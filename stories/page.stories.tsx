@@ -1,6 +1,6 @@
+import { Meta } from "@storybook/react";
 import React from "react";
 
-import { Meta } from "@storybook/react";
 
 export default {
   title: "Default",
