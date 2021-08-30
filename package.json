@@ -4,16 +4,16 @@
   "description": "React components to build analysis UI",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "start-storybook -s ./public -p 6006",
     "serve": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "check-types": "tsc --noEmit",
     "eslint": "eslint src stories --cache",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
-    "test": "npm run eslint && npm run prettier"
+    "test": "npm run eslint && npm run prettier && npm run check-types",
+    "build-storybook": "build-storybook -s ./public"
   },
   "dependencies": {
     "react": "^17.0.0",
