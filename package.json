@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/cheminfo/analysis-ui-components/issues"
   },
-  "homepage": "https://github.com/cheminfo/analysis-ui-components#readme"
+  "homepage": "https://github.com/cheminfo/analysis-ui-components#readme",
+  "volta": {
+    "node": "16.8.0"
+  }
 }
