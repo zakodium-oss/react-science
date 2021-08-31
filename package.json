@@ -1,6 +1,6 @@
 {
   "name": "analysis-ui-components",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "React components to build analysis UI",
   "main": "index.js",
   "scripts": {
@@ -15,9 +15,9 @@
     "test": "npm run eslint && npm run prettier && npm run check-types",
     "build-storybook": "build-storybook -s ./public"
   },
-  "dependencies": {
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
@@ -33,6 +33,8 @@
     "babel-loader": "^8.2.2",
     "eslint": "^7.32.0",
     "prettier": "^2.3.2",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "typescript": "^4.3.2",
     "vite": "^2.5.1"
   },
@@ -40,8 +42,7 @@
     "type": "git",
     "url": "git+https://github.com/cheminfo/analysis-ui-components.git"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/cheminfo/analysis-ui-components/issues"
   },
