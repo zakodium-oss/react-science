@@ -2,7 +2,6 @@ import { Meta } from '@storybook/react';
 import React from 'react';
 
 import App from '../src/App';
-import '../public/normalize.css';
 
 export default {
   title: 'Default',
