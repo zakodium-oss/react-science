@@ -24,5 +24,5 @@ jobs:
         with:
           token: ${{ secrets.BOT_TOKEN }}
           branch: gh-pages
-          folder: docs
+          folder: storybook-static
           clean: true
