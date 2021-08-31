@@ -1,10 +1,10 @@
-import { Meta } from "@storybook/react";
-import React from "react";
+import { Meta } from '@storybook/react';
+import React from 'react';
 
-import App from "../src/App";
+import App from '../src/App';
 
 export default {
-  title: "Default",
+  title: 'Default',
 } as Meta;
 
 export function Control() {
