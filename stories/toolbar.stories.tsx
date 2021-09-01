@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react';
 import React, { ReactNode, useState } from 'react';
 
 import { Toolbar, RootLayout } from '../src';
-import { ToolbarItemProps, ToolbarProps } from '../src/layout/SideBarLayout';
+import { ToolbarItemProps, ToolbarProps } from '../src/layout/ToolbarLayout';
 
 export default {
   title: 'Layout/Toolbar',

@@ -1,6 +1,6 @@
 import React, { ReactNode, CSSProperties, useState } from 'react';
 
-import { SideBarProvider, useSideBarContext } from './context/SideBarContext';
+import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
 
 export type ToolbarOrientation = 'vertical' | 'horizontal';
 
@@ -62,15 +62,13 @@ export function Toolbar(props: ToolbarProps) {
             }),
       }}
     >
-      <SideBarProvider initialState={{ orientation }}>
-        {children}
-      </SideBarProvider>
+      <ToolbarProvider orientation={orientation}>{children}</ToolbarProvider>
     </div>
   );
 }
 
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
-  const [{ orientation }] = useSideBarContext();
+  const orientation = useToolbarContext();
   const [show, setShow] = useState(false);
 
   const { active, children, onClick, title } = props;
