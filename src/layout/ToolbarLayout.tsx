@@ -1,4 +1,6 @@
-import React, { ReactNode, CSSProperties, useState } from 'react';
+/** @jsxImportSource @emotion/react */
+import { css, SerializedStyles } from '@emotion/react';
+import React, { ReactNode } from 'react';
 
 import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
 
@@ -18,25 +20,60 @@ export interface ToolbarItemProps {
   onClick: (item: ToolbarItemProps) => void;
 }
 
-const size = 30;
+const size = '30px';
 const border = '1px solid rgb(247, 247, 247)';
-const styles: Record<'toolbar' | 'item' | 'tooltip', CSSProperties> = {
-  toolbar: {
-    display: 'flex',
+
+const styles: Record<
+  'toolbar' | 'item' | 'tooltip',
+  (object: any) => SerializedStyles
+> = {
+  toolbar: (orientation: ToolbarOrientation) => {
+    if (orientation === 'vertical') {
+      return css`
+        display: flex;
+        flex-direction: column;
+        max-width: ${size};
+        min-height: 100%;
+        border-right: '${border};
+      `;
+    }
+    return css`
+      display: flex;
+      flex-direction: row;
+      max-height: ${size};
+      min-width: 100%;
+      border-bottom: ${border};
+    `;
   },
-  item: {
-    width: size,
-    height: size,
-    outline: 'none',
+  item: (active: boolean) => {
+    return css`
+      width: ${size};
+      height: ${size};
+      outline: none;
+      background-color: ${active ? 'rgb(247, 247, 247)' : 'transparent'};
+      &:hover + .content {
+        display: flex;
+      }
+    `;
   },
-  tooltip: {
-    position: 'absolute',
-    backgroundColor: 'gray',
-    borderRadius: '2px',
-    color: 'white',
-    whiteSpace: 'nowrap',
-    fontSize: '10px',
-    fontFamily: 'tahoma',
+  tooltip: (orientation: ToolbarOrientation) => {
+    return css`
+      display: none;
+      position: absolute;
+      background-color: gray;
+      border-radius: 2px;
+      color: white;
+      white-space: nowrap;
+      font-size: 10px;
+      font-family: tahoma;
+      bottom: 0px;
+      right: 0px;
+      width: 100%;
+      height: 50%;
+      top: ${orientation === 'horizontal' ? '100%' : '0px'};
+      left: ${orientation === 'horizontal' ? '0px' : '100%'};
+      ${orientation === 'vertical' && 'margin: auto;'}
+    `;
   },
 };
 
@@ -44,24 +81,7 @@ export function Toolbar(props: ToolbarProps) {
   const { children, orientation } = props;
 
   return (
-    <div
-      style={{
-        ...styles.toolbar,
-        ...(orientation === 'vertical'
-          ? {
-              flexDirection: 'column',
-              maxWidth: size,
-              minHeight: '100%',
-              borderRight: border,
-            }
-          : {
-              flexDirection: 'row',
-              maxHeight: size,
-              minWidth: '100%',
-              borderBottom: border,
-            }),
-      }}
-    >
+    <div css={styles.toolbar(orientation)}>
       <ToolbarProvider orientation={orientation}>{children}</ToolbarProvider>
     </div>
   );
@@ -69,69 +89,20 @@ export function Toolbar(props: ToolbarProps) {
 
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const orientation = useToolbarContext();
-  const [show, setShow] = useState(false);
-
   const { active, children, onClick, title } = props;
-
-  function mouseOverHandler() {
-    setShow(true);
-  }
-
-  function mouseLeaveHandler() {
-    setShow(false);
-  }
 
   return (
     <div style={{ position: 'relative' }}>
       <button
-        style={{
-          ...styles.item,
-          ...(active === true ? { backgroundColor: 'rgb(247, 247, 247)' } : {}),
-        }}
         type="button"
+        css={styles.item(active)}
         onClick={() => onClick(props)}
-        onMouseOver={mouseOverHandler}
-        onMouseOut={mouseLeaveHandler}
       >
         {children}
       </button>
-      {show && (
-        <div
-          style={{
-            display: 'flex',
-            ...styles.tooltip,
-            ...getCustomStyle(orientation),
-          }}
-        >
-          <span style={{ display: 'flex', margin: 'auto' }}>{title}</span>
-        </div>
-      )}
+      <div className="content" css={styles.tooltip(orientation)}>
+        <span style={{ display: 'flex', margin: 'auto' }}>{title}</span>
+      </div>
     </div>
   );
 };
-
-function getCustomStyle(
-  orientation: ToolbarOrientation = 'horizontal',
-): CSSProperties {
-  if (orientation === 'horizontal') {
-    return {
-      top: '100%',
-      bottom: '0px',
-      left: '0px',
-      right: '0px',
-      width: '100%',
-      height: '50%',
-    };
-  }
-
-  return {
-    top: '0px',
-    bottom: '0px',
-    left: '100%',
-    right: '0px',
-
-    margin: 'auto',
-    width: '100%',
-    height: '50%',
-  };
-}
