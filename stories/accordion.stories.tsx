@@ -32,7 +32,7 @@ export function control() {
           }}
         >
           <AccordionLayout>
-            <AccordionLayout.Item title="First Item" defaultOpended>
+            <AccordionLayout.Item title="First Item" defaultOpened>
               This is the content of the first item
             </AccordionLayout.Item>
             <AccordionLayout.Item title="Second Item">

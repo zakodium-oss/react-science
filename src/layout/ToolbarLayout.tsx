@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from '@emotion/react';
+import { css } from '@emotion/react';
 import React, { ReactNode } from 'react';
 
 import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
@@ -23,57 +23,55 @@ export interface ToolbarItemProps {
 const size = '30px';
 const border = '1px solid rgb(247, 247, 247)';
 
-const styles: Record<
-  'toolbar' | 'item' | 'tooltip',
-  (object: any) => SerializedStyles
-> = {
+const styles = {
   toolbar: (orientation: ToolbarOrientation) => {
-    if (orientation === 'vertical') {
-      return css`
-        display: flex;
-        flex-direction: column;
-        max-width: ${size};
-        min-height: 100%;
-        border-right: ${border};
-      `;
-    }
-    return css`
-      display: flex;
-      flex-direction: row;
-      max-height: ${size};
-      min-width: 100%;
-      border-bottom: ${border};
-    `;
+    return css([
+      { display: 'flex' },
+      orientation === 'vertical'
+        ? {
+            flexDirection: 'column',
+            maxWidth: size,
+            minHeight: '100%',
+            borderRight: border,
+          }
+        : {
+            flexDirection: 'row',
+            maxHeight: size,
+            minWidth: '100%',
+            borderBottom: border,
+          },
+    ]);
   },
   item: (active: boolean) => {
-    return css`
-      width: ${size};
-      height: ${size};
-      outline: none;
-      background-color: ${active ? 'rgb(247, 247, 247)' : 'transparent'};
-      &:hover + .content {
-        display: flex;
-      }
-    `;
+    return css([
+      active && { backgroundColor: 'rgb(247, 247, 247)' },
+      {
+        width: size,
+        height: size,
+        outline: 'none',
+        '&:hover + .content': { display: 'flex' },
+      },
+    ]);
   },
   tooltip: (orientation: ToolbarOrientation) => {
-    return css`
-      display: none;
-      position: absolute;
-      background-color: gray;
-      border-radius: 2px;
-      color: white;
-      white-space: nowrap;
-      font-size: 10px;
-      font-family: tahoma;
-      bottom: 0px;
-      right: 0px;
-      width: 100%;
-      height: 50%;
-      top: ${orientation === 'horizontal' ? '100%' : '0px'};
-      left: ${orientation === 'horizontal' ? '0px' : '100%'};
-      ${orientation === 'vertical' && 'margin: auto;'}
-    `;
+    return css([
+      {
+        display: 'none',
+        position: 'absolute',
+        backgroundColor: 'gray',
+        borderRadius: '2px',
+        color: 'white',
+        fontFamily: 'tahoma',
+        bottom: '0px',
+        right: '0px',
+        width: '100%',
+        height: '50%',
+      },
+      orientation === 'vertical' && { margin: 'auto' },
+      orientation === 'horizontal'
+        ? { top: '100%', left: '0px' }
+        : { top: '0px', left: '100%' },
+    ]);
   },
 };
 
