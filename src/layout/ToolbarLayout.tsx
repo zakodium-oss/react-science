@@ -34,7 +34,7 @@ const styles: Record<
         flex-direction: column;
         max-width: ${size};
         min-height: 100%;
-        border-right: '${border};
+        border-right: ${border};
       `;
     }
     return css`
