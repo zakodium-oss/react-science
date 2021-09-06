@@ -19,10 +19,6 @@ const styles = {
     paddingRight: '5px',
     justifyContent: 'space-between',
 
-    borderWidth: '1px 1px 0px',
-    borderStyle: 'solid',
-    borderColor: 'rgb(213, 213, 213)',
-
     boxShadow: 'rgb(255, 255, 255) 0px 1px 0px 0px inset',
     background:
       'rgb(255, 255, 255) linear-gradient(rgb(255, 255, 255) 5%, rgb(246, 246, 246) 100%) repeat scroll 0% 0%',
