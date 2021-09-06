@@ -70,10 +70,13 @@ const styles = {
       fontFamily: 'tahoma',
       bottom: '0px',
       right: '0px',
+      minWidth: 'min-content',
       width: '100%',
       height: '50%',
       fontSize: '10px',
       whiteSpace: 'nowrap',
+      paddingLeft: '3px',
+      paddingRight: '3px',
     };
 
     if (itemOrientation === 'auto') {
@@ -81,7 +84,7 @@ const styles = {
         unity,
         orientation === 'vertical' && { margin: 'auto', marginLeft: 5 },
         orientation === 'horizontal'
-          ? { top: '100%', left: '0px' }
+          ? { top: '100%' }
           : { top: '0px', left: '100%' },
       ]);
     } else {
@@ -89,7 +92,7 @@ const styles = {
         unity,
         itemOrientation === 'horizontal' && { margin: 'auto', marginLeft: 5 },
         itemOrientation === 'vertical'
-          ? { top: '100%', left: '0px' }
+          ? { top: '100%' }
           : { top: '0px', left: '100%' },
       ]);
     }
@@ -134,7 +137,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         css={styles.tooltip(orientation, titleOrientation)}
       >
         <span
-          style={{ display: 'flex', margin: 'auto', justifyContent: 'center' }}
+          style={{
+            display: 'flex',
+            margin: 'auto',
+            justifyContent: 'center',
+          }}
         >
           {title}
         </span>
