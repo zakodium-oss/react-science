@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css, CSSObject } from '@emotion/react';
 import React, { ReactNode } from 'react';
 
 import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
@@ -61,7 +61,7 @@ const styles = {
     orientation: ToolbarOrientation,
     itemOrientation: ToolbarItemOrientation,
   ) => {
-    const unity: any = {
+    const common: CSSObject = {
       display: 'none',
       position: 'absolute',
       backgroundColor: 'gray',
@@ -70,8 +70,7 @@ const styles = {
       fontFamily: 'tahoma',
       bottom: '0px',
       right: '0px',
-      minWidth: 'min-content',
-      width: '100%',
+      width: 'fit-content',
       height: '50%',
       fontSize: '10px',
       whiteSpace: 'nowrap',
@@ -81,7 +80,7 @@ const styles = {
 
     if (itemOrientation === 'auto') {
       return css([
-        unity,
+        common,
         orientation === 'vertical' && { margin: 'auto', marginLeft: 5 },
         orientation === 'horizontal'
           ? { top: '100%' }
@@ -89,7 +88,7 @@ const styles = {
       ]);
     } else {
       return css([
-        unity,
+        common,
         itemOrientation === 'horizontal' && { margin: 'auto', marginLeft: 5 },
         itemOrientation === 'vertical'
           ? { top: '100%' }
