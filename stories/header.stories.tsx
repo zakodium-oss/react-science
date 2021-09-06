@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { RootLayout, HeaderLayout, Toolbar } from '../src';
+import { RootLayout, Header, Toolbar } from '../src';
 
 export default {
   title: 'Layout/Header',
@@ -17,7 +17,7 @@ export function control() {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <HeaderLayout>
+        <Header>
           <Toolbar orientation="horizontal">
             <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
               Logo
@@ -34,7 +34,7 @@ export function control() {
               C
             </Toolbar.Item>
           </Toolbar>
-        </HeaderLayout>
+        </Header>
       </div>
       <div
         style={{

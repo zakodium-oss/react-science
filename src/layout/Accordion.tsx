@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import React, { ReactNode, useState } from 'react';
 
-interface AccordionLayoutProps {
+interface AccordionProps {
   children:
     | Array<React.ReactElement<AccordionItemProps>>
     | React.ReactElement<AccordionItemProps>;
@@ -50,11 +50,11 @@ const styles = {
   }),
 };
 
-export function AccordionLayout(props: AccordionLayoutProps) {
+export function Accordion(props: AccordionProps) {
   return <div css={styles.container}>{props.children}</div>;
 }
 
-AccordionLayout.Item = function AccordionItem(props: AccordionItemProps) {
+Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const { children, title, defaultOpened = false } = props;
   const [open, setOpen] = useState(defaultOpened);
 

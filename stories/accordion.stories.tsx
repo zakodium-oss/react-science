@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { AccordionLayout, RootLayout, Toolbar } from '../src';
+import { Accordion, RootLayout, Toolbar } from '../src';
 
 export default {
   title: 'Layout/Accordion',
@@ -31,14 +31,14 @@ export function control() {
             height: '100%',
           }}
         >
-          <AccordionLayout>
-            <AccordionLayout.Item title="First Item" defaultOpened>
+          <Accordion>
+            <Accordion.Item title="First Item" defaultOpened>
               This is the content of the first item
-            </AccordionLayout.Item>
-            <AccordionLayout.Item title="Second Item">
+            </Accordion.Item>
+            <Accordion.Item title="Second Item">
               This is the content of the second item
-            </AccordionLayout.Item>
-          </AccordionLayout>
+            </Accordion.Item>
+          </Accordion>
         </div>
       </div>
     </RootLayout>
