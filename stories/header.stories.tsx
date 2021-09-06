@@ -24,13 +24,13 @@ export function control() {
             </Toolbar.Item>
           </Toolbar>
           <Toolbar orientation="horizontal">
-            <Toolbar.Item id="a" title="A">
+            <Toolbar.Item id="a" title="User manual">
               A
             </Toolbar.Item>
-            <Toolbar.Item id="b" title="B">
+            <Toolbar.Item id="b" title="General settings">
               B
             </Toolbar.Item>
-            <Toolbar.Item id="c" title="C">
+            <Toolbar.Item id="c" title="Full screen">
               C
             </Toolbar.Item>
           </Toolbar>
