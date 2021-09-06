@@ -9,11 +9,17 @@ export default {
 
 export function control() {
   return (
-    <RootLayout>
+    <RootLayout
+      style={{
+        borderStyle: 'solid',
+        borderColor: 'rgb(213, 213, 213)',
+        borderWidth: '1px',
+      }}
+    >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <HeaderLayout>
           <Toolbar orientation="horizontal">
-            <Toolbar.Item id="logo" title="Logo">
+            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
               Logo
             </Toolbar.Item>
           </Toolbar>
@@ -30,7 +36,12 @@ export function control() {
           </Toolbar>
         </HeaderLayout>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
         <div>
           <Toolbar orientation="vertical">
             <Toolbar.Item id="a" title="A" active>
@@ -45,7 +56,6 @@ export function control() {
           style={{
             padding: 5,
             width: '100%',
-            backgroundColor: 'rgba(223, 231, 235, 1)',
           }}
         >
           <p>content</p>

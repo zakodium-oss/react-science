@@ -5,6 +5,7 @@ import React, { ReactNode } from 'react';
 import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
 
 export type ToolbarOrientation = 'vertical' | 'horizontal';
+export type ToolbarItemOrientation = 'vertical' | 'horizontal' | 'auto';
 
 export interface ToolbarProps {
   orientation: ToolbarOrientation;
@@ -19,6 +20,7 @@ export interface ToolbarItemProps {
   children: ReactNode;
 
   active?: boolean;
+  titleOrientation?: ToolbarItemOrientation;
   onClick?: (item: ToolbarItemProps) => void;
 }
 
@@ -55,27 +57,42 @@ const styles = {
       },
     ]);
   },
-  tooltip: (orientation: ToolbarOrientation) => {
-    return css([
-      {
-        display: 'none',
-        position: 'absolute',
-        backgroundColor: 'gray',
-        borderRadius: '2px',
-        color: 'white',
-        fontFamily: 'tahoma',
-        bottom: '0px',
-        right: '0px',
-        width: '100%',
-        height: '50%',
-        fontSize: '10px',
-        whiteSpace: 'nowrap',
-      },
-      orientation === 'vertical' && { margin: 'auto' },
-      orientation === 'horizontal'
-        ? { top: '100%', left: '0px' }
-        : { top: '0px', left: '100%' },
-    ]);
+  tooltip: (
+    orientation: ToolbarOrientation,
+    itemOrientation: ToolbarItemOrientation,
+  ) => {
+    const unity: any = {
+      display: 'none',
+      position: 'absolute',
+      backgroundColor: 'gray',
+      borderRadius: '2px',
+      color: 'white',
+      fontFamily: 'tahoma',
+      bottom: '0px',
+      right: '0px',
+      width: '100%',
+      height: '50%',
+      fontSize: '10px',
+      whiteSpace: 'nowrap',
+    };
+
+    if (itemOrientation === 'auto') {
+      return css([
+        unity,
+        orientation === 'vertical' && { margin: 'auto', marginLeft: 5 },
+        orientation === 'horizontal'
+          ? { top: '100%', left: '0px' }
+          : { top: '0px', left: '100%' },
+      ]);
+    } else {
+      return css([
+        unity,
+        itemOrientation === 'horizontal' && { margin: 'auto', marginLeft: 5 },
+        itemOrientation === 'vertical'
+          ? { top: '100%', left: '0px' }
+          : { top: '0px', left: '100%' },
+      ]);
+    }
   },
 };
 
@@ -91,7 +108,13 @@ export function Toolbar(props: ToolbarProps) {
 
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const orientation = useToolbarContext();
-  const { active = false, children, onClick, title } = props;
+  const {
+    active = false,
+    children,
+    onClick,
+    title,
+    titleOrientation = 'auto',
+  } = props;
 
   return (
     <div style={{ position: 'relative' }}>
@@ -106,7 +129,10 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       >
         {children}
       </button>
-      <div className="content" css={styles.tooltip(orientation)}>
+      <div
+        className="content"
+        css={styles.tooltip(orientation, titleOrientation)}
+      >
         <span
           style={{ display: 'flex', margin: 'auto', justifyContent: 'center' }}
         >
