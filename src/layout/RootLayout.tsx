@@ -1,7 +1,10 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React, { ReactNode, CSSProperties } from 'react';
 
 interface RootLayoutProps {
   children: ReactNode;
+  style?: CSSProperties;
 }
 
 const style: CSSProperties = {
@@ -10,5 +13,7 @@ const style: CSSProperties = {
 };
 
 export function RootLayout(props: RootLayoutProps) {
-  return <div style={style}>{props.children}</div>;
+  return (
+    <div css={css([{ ...style }, { ...props.style }])}>{props.children}</div>
+  );
 }
