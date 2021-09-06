@@ -8,16 +8,18 @@ export type ToolbarOrientation = 'vertical' | 'horizontal';
 
 export interface ToolbarProps {
   orientation: ToolbarOrientation;
-  children: Array<React.ReactElement<ToolbarItemProps>>;
+  children:
+    | Array<React.ReactElement<ToolbarItemProps>>
+    | React.ReactElement<ToolbarItemProps>;
 }
 
 export interface ToolbarItemProps {
   id: string;
   title: string;
-  active: boolean;
   children: ReactNode;
 
-  onClick: (item: ToolbarItemProps) => void;
+  active?: boolean;
+  onClick?: (item: ToolbarItemProps) => void;
 }
 
 const size = '30px';
@@ -66,6 +68,8 @@ const styles = {
         right: '0px',
         width: '100%',
         height: '50%',
+        fontSize: '10px',
+        whiteSpace: 'nowrap',
       },
       orientation === 'vertical' && { margin: 'auto' },
       orientation === 'horizontal'
@@ -87,19 +91,27 @@ export function Toolbar(props: ToolbarProps) {
 
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const orientation = useToolbarContext();
-  const { active, children, onClick, title } = props;
+  const { active = false, children, onClick, title } = props;
 
   return (
     <div style={{ position: 'relative' }}>
       <button
         type="button"
         css={styles.item(active)}
-        onClick={() => onClick(props)}
+        onClick={() => {
+          if (onClick) {
+            onClick(props);
+          }
+        }}
       >
         {children}
       </button>
       <div className="content" css={styles.tooltip(orientation)}>
-        <span style={{ display: 'flex', margin: 'auto' }}>{title}</span>
+        <span
+          style={{ display: 'flex', margin: 'auto', justifyContent: 'center' }}
+        >
+          {title}
+        </span>
       </div>
     </div>
   );
