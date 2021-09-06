@@ -1,6 +1,7 @@
-import { AccordionLayout } from './layout/AccordionLayout';
-import { HeaderLayout } from './layout/HeaderLayout';
+import { Accordion } from './layout/Accordion';
+import { Header } from './layout/Header';
 import { RootLayout } from './layout/RootLayout';
-import { Toolbar } from './layout/ToolbarLayout';
+import { SplitPane } from './layout/SplitPane';
+import { Toolbar } from './layout/Toolbar';
 
-export { AccordionLayout, HeaderLayout, RootLayout, Toolbar };
+export { Accordion, Header, RootLayout, SplitPane, Toolbar };

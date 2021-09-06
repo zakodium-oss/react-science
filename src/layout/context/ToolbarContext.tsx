@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext } from 'react';
 
-import { ToolbarOrientation } from '../ToolbarLayout';
+import { ToolbarOrientation } from '../Toolbar';
 
 const toolbarContext = createContext<ToolbarOrientation | null>(null);
 

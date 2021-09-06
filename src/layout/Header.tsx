@@ -2,11 +2,11 @@
 import { css } from '@emotion/react';
 import React, { ReactElement } from 'react';
 
-import { ToolbarProps } from './ToolbarLayout';
+import { ToolbarProps } from './Toolbar';
 
 type ReactProps = ReactElement<ToolbarProps>;
 
-interface HeaderLayoutProps {
+interface HeaderProps {
   children: [ReactProps, ReactProps];
 }
 
@@ -25,7 +25,7 @@ const styles = {
   }),
 };
 
-export function HeaderLayout(props: HeaderLayoutProps) {
+export function Header(props: HeaderProps) {
   return (
     <div css={styles.header}>
       <div>{props.children[0]}</div>
