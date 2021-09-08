@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, SerializedStyles } from '@emotion/react';
-import { ReactNode, DragEvent, useState } from 'react';
-import Draggable, { DraggableEvent } from 'react-draggable';
+import React, { ReactNode, useRef, useState } from 'react';
 
 type SplitOrientation = 'vertical' | 'horizontal';
 type SideSeparation = 'start' | 'end';
@@ -12,9 +11,32 @@ interface SplitPaneProps {
   sideSeparation?: SideSeparation;
   initialSeparation?: InitialSeperation;
   onChange?: (position: InitialSeperation) => void;
-
   children: [ReactNode, ReactNode];
 }
+
+const cssStyles = {
+  separator: (orientation: SplitOrientation) => {
+    return css([
+      orientation === 'horizontal' && {
+        width: '10px',
+        cursor: 'ew-resize',
+      },
+      orientation === 'vertical' && {
+        height: '10px',
+        cursor: 'ns-resize',
+      },
+      {
+        backgroundColor: 'rgb(247, 247, 247)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        ':hover': {
+          backgroundColor: 'rgb(223, 223, 223)',
+        },
+      },
+    ]);
+  },
+};
 
 export function SplitPane(props: SplitPaneProps) {
   const {
@@ -25,117 +47,99 @@ export function SplitPane(props: SplitPaneProps) {
     children,
   } = props;
 
-  const [widthState, setWidthState] = useState(() => {
+  const parentRef = useRef<HTMLDivElement>();
+  const initialMousePosition = useRef({ x: 0, y: 0 });
+
+  const [[size, type], setSize] = useState(() => {
     const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
       initialSeparation as string,
-    ) as unknown as [string, string, string];
+    ) as unknown as [string, string, '%' | 'px'];
 
-    return {
-      value,
-      type,
-      initialSeparation,
-      separation: `${value}${type}` as InitialSeperation,
-    };
+    return [Number(value), type];
   });
+
+  const [isMouseMoving, setMouseMoving] = useState(false);
+  // MouseMoving dans la ref
+
+  function onMouseMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (isMouseMoving) {
+      const { screenX, screenY } = event;
+
+      if (type === 'px') {
+        setSize(([currentSize]) => {
+          const diffX = screenX - initialMousePosition.current.x;
+          const diffY = screenY - initialMousePosition.current.y;
+
+          initialMousePosition.current = {
+            x: screenX,
+            y: screenY,
+          };
+
+          return [
+            Number(
+              currentSize + (orientation === 'horizontal' ? diffX : diffY),
+            ),
+            type,
+          ];
+        });
+      } else if (type === '%') {
+        if (parentRef.current) {
+          setSize([
+            orientation === 'horizontal'
+              ? (100 * screenX) / parentRef.current.clientWidth
+              : (100 * screenY) / parentRef.current.clientHeight,
+            type,
+          ]);
+        }
+      }
+
+      onChange(`${size}${type}` as InitialSeperation);
+    }
+  }
 
   return (
     <div
+      onMouseMove={onMouseMove}
+      onMouseLeave={() => setMouseMoving(false)}
+      onMouseUp={() => setMouseMoving(false)}
       css={css([
-        { display: 'flex', gap: 5, height: 200 },
+        { display: 'flex', height: '100%', width: '100%' },
         orientation === 'vertical' && { flexDirection: 'column' },
       ])}
     >
       <div
         css={
-          sideSeparation === 'start' &&
-          getSize(orientation, widthState.separation)
+          sideSeparation === 'start'
+            ? getSize(orientation, `${size}${type}` as InitialSeperation)
+            : { flex: '1 1 0%' }
         }
       >
         {children[0]}
       </div>
 
-      {getSeparator(orientation, setWidthState, widthState)}
+      <div
+        onMouseDown={(event) => {
+          setMouseMoving(true);
+          initialMousePosition.current = { x: event.screenX, y: event.screenY };
+        }}
+        onMouseUp={() => setMouseMoving(false)}
+        css={cssStyles.separator(orientation)}
+      >
+        <div css={css({ fontSize: 10 })}>
+          {orientation === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
+        </div>
+      </div>
 
       <div
         css={
-          sideSeparation === 'end' &&
-          getSize(orientation, widthState.separation)
+          sideSeparation === 'end'
+            ? getSize(orientation, `${size}${type}` as InitialSeperation)
+            : { flex: '1 1 0%' }
         }
       >
         {children[1]}
       </div>
     </div>
-  );
-}
-
-/*
-mouse down
-mouse move
-mouse up
-*/
-
-function getSeparator(
-  orientation: SplitOrientation,
-  setWidthState: (state: {
-    value: number;
-    type: string;
-    initialSeparation: InitialSeperation;
-    separation: InitialSeperation;
-  }) => void,
-  state: {
-    value: number;
-    type: string;
-    initialSeparation: InitialSeperation;
-    separation: InitialSeperation;
-  },
-) {
-  function onDrag(event: DraggableEvent) {
-    const { clientX } = event as DragEvent<HTMLDivElement>;
-
-    setWidthState({
-      ...state,
-      value: clientX,
-      separation: `${clientX}${state.type}` as InitialSeperation,
-    });
-  }
-
-  return (
-    <Draggable
-      axis={orientation === 'horizontal' ? 'x' : 'y'}
-      scale={1}
-      onDrag={onDrag}
-      defaultPosition={{
-        x: 0,
-        y: 0,
-      }}
-    >
-      <div
-        css={css([
-          orientation === 'horizontal' && {
-            width: '10px',
-            cursor: 'ew-resize',
-          },
-          orientation === 'vertical' && {
-            height: '10px',
-            cursor: 'ns-resize',
-          },
-          {
-            backgroundColor: 'rgb(247, 247, 247)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            ':hover': {
-              backgroundColor: 'rgb(223, 223, 223)',
-            },
-          },
-        ])}
-      >
-        {orientation === 'horizontal' && (
-          <div css={css({ fontSize: 10 })}>⋮</div>
-        )}
-        {orientation === 'vertical' && <div css={css({ fontSize: 10 })}>⋯</div>}
-      </div>
-    </Draggable>
   );
 }
 
@@ -146,11 +150,11 @@ function getSize(
   return css([
     orientation === 'horizontal' && {
       width: separation,
-      backgroundColor: 'red',
+      display: 'flex',
     },
     orientation === 'vertical' && {
       height: separation,
-      backgroundColor: 'red',
+      display: 'flex',
     },
   ]);
 }
