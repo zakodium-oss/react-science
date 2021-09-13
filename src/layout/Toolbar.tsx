@@ -57,7 +57,6 @@ const styles = {
         width: size,
         height: size,
         outline: 'none',
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         '&:hover + .content': { display: 'flex' },
@@ -83,6 +82,7 @@ const styles = {
       whiteSpace: 'nowrap',
       paddingLeft: '3px',
       paddingRight: '3px',
+      zIndex: 50,
     };
 
     if (itemOrientation === 'auto') {
