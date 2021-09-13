@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.1.0...v0.2.0) (2021-09-13)
+
+
+### Features
+
+* add color on background of modal ([cdadf6e](https://www.github.com/cheminfo/analysis-ui-components/commit/cdadf6ed576825a331c2e6b59d3784f060f4ac1d))
+* add Modal to components ([9f2f3e2](https://www.github.com/cheminfo/analysis-ui-components/commit/9f2f3e238b8d676577f9b2d0fad9f39e739af73d))
+* add zindex 50 on tooltip ([da760b2](https://www.github.com/cheminfo/analysis-ui-components/commit/da760b243a507c54e50285677c2c98100e89a25a))
+* allow to pass className to Toolbar.Item ([#20](https://www.github.com/cheminfo/analysis-ui-components/issues/20)) ([e2509ce](https://www.github.com/cheminfo/analysis-ui-components/commit/e2509ce4fc90110f545684ea2b9e317c94b32f31))
+* set text from Toolbar to center ([44f7f62](https://www.github.com/cheminfo/analysis-ui-components/commit/44f7f627e3bcebc5054f8dd164244c29c20ac130))
+
+
+### Bug Fixes
+
+* add ReactFragment, boolean and null to Toolbar ([#14](https://www.github.com/cheminfo/analysis-ui-components/issues/14)) ([4584681](https://www.github.com/cheminfo/analysis-ui-components/commit/4584681c471726e81162c3668219776bffb96a9f))
+
 ## 0.1.0 (2021-09-13)
 
 
