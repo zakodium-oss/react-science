@@ -16,7 +16,6 @@ export function FullExample() {
         borderStyle: 'solid',
         borderColor: 'rgb(213, 213, 213)',
         borderWidth: '1px',
-        marginLeft: 50,
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
