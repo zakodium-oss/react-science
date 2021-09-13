@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.1.0...v0.1.1) (2021-09-13)
+
+
+### Bug Fixes
+
+* add ReactFragment, boolean and null to Toolbar ([#14](https://www.github.com/cheminfo/analysis-ui-components/issues/14)) ([4584681](https://www.github.com/cheminfo/analysis-ui-components/commit/4584681c471726e81162c3668219776bffb96a9f))
+
 ## 0.1.0 (2021-09-13)
 
 
