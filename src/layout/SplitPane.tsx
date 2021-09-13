@@ -6,7 +6,7 @@ type SplitOrientation = 'vertical' | 'horizontal';
 type SideSeparation = 'start' | 'end';
 type InitialSeperation = `${number}%` | `${number}px`;
 
-interface SplitPaneProps {
+export interface SplitPaneProps {
   orientation?: SplitOrientation;
   sideSeparation?: SideSeparation;
   initialSeparation?: InitialSeperation;
@@ -30,6 +30,7 @@ const cssStyles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        userSelect: 'none',
         ':hover': {
           backgroundColor: 'rgb(223, 223, 223)',
         },
@@ -65,9 +66,10 @@ export function SplitPane(props: SplitPaneProps) {
       if (type === 'px') {
         setSize(([currentSize]) => {
           return [
-            Number(
-              currentSize +
-                (orientation === 'horizontal' ? movementX : movementY),
+            getValueFromSplitter(
+              sideSeparation,
+              orientation === 'horizontal' ? movementX : movementY,
+              currentSize,
             ),
             type,
           ];
@@ -80,8 +82,10 @@ export function SplitPane(props: SplitPaneProps) {
               const diffY = (movementY / parentRef.current?.clientHeight) * 100;
 
               return [
-                Number(
-                  currentSize + (orientation === 'horizontal' ? diffX : diffY),
+                getValueFromSplitter(
+                  sideSeparation,
+                  orientation === 'horizontal' ? diffX : diffY,
+                  currentSize,
                 ),
                 type,
               ];
@@ -154,4 +158,16 @@ function getSize(
       display: 'flex',
     },
   ]);
+}
+
+function getValueFromSplitter(
+  position: 'start' | 'end',
+  value: number,
+  currentSize: number,
+) {
+  if (position === 'end') {
+    return currentSize - value;
+  }
+
+  return currentSize + value;
 }
