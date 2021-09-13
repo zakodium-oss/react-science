@@ -49,6 +49,7 @@ export function SplitPane(props: SplitPaneProps) {
   } = props;
 
   const parentRef = useRef<HTMLDivElement>(null);
+
   const [[size, type], setSize] = useState(() => {
     const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
       initialSeparation as string,
@@ -165,9 +166,13 @@ function getValueFromSplitter(
   value: number,
   currentSize: number,
 ) {
+  let val = 0;
+
   if (position === 'end') {
-    return currentSize - value;
+    val = currentSize - value;
+  } else {
+    val = currentSize + value;
   }
 
-  return currentSize + value;
+  return Math.round((val + Number.EPSILON) * 100) / 100;
 }
