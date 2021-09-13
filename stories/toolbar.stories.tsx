@@ -12,7 +12,11 @@ const items: Array<{ children: ReactNode; title: string; id: string }> = [
   { id: 'copy', children: 'c', title: 'Copy' },
   { id: 'paste', children: 'v', title: 'Paste' },
   { id: 'undo', children: 'b', title: 'Undo' },
-  { id: 'redo', children: 'f', title: 'Redo' },
+  {
+    id: 'redo',
+    children: 'r',
+    title: 'Redo',
+  },
 ];
 
 export function VerticalToolbar() {
@@ -37,6 +41,12 @@ export function VerticalToolbar() {
               {item.children}
             </Toolbar.Item>
           ))}
+          <Toolbar.Item id="test" title="Test">
+            <i
+              style={{ width: 16, height: 16, display: 'block' }}
+              className="ci-icon-bio-dna"
+            />
+          </Toolbar.Item>
         </Toolbar>
         <div style={{ padding: 5 }}>
           <p>Hello, World!</p>
