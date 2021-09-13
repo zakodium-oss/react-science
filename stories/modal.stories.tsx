@@ -14,6 +14,8 @@ export default {
   title: 'Layout/Modal',
 } as Meta;
 
+// rgba(255, 255, 255, 0.8);
+
 export function ModalStories() {
   return (
     <RootLayout
@@ -21,10 +23,8 @@ export function ModalStories() {
         borderStyle: 'solid',
         borderColor: 'rgb(213, 213, 213)',
         borderWidth: '1px',
-        marginTop: 150,
       }}
     >
-      <Modal title="Hello, World!">Hello !</Modal>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar orientation="horizontal">
@@ -93,6 +93,7 @@ export function ModalStories() {
           </SplitPane>
         </div>
       </div>
+      <Modal title="Hello, World!">Hello !</Modal>
     </RootLayout>
   );
 }
