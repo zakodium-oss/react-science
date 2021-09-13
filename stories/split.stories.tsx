@@ -11,15 +11,16 @@ export default {
     orientation: 'horizontal',
     sideSeparation: 'end',
   },
+  argTypes: {
+    onChange: { action: 'handle' },
+  },
   component: SplitPane,
 } as Meta<SplitPaneProps>;
 
-export function Control(
-  props: Omit<SplitPaneProps, 'children' | 'onChange' | 'initialSeparation'>,
-) {
+export function Control(props: Omit<SplitPaneProps, 'children'>) {
   return (
     <div style={{ backgroundColor: 'greenyellow', height: 400, width: 600 }}>
-      <SplitPane {...props}>
+      <SplitPane key={props.initialSeparation} {...props}>
         <div>A</div>
         <div>B</div>
       </SplitPane>
