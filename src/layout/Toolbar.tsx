@@ -17,7 +17,8 @@ export interface ToolbarProps {
     | null;
 }
 
-export interface ToolbarItemProps {
+export interface ToolbarItemProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
   id: string;
   title: string;
   children: ReactNode;
