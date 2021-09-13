@@ -59,6 +59,7 @@ const styles = {
         outline: 'none',
         alignItems: 'center',
         justifyContent: 'center',
+        display: 'flex',
         '&:hover + .content': { display: 'flex' },
       },
     ]);
