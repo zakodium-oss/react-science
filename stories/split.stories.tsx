@@ -2,10 +2,30 @@ import { Meta } from '@storybook/react';
 import React from 'react';
 
 import { SplitPane } from '../src';
+import { SplitPaneProps } from '../src/layout/SplitPane';
 
 export default {
   title: 'Layout/SplitPane',
-} as Meta;
+  args: {
+    initialSeparation: '50%',
+    orientation: 'horizontal',
+    sideSeparation: 'end',
+  },
+  component: SplitPane,
+} as Meta<SplitPaneProps>;
+
+export function Control(
+  props: Omit<SplitPaneProps, 'children' | 'onChange' | 'initialSeparation'>,
+) {
+  return (
+    <div style={{ backgroundColor: 'greenyellow', height: 400, width: 600 }}>
+      <SplitPane {...props}>
+        <div>A</div>
+        <div>B</div>
+      </SplitPane>
+    </div>
+  );
+}
 
 export function Vertical() {
   return (
