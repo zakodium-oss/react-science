@@ -42,14 +42,12 @@ export function SplitPane(props: SplitPaneProps) {
   const {
     orientation = 'horizontal',
     sideSeparation = 'start',
-    initialSeparation = '200px',
+    initialSeparation = '50%',
     onChange = () => null,
     children,
   } = props;
 
-  const parentRef = useRef<HTMLDivElement>();
-  const initialMousePosition = useRef({ x: 0, y: 0 });
-
+  const parentRef = useRef<HTMLDivElement>(null);
   const [[size, type], setSize] = useState(() => {
     const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
       initialSeparation as string,
@@ -59,37 +57,38 @@ export function SplitPane(props: SplitPaneProps) {
   });
 
   const [isMouseMoving, setMouseMoving] = useState(false);
-  // MouseMoving dans la ref
 
   function onMouseMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (isMouseMoving) {
-      const { screenX, screenY } = event;
+      const { movementX, movementY } = event;
 
       if (type === 'px') {
         setSize(([currentSize]) => {
-          const diffX = screenX - initialMousePosition.current.x;
-          const diffY = screenY - initialMousePosition.current.y;
-
-          initialMousePosition.current = {
-            x: screenX,
-            y: screenY,
-          };
-
           return [
             Number(
-              currentSize + (orientation === 'horizontal' ? diffX : diffY),
+              currentSize +
+                (orientation === 'horizontal' ? movementX : movementY),
             ),
             type,
           ];
         });
       } else if (type === '%') {
         if (parentRef.current) {
-          setSize([
-            orientation === 'horizontal'
-              ? (100 * screenX) / parentRef.current.clientWidth
-              : (100 * screenY) / parentRef.current.clientHeight,
-            type,
-          ]);
+          setSize(([currentSize]) => {
+            if (parentRef.current) {
+              const diffX = (movementX / parentRef.current?.clientWidth) * 100;
+              const diffY = (movementY / parentRef.current?.clientHeight) * 100;
+
+              return [
+                Number(
+                  currentSize + (orientation === 'horizontal' ? diffX : diffY),
+                ),
+                type,
+              ];
+            }
+
+            return [currentSize, type];
+          });
         }
       }
 
@@ -99,6 +98,7 @@ export function SplitPane(props: SplitPaneProps) {
 
   return (
     <div
+      ref={parentRef}
       onMouseMove={onMouseMove}
       onMouseLeave={() => setMouseMoving(false)}
       onMouseUp={() => setMouseMoving(false)}
@@ -118,10 +118,7 @@ export function SplitPane(props: SplitPaneProps) {
       </div>
 
       <div
-        onMouseDown={(event) => {
-          setMouseMoving(true);
-          initialMousePosition.current = { x: event.screenX, y: event.screenY };
-        }}
+        onMouseDown={() => setMouseMoving(true)}
         onMouseUp={() => setMouseMoving(false)}
         css={cssStyles.separator(orientation)}
       >
