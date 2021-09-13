@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/react';
-import React, { useRef } from 'react';
+import React from 'react';
 
 import { SplitPane } from '../src';
 
@@ -8,15 +8,9 @@ export default {
 } as Meta;
 
 export function Vertical() {
-  const ref = useRef<HTMLDivElement>(null);
-
   return (
-    <div ref={ref} style={{ backgroundColor: 'green' }}>
-      <SplitPane
-        parentRef={ref}
-        orientation="vertical"
-        initialSeparation="200px"
-      >
+    <div style={{ backgroundColor: 'green', height: 400 }}>
+      <SplitPane orientation="vertical" initialSeparation="200px">
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -25,17 +19,31 @@ export function Vertical() {
 }
 
 export function Horizontal() {
-  const ref = useRef<HTMLDivElement>(null);
-
   return (
-    <div ref={ref} style={{ backgroundColor: 'green' }}>
-      <SplitPane
-        parentRef={ref}
-        orientation="horizontal"
-        initialSeparation="30%"
-      >
+    <div style={{ backgroundColor: 'yellow', height: 200 }}>
+      <SplitPane orientation="horizontal" initialSeparation="20%">
         <div>A</div>
         <div>B</div>
+      </SplitPane>
+    </div>
+  );
+}
+
+export function Inception() {
+  return (
+    <div style={{ backgroundColor: 'cyan', height: 400 }}>
+      <SplitPane orientation="horizontal">
+        <SplitPane orientation="vertical">
+          <p>A</p>
+          <p>B</p>
+        </SplitPane>
+        <SplitPane orientation="vertical">
+          <p>C</p>
+          <SplitPane orientation="vertical">
+            <p>D</p>
+            <p>E</p>
+          </SplitPane>
+        </SplitPane>
       </SplitPane>
     </div>
   );
