@@ -57,6 +57,9 @@ const styles = {
         width: size,
         height: size,
         outline: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         '&:hover + .content': { display: 'flex' },
       },
     ]);
