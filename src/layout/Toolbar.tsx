@@ -25,6 +25,7 @@ export interface ToolbarItemProps {
   active?: boolean;
   titleOrientation?: ToolbarItemOrientation;
   onClick?: (item: ToolbarItemProps) => void;
+  className?: string;
 }
 
 const size = '30px';
@@ -119,10 +120,12 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     onClick,
     title,
     titleOrientation = 'auto',
+    id,
+    ...other
   } = props;
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }} {...other}>
       <button
         type="button"
         css={styles.item(active)}
