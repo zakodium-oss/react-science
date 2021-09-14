@@ -63,8 +63,10 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   }
 
   return (
-    <div onClick={handleClick} css={styles.item(open)}>
-      <div css={styles.header}>{title}</div>
+    <div css={styles.item(open)}>
+      <div onClick={handleClick} css={styles.header}>
+        {title}
+      </div>
       <div style={{ display: open ? 'block' : 'none' }}>{children}</div>
     </div>
   );

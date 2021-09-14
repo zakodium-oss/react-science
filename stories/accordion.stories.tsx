@@ -38,6 +38,16 @@ export function control() {
             <Accordion.Item title="Second Item">
               This is the content of the second item
             </Accordion.Item>
+            <Accordion.Item title="With Toolbar">
+              <Toolbar orientation="horizontal">
+                <Toolbar.Item id="A" title="Test A">
+                  A
+                </Toolbar.Item>
+                <Toolbar.Item id="B" title="Test B">
+                  B
+                </Toolbar.Item>
+              </Toolbar>
+            </Accordion.Item>
           </Accordion>
         </div>
       </div>
