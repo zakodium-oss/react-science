@@ -15,4 +15,102 @@ React components to build analysis UI
 
 # Installation
 
-// TODO do this
+```
+> npm i analysis-ui-components
+```
+
+## Basic example
+
+```tsx
+import {
+  Accordion,
+  Header,
+  RootLayout,
+  SplitPane,
+  Toolbar,
+} from 'analysis-ui-components';
+
+function BasicExample() {
+  return (
+    <RootLayout
+      style={{
+        borderStyle: 'solid',
+        borderColor: 'rgb(213, 213, 213)',
+        borderWidth: '1px',
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Header>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
+              <i className="fas fa-meteor" />
+            </Toolbar.Item>
+          </Toolbar>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item id="a" title="User manual">
+              <i className="fas fa-book" />
+            </Toolbar.Item>
+            <Toolbar.Item id="b" title="General settings">
+              <i className="fas fa-cogs" />
+            </Toolbar.Item>
+            <Toolbar.Item id="c" title="Full screen">
+              <i className="fas fa-tablet-alt" />
+            </Toolbar.Item>
+          </Toolbar>
+        </Header>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <div>
+          <Toolbar orientation="vertical">
+            <Toolbar.Item id="a" title="Glasses" active>
+              <i className="fas fa-glasses" />
+            </Toolbar.Item>
+            <Toolbar.Item id="b" title="Open in large mode">
+              <i className="fas fa-arrows-alt" />
+            </Toolbar.Item>
+          </Toolbar>
+        </div>
+        <div
+          ref={ref}
+          style={{
+            width: '100%',
+            height: '300px',
+          }}
+        >
+          <SplitPane initialSeparation="35%">
+            <div style={{ padding: 5 }}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+              earum omnis, et voluptatum veniam repellendus similique! Sunt
+              nostrum necessitatibus reprehenderit asperiores excepturi
+              corrupti? Optio soluta illo quae ex nam nulla.
+            </div>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                flex: '1 1 0%',
+              }}
+            >
+              <Accordion>
+                <Accordion.Item title="Spectra" defaultOpened>
+                  <p style={{ padding: 5 }}>Spectra lorem</p>
+                </Accordion.Item>
+                <Accordion.Item title="Integral">
+                  <p style={{ padding: 5 }}>Integral lorem</p>
+                </Accordion.Item>
+              </Accordion>
+            </div>
+          </SplitPane>
+        </div>
+      </div>
+    </RootLayout>
+  );
+}
+```
+
+![image](https://user-images.githubusercontent.com/30870051/133239548-fe002213-53e5-44ab-8d44-39aaebe65152.png)
