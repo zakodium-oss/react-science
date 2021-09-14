@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.3.0...v0.3.1) (2021-09-14)
+
+
+### Bug Fixes
+
+* move the onClick on Accordion ([#29](https://www.github.com/cheminfo/analysis-ui-components/issues/29)) ([70a7da5](https://www.github.com/cheminfo/analysis-ui-components/commit/70a7da5c2e4bdeea7fa5288b909714f6d9378d78))
+
 ## [0.3.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.2.0...v0.3.0) (2021-09-14)
 
 
