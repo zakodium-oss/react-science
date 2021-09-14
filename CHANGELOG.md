@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.2.0...v0.3.0) (2021-09-14)
+
+
+### Features
+
+* add ReactFragment undefined null boolean on Accordion ([#26](https://www.github.com/cheminfo/analysis-ui-components/issues/26)) ([c076bcf](https://www.github.com/cheminfo/analysis-ui-components/commit/c076bcfa682091f5780886485e04f15c30ec78ed))
+
 ## [0.2.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.1.0...v0.2.0) (2021-09-13)
 
 
