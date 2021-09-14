@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, ReactFragment } from 'react';
 
 interface AccordionProps {
-  children:
+  children?:
     | Array<React.ReactElement<AccordionItemProps>>
-    | React.ReactElement<AccordionItemProps>;
+    | React.ReactElement<AccordionItemProps>
+    | ReactFragment
+    | boolean
+    | null;
 }
 
 interface AccordionItemProps {
