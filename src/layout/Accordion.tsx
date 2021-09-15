@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { ReactNode, ReactFragment, ReactElement } from 'react';
+import React, { ReactNode, ReactFragment } from 'react';
 
 import {
   AccordionProvider,
@@ -59,44 +59,33 @@ const styles = {
 };
 
 export function Accordion(props: AccordionProps) {
-  const items =
-    React.Children.map(props.children, (child) => {
-      if (!child) {
-        return undefined;
-      }
-
-      const { props } = child as ReactElement<AccordionItemProps>;
-
-      return {
-        title: props.title,
-        isOpen: props.defaultOpened || false,
-      };
-    }) || [];
-
   return (
-    <AccordionProvider items={items.filter((element) => element !== undefined)}>
+    <AccordionProvider>
       <div css={styles.container}>{props.children}</div>
     </AccordionProvider>
   );
 }
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
-  const {
-    item,
-    utils: { clear, toggle },
-  } = useAccordionContext(props.title);
+  const { item, utils } = useAccordionContext(props.title);
 
   const onClickHandle = useDoubleClick({
-    onClick: toggle,
-    onDoubleClick: clear,
+    onClick: utils.toggle,
+    onDoubleClick: utils.clear,
   });
 
+  let displayable = false;
+
+  if (item) {
+    displayable = item.isOpen;
+  }
+
   return (
-    <div css={styles.item(item.isOpen)}>
+    <div css={styles.item(displayable)}>
       <div onClick={onClickHandle} css={styles.header}>
-        {item.title}
+        {props.title}
       </div>
-      <div style={{ display: item.isOpen ? 'block' : 'none' }}>
+      <div style={{ display: displayable ? 'block' : 'none' }}>
         {props.children}
       </div>
     </div>
