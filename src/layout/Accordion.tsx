@@ -34,7 +34,6 @@ const styles = {
       {
         display: 'flex',
         flexDirection: 'column',
-        transition: 'flex-grow 500ms',
       },
       isOpen && { flex: '1 1 0%' },
     ]);
