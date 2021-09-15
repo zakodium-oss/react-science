@@ -34,7 +34,7 @@ type ContextType = [
     clear: (except: string) => void;
     toggle: (title: string) => void;
     remove: (title: string) => void;
-    create: (title: string) => AccordionItemState;
+    create: (title: string, defaultOpened?: boolean) => AccordionItemState;
   },
 ];
 
@@ -89,7 +89,7 @@ const reducer: Reducer<AccordionState, AccordionActions> = produce(
   },
 );
 
-export function useAccordionContext(title: string) {
+export function useAccordionContext(title: string, defaultOpened?: boolean) {
   const context = useContext(accordionContext);
 
   if (!context) {
@@ -99,9 +99,9 @@ export function useAccordionContext(title: string) {
   const [state, utils] = context;
 
   useEffect(() => {
-    utils.create(title);
+    utils.create(title, defaultOpened);
     return () => utils.remove(title);
-  }, [title, utils]);
+  }, [defaultOpened, title, utils]);
 
   let item = getItem(title, state.items);
 
@@ -112,7 +112,7 @@ export function useAccordionContext(title: string) {
         clear: () => utils.clear(title),
         toggle: () => utils.toggle(title),
         remove: () => utils.remove(title),
-        create: () => utils.create(title),
+        create: (defaultOpened?: boolean) => utils.create(title, defaultOpened),
       },
     }),
     [item, title, utils],
@@ -135,8 +135,8 @@ export function AccordionProvider(props: { children: ReactNode }) {
       remove: (title: string) => {
         return dispatch({ type: 'REMOVE_ITEM', payload: title });
       },
-      create: (title: string) => {
-        const item = { title, isOpen: false };
+      create: (title: string, defaultOpened?: boolean) => {
+        const item = { title, isOpen: defaultOpened || false };
         dispatch({ type: 'CREATE_ITEM', payload: item });
         return item;
       },
