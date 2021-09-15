@@ -1,10 +1,12 @@
-import { produce } from 'immer';
+import { Draft, produce } from 'immer';
 import React, {
   createContext,
   ReactNode,
   useContext,
   Reducer,
   useReducer,
+  useMemo,
+  useEffect,
 } from 'react';
 
 interface AccordionItemState {
@@ -22,28 +24,46 @@ export interface AccordionState {
 
 type AccordionActions =
   | ActionType<'TOGGLE', string>
-  | ActionType<'CLEAR', string>;
+  | ActionType<'CLEAR', string>
+  | ActionType<'REMOVE_ITEM', string>
+  | ActionType<'CREATE_ITEM', { title: string; isOpen: boolean }>;
+
+type ContextType = [
+  AccordionContext,
+  {
+    clear: (except: string) => void;
+    toggle: (title: string) => void;
+    remove: (title: string) => void;
+    create: (title: string) => AccordionItemState;
+  },
+];
 
 type AccordionContext = AccordionState;
 
-const accordionContext = createContext<
-  | [
-      AccordionContext,
-      { clear: (except: string) => void; toggle: (title: string) => void },
-    ]
-  | null
->(null);
+const accordionContext = createContext<ContextType | null>(null);
 
 const reducer: Reducer<AccordionState, AccordionActions> = produce(
-  (draft, actions) => {
+  (draft, actions): Draft<AccordionState> => {
     switch (actions.type) {
       case 'TOGGLE': {
         const item = getItem(actions.payload, draft.items);
+
+        if (!item) {
+          draft.items.push({ isOpen: true, title: actions.payload });
+          return draft;
+        }
+
         item.isOpen = !item.isOpen;
+
         return draft;
       }
       case 'CLEAR': {
         const item = getItem(actions.payload, draft.items);
+
+        if (!item) {
+          draft.items.push({ isOpen: true, title: actions.payload });
+          return draft;
+        }
 
         for (const element of draft.items) {
           element.isOpen = element.title === item.title;
@@ -51,8 +71,19 @@ const reducer: Reducer<AccordionState, AccordionActions> = produce(
 
         return draft;
       }
+      case 'REMOVE_ITEM': {
+        draft.items = draft.items.filter(
+          (element) => element.title !== actions.payload,
+        );
+
+        return draft;
+      }
+      case 'CREATE_ITEM': {
+        draft.items.push(actions.payload);
+        return draft;
+      }
       default: {
-        break;
+        return draft;
       }
     }
   },
@@ -66,38 +97,59 @@ export function useAccordionContext(title: string) {
   }
 
   const [state, utils] = context;
-  const item = getItem(title, state.items);
 
-  return {
-    item,
-    utils: {
-      clear: () => utils.clear(title),
-      toggle: () => utils.toggle(title),
-    },
-  };
+  useEffect(() => {
+    utils.create(title);
+    return () => utils.remove(title);
+  }, [title, utils]);
+
+  let item = getItem(title, state.items);
+
+  return useMemo(
+    () => ({
+      item,
+      utils: {
+        clear: () => utils.clear(title),
+        toggle: () => utils.toggle(title),
+        remove: () => utils.remove(title),
+        create: () => utils.create(title),
+      },
+    }),
+    [item, title, utils],
+  );
 }
 
-export function AccordionProvider(props: {
-  children: ReactNode;
-  items: Array<AccordionItemState>;
-}) {
-  const ctx = useReducer(reducer, {
-    items: props.items,
+export function AccordionProvider(props: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, {
+    items: [],
   });
 
-  if (!props.items) {
-    return null;
-  }
+  const utils = useMemo(
+    () => ({
+      clear: (except: string) => {
+        return dispatch({ type: 'CLEAR', payload: except });
+      },
+      toggle: (title: string) => {
+        return dispatch({ type: 'TOGGLE', payload: title });
+      },
+      remove: (title: string) => {
+        return dispatch({ type: 'REMOVE_ITEM', payload: title });
+      },
+      create: (title: string) => {
+        const item = { title, isOpen: false };
+        dispatch({ type: 'CREATE_ITEM', payload: item });
+        return item;
+      },
+    }),
+    [dispatch],
+  );
 
-  const [state, dispatch] = ctx;
-
-  const utils = {
-    clear: (except: string) => dispatch({ type: 'CLEAR', payload: except }),
-    toggle: (title: string) => dispatch({ type: 'TOGGLE', payload: title }),
-  };
+  const value = useMemo<ContextType>(() => {
+    return [{ items: state.items }, utils];
+  }, [state.items, utils]);
 
   return (
-    <accordionContext.Provider value={[{ items: state.items }, utils]}>
+    <accordionContext.Provider value={value}>
       {props.children}
     </accordionContext.Provider>
   );
@@ -105,10 +157,5 @@ export function AccordionProvider(props: {
 
 function getItem(title: string, items: Array<AccordionItemState>) {
   const item = items.find((element) => element.title === title);
-
-  if (!item) {
-    throw new Error('Item not found');
-  }
-
   return item;
 }
