@@ -1,6 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { ReactNode, useState, ReactFragment } from 'react';
+import React, { ReactNode, ReactFragment, ReactElement } from 'react';
+
+import {
+  AccordionProvider,
+  useAccordionContext,
+} from './context/AccordionContext';
+import { useDoubleClick } from './hooks/useDoubleClick';
 
 interface AccordionProps {
   children?:
@@ -11,7 +17,7 @@ interface AccordionProps {
     | null;
 }
 
-interface AccordionItemProps {
+export interface AccordionItemProps {
   title: string;
   children: ReactNode;
   defaultOpened?: boolean;
@@ -54,23 +60,46 @@ const styles = {
 };
 
 export function Accordion(props: AccordionProps) {
-  return <div css={styles.container}>{props.children}</div>;
+  const items =
+    React.Children.map(props.children, (child) => {
+      if (!child) {
+        return undefined;
+      }
+
+      const { props } = child as ReactElement<AccordionItemProps>;
+
+      return {
+        title: props.title,
+        isOpen: props.defaultOpened || false,
+      };
+    }) || [];
+
+  return (
+    <AccordionProvider items={items.filter((element) => element !== undefined)}>
+      <div css={styles.container}>{props.children}</div>
+    </AccordionProvider>
+  );
 }
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
-  const { children, title, defaultOpened = false } = props;
-  const [open, setOpen] = useState(defaultOpened);
+  const {
+    item,
+    utils: { clear, toggle },
+  } = useAccordionContext(props.title);
 
-  function handleClick() {
-    setOpen(!open);
-  }
+  const onClickHandle = useDoubleClick({
+    onClick: toggle,
+    onDoubleClick: clear,
+  });
 
   return (
-    <div css={styles.item(open)}>
-      <div onClick={handleClick} css={styles.header}>
-        {title}
+    <div css={styles.item(item.isOpen)}>
+      <div onClick={onClickHandle} css={styles.header}>
+        {item.title}
       </div>
-      <div style={{ display: open ? 'block' : 'none' }}>{children}</div>
+      <div style={{ display: item.isOpen ? 'block' : 'none' }}>
+        {props.children}
+      </div>
     </div>
   );
 };
