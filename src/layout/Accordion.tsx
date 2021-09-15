@@ -67,7 +67,7 @@ export function Accordion(props: AccordionProps) {
 }
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
-  const { item, utils } = useAccordionContext(props.title);
+  const { item, utils } = useAccordionContext(props.title, props.defaultOpened);
 
   const onClickHandle = useDoubleClick({
     onClick: utils.toggle,

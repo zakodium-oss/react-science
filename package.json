@@ -32,7 +32,8 @@
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
-    "immer": "^9.0.6"
+    "immer": "^9.0.6",
+    "@testing-library/jest-dom": "^5.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
@@ -42,7 +43,9 @@
     "@storybook/addon-links": "^6.3.7",
     "@storybook/addon-storysource": "^6.3.7",
     "@storybook/react": "^6.3.7",
+    "@testing-library/dom": "^8.5.0",
     "@testing-library/react": "^12.1.0",
+    "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -56,12 +59,16 @@
     "react-dom": "^17.0.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.2",
     "vite": "^2.5.1"
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
+    ]
   },
   "repository": {
     "type": "git",

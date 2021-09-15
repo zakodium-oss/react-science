@@ -7,6 +7,17 @@ export default {
   title: 'Layout/Accordion',
 } as Meta;
 
+export function Test() {
+  return (
+    <Accordion>
+      <Accordion.Item title="first">first element</Accordion.Item>
+      <Accordion.Item title="second" defaultOpened>
+        second element
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
 export function Control() {
   return (
     <RootLayout>
@@ -33,7 +44,7 @@ export function Control() {
         >
           <Accordion>
             <Accordion.Item title="First Item" defaultOpened>
-              This is the content of the first item
+              This is the first content
             </Accordion.Item>
             <Accordion.Item title="Second Item">
               This is the content of the second item
