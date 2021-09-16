@@ -7,6 +7,15 @@ export default {
   title: 'Layout/Header',
 } as Meta;
 
+export function test() {
+  return (
+    <Header>
+      <p title="a">A</p>
+      <p title="b">B</p>
+    </Header>
+  );
+}
+
 export function control() {
   return (
     <RootLayout
