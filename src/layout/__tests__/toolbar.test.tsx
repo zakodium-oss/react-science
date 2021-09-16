@@ -46,4 +46,22 @@ describe('<Toolbar.Item />', () => {
 
     expect(element).toHaveStyle('background-color: ButtonFace');
   });
+
+  it('test the click on the button', () => {
+    const fn = jest.fn();
+
+    const { getByText } = render(
+      <Toolbar orientation="horizontal">
+        <Toolbar.Item id="c" title="c title">
+          C
+        </Toolbar.Item>
+        <Toolbar.Item id="d" onClick={fn} title="c title" active>
+          D
+        </Toolbar.Item>
+      </Toolbar>,
+    );
+
+    userEvent.click(getByText('D'));
+    expect(fn).toHaveBeenCalled();
+  });
 });
