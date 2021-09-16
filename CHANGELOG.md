@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.4.0...v0.4.1) (2021-09-16)
+
+
+### Bug Fixes
+
+* add flex on Accordion ([#43](https://www.github.com/cheminfo/analysis-ui-components/issues/43)) ([ef4eb31](https://www.github.com/cheminfo/analysis-ui-components/commit/ef4eb31b5113a35239a21dec8e965762c5156c18))
+
 ## [0.4.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.3.1...v0.4.0) (2021-09-16)
 
 
