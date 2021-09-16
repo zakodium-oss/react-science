@@ -31,6 +31,7 @@ const cssStyles = {
         justifyContent: 'center',
         alignItems: 'center',
         userSelect: 'none',
+        minWidth: 11,
         ':hover': {
           backgroundColor: 'rgb(223, 223, 223)',
         },
