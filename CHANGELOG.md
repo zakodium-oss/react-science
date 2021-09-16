@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.3.1...v0.4.0) (2021-09-16)
+
+
+### Features
+
+* add double click on Accordion to close every items ([bcb2604](https://www.github.com/cheminfo/analysis-ui-components/commit/bcb260403c6799c7b71c0203657e828b8698f7a0))
+
+
+### Bug Fixes
+
+* add min width on SplitPane ([4bec92f](https://www.github.com/cheminfo/analysis-ui-components/commit/4bec92f77db3257950af01065a7bcd800b6667ba))
+* change block to flex on Accordion ([#42](https://www.github.com/cheminfo/analysis-ui-components/issues/42)) ([fcc24bb](https://www.github.com/cheminfo/analysis-ui-components/commit/fcc24bb813405f8203be6d06be637e887c51f40c))
+* remove animation ([b07dc3c](https://www.github.com/cheminfo/analysis-ui-components/commit/b07dc3c9cf978927f778e1bfe1a8e365154601c3))
+
 ### [0.3.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.3.0...v0.3.1) (2021-09-14)
 
 
