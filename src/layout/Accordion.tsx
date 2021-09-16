@@ -85,7 +85,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
       <div onClick={onClickHandle} css={styles.header}>
         {props.title}
       </div>
-      <div style={{ display: displayable ? 'block' : 'none' }}>
+      <div style={{ display: displayable ? 'flex' : 'none' }}>
         {props.children}
       </div>
     </div>

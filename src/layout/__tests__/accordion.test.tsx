@@ -24,20 +24,20 @@ describe('<Accordion />', () => {
     userEvent.click(element);
 
     setTimeout(() => {
-      expect(content).toHaveStyle('display: block');
+      expect(content).toHaveStyle('display: flex');
     }, 300);
   });
 
   it('is default opened', () => {
     const content = screen.getByText('second element');
-    expect(content).toHaveStyle('display: block');
+    expect(content).toHaveStyle('display: flex');
   });
 
   it('Can close a menu', () => {
     const element = screen.getByText('second');
     const content = screen.getByText('second element');
 
-    expect(content).toHaveStyle('display: block');
+    expect(content).toHaveStyle('display: flex');
     userEvent.click(element);
 
     setTimeout(() => {
@@ -57,7 +57,7 @@ describe('<Accordion />', () => {
     };
 
     // second should be opened (default) & first should be closed
-    expect(second.content).toHaveStyle('display: block');
+    expect(second.content).toHaveStyle('display: flex');
     expect(first.content).toHaveStyle('display: none');
 
     // double click on first title
@@ -66,7 +66,7 @@ describe('<Accordion />', () => {
     setTimeout(() => {
       // first should be opened now
       expect(second.content).toHaveStyle('display: none');
-      expect(first.content).toHaveStyle('display: block');
+      expect(first.content).toHaveStyle('display: flex');
     }, 300);
   });
 });
