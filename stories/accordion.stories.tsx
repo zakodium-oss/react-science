@@ -12,7 +12,7 @@ export function Test() {
     <Accordion>
       <Accordion.Item title="first">first element</Accordion.Item>
       <Accordion.Item title="second" defaultOpened>
-        second element
+        <div style={{ backgroundColor: 'red' }}>second element</div>
       </Accordion.Item>
     </Accordion>
   );
