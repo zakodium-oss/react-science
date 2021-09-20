@@ -15,8 +15,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    paddingLeft: '5px',
-    paddingRight: '5px',
+
     justifyContent: 'space-between',
 
     boxShadow: 'rgb(255, 255, 255) 0px 1px 0px 0px inset',
