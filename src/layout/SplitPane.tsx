@@ -2,7 +2,6 @@
 import { css, SerializedStyles } from '@emotion/react';
 import React, { ReactNode, useRef, useState } from 'react';
 
-import { useDoubleClick } from './hooks/useDoubleClick';
 import { useOnOff } from './hooks/useOnOff';
 
 type SplitOrientation = 'vertical' | 'horizontal';
@@ -18,15 +17,15 @@ export interface SplitPaneProps {
 }
 
 const cssStyles = {
-  separator: (orientation: SplitOrientation) => {
+  separator: (orientation: SplitOrientation, enabled: boolean) => {
     return css([
       orientation === 'horizontal' && {
         width: '10px',
-        cursor: 'ew-resize',
+        cursor: enabled ? 'ew-resize' : 'pointer',
       },
       orientation === 'vertical' && {
         height: '10px',
-        cursor: 'ns-resize',
+        cursor: enabled ? 'ns-resize' : 'pointer',
       },
       {
         backgroundColor: 'rgb(247, 247, 247)',
@@ -115,10 +114,6 @@ export function SplitPane(props: SplitPaneProps) {
     }
   }
 
-  const onClickHandle = useDoubleClick({
-    onDoubleClick: toggle,
-  });
-
   return (
     <div
       ref={parentRef}
@@ -149,7 +144,7 @@ export function SplitPane(props: SplitPaneProps) {
       )}
 
       <div
-        onClick={onClickHandle}
+        onDoubleClick={toggle}
         onMouseDown={(event) => {
           isMouseMoving.current = {
             moving: true,
@@ -160,7 +155,7 @@ export function SplitPane(props: SplitPaneProps) {
         onMouseUp={() => {
           isMouseMoving.current.moving = false;
         }}
-        css={cssStyles.separator(orientation)}
+        css={cssStyles.separator(orientation, isDisplayedSidePane)}
       >
         <div css={css({ fontSize: 10 })}>
           {orientation === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
