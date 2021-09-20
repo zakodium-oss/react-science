@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { ReactNode, CSSProperties } from 'react';
+import { ReactNode, CSSProperties } from 'react';
+
+import { AccordionProvider } from './context/AccordionContext';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -15,6 +17,8 @@ const style: CSSProperties = {
 
 export function RootLayout(props: RootLayoutProps) {
   return (
-    <div css={css([{ ...style }, { ...props.style }])}>{props.children}</div>
+    <AccordionProvider>
+      <div css={css([{ ...style }, { ...props.style }])}>{props.children}</div>
+    </AccordionProvider>
   );
 }

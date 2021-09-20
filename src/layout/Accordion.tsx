@@ -2,10 +2,7 @@
 import { css } from '@emotion/react';
 import React, { ReactNode, ReactFragment } from 'react';
 
-import {
-  AccordionProvider,
-  useAccordionContext,
-} from './context/AccordionContext';
+import { useAccordionContext } from './context/AccordionContext';
 import { useDoubleClick } from './hooks/useDoubleClick';
 
 interface AccordionProps {
@@ -59,11 +56,7 @@ const styles = {
 };
 
 export function Accordion(props: AccordionProps) {
-  return (
-    <AccordionProvider>
-      <div css={styles.container}>{props.children}</div>
-    </AccordionProvider>
-  );
+  return <div css={styles.container}>{props.children}</div>;
 }
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
