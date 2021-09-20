@@ -42,7 +42,7 @@ export function Vertical() {
 export function Horizontal() {
   return (
     <div style={{ backgroundColor: 'yellow', height: 200 }}>
-      <SplitPane orientation="horizontal" initialSeparation="20%">
+      <SplitPane orientation="horizontal" initialSeparation="200px">
         <div>A</div>
         <div>B</div>
       </SplitPane>
