@@ -26,7 +26,8 @@ type AccordionActions =
   | ActionType<'TOGGLE', string>
   | ActionType<'CLEAR', string>
   | ActionType<'REMOVE_ITEM', string>
-  | ActionType<'CREATE_ITEM', { title: string; isOpen: boolean }>;
+  | ActionType<'CREATE_ITEM', { title: string; isOpen: boolean }>
+  | ActionType<'CHANGE_ITEM', { title: string; isOpen: boolean }>;
 
 type ContextType = [
   AccordionContext,
@@ -35,6 +36,7 @@ type ContextType = [
     toggle: (title: string) => void;
     remove: (title: string) => void;
     create: (title: string, defaultOpened?: boolean) => AccordionItemState;
+    change: (title: string, isOpen: boolean) => void;
   },
 ];
 
@@ -82,12 +84,34 @@ const reducer: Reducer<AccordionState, AccordionActions> = produce(
         draft.items.push(actions.payload);
         return draft;
       }
+      case 'CHANGE_ITEM': {
+        const item = getItemOrThrow(actions.payload.title, draft.items);
+        item.isOpen = actions.payload.isOpen;
+        return draft;
+      }
       default: {
         return draft;
       }
     }
   },
 );
+
+export function useToggleAccordion() {
+  const context = useContext(accordionContext);
+
+  if (!context) {
+    throw new Error('AccordionContext was not found');
+  }
+
+  const [, utils] = context;
+
+  return useMemo(() => {
+    return {
+      open: (title: string) => utils.change(title, true),
+      close: (title: string) => utils.change(title, false),
+    };
+  }, [utils]);
+}
 
 export function useAccordionContext(title: string, defaultOpened?: boolean) {
   const context = useContext(accordionContext);
@@ -126,6 +150,12 @@ export function AccordionProvider(props: { children: ReactNode }) {
 
   const utils = useMemo(
     () => ({
+      change: (title: string, isOpen: boolean) => {
+        return dispatch({
+          type: 'CHANGE_ITEM',
+          payload: { isOpen, title },
+        });
+      },
       clear: (except: string) => {
         return dispatch({ type: 'CLEAR', payload: except });
       },
@@ -157,5 +187,15 @@ export function AccordionProvider(props: { children: ReactNode }) {
 
 function getItem(title: string, items: Array<AccordionItemState>) {
   const item = items.find((element) => element.title === title);
+  return item;
+}
+
+function getItemOrThrow(title: string, items: Array<AccordionItemState>) {
+  const item = items.find((element) => element.title === title);
+
+  if (!item) {
+    throw new Error('item not found');
+  }
+
   return item;
 }

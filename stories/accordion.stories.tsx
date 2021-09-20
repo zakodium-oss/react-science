@@ -1,7 +1,8 @@
 import { Meta } from '@storybook/react';
 import React, { useState } from 'react';
 
-import { Accordion, RootLayout, Toolbar } from '../src';
+import { Accordion, Header, RootLayout, SplitPane, Toolbar } from '../src';
+import { useToggleAccordion } from '../src/layout/context/AccordionContext';
 
 export default {
   title: 'Layout/Accordion',
@@ -9,12 +10,14 @@ export default {
 
 export function Test() {
   return (
-    <Accordion>
-      <Accordion.Item title="first">first element</Accordion.Item>
-      <Accordion.Item title="second" defaultOpened>
-        <div style={{ backgroundColor: 'red' }}>second element</div>
-      </Accordion.Item>
-    </Accordion>
+    <RootLayout>
+      <Accordion>
+        <Accordion.Item title="first">first element</Accordion.Item>
+        <Accordion.Item title="second" defaultOpened>
+          <div style={{ backgroundColor: 'red' }}>second element</div>
+        </Accordion.Item>
+      </Accordion>
+    </RootLayout>
   );
 }
 
@@ -157,6 +160,109 @@ export function WithAddiction() {
           </div>
         </div>
       </RootLayout>
+    </>
+  );
+}
+
+export function WithHookAccordion() {
+  return (
+    <RootLayout>
+      <Inside />
+    </RootLayout>
+  );
+}
+
+function Inside() {
+  const utils = useToggleAccordion();
+
+  function onCallback(title: string, action: 'open' | 'close') {
+    if (action === 'open') {
+      utils.open(title);
+    } else {
+      utils.close(title);
+    }
+  }
+
+  return (
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Header>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
+              <i className="fas fa-meteor" />
+            </Toolbar.Item>
+          </Toolbar>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item id="a" title="User manual">
+              <i className="fas fa-book" />
+            </Toolbar.Item>
+            <Toolbar.Item id="b" title="General settings">
+              <i className="fas fa-cogs" />
+            </Toolbar.Item>
+            <Toolbar.Item id="c" title="Full screen">
+              <i className="fas fa-tablet-alt" />
+            </Toolbar.Item>
+          </Toolbar>
+        </Header>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <div>
+          <Toolbar orientation="vertical">
+            <Toolbar.Item id="a" title="Glasses" active>
+              <i className="fas fa-glasses" />
+            </Toolbar.Item>
+            <Toolbar.Item id="b" title="Open in large mode">
+              <i className="fas fa-arrows-alt" />
+            </Toolbar.Item>
+          </Toolbar>
+        </div>
+        <div
+          style={{
+            width: '100%',
+            height: '300px',
+          }}
+        >
+          <SplitPane initialSeparation="35%">
+            <div style={{ padding: 5, display: 'flex', gap: 5, height: 40 }}>
+              <button
+                type="button"
+                onClick={() => onCallback('Spectra', 'open')}
+                style={{ backgroundColor: 'red' }}
+              >
+                Open Spectra
+              </button>
+              <button
+                type="button"
+                onClick={() => onCallback('Spectra', 'close')}
+                style={{ backgroundColor: 'green' }}
+              >
+                Close Spectra
+              </button>
+            </div>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                flex: '1 1 0%',
+              }}
+            >
+              <Accordion>
+                <Accordion.Item title="Spectra" defaultOpened>
+                  <p style={{ padding: 5 }}>Spectra lorem</p>
+                </Accordion.Item>
+                <Accordion.Item title="Integral">
+                  <p style={{ padding: 5 }}>Integral lorem</p>
+                </Accordion.Item>
+              </Accordion>
+            </div>
+          </SplitPane>
+        </div>
+      </div>
     </>
   );
 }
