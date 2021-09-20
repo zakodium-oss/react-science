@@ -74,10 +74,8 @@ export function WithEvilChild() {
   return (
     <div style={{ backgroundColor: 'pink', width: 600, height: 300 }}>
       <SplitPane orientation="horizontal" initialSeparation="300px">
-        <div>I am a good child. Do whatever you want with me 😊</div>
-        <div style={{ backgroundColor: 'red', width: 300 }}>
-          I am an evil child. You cannot make me smaller than 300px 😈
-        </div>
+        <div>A</div>
+        <div style={{ backgroundColor: 'red', width: 300 }}>B</div>
       </SplitPane>
     </div>
   );
