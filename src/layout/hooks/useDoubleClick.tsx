@@ -1,8 +1,8 @@
 import { useRef, useCallback, useEffect } from 'react';
 
 export interface UseDoubleClickOptions<EventData> {
-  onClick?: (data: EventData) => void;
-  onDoubleClick?: (data: EventData) => void;
+  onClick: (data: EventData) => void;
+  onDoubleClick: (data: EventData) => void;
   delay?: number;
 }
 
