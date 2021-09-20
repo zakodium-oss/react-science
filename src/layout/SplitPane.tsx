@@ -2,6 +2,9 @@
 import { css, SerializedStyles } from '@emotion/react';
 import React, { ReactNode, useRef, useState } from 'react';
 
+import { useDoubleClick } from './hooks/useDoubleClick';
+import { useOnOff } from './hooks/useOnOff';
+
 type SplitOrientation = 'vertical' | 'horizontal';
 type SideSeparation = 'start' | 'end';
 type InitialSeperation = `${number}%` | `${number}px`;
@@ -49,6 +52,7 @@ export function SplitPane(props: SplitPaneProps) {
     children,
   } = props;
 
+  const [isDisplayedSidePane, , , toggle] = useOnOff(true);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const [[size, type], setSize] = useState(() => {
@@ -102,6 +106,10 @@ export function SplitPane(props: SplitPaneProps) {
     }
   }
 
+  const onClickHandle = useDoubleClick({
+    onDoubleClick: toggle,
+  });
+
   return (
     <div
       ref={parentRef}
@@ -113,17 +121,22 @@ export function SplitPane(props: SplitPaneProps) {
         orientation === 'vertical' && { flexDirection: 'column' },
       ])}
     >
-      <div
-        css={
-          sideSeparation === 'start'
-            ? getSize(orientation, `${size}${type}` as InitialSeperation)
-            : { flex: '1 1 0%' }
-        }
-      >
-        {children[0]}
-      </div>
+      {sideSeparation === 'start' && !isDisplayedSidePane ? (
+        <div />
+      ) : (
+        <div
+          css={
+            sideSeparation === 'start'
+              ? getSize(orientation, `${size}${type}` as InitialSeperation)
+              : { flex: '1 1 0%' }
+          }
+        >
+          {children[0]}
+        </div>
+      )}
 
       <div
+        onClick={onClickHandle}
         onMouseDown={() => setMouseMoving(true)}
         onMouseUp={() => setMouseMoving(false)}
         css={cssStyles.separator(orientation)}
@@ -133,15 +146,19 @@ export function SplitPane(props: SplitPaneProps) {
         </div>
       </div>
 
-      <div
-        css={
-          sideSeparation === 'end'
-            ? getSize(orientation, `${size}${type}` as InitialSeperation)
-            : { flex: '1 1 0%' }
-        }
-      >
-        {children[1]}
-      </div>
+      {sideSeparation === 'end' && !isDisplayedSidePane ? (
+        <div />
+      ) : (
+        <div
+          css={
+            sideSeparation === 'end'
+              ? getSize(orientation, `${size}${type}` as InitialSeperation)
+              : { flex: '1 1 0%' }
+          }
+        >
+          {children[1]}
+        </div>
+      )}
     </div>
   );
 }
