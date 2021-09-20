@@ -28,7 +28,6 @@ export interface ToolbarItemProps {
   className?: string;
 }
 
-const size = '30px';
 const border = '1px solid rgb(247, 247, 247)';
 
 const styles = {
@@ -38,13 +37,11 @@ const styles = {
       orientation === 'vertical'
         ? {
             flexDirection: 'column',
-            maxWidth: size,
             minHeight: '100%',
             borderRight: border,
           }
         : {
             flexDirection: 'row',
-            maxHeight: size,
             minWidth: '100%',
             borderBottom: border,
           },
@@ -52,10 +49,10 @@ const styles = {
   },
   item: (active: boolean) => {
     return css([
-      active && { backgroundColor: 'rgb(247, 247, 247)' },
+      active && { backgroundColor: 'rgb(247, 247, 247)', borderRadius: 5 },
       {
-        width: size,
-        height: size,
+        width: '35px',
+        height: '35px',
         outline: 'none',
         alignItems: 'center',
         justifyContent: 'center',
@@ -129,7 +126,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = props;
 
   return (
-    <div style={{ position: 'relative' }} {...other}>
+    <div style={{ position: 'relative', margin: 5 }} {...other}>
       <button
         type="button"
         css={styles.item(active)}
