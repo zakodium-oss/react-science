@@ -63,11 +63,14 @@ export function SplitPane(props: SplitPaneProps) {
     return [Number(value), type];
   });
 
-  const [isMouseMoving, setMouseMoving] = useState(false);
+  const isMouseMoving = useRef({ moving: false, x: 0, y: 0 });
 
   function onMouseMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (isMouseMoving) {
-      const { movementX, movementY } = event;
+    if (isMouseMoving.current.moving) {
+      const { clientX, clientY } = event;
+
+      const movementX = clientX - isMouseMoving.current.x;
+      const movementY = clientY - isMouseMoving.current.y;
 
       if (type === 'px') {
         setSize(([currentSize]) => {
@@ -102,6 +105,12 @@ export function SplitPane(props: SplitPaneProps) {
         }
       }
 
+      isMouseMoving.current = {
+        moving: true,
+        x: clientX,
+        y: clientY,
+      };
+
       onChange(`${size}${type}` as InitialSeperation);
     }
   }
@@ -114,8 +123,12 @@ export function SplitPane(props: SplitPaneProps) {
     <div
       ref={parentRef}
       onMouseMove={onMouseMove}
-      onMouseLeave={() => setMouseMoving(false)}
-      onMouseUp={() => setMouseMoving(false)}
+      onMouseLeave={() => {
+        isMouseMoving.current.moving = false;
+      }}
+      onMouseUp={() => {
+        isMouseMoving.current.moving = false;
+      }}
       css={css([
         { display: 'flex', height: '100%', width: '100%' },
         orientation === 'vertical' && { flexDirection: 'column' },
@@ -137,8 +150,16 @@ export function SplitPane(props: SplitPaneProps) {
 
       <div
         onClick={onClickHandle}
-        onMouseDown={() => setMouseMoving(true)}
-        onMouseUp={() => setMouseMoving(false)}
+        onMouseDown={(event) => {
+          isMouseMoving.current = {
+            moving: true,
+            x: event.clientX,
+            y: event.clientY,
+          };
+        }}
+        onMouseUp={() => {
+          isMouseMoving.current.moving = false;
+        }}
         css={cssStyles.separator(orientation)}
       >
         <div css={css({ fontSize: 10 })}>
