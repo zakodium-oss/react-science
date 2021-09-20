@@ -2,7 +2,7 @@
 import { css, SerializedStyles } from '@emotion/react';
 import React, { ReactNode, useRef, useState } from 'react';
 
-import { useOnOff } from './hooks/useOnOff';
+import { useToggle } from './hooks/useToggle';
 
 type SplitOrientation = 'vertical' | 'horizontal';
 type SideSeparation = 'start' | 'end';
@@ -51,7 +51,7 @@ export function SplitPane(props: SplitPaneProps) {
     children,
   } = props;
 
-  const [isDisplayedSidePane, , , toggle] = useOnOff(true);
+  const [isDisplayedSidePane, toggle] = useToggle(true);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const [[size, type], setSize] = useState(() => {
