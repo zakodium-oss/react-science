@@ -80,9 +80,9 @@ export function WithEvilChild() {
       }}
     >
       <SplitPane orientation="horizontal" initialSeparation="300px">
-        <div>A</div>
+        <div>I am a good child. 😊</div>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: 300 }}>
-          B
+          I am an evil child. You cannot make me smaller than 300px 😈
         </div>
       </SplitPane>
     </div>
