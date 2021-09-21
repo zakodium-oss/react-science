@@ -9,8 +9,14 @@ import {
   FaArrowsAlt,
 } from 'react-icons/fa';
 
-import { Accordion, Header, RootLayout, SplitPane, Toolbar } from '../src';
-import { useToggleAccordion } from '../src/layout/context/AccordionContext';
+import {
+  Accordion,
+  Header,
+  RootLayout,
+  SplitPane,
+  Toolbar,
+  useToggleAccordion,
+} from '../src';
 
 export default {
   title: 'Layout/Accordion',
