@@ -2,11 +2,12 @@
 import { css, SerializedStyles } from '@emotion/react';
 import React, { ReactNode, useRef, useState } from 'react';
 
+import { useSplitPaneSize } from './hooks/useSplitPaneSize';
 import { useToggle } from './hooks/useToggle';
 
-type SplitOrientation = 'vertical' | 'horizontal';
-type SideSeparation = 'start' | 'end';
-type InitialSeperation = `${number}%` | `${number}px`;
+export type SplitOrientation = 'vertical' | 'horizontal';
+export type SideSeparation = 'start' | 'end';
+export type InitialSeperation = `${number}%` | `${number}px`;
 
 export interface SplitPaneProps {
   orientation?: SplitOrientation;
@@ -62,68 +63,21 @@ export function SplitPane(props: SplitPaneProps) {
     return [Number(value), type];
   });
 
-  const isMouseMoving = useRef({ moving: false, x: 0, y: 0 });
-
-  function onMouseMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (isMouseMoving.current.moving) {
-      const { clientX, clientY } = event;
-
-      const movementX = clientX - isMouseMoving.current.x;
-      const movementY = clientY - isMouseMoving.current.y;
-
-      if (type === 'px') {
-        setSize(([currentSize]) => {
-          return [
-            getValueFromSplitter(
-              sideSeparation,
-              orientation === 'horizontal' ? movementX : movementY,
-              currentSize,
-            ),
-            type,
-          ];
-        });
-      } else if (type === '%') {
-        if (parentRef.current) {
-          setSize(([currentSize]) => {
-            if (parentRef.current) {
-              const diffX = (movementX / parentRef.current?.clientWidth) * 100;
-              const diffY = (movementY / parentRef.current?.clientHeight) * 100;
-
-              return [
-                getValueFromSplitter(
-                  sideSeparation,
-                  orientation === 'horizontal' ? diffX : diffY,
-                  currentSize,
-                ),
-                type,
-              ];
-            }
-
-            return [currentSize, type];
-          });
-        }
-      }
-
-      isMouseMoving.current = {
-        moving: true,
-        x: clientX,
-        y: clientY,
-      };
-
-      onChange(`${size}${type}` as InitialSeperation);
-    }
-  }
+  const { onMouseDown, onMouseLeave, onMouseMove, onMouseUp } =
+    useSplitPaneSize({
+      onChange,
+      orientation,
+      parentRef,
+      sideSeparation,
+      state: { setSize, size, type },
+    });
 
   return (
     <div
       ref={parentRef}
       onMouseMove={onMouseMove}
-      onMouseLeave={() => {
-        isMouseMoving.current.moving = false;
-      }}
-      onMouseUp={() => {
-        isMouseMoving.current.moving = false;
-      }}
+      onMouseLeave={onMouseLeave}
+      onMouseUp={onMouseUp}
       css={css([
         { display: 'flex', height: '100%', width: '100%' },
         orientation === 'vertical' && { flexDirection: 'column' },
@@ -145,16 +99,8 @@ export function SplitPane(props: SplitPaneProps) {
 
       <div
         onDoubleClick={toggle}
-        onMouseDown={(event) => {
-          isMouseMoving.current = {
-            moving: true,
-            x: event.clientX,
-            y: event.clientY,
-          };
-        }}
-        onMouseUp={() => {
-          isMouseMoving.current.moving = false;
-        }}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
         css={cssStyles.separator(orientation, isDisplayedSidePane)}
       >
         <div css={css({ fontSize: 10 })}>
@@ -193,20 +139,4 @@ function getSize(
       display: 'flex',
     },
   ]);
-}
-
-function getValueFromSplitter(
-  position: 'start' | 'end',
-  value: number,
-  currentSize: number,
-) {
-  let val = 0;
-
-  if (position === 'end') {
-    val = currentSize - value;
-  } else {
-    val = currentSize + value;
-  }
-
-  return Math.round((val + Number.EPSILON) * 100) / 100;
 }
