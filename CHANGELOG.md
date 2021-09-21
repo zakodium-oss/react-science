@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.4.1...v0.5.0) (2021-09-21)
+
+
+### Features
+
+* add border on height / width for SplitPane ([323286e](https://www.github.com/cheminfo/analysis-ui-components/commit/323286eee1a34039df9c4657d132302ad413e4e2))
+* add toggleAccordion ([d3546c3](https://www.github.com/cheminfo/analysis-ui-components/commit/d3546c305d42cec9da4b8b06b9912338eb9b3e10))
+* allow to close a pane with double click on divider ([dfa6c51](https://www.github.com/cheminfo/analysis-ui-components/commit/dfa6c51a20001fcf233fb345e69be20112495345))
+
+
+### Bug Fixes
+
+* resolve error on chrome & firefox & safari on scroll pane ([9a2f81c](https://www.github.com/cheminfo/analysis-ui-components/commit/9a2f81c234d1da37b5b9839486d159e877621933))
+
 ### [0.4.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.4.0...v0.4.1) (2021-09-16)
 
 
