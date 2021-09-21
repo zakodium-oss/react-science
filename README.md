@@ -17,6 +17,7 @@ React components to build analysis UI
 
 ```
 > npm i analysis-ui-components
+> npm i react-icons
 ```
 
 ## Basic example
@@ -29,6 +30,15 @@ import {
   SplitPane,
   Toolbar,
 } from 'analysis-ui-components';
+
+import {
+  FaMeteor,
+  FaBook,
+  FaCogs,
+  FaTabletAlt,
+  FaGlasses,
+  FaArrowsAlt,
+} from 'react-icons/fa';
 
 function BasicExample() {
   return (
@@ -43,18 +53,18 @@ function BasicExample() {
         <Header>
           <Toolbar orientation="horizontal">
             <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
-              <i className="fas fa-meteor" />
+              <FaMeteor />
             </Toolbar.Item>
           </Toolbar>
           <Toolbar orientation="horizontal">
             <Toolbar.Item id="a" title="User manual">
-              <i className="fas fa-book" />
+              <FaBook />
             </Toolbar.Item>
             <Toolbar.Item id="b" title="General settings">
-              <i className="fas fa-cogs" />
+              <FaCogs>
             </Toolbar.Item>
             <Toolbar.Item id="c" title="Full screen">
-              <i className="fas fa-tablet-alt" />
+              <FaTabletAlt />
             </Toolbar.Item>
           </Toolbar>
         </Header>
@@ -68,10 +78,10 @@ function BasicExample() {
         <div>
           <Toolbar orientation="vertical">
             <Toolbar.Item id="a" title="Glasses" active>
-              <i className="fas fa-glasses" />
+              <FaGlasses />
             </Toolbar.Item>
             <Toolbar.Item id="b" title="Open in large mode">
-              <i className="fas fa-arrows-alt" />
+              <FaArrowsAlt />
             </Toolbar.Item>
           </Toolbar>
         </div>
