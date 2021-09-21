@@ -30,7 +30,7 @@ export function Control(props: Omit<SplitPaneProps, 'children'>) {
 
 export function Vertical() {
   return (
-    <div style={{ backgroundColor: 'green', height: 400 }}>
+    <div style={{ backgroundColor: 'rgba(165, 180, 252)', height: 400 }}>
       <SplitPane orientation="vertical" initialSeparation="200px">
         <div>A</div>
         <div>B</div>
@@ -41,7 +41,7 @@ export function Vertical() {
 
 export function Horizontal() {
   return (
-    <div style={{ backgroundColor: 'yellow', height: 200 }}>
+    <div style={{ backgroundColor: 'rgba(147, 197, 253)', height: 200 }}>
       <SplitPane orientation="horizontal" initialSeparation="200px">
         <div>A</div>
         <div>B</div>
@@ -52,7 +52,7 @@ export function Horizontal() {
 
 export function Inception() {
   return (
-    <div style={{ backgroundColor: 'cyan', height: 400 }}>
+    <div style={{ backgroundColor: 'rgba(209, 213, 219)', height: 400 }}>
       <SplitPane orientation="horizontal">
         <SplitPane orientation="vertical">
           <p>A</p>
@@ -72,10 +72,18 @@ export function Inception() {
 
 export function WithEvilChild() {
   return (
-    <div style={{ backgroundColor: 'pink', width: 600, height: 300 }}>
+    <div
+      style={{
+        backgroundColor: 'rgba(251, 207, 232)',
+        width: 600,
+        height: 300,
+      }}
+    >
       <SplitPane orientation="horizontal" initialSeparation="300px">
         <div>A</div>
-        <div style={{ backgroundColor: 'red', width: 300 }}>B</div>
+        <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: 300 }}>
+          B
+        </div>
       </SplitPane>
     </div>
   );

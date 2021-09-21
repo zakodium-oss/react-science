@@ -14,7 +14,9 @@ export function Test() {
       <Accordion>
         <Accordion.Item title="first">first element</Accordion.Item>
         <Accordion.Item title="second" defaultOpened>
-          <div style={{ backgroundColor: 'red' }}>second element</div>
+          <div style={{ backgroundColor: 'rgba(252, 165, 165)' }}>
+            second element
+          </div>
         </Accordion.Item>
       </Accordion>
     </RootLayout>
@@ -115,7 +117,7 @@ export function WithAddiction() {
         <button
           type="button"
           onClick={addElement}
-          style={{ backgroundColor: 'red', padding: 5 }}
+          style={{ backgroundColor: 'rgba(252, 165, 165)', padding: 5 }}
         >
           Add new element
         </button>
@@ -123,7 +125,7 @@ export function WithAddiction() {
         <button
           type="button"
           onClick={removeElement}
-          style={{ backgroundColor: 'red', padding: 5 }}
+          style={{ backgroundColor: 'rgba(252, 165, 165)', padding: 5 }}
         >
           Delete the latest element
         </button>
@@ -232,14 +234,22 @@ function Inside() {
               <button
                 type="button"
                 onClick={() => onCallback('Spectra', 'open')}
-                style={{ backgroundColor: 'red' }}
+                style={{
+                  backgroundColor: 'rgba(252, 165, 165)',
+                  paddingLeft: 5,
+                  paddingRight: 5,
+                }}
               >
                 Open Spectra
               </button>
               <button
                 type="button"
                 onClick={() => onCallback('Spectra', 'close')}
-                style={{ backgroundColor: 'green' }}
+                style={{
+                  backgroundColor: 'rgba(110, 231, 183)',
+                  paddingLeft: 5,
+                  paddingRight: 5,
+                }}
               >
                 Close Spectra
               </button>
