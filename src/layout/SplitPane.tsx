@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from '@emotion/react';
-import React, { ReactNode, useRef, useState } from 'react';
+import { css } from '@emotion/react';
+import { CSSProperties, ReactNode, useRef, useState } from 'react';
 
 import { useSplitPaneSize } from './hooks/useSplitPaneSize';
 import { useToggle } from './hooks/useToggle';
@@ -63,20 +63,17 @@ export function SplitPane(props: SplitPaneProps) {
     return [Number(value), type];
   });
 
-  const { onMouseDown, onMouseLeave, onMouseMove, onMouseUp } =
-    useSplitPaneSize({
-      onChange,
-      orientation,
-      parentRef,
-      sideSeparation,
-      state: { setSize, size, type },
-    });
+  const { onMouseDown, onMouseUp } = useSplitPaneSize({
+    onChange,
+    orientation,
+    parentRef,
+    sideSeparation,
+    state: { setSize, size, type },
+  });
 
   return (
     <div
       ref={parentRef}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
       onMouseUp={onMouseUp}
       css={css([
         { display: 'flex', height: '100%', width: '100%' },
@@ -87,9 +84,9 @@ export function SplitPane(props: SplitPaneProps) {
         <div />
       ) : (
         <div
-          css={
+          style={
             sideSeparation === 'start'
-              ? getSize(orientation, `${size}${type}` as InitialSeperation)
+              ? getSize(orientation, { size, type })
               : { flex: '1 1 0%' }
           }
         >
@@ -112,9 +109,9 @@ export function SplitPane(props: SplitPaneProps) {
         <div />
       ) : (
         <div
-          css={
+          style={
             sideSeparation === 'end'
-              ? getSize(orientation, `${size}${type}` as InitialSeperation)
+              ? getSize(orientation, { size, type })
               : { flex: '1 1 0%' }
           }
         >
@@ -127,16 +124,20 @@ export function SplitPane(props: SplitPaneProps) {
 
 function getSize(
   orientation: SplitOrientation,
-  separation: InitialSeperation,
-): SerializedStyles {
-  return css([
-    orientation === 'horizontal' && {
-      width: separation,
-      display: 'flex',
-    },
-    orientation === 'vertical' && {
-      height: separation,
-      display: 'flex',
-    },
-  ]);
+  separation: {
+    size: number;
+    type: '%' | 'px';
+  },
+): CSSProperties {
+  const style: CSSProperties = {
+    display: 'flex',
+  };
+
+  if (orientation === 'horizontal') {
+    style.width = `${separation.size}${separation.type}`;
+  } else {
+    style.height = `${separation.size}${separation.type}`;
+  }
+
+  return style;
 }

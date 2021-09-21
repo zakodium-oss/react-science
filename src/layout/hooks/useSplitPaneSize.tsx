@@ -1,4 +1,4 @@
-import { MouseEvent, RefObject, useRef } from 'react';
+import React, { RefObject, useCallback, useRef } from 'react';
 
 import {
   InitialSeperation,
@@ -29,36 +29,30 @@ export function useSplitPaneSize(options: HookOptions) {
 
   const mouseRef = useRef({ moving: false, x: 0, y: 0 });
 
-  function onMouseMove(event: MouseEvent) {
-    if (mouseRef.current.moving) {
-      const { clientX, clientY } = event;
+  const mouseDownCallback = useCallback(() => {
+    function onMouseMove(event: MouseEvent) {
+      if (mouseRef.current.moving) {
+        const { clientX, clientY } = event;
 
-      const movementX = clientX - mouseRef.current.x;
-      const movementY = clientY - mouseRef.current.y;
+        const movementX = clientX - mouseRef.current.x;
+        const movementY = clientY - mouseRef.current.y;
 
-      if (type === 'px') {
-        setSize(([currentSize]) => {
-          return [
-            getValueFromSplitter(
-              sideSeparation,
-              orientation === 'horizontal' ? movementX : movementY,
-              currentSize,
-            ),
-            type,
-          ];
-        });
-      } else if (type === '%') {
-        if (parentRef.current) {
+        if (type === 'px') {
           setSize(([currentSize]) => {
             if (parentRef.current) {
-              const diffX = (movementX / parentRef.current?.clientWidth) * 100;
-              const diffY = (movementY / parentRef.current?.clientHeight) * 100;
-
               return [
                 getValueFromSplitter(
                   sideSeparation,
-                  orientation === 'horizontal' ? diffX : diffY,
+                  orientation === 'horizontal' ? movementX : movementY,
                   currentSize,
+                  type,
+                  {
+                    min: 50,
+                    max:
+                      orientation === 'horizontal'
+                        ? parentRef.current.clientWidth - 50
+                        : parentRef.current.clientHeight - 50,
+                  },
                 ),
                 type,
               ];
@@ -66,33 +60,63 @@ export function useSplitPaneSize(options: HookOptions) {
 
             return [currentSize, type];
           });
+        } else if (type === '%') {
+          if (parentRef.current) {
+            setSize(([currentSize]) => {
+              if (parentRef.current) {
+                const diffX =
+                  (movementX / parentRef.current?.clientWidth) * 100;
+                const diffY =
+                  (movementY / parentRef.current?.clientHeight) * 100;
+
+                return [
+                  getValueFromSplitter(
+                    sideSeparation,
+                    orientation === 'horizontal' ? diffX : diffY,
+                    currentSize,
+                    type,
+                    { min: 5, max: 95 },
+                  ),
+                  type,
+                ];
+              }
+
+              return [currentSize, type];
+            });
+          }
         }
+
+        mouseRef.current = {
+          moving: true,
+          x: clientX,
+          y: clientY,
+        };
       }
 
-      mouseRef.current = {
-        moving: true,
-        x: clientX,
-        y: clientY,
-      };
+      onChange(`${size}${type}` as InitialSeperation);
     }
 
-    onChange(`${size}${type}` as InitialSeperation);
-  }
+    function mouseUpCallback() {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', mouseUpCallback);
+    }
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', mouseUpCallback);
+  }, [onChange, orientation, parentRef, setSize, sideSeparation, size, type]);
 
   return {
-    onMouseMove,
-    onMouseLeave: () => {
-      mouseRef.current.moving = false;
-    },
     onMouseUp: () => {
       mouseRef.current.moving = false;
     },
-    onMouseDown: (event: MouseEvent) => {
+    onMouseDown: (event: React.MouseEvent) => {
       mouseRef.current = {
         moving: true,
         x: event.clientX,
         y: event.clientY,
       };
+
+      mouseDownCallback();
     },
   };
 }
@@ -101,6 +125,8 @@ function getValueFromSplitter(
   position: 'start' | 'end',
   value: number,
   currentSize: number,
+  type: '%' | 'px',
+  options: { min: number; max: number },
 ) {
   let val = 0;
 
@@ -110,5 +136,10 @@ function getValueFromSplitter(
     val = currentSize + value;
   }
 
-  return Math.round((val + Number.EPSILON) * 100) / 100;
+  const newValue = Math.round((val + Number.EPSILON) * 100) / 100;
+  return getMinMax(newValue, options);
+}
+
+function getMinMax(value: number, options: { min: number; max: number }) {
+  return Math.min(Math.max(value, options.min), options.max);
 }
