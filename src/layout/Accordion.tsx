@@ -33,7 +33,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
       },
-      isOpen && { flex: '1 1 0%' /* height: '100%' */ },
+      isOpen && { flex: '1 1 0%' },
     ]);
   },
   header: css({
@@ -85,18 +85,23 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
       <button
         onClick={onClickHandle}
         type="button"
-        style={{ display: 'flex', alignItems: 'center', width: '100%' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          outline: 'none',
+        }}
         css={styles.header}
       >
         {props.title}
       </button>
       <div
         style={{
-          flex: '1 1 1px',
+          display: displayable ? 'flex' : 'none',
+          flex: displayable ? '1 1 1px' : 'none',
           backgroundColor: 'white',
           maxHeight: '100%',
           overflow: 'hidden',
-          display: 'flex',
         }}
       >
         <div
