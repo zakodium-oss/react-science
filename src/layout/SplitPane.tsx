@@ -87,7 +87,7 @@ export function SplitPane(props: SplitPaneProps) {
           style={
             sideSeparation === 'start'
               ? getSize(orientation, { size, type })
-              : { flex: '1 1 0%' }
+              : { flex: '1 1 0%', display: 'flex' }
           }
         >
           {children[0]}
@@ -112,7 +112,7 @@ export function SplitPane(props: SplitPaneProps) {
           style={
             sideSeparation === 'end'
               ? getSize(orientation, { size, type })
-              : { flex: '1 1 0%' }
+              : { flex: '1 1 0%', display: 'flex' }
           }
         >
           {children[1]}

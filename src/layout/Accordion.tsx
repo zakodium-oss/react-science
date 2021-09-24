@@ -22,9 +22,10 @@ export interface AccordionItemProps {
 
 const styles = {
   container: css({
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
+    width: '100%',
   }),
   item: (isOpen: boolean) => {
     return css([
@@ -32,7 +33,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
       },
-      isOpen && { flex: '1 1 0%' },
+      isOpen && { flex: '1 1 0%' /* height: '100%' */ },
     ]);
   },
   header: css({
@@ -74,17 +75,40 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   }
 
   return (
-    <div css={styles.item(displayable)}>
-      <div onClick={onClickHandle} css={styles.header}>
+    <div
+      style={{
+        flex: displayable ? '1 1 1px' : 'none',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <button
+        onClick={onClickHandle}
+        type="button"
+        style={{ display: 'flex', alignItems: 'center', width: '100%' }}
+        css={styles.header}
+      >
         {props.title}
-      </div>
+      </button>
       <div
         style={{
-          display: displayable ? 'flex' : 'none',
-          flex: displayable ? '1 1 0%' : 'none',
+          flex: '1 1 1px',
+          backgroundColor: 'white',
+          maxHeight: '100%',
+          overflow: 'hidden',
+          display: 'flex',
         }}
       >
-        {props.children}
+        <div
+          style={{
+            height: '100%',
+            overflow: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {props.children}
+        </div>
       </div>
     </div>
   );

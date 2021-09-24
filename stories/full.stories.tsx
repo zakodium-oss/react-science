@@ -66,6 +66,7 @@ export function FullExample() {
           style={{
             width: '100%',
             height: '300px',
+            maxHeight: '100%',
           }}
         >
           <SplitPane initialSeparation="35%">
@@ -84,7 +85,19 @@ export function FullExample() {
             >
               <Accordion>
                 <Accordion.Item title="Spectra" defaultOpened>
-                  <p style={{ padding: 5 }}>Spectra lorem</p>
+                  <div>
+                    {Array(10)
+                      .fill(0)
+                      .map((a, i) => (
+                        <p key={i} style={{ padding: 5 }}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Nostrum quos soluta animi accusantium ipsum
+                          delectus facilis! Modi quis tenetur enim aut beatae
+                          deleniti aspernatur reprehenderit distinctio rerum
+                          eius. Quidem, nam?
+                        </p>
+                      ))}
+                  </div>
                 </Accordion.Item>
                 <Accordion.Item title="Integral">
                   <p style={{ padding: 5 }}>Integral lorem</p>

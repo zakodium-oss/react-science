@@ -201,7 +201,12 @@ function Inside() {
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Header>
           <Toolbar orientation="horizontal">
             <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
