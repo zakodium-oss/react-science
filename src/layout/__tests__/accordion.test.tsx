@@ -8,12 +8,14 @@ import { RootLayout } from '../RootLayout';
 beforeEach(() => {
   render(
     <RootLayout>
-      <Accordion>
-        <Accordion.Item title="first">first element</Accordion.Item>
-        <Accordion.Item title="second" defaultOpened>
-          second element
-        </Accordion.Item>
-      </Accordion>
+      <div style={{ height: 500 }}>
+        <Accordion>
+          <Accordion.Item title="first">first element</Accordion.Item>
+          <Accordion.Item title="second" defaultOpened>
+            second element
+          </Accordion.Item>
+        </Accordion>
+      </div>
     </RootLayout>,
   );
 });
@@ -23,7 +25,7 @@ describe('<Accordion />', () => {
     const element = screen.getByText('first');
     const content = screen.getByText('first element');
 
-    expect(content).toHaveStyle('display: none');
+    expect(content.parentElement).toHaveStyle('display: none');
     userEvent.click(element);
 
     setTimeout(() => {
@@ -60,16 +62,16 @@ describe('<Accordion />', () => {
     };
 
     // second should be opened (default) & first should be closed
-    expect(second.content).toHaveStyle('display: flex');
-    expect(first.content).toHaveStyle('display: none');
+    expect(second.content.parentElement).toHaveStyle('display: flex');
+    expect(first.content.parentElement).toHaveStyle('display: none');
 
     // double click on first title
     userEvent.click(first.title, undefined, { clickCount: 2 });
 
     setTimeout(() => {
       // first should be opened now
-      expect(second.content).toHaveStyle('display: none');
-      expect(first.content).toHaveStyle('display: flex');
+      expect(second.content.parentElement).toHaveStyle('display: none');
+      expect(first.content.parentElement).toHaveStyle('display: flex');
     }, 300);
   });
 });
