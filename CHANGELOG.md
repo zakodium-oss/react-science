@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.6.0...v0.6.1) (2021-09-24)
+
+
+### Bug Fixes
+
+* add full width in accordion ([#56](https://www.github.com/cheminfo/analysis-ui-components/issues/56)) ([c85c7fe](https://www.github.com/cheminfo/analysis-ui-components/commit/c85c7fe8d443063caca46c7913ea4e40a93445ec))
+
 ## [0.6.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.5.0...v0.6.0) (2021-09-24)
 
 
