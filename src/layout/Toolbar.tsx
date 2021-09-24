@@ -43,7 +43,6 @@ const styles = {
         : {
             flexDirection: 'row',
             minWidth: '100%',
-            borderBottom: border,
           },
     ]);
   },
