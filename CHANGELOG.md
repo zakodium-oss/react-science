@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.5.0...v0.6.0) (2021-09-24)
+
+
+### Features
+
+* remove backgroundcolor on header ([6dce124](https://www.github.com/cheminfo/analysis-ui-components/commit/6dce1242f79cef4a001ec532db22569bdcf916d0))
+* remove outline on button ([df54be7](https://www.github.com/cheminfo/analysis-ui-components/commit/df54be77db79cf5cd0ee4ceb0559dd34e93944a0))
+
+
+### Bug Fixes
+
+* allow the Accordion to have a max height ([2825868](https://www.github.com/cheminfo/analysis-ui-components/commit/2825868202dc54a199b63a7ca622c90eb372eac8))
+
 ## [0.5.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.4.1...v0.5.0) (2021-09-21)
 
 
