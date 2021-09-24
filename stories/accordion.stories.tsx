@@ -25,14 +25,14 @@ export default {
 export function Test() {
   return (
     <RootLayout>
-      <Accordion>
-        <Accordion.Item title="first">first element</Accordion.Item>
-        <Accordion.Item title="second" defaultOpened>
-          <div style={{ backgroundColor: 'rgba(252, 165, 165)' }}>
+      <div style={{ height: 500 }}>
+        <Accordion>
+          <Accordion.Item title="first">first element</Accordion.Item>
+          <Accordion.Item title="second" defaultOpened>
             second element
-          </div>
-        </Accordion.Item>
-      </Accordion>
+          </Accordion.Item>
+        </Accordion>
+      </div>
     </RootLayout>
   );
 }
