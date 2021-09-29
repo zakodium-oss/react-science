@@ -8,7 +8,15 @@ import {
   FaGlasses,
 } from 'react-icons/fa';
 
-import { Accordion, Header, RootLayout, SplitPane, Toolbar } from '../src';
+import {
+  Accordion,
+  Header,
+  RootLayout,
+  SplitPane,
+  Tabs,
+  Toolbar,
+} from '../src';
+import { TabItem } from '../src/layout/Tabs';
 
 export default {
   title: 'Layout/Full',
@@ -16,6 +24,17 @@ export default {
 
 export function FullExample() {
   const ref = useRef<HTMLDivElement>(null);
+  const items: Array<TabItem> = [
+    {
+      id: '1h',
+      title: '1H',
+      content:
+        'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem odit nulla delectus rem et non quis animi molestias pariatur tempora. Corporis consequuntur asperiores odio officia minima fugiat, corrupti hic illum!',
+    },
+    { id: '13c', title: '13C', content: 'Hello, World! [b]' },
+    { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
+    { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
+  ];
 
   return (
     <RootLayout
@@ -69,7 +88,7 @@ export function FullExample() {
             maxHeight: '100%',
           }}
         >
-          <SplitPane initialSeparation="35%">
+          <SplitPane initialSeparation="50%">
             <div style={{ padding: 5 }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
               earum omnis, et voluptatum veniam repellendus similique! Sunt
@@ -100,7 +119,18 @@ export function FullExample() {
                   </div>
                 </Accordion.Item>
                 <Accordion.Item title="Integral">
-                  <p style={{ padding: 5 }}>Integral lorem</p>
+                  <div
+                    style={{
+                      flex: '1 1 0%',
+                      width: '100%',
+                    }}
+                  >
+                    <Tabs
+                      orientation="horizontal"
+                      items={items}
+                      opened={items[0]}
+                    />
+                  </div>
                 </Accordion.Item>
               </Accordion>
             </div>
