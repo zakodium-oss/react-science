@@ -15,6 +15,7 @@ import { useModal } from './layout/hooks/useModal';
 import { useSplitPaneSize } from './layout/hooks/useSplitPaneSize';
 import { useToggle } from './layout/hooks/useToggle';
 
+export type { TabItem };
 export {
   Accordion,
   Button,
@@ -30,5 +31,4 @@ export {
   useModal,
   useToggleAccordion,
   Tabs,
-  TabItem,
 };
