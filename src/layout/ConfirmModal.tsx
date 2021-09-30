@@ -6,7 +6,7 @@ interface ConfirmModalProps {
   children: ReactNode;
   isOpen: boolean;
 
-  onSave: () => void;
+  onConfirm: () => void;
   onCancel: () => void;
 
   saveText?: string;
@@ -75,7 +75,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
             }}
           >
             <Button
-              onClick={props.onSave}
+              onClick={props.onConfirm}
               backgroundColor={{
                 basic: 'hsla(243deg, 75%, 58%, 1)',
                 hover: 'hsla(245deg, 58%, 50%, 1)',

@@ -260,7 +260,7 @@ export function ConfirmModalStories(props: {
       </div>
       <ConfirmModal
         headerColor="hsl(351deg, 73%, 47%)"
-        onSave={props.onSave}
+        onConfirm={props.onSave}
         onCancel={() => {
           props.onCancel();
           close();
