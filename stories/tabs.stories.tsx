@@ -38,9 +38,13 @@ export function Control(props: { onClick: (item: TabItem) => void }) {
 
 export function ControlVertical(props: { onClick: (item: TabItem) => void }) {
   const items: Array<TabItem> = [
-    { id: 'controllers', title: 'Controllers', content: 'Hello, World! [a]' },
-    { id: 'formatting', title: 'Formatting', content: 'Hello, World! [b]' },
-    { id: 'display', title: 'Display', content: 'Hello, World! [c]' },
+    { id: 'controllers', title: 'Controllers', content: 'Hello, World!' },
+    {
+      id: 'formatting',
+      title: 'Controllers a',
+      content: 'Hello, World!',
+    },
+    { id: 'display', title: 'Controllers', content: 'Hello, World!' },
   ];
 
   const [state, setState] = useState(items[1]);

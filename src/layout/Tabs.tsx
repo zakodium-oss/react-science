@@ -25,11 +25,6 @@ interface TabsProps {
   onClick?: (item: TabItem) => void;
 }
 
-const background = {
-  horizontal: 'linear-gradient(180deg, hsl(0deg, 0%, 97%), white)',
-  vertical: 'linear-gradient(90deg, hsl(0deg, 0%, 97%), white)',
-};
-
 const styles = {
   item: (isSelected: boolean, orientation: TabsOrientation) => {
     return css([
@@ -41,21 +36,21 @@ const styles = {
           outline: 'none',
         },
         ':hover': {
-          backgroundColor: 'hsl(0deg, 0%, 97%)',
+          backgroundColor: 'hsl(0deg, 0%, 90%)',
         },
       },
       isSelected && {
-        background:
-          orientation === 'horizontal'
-            ? background.horizontal
-            : background.vertical,
+        backgroundColor: 'hsl(0deg, 0%, 95%)',
+        ':hover': {
+          backgroundColor: 'hsl(0deg, 0%, 90%)',
+        },
       },
       orientation === 'horizontal' && {
-        margin: isSelected ? '0px 2px -1px 2px' : '0px 2px 0 2px',
+        margin: '0px 2px 0px 2px',
         borderBottom: 'none',
       },
       orientation === 'vertical' && {
-        margin: isSelected ? '2px -1px 2px 0px' : '2px 0px 2px 0px',
+        margin: '2px 0px 2px 0px',
         borderRight: 'none',
       },
     ]);
