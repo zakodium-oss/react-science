@@ -25,7 +25,10 @@ interface TabsProps {
   onClick?: (item: TabItem) => void;
 }
 
-const background = 'linear-gradient(180deg, hsl(0deg, 0%, 97%), white)';
+const background = {
+  horizontal: 'linear-gradient(180deg, hsl(0deg, 0%, 97%), white)',
+  vertical: 'linear-gradient(90deg, hsl(0deg, 0%, 97%), white)',
+};
 
 const styles = {
   item: (isSelected: boolean, orientation: TabsOrientation) => {
@@ -41,7 +44,12 @@ const styles = {
           backgroundColor: 'hsl(0deg, 0%, 97%)',
         },
       },
-      isSelected && { background },
+      isSelected && {
+        background:
+          orientation === 'horizontal'
+            ? background.horizontal
+            : background.vertical,
+      },
       orientation === 'horizontal' && {
         margin: isSelected ? '0px 2px -1px 2px' : '0px 2px 0 2px',
         borderBottom: 'none',
