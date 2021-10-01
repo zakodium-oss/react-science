@@ -12,6 +12,7 @@ import {
 import {
   Accordion,
   Header,
+  RootLayout,
   SplitPane,
   Toolbar,
   useToggleAccordion,
@@ -23,14 +24,16 @@ export default {
 
 export function Test() {
   return (
-    <div style={{ height: 500 }}>
-      <Accordion>
-        <Accordion.Item title="first">first element</Accordion.Item>
-        <Accordion.Item title="second" defaultOpened>
-          second element
-        </Accordion.Item>
-      </Accordion>
-    </div>
+    <RootLayout>
+      <div style={{ height: 500 }}>
+        <Accordion>
+          <Accordion.Item title="1title">1content</Accordion.Item>
+          <Accordion.Item title="2title" defaultOpened>
+            2content
+          </Accordion.Item>
+        </Accordion>
+      </div>
+    </RootLayout>
   );
 }
 

@@ -86,6 +86,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
           display: 'flex',
           alignItems: 'center',
           width: '100%',
+          userSelect: 'text',
         }}
         css={styles.header}
       >
