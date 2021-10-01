@@ -70,7 +70,6 @@ const styles = {
       backgroundColor: 'gray',
       borderRadius: '2px',
       color: 'white',
-      fontFamily: 'tahoma',
       bottom: '0px',
       right: '0px',
       width: 'fit-content',

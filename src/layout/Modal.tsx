@@ -1,16 +1,23 @@
-import React, { ReactNode } from 'react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { ReactElement, ReactNode } from 'react';
+import { FaTimes } from 'react-icons/fa';
 
 interface ModalProps {
-  title: string;
-  children: ReactNode;
+  children: Array<ReactElement>;
+  isOpen: boolean;
 }
 
 export function Modal(props: ModalProps) {
+  if (!props.isOpen) {
+    return null;
+  }
+
   return (
     <>
       <div
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backgroundColor: 'hsla(0deg, 0%, 97%, 0.8)',
           height: '100%',
           width: '100%',
           position: 'absolute',
@@ -22,7 +29,7 @@ export function Modal(props: ModalProps) {
         style={{
           backgroundColor: 'white',
           width: '60%',
-          height: '80%',
+          height: 'max-content',
           margin: 'auto',
           top: 0,
           left: 0,
@@ -33,28 +40,67 @@ export function Modal(props: ModalProps) {
           borderColor: 'transparent',
           borderRadius: '0.5rem',
           boxShadow: '0 0 0 0,0 8px 16px rgba(0, 0, 0, 0.3)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: 10,
-            paddingTop: 10,
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {props.title}
-          </div>
-          <div>{props.children}</div>
+          {props.children}
         </div>
       </div>
     </>
   );
 }
+
+Modal.Header = function ModalHeader(props: {
+  children: ReactNode;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '10px 20px 10px 20px',
+        borderBottom: '2px solid rgb(247, 247, 247)',
+      }}
+    >
+      {props.children}
+      <button
+        type="button"
+        onClick={props.onClose}
+        css={css({
+          color: 'rgba(239, 68, 68)',
+          fontSize: 18,
+          ':hover': { color: 'rgba(185, 28, 28)' },
+        })}
+      >
+        <FaTimes />
+      </button>
+    </div>
+  );
+};
+
+Modal.Body = function ModalBody(props: { children: ReactNode }) {
+  return <div style={{ display: 'flex' }}>{props.children}</div>;
+};
+
+Modal.Footer = function ModalFooter(props: { children: ReactNode }) {
+  return (
+    <div
+      style={{
+        borderTop: '2px solid rgb(247, 247, 247)',
+        padding: '10px 20px 10px 20px',
+      }}
+    >
+      {props.children}
+    </div>
+  );
+};

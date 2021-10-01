@@ -27,9 +27,9 @@ export function Test() {
     <RootLayout>
       <div style={{ height: 500 }}>
         <Accordion>
-          <Accordion.Item title="first">first element</Accordion.Item>
-          <Accordion.Item title="second" defaultOpened>
-            second element
+          <Accordion.Item title="1title">1content</Accordion.Item>
+          <Accordion.Item title="2title" defaultOpened>
+            2content
           </Accordion.Item>
         </Accordion>
       </div>
@@ -39,49 +39,47 @@ export function Test() {
 
 export function Control() {
   return (
-    <RootLayout>
+    <div
+      style={{
+        display: 'flex',
+        width: 500,
+        height: 300,
+      }}
+    >
+      <Toolbar orientation="vertical">
+        <Toolbar.Item id="C" title="C" active onClick={() => {}}>
+          C
+        </Toolbar.Item>
+        <Toolbar.Item id="V" title="V" active={false} onClick={() => {}}>
+          V
+        </Toolbar.Item>
+      </Toolbar>
       <div
         style={{
-          display: 'flex',
-          width: 500,
-          height: 300,
+          width: '100%',
+          height: '100%',
         }}
       >
-        <Toolbar orientation="vertical">
-          <Toolbar.Item id="C" title="C" active onClick={() => {}}>
-            C
-          </Toolbar.Item>
-          <Toolbar.Item id="V" title="V" active={false} onClick={() => {}}>
-            V
-          </Toolbar.Item>
-        </Toolbar>
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          <Accordion>
-            <Accordion.Item title="First Item" defaultOpened>
-              This is the first content
-            </Accordion.Item>
-            <Accordion.Item title="Second Item">
-              This is the content of the second item
-            </Accordion.Item>
-            <Accordion.Item title="With Toolbar">
-              <Toolbar orientation="horizontal">
-                <Toolbar.Item id="A" title="Test A">
-                  A
-                </Toolbar.Item>
-                <Toolbar.Item id="B" title="Test B">
-                  B
-                </Toolbar.Item>
-              </Toolbar>
-            </Accordion.Item>
-          </Accordion>
-        </div>
+        <Accordion>
+          <Accordion.Item title="First Item" defaultOpened>
+            This is the first content
+          </Accordion.Item>
+          <Accordion.Item title="Second Item">
+            This is the content of the second item
+          </Accordion.Item>
+          <Accordion.Item title="With Toolbar">
+            <Toolbar orientation="horizontal">
+              <Toolbar.Item id="A" title="Test A">
+                A
+              </Toolbar.Item>
+              <Toolbar.Item id="B" title="Test B">
+                B
+              </Toolbar.Item>
+            </Toolbar>
+          </Accordion.Item>
+        </Accordion>
       </div>
-    </RootLayout>
+    </div>
   );
 }
 
@@ -144,51 +142,41 @@ export function WithAddiction() {
           Delete the latest element
         </button>
       </div>
-      <RootLayout>
+      <div
+        style={{
+          display: 'flex',
+          width: 500,
+          height: 300,
+        }}
+      >
+        <Toolbar orientation="vertical">
+          <Toolbar.Item id="C" title="C" active onClick={() => {}}>
+            C
+          </Toolbar.Item>
+          <Toolbar.Item id="V" title="V" active={false} onClick={() => {}}>
+            V
+          </Toolbar.Item>
+        </Toolbar>
         <div
           style={{
-            display: 'flex',
-            width: 500,
-            height: 300,
+            width: '100%',
+            height: '100%',
           }}
         >
-          <Toolbar orientation="vertical">
-            <Toolbar.Item id="C" title="C" active onClick={() => {}}>
-              C
-            </Toolbar.Item>
-            <Toolbar.Item id="V" title="V" active={false} onClick={() => {}}>
-              V
-            </Toolbar.Item>
-          </Toolbar>
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <Accordion>
-              {state.map(({ content, ...element }) => (
-                <Accordion.Item key={element.title} {...element}>
-                  {content}
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </div>
+          <Accordion>
+            {state.map(({ content, ...element }) => (
+              <Accordion.Item key={element.title} {...element}>
+                {content}
+              </Accordion.Item>
+            ))}
+          </Accordion>
         </div>
-      </RootLayout>
+      </div>
     </>
   );
 }
 
 export function WithHookAccordion() {
-  return (
-    <RootLayout>
-      <Inside />
-    </RootLayout>
-  );
-}
-
-function Inside() {
   const utils = useToggleAccordion();
 
   function onCallback(title: string, action: 'open' | 'close') {

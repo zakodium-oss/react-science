@@ -1,7 +1,8 @@
 import { Meta } from '@storybook/react';
+import { SvgBioDna } from 'cheminfo-font';
 import React, { ReactNode, useState } from 'react';
 
-import { Toolbar, RootLayout } from '../src';
+import { Toolbar } from '../src';
 import { ToolbarItemProps, ToolbarProps } from '../src/layout/Toolbar';
 
 export default {
@@ -27,33 +28,28 @@ export function VerticalToolbar() {
   }
 
   return (
-    <RootLayout>
-      <div style={{ display: 'flex' }}>
-        <Toolbar orientation="vertical">
-          {items.map((item) => (
-            <Toolbar.Item
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              active={state.title === item.title}
-              onClick={handleChange}
-            >
-              {item.children}
-            </Toolbar.Item>
-          ))}
-          <Toolbar.Item id="test" title="Test">
-            <i
-              style={{ width: 16, height: 16, display: 'block' }}
-              className="ci-icon-bio-dna"
-            />
+    <div style={{ display: 'flex' }}>
+      <Toolbar orientation="vertical">
+        {items.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            active={state.title === item.title}
+            onClick={handleChange}
+          >
+            {item.children}
           </Toolbar.Item>
-        </Toolbar>
-        <div style={{ padding: 5 }}>
-          <p>Hello, World!</p>
-          <p>Value selected: {state.title}</p>
-        </div>
+        ))}
+        <Toolbar.Item id="test" title="Test">
+          <SvgBioDna style={{ width: 16, height: 16, display: 'block' }} />
+        </Toolbar.Item>
+      </Toolbar>
+      <div style={{ padding: 5 }}>
+        <p>Hello, World!</p>
+        <p>Value selected: {state.title}</p>
       </div>
-    </RootLayout>
+    </div>
   );
 }
 
@@ -65,26 +61,24 @@ export function HorizontalToolbar() {
   }
 
   return (
-    <RootLayout>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Toolbar orientation="horizontal">
-          {items.map((item) => (
-            <Toolbar.Item
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              active={state.id === item.id}
-              onClick={handleChange}
-            >
-              {item.children}
-            </Toolbar.Item>
-          ))}
-        </Toolbar>
-        <div style={{ padding: 5 }}>
-          <p>Hello, World!</p>
-          <p>Value selected: {state.title}</p>
-        </div>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Toolbar orientation="horizontal">
+        {items.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            active={state.id === item.id}
+            onClick={handleChange}
+          >
+            {item.children}
+          </Toolbar.Item>
+        ))}
+      </Toolbar>
+      <div style={{ padding: 5 }}>
+        <p>Hello, World!</p>
+        <p>Value selected: {state.title}</p>
       </div>
-    </RootLayout>
+    </div>
   );
 }
