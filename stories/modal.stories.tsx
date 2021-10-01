@@ -16,7 +16,6 @@ import {
   Accordion,
   Header,
   Modal,
-  RootLayout,
   SplitPane,
   Toolbar,
   useModal,
@@ -36,13 +35,7 @@ export function ModalStories(props: { onSave: () => void }) {
   const [isOpen, open, close] = useModal({ defaultOpened: true });
 
   return (
-    <RootLayout
-      style={{
-        borderStyle: 'solid',
-        borderColor: 'rgb(213, 213, 213)',
-        borderWidth: '1px',
-      }}
-    >
+    <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar orientation="horizontal">
@@ -166,7 +159,7 @@ export function ModalStories(props: { onSave: () => void }) {
           </div>
         </Modal.Footer>
       </Modal>
-    </RootLayout>
+    </>
   );
 }
 
@@ -177,13 +170,7 @@ export function ConfirmModalStories(props: {
   const [isOpen, open, close] = useModal({ defaultOpened: true });
 
   return (
-    <RootLayout
-      style={{
-        borderStyle: 'solid',
-        borderColor: 'rgb(213, 213, 213)',
-        borderWidth: '1px',
-      }}
-    >
+    <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar orientation="horizontal">
@@ -282,6 +269,6 @@ export function ConfirmModalStories(props: {
           cannot be undone.
         </div>
       </ConfirmModal>
-    </RootLayout>
+    </>
   );
 }

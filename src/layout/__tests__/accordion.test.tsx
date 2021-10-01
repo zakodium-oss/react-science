@@ -3,20 +3,17 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { Accordion } from '../..';
-import { RootLayout } from '../RootLayout';
 
 beforeEach(() => {
   render(
-    <RootLayout>
-      <div style={{ height: 500 }}>
-        <Accordion>
-          <Accordion.Item title="first">first element</Accordion.Item>
-          <Accordion.Item title="second" defaultOpened>
-            second element
-          </Accordion.Item>
-        </Accordion>
-      </div>
-    </RootLayout>,
+    <div style={{ height: 500 }}>
+      <Accordion>
+        <Accordion.Item title="first">first element</Accordion.Item>
+        <Accordion.Item title="second" defaultOpened>
+          second element
+        </Accordion.Item>
+      </Accordion>
+    </div>,
   );
 });
 

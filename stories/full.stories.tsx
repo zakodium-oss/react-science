@@ -8,14 +8,7 @@ import {
   FaGlasses,
 } from 'react-icons/fa';
 
-import {
-  Accordion,
-  Header,
-  RootLayout,
-  SplitPane,
-  Tabs,
-  Toolbar,
-} from '../src';
+import { Accordion, Header, SplitPane, Tabs, Toolbar } from '../src';
 import { TabItem } from '../src/layout/Tabs';
 
 export default {
@@ -37,13 +30,7 @@ export function FullExample() {
   ];
 
   return (
-    <RootLayout
-      style={{
-        borderStyle: 'solid',
-        borderColor: 'rgb(213, 213, 213)',
-        borderWidth: '1px',
-      }}
-    >
+    <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar orientation="horizontal">
@@ -137,6 +124,6 @@ export function FullExample() {
           </SplitPane>
         </div>
       </div>
-    </RootLayout>
+    </>
   );
 }

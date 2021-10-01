@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { RootLayout, Header, Toolbar } from '../src';
+import { Header, Toolbar } from '../src';
 
 export default {
   title: 'Layout/Header',
@@ -18,13 +18,7 @@ export function test() {
 
 export function control() {
   return (
-    <RootLayout
-      style={{
-        borderStyle: 'solid',
-        borderColor: 'rgb(213, 213, 213)',
-        borderWidth: '1px',
-      }}
-    >
+    <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar orientation="horizontal">
@@ -70,6 +64,6 @@ export function control() {
           <p>content</p>
         </div>
       </div>
-    </RootLayout>
+    </>
   );
 }

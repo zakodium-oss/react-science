@@ -44,10 +44,7 @@ const styles = {
     fontSize: '11px',
     borderColor: 'rgb(213, 213, 213) currentcolor currentcolor',
     borderStyle: 'solid none none',
-    borderWidth: '0.55px, medium medium',
-    borderImage: 'none 100% / 1 / 0 stretch',
     color: 'rgb(45, 45, 45)',
-    fontFamily: 'Arial',
     fontWeight: 'bold',
     textDecoration: 'none',
     textShadow: 'rgb(255, 255, 255) 0px 1px 0px',
@@ -89,7 +86,6 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
           display: 'flex',
           alignItems: 'center',
           width: '100%',
-          outline: 'none',
         }}
         css={styles.header}
       >

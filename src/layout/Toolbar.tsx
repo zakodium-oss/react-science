@@ -52,7 +52,6 @@ const styles = {
       {
         width: '35px',
         height: '35px',
-        outline: 'none',
         alignItems: 'center',
         justifyContent: 'center',
         display: 'flex',
@@ -70,7 +69,6 @@ const styles = {
       backgroundColor: 'gray',
       borderRadius: '2px',
       color: 'white',
-      fontFamily: 'tahoma',
       bottom: '0px',
       right: '0px',
       width: 'fit-content',

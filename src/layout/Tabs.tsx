@@ -32,9 +32,6 @@ const styles = {
         padding: '0.5rem 2rem',
         border: '1px solid hsl(0deg, 0%, 80%)',
         fontSize: 14,
-        ':focus': {
-          outline: 'none',
-        },
         ':hover': {
           backgroundColor: 'hsl(0deg, 0%, 90%)',
         },
