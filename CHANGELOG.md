@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.6.1...v0.7.0) (2021-10-01)
+
+
+### Features
+
+* add button / modal / tabs ([#60](https://www.github.com/cheminfo/analysis-ui-components/issues/60)) ([3f1e69a](https://www.github.com/cheminfo/analysis-ui-components/commit/3f1e69ae7ef62100caf9b210e14a013500ec538f))
+* add buttons components ([3f1e69a](https://www.github.com/cheminfo/analysis-ui-components/commit/3f1e69ae7ef62100caf9b210e14a013500ec538f))
+* add modal components ([3f1e69a](https://www.github.com/cheminfo/analysis-ui-components/commit/3f1e69ae7ef62100caf9b210e14a013500ec538f))
+* add Tabs on components ([3f1e69a](https://www.github.com/cheminfo/analysis-ui-components/commit/3f1e69ae7ef62100caf9b210e14a013500ec538f))
+* implement style scoping using a shadow DOM ([3f1e69a](https://www.github.com/cheminfo/analysis-ui-components/commit/3f1e69ae7ef62100caf9b210e14a013500ec538f))
+
+
+### Bug Fixes
+
+* make toolbar a bit smaller ([#59](https://www.github.com/cheminfo/analysis-ui-components/issues/59)) ([9c38865](https://www.github.com/cheminfo/analysis-ui-components/commit/9c38865b9815aa7ff0099a500e2fa6f7ddfe11af))
+* resolve spacing problems on modal ([3f1e69a](https://www.github.com/cheminfo/analysis-ui-components/commit/3f1e69ae7ef62100caf9b210e14a013500ec538f))
+
 ### [0.6.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.6.0...v0.6.1) (2021-09-24)
 
 
