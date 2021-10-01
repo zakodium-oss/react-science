@@ -29,7 +29,7 @@ export function Modal(props: ModalProps) {
         style={{
           backgroundColor: 'white',
           width: '60%',
-          height: '80%',
+          height: 'max-content',
           margin: 'auto',
           top: 0,
           left: 0,
@@ -49,7 +49,6 @@ export function Modal(props: ModalProps) {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            flex: '1 1 0%',
           }}
         >
           {props.children}
@@ -90,9 +89,7 @@ Modal.Header = function ModalHeader(props: {
 };
 
 Modal.Body = function ModalBody(props: { children: ReactNode }) {
-  return (
-    <div style={{ display: 'flex', flex: '1 1 0%' }}>{props.children}</div>
-  );
+  return <div style={{ display: 'flex' }}>{props.children}</div>;
 };
 
 Modal.Footer = function ModalFooter(props: { children: ReactNode }) {

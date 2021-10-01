@@ -38,7 +38,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
         style={{
           backgroundColor: 'white',
           width: '40%',
-          height: '60%',
+          height: 'max-content',
           margin: 'auto',
           top: 0,
           left: 0,
@@ -55,16 +55,9 @@ export function ConfirmModal(props: ConfirmModalProps) {
           borderTop: `10px solid ${headerColor}`,
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: '1 1 0%',
-          }}
-        >
-          <div style={{ flex: '1 1 0%', color: headerColor, display: 'flex' }}>
-            {props.children}
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+          <div style={{ color: headerColor }}>{props.children}</div>
+
           <div
             style={{
               borderTop: '2px solid rgb(247, 247, 247)',
