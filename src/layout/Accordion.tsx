@@ -103,6 +103,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
         <div
           style={{
             height: '100%',
+            width: '100%',
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
