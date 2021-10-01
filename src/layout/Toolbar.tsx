@@ -50,8 +50,8 @@ const styles = {
     return css([
       active && { backgroundColor: 'rgb(247, 247, 247)', borderRadius: 5 },
       {
-        width: '35px',
-        height: '35px',
+        width: 30,
+        height: 30,
         outline: 'none',
         alignItems: 'center',
         justifyContent: 'center',
@@ -125,7 +125,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = props;
 
   return (
-    <div style={{ position: 'relative', margin: 5 }} {...other}>
+    <div style={{ position: 'relative', margin: 4 }} {...other}>
       <button
         type="button"
         css={styles.item(active)}
