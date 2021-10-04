@@ -4,7 +4,7 @@ import { ReactElement, ReactNode } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 interface ModalProps {
-  children: ReactElement;
+  children: Array<ReactElement>;
   isOpen: boolean;
 }
 
