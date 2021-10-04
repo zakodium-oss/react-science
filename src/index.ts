@@ -12,6 +12,7 @@ import {
   useToggleAccordion,
 } from './layout/context/AccordionContext';
 import { useModal } from './layout/hooks/useModal';
+import { useOnOff } from './layout/hooks/useOnOff';
 import { useSplitPaneSize } from './layout/hooks/useSplitPaneSize';
 import { useToggle } from './layout/hooks/useToggle';
 
@@ -30,5 +31,6 @@ export {
   useToggle,
   useModal,
   useToggleAccordion,
+  useOnOff,
   Tabs,
 };
