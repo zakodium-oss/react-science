@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 import { TabsProvider, useTabsContext } from './context/TabsContext';
 
@@ -86,7 +86,9 @@ function TabsItem(props: TabsItemProps & { orientation: TabsOrientation }) {
   );
 }
 
-function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
+function TabsVertical(
+  props: Omit<TabsProps, 'orientation' | 'opened'> & { style?: CSSProperties },
+) {
   const item = useTabsContext();
 
   return (
@@ -110,7 +112,7 @@ function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
           />
         ))}
       </div>
-      <div style={{ marginLeft: 5 }}>{item.content}</div>
+      <div style={{ marginLeft: 5, ...props.style }}>{item.content}</div>
     </div>
   );
 }
