@@ -3,8 +3,10 @@ import { css } from '@emotion/react';
 import { ReactElement, ReactNode } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
+import { Portal } from './Portal';
+
 interface ModalProps {
-  children: ReactElement;
+  children: ReactElement | Array<ReactElement>;
   isOpen: boolean;
 }
 
@@ -14,7 +16,7 @@ export function Modal(props: ModalProps) {
   }
 
   return (
-    <>
+    <Portal>
       <div
         style={{
           backgroundColor: 'hsla(0deg, 0%, 97%, 0.8)',
@@ -54,7 +56,7 @@ export function Modal(props: ModalProps) {
           {props.children}
         </div>
       </div>
-    </>
+    </Portal>
   );
 }
 
