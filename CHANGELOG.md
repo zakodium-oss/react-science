@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.8.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.8.0...v0.8.1) (2021-10-05)
+
+
+### Bug Fixes
+
+* add tabs styles override ([#67](https://www.github.com/cheminfo/analysis-ui-components/issues/67)) ([8fcbd5f](https://www.github.com/cheminfo/analysis-ui-components/commit/8fcbd5fa838ea473547a2543168e0650ea35f22b))
+
 ## [0.8.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.7.0...v0.8.0) (2021-10-05)
 
 
