@@ -4,7 +4,6 @@ import { ReactElement, ReactNode } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { Portal } from './Portal';
-import { useRootLayoutContext } from './context/RootLayoutContext';
 
 interface ModalProps {
   children: ReactElement | Array<ReactElement>;
