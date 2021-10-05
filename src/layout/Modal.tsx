@@ -12,14 +12,12 @@ interface ModalProps {
 }
 
 export function Modal(props: ModalProps) {
-  const ref = useRootLayoutContext();
-
   if (!props.isOpen) {
     return null;
   }
 
   return (
-    <Portal innerRef={ref}>
+    <Portal>
       <div
         style={{
           backgroundColor: 'hsla(0deg, 0%, 97%, 0.8)',
@@ -28,7 +26,6 @@ export function Modal(props: ModalProps) {
           position: 'absolute',
           top: 0,
           left: 0,
-          zIndex: 90,
         }}
       />
       <div
@@ -49,7 +46,6 @@ export function Modal(props: ModalProps) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          zIndex: 91,
         }}
       >
         <div
