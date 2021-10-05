@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.7.0...v0.8.0) (2021-10-05)
+
+
+### Features
+
+* add export useOnOff ([dceb8f2](https://www.github.com/cheminfo/analysis-ui-components/commit/dceb8f2633be4f230b2f6a72b36b3cef5cbf435c))
+
+
+### Bug Fixes
+
+* add Portal to place modals ([#65](https://www.github.com/cheminfo/analysis-ui-components/issues/65)) ([7b72a19](https://www.github.com/cheminfo/analysis-ui-components/commit/7b72a195233ff40ae30c32de62d0becad0dbed01))
+* change children props of modal to accept one element ([7bbd478](https://www.github.com/cheminfo/analysis-ui-components/commit/7bbd478f7c06785f1ac6edfa1198fced1099dd4b))
+
 ## [0.7.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.6.1...v0.7.0) (2021-10-01)
 
 
