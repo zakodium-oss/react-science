@@ -82,3 +82,36 @@ export function HorizontalToolbar() {
     </div>
   );
 }
+
+export function OverFlowVerticalToolbar() {
+  const [state, setState] = useState(items[1]);
+
+  function handleChange({ id, children, title }: ToolbarItemProps) {
+    setState({ id, children, title });
+  }
+
+  return (
+    <div style={{ display: 'flex', height: '120px' }}>
+      <Toolbar orientation="vertical" overflow="popup">
+        {items.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            active={state.title === item.title}
+            onClick={handleChange}
+          >
+            {item.children}
+          </Toolbar.Item>
+        ))}
+        <Toolbar.Item id="test" title="Test">
+          <SvgBioDna style={{ width: 16, height: 16, display: 'block' }} />
+        </Toolbar.Item>
+      </Toolbar>
+      <div style={{ padding: 5 }}>
+        <p>Hello, World!</p>
+        <p>Value selected: {state.title}</p>
+      </div>
+    </div>
+  );
+}
