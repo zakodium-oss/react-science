@@ -9,33 +9,41 @@ interface Colorhover {
 
 interface ButtonProps {
   children: ReactNode;
-  backgroundColor: Colorhover;
-  color: Colorhover;
+  backgroundColor?: Colorhover;
+  color?: Colorhover;
   onClick?: () => void;
 }
 
 export function Button(props: ButtonProps) {
+  const {
+    backgroundColor = {
+      basic: 'hsl(21deg, 90%, 48%)',
+      hover: 'hsl(21deg, 90%, 40%)',
+    },
+    color = { basic: 'white', hover: 'white' },
+  } = props;
+
   return (
     <button
       onClick={props.onClick}
       css={css({
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: 12,
-        paddingRight: 12,
-        paddingTop: 8,
-        paddingBottom: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 6,
+        paddingBottom: 6,
         borderWidth: 1,
         borderColor: 'transparent',
         fontSize: 14,
         borderRadius: 6,
-        color: props.color.basic,
+        color: color.basic,
         minWidth: 70,
         justifyContent: 'center',
-        backgroundColor: props.backgroundColor.basic,
+        backgroundColor: backgroundColor.basic,
         ':hover': {
-          color: props.color.hover,
-          backgroundColor: props.backgroundColor.hover,
+          color: color.hover,
+          backgroundColor: backgroundColor.hover,
         },
       })}
       type="button"

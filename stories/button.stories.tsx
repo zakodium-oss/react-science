@@ -7,12 +7,5 @@ export default {
 };
 
 export function Control() {
-  return (
-    <Button
-      backgroundColor={{ basic: 'blue', hover: 'green' }}
-      color={{ basic: 'white' }}
-    >
-      Hello, World!
-    </Button>
-  );
+  return <Button>Hello, World!</Button>;
 }
