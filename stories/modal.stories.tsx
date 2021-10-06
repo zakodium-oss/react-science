@@ -110,7 +110,7 @@ export function ModalStories(props: { onSave: () => void }) {
           </SplitPane>
         </div>
       </div>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} minHeight={1000} maxWidth={200}>
         <Modal.Header onClose={close}>Hello, World!</Modal.Header>
         <Modal.Body>
           <div
@@ -135,7 +135,17 @@ export function ModalStories(props: { onSave: () => void }) {
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
               accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
               assumenda esse animi id atque natus ipsa sunt iure illo,
-              exercitationem voluptates non.
+              exercitationem voluptates non. Lorem ipsum dolor sit, amet
+              consectetur adipisicing elit. Modi accusamus voluptas odit minima
+              amet obcaecati eveniet voluptatibus assumenda esse animi id atque
+              natus ipsa sunt iure illo, exercitationem voluptates non. Lorem
+              ipsum dolor sit, amet consectetur adipisicing elit. Modi accusamus
+              voluptas odit minima amet obcaecati eveniet voluptatibus assumenda
+              esse animi id atque natus ipsa sunt iure illo, exercitationem
+              voluptates non. Lorem ipsum dolor sit, amet consectetur
+              adipisicing elit. Modi accusamus voluptas odit minima amet
+              obcaecati eveniet voluptatibus assumenda esse animi id atque natus
+              ipsa sunt iure illo, exercitationem voluptates non.
             </p>
           </div>
         </Modal.Body>
