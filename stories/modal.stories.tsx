@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/react';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -21,6 +21,8 @@ import {
   useModal,
   ConfirmModal,
   Button,
+  Tabs,
+  TabItem,
 } from '../src';
 
 export default {
@@ -110,7 +112,7 @@ export function ModalStories(props: { onSave: () => void }) {
           </SplitPane>
         </div>
       </div>
-      <Modal isOpen={isOpen} minHeight={1000} maxWidth={200}>
+      <Modal isOpen={isOpen}>
         <Modal.Header onClose={close}>Hello, World!</Modal.Header>
         <Modal.Body>
           <div
@@ -135,17 +137,7 @@ export function ModalStories(props: { onSave: () => void }) {
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
               accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
               assumenda esse animi id atque natus ipsa sunt iure illo,
-              exercitationem voluptates non. Lorem ipsum dolor sit, amet
-              consectetur adipisicing elit. Modi accusamus voluptas odit minima
-              amet obcaecati eveniet voluptatibus assumenda esse animi id atque
-              natus ipsa sunt iure illo, exercitationem voluptates non. Lorem
-              ipsum dolor sit, amet consectetur adipisicing elit. Modi accusamus
-              voluptas odit minima amet obcaecati eveniet voluptatibus assumenda
-              esse animi id atque natus ipsa sunt iure illo, exercitationem
-              voluptates non. Lorem ipsum dolor sit, amet consectetur
-              adipisicing elit. Modi accusamus voluptas odit minima amet
-              obcaecati eveniet voluptatibus assumenda esse animi id atque natus
-              ipsa sunt iure illo, exercitationem voluptates non.
+              exercitationem voluptates non.
             </p>
           </div>
         </Modal.Body>
@@ -279,6 +271,139 @@ export function ConfirmModalStories(props: {
           cannot be undone.
         </div>
       </ConfirmModal>
+    </>
+  );
+}
+
+const tabs: Array<TabItem> = [
+  {
+    id: 'controllers',
+    title: 'Controllers',
+    content: <div style={{ height: 150 }}>Controllers</div>,
+  },
+  {
+    id: 'formatting',
+    title: 'Formatting',
+    content: <div style={{ height: 50 }}>Formatting</div>,
+  },
+  {
+    id: 'display',
+    title: 'Display',
+    content: <div style={{ height: 200 }}>Display</div>,
+  },
+];
+
+export function RealModalStories(props: { onSave: () => void }) {
+  const [isOpen, open, close] = useModal({ defaultOpened: true });
+  const [state, setState] = useState(tabs[0]);
+
+  return (
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Header>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
+              <FaMeteor />
+            </Toolbar.Item>
+          </Toolbar>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item id="a" title="User manual">
+              <FaBook />
+            </Toolbar.Item>
+            <Toolbar.Item id="b" title="General settings">
+              <FaCogs />
+            </Toolbar.Item>
+            <Toolbar.Item id="c" title="Full screen">
+              <FaTabletAlt />
+            </Toolbar.Item>
+          </Toolbar>
+        </Header>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <div>
+          <Toolbar orientation="vertical">
+            <Toolbar.Item id="a" title="Glasses" active>
+              <FaGlasses />
+            </Toolbar.Item>
+            <Toolbar.Item id="b" title="Open in large mode">
+              <FaArrowsAlt />
+            </Toolbar.Item>
+          </Toolbar>
+        </div>
+        <div
+          style={{
+            width: '100%',
+            height: '300px',
+          }}
+        >
+          <SplitPane initialSeparation="35%">
+            <div style={{ padding: 5 }}>
+              <Button
+                onClick={open}
+                backgroundColor={{
+                  basic: 'hsla(243deg, 75%, 58%, 1)',
+                  hover: 'hsla(245deg, 58%, 50%, 1)',
+                }}
+                color={{ basic: 'white' }}
+              >
+                Open
+              </Button>
+            </div>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                flex: '1 1 0%',
+              }}
+            >
+              <Accordion>
+                <Accordion.Item title="Spectra" defaultOpened>
+                  <p style={{ padding: 5 }}>Spectra lorem</p>
+                </Accordion.Item>
+                <Accordion.Item title="Integral">
+                  <p style={{ padding: 5 }}>Integral lorem</p>
+                </Accordion.Item>
+              </Accordion>
+            </div>
+          </SplitPane>
+        </div>
+      </div>
+      <Modal isOpen={isOpen}>
+        <Modal.Header onClose={close}>General Settings</Modal.Header>
+        <Modal.Body minHeight={350}>
+          <Tabs
+            items={tabs}
+            opened={state}
+            onClick={setState}
+            orientation="vertical"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              flex: '1 1 0%',
+            }}
+          >
+            <Button
+              onClick={props.onSave}
+              backgroundColor={{
+                basic: 'hsla(243deg, 75%, 58%, 1)',
+                hover: 'hsla(245deg, 58%, 50%, 1)',
+              }}
+              color={{ basic: 'white' }}
+            >
+              Save
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
