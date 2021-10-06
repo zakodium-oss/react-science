@@ -90,7 +90,7 @@ function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
   const item = useTabsContext();
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', flex: '1 1 0%' }}>
       <div
         style={{
           display: 'flex',
@@ -110,7 +110,7 @@ function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
           />
         ))}
       </div>
-      <div style={{ marginLeft: 5, flex: '1 1 0%' }}>{item.content}</div>
+      <div style={{ flex: '1 1 0%', overflowY: 'auto' }}>{item.content}</div>
     </div>
   );
 }
@@ -140,7 +140,7 @@ function TabsHorizontal(props: Omit<TabsProps, 'orientation' | 'opened'>) {
           />
         ))}
       </div>
-      <div style={{ flex: '1 1 0%' }}>{item.content}</div>
+      <div style={{ flex: '1 1 0%', overflowX: 'auto' }}>{item.content}</div>
     </div>
   );
 }

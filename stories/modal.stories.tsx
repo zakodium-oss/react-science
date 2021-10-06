@@ -279,17 +279,33 @@ const tabs: Array<TabItem> = [
   {
     id: 'controllers',
     title: 'Controllers',
-    content: <div style={{ height: 150 }}>Controllers</div>,
+    content: (
+      <div style={{ height: 150, backgroundColor: 'hsl(0deg, 0%, 90%)' }}>
+        {Array(10)
+          .fill(`Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur ex
+        nam temporibus delectus repellendus, dolorem cupiditate molestias
+        aliquid illum perspiciatis quis similique perferendis. Expedita beatae
+        est nemo corporis cum quam!`)}
+      </div>
+    ),
   },
   {
     id: 'formatting',
     title: 'Formatting',
-    content: <div style={{ height: 50 }}>Formatting</div>,
+    content: (
+      <div style={{ height: 50, backgroundColor: 'hsl(0deg, 0%, 90%)' }}>
+        Formatting
+      </div>
+    ),
   },
   {
     id: 'display',
     title: 'Display',
-    content: <div style={{ height: 200 }}>Display</div>,
+    content: (
+      <div style={{ height: 180, backgroundColor: 'hsl(0deg, 0%, 90%)' }}>
+        Display
+      </div>
+    ),
   },
 ];
 
@@ -375,7 +391,7 @@ export function RealModalStories(props: { onSave: () => void }) {
       </div>
       <Modal isOpen={isOpen}>
         <Modal.Header onClose={close}>General Settings</Modal.Header>
-        <Modal.Body minHeight={350}>
+        <Modal.Body>
           <Tabs
             items={tabs}
             opened={state}

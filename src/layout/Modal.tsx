@@ -9,6 +9,7 @@ interface ModalProps {
   children: ReactElement | Array<ReactElement>;
   isOpen: boolean;
   maxWidth?: number;
+  minHeight?: number;
 }
 
 export function Modal(props: ModalProps) {
@@ -30,10 +31,12 @@ export function Modal(props: ModalProps) {
       />
       <div
         style={{
+          maxHeight: '90%',
           maxWidth: props.maxWidth,
+          minHeight: props.minHeight,
           backgroundColor: 'white',
           width: '60%',
-          height: 'max-content',
+          // height: 'max-content',
           margin: 'auto',
           top: 0,
           left: 0,
@@ -49,14 +52,7 @@ export function Modal(props: ModalProps) {
           justifyContent: 'space-between',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {props.children}
-        </div>
+        {props.children}
       </div>
     </Portal>
   );
@@ -92,12 +88,9 @@ Modal.Header = function ModalHeader(props: {
   );
 };
 
-Modal.Body = function ModalBody(props: {
-  children: ReactNode;
-  minHeight?: number;
-}) {
+Modal.Body = function ModalBody(props: { children: ReactNode }) {
   return (
-    <div style={{ display: 'flex', minHeight: props.minHeight }}>
+    <div style={{ display: 'flex', flex: '1 1 0%', overflowY: 'auto' }}>
       {props.children}
     </div>
   );
