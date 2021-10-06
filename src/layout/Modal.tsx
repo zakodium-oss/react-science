@@ -8,8 +8,6 @@ import { Portal } from './Portal';
 interface ModalProps {
   children: ReactElement | Array<ReactElement>;
   isOpen: boolean;
-
-  minHeight?: number;
   maxWidth?: number;
 }
 
@@ -32,7 +30,6 @@ export function Modal(props: ModalProps) {
       />
       <div
         style={{
-          minHeight: props.minHeight,
           maxWidth: props.maxWidth,
           backgroundColor: 'white',
           width: '60%',
@@ -95,8 +92,15 @@ Modal.Header = function ModalHeader(props: {
   );
 };
 
-Modal.Body = function ModalBody(props: { children: ReactNode }) {
-  return <div style={{ display: 'flex' }}>{props.children}</div>;
+Modal.Body = function ModalBody(props: {
+  children: ReactNode;
+  minHeight?: number;
+}) {
+  return (
+    <div style={{ display: 'flex', minHeight: props.minHeight }}>
+      {props.children}
+    </div>
+  );
 };
 
 Modal.Footer = function ModalFooter(props: { children: ReactNode }) {
