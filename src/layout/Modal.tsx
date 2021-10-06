@@ -8,6 +8,9 @@ import { Portal } from './Portal';
 interface ModalProps {
   children: ReactElement | Array<ReactElement>;
   isOpen: boolean;
+
+  minHeight?: number;
+  maxWidth?: number;
 }
 
 export function Modal(props: ModalProps) {
@@ -29,6 +32,8 @@ export function Modal(props: ModalProps) {
       />
       <div
         style={{
+          minHeight: props.minHeight,
+          maxWidth: props.maxWidth,
           backgroundColor: 'white',
           width: '60%',
           height: 'max-content',
