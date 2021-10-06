@@ -23,6 +23,7 @@ interface TabsProps {
   orientation?: TabsOrientation;
   items: Array<TabItem>;
   onClick?: (item: TabItem) => void;
+  contentStyle?: CSSProperties;
 }
 
 const styles = {
@@ -55,19 +56,25 @@ const styles = {
 };
 
 export function Tabs(props: TabsProps) {
-  const { orientation = 'horizontal', items, onClick, opened } = props;
+  const {
+    orientation = 'horizontal',
+    items,
+    onClick,
+    opened,
+    contentStyle,
+  } = props;
 
   if (orientation === 'horizontal') {
     return (
       <TabsProvider opened={opened}>
-        <TabsHorizontal items={items} onClick={onClick} />
+        <TabsHorizontal items={items} onClick={onClick} style={contentStyle} />
       </TabsProvider>
     );
   }
 
   return (
     <TabsProvider opened={opened}>
-      <TabsVertical items={items} onClick={onClick} />
+      <TabsVertical items={items} onClick={onClick} style={contentStyle} />
     </TabsProvider>
   );
 }
@@ -117,7 +124,9 @@ function TabsVertical(
   );
 }
 
-function TabsHorizontal(props: Omit<TabsProps, 'orientation' | 'opened'>) {
+function TabsHorizontal(
+  props: Omit<TabsProps, 'orientation' | 'opened'> & { style?: CSSProperties },
+) {
   const item = useTabsContext();
 
   return (
@@ -142,7 +151,7 @@ function TabsHorizontal(props: Omit<TabsProps, 'orientation' | 'opened'>) {
           />
         ))}
       </div>
-      <div>{item.content}</div>
+      <div style={props.style}>{item.content}</div>
     </div>
   );
 }
