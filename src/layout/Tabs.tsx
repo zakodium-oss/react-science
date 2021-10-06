@@ -110,7 +110,7 @@ function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
           />
         ))}
       </div>
-      <div style={{ marginLeft: 5 }}>{item.content}</div>
+      <div style={{ marginLeft: 5, flex: '1 1 0%' }}>{item.content}</div>
     </div>
   );
 }
@@ -140,7 +140,7 @@ function TabsHorizontal(props: Omit<TabsProps, 'orientation' | 'opened'>) {
           />
         ))}
       </div>
-      <div>{item.content}</div>
+      <div style={{ flex: '1 1 0%' }}>{item.content}</div>
     </div>
   );
 }
