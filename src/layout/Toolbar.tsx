@@ -33,7 +33,15 @@ const border = '1px solid rgb(247, 247, 247)';
 const styles = {
   toolbar: (orientation: ToolbarOrientation) => {
     return css([
-      { display: 'flex' },
+      {
+        display: 'flex',
+        flexWrap: 'wrap',
+        width: '100%',
+        minWidth: '100%',
+        minHeight: '100%',
+        maxWidth: '100%',
+        maxHeight: '100%',
+      },
       orientation === 'vertical'
         ? {
             flexDirection: 'column',
@@ -124,7 +132,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = props;
 
   return (
-    <div style={{ position: 'relative', margin: 4 }} {...other}>
+    <div style={{ position: 'relative', margin: 4, width: 30 }} {...other}>
       <button
         type="button"
         css={styles.item(active)}

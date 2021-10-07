@@ -28,7 +28,7 @@ export function VerticalToolbar() {
   }
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', height: 100 }}>
       <Toolbar orientation="vertical">
         {items.map((item) => (
           <Toolbar.Item
@@ -78,6 +78,28 @@ export function HorizontalToolbar() {
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
         <p>Value selected: {state.title}</p>
+      </div>
+    </div>
+  );
+}
+
+export function Test() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row', height: 100 }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          borderRight: '1px solid black',
+        }}
+      >
+        <span style={{ width: 20 }}>A</span>
+        <span style={{ width: 20 }}>B</span>
+        <span style={{ width: 20 }}>C</span>
+        <span style={{ width: 20 }}>D</span>
+        <span style={{ width: 20 }}>E</span>
+        <span style={{ width: 20 }}>F</span>
       </div>
     </div>
   );
