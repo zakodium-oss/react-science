@@ -28,7 +28,7 @@ export function VerticalToolbar() {
   }
 
   return (
-    <div style={{ display: 'flex', height: 100 }}>
+    <div style={{ display: 'flex', height: 90 }}>
       <Toolbar orientation="vertical">
         {items.map((item) => (
           <Toolbar.Item
@@ -61,7 +61,7 @@ export function HorizontalToolbar() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', width: 100 }}>
       <Toolbar orientation="horizontal">
         {items.map((item) => (
           <Toolbar.Item
@@ -83,24 +83,21 @@ export function HorizontalToolbar() {
   );
 }
 
-export function Test() {
+export function TestV() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', height: 100 }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'wrap',
-          borderRight: '1px solid black',
-        }}
-      >
-        <span style={{ width: 20 }}>A</span>
-        <span style={{ width: 20 }}>B</span>
-        <span style={{ width: 20 }}>C</span>
-        <span style={{ width: 20 }}>D</span>
-        <span style={{ width: 20 }}>E</span>
-        <span style={{ width: 20 }}>F</span>
-      </div>
+    <div
+      style={{
+        height: 150,
+        width: 50,
+        display: 'grid',
+        grid: 'repeat(auto-fit, 30px) / auto-flow',
+      }}
+    >
+      {Array(10)
+        .fill(0)
+        .map((_, index) => (
+          <div key={index}>{index}</div>
+        ))}
     </div>
   );
 }

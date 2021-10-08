@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, CSSObject } from '@emotion/react';
-import React, { ReactFragment, ReactNode } from 'react';
+import React, { ReactFragment, ReactNode, useCallback, useState } from 'react';
 
 import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
 
@@ -31,24 +31,21 @@ export interface ToolbarItemProps {
 const border = '1px solid rgb(247, 247, 247)';
 
 const styles = {
-  toolbar: (orientation: ToolbarOrientation) => {
+  toolbar: (orientation: ToolbarOrientation, nbColumns: number) => {
     return css([
-      {
-        display: 'flex',
-        flexWrap: 'wrap',
-        width: '100%',
-        minWidth: '100%',
-        minHeight: '100%',
-        maxWidth: '100%',
-        maxHeight: '100%',
-      },
       orientation === 'vertical'
         ? {
-            flexDirection: 'column',
+            display: 'grid',
+            gridTemplateRows: `repeat(${nbColumns}, 40px)`,
+            gridAutoRows: 'auto',
+            gridAutoColumns: 'auto',
+            gridAutoFlow: 'column',
             minHeight: '100%',
             borderRight: border,
           }
         : {
+            display: 'flex',
+            flexWrap: 'wrap',
             flexDirection: 'row',
             minWidth: '100%',
           },
@@ -110,10 +107,17 @@ const styles = {
 };
 
 export function Toolbar(props: ToolbarProps) {
+  const [nbColumns, setNbColumns] = useState(0);
   const { children, orientation } = props;
 
+  const ref = useCallback((node: HTMLDivElement) => {
+    if (node !== null) {
+      setNbColumns(Math.floor(node.clientHeight / 40));
+    }
+  }, []);
+
   return (
-    <div css={styles.toolbar(orientation)}>
+    <div ref={ref} css={styles.toolbar(orientation, nbColumns)}>
       <ToolbarProvider orientation={orientation}>{children}</ToolbarProvider>
     </div>
   );
