@@ -13,9 +13,23 @@ import { TabItem } from '../src/layout/Tabs';
 
 export default {
   title: 'Layout/Full',
+  args: {
+    height: 300,
+  },
 } as Meta;
 
-export function FullExample() {
+const toolbar: Array<TabItem> = [
+  { id: 'a', title: 'Glasses', content: <FaGlasses /> },
+  { id: 'b', title: 'Open in large mode', content: <FaTabletAlt /> },
+  ...Array(3)
+    .fill(0)
+    .map((_, index) => {
+      const element = String(index);
+      return { id: element, content: element, title: element };
+    }),
+];
+
+export function FullExample(props: { height: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const items: Array<TabItem> = [
     {
@@ -55,16 +69,16 @@ export function FullExample() {
         style={{
           display: 'flex',
           flexDirection: 'row',
+          height: props.height,
         }}
       >
         <div>
           <Toolbar orientation="vertical">
-            <Toolbar.Item id="a" title="Glasses" active>
-              <FaGlasses />
-            </Toolbar.Item>
-            <Toolbar.Item id="b" title="Open in large mode">
-              <FaTabletAlt />
-            </Toolbar.Item>
+            {toolbar.map(({ id, title, content }) => (
+              <Toolbar.Item key={id} id={id} title={String(title)}>
+                {content}
+              </Toolbar.Item>
+            ))}
           </Toolbar>
         </div>
         <div

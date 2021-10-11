@@ -1,5 +1,4 @@
 import { Meta } from '@storybook/react';
-import { SvgBioDna } from 'cheminfo-font';
 import React, { ReactNode, useState } from 'react';
 
 import { Toolbar } from '../src';
@@ -12,12 +11,6 @@ export default {
 const items: Array<{ children: ReactNode; title: string; id: string }> = [
   { id: 'copy', children: 'c', title: 'Copy' },
   { id: 'paste', children: 'v', title: 'Paste' },
-  { id: 'undo', children: 'b', title: 'Undo' },
-  {
-    id: 'redo',
-    children: 'r',
-    title: 'Redo',
-  },
 ];
 
 export function VerticalToolbar() {
@@ -41,9 +34,6 @@ export function VerticalToolbar() {
             {item.children}
           </Toolbar.Item>
         ))}
-        <Toolbar.Item id="test" title="Test">
-          <SvgBioDna style={{ width: 16, height: 16, display: 'block' }} />
-        </Toolbar.Item>
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
@@ -85,19 +75,16 @@ export function HorizontalToolbar() {
 
 export function TestV() {
   return (
-    <div
-      style={{
-        height: 150,
-        width: 50,
-        display: 'grid',
-        grid: 'repeat(auto-fit, 30px) / auto-flow',
-      }}
-    >
-      {Array(10)
-        .fill(0)
-        .map((_, index) => (
-          <div key={index}>{index}</div>
-        ))}
+    <div style={{ height: 300 }}>
+      <Toolbar orientation="vertical">
+        {Array(10)
+          .fill(0)
+          .map((_, index) => (
+            <Toolbar.Item key={index} id={String(index)} title={String(index)}>
+              {index}
+            </Toolbar.Item>
+          ))}
+      </Toolbar>
     </div>
   );
 }
