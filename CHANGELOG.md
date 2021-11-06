@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.9.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.8.1...v0.9.0) (2021-11-06)
+
+
+### Features
+
+* add default color on Button ([f4e18a1](https://www.github.com/cheminfo/analysis-ui-components/commit/f4e18a178caa1b70852559e77be23a084531dccd))
+* add flex on Tabs ([d5b6e7a](https://www.github.com/cheminfo/analysis-ui-components/commit/d5b6e7aa94044e6bd6f687e2f8f81432fbd578e1))
+* add flex-1 on Tabs & Modal ([215ee8e](https://www.github.com/cheminfo/analysis-ui-components/commit/215ee8ecedf8755d546bf8942b1e60e5d362a57a))
+* add minHeight  / maxWidth on Modal ([f8f0e7a](https://www.github.com/cheminfo/analysis-ui-components/commit/f8f0e7a77e843e01db63690d99cada77ae7a44d0))
+
+
+### Bug Fixes
+
+* change Modal impl to allow user to have a minHeight ([d6089ec](https://www.github.com/cheminfo/analysis-ui-components/commit/d6089ecb39e7b09e126e6266e79ebf1bb9cc550f))
+* **toolbar:** make elements wrap if height is too small ([6c038ae](https://www.github.com/cheminfo/analysis-ui-components/commit/6c038ae97dafa868c7b00a63c9640e93d00f071f))
+
 ### [0.8.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.8.0...v0.8.1) (2021-10-05)
 
 
