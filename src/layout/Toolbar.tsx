@@ -1,6 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css, CSSObject } from '@emotion/react';
-import React, { ReactFragment, ReactNode } from 'react';
+import React, {
+  ReactFragment,
+  ReactNode,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
 import { ToolbarProvider, useToolbarContext } from './context/ToolbarContext';
 
@@ -33,7 +38,7 @@ const border = '1px solid rgb(247, 247, 247)';
 const styles = {
   toolbar: (orientation: ToolbarOrientation) => {
     return css([
-      { display: 'flex' },
+      { display: 'flex', flexWrap: 'wrap' },
       orientation === 'vertical'
         ? {
             flexDirection: 'column',
@@ -104,8 +109,18 @@ const styles = {
 export function Toolbar(props: ToolbarProps) {
   const { children, orientation } = props;
 
+  const ref = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const lastElement = ref.current?.lastElementChild;
+    if (!lastElement) {
+      return;
+    }
+    const rect = lastElement.getBoundingClientRect();
+    ref.current.style.width = `${rect.x + rect.width}px`;
+  }, []);
+
   return (
-    <div css={styles.toolbar(orientation)}>
+    <div css={styles.toolbar(orientation)} ref={ref}>
       <ToolbarProvider orientation={orientation}>{children}</ToolbarProvider>
     </div>
   );

@@ -18,6 +18,11 @@ const items: Array<{ children: ReactNode; title: string; id: string }> = [
     children: 'r',
     title: 'Redo',
   },
+  { id: 'test1', children: 't', title: 'Test 1' },
+  { id: 'test2', children: 't', title: 'Test 2' },
+  { id: 'test3', children: 't', title: 'Test 3' },
+  { id: 'test4', children: 't', title: 'Test 4' },
+  { id: 'test5', children: 't', title: 'Test 5' },
 ];
 
 export function VerticalToolbar() {
@@ -28,7 +33,7 @@ export function VerticalToolbar() {
   }
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', maxHeight: 200 }}>
       <Toolbar orientation="vertical">
         {items.map((item) => (
           <Toolbar.Item
