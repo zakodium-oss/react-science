@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.9.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.0...v0.9.1) (2021-11-06)
+
+
+### Bug Fixes
+
+* recompute toolbar width when size changes ([2489524](https://www.github.com/cheminfo/analysis-ui-components/commit/2489524626c7e51d2923566dc86fa22bd149cba0))
+
 ## [0.9.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.8.1...v0.9.0) (2021-11-06)
 
 
