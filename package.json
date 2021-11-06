@@ -24,7 +24,7 @@
     "test-only": "jest",
     "watch": "jest --watchAll",
     "test": "npm run eslint && npm run prettier && npm run check-types",
-    "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider build-storybook",
+    "build-storybook": "build-storybook",
     "prepack": "npm run build"
   },
   "peerDependencies": {
