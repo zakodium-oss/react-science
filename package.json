@@ -12,10 +12,10 @@
   "scripts": {
     "build": "npm run clean && npm run build-ts",
     "build-ts": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
-    "dev": "start-storybook -s ./public -p 6006",
+    "dev": "npm run storybook",
     "clean": "rimraf lib lib-esm",
     "serve": "vite preview",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -s ./public -p 6006",
     "check-types": "tsc --noEmit",
     "eslint": "eslint src stories --cache",
     "eslint-fix": "npm run eslint -- --fix",
@@ -24,7 +24,7 @@
     "test-only": "jest",
     "watch": "jest --watchAll",
     "test": "npm run eslint && npm run prettier && npm run check-types",
-    "build-storybook": "build-storybook",
+    "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider build-storybook",
     "prepack": "npm run build"
   },
   "peerDependencies": {
@@ -55,6 +55,7 @@
     "@zakodium/eslint-config": "^5.0.1",
     "babel-loader": "^8.2.3",
     "cheminfo-font": "^1.8.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
