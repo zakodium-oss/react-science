@@ -16,7 +16,7 @@
     "dev": "npm run storybook",
     "clean": "rimraf lib lib-esm",
     "serve": "vite preview",
-    "storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -s ./public -p 6006",
+    "storybook": "start-storybook -s ./public -p 6006",
     "check-types": "tsc --noEmit",
     "eslint": "eslint src stories --cache",
     "eslint-fix": "npm run eslint -- --fix",
@@ -83,5 +83,8 @@
   "bugs": {
     "url": "https://github.com/cheminfo/analysis-ui-components/issues"
   },
-  "homepage": "https://github.com/cheminfo/analysis-ui-components#readme"
+  "homepage": "https://github.com/cheminfo/analysis-ui-components#readme",
+  "volta": {
+    "node": "16.13.0"
+  }
 }

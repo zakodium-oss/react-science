@@ -111,13 +111,31 @@ export function Toolbar(props: ToolbarProps) {
 
   const ref = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
-    const lastElement = ref.current?.lastElementChild;
-    if (!lastElement) {
+    if (orientation === 'horizontal') {
       return;
     }
-    const rect = lastElement.getBoundingClientRect();
-    ref.current.style.width = `${rect.x + rect.width}px`;
-  }, []);
+
+    function update() {
+      const lastElement = ref.current?.lastElementChild;
+      if (!lastElement) {
+        return;
+      }
+      ref.current.style.width = 'initial';
+      const divRect = ref.current.getBoundingClientRect();
+      const lastElemRect = lastElement.getBoundingClientRect();
+      const width = `${lastElemRect.right - divRect.left}px`;
+      if (ref.current.style.width !== width) {
+        ref.current.style.width = width;
+      }
+    }
+
+    const element = ref.current;
+    if (element) {
+      const observer = new ResizeObserver(update);
+      observer.observe(element);
+      return () => observer.unobserve(element);
+    }
+  }, [orientation]);
 
   return (
     <div css={styles.toolbar(orientation)} ref={ref}>
@@ -139,7 +157,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = props;
 
   return (
-    <div style={{ position: 'relative', margin: 4 }} {...other}>
+    <div style={{ position: 'relative', padding: 4 }} {...other}>
       <button
         type="button"
         css={styles.item(active)}

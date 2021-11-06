@@ -7,6 +7,19 @@ import { ToolbarItemProps, ToolbarProps } from '../src/layout/Toolbar';
 
 export default {
   title: 'Layout/Toolbar',
+  args: {
+    height: 200,
+  },
+  argTypes: {
+    height: {
+      control: {
+        type: 'range',
+        min: 50,
+        max: 500,
+        step: 10,
+      },
+    },
+  },
 } as Meta<ToolbarProps>;
 
 const items: Array<{ children: ReactNode; title: string; id: string }> = [
@@ -25,7 +38,7 @@ const items: Array<{ children: ReactNode; title: string; id: string }> = [
   { id: 'test5', children: 't', title: 'Test 5' },
 ];
 
-export function VerticalToolbar() {
+export function VerticalToolbar(props: { height: number }) {
   const [state, setState] = useState(items[1]);
 
   function handleChange({ id, children, title }: ToolbarItemProps) {
@@ -33,7 +46,15 @@ export function VerticalToolbar() {
   }
 
   return (
-    <div style={{ display: 'flex', maxHeight: 200 }}>
+    <div
+      style={{
+        display: 'flex',
+        height: props.height,
+      }}
+    >
+      <div style={{ padding: 5 }}>
+        <p>Something on the left</p>
+      </div>
       <Toolbar orientation="vertical">
         {items.map((item) => (
           <Toolbar.Item
