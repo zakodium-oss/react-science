@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["stories"]
+  "exclude": ["src/app", "stories", "tests", "playwright.config.ts"]
 }

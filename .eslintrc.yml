@@ -3,3 +3,4 @@ rules:
   # TODO: re-enable this rule once eslint-plugin-import supports the "exports" field.
   # See https://github.com/benmosher/eslint-plugin-import/issues/2132
   'import/no-unresolved': off
+  'jest/no-done-callback': off
