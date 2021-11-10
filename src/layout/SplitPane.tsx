@@ -63,7 +63,7 @@ export function SplitPane(props: SplitPaneProps) {
     return [Number(value), type];
   });
 
-  const { onMouseDown, onMouseUp,onMouseLeave } = useSplitPaneSize({
+  const { onMouseDown, onMouseUp, onMouseLeave } = useSplitPaneSize({
     onChange,
     orientation,
     parentRef,

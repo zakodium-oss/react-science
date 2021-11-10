@@ -119,7 +119,7 @@ export function useSplitPaneSize(options: HookOptions) {
     },
     onMouseLeave: () => {
       mouseRef.current.moving = false;
-    }
+    },
   };
 }
 
