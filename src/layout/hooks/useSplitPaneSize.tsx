@@ -115,9 +115,11 @@ export function useSplitPaneSize(options: HookOptions) {
         x: event.clientX,
         y: event.clientY,
       };
-
       mouseDownCallback();
     },
+    onMouseLeave: () => {
+      mouseRef.current.moving = false;
+    }
   };
 }
 

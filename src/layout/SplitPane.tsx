@@ -63,7 +63,7 @@ export function SplitPane(props: SplitPaneProps) {
     return [Number(value), type];
   });
 
-  const { onMouseDown, onMouseUp } = useSplitPaneSize({
+  const { onMouseDown, onMouseUp,onMouseLeave } = useSplitPaneSize({
     onChange,
     orientation,
     parentRef,
@@ -75,6 +75,7 @@ export function SplitPane(props: SplitPaneProps) {
     <div
       ref={parentRef}
       onMouseUp={onMouseUp}
+      onMouseLeave={onMouseLeave}
       css={css([
         { display: 'flex', height: '100%', width: '100%' },
         orientation === 'vertical' && { flexDirection: 'column' },
