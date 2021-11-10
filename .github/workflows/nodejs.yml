@@ -8,7 +8,13 @@ on:
 
 jobs:
   nodejs:
+    # Documentation: https://github.com/zakodium/workflows#nodejs-ci
     uses: zakodium/workflows/.github/workflows/nodejs.yml@nodejs-v1
     with:
       node-version-matrix: '[16]'
       lint-check-types: true
+      npm-setup-command: npm ci
+      # TODO: create a separate workflow for playwright tests to use browser matrix.
+      test-setup-command: |
+        npx playwright install-deps
+        npx playwright install

@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.9.2](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.1...v0.9.2) (2021-11-08)
+
+
+### Bug Fixes
+
+* disable shadow root ([36e0561](https://www.github.com/cheminfo/analysis-ui-components/commit/36e056193a7f4362607a2f6f85cb9312f80dc5cd))
+
 ### [0.9.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.0...v0.9.1) (2021-11-06)
 
 
