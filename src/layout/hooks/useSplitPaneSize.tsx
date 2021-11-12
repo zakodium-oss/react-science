@@ -39,11 +39,9 @@ export function useSplitPaneSize(options: HookOptions) {
         if (type === 'px') {
           setSize(([currentSize]) => {
             if (parentRef.current) {
-              const movement =
-                orientation === 'horizontal' ? movementX : movementY;
               const newSize = getValueFromSplitter(
                 sideSeparation,
-                movement,
+                orientation === 'horizontal' ? movementX : movementY,
                 currentSize,
                 type,
                 {
@@ -55,35 +53,6 @@ export function useSplitPaneSize(options: HookOptions) {
                 },
               );
               if (newSize === currentSize) {
-                for (let i = movement - 1; i > 0; i--) {
-                  if (
-                    getValueFromSplitter(
-                      sideSeparation,
-                      movement,
-                      currentSize,
-                      type,
-                      {
-                        min: 50,
-                        max:
-                          orientation === 'horizontal'
-                            ? parentRef.current.clientWidth - 50
-                            : parentRef.current.clientHeight - 50,
-                      },
-                    ) !== currentSize
-                  ) {
-                    mouseRef.current = {
-                      moving: true,
-                      x:
-                        orientation === 'horizontal'
-                          ? mouseRef.current.x + movement
-                          : mouseRef.current.x,
-                      y:
-                        orientation === 'horizontal'
-                          ? mouseRef.current.y
-                          : mouseRef.current.y + movement,
-                    };
-                  }
-                }
                 changed = false;
               }
               return [newSize, type];
@@ -99,44 +68,14 @@ export function useSplitPaneSize(options: HookOptions) {
                   (movementX / parentRef.current?.clientWidth) * 100;
                 const diffY =
                   (movementY / parentRef.current?.clientHeight) * 100;
-
-                const diff = orientation === 'horizontal' ? diffX : diffY;
                 let newSize = getValueFromSplitter(
                   sideSeparation,
-                  diff,
+                  orientation === 'horizontal' ? diffX : diffY,
                   currentSize,
                   type,
                   { min: 5, max: 95 },
                 );
                 if (newSize === currentSize) {
-                  for (let i = diff - 1; i > 0; i--) {
-                    if (
-                      getValueFromSplitter(
-                        sideSeparation,
-                        i,
-                        currentSize,
-                        type,
-                        {
-                          min: 5,
-                          max: 95,
-                        },
-                      ) !== currentSize
-                    ) {
-                      mouseRef.current = {
-                        moving: true,
-                        x:
-                          orientation === 'horizontal'
-                            ? mouseRef.current.x +
-                              (i * parentRef.current?.clientWidth) / 100
-                            : mouseRef.current.x,
-                        y:
-                          orientation === 'horizontal'
-                            ? mouseRef.current.y
-                            : mouseRef.current.y +
-                              (i * parentRef.current?.clientHeight) / 100,
-                      };
-                    }
-                  }
                   changed = false;
                 }
                 return [newSize, type];
