@@ -32,16 +32,16 @@ export function useSplitPaneSize(options: HookOptions) {
   const mouseDownCallback = useCallback(() => {
     function onMouseMove(event: MouseEvent) {
       if (mouseRef.current.moving) {
-        let changed = true;
         const { clientX, clientY } = event;
         const movementX = clientX - mouseRef.current.x;
         const movementY = clientY - mouseRef.current.y;
+        const movement = orientation === 'horizontal' ? movementX : movementY; //the movement expected
         if (type === 'px') {
           setSize(([currentSize]) => {
             if (parentRef.current) {
               const newSize = getValueFromSplitter(
                 sideSeparation,
-                orientation === 'horizontal' ? movementX : movementY,
+                movement,
                 currentSize,
                 type,
                 {
@@ -52,9 +52,28 @@ export function useSplitPaneSize(options: HookOptions) {
                       : parentRef.current.clientHeight - 50,
                 },
               );
-              if (newSize === currentSize) {
-                changed = false;
+              if (newSize !== currentSize) {
+                let movement1; //the real movement
+                if (movement * (newSize - currentSize) > 0) {
+                  //check that movement and movement1 have the same sign
+                  movement1 = newSize - currentSize;
+                } else {
+                  movement1 = currentSize - newSize;
+                }
+                mouseRef.current = {
+                  //set x y of the separation
+                  moving: true,
+                  x:
+                    orientation === 'horizontal'
+                      ? mouseRef.current.x + movement1
+                      : mouseRef.current.x,
+                  y:
+                    orientation === 'horizontal'
+                      ? mouseRef.current.y
+                      : mouseRef.current.y + movement1,
+                };
               }
+
               return [newSize, type];
             }
 
@@ -64,19 +83,44 @@ export function useSplitPaneSize(options: HookOptions) {
           if (parentRef.current) {
             setSize(([currentSize]) => {
               if (parentRef.current) {
-                const diffX =
-                  (movementX / parentRef.current?.clientWidth) * 100;
+                const diffX = (movementX / parentRef.current.clientWidth) * 100;
                 const diffY =
-                  (movementY / parentRef.current?.clientHeight) * 100;
+                  (movementY / parentRef.current.clientHeight) * 100;
+                const diff = orientation === 'horizontal' ? diffX : diffY; //the diffrance expected
                 let newSize = getValueFromSplitter(
                   sideSeparation,
-                  orientation === 'horizontal' ? diffX : diffY,
+                  diff,
                   currentSize,
                   type,
                   { min: 5, max: 95 },
                 );
-                if (newSize === currentSize) {
-                  changed = false;
+                if (newSize !== currentSize) {
+                  let diff1; //the real diffrence
+                  if (diff * (newSize - currentSize) > 0) {
+                    //check that diff and diff1 have the same sign
+                    diff1 =
+                      Math.round(
+                        (newSize - currentSize + Number.EPSILON) * 100,
+                      ) / 100;
+                  } else {
+                    diff1 =
+                      Math.round(
+                        (currentSize - newSize + Number.EPSILON) * 100,
+                      ) / 100;
+                  }
+                  mouseRef.current = {
+                    moving: true,
+                    x:
+                      orientation === 'horizontal'
+                        ? mouseRef.current.x +
+                          (diff1 * parentRef.current.clientWidth) / 100
+                        : mouseRef.current.x,
+                    y:
+                      orientation === 'horizontal'
+                        ? mouseRef.current.y
+                        : mouseRef.current.y +
+                          (diff1 * parentRef.current.clientHeight) / 100,
+                  };
                 }
                 return [newSize, type];
               }
@@ -84,13 +128,6 @@ export function useSplitPaneSize(options: HookOptions) {
               return [currentSize, type];
             });
           }
-        }
-        if (changed) {
-          mouseRef.current = {
-            moving: true,
-            x: clientX,
-            y: clientY,
-          };
         }
       }
 
@@ -129,7 +166,6 @@ function getValueFromSplitter(
   options: { min: number; max: number },
 ) {
   let val = 0;
-
   if (position === 'end') {
     val = currentSize - value;
   } else {
