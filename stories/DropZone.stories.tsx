@@ -1,11 +1,11 @@
-import { Meta } from '@storybook/react';
 import React from 'react';
 
-import DropZone from '../src/layout/DropZone';
+import DropZone from '../src/layout/DropZone/index';
 
 export default {
   title: 'Layout/DropZone',
-} as Meta;
+};
+
 export function TestDropZone() {
   return <DropZone />;
 }
