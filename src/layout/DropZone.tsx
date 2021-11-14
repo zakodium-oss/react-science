@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { MdCloudUpload } from 'react-icons/md';
 
-export default function DropZone() {
+export default function DropZone(props?: { color?: string }) {
   const [alert, setAlert] = useState('');
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
@@ -31,13 +31,14 @@ export default function DropZone() {
         css={css`
           position: relative;
           height: 200px;
-          border: 2px dashed black;
+          border: 2px dashed ${props ? props.color : 'black'};
+          color: ${props ? props.color : 'black'};
           border-radius: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
           &:hover {
-            opacity: 0.9;
+            opacity: 0.8;
           }
         `}
       >
