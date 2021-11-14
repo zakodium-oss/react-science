@@ -1,8 +1,9 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { MdCloudUpload } from 'react-icons/md';
 import './style.css';
-
-import uploadImg from './upload.png';
 
 export default function DropZone() {
   const [alert, setAlert] = useState('');
@@ -26,16 +27,52 @@ export default function DropZone() {
 
   return (
     <>
-      <div {...getRootProps()} className="drop-file-input">
-        <div className="drop-file-input__label">
-          <img src={uploadImg} alt="" />
+      <div
+        {...getRootProps()}
+        css={css`
+          position: relative;
+          height: 200px;
+          border: 2px dashed black;
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            opacity: 0.9;
+          }
+        `}
+      >
+        <div
+          css={css`
+            text-align: center;
+            font-weight: 600;
+            padding: 10px;
+          `}
+        >
+          <MdCloudUpload
+            size={70}
+            css={css`
+              margin: auto;
+            `}
+          />
           {isDragActive ? (
             <p>Drop the files here</p>
           ) : (
             <p>Drag & Drop your files here, or click to select files</p>
           )}
         </div>
-        <input {...getInputProps()} />
+        <input
+          css={css`
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+          `}
+          {...getInputProps()}
+        />
       </div>
       <div>{alert}</div>
     </>

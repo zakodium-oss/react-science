@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DropZone from '../src/layout/DropZone/index';
+import DropZone from '../src/layout/DropZone';
 
 export default {
   title: 'Layout/DropZone',
