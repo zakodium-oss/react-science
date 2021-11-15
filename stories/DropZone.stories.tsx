@@ -5,8 +5,18 @@ import DropZone from '../src/layout/DropZone';
 
 export default {
   title: 'Layout/DropZone',
+  args: {
+    color: 'black',
+  },
+  argTypes: {
+    color: {
+      control: {
+        type: 'color',
+      },
+    },
+  },
 } as Meta;
 
-export function TestDropZone() {
-  return <DropZone color="red" />; //we can add a color prop or it's black in default
+export function TestDropZone(props: { color: string }) {
+  return <DropZone color={props.color} />; //we can add a color prop or it's black in default
 }
