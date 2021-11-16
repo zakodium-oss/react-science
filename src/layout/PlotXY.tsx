@@ -1,43 +1,55 @@
 import * as d3 from 'd3';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+interface MyData {
+  x: number;
+  y: number;
+}
 function LineChart() {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const data = [
-    65, 50, 40, 90, 15, 20, 8, 90, 65, 50, 40, 90, 15, 20, 8, 90, 65, 90, 15,
-    20, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90,
-    65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90,
-    65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90,
-    65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90,
-    65, 8, 90, 65, 8, 90, 70, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90,
-    65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65, 8, 90, 65,
-  ];
+  const createData = (dataX: number[], dataY: number[]): MyData[] => {
+    const data: MyData[] = [];
+    if (dataX.length !== dataY.length) return [];
+    let length = dataX.length;
+    for (let i = 0; i < length; i++) {
+      data[i] = { x: dataX[i], y: dataY[i] };
+    }
+    return data;
+  };
+  //data
+  const [dataX] = useState<number[]>([
+    4, 5, 12, 13, 20, 25, 31, 32, 37, 41, 50, 52, 55,
+  ]);
+  //const MonotoneX = true;
+  const minX = 4;
+  const maxX = 55;
+  const [dataY] = useState<number[]>([
+    55, 41, 451, 45, 555, 55, 85, 105, 150, 190, 100, 616, 65,
+  ]);
+  const [data] = useState<MyData[]>(createData(dataX, dataY));
+  //const MonotoneY = false;
+  const minY = 0;
+  const maxY = 700;
   const svgRef = useRef<SVGSVGElement>(null);
+
   useEffect(() => {
     const w = 700;
-    const h = 100;
+    const h = 300;
     const svg = d3
       .select(svgRef.current)
       .attr('width', w)
       .attr('height', h)
       .style('background', '#d3d3d3')
       .style('overflow', 'visible')
-      .style('margin', '50px');
+      .style('margin', '40px');
 
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, data.length - 1])
-      .range([0, w]);
-    const yScale = d3.scaleLinear().domain([0, h]).range([h, 0]);
+    const xScale = d3.scaleLinear<number>().domain([minX, maxX]).range([0, w]);
+    const yScale = d3.scaleLinear<number>().domain([minY, maxY]).range([h, 0]);
     const generateScaledLine = d3
-      .line()
-      .x((d, i) => xScale(i))
-      .y(yScale)
-      .curve(d3.curveCardinal);
-    const xAxis = d3
-      .axisBottom(xScale)
-      .ticks(data.length / 10)
-      .tickFormat((i) => i);
+      .line<MyData>()
+      .x((d) => xScale(d.x))
+      .y((d) => yScale(d.y))
+      .curve(d3.curveMonotoneX);
+    const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale).ticks(5);
     svg.append('g').call(xAxis).attr('transform', `translate(0,${h})`);
     svg.append('g').call(yAxis);
@@ -49,7 +61,7 @@ function LineChart() {
       .attr('fill', 'none')
       .attr('stroke', 'black');
     drawChart();
-  }, [data]);
+  }, [data, minX, maxX, minY, maxY]);
 
   function drawChart() {
     // Add logic to draw the chart here
