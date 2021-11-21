@@ -7,6 +7,7 @@ export default {
   title: 'Layout/DropZone',
   args: {
     color: 'black',
+    width: '50%',
   },
   argTypes: {
     color: {
@@ -14,9 +15,14 @@ export default {
         type: 'color',
       },
     },
+    width: {
+      control: {
+        type: 'text',
+      },
+    },
   },
 } as Meta;
 
-export function TestDropZone(props: { color: string }) {
-  return <DropZone color={props.color} />; //we can add a color prop or it's black in default
+export function TestDropZone(props: { color: string; width: string }) {
+  return <DropZone color={props.color} width={props.width} />; //we can add a color prop or it's black in default
 }
