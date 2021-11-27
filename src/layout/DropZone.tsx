@@ -61,11 +61,16 @@ export default function DropZone(props?: { color?: string; width?: string }) {
               `}
             >
               {/* we can use PlaceHolder image to see the diffrance*/}
-              <div css={css`
-                width: 100%;
-                background-color:red;
-                color:white;
-              `}> Test </div>
+              <div
+                css={css`
+                  width: 100%;
+                  background-color: red;
+                  color: white;
+                `}
+              >
+                {' '}
+                Test{' '}
+              </div>
             </div>
           ) : (
             ''
