@@ -58,11 +58,15 @@ export default function DropZone(props?: { color?: string; width?: string }) {
               css={css`
                 width: 100%;
                 z-index: -1;
+                padding: 0;
+                opacity: ${isDragActive ? 0.3 : 1};
               `}
             >
               {/* we can use PlaceHolder image to see the diffrance*/}
               <div
                 css={css`
+                  margin: 0;
+                  height: 100%;
                   width: 100%;
                   background-color: red;
                   color: white;
