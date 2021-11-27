@@ -60,8 +60,12 @@ export default function DropZone(props?: { color?: string; width?: string }) {
                 z-index: -1;
               `}
             >
-              {/* we can use PlaceHolder image to see the diffrance
-              <img src={PlaceHolderImage} />*/}
+              {/* we can use PlaceHolder image to see the diffrance*/}
+              <div css={css`
+                width: 100%;
+                background-color:red;
+                color:white;
+              `}> Test </div>
             </div>
           ) : (
             ''
