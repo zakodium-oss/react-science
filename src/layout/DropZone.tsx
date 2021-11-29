@@ -35,8 +35,6 @@ export default function DropZone(props?: { color?: string; width?: string }) {
           overflow: hidden;
           position: relative;
           width: ${props ? props.width : '100%'};
-          min-width: 400px;
-          min-height: 300px;
           border: 2px dashed ${props ? props.color : 'black'};
           color: ${props ? props.color : 'black'};
           border-radius: 20px;
@@ -62,7 +60,7 @@ export default function DropZone(props?: { color?: string; width?: string }) {
                 opacity: ${isDragActive ? 0.3 : 1};
               `}
             >
-              {/* we can use PlaceHolder image to see the diffrance*/}
+              {/* we can use PlaceHolder to see the diffrance*/}
               <div
                 css={css`
                   margin: 0;
@@ -72,13 +70,10 @@ export default function DropZone(props?: { color?: string; width?: string }) {
                   color: white;
                 `}
               >
-                {' '}
-                Test{' '}
+                Test
               </div>
             </div>
-          ) : (
-            ''
-          )}
+          ) : null}
 
           {isDragActive ? (
             <>
@@ -115,13 +110,9 @@ export default function DropZone(props?: { color?: string; width?: string }) {
                     `}
                   />
                 </>
-              ) : (
-                ''
-              )}
+              ) : null}
             </>
-          ) : active ? (
-            ''
-          ) : (
+          ) : active ? null : (
             <p>Drag & Drop your files here, or click to select files</p>
           )}
         </div>
