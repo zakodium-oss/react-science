@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { MdCloudUpload } from 'react-icons/md';
 
 export default function DropZone(props?: {
-  color?: string;
+  color: string;
   width?: string;
   state: boolean;
 }) {
@@ -38,6 +38,7 @@ export default function DropZone(props?: {
         css={css`
           overflow: hidden;
           position: relative;
+          height: 500px;
           width: ${props ? props.width : '100%'};
           ${!active || isDragActive
             ? `border: 2px dashed ${props ? props.color : 'black'};`
@@ -72,7 +73,7 @@ export default function DropZone(props?: {
                 css={css`
                   margin: 0;
                   padding: 0;
-                  height: 100%;
+                  height: 500px;
                   width: 100%;
                   background-color: blue;
                 `}
