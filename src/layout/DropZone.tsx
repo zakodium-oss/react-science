@@ -38,7 +38,7 @@ export default function DropZone(props?: {
         css={css`
           overflow: hidden;
           position: relative;
-          height: 500px;
+          height: 200px;
           width: ${props ? props.width : '100%'};
           ${!active || isDragActive
             ? `border: 2px dashed ${props ? props.color : 'black'};`
@@ -73,9 +73,11 @@ export default function DropZone(props?: {
                 css={css`
                   margin: 0;
                   padding: 0;
-                  height: 500px;
+                  height: 200px;
                   width: 100%;
                   background-color: blue;
+                  position: relative;
+                  z-index: 10;
                 `}
               />
             </div>
@@ -131,7 +133,7 @@ export default function DropZone(props?: {
             width: 100%;
             height: 100%;
             cursor: pointer;
-            z-index: ${active ? -2 : 1};
+            z-index: ${active ? '-2' : '1'};
           `}
           {...getInputProps()}
         />
