@@ -1,13 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { MdCloudUpload } from 'react-icons/md';
 
-export default function DropZone(props?: { color?: string; width?: string }) {
+export default function DropZone(props?: {
+  color?: string;
+  width?: string;
+  state: boolean;
+}) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [alert, setAlert] = useState('');
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(props ? props.state : false);
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
     acceptedFiles.forEach((file: Blob) => {
@@ -35,7 +39,10 @@ export default function DropZone(props?: { color?: string; width?: string }) {
           overflow: hidden;
           position: relative;
           width: ${props ? props.width : '100%'};
-          border: 2px dashed ${props ? props.color : 'black'};
+          ${!active || isDragActive
+            ? `border: 2px dashed ${props ? props.color : 'black'};`
+            : null}
+
           color: ${props ? props.color : 'black'};
           border-radius: 20px;
           display: flex;
@@ -60,18 +67,16 @@ export default function DropZone(props?: { color?: string; width?: string }) {
                 opacity: ${isDragActive ? 0.3 : 1};
               `}
             >
-              {/* we can use PlaceHolder to see the diffrance*/}
+              {/*PlaceHolder*/}
               <div
                 css={css`
                   margin: 0;
+                  padding: 0;
                   height: 100%;
                   width: 100%;
-                  background-color: red;
-                  color: white;
+                  background-color: blue;
                 `}
-              >
-                Test
-              </div>
+              />
             </div>
           ) : null}
 

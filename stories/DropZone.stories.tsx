@@ -23,6 +23,9 @@ export default {
   },
 } as Meta;
 
-export function TestDropZone(props: { color: string; width: string }) {
-  return <DropZone color={props.color} width={props.width} />; //we can add a color prop or it's black in default
+export function Empty(props: { color: string; width: string }) {
+  return <DropZone state={false} color={props.color} width={props.width} />; //we can add a color prop or it's black in default
+}
+export function Active(props: { color: string; width: string }) {
+  return <DropZone state color={props.color} width={props.width} />; //we can add a color prop or it's black in default
 }
