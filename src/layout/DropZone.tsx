@@ -34,7 +34,7 @@ export default function DropZone(props?: {
   return (
     <>
       <div
-        {...getRootProps()}
+        {...getRootProps({ onClick: (event) => event.stopPropagation() })}
         css={css`
           overflow: hidden;
           position: relative;
@@ -121,7 +121,7 @@ export default function DropZone(props?: {
               ) : null}
             </>
           ) : active ? null : (
-            <p>Drag & Drop your files here, or click to select files</p>
+            <p>Drag & Drop your files here</p>
           )}
         </div>
         <input
@@ -132,8 +132,6 @@ export default function DropZone(props?: {
             left: 0;
             width: 100%;
             height: 100%;
-            cursor: pointer;
-            z-index: ${active ? '-2' : '1'};
           `}
           {...getInputProps()}
         />
