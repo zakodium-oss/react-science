@@ -7,7 +7,7 @@ export default {
   title: 'Layout/DropZone',
   args: {
     color: 'black',
-    width: '50%',
+    children: <div style={{ backgroundColor: 'blue' }}>hello world</div>,
   },
   argTypes: {
     color: {
@@ -15,17 +15,12 @@ export default {
         type: 'color',
       },
     },
-    width: {
-      control: {
-        type: 'text',
-      },
-    },
   },
 } as Meta;
 
-export function Empty(props: { color: string; width: string }) {
-  return <DropZone state={false} color={props.color} width={props.width} />; //we can add a color prop or it's black in default
+export function Empty(props: { color: string }) {
+  return <DropZone color={props.color} />; //we can add a color prop or it's black in default
 }
-export function Active(props: { color: string; width: string }) {
-  return <DropZone state color={props.color} width={props.width} />; //we can add a color prop or it's black in default
+export function Active(props: { color: string; children: JSX.Element }) {
+  return <DropZone color={props.color} children={props.children} />; //we can add a color prop or it's black in default
 }

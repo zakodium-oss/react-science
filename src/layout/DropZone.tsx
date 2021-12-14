@@ -4,14 +4,13 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { MdCloudUpload } from 'react-icons/md';
 
-export default function DropZone(props?: {
-  color: string;
-  width?: string;
-  state: boolean;
+export default function DropZone(props: {
+  color?: string;
+  children?: JSX.Element;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [alert, setAlert] = useState('');
-  const [active, setActive] = useState(props ? props.state : false);
+  const [active, setActive] = useState(props.children ? true : false);
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
     acceptedFiles.forEach((file: Blob) => {
@@ -39,12 +38,12 @@ export default function DropZone(props?: {
           overflow: hidden;
           position: relative;
           height: 200px;
-          width: ${props ? props.width : '100%'};
+          width: 100%;
           ${!active || isDragActive
-            ? `border: 2px dashed ${props ? props.color : 'black'};`
+            ? `border: 2px dashed ${props.color ? props.color : 'black'};`
             : null}
 
-          color: ${props ? props.color : 'black'};
+          color: ${props.color ? props.color : 'black'};
           border-radius: 20px;
           display: flex;
           align-items: center;
@@ -69,17 +68,7 @@ export default function DropZone(props?: {
               `}
             >
               {/*PlaceHolder*/}
-              <div
-                css={css`
-                  margin: 0;
-                  padding: 0;
-                  height: 200px;
-                  width: 100%;
-                  background-color: blue;
-                  position: relative;
-                  z-index: 10;
-                `}
-              />
+              {props.children}
             </div>
           ) : null}
 
