@@ -4,29 +4,21 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { MdCloudUpload } from 'react-icons/md';
 
-export default function EmptyDropZone(props: { color?: string }) {
-  const { color = 'black' } = props;
-  const [alert, setAlert] = useState('');
+export default function EmptyDropZone(props: {
+  color?: string;
+  Drop: (files: unknown) => void;
+}) {
+  const { color = 'black', Drop } = props;
   const [active, setActive] = useState(false);
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    acceptedFiles.forEach((file: Blob) => {
-      const reader = new FileReader();
 
-      reader.onabort = () => setAlert('file reading was aborted');
-      reader.onerror = () => setAlert('file reading has failed');
-      reader.onload = () => {
-        setActive(true);
-        // Do whatever you want with the file contents
-        //const binaryStr = reader.result;
-        setAlert('file uploaded');
-        //console.log(binaryStr);
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      Drop(acceptedFiles);
+      setActive(true);
+    },
+    [Drop],
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
   return (
     <>
       <div
@@ -59,8 +51,6 @@ export default function EmptyDropZone(props: { color?: string }) {
               `}
             >
               {/*PlaceHolder*/}
-              {/**we can delete alert visualisation */}
-              <div>{alert}</div>
             </div>
           ) : null}
 

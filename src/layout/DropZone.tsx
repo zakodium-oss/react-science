@@ -7,6 +7,7 @@ import { MdCloudUpload } from 'react-icons/md';
 export default function DropZone(props: {
   color?: string;
   children?: JSX.Element;
+  Drop: (files?: unknown) => void;
 }) {
   const {
     color = 'black',
@@ -20,27 +21,17 @@ export default function DropZone(props: {
         hello world
       </div>
     ),
+    Drop,
   } = props;
 
-  const [alert, setAlert] = useState('');
-  const [active, setActive] = useState(children ? true : false);
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    acceptedFiles.forEach((file: Blob) => {
-      const reader = new FileReader();
-
-      reader.onabort = () => setAlert('file reading was aborted');
-      reader.onerror = () => setAlert('file reading has failed');
-      reader.onload = () => {
-        setActive(true);
-        // Do whatever you want with the file contents
-        //const binaryStr = reader.result;
-        setAlert('file uploaded');
-        //console.log(binaryStr);
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
+  const [active, setActive] = useState<boolean>(children ? true : false);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      Drop(acceptedFiles);
+      setActive(true);
+    },
+    [Drop],
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
@@ -75,8 +66,6 @@ export default function DropZone(props: {
             >
               {/*PlaceHolder*/}
               {children}
-              {/**we can delete alert visualisation */}
-              <div>{alert}</div>
             </div>
           ) : null}
 
