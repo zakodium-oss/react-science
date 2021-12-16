@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { MdCloudUpload } from 'react-icons/md';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export default function DropZone(props: {
   color?: string;
@@ -79,7 +79,7 @@ export default function DropZone(props: {
                   transform: translate(-50%, -50%);
                 `}
               >
-                <MdCloudUpload
+                <FaCloudUploadAlt
                   size={70}
                   css={css`
                     margin: auto;
