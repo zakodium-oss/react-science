@@ -4,26 +4,10 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { MdCloudUpload } from 'react-icons/md';
 
-export default function DropZone(props: {
-  color?: string;
-  children?: JSX.Element;
-}) {
-  const {
-    color = 'black',
-    children = (
-      <div
-        style={{
-          backgroundColor: 'blue',
-          height: '150px',
-        }}
-      >
-        hello world
-      </div>
-    ),
-  } = props;
-
+export default function EmptyDropZone(props: { color?: string }) {
+  const { color = 'black' } = props;
   const [alert, setAlert] = useState('');
-  const [active, setActive] = useState(children ? true : false);
+  const [active, setActive] = useState(false);
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
     acceptedFiles.forEach((file: Blob) => {
@@ -46,10 +30,11 @@ export default function DropZone(props: {
   return (
     <>
       <div
-        {...getRootProps({ onClick: (event) => event.stopPropagation() })}
+        {...getRootProps()}
         css={css`
           overflow: hidden;
           position: relative;
+          min-height: 150px;
           height: 100%;
           width: 100%;
           ${!active || isDragActive ? `border: 2px dashed ${color};` : null}
@@ -74,7 +59,6 @@ export default function DropZone(props: {
               `}
             >
               {/*PlaceHolder*/}
-              {children}
               {/**we can delete alert visualisation */}
               <div>{alert}</div>
             </div>
@@ -116,7 +100,7 @@ export default function DropZone(props: {
               ) : null}
             </>
           ) : active ? null : (
-            <p>Drag & Drop your files here</p>
+            <p>Drag & Drop your files here, or click to select files</p>
           )}
         </div>
         <input
