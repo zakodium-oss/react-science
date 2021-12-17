@@ -7,7 +7,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 export default function DropZone(props: {
   color?: string;
   children?: JSX.Element;
-  Drop: (files?: unknown) => void;
+  Drop: (files?: File[]) => void;
 }) {
   const {
     color = 'black',
@@ -18,7 +18,7 @@ export default function DropZone(props: {
           height: '150px',
         }}
       >
-        hello world
+        DropZone Children
       </div>
     ),
     Drop,

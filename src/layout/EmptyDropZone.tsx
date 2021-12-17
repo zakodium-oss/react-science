@@ -6,10 +6,10 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export default function EmptyDropZone(props: {
   color?: string;
-  Drop: (files: unknown) => void;
+  Drop: (files: File[]) => void;
 }) {
   const { color = 'black', Drop } = props;
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState<boolean>(false);
 
   const onDrop = useCallback(
     (acceptedFiles) => {
