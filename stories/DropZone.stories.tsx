@@ -1,8 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import DropZone from '../src/layout/DropZone';
-import EmptyDropZone from '../src/layout/EmptyDropZone';
+import { DropZoneContainer, DropZone } from '../src/index';
 
 export default {
   title: 'Layout/DropZone',
@@ -26,12 +25,12 @@ interface DropzoneStoryProps {
   onDrop: (files: File[]) => void;
 }
 
-export function Empty(props: DropzoneStoryProps) {
-  return <EmptyDropZone color={props.color} onDrop={props.onDrop} />;
+export function DropZoneControl(props: DropzoneStoryProps) {
+  return <DropZone color={props.color} onDrop={props.onDrop} />;
 }
-export function Active(props: DropzoneStoryProps) {
+export function DropZoneContainerControl(props: DropzoneStoryProps) {
   return (
-    <DropZone color={props.color} onDrop={props.onDrop}>
+    <DropZoneContainer color={props.color} onDrop={props.onDrop}>
       <div
         style={{
           backgroundColor: 'blue',
@@ -40,6 +39,6 @@ export function Active(props: DropzoneStoryProps) {
       >
         DropZone children
       </div>
-    </DropZone>
+    </DropZoneContainer>
   );
 }
