@@ -5,9 +5,9 @@ import { useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export default function DropZone(props: {
-  color?: string;
-  children?: JSX.Element;
-  Drop: (files?: File[]) => void;
+  color: string;
+  children: JSX.Element;
+  onDrop: (files?: File[]) => void;
 }) {
   const {
     color = 'black',
@@ -18,10 +18,10 @@ export default function DropZone(props: {
           height: '150px',
         }}
       >
-        DropZone Children
+        DropZone Children Undefined
       </div>
     ),
-    Drop,
+    onDrop: Drop,
   } = props;
 
   const [active, setActive] = useState<boolean>(children ? true : false);
