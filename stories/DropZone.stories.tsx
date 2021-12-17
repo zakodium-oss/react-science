@@ -1,5 +1,5 @@
-import { ComponentStory, Meta } from '@storybook/react';
-import React, { useCallback } from 'react';
+import { Meta } from '@storybook/react';
+import React from 'react';
 
 import DropZone from '../src/layout/DropZone';
 import EmptyDropZone from '../src/layout/EmptyDropZone';
@@ -15,41 +15,31 @@ export default {
         type: 'color',
       },
     },
+    onDrop: {
+      action: 'onDrop',
+    },
   },
 } as Meta;
 
-export function Empty(props: { color: string }) {
+interface DropzoneStoryProps {
+  color: string;
+  onDrop: (files: File[]) => void;
+}
+
+export function Empty(props: DropzoneStoryProps) {
+  return <EmptyDropZone color={props.color} onDrop={props.onDrop} />;
+}
+export function Active(props: DropzoneStoryProps) {
   return (
-    <EmptyDropZone
-      color={props.color}
-      onDrop={useCallback(() => {
-        //test
-      }, [])}
-    />
+    <DropZone color={props.color} onDrop={props.onDrop}>
+      <div
+        style={{
+          backgroundColor: 'blue',
+          height: '150px',
+        }}
+      >
+        DropZone children
+      </div>
+    </DropZone>
   );
 }
-const ActiveTemp: ComponentStory<typeof DropZone> = (props: {
-  color: string;
-  children: JSX.Element;
-}) => (
-  <DropZone
-    color={props.color}
-    children={props.children}
-    onDrop={useCallback(() => {
-      //test
-    }, [])}
-  />
-);
-export const Active = ActiveTemp.bind({});
-Active.args = {
-  children: (
-    <div
-      style={{
-        backgroundColor: 'blue',
-        height: '150px',
-      }}
-    >
-      DropZone Children Undefined
-    </div>
-  ),
-};

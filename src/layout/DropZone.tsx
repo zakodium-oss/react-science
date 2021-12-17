@@ -1,38 +1,27 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export default function DropZone(props: {
-  color: string;
+  color?: string;
   children: JSX.Element;
-  onDrop: (files?: File[]) => void;
+  onDrop: (files: File[]) => void;
 }) {
-  const {
-    color = 'black',
-    children = (
-      <div
-        style={{
-          backgroundColor: 'blue',
-          height: '150px',
-        }}
-      >
-        DropZone Children Undefined
-      </div>
-    ),
-    onDrop: Drop,
-  } = props;
+  const { color = 'black', children, onDrop } = props;
 
   const [active, setActive] = useState<boolean>(children ? true : false);
-  const onDrop = useCallback(
+  const handleOnDrop = useCallback(
     (acceptedFiles) => {
-      Drop(acceptedFiles);
+      onDrop(acceptedFiles);
       setActive(true);
     },
-    [Drop],
+    [onDrop],
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: handleOnDrop,
+  });
 
   return (
     <>
@@ -64,7 +53,6 @@ export default function DropZone(props: {
                 opacity: ${isDragActive ? 0.3 : 1};
               `}
             >
-              {/*PlaceHolder*/}
               {children}
             </div>
           ) : null}
@@ -90,7 +78,6 @@ export default function DropZone(props: {
               </div>
               {active ? (
                 <>
-                  {/*grey blur*/}
                   <div
                     css={css`
                       position: absolute;
