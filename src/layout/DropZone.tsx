@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { MouseEventHandler, useCallback, useMemo, useState } from 'react';
+import { MouseEventHandler, useCallback, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
@@ -38,21 +38,15 @@ function DropZoneContent(props: {
 }) {
   const { color = 'black', children, onDrop, isContainer, onClick } = props;
 
-  const [active, setActive] = useState<boolean>(children ? true : false);
   const handleOnDrop = useCallback(
     (acceptedFiles) => {
       onDrop(acceptedFiles);
-      setActive(true);
     },
     [onDrop],
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleOnDrop,
   });
-
-  const description = isContainer
-    ? 'Drag & Drop your files here, or click to select files'
-    : 'Drag & Drop your files here';
 
   const getPropsOptions = useMemo(() => {
     if (onClick) {
@@ -65,10 +59,10 @@ function DropZoneContent(props: {
       css={css`
         overflow: hidden;
         position: relative;
-        ${isContainer ? null : 'min-height: 150px;'}
+        ${isContainer ? null : 'min-height: 150px; cursor: pointer;'}
         height: 100%;
         width: 100%;
-        ${!active || isDragActive ? `border: 2px dashed ${color};` : null}
+        ${isDragActive || !isContainer ? `border: 2px dashed ${color};` : null}
         color: ${color};
         display: flex;
         align-items: center;
@@ -82,16 +76,14 @@ function DropZoneContent(props: {
           width: 100%;
         `}
       >
-        {active ? (
-          <div
-            css={css`
-              width: 100%;
-              opacity: ${isDragActive ? 0.3 : 1};
-            `}
-          >
-            {children}
-          </div>
-        ) : null}
+        <div
+          css={css`
+            width: 100%;
+            opacity: ${isDragActive ? 0.3 : 1};
+          `}
+        >
+          {children}
+        </div>
 
         {isDragActive ? (
           <>
@@ -112,23 +104,9 @@ function DropZoneContent(props: {
 
               <p>Drop the files here</p>
             </div>
-            {active ? (
-              <>
-                <div
-                  css={css`
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.3);
-                  `}
-                />
-              </>
-            ) : null}
           </>
-        ) : active ? null : (
-          <p>{description}</p>
+        ) : isContainer ? null : (
+          <p>Drag and drop your files here, or click to select files</p>
         )}
       </div>
       <input
