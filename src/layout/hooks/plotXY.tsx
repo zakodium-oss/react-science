@@ -31,22 +31,20 @@ export function usePlotContext() {
   }
   return context;
 }
+
+//splitChildren function
 export function splitChildren(children: ReactNode) {
   let axes = null;
   let lineSeries = [];
 
   for (let child of Children.toArray(children)) {
     if (typeof child !== 'object' || !isValidElement(child)) {
-      // eslint-disable-next-line no-console
-      console.error('Invalid Plot child:', child);
       throw new Error('invalid Plot child');
     } else if (child.type === LineSerie) {
       lineSeries.push(child);
     } else if (child.type === XYAxis) {
       axes = child;
     } else {
-      // eslint-disable-next-line no-console
-      console.error('Invalid Plot child: ', child);
       throw new Error('invalid plot child');
     }
   }
