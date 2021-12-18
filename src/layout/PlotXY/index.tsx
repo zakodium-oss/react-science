@@ -1,7 +1,9 @@
 import { extent } from 'd3-array';
 import { scaleLinear, NumberValue } from 'd3-scale';
-import { transition } from 'd3-transition';
+import { Transition, transition } from 'd3-transition';
 import React from 'react';
+
+import { PlotContext } from '../hooks/plotXY';
 
 import LineSerie from './components/LineSerie';
 import XYAxis from './components/axis/xy-axis';
@@ -9,6 +11,13 @@ import XYAxis from './components/axis/xy-axis';
 export interface Data {
   name: number;
   value: number;
+}
+export type TransitionType = Transition<HTMLElement, unknown, null, undefined>;
+export interface Margins {
+  top?: 20;
+  right?: 20;
+  bottom?: 50;
+  left?: 50;
 }
 export default function PlotXY() {
   const data: Data[] = [
@@ -26,18 +35,18 @@ export default function PlotXY() {
     { name: 20, value: 80 },
   ];
   const parentWidth = 500;
-  const margins = {
+  const margins: Margins = {
     top: 20,
     right: 20,
     bottom: 50,
     left: 50,
   };
-
-  const width = parentWidth - margins.left - margins.right;
-  const height = 200 - margins.top - margins.bottom;
+  const { top = 0, left = 0, right = 0, bottom = 0 } = margins;
+  const width = parentWidth - left - right;
+  const height = 200 - top - bottom;
 
   const ticks = 5;
-  const t = transition().duration(1000);
+  const t: TransitionType = transition().duration(1000);
 
   const xScale = scaleLinear<number>()
     .domain(extent<Data, number>(data, (d) => d.name) as Iterable<NumberValue>)
@@ -49,28 +58,31 @@ export default function PlotXY() {
     .nice();
 
   return (
-    <div>
+    <PlotContext.Provider
+      value={{
+        width,
+        height,
+        margins,
+        xScale,
+        yScale,
+        ticks,
+        t,
+      }}
+    >
       <svg
         className="lineChartSvg"
-        width={width + margins.left + margins.right}
-        height={height + margins.top + margins.bottom}
+        width={width + left + right}
+        height={height + top + bottom}
       >
-        <g transform={`translate(${margins.left}, ${margins.top})`}>
+        <g transform={`translate(${left}, ${top})`}>
           <XYAxis
-            {...{
-              xScale,
-              yScale,
-              height,
-              width,
-              ticks,
-              t,
-              xLabel: 'labelx',
-              yLabel: 'labely',
-            }}
+            xLabel="labelx"
+            yLabel="labely"
+            labelStyle={{ fontSize: '18px' }}
           />
-          <LineSerie data={data} xScale={xScale} yScale={yScale} />
+          <LineSerie data={data} xScale={xScale} yScale={yScale} color="red" />
         </g>
       </svg>
-    </div>
+    </PlotContext.Provider>
   );
 }

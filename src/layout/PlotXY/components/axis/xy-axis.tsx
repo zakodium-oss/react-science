@@ -1,25 +1,19 @@
-import { ScaleLinear } from 'd3-scale';
 import React, { CSSProperties, ReactNode, SVGProps } from 'react';
+
+import { PlotContextType, usePlotContext } from '../../../hooks/plotXY';
 
 import Axis from './axis';
 
 const XYAxis = ({
-  xScale,
   xLabel,
-  yScale,
   yLabel,
-  height,
-  width,
   labelStyle,
 }: {
-  xScale: ScaleLinear<number, number>;
   xLabel?: string;
-  yScale: ScaleLinear<number, number>;
   yLabel?: string;
-  height: number;
-  width: number;
   labelStyle?: CSSProperties;
 }) => {
+  const { width, height, xScale, yScale } = usePlotContext() as PlotContextType;
   const xSettings = {
     scale: xScale,
     orient: 'bottom',
