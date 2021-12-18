@@ -26,6 +26,7 @@ export default function LineSerie(props: LineSerieProps) {
       .x((d) => xScale(d.name))
       .y((d) => yScale(d.value))
       .curve(curveMonotoneX);
+
     return lineGenerator(data);
   }, [data, xScale, yScale]);
   if (!path) return null;

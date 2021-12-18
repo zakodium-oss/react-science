@@ -13,7 +13,8 @@ export default function XYAxis({
   yLabel?: string;
   labelStyle?: CSSProperties;
 }) {
-  const { width, height, xScale, yScale } = usePlotContext() as PlotContextType;
+  const { width, height, xScale, yScale, ticks } =
+    usePlotContext() as PlotContextType;
   const xSettings = {
     scale: xScale,
     orient: 'bottom',
@@ -23,7 +24,7 @@ export default function XYAxis({
     scale: yScale,
     orient: 'left',
     transform: 'translate(0, 0)',
-    ticks: 6,
+    ticks: ticks,
   };
   return (
     <g className="axis-group">

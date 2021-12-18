@@ -7,7 +7,6 @@ import {
   useContext,
 } from 'react';
 
-import { TransitionType } from '../PlotXY';
 import LineSerie from '../PlotXY/components/LineSerie';
 import XYAxis from '../PlotXY/components/axis/xy-axis';
 
@@ -22,7 +21,6 @@ export interface PlotContextType {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   ticks: number;
-  t: TransitionType;
 }
 
 export const PlotContext = createContext<Partial<PlotContextType>>({});

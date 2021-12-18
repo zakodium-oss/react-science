@@ -1,6 +1,5 @@
 import { extent } from 'd3-array';
 import { scaleLinear, NumberValue } from 'd3-scale';
-import { Transition, transition } from 'd3-transition';
 import React, { ReactNode } from 'react';
 
 import { PlotContext, splitChildren } from '../hooks/plotXY';
@@ -9,7 +8,6 @@ export interface Data {
   name: number;
   value: number;
 }
-export type TransitionType = Transition<HTMLElement, unknown, null, undefined>;
 export interface Margins {
   top?: 20;
   right?: 20;
@@ -40,7 +38,6 @@ export default function PlotXY(props: PlotProps) {
   //const parentWidth = width + left + right;
   //const parentHeight = height + top + bottom;
   const { lineSeries, axes } = splitChildren(children);
-  const t: TransitionType = transition().duration(1000);
 
   const xScale = scaleLinear<number>()
     .domain(extent<Data, number>(data, (d) => d.name) as Iterable<NumberValue>)
@@ -63,7 +60,6 @@ export default function PlotXY(props: PlotProps) {
         xScale,
         yScale,
         ticks,
-        t,
       }}
     >
       <svg
