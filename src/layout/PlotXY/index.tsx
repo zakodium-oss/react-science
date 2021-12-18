@@ -26,11 +26,10 @@ export default function PlotXY() {
     { name: 20, value: 80 },
   ];
   const parentWidth = 500;
-
   const margins = {
     top: 20,
     right: 20,
-    bottom: 20,
+    bottom: 50,
     left: 50,
   };
 
@@ -57,7 +56,18 @@ export default function PlotXY() {
         height={height + margins.top + margins.bottom}
       >
         <g transform={`translate(${margins.left}, ${margins.top})`}>
-          <XYAxis {...{ xScale, yScale, height, ticks, t }} />
+          <XYAxis
+            {...{
+              xScale,
+              yScale,
+              height,
+              width,
+              ticks,
+              t,
+              xLabel: 'labelx',
+              yLabel: 'labely',
+            }}
+          />
           <LineSerie data={data} xScale={xScale} yScale={yScale} />
         </g>
       </svg>
