@@ -1,4 +1,4 @@
-import { curveMonotoneX, line } from 'd3-shape';
+import { line } from 'd3-shape';
 import React, { CSSProperties, useMemo } from 'react';
 
 import { Data } from '..';
