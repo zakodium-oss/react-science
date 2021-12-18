@@ -24,8 +24,7 @@ export default function LineSerie(props: LineSerieProps) {
     }
     const lineGenerator = line<Data>()
       .x((d) => xScale(d.name))
-      .y((d) => yScale(d.value))
-      .curve(curveMonotoneX);
+      .y((d) => yScale(d.value));
 
     return lineGenerator(data);
   }, [data, xScale, yScale]);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { axisBottom, axisLeft, AxisScale } from 'd3-axis';
 import { select, selectAll } from 'd3-selection';
 import React, { useEffect } from 'react';
