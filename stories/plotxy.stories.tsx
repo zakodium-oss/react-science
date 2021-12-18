@@ -11,7 +11,7 @@ export default {
 
 export function Test() {
   const data = [
-    { name: 1, value: 30 },
+    { name: 1, value: 100 },
     { name: 2, value: 10 },
     { name: 3, value: 50 },
     { name: 4, value: 20 },
@@ -30,7 +30,7 @@ export function Test() {
     { name: 3, value: 20 },
     { name: 4, value: 20 },
     { name: 5, value: 80 },
-    { name: 6, value: 90 },
+    { name: 6, value: 500 },
     { name: 7, value: 0 },
     { name: 8, value: 20 },
     { name: 9, value: 5 },
@@ -45,7 +45,13 @@ export function Test() {
     left: 50,
   };
   return (
-    <PlotXY data={data} margins={margins} width={400} height={200} ticks={5}>
+    <PlotXY
+      dataArray={[data, data2]}
+      margins={margins}
+      width={400}
+      height={200}
+      ticks={5}
+    >
       <XYAxis
         xLabel="labelx"
         yLabel="labely"

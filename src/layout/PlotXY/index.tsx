@@ -17,7 +17,7 @@ export interface Margins {
   left?: 50;
 }
 interface PlotProps {
-  data?: Data[];
+  dataArray?: Data[][];
   children?: ReactNode;
   width: number;
   height: number;
@@ -27,14 +27,15 @@ interface PlotProps {
 
 export default function PlotXY(props: PlotProps) {
   const {
-    data = [],
+    dataArray = [],
     children,
     width,
     height,
     margins = { top: 0, left: 0, right: 0, bottom: 0 },
     ticks = 5,
   } = props;
-
+  let concatData: Data[] = [];
+  const data = concatData.concat(...dataArray);
   const { top = 0, left = 0, right = 0, bottom = 0 } = margins;
   //const parentWidth = width + left + right;
   //const parentHeight = height + top + bottom;
