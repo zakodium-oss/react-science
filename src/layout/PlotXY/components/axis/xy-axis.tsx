@@ -1,4 +1,4 @@
-import { AxisScale } from 'd3-axis';
+import { ScaleLinear } from 'd3-scale';
 import React from 'react';
 
 import Axis from './axis';
@@ -8,8 +8,8 @@ const XYAxis = ({
   yScale,
   height,
 }: {
-  xScale: AxisScale<number>;
-  yScale: AxisScale<number>;
+  xScale: ScaleLinear<number, number>;
+  yScale: ScaleLinear<number, number>;
   height: number;
 }) => {
   const xSettings = {
