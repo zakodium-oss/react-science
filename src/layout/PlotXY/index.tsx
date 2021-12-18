@@ -1,11 +1,10 @@
 import { extent } from 'd3-array';
 import { scaleLinear, NumberValue } from 'd3-scale';
-import { line, curveMonotoneX } from 'd3-shape';
 import { transition } from 'd3-transition';
 import React from 'react';
 
+import LineSerie from './components/LineSerie';
 import XYAxis from './components/axis/xy-axis';
-import Line from './components/line/line';
 
 export interface Data {
   name: number;
@@ -50,11 +49,6 @@ export default function PlotXY() {
     .range([height, 0])
     .nice();
 
-  const lineGenerator = line<Data>()
-    .x((d) => xScale(d.name))
-    .y((d) => yScale(d.value))
-    .curve(curveMonotoneX);
-
   return (
     <div>
       <svg
@@ -64,14 +58,7 @@ export default function PlotXY() {
       >
         <g transform={`translate(${margins.left}, ${margins.top})`}>
           <XYAxis {...{ xScale, yScale, height, ticks, t }} />
-          <Line
-            data={data}
-            xScale={xScale}
-            yScale={yScale}
-            lineGenerator={lineGenerator}
-            width={width}
-            height={height}
-          />
+          <LineSerie data={data} xScale={xScale} yScale={yScale} />
         </g>
       </svg>
     </div>
