@@ -1,13 +1,24 @@
 import { ScaleLinear } from 'd3-scale';
-import { createContext, useContext } from 'react';
+import {
+  Children,
+  createContext,
+  isValidElement,
+  ReactNode,
+  useContext,
+} from 'react';
 
-import { Margins, TransitionType } from '../PlotXY';
+import { TransitionType } from '../PlotXY';
+import LineSerie from '../PlotXY/components/LineSerie';
+import XYAxis from '../PlotXY/components/axis/xy-axis';
 
 //plot context
 export interface PlotContextType {
   width: number;
   height: number;
-  margins: Margins;
+  top: number;
+  right: number;
+  left: number;
+  bottom: number;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   ticks: number;
@@ -21,4 +32,29 @@ export function usePlotContext() {
     throw new Error('Plot compound component outside Plot context');
   }
   return context;
+}
+export function splitChildren(children: ReactNode) {
+  let axes = null;
+  let lineSeries = [];
+
+  for (let child of Children.toArray(children)) {
+    if (typeof child !== 'object' || !isValidElement(child)) {
+      // eslint-disable-next-line no-console
+      console.error('Invalid Plot child:', child);
+      throw new Error('invalid Plot child');
+    } else if (child.type === LineSerie) {
+      lineSeries.push(child);
+    } else if (child.type === XYAxis) {
+      axes = child;
+    } else {
+      // eslint-disable-next-line no-console
+      console.error('Invalid Plot child: ', child);
+      throw new Error('invalid plot child');
+    }
+  }
+
+  return {
+    lineSeries,
+    axes,
+  };
 }

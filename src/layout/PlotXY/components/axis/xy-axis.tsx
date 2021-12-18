@@ -4,7 +4,7 @@ import { PlotContextType, usePlotContext } from '../../../hooks/plotXY';
 
 import Axis from './axis';
 
-const XYAxis = ({
+export default function XYAxis({
   xLabel,
   yLabel,
   labelStyle,
@@ -12,7 +12,7 @@ const XYAxis = ({
   xLabel?: string;
   yLabel?: string;
   labelStyle?: CSSProperties;
-}) => {
+}) {
   const { width, height, xScale, yScale } = usePlotContext() as PlotContextType;
   const xSettings = {
     scale: xScale,
@@ -48,9 +48,8 @@ const XYAxis = ({
       ) : null}
     </g>
   );
-};
+}
 
-export default XYAxis;
 interface VerticalTextProps extends SVGProps<SVGTextElement> {
   label: ReactNode;
 }

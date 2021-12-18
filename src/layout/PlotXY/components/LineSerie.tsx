@@ -1,18 +1,18 @@
-import { ScaleLinear } from 'd3-scale';
 import { curveMonotoneX, line } from 'd3-shape';
 import React, { CSSProperties, useMemo } from 'react';
 
 import { Data } from '..';
+import { usePlotContext } from '../../hooks/plotXY';
 
 interface LineSerieProps {
-  xScale?: ScaleLinear<number, number>;
-  yScale?: ScaleLinear<number, number>;
   data: Data[];
   lineStyle?: CSSProperties;
   color?: string;
 }
 export default function LineSerie(props: LineSerieProps) {
-  const { xScale, yScale, lineStyle, data, color = 'black' } = props;
+  const { lineStyle, data, color = 'black' } = props;
+
+  const { xScale, yScale } = usePlotContext();
   const style = {
     stroke: color,
     strokeWidth: 2,
