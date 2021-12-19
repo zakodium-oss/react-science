@@ -1,4 +1,3 @@
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 
@@ -127,9 +126,9 @@ const FromXMLStory: ComponentStory<
     <XmlPlotXY
       data={data}
       margins={margins}
-      width={400}
-      height={200}
-      ticks={5}
+      width={width}
+      height={height}
+      ticks={ticks}
     />
   );
 };

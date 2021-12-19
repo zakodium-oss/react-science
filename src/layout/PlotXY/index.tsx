@@ -115,13 +115,15 @@ export default function PlotXY(props: PlotProps) {
     </PlotContext.Provider>
   );
 }
-export function XmlPlotXY(props: {
+interface XmlPlotXYPorps {
   data: DataXML;
   margins?: Margins;
   width: number;
   height: number;
   ticks?: number;
-}) {
+}
+
+export function XmlPlotXY(props: XmlPlotXYPorps) {
   const { data, margins, ticks = 5, height, width } = props;
 
   const minMax = {
