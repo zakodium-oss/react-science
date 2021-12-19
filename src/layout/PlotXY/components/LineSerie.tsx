@@ -23,8 +23,8 @@ export default function LineSerie(props: LineSerieProps) {
       return null;
     }
     const lineGenerator = line<Data>()
-      .x((d) => xScale(d.name))
-      .y((d) => yScale(d.value));
+      .x((d) => xScale(d.x))
+      .y((d) => yScale(d.y));
 
     return lineGenerator(data);
   }, [data, xScale, yScale]);

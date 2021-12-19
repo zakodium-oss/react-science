@@ -4,15 +4,40 @@ import React, { ReactNode } from 'react';
 
 import { PlotContext, splitChildren } from '../hooks/plotXY';
 
+import LineSerie from './components/LineSerie';
+import XYAxis from './components/axis/xy-axis';
+
 export interface Data {
-  name: number;
-  value: number;
+  x: number;
+  y: number;
 }
 export interface Margins {
   top?: 20;
   right?: 20;
   bottom?: 50;
   left?: 50;
+}
+interface DataXML {
+  x: {
+    label: string;
+    symbol: string;
+    data: number[];
+    min: number;
+    max: number;
+    isMonotone: boolean;
+  };
+  y: {
+    label: string;
+    symbol: string;
+    data: number[];
+    min: number;
+    max: number;
+    isMonotone: boolean;
+  };
+}
+interface MinMax {
+  x: { min: number; max: number };
+  y: { min: number; max: number };
 }
 interface PlotProps {
   dataArray?: Data[][];
@@ -21,32 +46,47 @@ interface PlotProps {
   height: number;
   margins?: Margins;
   ticks?: number;
+  minMax?: MinMax;
 }
 
 export default function PlotXY(props: PlotProps) {
   const {
-    dataArray = [],
+    minMax,
+    dataArray,
     children,
     width,
     height,
     margins = { top: 0, left: 0, right: 0, bottom: 0 },
     ticks = 5,
   } = props;
-  let concatData: Data[] = [];
-  const data = concatData.concat(...dataArray);
+
   const { top = 0, left = 0, right = 0, bottom = 0 } = margins;
-  //const parentWidth = width + left + right;
-  //const parentHeight = height + top + bottom;
+
   const { lineSeries, axes } = splitChildren(children);
+  let xScale = scaleLinear<number>();
+  let yScale = scaleLinear<number>();
 
-  const xScale = scaleLinear<number>()
-    .domain(extent<Data, number>(data, (d) => d.name) as Iterable<NumberValue>)
-    .rangeRound([0, width]);
-
-  const yScale = scaleLinear<number>()
-    .domain(extent<Data, number>(data, (d) => d.value) as Iterable<NumberValue>)
-    .range([height, 0])
-    .nice();
+  if (minMax) {
+    xScale = scaleLinear<number>()
+      .domain([minMax.x.min, minMax.x.max])
+      .rangeRound([0, width]);
+    yScale = scaleLinear<number>()
+      .domain([minMax.y.min, minMax.y.max])
+      .range([height, 0])
+      .nice();
+  } else if (dataArray) {
+    const concatData: Data[] = [];
+    const data = concatData.concat(...dataArray);
+    xScale = scaleLinear<number>()
+      .domain(extent<Data, number>(data, (d) => d.x) as Iterable<NumberValue>)
+      .rangeRound([0, width]);
+    yScale = scaleLinear<number>()
+      .domain(extent<Data, number>(data, (d) => d.y) as Iterable<NumberValue>)
+      .range([height, 0])
+      .nice();
+  } else {
+    throw Error('Data needed');
+  }
 
   return (
     <PlotContext.Provider
@@ -73,5 +113,35 @@ export default function PlotXY(props: PlotProps) {
         </g>
       </svg>
     </PlotContext.Provider>
+  );
+}
+export function XmlPlotXY(props: {
+  data: DataXML;
+  margins: Margins;
+  width: number;
+  height: number;
+  ticks?: number;
+}) {
+  const { data, margins, ticks = 5, height, width } = props;
+
+  const minMax = {
+    x: { min: data.x.min, max: data.x.max },
+    y: { min: data.y.min, max: data.y.max },
+  };
+  const dataOff: Data[] = [];
+  data.x.data.forEach((x, key) => {
+    dataOff.push({ x: x, y: data.y.data[key] });
+  });
+  return (
+    <PlotXY
+      minMax={minMax}
+      margins={margins}
+      width={width}
+      height={height}
+      ticks={ticks}
+    >
+      <XYAxis xLabel={data.x.label} yLabel={data.y.label} />
+      <LineSerie data={dataOff} color="red" />
+    </PlotXY>
   );
 }
