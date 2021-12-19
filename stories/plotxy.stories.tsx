@@ -3,7 +3,12 @@ import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 
 import data from '../src/data/variables.json';
-import PlotXY, { Data, Margins, XmlPlotXY } from '../src/layout/PlotXY';
+import PlotXY, {
+  Data,
+  DataXML,
+  Margins,
+  XmlPlotXY,
+} from '../src/layout/PlotXY';
 import LineSerie from '../src/layout/PlotXY/components/LineSerie';
 import XYAxis from '../src/layout/PlotXY/components/axis/xy-axis';
 
@@ -101,19 +106,23 @@ MultiLines.args = {
   xLabel: 'xLabel',
   yLabel: 'yLabel',
 };
-export function FromXML(props) {
+interface PlotFromXMLStoryProps {
+  data: DataXML;
+  margins?: Margins;
+  height: number;
+  width: number;
+  ticks?: number;
+}
+const FromXMLStory: ComponentStory<
+  (props: PlotFromXMLStoryProps) => JSX.Element
+> = (props: PlotFromXMLStoryProps) => {
+  const { data, margins, height, width, ticks } = props;
   const x = data.x;
   const y = data.y;
   const dataOff: Data[] = [];
   x.data.forEach((x, key) => {
     dataOff.push({ x: x, y: y.data[key] });
   });
-  const margins: Margins = {
-    top: 20,
-    right: 20,
-    bottom: 50,
-    left: 50,
-  };
   return (
     <XmlPlotXY
       data={data}
@@ -123,4 +132,17 @@ export function FromXML(props) {
       ticks={5}
     />
   );
-}
+};
+
+export const fromXML = FromXMLStory.bind({});
+fromXML.args = {
+  data: data,
+  margins: {
+    top: 20,
+    right: 20,
+    bottom: 50,
+    left: 50,
+  },
+  height: 200,
+  width: 400,
+};

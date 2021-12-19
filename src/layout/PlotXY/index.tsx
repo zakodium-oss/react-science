@@ -17,7 +17,7 @@ export interface Margins {
   bottom?: 50;
   left?: 50;
 }
-interface DataXML {
+export interface DataXML {
   x: {
     label: string;
     symbol: string;
@@ -117,7 +117,7 @@ export default function PlotXY(props: PlotProps) {
 }
 export function XmlPlotXY(props: {
   data: DataXML;
-  margins: Margins;
+  margins?: Margins;
   width: number;
   height: number;
   ticks?: number;
