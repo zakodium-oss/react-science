@@ -10,7 +10,6 @@ import {
 import LineSerie from '../PlotXY/components/LineSerie';
 import XYAxis from '../PlotXY/components/axis/xy-axis';
 
-//plot context
 export interface PlotContextType {
   width: number;
   height: number;
@@ -32,7 +31,6 @@ export function usePlotContext() {
   return context;
 }
 
-//splitChildren function
 export function splitChildren(children: ReactNode) {
   let axes = null;
   let lineSeries = [];
