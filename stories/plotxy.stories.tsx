@@ -13,6 +13,7 @@ import XYAxis from '../src/layout/PlotXY/components/axis/xy-axis';
 
 export default {
   title: 'Layout/PlotXY',
+  component: PlotXY,
   args: {},
 } as Meta;
 interface PlotMultiLinesStoryProps {
