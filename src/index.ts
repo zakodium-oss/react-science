@@ -34,3 +34,5 @@ export {
   useOnOff,
   Tabs,
 };
+
+export * from './layout/DropZone';

@@ -36,6 +36,7 @@
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "immer": "^9.0.6",
+    "react-dropzone": "^11.4.2",
     "react-shadow": "^19.0.2"
   },
   "devDependencies": {
