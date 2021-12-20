@@ -17,7 +17,7 @@ export interface Margins {
   bottom?: 50;
   left?: 50;
 }
-export interface DataXML {
+export interface DataJSON {
   x: {
     label: string;
     symbol: string;
@@ -115,15 +115,15 @@ export default function PlotXY(props: PlotProps) {
     </PlotContext.Provider>
   );
 }
-interface XmlPlotXYPorps {
-  data: DataXML;
+interface JsonPlotXYPorps {
+  data: DataJSON;
   margins?: Margins;
   width: number;
   height: number;
   ticks?: number;
 }
 
-export function XmlPlotXY(props: XmlPlotXYPorps) {
+export function JsonPlotXY(props: JsonPlotXYPorps) {
   const { data, margins, ticks = 5, height, width } = props;
 
   const minMax = {

@@ -4,9 +4,9 @@ import React from 'react';
 import data from '../src/data/variables.json';
 import PlotXY, {
   Data,
-  DataXML,
+  DataJSON,
   Margins,
-  XmlPlotXY,
+  JsonPlotXY,
 } from '../src/layout/PlotXY';
 import LineSerie from '../src/layout/PlotXY/components/LineSerie';
 import XYAxis from '../src/layout/PlotXY/components/axis/xy-axis';
@@ -105,16 +105,16 @@ MultiLines.args = {
   xLabel: 'xLabel',
   yLabel: 'yLabel',
 };
-interface PlotFromXMLStoryProps {
-  data: DataXML;
+interface PlotFromJSONStoryProps {
+  data: DataJSON;
   margins?: Margins;
   height: number;
   width: number;
   ticks?: number;
 }
-const FromXMLStory: ComponentStory<
-  (props: PlotFromXMLStoryProps) => JSX.Element
-> = (props: PlotFromXMLStoryProps) => {
+const FromJSONStory: ComponentStory<
+  (props: PlotFromJSONStoryProps) => JSX.Element
+> = (props: PlotFromJSONStoryProps) => {
   const { data, margins, height, width, ticks } = props;
   const x = data.x;
   const y = data.y;
@@ -123,7 +123,7 @@ const FromXMLStory: ComponentStory<
     dataOff.push({ x: x, y: y.data[key] });
   });
   return (
-    <XmlPlotXY
+    <JsonPlotXY
       data={data}
       margins={margins}
       width={width}
@@ -133,8 +133,8 @@ const FromXMLStory: ComponentStory<
   );
 };
 
-export const fromXML = FromXMLStory.bind({});
-fromXML.args = {
+export const fromJSON = FromJSONStory.bind({});
+fromJSON.args = {
   data: data,
   margins: {
     top: 20,
