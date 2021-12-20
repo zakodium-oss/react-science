@@ -104,6 +104,7 @@ MultiLines.args = {
   width: 400,
   xLabel: 'xLabel',
   yLabel: 'yLabel',
+  ticks: 5,
 };
 interface PlotFromJSONStoryProps {
   data: DataJSON;
