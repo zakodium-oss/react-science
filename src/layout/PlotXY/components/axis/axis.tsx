@@ -1,94 +1,80 @@
-import React, { SVGProps } from 'react';
+import { ScaleLinear } from 'd3-scale';
+import React, { forwardRef, MutableRefObject, useRef } from 'react';
+import { useLinearPrimaryTicks } from 'react-d3-utils';
 
-interface AxisProps {
-  orient: string;
-  range: Array<number>;
-  values: Array<number>;
-  position: (x: number) => number;
-  transform: string;
+interface BaseAxis {
+  x: number;
+  y: number;
 }
+interface ScaleAxis {
+  scale: ScaleLinear<number, number>;
+}
+interface TickAxis {
+  ticks: Ticks[];
+  ref: MutableRefObject<SVGGElement | null>;
+}
+interface Horizontal {
+  width: number;
+}
+interface Vertical {
+  height: number;
+}
+interface Ticks {
+  label: string;
+  position: number;
+}
+type HorizontalAxisProps = BaseAxis & Horizontal & ScaleAxis;
+type VerticalAxisProps = BaseAxis & Vertical & ScaleAxis;
+type HorizontalRenderProps = BaseAxis & Horizontal & TickAxis;
+type VerticalRenderProps = BaseAxis & Vertical & TickAxis;
 
-export default function Axis(props: AxisProps) {
-  const { range, values, position, transform: transfrom, orient } = props;
-
-  const ticksTransform =
-    orient === TOP || orient === BOTTOM ? translateX : translateY;
-  const tickTransformer = (d: number) => ticksTransform(position, position, d);
-
-  const k = orient === TOP || orient === LEFT ? -1 : 1;
-  const isRight = orient === RIGHT;
-  const isLeft = orient === LEFT;
-  const isTop = orient === TOP;
-  const isBottom = orient === BOTTOM;
-  const isHorizontal = isRight || isLeft;
-  const x = isHorizontal ? 'x' : 'y';
-  const y = isHorizontal ? 'y' : 'x';
-
-  const halfWidth = 1 / 2;
-  const range0 = range[0] + halfWidth;
-  const range1 = range[range.length - 1] + halfWidth;
-
-  const spacing = Math.max(6, 0) + 3;
-
-  return (
-    <g
-      fill={'none'}
-      fontSize={10}
-      textAnchor={isRight ? 'start' : isLeft ? 'end' : 'middle'}
-      strokeWidth={1}
-      transform={transfrom}
-    >
-      <path
-        stroke={'black'}
-        d={
-          isHorizontal
-            ? `M${k * 6},${range0}H${halfWidth}V${range1}H${k * 6}`
-            : `M${range0},${k * 6}V${halfWidth}H${range1}V${k * 6}`
-        }
-      />
-      {values.map((v: number) => {
-        let lineProps: SVGProps<SVGLineElement> = { stroke: 'black' };
-        lineProps[`${x}2`] = k * 6;
-        lineProps[`${y}1`] = halfWidth;
-        lineProps[`${y}2`] = halfWidth;
-
-        let textProps: SVGProps<SVGTextElement> = {
-          fill: 'black',
-          dy: isTop ? '0em' : isBottom ? '0.71em' : '0.32em',
-        };
-        textProps[`${x}`] = k * spacing;
-        textProps[`${y}`] = halfWidth;
-
-        return (
-          <g key={`tick-${v}`} opacity={1} transform={tickTransformer(v)}>
-            <line {...lineProps} />
-            <text {...textProps}>{v}</text>
-          </g>
-        );
-      })}
+export function LinearHorizontalAxis(props: HorizontalAxisProps) {
+  const { scale, ...other } = props;
+  const ref = useRef<SVGGElement>(null);
+  const ticks = useLinearPrimaryTicks(scale, 'horizontal', ref, {
+    tickFormat: undefined,
+  });
+  return <HorizontalAxisBottom {...other} ticks={ticks} ref={ref} />;
+}
+const HorizontalAxisBottom = forwardRef<
+  SVGGElement | null,
+  HorizontalRenderProps
+>(({ x, y, width, ticks }, ref) => (
+  <g ref={ref} transform={`translate(${x}, ${y})`}>
+    <line x2={width} y1={15} y2={15} stroke="black" />
+    {ticks.map(({ label, position }, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <g key={index + label + position}>
+        <line x1={position} x2={position} y1={15} y2={20} stroke="black" />
+        <text x={position} y={30} dominantBaseline="middle" textAnchor="middle">
+          {label}
+        </text>
+      </g>
+    ))}
+  </g>
+));
+const VerticalAxisLeft = forwardRef<SVGGElement | null, VerticalRenderProps>(
+  ({ x, y, height, ticks }, ref) => (
+    <g ref={ref} transform={`translate(${x}, ${y})`}>
+      <line y2={height} x1={15} x2={15} stroke="black" />
+      {ticks.map(({ label, position }, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <g key={index + label + position}>
+          <line y1={position} y2={position} x1={10} x2={15} stroke="black" />
+          <text y={position} dominantBaseline="middle" textAnchor="end">
+            {label}
+          </text>
+        </g>
+      ))}
     </g>
-  );
-}
+  ),
+);
+export function LinearVerticalAxis(props: VerticalAxisProps) {
+  const { scale, ...other } = props;
+  const ref = useRef<SVGGElement>(null);
+  const ticks = useLinearPrimaryTicks(scale, 'vertical', ref, {
+    tickFormat: undefined,
+  });
 
-function translateX(
-  scale0: (x: number) => number,
-  scale1: (x: number) => number,
-  d: number,
-) {
-  const x = scale0(d);
-  return `translate(${isFinite(x) ? x : scale1(d)},0)`;
+  return <VerticalAxisLeft {...other} ticks={ticks} ref={ref} />;
 }
-
-function translateY(
-  scale0: (x: number) => number,
-  scale1: (x: number) => number,
-  d: number,
-) {
-  const y = scale0(d);
-  return `translate(0,${isFinite(y) ? y : scale1(d)})`;
-}
-
-export const TOP = 'TOP';
-export const RIGHT = 'RIGHT';
-export const BOTTOM = 'BOTTOM';
-export const LEFT = 'LEFT';

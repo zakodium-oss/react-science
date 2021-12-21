@@ -1,9 +1,8 @@
-import { ScaleLinear } from 'd3-scale';
 import React, { CSSProperties, ReactNode, SVGProps } from 'react';
 
 import { PlotContextType, usePlotContext } from '../../../hooks/plotXY';
 
-import Axis from './axis';
+import { LinearHorizontalAxis, LinearVerticalAxis } from './axis';
 
 export default function XYAxis({
   xLabel,
@@ -14,37 +13,39 @@ export default function XYAxis({
   yLabel?: string;
   labelStyle?: CSSProperties;
 }) {
-  const { width, height, xScale, yScale, ticks } =
-    usePlotContext() as PlotContextType;
+  const { width, height, xScale, yScale } = usePlotContext() as PlotContextType;
   const xSettings = {
-    ...axisPropsFromTickScale(xScale, ticks.x),
-    orient: 'BOTTOM',
+    key: width,
+    x: 0,
+    y: height - 15,
     scale: xScale,
-    transform: `translate(0, ${height})`,
+    width: width,
   };
   const ySettings = {
-    ...axisPropsFromTickScale(yScale, ticks.y),
-    orient: 'LEFT',
-    transform: 'translate(0, 0)',
+    key: height,
+    x: -15,
+    y: 0,
+    scale: yScale,
+    height: height,
   };
   return (
     <g className="axis-group">
-      <Axis {...xSettings} />
+      <LinearVerticalAxis {...ySettings} />
       {xLabel ? (
         <text
           x={width / 2}
-          y={height + 35}
+          y={height + 40}
           textAnchor="middle"
           style={labelStyle}
         >
           {xLabel}
         </text>
       ) : null}
-      <Axis {...ySettings} />
+      <LinearHorizontalAxis {...xSettings} />
       {yLabel ? (
         <VerticalText
           label={yLabel}
-          transform={`translate(-30, ${height / 2})`}
+          transform={`translate(-45, ${height / 2})`}
           style={labelStyle}
         />
       ) : null}
@@ -72,13 +73,4 @@ function VerticalText(props: VerticalTextProps) {
       {label}
     </text>
   );
-}
-function axisPropsFromTickScale(
-  scale: ScaleLinear<number, number>,
-  tickCount: number,
-) {
-  const range = scale.range();
-  const values = scale.ticks(tickCount);
-  const position = scale.copy();
-  return { range, values, position };
 }

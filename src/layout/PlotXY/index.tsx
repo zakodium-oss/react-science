@@ -12,10 +12,10 @@ export interface Data {
   y: number;
 }
 export interface Margins {
-  top?: 20;
-  right?: 20;
-  bottom?: 50;
-  left?: 50;
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
 }
 export interface DataJSON {
   x: {
@@ -45,7 +45,6 @@ interface PlotProps {
   width: number;
   height: number;
   margins?: Margins;
-  ticks?: { x: number; y: number };
   minMax?: MinMax;
 }
 
@@ -57,7 +56,6 @@ export default function PlotXY(props: PlotProps) {
     width,
     height,
     margins = { top: 0, left: 0, right: 0, bottom: 0 },
-    ticks = { x: 5, y: 5 },
   } = props;
 
   const { top = 0, left = 0, right = 0, bottom = 0 } = margins;
@@ -99,7 +97,6 @@ export default function PlotXY(props: PlotProps) {
         bottom,
         xScale,
         yScale,
-        ticks,
       }}
     >
       <svg
@@ -120,12 +117,11 @@ interface JsonPlotXYPorps {
   margins?: Margins;
   width: number;
   height: number;
-  ticks?: { x: number; y: number };
   color: string;
 }
 
 export function JsonPlotXY(props: JsonPlotXYPorps) {
-  const { data, margins, ticks = { x: 5, y: 5 }, height, width, color } = props;
+  const { data, margins, height, width, color } = props;
 
   const minMax = {
     x: { min: data.x.min, max: data.x.max },
@@ -136,13 +132,7 @@ export function JsonPlotXY(props: JsonPlotXYPorps) {
     dataOff.push({ x: x, y: data.y.data[key] });
   });
   return (
-    <PlotXY
-      minMax={minMax}
-      margins={margins}
-      width={width}
-      height={height}
-      ticks={ticks}
-    >
+    <PlotXY minMax={minMax} margins={margins} width={width} height={height}>
       <XYAxis xLabel={data.x.label} yLabel={data.y.label} />
       <LineSerie data={dataOff} color={color} />
     </PlotXY>

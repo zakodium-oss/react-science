@@ -21,7 +21,6 @@ interface PlotMultiLinesStoryProps {
   margins?: Margins;
   height: number;
   width: number;
-  ticks?: { x: number; y: number };
   xLabel?: string;
   yLabel?: string;
 }
@@ -33,7 +32,6 @@ const MultiLinesStory: ComponentStory<
     margins,
     height,
     width,
-    ticks,
     xLabel = 'x',
     yLabel = 'y',
   } = props;
@@ -43,7 +41,6 @@ const MultiLinesStory: ComponentStory<
       margins={margins}
       width={width}
       height={height}
-      ticks={ticks}
     >
       <XYAxis
         xLabel={xLabel}
@@ -100,13 +97,12 @@ MultiLines.args = {
     top: 20,
     right: 20,
     bottom: 50,
-    left: 50,
+    left: 70,
   },
   height: 200,
   width: 400,
   xLabel: 'xLabel',
   yLabel: 'yLabel',
-  ticks: { x: 5, y: 5 },
 };
 interface PlotFromJSONStoryProps {
   data: DataJSON;
@@ -114,12 +110,11 @@ interface PlotFromJSONStoryProps {
   height: number;
   width: number;
   color: string;
-  ticks?: { x: number; y: number };
 }
 const FromJSONStory: ComponentStory<
   (props: PlotFromJSONStoryProps) => JSX.Element
 > = (props: PlotFromJSONStoryProps) => {
-  const { data, margins, height, width, ticks, color } = props;
+  const { data, margins, height, width, color } = props;
   const x = data.x;
   const y = data.y;
   const dataOff: Data[] = [];
@@ -133,7 +128,6 @@ const FromJSONStory: ComponentStory<
       margins={margins}
       width={width}
       height={height}
-      ticks={ticks}
     />
   );
 };
@@ -145,7 +139,7 @@ fromJSON.args = {
     top: 20,
     right: 20,
     bottom: 50,
-    left: 50,
+    left: 70,
   },
   height: 200,
   width: 400,

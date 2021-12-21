@@ -19,7 +19,6 @@ export interface PlotContextType {
   bottom: number;
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
-  ticks: { x: number; y: number };
 }
 
 export const PlotContext = createContext<Partial<PlotContextType>>({});
