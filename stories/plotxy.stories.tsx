@@ -17,7 +17,7 @@ export default {
   args: {},
 } as Meta;
 interface PlotMultiLinesStoryProps {
-  dataArray: { color: string; data: Data[] }[];
+  lineArray: { color: string; data: Data[] }[];
   margins?: Margins;
   height: number;
   width: number;
@@ -29,7 +29,7 @@ const MultiLinesStory: ComponentStory<
   (props: PlotMultiLinesStoryProps) => JSX.Element
 > = (props: PlotMultiLinesStoryProps) => {
   const {
-    dataArray = [],
+    lineArray = [],
     margins,
     height,
     width,
@@ -39,7 +39,7 @@ const MultiLinesStory: ComponentStory<
   } = props;
   return (
     <PlotXY
-      dataArray={dataArray}
+      dataArray={lineArray}
       margins={margins}
       width={width}
       height={height}
@@ -50,7 +50,7 @@ const MultiLinesStory: ComponentStory<
         yLabel={yLabel}
         labelStyle={{ fontSize: '18px' }}
       />
-      {dataArray.map((line) => {
+      {lineArray.map((line) => {
         return (
           <LineSerie key={line.color} data={line.data} color={line.color} />
         );
@@ -60,7 +60,7 @@ const MultiLinesStory: ComponentStory<
 };
 export const MultiLines = MultiLinesStory.bind({});
 MultiLines.args = {
-  dataArray: [
+  lineArray: [
     {
       color: 'blue',
       data: [
