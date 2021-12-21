@@ -40,7 +40,7 @@ interface MinMax {
   y: { min: number; max: number };
 }
 interface PlotProps {
-  dataArray?: Data[][];
+  dataArray?: { color: string; data: Data[] }[];
   children?: ReactNode;
   width: number;
   height: number;
@@ -76,7 +76,7 @@ export default function PlotXY(props: PlotProps) {
       .nice();
   } else if (dataArray) {
     const concatData: Data[] = [];
-    const data = concatData.concat(...dataArray);
+    const data = concatData.concat(...dataArray.map((line) => line.data));
     xScale = scaleLinear<number>()
       .domain(extent<Data, number>(data, (d) => d.x) as Iterable<NumberValue>)
       .rangeRound([0, width]);
@@ -121,10 +121,11 @@ interface JsonPlotXYPorps {
   width: number;
   height: number;
   ticks?: { x: number; y: number };
+  color: string;
 }
 
 export function JsonPlotXY(props: JsonPlotXYPorps) {
-  const { data, margins, ticks = { x: 5, y: 5 }, height, width } = props;
+  const { data, margins, ticks = { x: 5, y: 5 }, height, width, color } = props;
 
   const minMax = {
     x: { min: data.x.min, max: data.x.max },
@@ -143,7 +144,7 @@ export function JsonPlotXY(props: JsonPlotXYPorps) {
       ticks={ticks}
     >
       <XYAxis xLabel={data.x.label} yLabel={data.y.label} />
-      <LineSerie data={dataOff} color="red" />
+      <LineSerie data={dataOff} color={color} />
     </PlotXY>
   );
 }

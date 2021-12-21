@@ -17,7 +17,7 @@ export default {
   args: {},
 } as Meta;
 interface PlotMultiLinesStoryProps {
-  dataArray: Data[][];
+  dataArray: { color: string; data: Data[] }[];
   margins?: Margins;
   height: number;
   width: number;
@@ -50,14 +50,9 @@ const MultiLinesStory: ComponentStory<
         yLabel={yLabel}
         labelStyle={{ fontSize: '18px' }}
       />
-      {dataArray.map((data, key) => {
+      {dataArray.map((line) => {
         return (
-          <LineSerie
-            // eslint-disable-next-line react/no-array-index-key
-            key={key}
-            data={data}
-            color={`#${Math.floor(Math.random() * 16777215).toString(16)}`} //random colors
-          />
+          <LineSerie key={line.color} data={line.data} color={line.color} />
         );
       })}
     </PlotXY>
@@ -66,34 +61,40 @@ const MultiLinesStory: ComponentStory<
 export const MultiLines = MultiLinesStory.bind({});
 MultiLines.args = {
   dataArray: [
-    [
-      { x: 1, y: 100 },
-      { x: 2, y: 10 },
-      { x: 3, y: 50 },
-      { x: 4, y: 20 },
-      { x: 5, y: 80 },
-      { x: 6, y: 30 },
-      { x: 7, y: 0 },
-      { x: 8, y: 20 },
-      { x: 9, y: 100 },
-      { x: 10, y: 55 },
-      { x: 11, y: 60 },
-      { x: 20, y: 80 },
-    ],
-    [
-      { x: 1, y: 100 },
-      { x: 2, y: 10 },
-      { x: 3, y: 20 },
-      { x: 4, y: 20 },
-      { x: 5, y: 80 },
-      { x: 6, y: 200 },
-      { x: 7, y: 0 },
-      { x: 8, y: 20 },
-      { x: 9, y: 5 },
-      { x: 10, y: 8 },
-      { x: 11, y: 60 },
-      { x: 20, y: 20 },
-    ],
+    {
+      color: 'blue',
+      data: [
+        { x: 1, y: 100 },
+        { x: 2, y: 10 },
+        { x: 3, y: 50 },
+        { x: 4, y: 20 },
+        { x: 5, y: 80 },
+        { x: 6, y: 30 },
+        { x: 7, y: 0 },
+        { x: 8, y: 20 },
+        { x: 9, y: 100 },
+        { x: 10, y: 55 },
+        { x: 11, y: 60 },
+        { x: 20, y: 80 },
+      ],
+    },
+    {
+      color: 'red',
+      data: [
+        { x: 1, y: 100 },
+        { x: 2, y: 10 },
+        { x: 3, y: 20 },
+        { x: 4, y: 20 },
+        { x: 5, y: 80 },
+        { x: 6, y: 200 },
+        { x: 7, y: 0 },
+        { x: 8, y: 20 },
+        { x: 9, y: 5 },
+        { x: 10, y: 8 },
+        { x: 11, y: 60 },
+        { x: 20, y: 20 },
+      ],
+    },
   ],
   margins: {
     top: 20,
@@ -112,12 +113,13 @@ interface PlotFromJSONStoryProps {
   margins?: Margins;
   height: number;
   width: number;
+  color: string;
   ticks?: { x: number; y: number };
 }
 const FromJSONStory: ComponentStory<
   (props: PlotFromJSONStoryProps) => JSX.Element
 > = (props: PlotFromJSONStoryProps) => {
-  const { data, margins, height, width, ticks } = props;
+  const { data, margins, height, width, ticks, color } = props;
   const x = data.x;
   const y = data.y;
   const dataOff: Data[] = [];
@@ -126,6 +128,7 @@ const FromJSONStory: ComponentStory<
   });
   return (
     <JsonPlotXY
+      color={color}
       data={data}
       margins={margins}
       width={width}
@@ -146,4 +149,5 @@ fromJSON.args = {
   },
   height: 200,
   width: 400,
+  color: 'red',
 };
