@@ -1,66 +1,15 @@
-import { ScaleLinear } from 'd3-scale';
 import React, { SVGProps } from 'react';
-
-export default function Axis(props: {
-  scale: ScaleLinear<number, number>;
-  orient: string;
-  ticks: number;
-  transform: string;
-}) {
-  const { scale, orient, ticks, transform } = props;
-  if (orient === 'bottom') {
-    return (
-      <Axes
-        {...axisPropsFromTickScale(scale, ticks)}
-        orient="BOTTOM"
-        axisTreansform={transform}
-      />
-    );
-  }
-  if (orient === 'left') {
-    return (
-      <Axes
-        {...axisPropsFromTickScale(scale, ticks)}
-        orient="LEFT"
-        axisTreansform={transform}
-      />
-    );
-  }
-}
-function axisPropsFromTickScale(
-  scale: ScaleLinear<number, number>,
-  tickCount: number,
-): PropsForAxis {
-  const range = scale.range();
-  const values = scale.ticks(tickCount);
-  const position = scale.copy();
-  return { range, values, position };
-}
-function translateX(scale0: Scaler, scale1: Scaler, d: number) {
-  const x = scale0(d);
-  return `translate(${isFinite(x) ? x : scale1(d)},0)`;
-}
-
-function translateY(scale0: Scaler, scale1: Scaler, d: number) {
-  const y = scale0(d);
-  return `translate(0,${isFinite(y) ? y : scale1(d)})`;
-}
-
-export const TOP = 'TOP';
-export const RIGHT = 'RIGHT';
-export const BOTTOM = 'BOTTOM';
-export const LEFT = 'LEFT';
 
 interface AxisProps {
   orient: string;
   range: Array<number>;
   values: Array<number>;
-  position: Scaler;
-  axisTreansform: string;
+  position: (x: number) => number;
+  transform: string;
 }
 
-export function Axes(props: AxisProps) {
-  const { range, values, position, axisTreansform: transfrom, orient } = props;
+export default function Axis(props: AxisProps) {
+  const { range, values, position, transform: transfrom, orient } = props;
 
   const ticksTransform =
     orient === TOP || orient === BOTTOM ? translateX : translateY;
@@ -121,43 +70,25 @@ export function Axes(props: AxisProps) {
   );
 }
 
-//types
-export type Scaler = (x: number) => number;
-
-export interface BandedScale<T> {
-  (x: T): number;
-  domain(): Array<T>;
-  range(): Array<number>;
-  copy(): BandedScale<T>;
-  bandwidth(): number;
-  round(): boolean;
+function translateX(
+  scale0: (x: number) => number,
+  scale1: (x: number) => number,
+  d: number,
+) {
+  const x = scale0(d);
+  return `translate(${isFinite(x) ? x : scale1(d)},0)`;
 }
 
-export interface TickScale<T> {
-  (x: T): number;
-  domain(): Array<T>;
-  range(): Array<number>;
-  ticks(count: number): Array<T>;
-  tickFormat(count: number, fmt: string | null): (val: T) => string;
-  copy(): TickScale<T>;
-  round(): boolean;
+function translateY(
+  scale0: (x: number) => number,
+  scale1: (x: number) => number,
+  d: number,
+) {
+  const y = scale0(d);
+  return `translate(0,${isFinite(y) ? y : scale1(d)})`;
 }
 
-export type Orients = 'TOP' | 'RIGHT' | 'BOTTOM' | 'LEFT';
-
-export interface AxisStyle {
-  orient: Orients;
-  tickSizeInner: number;
-  tickSizeOuter: number;
-  tickPadding: number;
-  strokeWidth: number;
-  strokeColor: string;
-  tickFont: string;
-  tickFontSize: number;
-}
-
-export interface PropsForAxis {
-  range: Array<number>;
-  values: Array<number>;
-  position: Scaler;
-}
+export const TOP = 'TOP';
+export const RIGHT = 'RIGHT';
+export const BOTTOM = 'BOTTOM';
+export const LEFT = 'LEFT';

@@ -45,7 +45,7 @@ interface PlotProps {
   width: number;
   height: number;
   margins?: Margins;
-  ticks?: number;
+  ticks?: { x: number; y: number };
   minMax?: MinMax;
 }
 
@@ -57,7 +57,7 @@ export default function PlotXY(props: PlotProps) {
     width,
     height,
     margins = { top: 0, left: 0, right: 0, bottom: 0 },
-    ticks = 5,
+    ticks = { x: 5, y: 5 },
   } = props;
 
   const { top = 0, left = 0, right = 0, bottom = 0 } = margins;
@@ -120,11 +120,11 @@ interface JsonPlotXYPorps {
   margins?: Margins;
   width: number;
   height: number;
-  ticks?: number;
+  ticks?: { x: number; y: number };
 }
 
 export function JsonPlotXY(props: JsonPlotXYPorps) {
-  const { data, margins, ticks = 5, height, width } = props;
+  const { data, margins, ticks = { x: 5, y: 5 }, height, width } = props;
 
   const minMax = {
     x: { min: data.x.min, max: data.x.max },

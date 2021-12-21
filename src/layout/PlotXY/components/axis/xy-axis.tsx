@@ -1,3 +1,4 @@
+import { ScaleLinear } from 'd3-scale';
 import React, { CSSProperties, ReactNode, SVGProps } from 'react';
 
 import { PlotContextType, usePlotContext } from '../../../hooks/plotXY';
@@ -16,15 +17,15 @@ export default function XYAxis({
   const { width, height, xScale, yScale, ticks } =
     usePlotContext() as PlotContextType;
   const xSettings = {
+    ...axisPropsFromTickScale(xScale, ticks.x),
+    orient: 'BOTTOM',
     scale: xScale,
-    orient: 'bottom',
     transform: `translate(0, ${height})`,
   };
   const ySettings = {
-    scale: yScale,
-    orient: 'left',
+    ...axisPropsFromTickScale(yScale, ticks.y),
+    orient: 'LEFT',
     transform: 'translate(0, 0)',
-    ticks: ticks,
   };
   return (
     <g className="axis-group">
@@ -71,4 +72,13 @@ function VerticalText(props: VerticalTextProps) {
       {label}
     </text>
   );
+}
+function axisPropsFromTickScale(
+  scale: ScaleLinear<number, number>,
+  tickCount: number,
+) {
+  const range = scale.range();
+  const values = scale.ticks(tickCount);
+  const position = scale.copy();
+  return { range, values, position };
 }
