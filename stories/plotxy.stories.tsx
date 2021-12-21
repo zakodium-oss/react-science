@@ -21,7 +21,7 @@ interface PlotMultiLinesStoryProps {
   margins?: Margins;
   height: number;
   width: number;
-  ticks?: number;
+  ticks?: { x: number; y: number };
   xLabel?: string;
   yLabel?: string;
 }
@@ -105,14 +105,14 @@ MultiLines.args = {
   width: 400,
   xLabel: 'xLabel',
   yLabel: 'yLabel',
-  ticks: 5,
+  ticks: { x: 5, y: 5 },
 };
 interface PlotFromJSONStoryProps {
   data: DataJSON;
   margins?: Margins;
   height: number;
   width: number;
-  ticks?: number;
+  ticks?: { x: number; y: number };
 }
 const FromJSONStory: ComponentStory<
   (props: PlotFromJSONStoryProps) => JSX.Element
