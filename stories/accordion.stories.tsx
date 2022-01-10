@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Meta } from '@storybook/react';
 import React, { useState } from 'react';
 import {

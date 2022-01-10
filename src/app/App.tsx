@@ -86,8 +86,8 @@ export default function App() {
                   <div>
                     {Array(10)
                       .fill(0)
-                      .map((a, i) => (
-                        <p key={i} style={{ padding: 5 }}>
+                      .map((a) => (
+                        <p key={a} style={{ padding: 5 }}>
                           Lorem ipsum dolor sit amet consectetur adipisicing
                           elit. Nostrum quos soluta animi accusantium ipsum
                           delectus facilis! Modi quis tenetur enim aut beatae
