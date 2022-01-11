@@ -2,6 +2,7 @@
 import { Global } from '@emotion/react';
 import { ReactNode, CSSProperties, useState, useCallback } from 'react';
 
+// import root from 'react-shadow/emotion';
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
 import { customDivPreflight, customPreflight } from './css/customPreflight';
@@ -27,7 +28,6 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    // eslint-disable-next-line no-warning-comments
     // TODO: use `<root.div` when Playwright and React dev tools work better with shadow dom.
     <div style={{ ...style, ...props.style }}>
       <Global styles={[preflight, customPreflight]} />
