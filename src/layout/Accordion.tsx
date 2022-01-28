@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import React, { ReactNode, ReactFragment } from 'react';
 
+import { useSplitPaneContext } from './SplitPane';
 import { useAccordionContext } from './context/AccordionContext';
 import { useDoubleClick } from './hooks/useDoubleClick';
 
@@ -59,6 +60,7 @@ export function Accordion(props: AccordionProps) {
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const { item, utils } = useAccordionContext(props.title, props.defaultOpened);
+  const isSplitPaneClosed = useSplitPaneContext();
 
   const onClickHandle = useDoubleClick({
     onClick: utils.toggle,
@@ -69,6 +71,10 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
 
   if (item) {
     displayable = item.isOpen;
+  }
+
+  if (isSplitPaneClosed) {
+    return null;
   }
 
   return (

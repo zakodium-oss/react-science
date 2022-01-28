@@ -67,7 +67,7 @@ export default function App() {
             maxHeight: '100%',
           }}
         >
-          <SplitPane initialSeparation="50%">
+          <SplitPane initialSeparation="50%" sideSeparation="end">
             <div style={{ padding: 5 }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
               earum omnis, et voluptatum veniam repellendus similique! Sunt
