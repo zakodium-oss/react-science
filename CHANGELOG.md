@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.9.3](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.2...v0.9.3) (2022-01-28)
+
+
+### Bug Fixes
+
+* resolve error to allow Accordion to be opened on the SplitPane ([6ff1be9](https://www.github.com/cheminfo/analysis-ui-components/commit/6ff1be95136b7b4b666fee6cbe66cb6a35970bf9))
+* should not crashes if item not found ([851e0c3](https://www.github.com/cheminfo/analysis-ui-components/commit/851e0c39d77db36301a2190c27cb12c34ef4fe27))
+
 ### [0.9.2](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.1...v0.9.2) (2021-11-08)
 
 
