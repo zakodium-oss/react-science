@@ -85,8 +85,12 @@ const reducer: Reducer<AccordionState, AccordionActions> = produce(
         return draft;
       }
       case 'CHANGE_ITEM': {
-        const item = getItemOrThrow(actions.payload.title, draft.items);
-        item.isOpen = actions.payload.isOpen;
+        const item = getItem(actions.payload.title, draft.items);
+
+        if (item) {
+          item.isOpen = actions.payload.isOpen;
+        }
+
         return draft;
       }
       default: {
@@ -187,15 +191,5 @@ export function AccordionProvider(props: { children: ReactNode }) {
 
 function getItem(title: string, items: Array<AccordionItemState>) {
   const item = items.find((element) => element.title === title);
-  return item;
-}
-
-function getItemOrThrow(title: string, items: Array<AccordionItemState>) {
-  const item = items.find((element) => element.title === title);
-
-  if (!item) {
-    throw new Error('item not found');
-  }
-
   return item;
 }
