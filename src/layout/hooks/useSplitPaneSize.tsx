@@ -1,7 +1,7 @@
 import React, { RefObject, useCallback, useRef } from 'react';
 
 import {
-  InitialSeperation,
+  InitialSeparation,
   SideSeparation,
   SplitOrientation,
 } from '../SplitPane';
@@ -10,7 +10,7 @@ interface HookOptions {
   sideSeparation: SideSeparation;
   orientation: SplitOrientation;
   parentRef: RefObject<HTMLDivElement>;
-  onChange: (position: InitialSeperation) => void;
+  onChange: (position: InitialSeparation) => void;
   state: {
     size: number;
     type: '%' | 'px';
@@ -131,7 +131,7 @@ export function useSplitPaneSize(options: HookOptions) {
         }
       }
 
-      onChange(`${size}${type}` as InitialSeperation);
+      onChange(`${size}${type}` as InitialSeparation);
     }
 
     function mouseUpCallback() {

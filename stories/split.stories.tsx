@@ -1,8 +1,9 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { SplitPane } from '../src';
+import { Accordion, SplitPane } from '../src';
 import { SplitPaneProps } from '../src/layout/SplitPane';
+import { AccordionProvider } from '../src/layout/context/AccordionContext';
 
 export default {
   title: 'Layout/SplitPane',
@@ -56,7 +57,35 @@ export function Inception() {
       <SplitPane orientation="horizontal">
         <SplitPane orientation="vertical">
           <p>A</p>
-          <p>B</p>
+
+          <AccordionProvider>
+            <Accordion>
+              <Accordion.Item title="A">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Perferendis distinctio ducimus beatae iure! Vel, laudantium.
+                  Cum, aliquam officiis numquam rerum voluptatem repellat
+                  quibusdam incidunt enim officia tenetur corrupti qui quia.
+                </p>
+              </Accordion.Item>
+              <Accordion.Item title="B">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Perferendis distinctio ducimus beatae iure! Vel, laudantium.
+                  Cum, aliquam officiis numquam rerum voluptatem repellat
+                  quibusdam incidunt enim officia tenetur corrupti qui quia.
+                </p>
+              </Accordion.Item>
+              <Accordion.Item title="C">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Perferendis distinctio ducimus beatae iure! Vel, laudantium.
+                  Cum, aliquam officiis numquam rerum voluptatem repellat
+                  quibusdam incidunt enim officia tenetur corrupti qui quia.
+                </p>
+              </Accordion.Item>
+            </Accordion>
+          </AccordionProvider>
         </SplitPane>
         <SplitPane orientation="vertical">
           <p>C</p>
