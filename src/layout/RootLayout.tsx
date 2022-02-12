@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
 import { ReactNode, CSSProperties, useState, useCallback } from 'react';
-// import root from 'react-shadow/emotion';
+import root from 'react-shadow/emotion';
 
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
@@ -28,8 +28,7 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    // TODO: use `<root.div` when Playwright and React dev tools work better with shadow dom.
-    <div style={{ ...style, ...props.style }}>
+    <root.div style={{ ...style, ...props.style }}>
       <Global styles={[preflight, customPreflight]} />
       <div
         ref={ref}
@@ -40,6 +39,6 @@ export function RootLayout(props: RootLayoutProps) {
           <AccordionProvider>{props.children}</AccordionProvider>
         </RootLayoutProvider>
       </div>
-    </div>
+    </root.div>
   );
 }
