@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.10.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.10.0...v0.10.1) (2022-02-19)
+
+
+### Bug Fixes
+
+* remove shadow root again to fix usage with OCL ([051b4e4](https://www.github.com/cheminfo/analysis-ui-components/commit/051b4e40714ad706b6ee96ab884ff90455ff81e4))
+
 ## [0.10.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.3...v0.10.0) (2022-02-19)
 
 
