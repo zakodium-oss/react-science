@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.0](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.3...v0.10.0) (2022-02-19)
+
+
+### Features
+
+* allow useModal to be called without options ([3f17b50](https://www.github.com/cheminfo/analysis-ui-components/commit/3f17b50e8355926da4082a623cc770ffa39a742f))
+
+
+### Bug Fixes
+
+* re-enable shadow root ([1696f58](https://www.github.com/cheminfo/analysis-ui-components/commit/1696f5833d45be16b1a419ddd72f46bfe74245d1))
+
 ### [0.9.3](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.9.2...v0.9.3) (2022-01-28)
 
 
