@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
 import { ReactNode, CSSProperties, useState, useCallback } from 'react';
-import root from 'react-shadow/emotion';
 
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
@@ -28,7 +27,7 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    <root.div style={{ ...style, ...props.style }}>
+    <div style={{ ...style, ...props.style }}>
       <Global styles={[preflight, customPreflight]} />
       <div
         ref={ref}
@@ -39,6 +38,6 @@ export function RootLayout(props: RootLayoutProps) {
           <AccordionProvider>{props.children}</AccordionProvider>
         </RootLayoutProvider>
       </div>
-    </root.div>
+    </div>
   );
 }
