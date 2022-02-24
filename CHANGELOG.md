@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.10.2](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.10.1...v0.10.2) (2022-02-24)
+
+
+### Bug Fixes
+
+* remove global style reset ([179648f](https://www.github.com/cheminfo/analysis-ui-components/commit/179648f0f7d084576cbdebba2cbc517d02628949))
+
 ### [0.10.1](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.10.0...v0.10.1) (2022-02-19)
 
 
