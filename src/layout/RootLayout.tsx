@@ -1,11 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { Global } from '@emotion/react';
 import { ReactNode, CSSProperties, useState, useCallback } from 'react';
 
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
-import { customDivPreflight, customPreflight } from './css/customPreflight';
-import { preflight } from './css/preflight';
+import { customDivPreflight } from './css/customPreflight';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -28,7 +26,6 @@ export function RootLayout(props: RootLayoutProps) {
 
   return (
     <div style={{ ...style, ...props.style }}>
-      <Global styles={[preflight, customPreflight]} />
       <div
         ref={ref}
         css={customDivPreflight}
