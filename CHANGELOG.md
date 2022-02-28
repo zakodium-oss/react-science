@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.10.3](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.2...v0.10.3) (2022-02-28)
+
+
+### Bug Fixes
+
+* remove react-shadow ([d736b3c](https://github.com/cheminfo/analysis-ui-components/commit/d736b3c4b3439b1add942d3104256428e3efdd5f))
+
 ### [0.10.2](https://www.github.com/cheminfo/analysis-ui-components/compare/v0.10.1...v0.10.2) (2022-02-24)
 
 
