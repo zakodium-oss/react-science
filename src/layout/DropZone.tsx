@@ -4,6 +4,11 @@ import { MouseEventHandler, useCallback, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
+export interface DropzoneProps {
+  color?: string;
+  onDrop: (files: File[]) => void;
+}
+
 export function DropZoneContainer(props: {
   color?: string;
   children: JSX.Element;
@@ -21,10 +26,7 @@ export function DropZoneContainer(props: {
   );
 }
 
-export function DropZone(props: {
-  color?: string;
-  onDrop: (files: File[]) => void;
-}) {
+export function DropZone(props: DropzoneProps) {
   const { color = 'black', onDrop } = props;
   return <DropZoneContent color={color} onDrop={onDrop} isContainer={false} />;
 }

@@ -6,7 +6,7 @@ import { useSplitPaneContext } from './SplitPane';
 import { useAccordionContext } from './context/AccordionContext';
 import { useDoubleClick } from './hooks/useDoubleClick';
 
-interface AccordionProps {
+export interface AccordionProps {
   children?:
     | Array<React.ReactElement<AccordionItemProps>>
     | React.ReactElement<AccordionItemProps>
