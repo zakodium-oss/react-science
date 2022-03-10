@@ -91,5 +91,5 @@ function PinkBackground() {
 }
 
 export function test() {
-  return <RootLayout layout={layout}></RootLayout>;
+  return <RootLayout layout={layout} />;
 }

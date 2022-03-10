@@ -81,10 +81,10 @@ function createLayoutComponent(
     (typeof component === 'string' && layoutComponents[component]) ||
     typeof component === 'function'
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const componentNode =
       typeof component === 'string'
-        ? (layoutComponents[component] as any)
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (layoutComponents[component] as any)
         : component;
     const componentProps = { ...compProps, ...props };
     const childrenComp =
