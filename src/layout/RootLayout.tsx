@@ -1,20 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import React, { ReactNode, CSSProperties, useState, useCallback } from 'react';
 
-import { Accordion, AccordionProps } from './Accordion';
-import { DropZone, DropzoneProps } from './DropZone';
-import { Modal, ModalProps } from './Modal';
-import { SplitPane, SplitPaneProps } from './SplitPane';
+import { Accordion } from './Accordion';
+import { DropZone } from './DropZone';
+import { Modal } from './Modal';
+import { SplitPane } from './SplitPane';
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
 import { customDivPreflight } from './css/customPreflight';
-
-interface CompPropsTypes {
-  SplitPane: SplitPaneProps;
-  Accordion: AccordionProps;
-  DropZone: DropzoneProps;
-  Modal: ModalProps;
-}
 
 const layoutComponents = {
   SplitPane,
@@ -25,12 +18,13 @@ const layoutComponents = {
 
 interface LayoutComponent {
   id: string;
-  component: keyof typeof layoutComponents;
+  component: keyof typeof layoutComponents | React.FC;
   children?: LayoutComponent[];
 }
 
 export interface Layout {
-  layout: LayoutComponent;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  layout: LayoutComponent | any;
 }
 
 interface RootLayoutProps {
@@ -83,8 +77,15 @@ function createLayoutComponent(
   props = {},
 ): ReactNode | undefined {
   const { component, children, ...compProps } = com;
-  if (layoutComponents[component]) {
-    const componentNode = layoutComponents[component];
+  if (
+    (typeof component === 'string' && layoutComponents[component]) ||
+    typeof component === 'function'
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const componentNode =
+      typeof component === 'string'
+        ? (layoutComponents[component] as any)
+        : component;
     const componentProps = { ...compProps, ...props };
     const childrenComp =
       children && typeof children === 'string'
