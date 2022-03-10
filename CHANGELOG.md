@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.10.4](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.3...v0.10.4) (2022-03-10)
+
+
+### Bug Fixes
+
+* export lib on cjs ([#104](https://github.com/cheminfo/analysis-ui-components/issues/104)) ([573a491](https://github.com/cheminfo/analysis-ui-components/commit/573a4910d21735e840e1c83a4e29ee33262e92bc))
+
 ### [0.10.3](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.2...v0.10.3) (2022-02-28)
 
 
