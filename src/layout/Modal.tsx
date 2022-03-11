@@ -5,7 +5,7 @@ import { FaTimes } from 'react-icons/fa';
 
 import { Portal } from './Portal';
 
-interface ModalProps {
+export interface ModalProps {
   children: ReactElement | Array<ReactElement>;
   isOpen: boolean;
   maxWidth?: number;

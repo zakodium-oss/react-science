@@ -1,13 +1,36 @@
 /** @jsxImportSource @emotion/react */
-import { ReactNode, CSSProperties, useState, useCallback } from 'react';
+import React, { ReactNode, CSSProperties, useState, useCallback } from 'react';
 
+import { Accordion } from './Accordion';
+import { DropZone } from './DropZone';
+import { Modal } from './Modal';
+import { SplitPane } from './SplitPane';
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
 import { customDivPreflight } from './css/customPreflight';
 
+const layoutComponents = {
+  SplitPane,
+  Accordion,
+  Modal,
+  DropZone,
+};
+
+interface LayoutComponent {
+  id: string;
+  component: keyof typeof layoutComponents | React.FC;
+  children?: LayoutComponent[];
+}
+
+export interface Layout {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  layout: LayoutComponent | any;
+}
+
 interface RootLayoutProps {
-  children: ReactNode;
   style?: CSSProperties;
+  children?: ReactNode;
+  layout?: Layout;
 }
 
 const style: CSSProperties = {
@@ -32,9 +55,47 @@ export function RootLayout(props: RootLayoutProps) {
         style={{ width: '100%', height: '100%', position: 'relative' }}
       >
         <RootLayoutProvider innerRef={state}>
-          <AccordionProvider>{props.children}</AccordionProvider>
+          <AccordionProvider>
+            {props.layout ? createLayout(props.layout) : props.children}
+          </AccordionProvider>
         </RootLayoutProvider>
       </div>
     </div>
   );
+}
+
+function createElements(
+  children: LayoutComponent[] | undefined,
+): ReactNode[] | undefined {
+  return children?.map((comp, index) =>
+    createLayoutComponent(comp, { key: index }),
+  );
+}
+
+function createLayoutComponent(
+  com: LayoutComponent,
+  props = {},
+): ReactNode | undefined {
+  const { component, children, ...compProps } = com;
+  if (
+    (typeof component === 'string' && layoutComponents[component]) ||
+    typeof component === 'function'
+  ) {
+    const componentNode =
+      typeof component === 'string'
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (layoutComponents[component] as any)
+        : component;
+    const componentProps = { ...compProps, ...props };
+    const childrenComp =
+      children && typeof children === 'string'
+        ? children
+        : createElements(children);
+
+    return React.createElement(componentNode, componentProps, childrenComp);
+  }
+}
+
+function createLayout(layout: Layout) {
+  return createLayoutComponent(layout.layout);
 }
