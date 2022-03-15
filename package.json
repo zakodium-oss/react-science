@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
+    "@lukeed/uuid": "^2.0.0",
     "immer": "^9.0.12",
     "react-dropzone": "^12.1.0",
     "react-shadow": "^19.0.3"
