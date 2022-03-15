@@ -1,13 +1,18 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { RootLayout } from '../src';
-import { Layout } from '../src/layout/RootLayout';
+import { Toolbar } from '../src';
+import LayoutManager, { Layout } from '../src/layout/LayoutManager';
 
 export default {
-  title: 'Layout/RootLayout',
-  component: RootLayout,
+  title: 'Layout/LayoutManager',
+  component: fromLayoutObject,
 } as Meta;
+
+const components = {
+  BlueBackground,
+  YellowBackground,
+};
 
 const layout: Layout = {
   layout: {
@@ -38,7 +43,7 @@ const layout: Layout = {
         children: [
           {
             id: 'iuvv',
-            component: BlueBackground,
+            component: 'BlueBackground',
             isOpen: true,
           },
           {
@@ -48,7 +53,7 @@ const layout: Layout = {
           },
           {
             id: 'mt5q',
-            component: YellowBackground,
+            component: 'YellowBackground',
             isOpen: false,
           },
         ],
@@ -90,6 +95,15 @@ function PinkBackground() {
   );
 }
 
-export function test() {
-  return <RootLayout layout={layout} />;
+export function fromLayoutObject() {
+  return (
+    <>
+      <Toolbar orientation="vertical">
+        <Toolbar.Item id="A" title="A">
+          A
+        </Toolbar.Item>
+      </Toolbar>
+      <LayoutManager layout={layout} components={components} />
+    </>
+  );
 }
