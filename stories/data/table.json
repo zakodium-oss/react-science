@@ -1,0 +1,846 @@
+[
+  {
+    "id": "H60144",
+    "ocl": {
+      "idCode": "dklL@@STfue]eVf@B`Hr@",
+      "coordinates": "!B?g~w?Xc}b@JH?_y?b@JH?Xc}bOrH?Xc|"
+    },
+    "name": "4-Methoxycinnamic acid",
+    "mf": "C10H10O3",
+    "mw": 178.1849812808651,
+    "em": 178.06299418101,
+    "hasDensity": false,
+    "isExpensive": false,
+    "color": "#FF5500",
+    "rn": "830-09-1"
+  },
+  {
+    "id": "H59611",
+    "ocl": {
+      "idCode": "fbyHP@FRUxBDyrJYJQKZQHjMUT}UtpHB`",
+      "coordinates": "!B?`BH@k\\Bmwvw@k]}?`C~_{\\B?`Bw__y?mpK~@Oy?mwvw@ox@mwt"
+    },
+    "name": "4,4'-Azobis(4-cyanovaleric acid)",
+    "mf": "C12H16N4O4",
+    "mw": 280.2803153687717,
+    "em": 280.11715501168,
+    "hasDensity": false,
+    "isExpensive": false,
+    "color": "#FFAA00",
+    "rn": "2638-94-0"
+  },
+  {
+    "id": "H58022",
+    "ocl": {
+      "idCode": "deF@QICDaxCheAUUZjk@@",
+      "coordinates": "!B?kY?[G|S_vq?Dw}l_qM?[G}l"
+    },
+    "name": "6-Cyanohexylzinc bromide",
+    "mf": "C7H12NBrZn",
+    "mw": 255.45845384729682,
+    "em": 252.94445400119,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FFFF00",
+    "rn": "312624-28-5",
+    "density": 0.944
+  },
+  {
+    "id": "H58023",
+    "ocl": {
+      "idCode": "deDDQFxLRG`NbTEUmjfh@@",
+      "coordinates": "!Bl^zw?[_|m?vw?Ox@m?vw?K_}"
+    },
+    "name": "3-(Ethoxycarbonyl)propylzinc bromide",
+    "mf": "C6H11O2BrZn",
+    "mw": 260.4318838336966,
+    "em": 257.92338420366997,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#AAFF00",
+    "rn": "131379-39-0",
+    "density": 0.976
+  },
+  {
+    "id": "H58027",
+    "ocl": {
+      "idCode": "ded@Q@kH^@zIPVUen`@h@@",
+      "coordinates": "!B?oFH?X`B?g~H?Xc}?g~H@oy?"
+    },
+    "name": "3,5-Dimethylphenylzinc iodide",
+    "mf": "C8H9IZn",
+    "mw": 297.439608389909,
+    "em": 295.90403920007003,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#55FF00",
+    "rn": "312692-98-1",
+    "density": 0.992
+  },
+  {
+    "id": "H58036",
+    "ocl": {
+      "idCode": "dmT@I@qH^FdEd@zIPUf_FZB@`@@",
+      "coordinates": "!B?oFH?X`B?`BH?[\\Bb@JH@hc}b@H"
+    },
+    "name": "2,4-Difluorobenzylzinc bromide",
+    "mf": "C7H5BrF2Zn",
+    "mw": 272.39297168292063,
+    "em": 269.88341109661,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FF00",
+    "rn": "307496-26-0",
+    "density": 0.995
+  },
+  {
+    "id": "H58039",
+    "ocl": {
+      "idCode": "dix@Q@qH^@zIPVUZjh@@",
+      "coordinates": "!Bl^G~_xc}m?vH@k\\BbOvw?P"
+    },
+    "name": "1-Propylbutylzinc bromide",
+    "mf": "C7H15BrZn",
+    "mw": 244.4755728980184,
+    "em": 241.96485509344998,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FF55",
+    "rn": "312693-12-2",
+    "density": 0.959
+  },
+  {
+    "id": "H58043",
+    "ocl": {
+      "idCode": "diF@QJCDaxCheAYW[h@H@@",
+      "coordinates": "!B?oZw@ox@m?vw?K\\Bm?vw?@"
+    },
+    "name": "2-Methyl-5-pyridylzinc bromide",
+    "mf": "C6H6NBrZn",
+    "mw": 237.40007342622692,
+    "em": 234.89750380781,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#00FFAA"
+  },
+  {
+    "id": "H58050",
+    "ocl": {
+      "idCode": "ded@I@kH^NbIb@zIPVUea`BH@@",
+      "coordinates": "!B?oFH?_y?b@JH?Xc}?g~H@h`B"
+    },
+    "name": "3,5-Dichlorophenylzinc iodide",
+    "mf": "C6H3Cl2IZn",
+    "mw": 338.27636723731985,
+    "em": 335.79479437069,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FFFF",
+    "rn": "312692-86-7",
+    "density": 1.002
+  },
+  {
+    "id": "H58054",
+    "ocl": {
+      "idCode": "daX@Q@qH^@zIPUejj@@",
+      "coordinates": "!B?oFH?X`BbOw~@H`Bb@H"
+    },
+    "name": "2-Ethylbutylzinc bromide",
+    "mf": "C6H13BrZn",
+    "mw": 230.44895549317158,
+    "em": 227.94920502899,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00AAFF",
+    "rn": "312693-02-0",
+    "density": 0.963
+  },
+  {
+    "id": "H58066",
+    "ocl": {
+      "idCode": "diD@q@kH^Jd@zIPVY~FB@@@",
+      "coordinates": "!B?oFH?_y?b@Jw?Xc}bOvH?@"
+    },
+    "name": "2-Fluorophenylzinc iodide",
+    "mf": "C6H4FIZn",
+    "mw": 287.3768359888896,
+    "em": 285.86331720165003,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#0055FF",
+    "rn": "186000-41-9",
+    "density": 1.03
+  },
+  {
+    "id": "H58078",
+    "ocl": {
+      "idCode": "gOPDabQxGRTEgjh@",
+      "coordinates": "!Bl^G~_xc}m?vH@hc}"
+    },
+    "name": "1-Methylbutylzinc bromide",
+    "mf": "C5H11BrZn",
+    "mw": 216.4223380883248,
+    "em": 213.93355496452997,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#0000FF",
+    "rn": "308796-07-8",
+    "density": 0.961
+  },
+  {
+    "id": "H58089",
+    "ocl": {
+      "idCode": "day@QJXLRG`NbTEeVz@@@@",
+      "coordinates": "!B?oFH?X`B?g~H?Xc}?g|"
+    },
+    "name": "5-Pyrimidinylzinc bromide",
+    "mf": "C4H3N2BrZn",
+    "mw": 224.3614825820349,
+    "em": 221.87710271555,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#5500FF"
+  },
+  {
+    "id": "H58105",
+    "ocl": {
+      "idCode": "dkLDQITJrG`Nb\\BTRTtJXX@aj@@",
+      "coordinates": "!Bl^zw?[\\B?g~w?[_}mpK~_?x@m?vw@k_}"
+    },
+    "name": "3-(Ethoxycarbonyl)phenylzinc iodide",
+    "mf": "C9H9O2IZn",
+    "mw": 341.44915413528076,
+    "em": 339.89386843921005,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#AA00FF",
+    "rn": "282727-18-8",
+    "density": 0.991
+  },
+  {
+    "id": "H58119",
+    "ocl": { "idCode": "gK`DabQxGRTEZ`@", "coordinates": "!B|Vy?Dw}l_qL" },
+    "name": "n-Propylzinc bromide",
+    "mf": "C3H7BrZn",
+    "mw": 188.36910327863114,
+    "em": 185.90225483561,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF00FF",
+    "rn": "156567-57-6",
+    "density": 0.947
+  },
+  {
+    "id": "H58121",
+    "ocl": { "idCode": "gFPDabQxGRTEVj@@", "coordinates": "!B?kY?[G|S_vq?Dp" },
+    "name": "n-Butylzinc bromide",
+    "mf": "C4H9BrZn",
+    "mw": 202.39572068347798,
+    "em": 199.91790490007,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF00AA",
+    "rn": "92273-73-9",
+    "density": 0.958
+  },
+  {
+    "id": "H58137",
+    "ocl": {
+      "idCode": "ded@q@kH^AB@zIPVUun`@h@@",
+      "coordinates": "!Bl^zw?[\\B?g~w?[_}?g~w?[\\B"
+    },
+    "name": "4-(Methylthio)phenylzinc iodide",
+    "mf": "C7H7ISZn",
+    "mw": 315.47777839118925,
+    "em": 313.86046031001,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#FF0055",
+    "rn": "307496-24-8"
+  },
+  {
+    "id": "H58145",
+    "ocl": { "idCode": "gFPDabQxGRTEZj@@", "coordinates": "!Bl^zw?[_|?`Bw?P" },
+    "name": "Isobutylzinc bromide",
+    "mf": "C4H9BrZn",
+    "mw": 202.39572068347798,
+    "em": 199.91790490007,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF0000",
+    "rn": "126403-67-6",
+    "density": 0.943
+  },
+  {
+    "id": "H58149",
+    "ocl": {
+      "idCode": "ded@Q@kH^@zIpIQQH|LAA@@@",
+      "coordinates": "!B?oFH?_y?b@JH?[_}bOvH?Hc}"
+    },
+    "name": "2,4-Dimethylphenylzinc iodide",
+    "mf": "C8H9IZn",
+    "mw": 297.439608389909,
+    "em": 295.90403920007003,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF5500",
+    "rn": "312692-95-8",
+    "density": 1.012
+  },
+  {
+    "id": "H58154",
+    "ocl": {
+      "idCode": "ded@Q@qH^@zIPUYTYj@@@@",
+      "coordinates": "!BcnFH@hc}b@JH?_x@b@JH@ox@"
+    },
+    "name": "2-Phenylethylzinc bromide",
+    "mf": "C8H9BrZn",
+    "mw": 250.438664270419,
+    "em": 247.91790490007,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FFAA00",
+    "rn": "308796-14-7",
+    "density": 0.965
+  },
+  {
+    "id": "H58155",
+    "ocl": {
+      "idCode": "dcT@Q@qH^@zIPUUUZjjh@@",
+      "coordinates": "!B?kY?[G|S_vq?Dw}l_qM?[G|S_vq?Dp"
+    },
+    "name": "n-Decylzinc bromide",
+    "mf": "C10H21BrZn",
+    "mw": 286.5554251125588,
+    "em": 284.01180528683,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#FFFF00",
+    "rn": "160516-17-6"
+  },
+  {
+    "id": "H58161",
+    "ocl": {
+      "idCode": "diD@q@kH^Nd@zIPVUfF@H@@",
+      "coordinates": "!Bl^zw?[\\B?g~w?[_}mpK~_p"
+    },
+    "name": "3-Fluorophenylzinc iodide",
+    "mf": "C6H4FIZn",
+    "mw": 287.3768359888896,
+    "em": 285.86331720165003,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#AAFF00",
+    "rn": "307496-28-2",
+    "density": 0.995
+  },
+  {
+    "id": "H58165",
+    "ocl": {
+      "idCode": "ded@Q@kH^@zIPVUmn`@h@@",
+      "coordinates": "!B?oZw@k_}?`Bw@k_|?`Bw?[_|"
+    },
+    "name": "3,4-Dimethylphenylzinc iodide",
+    "mf": "C8H9IZn",
+    "mw": 297.439608389909,
+    "em": 295.90403920007003,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#55FF00",
+    "rn": "312692-97-0",
+    "density": 1.015
+  },
+  {
+    "id": "H58167",
+    "ocl": {
+      "idCode": "dmT@I@qH^AdEd@zIpIJIJGih@b@@",
+      "coordinates": "!B?oFH?X`BbOw~@H`Bb@JH?_x@b@H"
+    },
+    "name": "3,4-Difluorobenzylzinc bromide",
+    "mf": "C7H5BrF2Zn",
+    "mw": 272.39297168292063,
+    "em": 269.88341109661,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FF00",
+    "rn": "307496-34-0",
+    "density": 0.98
+  },
+  {
+    "id": "H58171",
+    "ocl": { "idCode": "gFPDabQxGRTEVi@@", "coordinates": "!B?kY?[G|S_vq?Dp" },
+    "name": "3-Butenylzinc bromide",
+    "mf": "C4H7BrZn",
+    "mw": 200.37983917536644,
+    "em": 197.90225483561,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#00FF55",
+    "rn": "226570-67-8"
+  },
+  {
+    "id": "H58177",
+    "ocl": {
+      "idCode": "gOPDabQxGRTEUjd@",
+      "coordinates": "!B?kY?[G|S_vq?Dw}l"
+    },
+    "name": "4-Pentenylzinc bromide",
+    "mf": "C5H9BrZn",
+    "mw": 214.40645658021322,
+    "em": 211.91790490007,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FFAA",
+    "rn": "308796-04-5",
+    "density": 0.954
+  },
+  {
+    "id": "H58185",
+    "ocl": {
+      "idCode": "ded@Q@^Ib@f^RYmSaj@@@@",
+      "coordinates": "!B?`BH@k\\BbGw~@H`Bb@K~@KGa"
+    },
+    "name": "alpha-Methylbenzylzinc chloride",
+    "mf": "C8H9ClZn",
+    "mw": 205.988074072517,
+    "em": 203.96841998207,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FFFF",
+    "rn": "85459-20-7",
+    "density": 0.965
+  },
+  {
+    "id": "H58186",
+    "ocl": {
+      "idCode": "diD@Q@qH^@zIPUe^Fjj`@",
+      "coordinates": "!B?oFH?X`BbOw~@H`Bb@K~@@"
+    },
+    "name": "(Cyclohexylmethyl)zinc bromide",
+    "mf": "C7H13BrZn",
+    "mw": 242.45969138990682,
+    "em": 239.94920502899,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00AAFF",
+    "rn": "135579-86-1",
+    "density": 0.972
+  },
+  {
+    "id": "H58193",
+    "ocl": {
+      "idCode": "ded@Q@qH^@zIPUYTYjjj@@",
+      "coordinates": "!BcnFH@hc}b@JH?_x@b@JH@ox@"
+    },
+    "name": "2-(Cyclohexyl)ethylzinc bromide",
+    "mf": "C8H15BrZn",
+    "mw": 256.48630879475365,
+    "em": 253.96485509344998,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#0055FF"
+  },
+  {
+    "id": "H58202",
+    "ocl": {
+      "idCode": "ded@I@qH^JdId@zIPVYwa``H@@",
+      "coordinates": "!BcnFH@ox@bOvw@h`Bb@JH?Xc}"
+    },
+    "name": "2,5-Difluorophenylzinc bromide",
+    "mf": "C6H3BrF2Zn",
+    "mw": 258.3663542780738,
+    "em": 255.86776103215,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#0000FF"
+  },
+  {
+    "id": "H58211",
+    "ocl": {
+      "idCode": "def@QICDaxCheAYWVz@Bp@@",
+      "coordinates": "!B?oFH?_y?bOrH?Xc}bOrH?Xa}"
+    },
+    "name": "4-Cyanophenylzinc bromide",
+    "mf": "C7H4NBrZn",
+    "mw": 247.39492781485063,
+    "em": 244.88185374334998,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#5500FF",
+    "rn": "131379-14-1",
+    "density": 0.98
+  },
+  {
+    "id": "H58214",
+    "ocl": {
+      "idCode": "gOPDabQxGRTEejh@",
+      "coordinates": "!Bl^G~_{_}bOvw@h`B"
+    },
+    "name": "1-Ethylpropylzinc bromide",
+    "mf": "C5H11BrZn",
+    "mw": 216.4223380883248,
+    "em": 213.93355496452997,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#AA00FF",
+    "rn": "308796-09-0",
+    "density": 0.95
+  },
+  {
+    "id": "H58221",
+    "ocl": {
+      "idCode": "ded@Q@kH^@zIPVYWa`HH@@",
+      "coordinates": "!B?oFH?_y?b@JH?[_}bOvH?K_|"
+    },
+    "name": "2-Ethylphenylzinc iodide",
+    "mf": "C8H9IZn",
+    "mw": 297.439608389909,
+    "em": 295.90403920007003,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF00FF",
+    "rn": "282727-19-9",
+    "density": 0.978
+  },
+  {
+    "id": "H58225",
+    "ocl": {
+      "idCode": "deD@Q@qH^@zIPUe^jj`@",
+      "coordinates": "!B?oFH?X`BbOw~@H`BmpJH?X`B"
+    },
+    "name": "2-Ethylhexylzinc bromide",
+    "mf": "C8H17BrZn",
+    "mw": 258.5021903028652,
+    "em": 255.98050515791,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF00AA",
+    "rn": "312693-03-1",
+    "density": 0.964
+  },
+  {
+    "id": "H58247",
+    "ocl": { "idCode": "gGPDabQxGRTEdvj`@", "coordinates": "!BpWFdf?y?@Ox@?`" },
+    "name": "Cyclobutylzinc bromide",
+    "mf": "C4H7BrZn",
+    "mw": 200.37983917536644,
+    "em": 197.90225483561,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF0055",
+    "density": 0.984
+  },
+  {
+    "id": "H58248",
+    "ocl": {
+      "idCode": "dmdDQNDLRG`NbTEU[ZjZ`@",
+      "coordinates": "!B?oZw@k]}mpJw_[\\B?`Bw_[\\Bmwt"
+    },
+    "name": "4-(Ethoxycarbonyl)butylzinc bromide",
+    "mf": "C7H13O2BrZn",
+    "mw": 274.4585012385434,
+    "em": 271.93903426813,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF0000",
+    "rn": "265330-98-1",
+    "density": 0.978
+  },
+  {
+    "id": "H58266",
+    "ocl": {
+      "idCode": "gOPLabQx\\PNdhJkUP@",
+      "coordinates": "!B?kY?[G|S_vq?Dw}l"
+    },
+    "name": "4-Chlorobutylzinc bromide",
+    "mf": "C4H8BrClZn",
+    "mw": 236.8407175120302,
+    "em": 233.87893254984,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF5500",
+    "rn": "155589-48-3",
+    "density": 0.98
+  },
+  {
+    "id": "H58272",
+    "ocl": {
+      "idCode": "def@QACDaxCheAYe^fBC@@@",
+      "coordinates": "!Bl^zw?_y?m?rH?[_}m?vH?[_|"
+    },
+    "name": "2-Cyanophenylzinc bromide",
+    "mf": "C7H4NBrZn",
+    "mw": 247.39492781485063,
+    "em": 244.88185374334998,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FFAA00",
+    "rn": "131379-17-4",
+    "density": 0.979
+  },
+  {
+    "id": "H58304",
+    "ocl": {
+      "idCode": "dcTDQAdLRG`NbTEUVvjij@@",
+      "coordinates": "!Bl^zw?[_|m?vw?K_}m?s~@K_}m?rw?P"
+    },
+    "name": "5-(Ethoxycarbonyl)pentylzinc bromide",
+    "mf": "C8H15O2BrZn",
+    "mw": 288.4851186433902,
+    "em": 285.95468433259,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FFFF00",
+    "rn": "312693-01-9",
+    "density": 0.98
+  },
+  {
+    "id": "H58312",
+    "ocl": {
+      "idCode": "gOPDabQxGRTEijh@",
+      "coordinates": "!B?oFH?Xc}m?w~@H`B"
+    },
+    "name": "tert-Pentylzinc bromide",
+    "mf": "C5H11BrZn",
+    "mw": 216.4223380883248,
+    "em": 213.93355496452997,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#AAFF00",
+    "rn": "171860-64-3",
+    "density": 0.974
+  },
+  {
+    "id": "H58320",
+    "ocl": {
+      "idCode": "ded@I@kHqNdI^@zYpIQIPlL@Q@@@",
+      "coordinates": "!BDoVw?K_}?`Bw?K\\Bm?w~@K\\B"
+    },
+    "name": "4-Bromo-2-fluorophenylzinc iodide",
+    "mf": "C6H3BrFIZn",
+    "mw": 366.2724230153438,
+    "em": 363.77382976942005,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#55FF00",
+    "rn": "352530-44-0",
+    "density": 1.016
+  },
+  {
+    "id": "H58330",
+    "ocl": {
+      "idCode": "dix@q@qH^Ab@zIPUUZjh@@",
+      "coordinates": "!B?hd@DpAl@AL@[@@S@Fp@Dp"
+    },
+    "name": "6-Chlorohexylzinc bromide",
+    "mf": "C6H12BrClZn",
+    "mw": 264.8939523217238,
+    "em": 261.91023267876,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FF00",
+    "rn": "135579-83-8",
+    "density": 0.974
+  },
+  {
+    "id": "H58338",
+    "ocl": {
+      "idCode": "diD@Q@kH^@zIPVUvz@B@@",
+      "coordinates": "!B?oFH?_y?b@JH?Xc}bOrH?P"
+    },
+    "name": "4-Methylphenylzinc iodide",
+    "mf": "C7H7IZn",
+    "mw": 283.4129909850622,
+    "em": 281.88838913561,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FF55",
+    "rn": "300766-53-4",
+    "density": 0.997
+  },
+  {
+    "id": "H58341",
+    "ocl": {
+      "idCode": "dedHQJBlaxCheAYe^fBB@@@",
+      "coordinates": "!B?oFH?_y?b@Jw?Xc}bOvw?Hc|"
+    },
+    "name": "2-Methoxyphenylzinc iodide",
+    "mf": "C7H7OIZn",
+    "mw": 299.41239590938045,
+    "em": 297.88330375518,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FFAA",
+    "rn": "282727-20-2",
+    "density": 0.997
+  },
+  {
+    "id": "H58343",
+    "ocl": {
+      "idCode": "dax@Q@kH^@zIPVU[h@@@@",
+      "coordinates": "!B?oFH?_y?b@JH?Xc}bOp"
+    },
+    "name": "Phenylzinc iodide",
+    "mf": "C6H5IZn",
+    "mw": 269.3863735802154,
+    "em": 267.87273907115,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00FFFF",
+    "rn": "23665-09-0",
+    "density": 0.966
+  },
+  {
+    "id": "H58351",
+    "ocl": { "idCode": "gFPDabQxGRTEjj@@", "coordinates": "!Bl^G~_w?~?g|@?`" },
+    "name": "tert-Butylzinc bromide",
+    "mf": "C4H9BrZn",
+    "mw": 202.39572068347798,
+    "em": 199.91790490007,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#00AAFF",
+    "rn": "7565-59-5",
+    "density": 0.966
+  },
+  {
+    "id": "H58354",
+    "ocl": {
+      "idCode": "diF@QLCDaxCheAYV[h@H@@",
+      "coordinates": "!B?oFH?X`B?g~H?Xc}?g~H@`"
+    },
+    "name": "6-Methyl-2-pyridylzinc bromide",
+    "mf": "C6H6NBrZn",
+    "mw": 237.40007342622692,
+    "em": 234.89750380781,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#0055FF",
+    "rn": "308795-98-4",
+    "density": 0.996
+  },
+  {
+    "id": "H58383",
+    "ocl": {
+      "idCode": "diD@q@kH^Jb@zIPVY~FB@@@",
+      "coordinates": "!B?oFH?_y?b@Jw?Xc}bOvH?@"
+    },
+    "name": "2-Chlorophenylzinc iodide",
+    "mf": "C6H4ClIZn",
+    "mw": 303.8313704087676,
+    "em": 301.83376672092,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#0000FF",
+    "rn": "148651-35-8",
+    "density": 0.973
+  },
+  {
+    "id": "H58384",
+    "ocl": {
+      "idCode": "daX@Q@qH^@zIPUUjj@@",
+      "coordinates": "!B?kY?[G|S_vq?Dw}l_qL"
+    },
+    "name": "n-Hexylzinc bromide",
+    "mf": "C6H13BrZn",
+    "mw": 230.44895549317158,
+    "em": 227.94920502899,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#5500FF",
+    "rn": "124397-96-2",
+    "density": 0.965
+  },
+  {
+    "id": "H58397",
+    "ocl": {
+      "idCode": "gNpLabQxpPNdhKKWSR@@",
+      "coordinates": "!BOoE`YQ`lFa|XTpC~"
+    },
+    "name": "2-Thienylzinc bromide",
+    "mf": "C4H3BrSZn",
+    "mw": 228.41286356527036,
+    "em": 225.84302588108997,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#AA00FF",
+    "rn": "45438-80-0",
+    "density": 0.973
+  },
+  {
+    "id": "H58408",
+    "ocl": {
+      "idCode": "dcl@Q@qH^@zIPVeV^dUGZjjjh@@",
+      "coordinates": "!Bkozj{Oxthzkle^rj_gSljfLZ{IT@VP"
+    },
+    "name": "1-Adamantylzinc bromide",
+    "mf": "C10H15BrZn",
+    "mw": 280.50778058822414,
+    "em": 277.96485509345,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF00FF",
+    "rn": "312624-15-0",
+    "density": 0.97
+  },
+  {
+    "id": "H58426",
+    "ocl": {
+      "idCode": "dcN@QJCDaxCheAYUU[ev@@@@@@",
+      "coordinates": "!BcnFH@ox@bOvH@h`BbOvH?X`Bb@JH?P"
+    },
+    "name": "3-Quinolinylzinc bromide",
+    "mf": "C9H6NBrZn",
+    "mw": 273.43228111643265,
+    "em": 270.89750380781004,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#FF00AA"
+  },
+  {
+    "id": "H58429",
+    "ocl": {
+      "idCode": "diD@q@kHqA^@xYPVUvz@B@@",
+      "coordinates": "!BDoVw?K_}?`Bw?K\\B?`Bw@`"
+    },
+    "name": "4-Bromophenylzinc iodide",
+    "mf": "C6H4BrIZn",
+    "mw": 348.2819606066696,
+    "em": 345.78325163892004,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF0055",
+    "rn": "148651-39-2",
+    "density": 1.045
+  },
+  {
+    "id": "H58431",
+    "ocl": {
+      "idCode": "diD@Q@kH^@zIPVUfz@B@@",
+      "coordinates": "!Bl^zw?[\\B?g~w?[_}?g~w@`"
+    },
+    "name": "3-Methylphenylzinc iodide",
+    "mf": "C7H7IZn",
+    "mw": 283.4129909850622,
+    "em": 281.88838913561,
+    "hasDensity": true,
+    "isExpensive": true,
+    "color": "#FF0000",
+    "rn": "312693-24-6",
+    "density": 0.984
+  },
+  {
+    "id": "H58435",
+    "ocl": {
+      "idCode": "dmTHqJCDaxVHCheAYeWi``b@@",
+      "coordinates": "!B?oFH?_y?b@Jw?Xc}bOvw?Hc|b@H"
+    },
+    "name": "5-Chloro-2-methoxyphenylzinc bromide",
+    "mf": "C7H6OBrClZn",
+    "mw": 286.85644861844264,
+    "em": 283.85819710495,
+    "hasDensity": false,
+    "isExpensive": true,
+    "color": "#FF5500"
+  }
+]

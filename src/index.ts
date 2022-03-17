@@ -5,6 +5,7 @@ import { Header } from './layout/Header';
 import { Modal } from './layout/Modal';
 import { RootLayout } from './layout/RootLayout';
 import { SplitPane } from './layout/SplitPane';
+import { Table } from './layout/Table';
 import { Tabs, TabItem } from './layout/Tabs';
 import { Toolbar } from './layout/Toolbar';
 import {
@@ -33,6 +34,7 @@ export {
   useToggleAccordion,
   useOnOff,
   Tabs,
+  Table,
 };
 
 export * from './layout/DropZone';
