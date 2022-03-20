@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
+import { Global } from '@emotion/react';
 import React, { ReactNode, CSSProperties, useState, useCallback } from 'react';
+import root from 'react-shadow/emotion';
 
 import { Accordion } from './Accordion';
 import { DropZone } from './DropZone';
@@ -7,19 +9,13 @@ import { Modal } from './Modal';
 import { SplitPane } from './SplitPane';
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
-import { customDivPreflight } from './css/customPreflight';
+import { customDivPreflight, customPreflight } from './css/customPreflight';
+import { preflight } from './css/preflight';
 
-const layoutComponents = {
-  SplitPane,
-  Accordion,
-  Modal,
-  DropZone,
-};
-
-interface LayoutComponent {
-  id: string;
-  component: keyof typeof layoutComponents | React.FC;
-  children?: LayoutComponent[];
+interface RootLayoutProps {
+  style?: CSSProperties;
+  children?: ReactNode;
+  layout?: Layout;
 }
 
 export interface Layout {
@@ -27,11 +23,18 @@ export interface Layout {
   layout: LayoutComponent | any;
 }
 
-interface RootLayoutProps {
-  style?: CSSProperties;
-  children?: ReactNode;
-  layout?: Layout;
+interface LayoutComponent {
+  id: string;
+  component: keyof typeof layoutComponents | React.FC;
+  children?: LayoutComponent[];
 }
+
+const layoutComponents = {
+  SplitPane,
+  Accordion,
+  Modal,
+  DropZone,
+};
 
 const style: CSSProperties = {
   width: '100%',
@@ -48,7 +51,8 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    <div style={{ ...style, ...props.style }}>
+    <root.div style={{ ...style, ...props.style }}>
+      <Global styles={[preflight, customPreflight]} />
       <div
         ref={ref}
         css={customDivPreflight}
@@ -60,7 +64,7 @@ export function RootLayout(props: RootLayoutProps) {
           </AccordionProvider>
         </RootLayoutProvider>
       </div>
-    </div>
+    </root.div>
   );
 }
 

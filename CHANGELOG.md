@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.11.0](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.4...v0.11.0) (2022-03-11)
+
+
+### Features
+
+* Render components from layout object ([#103](https://github.com/cheminfo/analysis-ui-components/issues/103)) ([e3b93f0](https://github.com/cheminfo/analysis-ui-components/commit/e3b93f0c2b22bbb3d8a27b057f2b2f4c2b662977))
+
+
+### Bug Fixes
+
+* reintroduce react-shadow ([897f496](https://github.com/cheminfo/analysis-ui-components/commit/897f4969f5d7fe11e9100cff8c56b1895ce8ba0d))
+
+### [0.10.4](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.3...v0.10.4) (2022-03-10)
+
+
+### Bug Fixes
+
+* export lib on cjs ([#104](https://github.com/cheminfo/analysis-ui-components/issues/104)) ([573a491](https://github.com/cheminfo/analysis-ui-components/commit/573a4910d21735e840e1c83a4e29ee33262e92bc))
+
 ### [0.10.3](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.2...v0.10.3) (2022-02-28)
 
 
