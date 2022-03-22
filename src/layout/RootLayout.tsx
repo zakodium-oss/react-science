@@ -1,6 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
-import React, { ReactNode, CSSProperties, useState, useCallback } from 'react';
+import React, {
+  ReactNode,
+  CSSProperties,
+  useState,
+  useCallback,
+  Ref,
+} from 'react';
 import root from 'react-shadow/emotion';
 
 import { Accordion } from './Accordion';
@@ -48,7 +54,7 @@ export function RootLayout(props: RootLayoutProps) {
     if (node !== null) {
       setState(node);
     }
-  }, []);
+  }, []) as Ref<HTMLDivElement>;
 
   return (
     <root.div style={{ ...style, ...props.style }}>
