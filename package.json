@@ -70,11 +70,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cheminfo/analysis-ui-components.git"
+    "url": "git+https://github.com/zakodium-oss/analysis-ui-components.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cheminfo/analysis-ui-components/issues"
+    "url": "https://github.com/zakodium-oss/analysis-ui-components/issues"
   },
-  "homepage": "https://github.com/cheminfo/analysis-ui-components#readme"
+  "homepage": "https://github.com/zakodium-oss/analysis-ui-components#readme"
 }
