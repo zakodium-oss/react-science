@@ -13,7 +13,7 @@ export function useRootLayoutContext() {
 
 export function RootLayoutProvider(props: {
   children: ReactNode;
-  innerRef: HTMLElement;
+  innerRef: HTMLElement | null;
 }) {
   return (
     <rootLayoutContext.Provider value={props.innerRef}>

@@ -42,7 +42,9 @@ const style: CSSProperties = {
 };
 
 export function RootLayout(props: RootLayoutProps) {
-  const [state, setState] = useState<HTMLElement>(document.body);
+  const [state, setState] = useState<HTMLElement | null>(
+    typeof document !== 'undefined' ? document.body : null,
+  );
 
   const ref = useCallback((node: HTMLDivElement) => {
     if (node !== null) {
