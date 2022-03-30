@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.11.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.11.0...v0.11.1) (2022-03-30)
+
+
+### Bug Fixes
+
+* resolve error on SSR with document ([#117](https://github.com/zakodium-oss/analysis-ui-components/issues/117)) ([08869d0](https://github.com/zakodium-oss/analysis-ui-components/commit/08869d01d99a8c4614419c19e7db442e9e71378e))
+
 ## [0.11.0](https://github.com/cheminfo/analysis-ui-components/compare/v0.10.4...v0.11.0) (2022-03-11)
 
 
