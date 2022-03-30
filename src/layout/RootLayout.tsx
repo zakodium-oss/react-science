@@ -52,8 +52,6 @@ export function RootLayout(props: RootLayoutProps) {
     }
   }, []);
 
-  if (state === null) return;
-
   return (
     <root.div style={{ ...style, ...props.style }}>
       <Global styles={[preflight, customPreflight]} />
