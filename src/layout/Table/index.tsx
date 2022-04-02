@@ -1,12 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, {
-  Children,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-  useEffect,
-} from 'react';
+import { Children, isValidElement, ReactElement, ReactNode } from 'react';
+
+import {
+  BooleanCell,
+  ColorCell,
+  HeaderCell,
+  NumberCell,
+  TextCell,
+} from './Cells';
+
+export * from './Cells';
 
 interface TableProps {
   children?: ReactNode;
@@ -16,15 +20,7 @@ const styles = {
   border: css({
     border: '0.5px solid rgb(0, 0, 0)',
     padding: '5px',
-  }),
-  color: css({
     position: 'relative',
-  }),
-  header: css({
-    fontWeight: 'bold',
-  }),
-  text: css({
-    textOverflow: 'ellipsis',
   }),
 };
 function splitChildren(children: ReactNode) {
@@ -57,57 +53,30 @@ export function Table({ children }: TableProps) {
     </table>
   );
 }
-Table.ColorCell = ({ value }: { value: string }) => (
-  <td css={[styles.color, styles.border]}>
-    <div
-      style={{
-        background: value,
-        position: 'absolute',
-        top: '2px',
-        left: '2px',
-        right: '2px',
-        bottom: '2px',
-      }}
-    />
-  </td>
-);
-Table.HeaderCell = ({ value }: { value?: string }) => (
-  <th css={[styles.header, styles.border]}>{value}</th>
-);
-Table.NumberCell = ({ value, fixed }: { value?: number; fixed?: number }) => (
-  <td css={styles.border}>
-    {value ? (fixed ? value.toFixed(fixed) : value) : ''}
-  </td>
-);
-Table.TextCell = ({ value }: { value?: string }) => (
-  <td css={[styles.text, styles.border]}>{value}</td>
-);
-Table.BooleanCell = ({ value }: { value?: boolean }) => (
-  <td css={styles.border}>{value !== undefined ? (value ? '✔' : '✘') : ''}</td>
-);
-function testRowChildren(children: ReactNode) {
+function rowChildren(children: ReactNode) {
+  const cells: ReactElement[] = [];
   for (let child of Children.toArray(children)) {
     if (
-      typeof child !== 'object' ||
-      !isValidElement(child) ||
-      (child.type !== Table.ColorCell &&
-        child.type !== Table.BooleanCell &&
-        child.type !== Table.TextCell &&
-        child.type !== Table.NumberCell &&
-        child.type !== Table.HeaderCell)
+      typeof child === 'object' &&
+      isValidElement(child) &&
+      (child.type === ColorCell ||
+        child.type === BooleanCell ||
+        child.type === TextCell ||
+        child.type === NumberCell ||
+        child.type === HeaderCell)
     ) {
+      cells.push(<td css={styles.border}>{child}</td>);
+    } else {
       // eslint-disable-next-line no-console
       console.error('Invalid Row child: ', child);
       throw new Error('invalid Row child');
     }
   }
+  return { cells };
 }
 Table.Row = ({ children }: TableProps) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    testRowChildren(children);
-  }, [children]);
-  return <tr>{children}</tr>;
+  const { cells } = rowChildren(children);
+  return <tr>{cells}</tr>;
 };
 
 Table.Header = ({ children }: TableProps) => {

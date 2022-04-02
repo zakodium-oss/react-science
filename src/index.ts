@@ -5,7 +5,6 @@ import { Header } from './layout/Header';
 import { Modal } from './layout/Modal';
 import { RootLayout } from './layout/RootLayout';
 import { SplitPane } from './layout/SplitPane';
-import { Table } from './layout/Table';
 import { Tabs, TabItem } from './layout/Tabs';
 import { Toolbar } from './layout/Toolbar';
 import {
@@ -16,6 +15,8 @@ import { useModal } from './layout/hooks/useModal';
 import { useOnOff } from './layout/hooks/useOnOff';
 import { useSplitPaneSize } from './layout/hooks/useSplitPaneSize';
 import { useToggle } from './layout/hooks/useToggle';
+
+export * from './layout/Table';
 
 export type { TabItem };
 export {
@@ -34,7 +35,6 @@ export {
   useToggleAccordion,
   useOnOff,
   Tabs,
-  Table,
 };
 
 export * from './layout/DropZone';
