@@ -1,9 +1,14 @@
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React from 'react';
 
 const styles = {
   color: css({
-    position: 'relative',
+    position: 'absolute',
+    top: '2px',
+    left: '2px',
+    right: '2px',
+    bottom: '2px',
   }),
   header: css({
     fontWeight: 'bold',
@@ -18,11 +23,6 @@ export function ColorCell({ value }: { value: string }) {
       css={styles.color}
       style={{
         background: value,
-        position: 'absolute',
-        top: '2px',
-        left: '2px',
-        right: '2px',
-        bottom: '2px',
       }}
     />
   );
