@@ -2,15 +2,11 @@
 import { css } from '@emotion/react';
 import { Children, isValidElement, ReactElement, ReactNode } from 'react';
 
-import {
-  BooleanCell,
-  ColorCell,
-  HeaderCell,
-  NumberCell,
-  TextCell,
-} from './Cells';
-
-export * from './Cells';
+import { Boolean } from './Boolean';
+import { Color } from './Color';
+import { Number } from './Number';
+import { Text } from './Text';
+import { Title } from './Title';
 
 interface TableProps {
   children?: ReactNode;
@@ -59,11 +55,11 @@ function rowChildren(children: ReactNode) {
     if (
       typeof child === 'object' &&
       isValidElement(child) &&
-      (child.type === ColorCell ||
-        child.type === BooleanCell ||
-        child.type === TextCell ||
-        child.type === NumberCell ||
-        child.type === HeaderCell)
+      (child.type === Color ||
+        child.type === Boolean ||
+        child.type === Text ||
+        child.type === Number ||
+        child.type === Title)
     ) {
       cells.push(<td css={styles.border}>{child}</td>);
     } else {
