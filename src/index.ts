@@ -1,11 +1,17 @@
 import { Accordion } from './layout/Accordion';
+import { Boolean } from './layout/Boolean';
 import { Button } from './layout/Button';
+import { Color } from './layout/Color';
 import { ConfirmModal } from './layout/ConfirmModal';
 import { Header } from './layout/Header';
 import { Modal } from './layout/Modal';
+import { Number } from './layout/Number';
 import { RootLayout } from './layout/RootLayout';
 import { SplitPane } from './layout/SplitPane';
+import { Table } from './layout/Table';
 import { Tabs, TabItem } from './layout/Tabs';
+import { Text } from './layout/Text';
+import { Title } from './layout/Title';
 import { Toolbar } from './layout/Toolbar';
 import {
   useAccordionContext,
@@ -33,6 +39,12 @@ export {
   useToggleAccordion,
   useOnOff,
   Tabs,
+  Table,
+  Color,
+  Text,
+  Title,
+  Boolean,
+  Number,
 };
 
 export * from './layout/DropZone';
