@@ -1,14 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import {
-  Table,
-  TextCell,
-  NumberCell,
-  BooleanCell,
-  ColorCell,
-  HeaderCell,
-} from '../src';
+import { Table, Text, Number, Boolean, Color, Title } from '../src';
 
 import data from './data/table.json';
 
@@ -20,25 +13,25 @@ export default {
 export function TableControl() {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
     <Table.Row key={id}>
-      <TextCell value={id} />
-      <TextCell value={name} />
-      <TextCell value={rn} />
-      <NumberCell value={mw} fixed={2} />
-      <NumberCell value={em} fixed={4} />
-      <BooleanCell value={isExpensive} />
-      <ColorCell value={color} />
+      <Text value={id} />
+      <Text value={name} />
+      <Text value={rn} />
+      <Number value={mw} fixed={2} />
+      <Number value={em} fixed={4} />
+      <Boolean value={isExpensive} />
+      <Color value={color} />
     </Table.Row>
   ));
   return (
     <Table>
       <Table.Header>
-        <HeaderCell value="id" />
-        <HeaderCell value="name" />
-        <HeaderCell value="rn" />
-        <HeaderCell value="mw" />
-        <HeaderCell value="em" />
-        <HeaderCell value="isExpensive" />
-        <HeaderCell value="color" />
+        <Title value="id" />
+        <Title value="name" />
+        <Title value="rn" />
+        <Title value="mw" />
+        <Title value="em" />
+        <Title value="isExpensive" />
+        <Title value="color" />
       </Table.Header>
       {Rows}
     </Table>
