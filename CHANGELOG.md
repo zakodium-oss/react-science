@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.11.1...v0.12.0) (2022-04-21)
+
+
+### Features
+
+* add table and basic rendering components ([#115](https://github.com/zakodium-oss/analysis-ui-components/issues/115)) ([d892375](https://github.com/zakodium-oss/analysis-ui-components/commit/d8923751efcd1a545638992fdf98deb76675e5ea))
+
 ### [0.11.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.11.0...v0.11.1) (2022-03-30)
 
 
