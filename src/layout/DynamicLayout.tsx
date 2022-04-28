@@ -22,20 +22,22 @@ type Node =
   | ReactFragment
   | React.FunctionComponent;
 
+type OmitChildren<T> = Omit<T, 'children'>;
+
 const LAYOUT_COMPONENTS: Record<string, Node> = {
   SplitPane,
   Accordion,
 };
 
-interface SplitPaneLayout extends Omit<SplitPaneProps, 'children'> {
+interface SplitPaneLayout extends OmitChildren<SplitPaneProps> {
   component: 'SplitPane';
   children: [Layout, Layout];
 }
-interface AccordionItem extends Omit<AccordionItemProps, 'children'> {
+interface AccordionItem extends OmitChildren<AccordionItemProps> {
   component: Node;
   key: string;
 }
-interface AccordionLayout extends Omit<AccordionProps, 'children'> {
+interface AccordionLayout extends OmitChildren<AccordionProps> {
   component: 'Accordion';
   children: AccordionItem[];
 }
