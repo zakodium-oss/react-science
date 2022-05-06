@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { CSSProperties, MouseEvent, useCallback } from 'react';
-import reactCSS from 'reactcss';
 
 import { Swatch } from '../common';
 
@@ -10,42 +8,30 @@ interface SketchPresetColorsProps {
   onSwatchHover: any;
 }
 
+const styles: Record<'swatchWrap' | 'swatch', CSSProperties> &
+  Record<'colors', (flag: boolean) => CSSProperties> = {
+  colors: (flag: boolean) => ({
+    margin: '0 -10px',
+    padding: '10px 0 0 10px',
+    borderTop: '1px solid #eee',
+    display: 'flex',
+    flexWrap: 'wrap',
+    position: 'relative',
+    ...(flag && { display: 'none' }),
+  }),
+  swatchWrap: {
+    width: '16px',
+    height: '16px',
+    margin: '0 10px 10px 0',
+  },
+  swatch: {
+    borderRadius: '3px',
+    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15)',
+  },
+};
+
 const SketchPresetColors = (props: SketchPresetColorsProps) => {
   const { colors, onClick, onSwatchHover } = props;
-
-  const styles = reactCSS<
-    Record<'colors' | 'swatchWrap' | 'swatch', CSSProperties>
-  >(
-    {
-      default: {
-        colors: {
-          margin: '0 -10px',
-          padding: '10px 0 0 10px',
-          borderTop: '1px solid #eee',
-          display: 'flex',
-          flexWrap: 'wrap',
-          position: 'relative',
-        },
-        swatchWrap: {
-          width: '16px',
-          height: '16px',
-          margin: '0 10px 10px 0',
-        },
-        swatch: {
-          borderRadius: '3px',
-          boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15)',
-        },
-      },
-      'no-presets': {
-        colors: {
-          display: 'none',
-        },
-      },
-    },
-    {
-      'no-presets': !colors || !colors.length,
-    },
-  );
 
   const handleClick = useCallback(
     (hex: any, e: MouseEvent) => {
@@ -61,7 +47,10 @@ const SketchPresetColors = (props: SketchPresetColorsProps) => {
   );
 
   return (
-    <div style={styles.colors} className="flexbox-fix">
+    <div
+      style={styles.colors(!colors || !colors.length)}
+      className="flexbox-fix"
+    >
       {colors.map((colorObjOrString) => {
         const c =
           typeof colorObjOrString === 'string'
