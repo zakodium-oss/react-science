@@ -24,26 +24,26 @@ const Alpha = (props) => {
     [props],
   );
   const mouseDownHandler = useOnChange(handleChange);
-
   const rgb = props.rgb;
+  const { borderRadius, boxShadow } = props.style;
   const styles = reactCSS(
     {
       default: {
         alpha: {
           absolute: '0px 0px 0px 0px',
-          borderRadius: props.radius,
+          borderRadius,
         },
         checkboard: {
           absolute: '0px 0px 0px 0px',
           overflow: 'hidden',
-          borderRadius: props.radius,
+          borderRadius,
         },
         gradient: {
           absolute: '0px 0px 0px 0px',
           background: `linear-gradient(to right, rgba(${rgb.r},${rgb.g},${rgb.b}, 0) 0%,
            rgba(${rgb.r},${rgb.g},${rgb.b}, 1) 100%)`,
-          boxShadow: props.shadow,
-          borderRadius: props.radius,
+          boxShadow,
+          borderRadius,
         },
         container: {
           position: 'relative',

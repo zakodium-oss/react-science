@@ -26,20 +26,20 @@ const Hue = (props) => {
   const handleMouseDown = useOnChange(handleChange);
 
   const { direction = 'horizontal' } = props;
-
+  const { borderRadius, boxShadow } = props.style;
   const styles = reactCSS(
     {
       default: {
         hue: {
           absolute: '0px 0px 0px 0px',
-          borderRadius: props.radius,
-          boxShadow: props.shadow,
+          borderRadius,
+          boxShadow,
         },
         container: {
           padding: '0 2px',
           position: 'relative',
           height: '100%',
-          borderRadius: props.radius,
+          borderRadius,
         },
         pointer: {
           position: 'absolute',

@@ -32,7 +32,8 @@ const Saturation = (props) => {
 
   const handleMouseDown = useOnChange(handleChange);
 
-  const { color, white, black, pointer, circle } = props.style || {};
+  const { color, white, black, pointer, circle, borderRadius, boxShadow } =
+    props.style || {};
 
   const styles = reactCSS(
     {
@@ -40,18 +41,18 @@ const Saturation = (props) => {
         color: {
           absolute: '0px 0px 0px 0px',
           background: `hsl(${props.hsl.h},100%, 50%)`,
-          borderRadius: props.radius,
+          borderRadius,
           userDraggle: 'none',
           userSelect: 'none',
         },
         white: {
           absolute: '0px 0px 0px 0px',
-          borderRadius: props.radius,
+          borderRadius,
         },
         black: {
           absolute: '0px 0px 0px 0px',
-          boxShadow: props.shadow,
-          borderRadius: props.radius,
+          boxShadow,
+          borderRadius,
         },
         pointer: {
           position: 'absolute',

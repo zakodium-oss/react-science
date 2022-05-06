@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import merge from 'lodash/merge';
 import React, { CSSProperties } from 'react';
-import reactCSS from 'reactcss';
 
 import { ColorWrap, Saturation, Hue, Alpha, CheckBoard } from '../common';
 
@@ -52,7 +49,6 @@ export interface BaseColorPicker extends BaseColor {
 
 interface ColorPicker extends BaseColorPicker {
   width: string | number;
-  styles: any;
   className: string;
   presetColors: string[];
   onSwatchHover: any;
@@ -79,6 +75,88 @@ const presetColorsList = [
   '#FFFFFF',
 ];
 
+const styles: Record<
+  | 'controls'
+  | 'sliders'
+  | 'saturationContainer'
+  | 'saturationElement'
+  | 'hueContainer'
+  | 'hueElement'
+  | 'alphaElement',
+  CSSProperties
+> &
+  Record<
+    'picker' | 'color' | 'activeColor' | 'alphaContainer',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (...args: any) => CSSProperties
+  > = {
+  picker: (width: number | string) => ({
+    width: typeof width === 'string' ? width : `${width}px`,
+    padding: '10px 10px 0',
+    boxSizing: 'initial',
+    background: '#fff',
+    borderRadius: '4px',
+    boxShadow: '0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)',
+  }),
+  controls: {
+    display: 'flex',
+  },
+  sliders: {
+    padding: '4px 0',
+    flex: '1',
+  },
+  color: (disableAlpha: boolean) => ({
+    width: '24px',
+    height: disableAlpha ? '10px' : '24px',
+    position: 'relative',
+    marginTop: '4px',
+    marginLeft: '4px',
+    borderRadius: '3px',
+  }),
+  activeColor: (rgb: RGB) => ({
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: '2px',
+    background: `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`,
+    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
+  }),
+
+  saturationContainer: {
+    width: '100%',
+    paddingBottom: '75%',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  saturationElement: {
+    borderRadius: '3px',
+    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
+  },
+
+  hueContainer: {
+    position: 'relative',
+    height: '10px',
+    overflow: 'hidden',
+  },
+  hueElement: {
+    borderRadius: '2px',
+    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
+  },
+  alphaContainer: (disableAlpha: boolean) => ({
+    position: 'relative',
+    height: '10px',
+    marginTop: '4px',
+    overflow: 'hidden',
+    ...(disableAlpha && { display: 'none' }),
+  }),
+  alphaElement: {
+    borderRadius: '2px',
+    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
+  },
+};
+
 const Sketch = (props: ColorPicker) => {
   const {
     width = 200,
@@ -91,116 +169,14 @@ const Sketch = (props: ColorPicker) => {
     disableAlpha = false,
     presetColors = presetColorsList,
     renderers,
-    styles: passedStyles = {},
     className = '',
   } = props;
 
-  const styles = reactCSS<
-    Record<
-      | 'picker'
-      | 'saturation'
-      | 'Saturation'
-      | 'controls'
-      | 'sliders'
-      | 'color'
-      | 'activeColor'
-      | 'hue'
-      | 'Hue'
-      | 'alpha'
-      | 'Alpha',
-      CSSProperties
-    >
-  >(
-    merge(
-      {
-        default: {
-          picker: {
-            width,
-            padding: '10px 10px 0',
-            boxSizing: 'initial',
-            background: '#fff',
-            borderRadius: '4px',
-            boxShadow: '0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)',
-          },
-          saturation: {
-            width: '100%',
-            paddingBottom: '75%',
-            position: 'relative',
-            overflow: 'hidden',
-          },
-          Saturation: {
-            radius: '3px',
-            shadow:
-              'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
-          },
-          controls: {
-            display: 'flex',
-          },
-          sliders: {
-            padding: '4px 0',
-            flex: '1',
-          },
-          color: {
-            width: '24px',
-            height: '24px',
-            position: 'relative',
-            marginTop: '4px',
-            marginLeft: '4px',
-            borderRadius: '3px',
-          },
-          activeColor: {
-            absolute: '0px 0px 0px 0px',
-            borderRadius: '2px',
-            background: `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`,
-            boxShadow:
-              'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
-          },
-          hue: {
-            position: 'relative',
-            height: '10px',
-            overflow: 'hidden',
-          },
-          Hue: {
-            radius: '2px',
-            shadow:
-              'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
-          },
-
-          alpha: {
-            position: 'relative',
-            height: '10px',
-            marginTop: '4px',
-            overflow: 'hidden',
-          },
-          Alpha: {
-            radius: '2px',
-            shadow:
-              'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
-          },
-          ...passedStyles,
-        },
-        disableAlpha: {
-          color: {
-            height: '10px',
-          },
-          hue: {
-            height: '10px',
-          },
-          alpha: {
-            display: 'none',
-          },
-        },
-      },
-      passedStyles,
-    ),
-    { disableAlpha },
-  );
-
   return (
-    <div style={styles.picker} className={`sketch-picker ${className}`}>
-      <div style={styles.saturation}>
+    <div style={styles.picker(width)} className={`sketch-picker ${className}`}>
+      <div style={styles.saturationContainer}>
         <Saturation
-          style={styles.Saturation}
+          style={styles.saturationElement}
           hsl={hsl}
           hsv={hsv}
           onChange={onChange}
@@ -208,12 +184,12 @@ const Sketch = (props: ColorPicker) => {
       </div>
       <div style={styles.controls} className="flexbox-fix">
         <div style={styles.sliders}>
-          <div style={styles.hue}>
-            <Hue style={styles.Hue} hsl={hsl} onChange={onChange} />
+          <div style={styles.hueContainer}>
+            <Hue style={styles.hueElement} hsl={hsl} onChange={onChange} />
           </div>
-          <div style={styles.alpha}>
+          <div style={styles.alphaContainer(disableAlpha)}>
             <Alpha
-              style={styles.Alpha}
+              style={styles.alphaElement}
               rgb={rgb}
               hsl={hsl}
               renderers={renderers}
@@ -221,9 +197,9 @@ const Sketch = (props: ColorPicker) => {
             />
           </div>
         </div>
-        <div style={styles.color}>
+        <div style={styles.color(disableAlpha)}>
           <CheckBoard />
-          <div style={styles.activeColor} />
+          <div style={styles.activeColor(rgb)} />
         </div>
       </div>
 
