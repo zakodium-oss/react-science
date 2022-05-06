@@ -39,11 +39,4 @@ const CheckBoard = (props) => {
   );
 };
 
-CheckBoard.defaultProps = {
-  size: 8,
-  white: 'transparent',
-  grey: 'rgba(0,0,0,.08)',
-  renderers: {},
-};
-
 export default CheckBoard;
