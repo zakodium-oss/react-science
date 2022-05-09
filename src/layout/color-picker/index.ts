@@ -3,6 +3,6 @@
  * https://github.com/casesandberg/react-color
  */
 
-import sketch from './sketch/Sketch';
+import ColorPicker from './sketch/Sketch';
 
-export default sketch;
+export default ColorPicker;
