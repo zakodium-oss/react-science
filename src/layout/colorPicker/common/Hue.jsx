@@ -1,9 +1,59 @@
 import React, { useCallback, useRef } from 'react';
-import reactCSS from 'reactcss';
 
 import * as hue from '../helpers/hue';
 
 import { useOnChange } from './useOnChange';
+
+const styles = {
+  hue: (borderRadius, boxShadow) => ({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius,
+    boxShadow,
+  }),
+  container: (direction, borderRadius) => {
+    let gradientDirection = 'right';
+
+    if (direction === 'vertical') {
+      gradientDirection = 'bottom';
+    }
+    return {
+      padding: '0 2px',
+      position: 'relative',
+      height: '100%',
+      borderRadius,
+      background: `linear-gradient(to ${gradientDirection}, #f00 0%, #ff0 17%, #0f0
+      33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%)`,
+    };
+  },
+  pointer: (direction, hsl) => {
+    if (direction === 'vertical') {
+      return {
+        position: 'absolute',
+        left: 0,
+        top: `${-((hsl.h * 100) / 360) + 100}%`,
+      };
+    }
+
+    return {
+      position: 'absolute',
+      left: `${(hsl.h * 100) / 360}%`,
+    };
+  },
+
+  slider: {
+    marginTop: '1px',
+    width: '4px',
+    borderRadius: '1px',
+    height: '8px',
+    boxShadow: '0 0 2px rgba(0, 0, 0, .6)',
+    background: '#fff',
+    transform: 'translateX(-2px)',
+  },
+};
 
 const Hue = (props) => {
   const containerRef = useRef();
@@ -25,72 +75,19 @@ const Hue = (props) => {
 
   const handleMouseDown = useOnChange(handleChange);
 
-  const { direction = 'horizontal' } = props;
+  const { direction = 'horizontal', hsl } = props;
   const { borderRadius, boxShadow } = props.style;
-  const styles = reactCSS(
-    {
-      default: {
-        hue: {
-          absolute: '0px 0px 0px 0px',
-          borderRadius,
-          boxShadow,
-        },
-        container: {
-          padding: '0 2px',
-          position: 'relative',
-          height: '100%',
-          borderRadius,
-        },
-        pointer: {
-          position: 'absolute',
-          left: `${(props.hsl.h * 100) / 360}%`,
-        },
-        slider: {
-          marginTop: '1px',
-          width: '4px',
-          borderRadius: '1px',
-          height: '8px',
-          boxShadow: '0 0 2px rgba(0, 0, 0, .6)',
-          background: '#fff',
-          transform: 'translateX(-2px)',
-        },
-      },
-      vertical: {
-        pointer: {
-          left: '0px',
-          top: `${-((props.hsl.h * 100) / 360) + 100}%`,
-        },
-      },
-    },
-    { vertical: direction === 'vertical' },
-  );
 
   return (
-    <div style={styles.hue}>
+    <div style={styles.hue(borderRadius, boxShadow)}>
       <div
-        className={`hue-${direction}`}
-        style={styles.container}
+        style={styles.container(direction, borderRadius)}
         ref={containerRef}
         onMouseDown={handleMouseDown}
         onTouchMove={handleChange}
         onTouchStart={handleChange}
       >
-        <style>{`
-            .hue-horizontal {
-              background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0
-                33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
-              background: -webkit-linear-gradient(to right, #f00 0%, #ff0
-                17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
-            }
-
-            .hue-vertical {
-              background: linear-gradient(to top, #f00 0%, #ff0 17%, #0f0 33%,
-                #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
-              background: -webkit-linear-gradient(to top, #f00 0%, #ff0 17%,
-                #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
-            }
-          `}</style>
-        <div style={styles.pointer}>
+        <div style={styles.pointer(direction, hsl)}>
           {props.pointer ? (
             <props.pointer {...props} />
           ) : (
