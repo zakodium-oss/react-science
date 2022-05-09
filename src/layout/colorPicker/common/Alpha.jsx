@@ -1,10 +1,77 @@
 import React, { useCallback, useRef } from 'react';
-import reactCSS from 'reactcss';
+// import reactCSS from 'reactcss';
 
 import * as alpha from '../helpers/alpha';
 
 import CheckBoard from './CheckBoard';
 import { useOnChange } from './useOnChange';
+
+const styles = {
+  alpha: (borderRadius) => ({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius,
+  }),
+  checkerboard: (borderRadius) => ({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+    borderRadius,
+  }),
+  gradient: (direction, boxShadow, borderRadius, rgb) => {
+    let gradientDirection = 'right';
+
+    if (direction === 'vertical') {
+      gradientDirection = 'bottom';
+    }
+
+    return {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      boxShadow,
+      borderRadius,
+      background: `linear-gradient(to ${gradientDirection}, rgba(${rgb.r},${rgb.g},${rgb.b}, 0) 0%,
+      rgba(${rgb.r},${rgb.g},${rgb.b}, 1) 100%)`,
+    };
+  },
+  container: {
+    position: 'relative',
+    height: '100%',
+    margin: '0 3px',
+  },
+  pointer: (direction, rgb) => {
+    if (direction === 'vertical') {
+      return {
+        position: 'absolute',
+        left: 0,
+        top: `${rgb.a * 100}%`,
+      };
+    }
+
+    return {
+      position: 'absolute',
+      left: `${rgb.a * 100}%`,
+    };
+  },
+  slider: {
+    width: '4px',
+    borderRadius: '1px',
+    height: '8px',
+    boxShadow: '0 0 2px rgba(0, 0, 0, .6)',
+    background: '#fff',
+    marginTop: '1px',
+    transform: 'translateX(-2px)',
+  },
+};
 
 const Alpha = (props) => {
   const containerRef = useRef();
@@ -25,71 +92,13 @@ const Alpha = (props) => {
   );
   const mouseDownHandler = useOnChange(handleChange);
   const rgb = props.rgb;
-  const { borderRadius, boxShadow } = props.style;
-  const styles = reactCSS(
-    {
-      default: {
-        alpha: {
-          absolute: '0px 0px 0px 0px',
-          borderRadius,
-        },
-        checkboard: {
-          absolute: '0px 0px 0px 0px',
-          overflow: 'hidden',
-          borderRadius,
-        },
-        gradient: {
-          absolute: '0px 0px 0px 0px',
-          background: `linear-gradient(to right, rgba(${rgb.r},${rgb.g},${rgb.b}, 0) 0%,
-           rgba(${rgb.r},${rgb.g},${rgb.b}, 1) 100%)`,
-          boxShadow,
-          borderRadius,
-        },
-        container: {
-          position: 'relative',
-          height: '100%',
-          margin: '0 3px',
-        },
-        pointer: {
-          position: 'absolute',
-          left: `${rgb.a * 100}%`,
-        },
-        slider: {
-          width: '4px',
-          borderRadius: '1px',
-          height: '8px',
-          boxShadow: '0 0 2px rgba(0, 0, 0, .6)',
-          background: '#fff',
-          marginTop: '1px',
-          transform: 'translateX(-2px)',
-        },
-      },
-      vertical: {
-        gradient: {
-          background: `linear-gradient(to bottom, rgba(${rgb.r},${rgb.g},${rgb.b}, 0) 0%,
-           rgba(${rgb.r},${rgb.g},${rgb.b}, 1) 100%)`,
-        },
-        pointer: {
-          left: 0,
-          top: `${rgb.a * 100}%`,
-        },
-      },
-      overwrite: {
-        ...props.style,
-      },
-    },
-    {
-      vertical: props.direction === 'vertical',
-      overwrite: true,
-    },
-  );
-
+  const { borderRadius, boxShadow, direction } = props.style;
   return (
-    <div style={styles.alpha}>
-      <div style={styles.checkboard}>
+    <div style={styles.alpha(borderRadius)}>
+      <div style={styles.checkerboard(borderRadius)}>
         <CheckBoard renderers={props.renderers} />
       </div>
-      <div style={styles.gradient} />
+      <div style={styles.gradient(direction, boxShadow, borderRadius, rgb)} />
       <div
         style={styles.container}
         ref={containerRef}
@@ -97,7 +106,7 @@ const Alpha = (props) => {
         onTouchMove={handleChange}
         onTouchStart={handleChange}
       >
-        <div style={styles.pointer}>
+        <div style={styles.pointer(direction, rgb)}>
           {props.pointer ? (
             <props.pointer {...props} />
           ) : (
