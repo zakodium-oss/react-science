@@ -21,6 +21,7 @@ export interface SplitPaneProps {
   orientation?: SplitOrientation;
   sideSeparation?: SideSeparation;
   initialSeparation?: InitialSeparation;
+  initialClosed?: boolean;
   onChange?: (position: InitialSeparation) => void;
   children: [ReactNode, ReactNode];
 }
@@ -81,11 +82,12 @@ export function SplitPane(props: SplitPaneProps) {
     orientation = 'horizontal',
     sideSeparation = 'start',
     initialSeparation = '50%',
+    initialClosed = false,
     onChange = () => null,
     children,
   } = props;
 
-  const [isSidePaneClosed, toggle] = useToggle(false);
+  const [isSidePaneClosed, toggle] = useToggle(initialClosed);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const [[size, type], setSize] = useState(() => {
