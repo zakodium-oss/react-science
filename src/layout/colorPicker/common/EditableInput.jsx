@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import reactCSS from 'reactcss';
 
 const DEFAULT_ARROW_OFFSET = 1;
 
@@ -11,16 +10,24 @@ const getNumberValue = (value) => Number(String(value).replace(/%/g, ''));
 
 let idCounter = 1;
 
+const styles = {
+  wrap: {
+    position: 'relative',
+  },
+};
+
 const EditableInput = (props) => {
   const [state, setState] = useState({
     value: String(props.value).toUpperCase(),
     blurValue: String(props.value).toUpperCase(),
   });
   const inputRef = useRef();
+  const valueRef = useRef(props.value);
 
   const inputId = useRef(`rc-editable-input-${idCounter++}`).current;
 
   useEffect(() => {
+    valueRef.current = props.value;
     if (inputRef.current === document.activeElement) {
       setState({ blurValue: String(props.value).toUpperCase() });
     } else {
@@ -87,16 +94,17 @@ const EditableInput = (props) => {
   const handleDrag = useCallback(
     (e) => {
       if (props.dragLabel) {
-        const newValue = Math.round(props.value + e.movementX);
-
+        const newValue = Math.round(valueRef.current + e.movementX);
         if (newValue >= 0 && newValue <= props.dragMax) {
+          valueRef.current = newValue;
+
           if (props.onChange) {
             props.onChange(getValueObjectWithLabel(newValue), e);
           }
         }
       }
     },
-    [getValueObjectWithLabel, props],
+    [props, getValueObjectWithLabel],
   );
 
   const handleMouseDown = useCallback(
@@ -107,7 +115,7 @@ const EditableInput = (props) => {
       }
 
       if (props.dragLabel) {
-        // e.preventDefault();
+        e.preventDefault();
         handleDrag(e);
         window.addEventListener('mousemove', handleDrag);
         window.addEventListener('mouseup', mouseUp);
@@ -116,36 +124,13 @@ const EditableInput = (props) => {
     [handleDrag, props.dragLabel],
   );
 
-  const styles = reactCSS(
-    {
-      default: {
-        wrap: {
-          position: 'relative',
-        },
-      },
-      'user-override': {
-        wrap: props.style && props.style.wrap ? props.style.wrap : {},
-        input: props.style && props.style.input ? props.style.input : {},
-        label: props.style && props.style.label ? props.style.label : {},
-      },
-      'dragLabel-true': {
-        label: {
-          cursor: 'ew-resize',
-          userSelect: 'none',
-        },
-      },
-    },
-    {
-      'user-override': true,
-    },
-    props,
-  );
+  const { wrap = {}, input = {}, label = {} } = props.style || {};
 
   return (
-    <div style={styles.wrap}>
+    <div style={{ ...styles.wrap, ...wrap }}>
       <input
         id={inputId}
-        style={styles.input}
+        style={input}
         ref={inputRef}
         value={state.value}
         onKeyDown={handleKeyDown}
@@ -157,7 +142,13 @@ const EditableInput = (props) => {
       {props.label && !props.hideLabel ? (
         <label
           htmlFor={inputId}
-          style={styles.label}
+          style={{
+            ...label,
+            ...(props.dragLabel === 'true' && {
+              cursor: 'ew-resize',
+              userSelect: 'none',
+            }),
+          }}
           onMouseDown={handleMouseDown}
         >
           {props.label}
