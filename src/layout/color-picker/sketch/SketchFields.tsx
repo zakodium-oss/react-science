@@ -1,9 +1,8 @@
 import React, { CSSProperties, useCallback } from 'react';
 
+import { HSL, RGB } from '../ColorPicker';
 import { EditableInput } from '../common';
 import * as color from '../helpers/color';
-
-import { HSL, RGB } from './ColorPicker';
 
 interface SketchFieldsProps {
   onChange: (
@@ -109,7 +108,7 @@ const SketchFields = ({
   );
 
   return (
-    <div style={styles.fields} className="flexbox-fix">
+    <div style={styles.fields}>
       <div style={styles.double}>
         <EditableInput
           style={{ input: styles.input, label: styles.label }}

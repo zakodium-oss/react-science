@@ -90,14 +90,8 @@ const Saturation = (props) => {
       onTouchMove={handleChange}
       onTouchStart={handleChange}
     >
-      <div
-        style={{ ...styles.white(borderRadius), ...white }}
-        className="saturation-white"
-      >
-        <div
-          style={{ ...styles.black(borderRadius, boxShadow), ...black }}
-          className="saturation-black"
-        />
+      <div style={{ ...styles.white(borderRadius), ...white }}>
+        <div style={{ ...styles.black(borderRadius, boxShadow), ...black }} />
         <div style={{ ...styles.pointer(props.hsv), ...pointer }}>
           {props.pointer ? (
             <props.pointer {...props} />

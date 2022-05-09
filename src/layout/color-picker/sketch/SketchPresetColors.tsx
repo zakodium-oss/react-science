@@ -47,10 +47,7 @@ const SketchPresetColors = (props: SketchPresetColorsProps) => {
   );
 
   return (
-    <div
-      style={styles.colors(!colors || !colors.length)}
-      className="flexbox-fix"
-    >
+    <div style={styles.colors(!colors || !colors.length)}>
       {colors.map((colorObjOrString) => {
         const c =
           typeof colorObjOrString === 'string'

@@ -7,13 +7,10 @@ import React, {
   useState,
 } from 'react';
 
-import { Saturation, Hue, Alpha, CheckBoard } from '../common';
-import * as colorHelper from '../helpers/color';
-
-import SketchFields from './SketchFields';
-import SketchPresetColors from './SketchPresetColors';
-
-export type Direction = 'vertical' | 'horizontal';
+import { Saturation, Hue, Alpha, CheckBoard } from './common';
+import * as colorHelper from './helpers/color';
+import SketchFields from './sketch/SketchFields';
+import SketchPresetColors from './sketch/SketchPresetColors';
 
 export interface RGB {
   r: number;
@@ -43,21 +40,17 @@ interface ChangeCallbackProps {
   source: 'hsv' | 'hsl' | 'rgb' | 'hex';
 }
 
-interface ColorPickerProps {
+export interface ColorPickerProps {
   width?: string | number;
   className?: string;
   presetColors?: string[];
-  renderers?: unknown;
-  color?: {
-    hex?: string;
-    r?: number;
-    g?: number;
-    b?: number;
-    h?: number;
-    s?: number;
-    l?: number;
-    v?: number;
-  };
+  color?:
+    | {
+        hex: string;
+      }
+    | RGB
+    | HSL
+    | HSV;
   disableAlpha?: boolean;
   onChange?: (props: ChangeCallbackProps, event?: Event) => void;
   onChangeComplete?: (props: ChangeCallbackProps, event?: Event) => void;
@@ -172,14 +165,13 @@ const styles: Record<
   },
 };
 
-const ColorPicker = (props: ColorPickerProps) => {
+export function ColorPicker(props: ColorPickerProps) {
   const {
     width = 200,
     onChange,
     onSwatchHover,
     disableAlpha = false,
     presetColors = presetColorsList,
-    renderers,
     className = '',
     color = defaultColor,
     onChangeComplete,
@@ -230,10 +222,7 @@ const ColorPicker = (props: ColorPickerProps) => {
   const { rgb, hex, hsv, hsl } = state;
 
   return (
-    <div
-      style={{ ...styles.picker(width), ...style }}
-      className={`sketch-picker ${className}`}
-    >
+    <div style={{ ...styles.picker(width), ...style }} className={className}>
       <div style={styles.saturationContainer}>
         <Saturation
           style={styles.saturationElement}
@@ -242,7 +231,7 @@ const ColorPicker = (props: ColorPickerProps) => {
           onChange={handleChange}
         />
       </div>
-      <div style={styles.controls} className="flexbox-fix">
+      <div style={styles.controls}>
         <div style={styles.sliders}>
           <div style={styles.hueContainer}>
             <Hue style={styles.hueElement} hsl={hsl} onChange={handleChange} />
@@ -252,7 +241,6 @@ const ColorPicker = (props: ColorPickerProps) => {
               style={styles.alphaElement}
               rgb={rgb}
               hsl={hsl}
-              renderers={renderers}
               onChange={handleChange}
             />
           </div>
@@ -277,6 +265,4 @@ const ColorPicker = (props: ColorPickerProps) => {
       />
     </div>
   );
-};
-
-export default ColorPicker;
+}

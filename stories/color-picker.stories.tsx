@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { ColorPicker } from '../src/layout/color-picker';
-import { RGB } from '../src/layout/color-picker/sketch/ColorPicker';
+import { ColorPicker, RGB } from '../src';
 
 export default {
   title: 'Layout/Color Picker',
@@ -10,15 +9,11 @@ const getBrightness = (rgb: RGB) =>
   (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
 
 export function ColorPickerStories() {
-  const [color, setColor] = useState({
-    hex: 'white',
-    rgb: { r: 255, g: 255, b: 255, a: 1 },
-  });
+  const [color, setColor] = useState({ r: 255, g: 255, b: 255, a: 1 });
 
-  const backgroundColor =
-    color.hex + Math.round(color.rgb.a * 255).toString(16);
+  const backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
   const textColor =
-    getBrightness(color.rgb) > 128 || color.rgb.a < 0.5 ? '#000' : '#FFF';
+    getBrightness(color) > 128 || color.a < 0.5 ? '#000' : '#FFF';
 
   return (
     <div
@@ -31,8 +26,9 @@ export function ColorPickerStories() {
       }}
     >
       <ColorPicker
+        color={color}
         onChange={(color) => {
-          setColor(color);
+          setColor(color.rgb);
         }}
       />
 
