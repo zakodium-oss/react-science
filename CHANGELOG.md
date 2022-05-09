@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.13.0...v0.14.0) (2022-05-09)
+
+
+### Features
+
+* add ColorPicker component ([#125](https://github.com/zakodium-oss/analysis-ui-components/issues/125)) ([c2efce8](https://github.com/zakodium-oss/analysis-ui-components/commit/c2efce8f1285828e585e356f10c503661a5b4c83))
+
 ## [0.13.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.12.0...v0.13.0) (2022-05-04)
 
 
