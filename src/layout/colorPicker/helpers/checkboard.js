@@ -1,4 +1,4 @@
-const checkboardCache = {};
+const checkBoardCache = {};
 
 export function render(c1, c2, size, serverCanvas) {
   if (typeof document === 'undefined' && !serverCanvas) {
@@ -25,11 +25,11 @@ export function render(c1, c2, size, serverCanvas) {
 export function get(c1, c2, size, serverCanvas) {
   const key = `${c1}-${c2}-${size}${serverCanvas ? '-server' : ''}`;
 
-  if (checkboardCache[key]) {
-    return checkboardCache[key];
+  if (checkBoardCache[key]) {
+    return checkBoardCache[key];
   }
 
-  const checkboard = render(c1, c2, size, serverCanvas);
-  checkboardCache[key] = checkboard;
-  return checkboard;
+  const checkBoard = render(c1, c2, size, serverCanvas);
+  checkBoardCache[key] = checkBoard;
+  return checkBoard;
 }
