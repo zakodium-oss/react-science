@@ -13,6 +13,7 @@ import { Tabs, TabItem } from './layout/Tabs';
 import { Text } from './layout/Text';
 import { Title } from './layout/Title';
 import { Toolbar } from './layout/Toolbar';
+import { ColorPicker } from './layout/color-picker';
 import {
   useAccordionContext,
   useToggleAccordion,
@@ -45,6 +46,7 @@ export {
   Title,
   Boolean,
   Number,
+  ColorPicker,
 };
 
 export * from './layout/DropZone';
