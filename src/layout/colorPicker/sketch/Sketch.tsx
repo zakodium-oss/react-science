@@ -1,6 +1,14 @@
-import React, { CSSProperties } from 'react';
+import lodashDebounce from 'lodash/debounce';
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import { ColorWrap, Saturation, Hue, Alpha, CheckBoard } from '../common';
+import { Saturation, Hue, Alpha, CheckBoard } from '../common';
+import * as colorHelper from '../helpers/color';
 
 import SketchFields from './SketchFields';
 import SketchPresetColors from './SketchPresetColors';
@@ -26,35 +34,34 @@ export interface HSV {
   a: number;
 }
 
-// interface ChangeCallbackProps {
-//   hex: string;
-//   hsl: HSL;
-//   hsv: HSV;
-//   oldHue: number;
-//   rgb: RGB;
-//   source: 'hsv' | 'hsl' | 'rgb' | 'hex';
-// }
-
-export interface BaseColor {
+interface ChangeCallbackProps {
   hex: string;
-  rgb: RGB;
   hsl: HSL;
   hsv: HSV;
-  disableAlpha: boolean;
+  oldHue: number;
+  rgb: RGB;
+  source: 'hsv' | 'hsl' | 'rgb' | 'hex';
 }
 
-export interface BaseColorPicker extends BaseColor {
-  onChange: (props: any, event: Event) => void;
-}
-
-interface ColorPicker extends BaseColorPicker {
-  width: string | number;
-  className: string;
-  presetColors: string[];
-  onSwatchHover: any;
-  renderers: any;
-  // oldHue: string;
-  // source: string;
+interface ColorPicker {
+  width?: string | number;
+  className?: string;
+  presetColors?: string[];
+  renderers?: unknown;
+  color?: {
+    hex?: string;
+    r?: number;
+    g?: number;
+    b?: number;
+    h?: number;
+    s?: number;
+    l?: number;
+    v?: number;
+  };
+  disableAlpha?: boolean;
+  onChange?: (props: ChangeCallbackProps, event?: Event) => void;
+  onChangeComplete?: (props: ChangeCallbackProps, event?: Event) => void;
+  onSwatchHover?: (props: ChangeCallbackProps, event?: Event) => void;
 }
 
 const presetColorsList = [
@@ -74,6 +81,13 @@ const presetColorsList = [
   '#9B9B9B',
   '#FFFFFF',
 ];
+
+const defaultColor = {
+  h: 250,
+  s: 0.5,
+  l: 0.2,
+  a: 1,
+};
 
 const styles: Record<
   | 'controls'
@@ -160,17 +174,58 @@ const styles: Record<
 const Sketch = (props: ColorPicker) => {
   const {
     width = 200,
-    rgb,
-    hex,
-    hsv,
-    hsl,
     onChange,
     onSwatchHover,
     disableAlpha = false,
     presetColors = presetColorsList,
     renderers,
     className = '',
+    color = defaultColor,
+    onChangeComplete,
   } = props;
+
+  const [state, setState] = useState(colorHelper.toState(color, 0));
+
+  const debounce = useRef(
+    lodashDebounce((fn, data, event) => {
+      fn(data, event);
+    }, 100),
+  ).current;
+
+  useEffect(() => {
+    setState((prevState) => colorHelper.toState(color, prevState.oldHue));
+  }, [color]);
+
+  const handleChange = useCallback(
+    (data, event) => {
+      const isValidColor = colorHelper.simpleCheckForValidColor(data);
+      if (isValidColor) {
+        const colors = colorHelper.toState(data, data.h || state.oldHue);
+        setState(colors);
+        if (onChangeComplete) {
+          debounce(onChangeComplete, colors, event);
+        }
+        if (onChange) {
+          onChange(colors, event);
+        }
+      }
+    },
+    [debounce, onChange, onChangeComplete, state.oldHue],
+  );
+
+  const handleSwatchHover = useCallback(
+    (data, event) => {
+      const isValidColor = colorHelper.simpleCheckForValidColor(data);
+      if (isValidColor) {
+        const colors = colorHelper.toState(data, data.h || state.oldHue);
+        if (onSwatchHover) {
+          onSwatchHover(colors, event);
+        }
+      }
+    },
+    [onSwatchHover, state.oldHue],
+  );
+  const { rgb, hex, hsv, hsl } = state;
 
   return (
     <div style={styles.picker(width)} className={`sketch-picker ${className}`}>
@@ -179,13 +234,13 @@ const Sketch = (props: ColorPicker) => {
           style={styles.saturationElement}
           hsl={hsl}
           hsv={hsv}
-          onChange={onChange}
+          onChange={handleChange}
         />
       </div>
       <div style={styles.controls} className="flexbox-fix">
         <div style={styles.sliders}>
           <div style={styles.hueContainer}>
-            <Hue style={styles.hueElement} hsl={hsl} onChange={onChange} />
+            <Hue style={styles.hueElement} hsl={hsl} onChange={handleChange} />
           </div>
           <div style={styles.alphaContainer(disableAlpha)}>
             <Alpha
@@ -193,7 +248,7 @@ const Sketch = (props: ColorPicker) => {
               rgb={rgb}
               hsl={hsl}
               renderers={renderers}
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -207,16 +262,16 @@ const Sketch = (props: ColorPicker) => {
         rgb={rgb}
         hsl={hsl}
         hex={hex}
-        onChange={onChange}
+        onChange={handleChange}
         disableAlpha={disableAlpha}
       />
       <SketchPresetColors
         colors={presetColors}
-        onClick={onChange}
-        onSwatchHover={onSwatchHover}
+        onClick={(data, e) => handleChange?.(data as ChangeCallbackProps, e)}
+        onSwatchHover={handleSwatchHover}
       />
     </div>
   );
 };
 
-export default ColorWrap(Sketch);
+export default Sketch;
