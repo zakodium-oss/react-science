@@ -62,6 +62,7 @@ interface ColorPicker {
   onChange?: (props: ChangeCallbackProps, event?: Event) => void;
   onChangeComplete?: (props: ChangeCallbackProps, event?: Event) => void;
   onSwatchHover?: (props: ChangeCallbackProps, event?: Event) => void;
+  style?: CSSProperties;
 }
 
 const presetColorsList = [
@@ -182,6 +183,7 @@ const Sketch = (props: ColorPicker) => {
     className = '',
     color = defaultColor,
     onChangeComplete,
+    style = {},
   } = props;
 
   const [state, setState] = useState(colorHelper.toState(color, 0));
@@ -228,7 +230,10 @@ const Sketch = (props: ColorPicker) => {
   const { rgb, hex, hsv, hsl } = state;
 
   return (
-    <div style={styles.picker(width)} className={`sketch-picker ${className}`}>
+    <div
+      style={{ ...styles.picker(width), ...style }}
+      className={`sketch-picker ${className}`}
+    >
       <div style={styles.saturationContainer}>
         <Saturation
           style={styles.saturationElement}
