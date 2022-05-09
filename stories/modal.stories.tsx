@@ -88,7 +88,7 @@ export function ModalStories(props: { onSave: () => void }) {
                   basic: 'hsla(243deg, 75%, 58%, 1)',
                   hover: 'hsla(245deg, 58%, 50%, 1)',
                 }}
-                color={{ basic: 'white' }}
+                color={{ basic: 'white', hover: 'white' }}
               >
                 Open
               </Button>
@@ -154,7 +154,7 @@ export function ModalStories(props: { onSave: () => void }) {
                 basic: 'hsla(243deg, 75%, 58%, 1)',
                 hover: 'hsla(245deg, 58%, 50%, 1)',
               }}
-              color={{ basic: 'white' }}
+              color={{ basic: 'white', hover: 'white' }}
             >
               Save
             </Button>
@@ -223,7 +223,7 @@ export function ConfirmModalStories(props: {
                   basic: 'hsla(243deg, 75%, 58%, 1)',
                   hover: 'hsla(245deg, 58%, 50%, 1)',
                 }}
-                color={{ basic: 'white' }}
+                color={{ basic: 'white', hover: 'white' }}
               >
                 Open
               </Button>
@@ -365,7 +365,7 @@ export function RealModalStories(props: { onSave: () => void }) {
                   basic: 'hsla(243deg, 75%, 58%, 1)',
                   hover: 'hsla(245deg, 58%, 50%, 1)',
                 }}
-                color={{ basic: 'white' }}
+                color={{ basic: 'white', hover: 'white' }}
               >
                 Open
               </Button>
@@ -413,7 +413,7 @@ export function RealModalStories(props: { onSave: () => void }) {
                 basic: 'hsla(243deg, 75%, 58%, 1)',
                 hover: 'hsla(245deg, 58%, 50%, 1)',
               }}
-              color={{ basic: 'white' }}
+              color={{ basic: 'white', hover: 'white' }}
             >
               Save
             </Button>

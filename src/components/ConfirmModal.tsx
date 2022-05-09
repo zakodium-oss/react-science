@@ -73,7 +73,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
                 basic: 'hsla(243deg, 75%, 58%, 1)',
                 hover: 'hsla(245deg, 58%, 50%, 1)',
               }}
-              color={{ basic: 'white' }}
+              color={{ basic: 'white', hover: 'white' }}
             >
               {saveText}
             </Button>
@@ -83,7 +83,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
                 basic: 'hsla(0deg, 72%, 50%, 1)',
                 hover: 'hsla(0deg, 73%, 42%, 1)',
               }}
-              color={{ basic: 'white' }}
+              color={{ basic: 'white', hover: 'white' }}
             >
               {cancelText}
             </Button>
