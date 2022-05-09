@@ -37,11 +37,13 @@ const styles: Record<
     flex: '2',
   },
   input: {
-    width: '80%',
+    width: '100%',
     padding: '4px 10% 3px',
     border: 'none',
     boxShadow: 'inset 0 0 0 1px #ccc',
     fontSize: '11px',
+    textAlign: 'center',
+    borderRadius: '3px',
   },
   label: {
     display: 'block',
