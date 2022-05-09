@@ -1,10 +1,57 @@
 import lodashThrottle from 'lodash/throttle';
 import React, { useCallback, useRef } from 'react';
-import reactCSS from 'reactcss';
 
 import * as saturation from '../helpers/saturation';
 
 import { useOnChange } from './useOnChange';
+
+const styles = {
+  color: (borderRadius, hsl) => ({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `hsl(${hsl.h},100%, 50%)`,
+    borderRadius,
+    userDraggle: 'none',
+    userSelect: 'none',
+  }),
+  white: (borderRadius) => ({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius,
+    background: `linear-gradient(to right, #fff, rgba(255,255,255,0))`,
+  }),
+  black: (borderRadius, boxShadow) => ({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    boxShadow,
+    borderRadius,
+    background: `linear-gradient(to top, #000, rgba(0,0,0,0))`,
+  }),
+  pointer: (hsv) => ({
+    position: 'absolute',
+    top: `${-(hsv.v * 100) + 100}%`,
+    left: `${hsv.s * 100}%`,
+    cursor: 'default',
+  }),
+  circle: {
+    width: '4px',
+    height: '4px',
+    boxShadow: `0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+          0 0 1px 2px rgba(0,0,0,.4)`,
+    borderRadius: '50%',
+    cursor: 'hand',
+    transform: 'translate(-2px, -2px)',
+  },
+};
 
 const Saturation = (props) => {
   const { onChange, hsl } = props;
@@ -35,77 +82,27 @@ const Saturation = (props) => {
   const { color, white, black, pointer, circle, borderRadius, boxShadow } =
     props.style || {};
 
-  const styles = reactCSS(
-    {
-      default: {
-        color: {
-          absolute: '0px 0px 0px 0px',
-          background: `hsl(${props.hsl.h},100%, 50%)`,
-          borderRadius,
-          userDraggle: 'none',
-          userSelect: 'none',
-        },
-        white: {
-          absolute: '0px 0px 0px 0px',
-          borderRadius,
-        },
-        black: {
-          absolute: '0px 0px 0px 0px',
-          boxShadow,
-          borderRadius,
-        },
-        pointer: {
-          position: 'absolute',
-          top: `${-(props.hsv.v * 100) + 100}%`,
-          left: `${props.hsv.s * 100}%`,
-          cursor: 'default',
-        },
-        circle: {
-          width: '4px',
-          height: '4px',
-          boxShadow: `0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
-            0 0 1px 2px rgba(0,0,0,.4)`,
-          borderRadius: '50%',
-          cursor: 'hand',
-          transform: 'translate(-2px, -2px)',
-        },
-      },
-      custom: {
-        color,
-        white,
-        black,
-        pointer,
-        circle,
-      },
-    },
-    { custom: !!props.style },
-  );
-
   return (
     <div
-      style={styles.color}
+      style={{ ...styles.color(borderRadius, props.hsl), ...color }}
       ref={containerRef}
       onMouseDown={handleMouseDown}
       onTouchMove={handleChange}
       onTouchStart={handleChange}
     >
-      <style>{`
-          .saturation-white {
-            background: -webkit-linear-gradient(to right, #fff, rgba(255,255,255,0));
-            background: linear-gradient(to right, #fff, rgba(255,255,255,0));
-          }
-          .saturation-black {
-            background: -webkit-linear-gradient(to top, #000, rgba(0,0,0,0));
-            background: linear-gradient(to top, #000, rgba(0,0,0,0));
-          }
-        `}</style>
-      <div style={styles.white} className="saturation-white">
-        <div style={styles.black} className="saturation-black" />
-        <div style={styles.pointer}>
+      <div
+        style={{ ...styles.white(borderRadius), ...white }}
+        className="saturation-white"
+      >
+        <div
+          style={{ ...styles.black(borderRadius, boxShadow), ...black }}
+          className="saturation-black"
+        />
+        <div style={{ ...styles.pointer(props.hsv), ...pointer }}>
           {props.pointer ? (
             <props.pointer {...props} />
           ) : (
-            <div style={styles.circle} />
+            <div style={{ ...styles.circle, ...circle }} />
           )}
         </div>
       </div>
