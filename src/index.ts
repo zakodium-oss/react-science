@@ -48,3 +48,4 @@ export {
 };
 
 export * from './layout/DropZone';
+export * from './layout/color-picker/ColorPicker';
