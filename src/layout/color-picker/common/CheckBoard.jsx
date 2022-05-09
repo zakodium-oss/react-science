@@ -1,4 +1,4 @@
-import { isValidElement, cloneElement } from 'react';
+import React from 'react';
 
 import * as checkBoard from '../helpers/checkboard';
 
@@ -34,14 +34,14 @@ const styles = {
 const CheckBoard = (props) => {
   const { children } = props;
 
-  return isValidElement(children) ? (
-    cloneElement(children, {
-      ...children.props,
-      style: { ...children.props.style, ...styles.grid(props) },
-    })
-  ) : (
-    <div style={styles.grid(props)} />
-  );
+  if (!React.isValidElement(children)) {
+    return <div style={styles.grid(props)} />;
+  }
+
+  return React.cloneElement(children, {
+    ...children.props,
+    style: { ...children.props.style, ...styles.grid(props) },
+  });
 };
 
 export default CheckBoard;
