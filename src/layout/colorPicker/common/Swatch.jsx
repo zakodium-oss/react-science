@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import reactCSS from 'reactcss';
 
 import CheckBoard from './CheckBoard';
 import { handleFocus } from './interaction';
@@ -14,6 +13,13 @@ import { handleFocus } from './interaction';
 //   focusStyle: any;
 //   children: ReactNode;
 // }
+const styles = {
+  height: '100%',
+  width: '100%',
+  cursor: 'pointer',
+  position: 'relative',
+  outline: 'none',
+};
 
 export const Swatch = ({
   color,
@@ -26,20 +32,6 @@ export const Swatch = ({
   focusStyle = {},
 }) => {
   const transparent = color === 'transparent';
-  const styles = reactCSS({
-    default: {
-      swatch: {
-        background: color,
-        height: '100%',
-        width: '100%',
-        cursor: 'pointer',
-        position: 'relative',
-        outline: 'none',
-        ...style,
-        ...(focus ? focusStyle : {}),
-      },
-    },
-  });
 
   const handleClick = useCallback((e) => onClick?.(color, e), [color, onClick]);
   const handleKeyDown = useCallback(
@@ -59,7 +51,12 @@ export const Swatch = ({
 
   return (
     <div
-      style={styles.swatch}
+      style={{
+        ...styles,
+        background: color,
+        ...style,
+        ...(focus ? focusStyle : {}),
+      }}
       onClick={handleClick}
       title={title}
       tabIndex={0}
@@ -69,7 +66,7 @@ export const Swatch = ({
       {children}
       {transparent && (
         <CheckBoard
-          borderRadius={styles.swatch.borderRadius}
+          borderRadius={style.borderRadius}
           boxShadow="inset 0 0 0 1px rgba(0,0,0,0.1)"
         />
       )}
