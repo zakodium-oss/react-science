@@ -3,9 +3,18 @@ import React, { CSSProperties, useCallback } from 'react';
 import { EditableInput } from '../common';
 import * as color from '../helpers/color';
 
-import { BaseColorPicker } from './Sketch';
+import { HSL, RGB } from './ColorPicker';
 
-interface SketchFieldsProps extends Omit<BaseColorPicker, 'hsv'> {}
+interface SketchFieldsProps {
+  onChange: (
+    data: (RGB | HSL | { hex: string }) & { source: string },
+    e: Event,
+  ) => void;
+  hsl: HSL;
+  hex: string;
+  rgb: RGB;
+  disableAlpha: boolean;
+}
 
 const styles: Record<
   'fields' | 'single' | 'double' | 'input' | 'label',

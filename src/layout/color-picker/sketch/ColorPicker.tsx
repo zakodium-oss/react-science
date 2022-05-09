@@ -43,7 +43,7 @@ interface ChangeCallbackProps {
   source: 'hsv' | 'hsl' | 'rgb' | 'hex';
 }
 
-interface ColorPicker {
+interface ColorPickerProps {
   width?: string | number;
   className?: string;
   presetColors?: string[];
@@ -172,7 +172,7 @@ const styles: Record<
   },
 };
 
-const Sketch = (props: ColorPicker) => {
+const ColorPicker = (props: ColorPickerProps) => {
   const {
     width = 200,
     onChange,
@@ -189,7 +189,7 @@ const Sketch = (props: ColorPicker) => {
   const [state, setState] = useState(colorHelper.toState(color, 0));
 
   const debounce = useRef(
-    lodashDebounce((fn, data, event) => {
+    lodashDebounce((fn: any, data: ChangeCallbackProps, event: Event) => {
       fn(data, event);
     }, 100),
   ).current;
@@ -264,9 +264,9 @@ const Sketch = (props: ColorPicker) => {
       </div>
 
       <SketchFields
-        rgb={rgb}
         hsl={hsl}
         hex={hex}
+        rgb={rgb}
         onChange={handleChange}
         disableAlpha={disableAlpha}
       />
@@ -279,4 +279,4 @@ const Sketch = (props: ColorPicker) => {
   );
 };
 
-export default Sketch;
+export default ColorPicker;
