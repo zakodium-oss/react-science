@@ -53,6 +53,20 @@ const EditableInput = (props) => {
     }
   }, [state.blurValue]);
 
+  const setUpdatedValue = useCallback(
+    (value, e) => {
+      const onChangeValue = props.label
+        ? getValueObjectWithLabel(value)
+        : value;
+      if (props.onChange) {
+        props.onChange(onChangeValue, e);
+      }
+
+      setState({ value });
+    },
+    [getValueObjectWithLabel, props],
+  );
+
   const handleChange = useCallback(
     (e) => {
       setUpdatedValue(e.target.value, e);
@@ -75,20 +89,6 @@ const EditableInput = (props) => {
       }
     },
     [props.arrowOffset, setUpdatedValue],
-  );
-
-  const setUpdatedValue = useCallback(
-    (value, e) => {
-      const onChangeValue = props.label
-        ? getValueObjectWithLabel(value)
-        : value;
-      if (props.onChange) {
-        props.onChange(onChangeValue, e);
-      }
-
-      setState({ value });
-    },
-    [getValueObjectWithLabel, props],
   );
 
   const handleDrag = useCallback(
