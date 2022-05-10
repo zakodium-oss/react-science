@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.14.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.0...v0.14.1) (2022-05-10)
+
+
+### Bug Fixes
+
+* react color picker crash when load it ([#130](https://github.com/zakodium-oss/analysis-ui-components/issues/130)) ([8c2e90f](https://github.com/zakodium-oss/analysis-ui-components/commit/8c2e90fb8614ae60748cb83a341965184d661702))
+
 ## [0.14.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.13.0...v0.14.0) (2022-05-09)
 
 
