@@ -13,13 +13,19 @@ type Color = CSSProperties['color'];
 
 interface BaseColor {
   basic: Color;
-  hover: Color;
+  hover?: Color;
   active?: Color;
 }
 
 type Fill = 'clear' | 'outline' | 'solid';
 
-type ColorTheme = 'success' | 'danger' | 'warning' | 'medium' | 'light';
+type ColorTheme =
+  | 'primary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'medium'
+  | 'light';
 
 type ColorPalettes = Record<
   ColorTheme,
@@ -31,6 +37,11 @@ type ColorPalettes = Record<
 >;
 
 const colorPalettes: ColorPalettes = {
+  primary: {
+    basic: '#3880ff',
+    shade: '#3171e0',
+    tint: '#4c8dff',
+  },
   success: {
     basic: '#2dd36f',
     shade: '#28ba62',
@@ -171,7 +182,7 @@ const styles: Style = {
   },
 };
 
-interface ButtonProps
+export interface ButtonProps
   extends Partial<ButtonStyle>,
     Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'style'> {
   onClick?: (event?: MouseEvent<HTMLButtonElement>) => void;
@@ -179,11 +190,12 @@ interface ButtonProps
 }
 
 export function Button(props: ButtonProps) {
+  const { basic, shade, tint } = colorPalettes.primary;
   const {
     onClick,
     size = 'medium',
     color = { basic: 'black', hover: 'white' },
-    backgroundColor = { basic: 'white', hover: 'black', active: 'black' },
+    backgroundColor = { basic, hover: shade, active: tint },
     borderColor = 'transparent',
     fill,
     borderRadius,
@@ -230,11 +242,14 @@ function ThemeButton(props: { colorTheme: ColorTheme } & ButtonProps) {
   return <Button {...{ fill, ...restProps, backgroundColor, color }} />;
 }
 
-Button.Done = (props: ButtonProps) => {
+Button.Success = (props: ButtonProps) => {
   return <ThemeButton {...props} colorTheme="success" />;
 };
 Button.Danger = (props: ButtonProps) => {
   return <ThemeButton {...props} colorTheme="danger" />;
+};
+Button.Warning = (props: ButtonProps) => {
+  return <ThemeButton {...props} colorTheme="warning" />;
 };
 Button.Action = (props: ButtonProps) => {
   return <ThemeButton {...props} colorTheme="medium" />;
