@@ -7,6 +7,7 @@ const browserName = (process.env.BROWSER || 'chromium') as BrowserName;
 const config: PlaywrightTestConfig = {
   testDir: 'tests',
   retries: 0,
+  reporter: process.env.CI ? 'github' : 'list',
   use: {
     browserName,
     headless: true,
