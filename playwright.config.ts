@@ -27,4 +27,5 @@ const config: PlaywrightTestConfig = {
     reuseExistingServer: true,
   },
 };
+
 export default config;
