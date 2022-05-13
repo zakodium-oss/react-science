@@ -3,7 +3,7 @@ import { SvgBioDna } from 'cheminfo-font';
 import React, { ReactNode, useState } from 'react';
 
 import { Toolbar } from '../src';
-import { ToolbarItemProps, ToolbarProps } from '../src/layout/Toolbar';
+import { ToolbarItemProps, ToolbarProps } from '../src/components/Toolbar';
 
 export default {
   title: 'Layout/Toolbar',

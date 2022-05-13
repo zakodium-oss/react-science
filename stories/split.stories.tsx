@@ -2,8 +2,8 @@ import { Meta } from '@storybook/react';
 import React from 'react';
 
 import { Accordion, SplitPane } from '../src';
-import { SplitPaneProps } from '../src/layout/SplitPane';
-import { AccordionProvider } from '../src/layout/context/AccordionContext';
+import { SplitPaneProps } from '../src/components/SplitPane';
+import { AccordionProvider } from '../src/components/context/AccordionContext';
 
 export default {
   title: 'Layout/SplitPane',
