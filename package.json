@@ -39,7 +39,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@lukeed/uuid": "^2.0.0",
-    "immer": "^9.0.13",
+    "immer": "^9.0.14",
     "lodash": "^4.17.21",
     "react-dropzone": "^14.2.1",
     "react-shadow": "^19.0.3",
@@ -48,7 +48,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
-    "@playwright/test": "^1.21.1",
+    "@playwright/test": "^1.22.0",
     "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-links": "^6.4.22",
