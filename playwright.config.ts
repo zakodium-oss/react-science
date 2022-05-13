@@ -22,7 +22,7 @@ const config: PlaywrightTestConfig = {
     },
   },
   webServer: {
-    command: 'npm run vite',
+    command: 'npm run dev-app',
     port: 3000,
     reuseExistingServer: true,
   },

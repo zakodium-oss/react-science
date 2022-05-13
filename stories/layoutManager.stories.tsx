@@ -6,7 +6,6 @@ import LayoutManager, { Layout } from '../src/components/LayoutManager';
 
 export default {
   title: 'Layout/LayoutManager',
-  component: fromLayoutObject,
 } as Meta;
 
 const components = {
