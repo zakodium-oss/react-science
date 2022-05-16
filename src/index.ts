@@ -1,6 +1,5 @@
 import { Accordion } from './components/Accordion';
 import { Boolean } from './components/Boolean';
-import { Button } from './components/Button';
 import { Color } from './components/Color';
 import { ConfirmModal } from './components/ConfirmModal';
 import { Header } from './components/Header';
@@ -13,6 +12,9 @@ import { Tabs, TabItem } from './components/Tabs';
 import { Text } from './components/Text';
 import { Title } from './components/Title';
 import { Toolbar } from './components/Toolbar';
+import { Button } from './components/buttons/Button';
+import { CloseButton } from './components/buttons/CloseButton';
+import { ValidateButton } from './components/buttons/ValidateButton';
 import {
   useAccordionContext,
   useToggleAccordion,
@@ -26,6 +28,7 @@ export type { TabItem };
 export {
   Accordion,
   Button,
+  CloseButton,
   ConfirmModal,
   Header,
   Modal,
@@ -38,6 +41,7 @@ export {
   useModal,
   useToggleAccordion,
   useOnOff,
+  ValidateButton,
   Tabs,
   Table,
   Color,

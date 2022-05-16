@@ -1,9 +1,7 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { ReactElement, ReactNode } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import React, { ReactElement, ReactNode } from 'react';
 
 import { Portal } from './Portal';
+import { CloseButton } from './buttons/CloseButton';
 
 export interface ModalProps {
   children: ReactElement | Array<ReactElement>;
@@ -73,17 +71,7 @@ Modal.Header = function ModalHeader(props: {
       }}
     >
       {props.children}
-      <button
-        type="button"
-        onClick={props.onClose}
-        css={css({
-          color: 'rgba(239, 68, 68)',
-          fontSize: 18,
-          ':hover': { color: 'rgba(185, 28, 28)' },
-        })}
-      >
-        <FaTimes />
-      </button>
+      <CloseButton onClick={props.onClose} />
     </div>
   );
 };
