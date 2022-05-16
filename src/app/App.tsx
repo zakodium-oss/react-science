@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/no-array-index-key */
+import React, { useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -16,8 +17,17 @@ import {
   Tabs,
   Toolbar,
 } from '..';
+import { DropZone, DropZoneContainer } from '../components/DropZone';
 
+interface IrPlot {
+  data: { x: number[]; y: number[] };
+  info: { filename: string; path: string };
+}
+interface DataMeasurements {
+  irs: IrPlot[];
+}
 export default function App() {
+  const [data, setData] = useState<DataMeasurements>({ irs: [] });
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -29,6 +39,30 @@ export default function App() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
+  function onDrop(files: File[]) {
+    files.forEach((file) => {
+      if (file.type !== 'application/json') {
+        throw Error(`the file ${file.name} must be JSON but it's ${file.type}`);
+      }
+      file
+        .text()
+        .then((d) => {
+          const info = {
+            filename: file.name,
+            path: file.webkitRelativePath,
+          };
+          const data = JSON.parse(d);
+          const ir: IrPlot = { data, info };
+
+          setData(({ irs }) => ({
+            irs: [...irs, ir],
+          }));
+        })
+        .catch((e) => {
+          throw Error(e);
+        });
+    });
+  }
 
   return (
     <RootLayout>
@@ -81,12 +115,33 @@ export default function App() {
             }}
           >
             <SplitPane initialSeparation="50%" sideSeparation="end">
-              <div style={{ padding: 5 }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-                earum omnis, et voluptatum veniam repellendus similique! Sunt
-                nostrum necessitatibus reprehenderit asperiores excepturi
-                corrupti? Optio soluta illo quae ex nam nulla.
+              <div
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                }}
+              >
+                <div>
+                  {data.irs.length > 0 ? (
+                    <DropZoneContainer onDrop={onDrop}>
+                      <div
+                        style={{
+                          padding: 5,
+                          textAlign: 'left',
+                          border: '2px solid black',
+                        }}
+                      >
+                        {data.irs.map((ir, i) => (
+                          <div key={i}>{ir.info.filename}</div>
+                        ))}
+                      </div>
+                    </DropZoneContainer>
+                  ) : (
+                    <DropZone onDrop={onDrop} />
+                  )}
+                </div>
               </div>
+
               <div
                 style={{
                   width: '100%',
