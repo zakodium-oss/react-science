@@ -64,11 +64,13 @@
     "cheminfo-font": "^1.8.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.15.0",
+    "ml-spectra-processing": "^11.6.0",
     "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-ocl": "^4.3.5",
+    "react-plot": "^0.18.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.6.4",
     "vite": "^2.9.9"

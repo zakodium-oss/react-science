@@ -1,4 +1,5 @@
 /* eslint-disable react/no-array-index-key */
+import { xyToXYObject } from 'ml-spectra-processing';
 import React, { useState } from 'react';
 import {
   FaMeteor,
@@ -7,6 +8,7 @@ import {
   FaTabletAlt,
   FaGlasses,
 } from 'react-icons/fa';
+import { Heading, LineSeries, Plot } from 'react-plot';
 
 import {
   Accordion,
@@ -132,7 +134,12 @@ export default function App() {
                         }}
                       >
                         {data.irs.map((ir, i) => (
-                          <div key={i}>{ir.info.filename}</div>
+                          <div key={i}>
+                            <Plot width={500} height={500}>
+                              <Heading title={ir.info.filename} />
+                              <LineSeries data={xyToXYObject(ir.data)} />
+                            </Plot>
+                          </div>
                         ))}
                       </div>
                     </DropZoneContainer>
