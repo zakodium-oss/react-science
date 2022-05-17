@@ -1,5 +1,5 @@
 import { configureActions } from '@storybook/addon-actions';
-import { RootLayout } from '../src/layout/RootLayout';
+import { RootLayout } from '../src';
 
 configureActions({
   limit: 5,

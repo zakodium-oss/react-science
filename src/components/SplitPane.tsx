@@ -22,7 +22,7 @@ export interface SplitPaneProps {
   sideSeparation?: SideSeparation;
   initialSeparation?: InitialSeparation;
   initialClosed?: boolean;
-   onChange?: (position: InitialSeparation) => void;
+  onChange?: (position: InitialSeparation) => void;
   children: [ReactNode, ReactNode];
 }
 

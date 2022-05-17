@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.14.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.1...v0.14.2) (2022-05-12)
+
+
+### Bug Fixes
+
+* **ColorPicker:** remove border radius from saturation element ([a60cf0a](https://github.com/zakodium-oss/analysis-ui-components/commit/a60cf0a84c40c67edbd87a3a43b4f8a22c783374))
+
 ### [0.14.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.0...v0.14.1) (2022-05-10)
 
 

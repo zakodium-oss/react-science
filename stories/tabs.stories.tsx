@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react';
 import React, { useState } from 'react';
 
 import { Tabs } from '../src';
-import { TabItem } from '../src/layout/Tabs';
+import { TabItem } from '../src/components/Tabs';
 
 export default {
   title: 'Layout/Tabs',

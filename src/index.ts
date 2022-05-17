@@ -1,26 +1,26 @@
-import { Accordion } from './layout/Accordion';
-import { Boolean } from './layout/Boolean';
-import { Button } from './layout/Button';
-import { Color } from './layout/Color';
-import { ConfirmModal } from './layout/ConfirmModal';
-import { Header } from './layout/Header';
-import { Modal } from './layout/Modal';
-import { Number } from './layout/Number';
-import { RootLayout } from './layout/RootLayout';
-import { SplitPane } from './layout/SplitPane';
-import { Table } from './layout/Table';
-import { Tabs, TabItem } from './layout/Tabs';
-import { Text } from './layout/Text';
-import { Title } from './layout/Title';
-import { Toolbar } from './layout/Toolbar';
+import { Accordion } from './components/Accordion';
+import { Boolean } from './components/Boolean';
+import { Button } from './components/Button';
+import { Color } from './components/Color';
+import { ConfirmModal } from './components/ConfirmModal';
+import { Header } from './components/Header';
+import { Modal } from './components/Modal';
+import { Number } from './components/Number';
+import { RootLayout } from './components/RootLayout';
+import { SplitPane } from './components/SplitPane';
+import { Table } from './components/Table';
+import { Tabs, TabItem } from './components/Tabs';
+import { Text } from './components/Text';
+import { Title } from './components/Title';
+import { Toolbar } from './components/Toolbar';
 import {
   useAccordionContext,
   useToggleAccordion,
-} from './layout/context/AccordionContext';
-import { useModal } from './layout/hooks/useModal';
-import { useOnOff } from './layout/hooks/useOnOff';
-import { useSplitPaneSize } from './layout/hooks/useSplitPaneSize';
-import { useToggle } from './layout/hooks/useToggle';
+} from './components/context/AccordionContext';
+import { useModal } from './components/hooks/useModal';
+import { useOnOff } from './components/hooks/useOnOff';
+import { useSplitPaneSize } from './components/hooks/useSplitPaneSize';
+import { useToggle } from './components/hooks/useToggle';
 
 export type { TabItem };
 export {
@@ -47,5 +47,5 @@ export {
   Number,
 };
 
-export * from './layout/DropZone';
-export * from './layout/color-picker/ColorPicker';
+export * from './components/DropZone';
+export * from './components/color-picker/ColorPicker';
