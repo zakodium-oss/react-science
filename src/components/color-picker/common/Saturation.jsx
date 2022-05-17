@@ -6,34 +6,30 @@ import * as saturation from '../helpers/saturation';
 import { useOnChange } from './useOnChange';
 
 const styles = {
-  color: (borderRadius, hsl) => ({
+  color: (hsl) => ({
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     background: `hsl(${hsl.h},100%, 50%)`,
-    borderRadius,
     userDraggle: 'none',
     userSelect: 'none',
   }),
-  white: (borderRadius) => ({
+  white: () => ({
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    borderRadius,
     background: `linear-gradient(to right, #fff, rgba(255,255,255,0))`,
   }),
-  black: (borderRadius, boxShadow) => ({
+  black: () => ({
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    boxShadow,
-    borderRadius,
     background: `linear-gradient(to top, #000, rgba(0,0,0,0))`,
   }),
   pointer: (hsv) => ({
@@ -79,24 +75,21 @@ const Saturation = (props) => {
 
   const handleMouseDown = useOnChange(handleChange);
 
-  const { color, white, black, pointer, circle, borderRadius, boxShadow } =
-    props.style || {};
-
   return (
     <div
-      style={{ ...styles.color(borderRadius, props.hsl), ...color }}
+      style={styles.color(props.hsl)}
       ref={containerRef}
       onMouseDown={handleMouseDown}
       onTouchMove={handleChange}
       onTouchStart={handleChange}
     >
-      <div style={{ ...styles.white(borderRadius), ...white }}>
-        <div style={{ ...styles.black(borderRadius, boxShadow), ...black }} />
-        <div style={{ ...styles.pointer(props.hsv), ...pointer }}>
+      <div style={styles.white()}>
+        <div style={styles.black()} />
+        <div style={styles.pointer(props.hsv)}>
           {props.pointer ? (
             <props.pointer {...props} />
           ) : (
-            <div style={{ ...styles.circle, ...circle }} />
+            <div style={styles.circle} />
           )}
         </div>
       </div>

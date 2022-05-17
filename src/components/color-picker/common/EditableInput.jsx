@@ -66,7 +66,6 @@ const EditableInput = (props) => {
     },
     [getValueObjectWithLabel, props],
   );
-
   const handleChange = useCallback(
     (e) => {
       setUpdatedValue(e.target.value, e);

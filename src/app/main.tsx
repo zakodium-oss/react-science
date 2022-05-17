@@ -1,17 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { RootLayout } from '..';
-
 import App from './App';
 
 import './main.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <RootLayout>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {import.meta.env.PROD ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            borderBottom: '1px solid black',
+            lineHeight: 1,
+            paddingBlock: 5,
+          }}
+        >
+          <a href="/storybook/">Open Storybook</a>
+        </div>
+      ) : null}
       <App />
-    </RootLayout>
+    </div>
   </React.StrictMode>,
   document.getElementById('root'),
 );

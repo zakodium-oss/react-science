@@ -87,7 +87,6 @@ const styles: Record<
   | 'controls'
   | 'sliders'
   | 'saturationContainer'
-  | 'saturationElement'
   | 'hueContainer'
   | 'hueElement'
   | 'alphaElement',
@@ -137,10 +136,6 @@ const styles: Record<
     paddingBottom: '75%',
     position: 'relative',
     overflow: 'hidden',
-  },
-  saturationElement: {
-    borderRadius: '3px',
-    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
   },
 
   hueContainer: {
@@ -224,12 +219,7 @@ export function ColorPicker(props: ColorPickerProps) {
   return (
     <div style={{ ...styles.picker(width), ...style }} className={className}>
       <div style={styles.saturationContainer}>
-        <Saturation
-          style={styles.saturationElement}
-          hsl={hsl}
-          hsv={hsv}
-          onChange={handleChange}
-        />
+        <Saturation hsl={hsl} hsv={hsv} onChange={handleChange} />
       </div>
       <div style={styles.controls}>
         <div style={styles.sliders}>

@@ -1,6 +1,6 @@
 {
   "name": "analysis-ui-components",
-  "version": "0.14.0",
+  "version": "0.14.2",
   "description": "React components to build analysis UI",
   "main": "lib/index.js",
   "module": "lib-esm/index.js",
@@ -12,22 +12,23 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run build-ts",
+    "build-all": "npm run build-app && npm run build-storybook && mv storybook-static dist/storybook",
+    "build-app": "cross-env NO_MINIFY=true vite build",
     "build-storybook": "build-storybook",
     "build-ts": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
     "dev": "npm run storybook",
+    "dev-app": "vite --open",
     "eslint": "eslint src stories --cache",
     "eslint-fix": "npm run eslint -- --fix",
     "prepack": "npm run build",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
     "serve": "vite preview",
-    "storybook": "start-storybook -s ./public -p 6006",
-    "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
-    "test-only": "playwright test",
-    "vite": "vite --open",
-    "vite-build": "cross-env NO_MINIFY=true vite build"
+    "storybook": "start-storybook -p 6006",
+    "test": "npm run test-playwright && npm run eslint && npm run prettier && npm run check-types",
+    "test-playwright": "playwright test"
   },
   "volta": {
     "node": "16.15.0"
@@ -39,20 +40,20 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@lukeed/uuid": "^2.0.0",
-    "immer": "^9.0.12",
+    "immer": "^9.0.14",
     "lodash": "^4.17.21",
-    "react-dropzone": "^14.2.0",
+    "react-dropzone": "^14.2.1",
     "react-shadow": "^19.0.3",
     "tinycolor2": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
-    "@playwright/test": "^1.21.1",
+    "@playwright/test": "^1.22.0",
     "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.22",
-    "@storybook/addon-links": "^6.4.22",
     "@storybook/addon-storysource": "^6.4.22",
+    "@storybook/builder-vite": "^0.1.33",
     "@storybook/react": "^6.4.22",
     "@types/lodash": "^4.14.182",
     "@types/react": "^17.0.44",
@@ -62,7 +63,7 @@
     "babel-loader": "^8.2.5",
     "cheminfo-font": "^1.8.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -70,7 +71,7 @@
     "react-ocl": "^4.3.5",
     "rimraf": "^3.0.2",
     "typescript": "^4.6.4",
-    "vite": "^2.9.7"
+    "vite": "^2.9.9"
   },
   "repository": {
     "type": "git",
