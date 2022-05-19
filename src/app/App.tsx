@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { xyToXYObject } from 'ml-spectra-processing';
 import React, { useState } from 'react';
+import { ResponsiveChart } from 'react-d3-utils';
 import {
   FaMeteor,
   FaBook,
@@ -135,10 +136,14 @@ export default function App() {
                       >
                         {data.irs.map((ir, i) => (
                           <div key={i}>
-                            <Plot width={500} height={500}>
-                              <Heading title={ir.info.filename} />
-                              <LineSeries data={xyToXYObject(ir.data)} />
-                            </Plot>
+                            <ResponsiveChart>
+                              {({ width }) => (
+                                <Plot width={width} height={400}>
+                                  <Heading title={ir.info.filename} />
+                                  <LineSeries data={xyToXYObject(ir.data)} />
+                                </Plot>
+                              )}
+                            </ResponsiveChart>
                           </div>
                         ))}
                       </div>
