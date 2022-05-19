@@ -49,3 +49,4 @@ export {
 
 export * from './components/DropZone';
 export * from './components/color-picker/ColorPicker';
+export * from './components/MeasurementPlot';
