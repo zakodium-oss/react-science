@@ -6,7 +6,7 @@ import {
   MeasurementPlotProps,
 } from '../src/components/MeasurementPlot';
 
-import data from './data/measurment.json';
+import data from './data/measurement.json';
 
 export default {
   title: 'Layout/MeasurementPlot',
@@ -20,6 +20,6 @@ export default {
   },
 } as Meta;
 
-export function control(props: Omit<MeasurementPlotProps, 'measurment'>) {
-  return <MeasurementPlot measurment={data} {...props} />;
+export function control(props: Omit<MeasurementPlotProps, 'measurement'>) {
+  return <MeasurementPlot measurement={data} {...props} />;
 }
