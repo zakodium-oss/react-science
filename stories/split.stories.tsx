@@ -11,6 +11,8 @@ export default {
     initialSeparation: '50%',
     orientation: 'horizontal',
     sideSeparation: 'end',
+    initialClosed: false,
+    minimalSize: undefined,
   },
   argTypes: {
     onChange: { action: 'handle' },
