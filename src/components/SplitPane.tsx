@@ -18,11 +18,36 @@ export type InitialSeparation = `${number}%` | `${number}px`;
 export type SeparationType = '%' | 'px';
 
 export interface SplitPaneProps {
+  /**
+   * Should we split horizontally or vertically
+   * @default 'horizontal'
+   */
   orientation?: SplitOrientation;
+  /**
+   * Defines towards which side we will close the Pane when double clicking on the Split.
+   * If the value is 'start' it will be closed to the
+   * 'left' or 'top' (depending if it is an horizontal or vertical SplitPane)
+   * @default 'start'
+   */
   sideSeparation?: SideSeparation;
+  /**
+   * What should be the relative split value. By default both side will have 50% of the space.
+   * Units can either be in '%' or in 'px'
+   * @default '50%''
+   */
   initialSeparation?: InitialSeparation;
+  /**
+   * Defines if it will be closed when loading. The side that is closed depends on `sideSeparation` value
+   * @default false
+   */
   initialClosed?: boolean;
+  /**
+   * @default () => null
+   */
   onChange?: (position: InitialSeparation) => void;
+  /**
+   * Array containing the 2 ReactNode to show on the 2 sides of the SplitPane
+   */
   children: [ReactNode, ReactNode];
 }
 
