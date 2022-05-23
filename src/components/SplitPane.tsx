@@ -7,6 +7,9 @@ import {
   useContext,
   useRef,
   useState,
+  useCallback,
+  useLayoutEffect,
+  forwardRef,
 } from 'react';
 
 import { useSplitPaneSize } from './hooks/useSplitPaneSize';
@@ -41,6 +44,11 @@ export interface SplitPaneProps {
    * @default false
    */
   initialClosed?: boolean;
+  /**
+   * Define when the split panel should be closed by setting the minimum size in Pixel 'px'
+   * @default undefined
+   */
+  minimalSize?: number;
   /**
    * @default () => null
    */
@@ -108,12 +116,15 @@ export function SplitPane(props: SplitPaneProps) {
     sideSeparation = 'start',
     initialSeparation = '50%',
     initialClosed = false,
+    minimalSize,
     onChange = () => null,
     children,
   } = props;
 
   const [isSidePaneClosed, toggle] = useToggle(initialClosed);
   const parentRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const touchedRef = useRef<boolean>(false);
 
   const [[size, type], setSize] = useState(() => {
     const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
@@ -133,6 +144,57 @@ export function SplitPane(props: SplitPaneProps) {
 
   const isFinalClosed = isParentClosed ? true : isSidePaneClosed;
 
+  const getSplitInnerPaneStyle = useCallback(
+    (side: SideSeparation) => {
+      return cssStyles.item(
+        isFinalClosed,
+        sideSeparation === side,
+        orientation,
+        size,
+        type,
+      );
+    },
+    [isFinalClosed, orientation, sideSeparation, size, type],
+  );
+
+  useLayoutEffect(() => {
+    if (parentRef.current && panelRef.current) {
+      const { width: parentWidth, height: parentHeight } =
+        parentRef.current.getBoundingClientRect();
+      const { width, height } = panelRef.current.getBoundingClientRect();
+
+      const parentDimension = [parentWidth, parentHeight];
+      const panelDimension = [width, height];
+      const sizeIndex = orientation === 'horizontal' ? 0 : 1;
+      const size =
+        sideSeparation === 'start'
+          ? panelDimension[sizeIndex]
+          : parentDimension[sizeIndex] - panelDimension[sizeIndex];
+
+      if (
+        minimalSize &&
+        size <= minimalSize &&
+        !isFinalClosed &&
+        !touchedRef.current
+      ) {
+        toggle();
+      }
+    }
+  }, [isFinalClosed, minimalSize, orientation, sideSeparation, toggle]);
+
+  const toggleHandler = useCallback(() => {
+    touchedRef.current = true;
+    toggle();
+  }, [toggle]);
+
+  const mouseDownHandler = useCallback(
+    (e) => {
+      touchedRef.current = true;
+      onMouseDown(e);
+    },
+    [onMouseDown],
+  );
+
   return (
     <div
       ref={parentRef}
@@ -142,48 +204,28 @@ export function SplitPane(props: SplitPaneProps) {
         orientation === 'vertical' && { flexDirection: 'column' },
       ])}
     >
-      <splitPaneContext.Provider
+      <SplitPaneInner
+        style={getSplitInnerPaneStyle('start')}
         value={isFinalClosed && sideSeparation === 'start'}
+        ref={panelRef}
       >
-        <div
-          style={cssStyles.item(
-            isFinalClosed,
-            sideSeparation === 'start',
-            orientation,
-            size,
-            type,
-          )}
-        >
-          {children[0]}
-        </div>
-      </splitPaneContext.Provider>
+        {children[0]}
+      </SplitPaneInner>
 
-      <div
-        onDoubleClick={toggle}
-        onMouseDown={onMouseDown}
+      <Splitter
+        onDoubleClick={toggleHandler}
+        onMouseDown={mouseDownHandler}
         onMouseUp={onMouseUp}
-        css={cssStyles.separator(orientation, !isFinalClosed)}
-      >
-        <div css={css({ fontSize: 10 })}>
-          {orientation === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
-        </div>
-      </div>
+        isFinalClosed={isFinalClosed}
+        orientation={orientation}
+      />
 
-      <splitPaneContext.Provider
+      <SplitPaneInner
+        style={getSplitInnerPaneStyle('end')}
         value={isFinalClosed && sideSeparation === 'end'}
       >
-        <div
-          style={cssStyles.item(
-            isFinalClosed,
-            sideSeparation === 'end',
-            orientation,
-            size,
-            type,
-          )}
-        >
-          {children[1]}
-        </div>
-      </splitPaneContext.Provider>
+        {children[1]}
+      </SplitPaneInner>
     </div>
   );
 }
@@ -207,3 +249,47 @@ function getSize(
 
   return style;
 }
+
+interface SplitterProps {
+  onDoubleClick: () => void;
+  onMouseDown: (event: React.MouseEvent) => void;
+  onMouseUp: () => void;
+  orientation: SplitOrientation;
+  isFinalClosed: boolean;
+}
+
+function Splitter(props: SplitterProps) {
+  const { onDoubleClick, onMouseDown, onMouseUp, orientation, isFinalClosed } =
+    props;
+  return (
+    <div
+      onDoubleClick={onDoubleClick}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      css={cssStyles.separator(orientation, !isFinalClosed)}
+    >
+      <div css={css({ fontSize: 10 })}>
+        {orientation === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
+      </div>
+    </div>
+  );
+}
+
+interface SplitPaneInnerProps {
+  style: CSSProperties;
+  value: boolean;
+  children: React.ReactNode;
+}
+
+const SplitPaneInner = forwardRef<HTMLDivElement, SplitPaneInnerProps>(
+  function splitPaneInner(props, ref) {
+    const { style, value, children } = props;
+    return (
+      <splitPaneContext.Provider value={value}>
+        <div ref={ref} style={style}>
+          {children}
+        </div>
+      </splitPaneContext.Provider>
+    );
+  },
+);
