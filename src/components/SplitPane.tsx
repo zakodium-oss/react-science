@@ -8,9 +8,8 @@ import {
   useRef,
   useState,
   useCallback,
-  useLayoutEffect,
-  forwardRef,
 } from 'react';
+import useResizeObserver from 'use-resize-observer';
 
 import { useSplitPaneSize } from './hooks/useSplitPaneSize';
 import { useToggle } from './hooks/useToggle';
@@ -123,7 +122,6 @@ export function SplitPane(props: SplitPaneProps) {
 
   const [isSidePaneClosed, toggle] = useToggle(initialClosed);
   const parentRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
   const touchedRef = useRef<boolean>(false);
 
   const [[size, type], setSize] = useState(() => {
@@ -157,30 +155,32 @@ export function SplitPane(props: SplitPaneProps) {
     [isFinalClosed, orientation, sideSeparation, size, type],
   );
 
-  useLayoutEffect(() => {
-    if (parentRef.current && panelRef.current) {
-      const { width: parentWidth, height: parentHeight } =
-        parentRef.current.getBoundingClientRect();
-      const { width, height } = panelRef.current.getBoundingClientRect();
+  const resizeObserverHandler = useCallback(
+    ({ width, height }) => {
+      if (parentRef.current) {
+        const { width: parentWidth, height: parentHeight } =
+          parentRef.current.getBoundingClientRect();
 
-      const parentDimension = [parentWidth, parentHeight];
-      const panelDimension = [width, height];
-      const sizeIndex = orientation === 'horizontal' ? 0 : 1;
-      const size =
-        sideSeparation === 'start'
-          ? panelDimension[sizeIndex]
-          : parentDimension[sizeIndex] - panelDimension[sizeIndex];
+        const parentDimension = [parentWidth, parentHeight];
+        const panelDimension = [width, height];
+        const sizeIndex = orientation === 'horizontal' ? 0 : 1;
+        const size =
+          sideSeparation === 'start'
+            ? panelDimension[sizeIndex]
+            : parentDimension[sizeIndex] - panelDimension[sizeIndex];
 
-      if (
-        minimalSize &&
-        size <= minimalSize &&
-        !isFinalClosed &&
-        !touchedRef.current
-      ) {
-        toggle();
+        if (
+          minimalSize &&
+          size <= minimalSize &&
+          !isFinalClosed &&
+          !touchedRef.current
+        ) {
+          toggle();
+        }
       }
-    }
-  }, [isFinalClosed, minimalSize, orientation, sideSeparation, toggle]);
+    },
+    [isFinalClosed, minimalSize, orientation, sideSeparation, toggle],
+  );
 
   const toggleHandler = useCallback(() => {
     touchedRef.current = true;
@@ -207,7 +207,7 @@ export function SplitPane(props: SplitPaneProps) {
       <SplitPaneInner
         style={getSplitInnerPaneStyle('start')}
         value={isFinalClosed && sideSeparation === 'start'}
-        ref={panelRef}
+        onResize={resizeObserverHandler}
       >
         {children[0]}
       </SplitPaneInner>
@@ -279,17 +279,23 @@ interface SplitPaneInnerProps {
   style: CSSProperties;
   value: boolean;
   children: React.ReactNode;
+  onResize?: (size: { width: number; height: number }) => void;
 }
 
-const SplitPaneInner = forwardRef<HTMLDivElement, SplitPaneInnerProps>(
-  function splitPaneInner(props, ref) {
-    const { style, value, children } = props;
-    return (
-      <splitPaneContext.Provider value={value}>
-        <div ref={ref} style={style}>
-          {children}
-        </div>
-      </splitPaneContext.Provider>
-    );
-  },
-);
+function SplitPaneInner(props: SplitPaneInnerProps) {
+  const { style, value, children, onResize } = props;
+  const { ref } = useResizeObserver<HTMLDivElement>({
+    onResize: ({ width, height }) => {
+      if (width && height) {
+        onResize?.({ width, height });
+      }
+    },
+  });
+  return (
+    <splitPaneContext.Provider value={value}>
+      <div ref={ref} style={style}>
+        {children}
+      </div>
+    </splitPaneContext.Provider>
+  );
+}
