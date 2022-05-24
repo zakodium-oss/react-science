@@ -119,3 +119,26 @@ export function WithEvilChild() {
     </div>
   );
 }
+export function WithMinimalSize() {
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: 300,
+      }}
+    >
+      <SplitPane
+        orientation="horizontal"
+        initialSeparation="50%"
+        minimalSize={300}
+      >
+        <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
+          Close when size less Than 300px 😊
+        </div>
+        <div
+          style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}
+        />
+      </SplitPane>
+    </div>
+  );
+}
