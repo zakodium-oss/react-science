@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
   useCallback,
+  RefObject,
 } from 'react';
 import useResizeObserver from 'use-resize-observer';
 
@@ -123,6 +124,7 @@ export function SplitPane(props: SplitPaneProps) {
   const [isSidePaneClosed, toggle] = useToggle(initialClosed);
   const parentRef = useRef<HTMLDivElement>(null);
   const touchedRef = useRef<boolean>(false);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const [[size, type], setSize] = useState(() => {
     const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
@@ -142,41 +144,22 @@ export function SplitPane(props: SplitPaneProps) {
 
   const isFinalClosed = isParentClosed ? true : isSidePaneClosed;
 
-  const getSplitInnerPaneStyle = (side: SideSeparation) =>
-    cssStyles.item(
-      isFinalClosed,
-      sideSeparation === side,
-      orientation,
-      size,
-      type,
-    );
+  useResizeObserver<HTMLDivElement>({
+    onResize: ({ width, height }) => {
+      const size = orientation === 'horizontal' ? width : height;
 
-  const resizeObserverHandler = useCallback(
-    ({ width, height }) => {
-      if (parentRef.current) {
-        const { width: parentWidth, height: parentHeight } =
-          parentRef.current.getBoundingClientRect();
-
-        const parentDimension = [parentWidth, parentHeight];
-        const panelDimension = [width, height];
-        const sizeIndex = orientation === 'horizontal' ? 0 : 1;
-        const size =
-          sideSeparation === 'start'
-            ? panelDimension[sizeIndex]
-            : parentDimension[sizeIndex] - panelDimension[sizeIndex];
-
-        if (
-          minimumSize &&
-          size <= minimumSize &&
-          !isFinalClosed &&
-          !touchedRef.current
-        ) {
-          toggle();
-        }
+      if (
+        size &&
+        minimumSize &&
+        size <= minimumSize &&
+        !isFinalClosed &&
+        !touchedRef.current
+      ) {
+        toggle();
       }
     },
-    [isFinalClosed, minimumSize, orientation, sideSeparation, toggle],
-  );
+    ref: panelRef,
+  });
 
   const toggleHandler = useCallback(() => {
     touchedRef.current = true;
@@ -191,6 +174,20 @@ export function SplitPane(props: SplitPaneProps) {
     [onMouseDown],
   );
 
+  const getSplitInnerProps = (side: SideSeparation) => {
+    return {
+      style: cssStyles.item(
+        isFinalClosed,
+        sideSeparation === side,
+        orientation,
+        size,
+        type,
+      ),
+      value: isFinalClosed && sideSeparation === side,
+      ...(sideSeparation === side && { innerRef: panelRef }),
+    };
+  };
+
   return (
     <div
       ref={parentRef}
@@ -200,11 +197,7 @@ export function SplitPane(props: SplitPaneProps) {
         orientation === 'vertical' && { flexDirection: 'column' },
       ])}
     >
-      <SplitPaneInner
-        style={getSplitInnerPaneStyle('start')}
-        value={isFinalClosed && sideSeparation === 'start'}
-        onResize={resizeObserverHandler}
-      >
+      <SplitPaneInner {...getSplitInnerProps('start')}>
         {children[0]}
       </SplitPaneInner>
 
@@ -216,10 +209,7 @@ export function SplitPane(props: SplitPaneProps) {
         orientation={orientation}
       />
 
-      <SplitPaneInner
-        style={getSplitInnerPaneStyle('end')}
-        value={isFinalClosed && sideSeparation === 'end'}
-      >
+      <SplitPaneInner {...getSplitInnerProps('end')}>
         {children[1]}
       </SplitPaneInner>
     </div>
@@ -275,21 +265,15 @@ interface SplitPaneInnerProps {
   style: CSSProperties;
   value: boolean;
   children: React.ReactNode;
-  onResize?: (size: { width: number; height: number }) => void;
+  innerRef?: RefObject<HTMLDivElement>;
 }
 
 function SplitPaneInner(props: SplitPaneInnerProps) {
-  const { style, value, children, onResize } = props;
-  const { ref } = useResizeObserver<HTMLDivElement>({
-    onResize: ({ width, height }) => {
-      if (width && height) {
-        onResize?.({ width, height });
-      }
-    },
-  });
+  const { style, value, children, innerRef } = props;
+
   return (
     <splitPaneContext.Provider value={value}>
-      <div ref={ref} style={style}>
+      <div ref={innerRef} style={style}>
         {children}
       </div>
     </splitPaneContext.Provider>
