@@ -142,15 +142,14 @@ export function SplitPane(props: SplitPaneProps) {
 
   const isFinalClosed = isParentClosed ? true : isSidePaneClosed;
 
-  const getSplitInnerPaneStyle = (side: SideSeparation) => {
-    return cssStyles.item(
+  const getSplitInnerPaneStyle = (side: SideSeparation) =>
+    cssStyles.item(
       isFinalClosed,
       sideSeparation === side,
       orientation,
       size,
       type,
     );
-  };
 
   const resizeObserverHandler = useCallback(
     ({ width, height }) => {
