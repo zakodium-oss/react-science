@@ -12,7 +12,7 @@ export default {
     orientation: 'horizontal',
     sideSeparation: 'end',
     initialClosed: false,
-    minimumSize: undefined,
+    minimumSize: 300,
   },
   argTypes: {
     onChange: { action: 'handle' },
@@ -119,7 +119,7 @@ export function WithEvilChild() {
     </div>
   );
 }
-export function WithMinimalSize() {
+export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
   return (
     <div
       style={{
@@ -127,11 +127,7 @@ export function WithMinimalSize() {
         height: 300,
       }}
     >
-      <SplitPane
-        orientation="horizontal"
-        initialSeparation="50%"
-        minimumSize={300}
-      >
+      <SplitPane key={props.initialSeparation} {...props}>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
           Close when size less Than 300px 😊
         </div>
