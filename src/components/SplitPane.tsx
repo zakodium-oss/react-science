@@ -47,7 +47,7 @@ export interface SplitPaneProps {
    * Define when the split panel should be closed by setting the minimum size in Pixel 'px'
    * @default undefined
    */
-  minimalSize?: number;
+  minimumSize?: number;
   /**
    * @default () => null
    */
@@ -115,7 +115,7 @@ export function SplitPane(props: SplitPaneProps) {
     sideSeparation = 'start',
     initialSeparation = '50%',
     initialClosed = false,
-    minimalSize,
+    minimumSize,
     onChange = () => null,
     children,
   } = props;
@@ -170,8 +170,8 @@ export function SplitPane(props: SplitPaneProps) {
             : parentDimension[sizeIndex] - panelDimension[sizeIndex];
 
         if (
-          minimalSize &&
-          size <= minimalSize &&
+          minimumSize &&
+          size <= minimumSize &&
           !isFinalClosed &&
           !touchedRef.current
         ) {
@@ -179,7 +179,7 @@ export function SplitPane(props: SplitPaneProps) {
         }
       }
     },
-    [isFinalClosed, minimalSize, orientation, sideSeparation, toggle],
+    [isFinalClosed, minimumSize, orientation, sideSeparation, toggle],
   );
 
   const toggleHandler = useCallback(() => {

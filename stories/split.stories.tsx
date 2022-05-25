@@ -12,7 +12,7 @@ export default {
     orientation: 'horizontal',
     sideSeparation: 'end',
     initialClosed: false,
-    minimalSize: undefined,
+    minimumSize: undefined,
   },
   argTypes: {
     onChange: { action: 'handle' },
@@ -130,7 +130,7 @@ export function WithMinimalSize() {
       <SplitPane
         orientation="horizontal"
         initialSeparation="50%"
-        minimalSize={300}
+        minimumSize={300}
       >
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
           Close when size less Than 300px 😊
