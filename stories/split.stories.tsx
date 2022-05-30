@@ -124,7 +124,7 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
     <div
       style={{
         width: '100%',
-        height: 300,
+        height: 'calc(100vh - 2.1rem)',
       }}
     >
       <SplitPane key={props.initialSeparation} {...props}>
