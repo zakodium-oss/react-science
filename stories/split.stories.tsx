@@ -11,6 +11,8 @@ export default {
     initialSeparation: '50%',
     orientation: 'horizontal',
     sideSeparation: 'end',
+    initialClosed: false,
+    minimumSize: 300,
   },
   argTypes: {
     onChange: { action: 'handle' },
@@ -113,6 +115,25 @@ export function WithEvilChild() {
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: 300 }}>
           I am an evil child. You cannot make me smaller than 300px 😈
         </div>
+      </SplitPane>
+    </div>
+  );
+}
+export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: 'calc(100vh - 2.1rem)',
+      }}
+    >
+      <SplitPane key={props.initialSeparation} {...props}>
+        <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
+          Close when size less Than 300px 😊
+        </div>
+        <div
+          style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}
+        />
       </SplitPane>
     </div>
   );
