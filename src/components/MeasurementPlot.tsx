@@ -1,5 +1,5 @@
 import { xyToXYObject } from 'ml-spectra-processing';
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import {
   Axis,
   Heading,
@@ -77,26 +77,29 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   const {
     variables: { [xVariableName]: x, [yVariableName]: y },
   } = data[dataIndex];
-  useAxisZoom({
-    direction: zoom,
-    axisId: zoom === 'vertical' ? yVariableName : xVariableName,
-  });
-  useRectangularZoom({
-    horizontalAxisId: xVariableName,
-    verticalAxisId: yVariableName,
-  });
-  useAxisWheelZoom({
-    direction: wheelZoom,
-    axisId: wheelZoom === 'vertical' ? yVariableName : xVariableName,
-  });
-  useAxisWheelZoom({
-    direction: wheelZoom,
-    axisId: wheelZoom === 'vertical' ? yVariableName : xVariableName,
-  });
-  useCrossHair({
-    horizontalAxisId: xVariableName,
-    verticalAxisId: yVariableName,
-  });
+  if (zoom === 'rectangular') {
+    useRectangularZoom({
+      horizontalAxisId: xVariableName,
+      verticalAxisId: yVariableName,
+    });
+  } else if (zoom !== '') {
+    useAxisZoom({
+      direction: zoom,
+      axisId: zoom === 'vertical' ? yVariableName : xVariableName,
+    });
+  }
+  if (wheelZoom !== '') {
+    useAxisWheelZoom({
+      direction: wheelZoom,
+      axisId: wheelZoom === 'vertical' ? yVariableName : xVariableName,
+    });
+  }
+  if (crossHair) {
+    useCrossHair({
+      horizontalAxisId: xVariableName,
+      verticalAxisId: yVariableName,
+    });
+  }
   usePan({
     horizontalAxisId: xVariableName,
     verticalAxisId: yVariableName,
