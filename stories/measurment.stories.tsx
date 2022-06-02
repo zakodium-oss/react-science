@@ -1,10 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import {
-  MeasurementPlot,
-  MeasurementPlotProps,
-} from '../src/components/MeasurementPlot';
+import { MeasurementPlot, MeasurementPlotProps } from '../src';
 
 import data from './data/measurement.json';
 
