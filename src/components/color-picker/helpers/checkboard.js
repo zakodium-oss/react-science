@@ -5,7 +5,9 @@ export function render(c1, c2, size, serverCanvas) {
     return null;
   }
   const canvas = serverCanvas
-    ? new serverCanvas()
+    ? // todo : fix the error "A constructor name should not start with a lowercase letter"
+      // eslint-disable-next-line new-cap
+      new serverCanvas()
     : document.createElement('canvas');
   canvas.width = size * 2;
   canvas.height = size * 2;
