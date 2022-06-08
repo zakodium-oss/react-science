@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.15.0...v0.15.1) (2022-06-08)
+
+
+### Bug Fixes
+
+* minimumSize parameter is not considering the correct side of the split ([#153](https://github.com/zakodium-oss/analysis-ui-components/issues/153)) ([227f7d4](https://github.com/zakodium-oss/analysis-ui-components/commit/227f7d4ed5a31fbb4a8327c063fb69b637bc3876))
+
 ## [0.15.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.2...v0.15.0) (2022-05-31)
 
 
