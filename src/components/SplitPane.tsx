@@ -184,7 +184,7 @@ export function SplitPane(props: SplitPaneProps) {
         type,
       ),
       value: isFinalClosed && sideSeparation === side,
-      ...(sideSeparation === side && { innerRef: panelRef }),
+      ...(sideSeparation !== side && { innerRef: panelRef }),
     };
   };
 
