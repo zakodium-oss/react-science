@@ -120,6 +120,7 @@ export function WithEvilChild() {
   );
 }
 export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
+  const { sideSeparation, minimumSize = 300 } = props;
   return (
     <div
       style={{
@@ -127,13 +128,15 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
         height: 'calc(100vh - 2.1rem)',
       }}
     >
-      <SplitPane key={props.initialSeparation} {...props}>
+      <SplitPane key={JSON.stringify(props)} {...props}>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
-          Close when size less Than 300px 😊
+          {sideSeparation === 'start' &&
+            `Close when size less Than ${minimumSize}px 😊`}
         </div>
-        <div
-          style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}
-        />
+        <div style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}>
+          {sideSeparation === 'end' &&
+            `Close when size less Than ${minimumSize}px 😊`}
+        </div>
       </SplitPane>
     </div>
   );
