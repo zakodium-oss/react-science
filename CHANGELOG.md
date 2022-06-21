@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.15.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.2...v0.15.0) (2022-05-31)
+
+
+### Features
+
+* add minimumSize prop to close SplitPane on load ([#147](https://github.com/zakodium-oss/analysis-ui-components/issues/147)) ([baaebd5](https://github.com/zakodium-oss/analysis-ui-components/commit/baaebd5da92066477984d0ececedcdd98d420601)), closes [#143](https://github.com/zakodium-oss/analysis-ui-components/issues/143)
+* create MeasurementPlot component ([#141](https://github.com/zakodium-oss/analysis-ui-components/issues/141)) ([b272f47](https://github.com/zakodium-oss/analysis-ui-components/commit/b272f47493cb14590c60296f5243c6e4244a4c61))
+
 ### [0.14.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.1...v0.14.2) (2022-05-12)
 
 
