@@ -147,8 +147,15 @@ export function SplitPane(props: SplitPaneProps) {
 
   useResizeObserver<HTMLDivElement>({
     onResize: ({ width, height }) => {
+      // size based on the split pane orientation
       const size = orientation === 'horizontal' ? width : height;
+
+      // if the separator is not touched or minimumSize is defined then the automatic close/open work
       if (size && minimumSize && !touchedRef.current) {
+        /**
+         *  if the size is less than or equal to the minimumSize and the panel is not closed yet then save the split pane width to use as
+           a reference value for checking if there is enough room to open the panel or not and then close the panel.
+         */
         if (size <= minimumSize && !isFinalClosed) {
           const parentBounding = parentRef.current?.getBoundingClientRect();
           if (parentBounding) {
@@ -158,6 +165,8 @@ export function SplitPane(props: SplitPaneProps) {
                 : parentBounding.height;
           }
           toggle();
+
+          //  if the size grater than reference size value and the panel is already closed then open it again
         } else if (size > parenSizeRef.current && isFinalClosed) {
           toggle();
         }
