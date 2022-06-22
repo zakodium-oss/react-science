@@ -125,6 +125,7 @@ export function SplitPane(props: SplitPaneProps) {
   const parentRef = useRef<HTMLDivElement>(null);
   const touchedRef = useRef<boolean>(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const parenSizeRef = useRef<number>(0);
 
   const [[size, type], setSize] = useState(() => {
     const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
@@ -147,15 +148,19 @@ export function SplitPane(props: SplitPaneProps) {
   useResizeObserver<HTMLDivElement>({
     onResize: ({ width, height }) => {
       const size = orientation === 'horizontal' ? width : height;
-
-      if (
-        size &&
-        minimumSize &&
-        size <= minimumSize &&
-        !isFinalClosed &&
-        !touchedRef.current
-      ) {
-        toggle();
+      if (size && minimumSize && !touchedRef.current) {
+        if (size <= minimumSize && !isFinalClosed) {
+          const parentBounding = parentRef.current?.getBoundingClientRect();
+          if (parentBounding) {
+            parenSizeRef.current =
+              orientation === 'horizontal'
+                ? parentBounding.width
+                : parentBounding.height;
+          }
+          toggle();
+        } else if (size > parenSizeRef.current && isFinalClosed) {
+          toggle();
+        }
       }
     },
     ref: panelRef,
