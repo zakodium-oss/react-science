@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as checkBoard from '../helpers/checkboard';
+import * as checkBoard from '../helpers/checkBoard';
 
 const styles = {
   grid: (props) => {
