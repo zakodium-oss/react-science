@@ -1,11 +1,11 @@
 const checkBoardCache = {};
 
-export function render(c1, c2, size, serverCanvas) {
-  if (typeof document === 'undefined' && !serverCanvas) {
+export function render(c1, c2, size, ServerCanvas) {
+  if (typeof document === 'undefined' && !ServerCanvas) {
     return null;
   }
-  const canvas = serverCanvas
-    ? new serverCanvas()
+  const canvas = ServerCanvas
+    ? new ServerCanvas()
     : document.createElement('canvas');
   canvas.width = size * 2;
   canvas.height = size * 2;
@@ -22,14 +22,14 @@ export function render(c1, c2, size, serverCanvas) {
   return canvas.toDataURL();
 }
 
-export function get(c1, c2, size, serverCanvas) {
-  const key = `${c1}-${c2}-${size}${serverCanvas ? '-server' : ''}`;
+export function get(c1, c2, size, ServerCanvas) {
+  const key = `${c1}-${c2}-${size}${ServerCanvas ? '-server' : ''}`;
 
   if (checkBoardCache[key]) {
     return checkBoardCache[key];
   }
 
-  const checkBoard = render(c1, c2, size, serverCanvas);
+  const checkBoard = render(c1, c2, size, ServerCanvas);
   checkBoardCache[key] = checkBoard;
   return checkBoard;
 }

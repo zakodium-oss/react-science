@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chromium, firefox, webkit]
+        project: [chromium, firefox, webkit]
+        test-type: [ct, e2e]
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
@@ -22,7 +23,5 @@ jobs:
         run: npm ci
       - name: Install Playwright
         run: npx playwright install --with-deps
-      - name: Run tests on ${{ matrix.browser }}
-        run: npm run test-playwright
-        env:
-          BROWSER: ${{ matrix.browser }}
+      - name: Run ${{ matrix.test-type }} tests on ${{ matrix.project }}
+        run: npm run playwright-${{ matrix.test-type }} -- --project ${{ matrix.project }}

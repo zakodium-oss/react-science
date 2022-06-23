@@ -8,7 +8,8 @@ const config: StorybookViteConfig = {
   staticDirs: [],
   addons: ['@storybook/addon-essentials', '@storybook/addon-storysource'],
   async viteFinal(config, options) {
-    config.base = '/storybook/';
+    const base = process.env.VITE_BASE || '/';
+    config.base = base + 'storybook/';
     return config;
   },
 };
