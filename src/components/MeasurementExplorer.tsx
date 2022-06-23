@@ -53,7 +53,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           <select
             onChange={({ target }) => {
               const value = Number(target.value);
-              if (value !== undefined) {
+              if (value !== undefined && !isNaN(value)) {
                 setInfo(defaultInfo(value));
               }
             }}
