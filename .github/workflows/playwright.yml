@@ -24,4 +24,4 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Run ${{ matrix.test-type }} tests on ${{ matrix.project }}
-        run: npm run playwright-${{ matrix.test-type }} --project ${{ matrix.project }}
+        run: npm run playwright-${{ matrix.test-type }} -- --project ${{ matrix.project }}
