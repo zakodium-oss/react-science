@@ -19,8 +19,8 @@
     "./src",
     "./stories",
     "./tests",
-    "./playwright.config.ts",
-    "./playwright"
+    "./playwright",
+    "playwright-*.ts"
   ],
   "exclude": ["node_modules"]
 }

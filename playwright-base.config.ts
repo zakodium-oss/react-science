@@ -1,9 +1,9 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-  testDir: 'tests',
+  forbidOnly: !!process.env.CI,
   retries: 0,
-  reporter: process.env.CI ? 'github' : 'list',
+  reporter: process.env.CI ? 'github' : [['list'], ['html']],
   use: {
     headless: true,
     ignoreHTTPSErrors: true,
@@ -14,11 +14,6 @@ const config: PlaywrightTestConfig = {
     contextOptions: {
       strictSelectors: true,
     },
-  },
-  webServer: {
-    command: 'npm run dev-app',
-    port: 3000,
-    reuseExistingServer: true,
   },
   projects: [
     {

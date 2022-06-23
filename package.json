@@ -22,13 +22,14 @@
     "dev-app": "vite --open",
     "eslint": "eslint src stories --cache",
     "eslint-fix": "npm run eslint -- --fix",
+    "playwright-ct": "playwright test -c playwright-ct.config.ts",
+    "playwright-e2e": "playwright test -c playwright-e2e.config.ts",
     "prepack": "npm run build",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
     "serve": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "test": "npm run test-playwright && npm run eslint && npm run prettier && npm run check-types",
-    "test-playwright": "playwright test"
+    "test": "npm run playwright-ct -- --project chromium && npm run playwright-e2e -- --project chromium && npm run eslint && npm run prettier && npm run check-types"
   },
   "volta": {
     "node": "16.15.0"
@@ -38,25 +39,25 @@
     "react-dom": ">=17.0.0"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
+    "@emotion/react": "^11.9.3",
     "@lukeed/uuid": "^2.0.0",
-    "immer": "^9.0.14",
+    "immer": "^9.0.15",
     "lodash": "^4.17.21",
     "react-dropzone": "^14.2.1",
     "react-shadow": "^19.0.3",
     "tinycolor2": "^1.4.2",
-    "use-resize-observer": "^9.0.0"
+    "use-resize-observer": "^9.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.2",
+    "@babel/core": "^7.18.5",
     "@babel/eslint-parser": "^7.18.2",
     "@playwright/experimental-ct-react": "^1.22.2",
     "@playwright/test": "^1.22.2",
-    "@storybook/addon-actions": "^6.5.6",
-    "@storybook/addon-essentials": "^6.5.6",
-    "@storybook/addon-storysource": "^6.5.6",
-    "@storybook/builder-vite": "^0.1.35",
-    "@storybook/react": "^6.5.6",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-storysource": "^6.5.9",
+    "@storybook/builder-vite": "^0.1.36",
+    "@storybook/react": "^6.5.9",
     "@types/lodash": "^4.14.182",
     "@types/react": "^17.0.44",
     "@types/react-dom": "^17.0.16",
@@ -65,17 +66,17 @@
     "babel-loader": "^8.2.5",
     "cheminfo-font": "^1.8.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.16.0",
-    "ml-spectra-processing": "^11.6.0",
-    "prettier": "^2.6.2",
+    "eslint": "^8.18.0",
+    "ml-spectra-processing": "^11.7.0",
+    "prettier": "^2.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
     "react-ocl": "^4.3.5",
     "react-plot": "^0.19.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.2",
-    "vite": "^2.9.9"
+    "typescript": "^4.7.4",
+    "vite": "^2.9.12"
   },
   "repository": {
     "type": "git",
