@@ -108,3 +108,4 @@ lib-esm
 
 dist
 storybook-static
+.DS_Store
