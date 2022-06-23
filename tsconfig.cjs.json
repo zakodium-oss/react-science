@@ -1,6 +1,12 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["src/app", "stories", "tests", "playwright.config.ts"],
+  "exclude": [
+    "./src/app",
+    "./stories",
+    "./tests",
+    "playwright.*.ts",
+    "./playwright"
+  ],
   "compilerOptions": {
     "module": "CommonJS"
   }
