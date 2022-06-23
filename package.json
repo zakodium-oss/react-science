@@ -40,6 +40,8 @@
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@lukeed/uuid": "^2.0.0",
     "immer": "^9.0.15",
     "lodash": "^4.17.21",

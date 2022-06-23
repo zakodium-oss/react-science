@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
 import { FaExchangeAlt } from 'react-icons/fa';
 
 import { Measurement, MeasurementPlot } from './MeasurementPlot';
@@ -159,12 +161,19 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             }))
           }
           css={css`
-            cursor: pointer;
-            border: 1px solid black;
             padding: 2px;
+            display: flex;
           `}
         >
-          Flip &quot;{info.xVariableName}&quot; axis
+          Flip &quot;{info.xVariableName}&quot; axis:
+          <FontAwesomeIcon
+            css={css`
+              cursor: pointer;
+            `}
+            width={60}
+            height={30}
+            icon={faArrowsLeftRightToLine}
+          />
         </div>
       </div>
       <MeasurementPlot {...props} {...info} />
