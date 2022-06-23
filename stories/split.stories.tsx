@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 
 import { Accordion, SplitPane } from '../src';
@@ -16,6 +16,14 @@ export default {
   },
   argTypes: {
     onChange: { action: 'handle' },
+    orientation: {
+      options: ['vertical', 'horizontal'],
+      control: { type: 'radio' },
+    },
+    sideSeparation: {
+      options: ['start', 'end'],
+      control: { type: 'radio' },
+    },
   },
   component: SplitPane,
 } as Meta<SplitPaneProps>;
@@ -119,7 +127,9 @@ export function WithEvilChild() {
     </div>
   );
 }
-export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
+const WithMinimalSizeExample: ComponentStory<typeof SplitPane> = (
+  props: Omit<SplitPaneProps, 'children'>,
+) => {
   const { sideSeparation, minimumSize = 300 } = props;
   return (
     <div
@@ -140,4 +150,13 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
       </SplitPane>
     </div>
   );
-}
+};
+
+export const WithMinimalSize = WithMinimalSizeExample.bind({});
+WithMinimalSize.args = {
+  initialSeparation: '500px',
+  orientation: 'horizontal',
+  sideSeparation: 'end',
+  initialClosed: false,
+  minimumSize: 300,
+};
