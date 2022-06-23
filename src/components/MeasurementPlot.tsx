@@ -1,6 +1,7 @@
 import { xyToXYObject } from 'ml-spectra-processing';
 import React from 'react';
 import {
+  Annotations,
   Axis,
   Heading,
   LineSeries,
@@ -52,7 +53,6 @@ export function MeasurementPlot(props: MeasurementPlotProps) {
     </PlotController>
   );
 }
-
 function MeasurementComponent(props: MeasurementPlotProps) {
   const {
     measurement,
@@ -77,29 +77,27 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   const {
     variables: { [xVariableName]: x, [yVariableName]: y },
   } = data[dataIndex];
-  if (zoom === 'rectangular') {
-    useRectangularZoom({
-      horizontalAxisId: xVariableName,
-      verticalAxisId: yVariableName,
-    });
-  } else if (zoom !== '') {
-    useAxisZoom({
-      direction: zoom,
-      axisId: zoom === 'vertical' ? yVariableName : xVariableName,
-    });
-  }
-  if (wheelZoom !== '') {
-    useAxisWheelZoom({
-      direction: wheelZoom,
-      axisId: wheelZoom === 'vertical' ? yVariableName : xVariableName,
-    });
-  }
-  if (crossHair) {
-    useCrossHair({
-      horizontalAxisId: xVariableName,
-      verticalAxisId: yVariableName,
-    });
-  }
+  const direction = ['vertical', 'horizontal'];
+  const rectZoom = useRectangularZoom({
+    horizontalAxisId: xVariableName,
+    verticalAxisId: yVariableName,
+    disabled: zoom !== 'rectangular',
+  });
+  const axisZoom = useAxisZoom({
+    direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
+    axisId: zoom === 'vertical' ? yVariableName : xVariableName,
+    disabled: !direction.includes(zoom),
+  });
+  useAxisWheelZoom({
+    direction: wheelZoom === 'vertical' ? 'vertical' : 'horizontal',
+    axisId: wheelZoom === 'vertical' ? yVariableName : xVariableName,
+    disabled: !direction.includes(wheelZoom),
+  });
+  const crossHairAnnot = useCrossHair({
+    horizontalAxisId: xVariableName,
+    verticalAxisId: yVariableName,
+    disabled: !crossHair,
+  });
   usePan({
     horizontalAxisId: xVariableName,
     verticalAxisId: yVariableName,
@@ -113,6 +111,11 @@ function MeasurementComponent(props: MeasurementPlotProps) {
           y: y.data,
         })}
       />
+      <Annotations>
+        {rectZoom.annotations}
+        {axisZoom.annotations}
+        {crossHairAnnot.annotations}
+      </Annotations>
       <Axis
         id={xVariableName}
         hidden={!showHorizontalAxis}
