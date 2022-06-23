@@ -20,11 +20,18 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     width = 800,
     height = 400,
   } = props;
-  const [info, setInfo] = useState<ExplorerInfo>({
-    dataIndex: 0,
-    xVariableName: Object.keys(data[0].variables)[0] || 'x',
-    yVariableName: Object.keys(data[0].variables)[1] || 'y',
-  });
+  function defaultInfo(dataIndex: number) {
+    return {
+      dataIndex,
+      xVariableName: Object.keys(data[dataIndex].variables).includes('x')
+        ? 'x'
+        : Object.keys(data[dataIndex].variables)[0],
+      yVariableName: Object.keys(data[dataIndex].variables).includes('y')
+        ? 'y'
+        : Object.keys(data[dataIndex].variables)[1],
+    };
+  }
+  const [info, setInfo] = useState<ExplorerInfo>(defaultInfo(0));
   return (
     <div
       css={css`
@@ -46,11 +53,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             onChange={({ target }) => {
               const value = Number(target.value);
               if (value) {
-                setInfo({
-                  dataIndex: value,
-                  xVariableName: Object.keys(data[value].variables)[0],
-                  yVariableName: Object.keys(data[value].variables)[1],
-                });
+                setInfo(defaultInfo(value));
               }
             }}
           >
@@ -65,6 +68,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         <div>
           <label>xVariable :</label>
           <select
+            css={css`
+              cursor: pointer;
+            `}
             onChange={({ target }) => {
               const value = target.value;
               if (value) {
@@ -72,16 +78,24 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               }
             }}
           >
-            {Object.keys(data[info.dataIndex].variables).map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
+            {Object.keys(data[info.dataIndex].variables).map((d) => {
+              if (d !== info.yVariableName) {
+                return (
+                  <option key={d} value={d} selected={d === info.xVariableName}>
+                    {d}
+                  </option>
+                );
+              }
+              return null;
+            })}
           </select>
         </div>
         <div>
-          <label>xVariable :</label>
+          <label>yVariable :</label>
           <select
+            css={css`
+              cursor: pointer;
+            `}
             onChange={({ target }) => {
               const value = target.value;
               if (value) {
@@ -89,11 +103,16 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               }
             }}
           >
-            {Object.keys(data[info.dataIndex].variables).map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
+            {Object.keys(data[info.dataIndex].variables).map((d) => {
+              if (d !== info.xVariableName) {
+                return (
+                  <option key={d} value={d} selected={d === info.yVariableName}>
+                    {d}
+                  </option>
+                );
+              }
+              return null;
+            })}
           </select>
         </div>
       </div>
