@@ -19,6 +19,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build-all
+        env:
+          VITE_BASE: '/analysis-ui-components/'
       - name: Deploy to GitHub pages
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:

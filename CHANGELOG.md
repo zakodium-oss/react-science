@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.15.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.15.1...v0.15.2) (2022-06-23)
+
+
+### Bug Fixes
+
+* enlarge the side panel does not appear anymore after shrinking it ([#155](https://github.com/zakodium-oss/analysis-ui-components/issues/155)) ([3fe3637](https://github.com/zakodium-oss/analysis-ui-components/commit/3fe3637268913c7f21c39ed34d1cdf945b71e1b6))
+* specify base URL for gh-pages build ([#156](https://github.com/zakodium-oss/analysis-ui-components/issues/156)) ([e45bb03](https://github.com/zakodium-oss/analysis-ui-components/commit/e45bb034f2d32ba6455360192e8b0a67b698fcc5))
+* specify base URL for Storybook in gh-pages build ([#158](https://github.com/zakodium-oss/analysis-ui-components/issues/158)) ([378ec45](https://github.com/zakodium-oss/analysis-ui-components/commit/378ec45845dec3ef34a688bd6df4330e05d54051))
+
+## [0.15.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.15.0...v0.15.1) (2022-06-08)
+
+
+### Bug Fixes
+
+* minimumSize parameter is not considering the correct side of the split ([#153](https://github.com/zakodium-oss/analysis-ui-components/issues/153)) ([227f7d4](https://github.com/zakodium-oss/analysis-ui-components/commit/227f7d4ed5a31fbb4a8327c063fb69b637bc3876))
+
+## [0.15.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.2...v0.15.0) (2022-05-31)
+
+
+### Features
+
+* add minimumSize prop to close SplitPane on load ([#147](https://github.com/zakodium-oss/analysis-ui-components/issues/147)) ([baaebd5](https://github.com/zakodium-oss/analysis-ui-components/commit/baaebd5da92066477984d0ececedcdd98d420601)), closes [#143](https://github.com/zakodium-oss/analysis-ui-components/issues/143)
+* create MeasurementPlot component ([#141](https://github.com/zakodium-oss/analysis-ui-components/issues/141)) ([b272f47](https://github.com/zakodium-oss/analysis-ui-components/commit/b272f47493cb14590c60296f5243c6e4244a4c61))
+
 ### [0.14.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.14.1...v0.14.2) (2022-05-12)
 
 

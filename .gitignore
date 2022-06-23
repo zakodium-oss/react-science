@@ -108,3 +108,4 @@ lib-esm
 
 dist
 storybook-static
+playwright-report

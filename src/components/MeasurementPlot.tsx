@@ -23,7 +23,7 @@ interface Variable {
 interface Data {
   variables: Record<string, Variable>;
 }
-interface Measurement {
+export interface Measurement {
   meta?: object;
   filename?: string;
   info?: object;

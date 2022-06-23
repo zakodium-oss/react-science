@@ -1,6 +1,6 @@
 {
   "name": "analysis-ui-components",
-  "version": "0.14.2",
+  "version": "0.15.2",
   "description": "React components to build analysis UI",
   "main": "lib/index.js",
   "module": "lib-esm/index.js",
@@ -22,13 +22,14 @@
     "dev-app": "vite --open",
     "eslint": "eslint src stories --cache",
     "eslint-fix": "npm run eslint -- --fix",
+    "playwright-ct": "playwright test -c playwright-ct.config.ts",
+    "playwright-e2e": "playwright test -c playwright-e2e.config.ts",
     "prepack": "npm run build",
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
     "serve": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "test": "npm run test-playwright && npm run eslint && npm run prettier && npm run check-types",
-    "test-playwright": "playwright test"
+    "test": "npm run playwright-ct -- --project chromium && npm run playwright-e2e -- --project chromium && npm run eslint && npm run prettier && npm run check-types"
   },
   "volta": {
     "node": "16.15.0"
@@ -44,11 +45,13 @@
     "lodash": "^4.17.21",
     "react-dropzone": "^14.2.1",
     "react-shadow": "^19.0.3",
-    "tinycolor2": "^1.4.2"
+    "tinycolor2": "^1.4.2",
+    "use-resize-observer": "^9.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "@babel/eslint-parser": "^7.18.2",
+    "@playwright/experimental-ct-react": "^1.22.2",
     "@playwright/test": "^1.22.2",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
