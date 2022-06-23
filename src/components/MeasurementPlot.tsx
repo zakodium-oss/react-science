@@ -29,14 +29,6 @@ interface Measurement {
   info?: object;
   title?: string;
   data: Data[];
-  zoom?: 'horizontal' | 'vertical' | 'rectangular' | '';
-  wheelZoom?: 'vertical' | 'horizontal' | '';
-  crossHair?: boolean;
-  showHorizontalAxis?: boolean;
-  showVerticalAxis?: boolean;
-  showHorizontalGrid?: boolean;
-  showVerticalGrid?: boolean;
-  flipHorizontalAxis?: boolean;
 }
 export interface MeasurementPlotProps {
   measurement: Measurement;
@@ -45,6 +37,14 @@ export interface MeasurementPlotProps {
   yVariableName?: string;
   width?: number;
   height?: number;
+  zoom?: 'horizontal' | 'vertical' | 'rectangular' | '';
+  wheelZoom?: 'vertical' | 'horizontal' | '';
+  crossHair?: boolean;
+  showHorizontalAxis?: boolean;
+  showVerticalAxis?: boolean;
+  showHorizontalGrid?: boolean;
+  showVerticalGrid?: boolean;
+  flipHorizontalAxis?: boolean;
 }
 export function MeasurementPlot(props: MeasurementPlotProps) {
   return (
@@ -61,10 +61,6 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     yVariableName = 'y',
     width = 800,
     height = 400,
-  } = props;
-  const {
-    title = '',
-    data,
     zoom = 'horizontal',
     wheelZoom = 'vertical',
     crossHair = true,
@@ -73,10 +69,20 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     showHorizontalGrid = true,
     showVerticalGrid = true,
     flipHorizontalAxis = false,
-  } = measurement;
-  const {
-    variables: { [xVariableName]: x, [yVariableName]: y },
-  } = data[dataIndex];
+  } = props;
+  const { title = '', data } = measurement;
+  const { variables } = data[dataIndex];
+  const { [xVariableName]: x, [yVariableName]: y } = variables;
+
+  if (x === undefined || y === undefined) {
+    throw new Error(
+      `Variable "${
+        x === undefined ? xVariableName : yVariableName
+      }" is not available in data. Only ${Object.keys(variables).join(
+        ', ',
+      )} are available`,
+    );
+  }
   const direction = ['vertical', 'horizontal'];
   const rectZoom = useRectangularZoom({
     horizontalAxisId: xVariableName,
