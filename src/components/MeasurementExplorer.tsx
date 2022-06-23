@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState } from 'react';
-import { CgArrowsExchangeAlt } from 'react-icons/cg';
+import { FaExchangeAlt } from 'react-icons/fa';
 
 import { Measurement, MeasurementPlot } from './MeasurementPlot';
 
@@ -53,7 +53,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           <select
             onChange={({ target }) => {
               const value = Number(target.value);
-              if (value) {
+              if (value !== undefined) {
                 setInfo(defaultInfo(value));
               }
             }}
@@ -92,11 +92,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           </select>
         </div>
         <div>
-          <CgArrowsExchangeAlt
+          <FaExchangeAlt
             css={css`
               cursor: pointer;
             `}
-            size="30"
+            size="25"
             onClick={() =>
               setInfo(({ xVariableName, yVariableName, ...info }) => ({
                 ...info,
