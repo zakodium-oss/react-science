@@ -29,7 +29,7 @@ interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
-  neta: Record<string, string>;
+  meta: Record<string, string>;
   info: Record<string, string | number>;
   data: {
     variables: Record<string, MeasurementVariable>;
