@@ -1,15 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaExchangeAlt } from 'react-icons/fa';
 
-import { Measurement, MeasurementPlot } from './MeasurementPlot';
+import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
 
-export interface MeasurementExplorerProps {
-  measurement: Measurement;
-  width?: number;
-  height?: number;
-}
+export type MeasurementExplorerProps = Omit<
+  MeasurementPlotProps,
+  'xVariableName' | 'yVariableName' | 'dataIndex'
+>;
 interface ExplorerInfo {
   dataIndex: number;
   xVariableName: string;
