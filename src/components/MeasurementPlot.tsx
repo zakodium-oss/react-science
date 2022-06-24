@@ -127,7 +127,6 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         {crossHairAnnot.annotations}
       </Annotations>
       <Axis
-        // id={xVariableName}
         hidden={!showHorizontalAxis}
         displayPrimaryGridLines={showHorizontalGrid}
         flip={flipHorizontalAxis}
@@ -135,7 +134,6 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         label={`${x.label}${x.units ? `(${x.units})` : ''}`}
       />
       <Axis
-        // id={yVariableName}
         hidden={!showVerticalAxis}
         displayPrimaryGridLines={showVerticalGrid}
         position="left"
