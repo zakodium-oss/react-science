@@ -6,9 +6,9 @@ import { jcampProcessor } from './processors/jcampProcessor';
 
 const defaultProcessors = [jcampProcessor];
 
-type AppendOptions = {
+interface AppendOptions {
   processors?: Processor[];
-};
+}
 /**
  * Adds in the state the information that can be extracted from the fileList
  * We can add 'processors' that based on the extension, filename, path or content

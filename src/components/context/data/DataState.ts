@@ -1,5 +1,6 @@
 import { Instrument, MeasurementVariable } from 'cheminfo-types';
 import { PartialFileList } from 'filelist-utils';
+
 export interface DataState {
   measurements: Measurements;
 }

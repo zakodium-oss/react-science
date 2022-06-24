@@ -9,7 +9,7 @@ const enhancers: Record<string, typeof irSpectrumEnhancer> = {
   ir: irSpectrumEnhancer,
 };
 
-export async function jcampProcessor(
+export const jcampProcessor: Processor = async function jcampProcessor(
   fileList: PartialFileList,
   dataState: DataState,
 ) {
@@ -42,7 +42,7 @@ export async function jcampProcessor(
       }
     }
   }
-}
+};
 
 function normalizeSpectra(spectra: any, kind: string) {
   const data = [];

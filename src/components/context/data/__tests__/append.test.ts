@@ -4,8 +4,8 @@ import { join } from 'path';
 
 import { fileListFromPath } from 'filelist-utils';
 
-import { getEmptyDataState } from '../getEmptyDataState';
 import { append } from '../append';
+import { getEmptyDataState } from '../getEmptyDataState';
 
 test('append', async () => {
   const dataState = getEmptyDataState();
