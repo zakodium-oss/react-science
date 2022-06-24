@@ -1,5 +1,5 @@
 import { Instrument, MeasurementVariable } from 'cheminfo-types';
-
+import { PartialFileList } from 'filelist-utils';
 export interface DataState {
   measurements: Measurements;
 }
@@ -46,3 +46,8 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   nmr1h: 'NMR 1H',
   other: 'Other',
 };
+
+export type Processor = (
+  fileList: PartialFileList,
+  dataState: DataState,
+) => Promise<void>;

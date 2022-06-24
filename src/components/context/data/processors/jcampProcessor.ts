@@ -2,7 +2,7 @@ import { PartialFileList } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 import { v4 } from 'uuid';
 
-import { DataState, MeasurementKind } from '../DataState';
+import { DataState, MeasurementKind, Processor } from '../DataState';
 import { irSpectrumEnhancer } from '../enhancers/irSpectrumEnhancer';
 
 const enhancers: Record<string, typeof irSpectrumEnhancer> = {
