@@ -31,7 +31,7 @@
     "serve": "vite preview",
     "storybook": "start-storybook -p 6006",
     "test": "npm run playwright && npm run test-only && npm run eslint && npm run prettier && npm run check-types",
-    "test-only": "vitest run --coverage --globals --dir src"
+    "test-only": "vitest run --coverage "
   },
   "volta": {
     "node": "16.15.1"
