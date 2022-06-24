@@ -1,5 +1,5 @@
 import { xyToXYObject } from 'ml-spectra-processing';
-import React from 'react';
+import { useMemo } from 'react';
 import {
   Annotations,
   Axis,
@@ -71,18 +71,22 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     flipHorizontalAxis = false,
   } = props;
   const { title = '', data } = measurement;
-  const { variables } = data[dataIndex];
-  const { [xVariableName]: x, [yVariableName]: y } = variables;
 
-  if (x === undefined || y === undefined) {
-    throw new Error(
-      `Variable "${
-        x === undefined ? xVariableName : yVariableName
-      }" is not available in data. Only ${Object.keys(variables).join(
-        ', ',
-      )} are available`,
-    );
-  }
+  const { x, y } = useMemo(() => {
+    const { variables } = data[dataIndex];
+    const { [xVariableName]: x, [yVariableName]: y } = variables;
+    if (x === undefined || y === undefined) {
+      throw new Error(
+        `Variable "${
+          x === undefined ? xVariableName : yVariableName
+        }" is not available in data. Only ${Object.keys(
+          data[dataIndex].variables,
+        ).join(', ')} are available`,
+      );
+    }
+    return { x, y };
+  }, [data, dataIndex, xVariableName, yVariableName]);
+
   const direction = ['vertical', 'horizontal'];
   const rectZoom = useRectangularZoom({
     horizontalAxisId: xVariableName,
@@ -123,7 +127,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         {crossHairAnnot.annotations}
       </Annotations>
       <Axis
-        id={xVariableName}
+        // id={xVariableName}
         hidden={!showHorizontalAxis}
         displayPrimaryGridLines={showHorizontalGrid}
         flip={flipHorizontalAxis}
@@ -131,7 +135,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         label={`${x.label}${x.units ? `(${x.units})` : ''}`}
       />
       <Axis
-        id={yVariableName}
+        // id={yVariableName}
         hidden={!showVerticalAxis}
         displayPrimaryGridLines={showVerticalGrid}
         position="left"
