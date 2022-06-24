@@ -1,14 +1,5 @@
 import { css } from '@emotion/react';
 
-export const customPreflight = css`
-  /*
-https://github.com/tailwindlabs/tailwindcss/pull/5653
-*/
-  button {
-    border-radius: 0;
-  }
-`;
-
 // Applying global styles that apply to elements that are not part of the shadow DOM.
 export const customDivPreflight = css`
   /* html */

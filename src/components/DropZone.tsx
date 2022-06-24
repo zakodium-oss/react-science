@@ -19,10 +19,11 @@ export function DropZoneContainer(props: {
     <DropZoneContent
       onDrop={onDrop}
       color={color}
-      children={children}
       isContainer
       onClick={(event) => event.stopPropagation()}
-    />
+    >
+      {children}
+    </DropZoneContent>
   );
 }
 
@@ -88,25 +89,23 @@ function DropZoneContent(props: {
         </div>
 
         {isDragActive ? (
-          <>
-            <div
+          <div
+            css={css`
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            `}
+          >
+            <FaCloudUploadAlt
+              size={70}
               css={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                margin: auto;
               `}
-            >
-              <FaCloudUploadAlt
-                size={70}
-                css={css`
-                  margin: auto;
-                `}
-              />
+            />
 
-              <p>Drop the files here</p>
-            </div>
-          </>
+            <p>Drop the files here</p>
+          </div>
         ) : isContainer ? null : (
           <p>Drag and drop your files here, or click to select files</p>
         )}

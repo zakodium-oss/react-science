@@ -5,7 +5,7 @@ import root from 'react-shadow/emotion';
 
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';
-import { customDivPreflight, customPreflight } from './css/customPreflight';
+import { customDivPreflight } from './css/customPreflight';
 import { preflight } from './css/preflight';
 
 interface RootLayoutProps {
@@ -31,7 +31,7 @@ export function RootLayout(props: RootLayoutProps) {
 
   return (
     <root.div style={{ ...style, ...props.style }}>
-      <Global styles={[preflight, customPreflight]} />
+      <Global styles={preflight} />
       <div
         ref={ref}
         css={customDivPreflight}

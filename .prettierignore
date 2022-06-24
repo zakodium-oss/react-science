@@ -5,3 +5,5 @@
 /lib
 /lib-esm
 /coverage
+/playwright/.cache
+/playwright-report
