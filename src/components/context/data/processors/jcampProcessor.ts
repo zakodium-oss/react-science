@@ -1,6 +1,6 @@
+import { v4 } from '@lukeed/uuid';
 import { PartialFileList } from 'filelist-utils';
 import { convert } from 'jcampconverter';
-import { v4 } from 'uuid';
 
 import { DataState, MeasurementKind, Processor } from '../DataState';
 import { irSpectrumEnhancer } from '../enhancers/irSpectrumEnhancer';
