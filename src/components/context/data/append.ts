@@ -17,7 +17,7 @@ interface AppendOptions {
 export async function append(
   fileList: PartialFileList,
   baseState: DataState,
-  options: AppendOptions,
+  options: AppendOptions = {},
 ) {
   const { processors = defaultProcessors } = options;
 

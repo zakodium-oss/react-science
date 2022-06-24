@@ -14,11 +14,11 @@ export const jcampProcessor: Processor = async function jcampProcessor(
   dataState: DataState,
 ) {
   for (const file of fileList) {
-    if (/(.jdx|.dx)$/i.exec(file.name)) {
+    if (/(?:\.jdx|\.dx)$/i.exec(file.name)) {
       const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
       for (const measurement of parsed.flatten) {
         let kind: MeasurementKind | '' = '';
-        if (measurement?.dataType?.match(/(infrared|ir)/i)) {
+        if (measurement?.dataType?.match(/infrared|ir/i)) {
           kind = 'ir';
         }
         if (measurement?.dataType?.match(/raman/i)) {
@@ -30,6 +30,7 @@ export const jcampProcessor: Processor = async function jcampProcessor(
         if (kind) {
           dataState.measurements[kind].entries.push({
             id: v4(),
+            //@ts-expect-error measurement.info should be ok
             meta: measurement.meta,
             filename: file.name,
             path: file.webkitRelativePath,
