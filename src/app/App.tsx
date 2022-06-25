@@ -17,8 +17,9 @@ import {
   Tabs,
   Toolbar,
 } from '..';
-import { measurements } from '../../stories/data/measurements.json';
 import { Measurements } from '../components/context/data/DataState';
+
+import { measurements } from './data/measurements.json';
 
 export default function App() {
   const items: Array<TabItem> = [
