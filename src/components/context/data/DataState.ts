@@ -5,7 +5,7 @@ export interface DataState {
   measurements: Measurements;
 }
 
-interface Measurements {
+export interface Measurements {
   ir: {
     entries: MeasurementBase[];
   };
@@ -30,8 +30,8 @@ interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
-  meta: Record<string, string>;
-  info: Record<string, string | number>;
+  meta: Record<string, string | number | undefined>;
+  info: Record<string, string | number | undefined>;
   data: {
     variables: Record<string, MeasurementVariable>;
   }[];
@@ -39,7 +39,7 @@ interface MeasurementBase {
 
 export type MeasurementKind = keyof Measurements;
 
-export const kindsLabel: Record<MeasurementKind, string> = {
+export const kindLabelMap: Record<MeasurementKind, string> = {
   ir: 'IR',
   raman: 'Raman',
   uv: 'UV',
@@ -47,6 +47,14 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   nmr1h: 'NMR 1H',
   other: 'Other',
 };
+export const kindsLabel: MeasurementKind[] = [
+  'ir',
+  'raman',
+  'uv',
+  'mass',
+  'nmr1h',
+  'other',
+];
 
 export type Processor = (
   fileList: PartialFileList,
