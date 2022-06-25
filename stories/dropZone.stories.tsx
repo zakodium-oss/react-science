@@ -7,6 +7,8 @@ export default {
   title: 'Layout/DropZone',
   args: {
     color: 'black',
+    // eslint-disable-next-line no-alert
+    onDrop: () => alert('files uploaded'),
   },
   argTypes: {
     color: {
