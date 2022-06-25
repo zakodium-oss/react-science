@@ -10,12 +10,15 @@ import {
 import {
   Accordion,
   Header,
+  MeasurementsPanel,
   RootLayout,
   SplitPane,
   TabItem,
   Tabs,
   Toolbar,
 } from '..';
+import { measurements } from '../../stories/data/measurements.json';
+import { Measurements } from '../components/context/data/DataState';
 
 export default function App() {
   const items: Array<TabItem> = [
@@ -122,6 +125,19 @@ export default function App() {
                         items={items}
                         opened={items[0]}
                       />
+                    </div>
+                  </Accordion.Item>
+                  <Accordion.Item title="Measurement">
+                    <div
+                      style={{
+                        flex: '1 1 0%',
+                        width: '100%',
+                      }}
+                    >
+                      <MeasurementsPanel
+                        measurements={measurements as Measurements}
+                      />
+                      ;
                     </div>
                   </Accordion.Item>
                 </Accordion>
