@@ -29,6 +29,7 @@
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
     "serve": "vite preview",
+    "start": "vite --open",
     "storybook": "start-storybook -p 6006",
     "test": "npm run playwright && npm run test-only && npm run eslint && npm run prettier && npm run check-types",
     "test-only": "vitest run --coverage "
