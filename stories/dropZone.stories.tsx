@@ -45,8 +45,8 @@ export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
           </Table.Header>
           {files.map(({ name, webkitRelativePath }, i) => (
             <Table.Row key={i}>
-              <ValueRenderers.Title value={webkitRelativePath} />
-              <ValueRenderers.Title value={name} />
+              <ValueRenderers.Text value={webkitRelativePath} />
+              <ValueRenderers.Text value={name} />
             </Table.Row>
           ))}
         </Table>
@@ -76,8 +76,8 @@ export function DropZoneContainerControl({
             </Table.Header>
             {files.map(({ name, webkitRelativePath }, i) => (
               <Table.Row key={i}>
-                <ValueRenderers.Title value={webkitRelativePath} />
-                <ValueRenderers.Title value={name} />
+                <ValueRenderers.Text value={webkitRelativePath} />
+                <ValueRenderers.Text value={name} />
               </Table.Row>
             ))}
           </Table>
