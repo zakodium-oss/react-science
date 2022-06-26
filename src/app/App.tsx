@@ -84,7 +84,11 @@ export default function App() {
               maxHeight: '100%',
             }}
           >
-            <SplitPane initialSeparation="50%" sideSeparation="end">
+            <SplitPane
+              initialSeparation="500px"
+              minimumSize={500}
+              sideSeparation="end"
+            >
               <div style={{ padding: 5 }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
                 earum omnis, et voluptatum veniam repellendus similique! Sunt
@@ -99,7 +103,7 @@ export default function App() {
                 }}
               >
                 <Accordion>
-                  <Accordion.Item title="Measurement">
+                  <Accordion.Item title="Measurement" defaultOpened>
                     <div
                       style={{
                         flex: '1 1 0%',
