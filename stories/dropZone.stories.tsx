@@ -1,44 +1,88 @@
 import { Meta } from '@storybook/react';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DropZoneContainer, DropZone } from '../src/index';
+import {
+  DropZoneContainer,
+  DropZone,
+  Table,
+  ValueRenderers,
+} from '../src/index';
 
 export default {
   title: 'Layout/DropZone',
-
   argTypes: {
     color: {
-      type: { name: 'string' },
       defaultValue: 'black',
-      control: 'color',
-    },
-    onDrop: {
-      type: { name: 'function' },
-      defaultValue: () => alert('test'),
-      action: 'files uploaded',
+      control: { type: 'color' },
     },
   },
 } as Meta<DropZoneStoryProps>;
 
 interface DropZoneStoryProps {
   color: string;
-  onDrop: (files: File[]) => void;
 }
 
 export function DropZoneControl(props: DropZoneStoryProps) {
-  return <DropZone color={props.color} onDrop={props.onDrop} />;
-}
-export function DropZoneContainerControl(props: DropZoneStoryProps) {
+  const [files, setFiles] = useState<File[]>([]);
   return (
-    <DropZoneContainer color={props.color} onDrop={props.onDrop}>
-      <div
-        style={{
-          backgroundColor: 'blue',
-          height: '150px',
-        }}
+    <div>
+      <DropZone
+        color={props.color}
+        onDrop={(files: File[]) =>
+          setFiles((oldFiles) => [...oldFiles, ...files])
+        }
+      />
+      {files.length > 0 && (
+        <Table>
+          <Table.Header>
+            <ValueRenderers.Title value="webkitRelativePath" />
+            <ValueRenderers.Title value="name" />
+          </Table.Header>
+          {files.map(({ name, webkitRelativePath }, i) => (
+            <Table.Row key={i}>
+              <ValueRenderers.Title value={webkitRelativePath} />
+              <ValueRenderers.Title value={name} />
+            </Table.Row>
+          ))}
+        </Table>
+      )}
+    </div>
+  );
+}
+export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
+  const [files, setFiles] = useState<File[]>([]);
+  return (
+    <div>
+      <DropZoneContainer
+        color={color}
+        onDrop={(files: File[]) =>
+          setFiles((oldFiles) => [...oldFiles, ...files])
+        }
       >
-        DropZone children
-      </div>
-    </DropZoneContainer>
+        {files.length > 0 ? (
+          <Table>
+            <Table.Header>
+              <ValueRenderers.Title value="webkitRelativePath" />
+              <ValueRenderers.Title value="name" />
+            </Table.Header>
+            {files.map(({ name, webkitRelativePath }, i) => (
+              <Table.Row key={i}>
+                <ValueRenderers.Title value={webkitRelativePath} />
+                <ValueRenderers.Title value={name} />
+              </Table.Row>
+            ))}
+          </Table>
+        ) : (
+          <div
+            style={{
+              backgroundColor: 'blue',
+              height: '150px',
+            }}
+          >
+            DropZone children
+          </div>
+        )}
+      </DropZoneContainer>
+    </div>
   );
 }
