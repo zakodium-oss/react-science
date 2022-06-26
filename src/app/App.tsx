@@ -80,7 +80,11 @@ export default function App() {
               maxHeight: '100%',
             }}
           >
-            <SplitPane initialSeparation="50%" sideSeparation="end">
+            <SplitPane
+              initialSeparation="500px"
+              minimumSize={500}
+              sideSeparation="end"
+            >
               <div style={{ padding: 5 }}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
                 earum omnis, et voluptatum veniam repellendus similique! Sunt
@@ -95,9 +99,9 @@ export default function App() {
                 }}
               >
                 <Accordion>
-                  <Accordion.Item title="Spectra" defaultOpened>
+                  <Accordion.Item title="Measurements" defaultOpened>
                     <div>
-                      {Array(10)
+                      {Array(2)
                         .fill(0)
                         .map((a, i) => (
                           <p key={i} style={{ padding: 5 }}>
