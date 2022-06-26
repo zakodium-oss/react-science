@@ -17,7 +17,7 @@ import {
   Tabs,
   Toolbar,
 } from '..';
-import { Measurements } from '../components/context/data/DataState';
+import { DataState } from '../components/context/data/DataState';
 
 import { measurements } from './data/measurements.json';
 
@@ -111,7 +111,7 @@ export default function App() {
                       }}
                     >
                       <MeasurementsPanel
-                        measurements={measurements as Measurements}
+                        measurements={measurements as DataState['measurements']}
                       />
                     </div>
                   </Accordion.Item>
