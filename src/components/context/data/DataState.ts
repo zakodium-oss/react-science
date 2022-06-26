@@ -39,7 +39,7 @@ interface MeasurementBase {
 
 export type MeasurementKind = keyof Measurements;
 
-export const kindLabelMap: Record<MeasurementKind, string> = {
+export const kindsLabel: Record<MeasurementKind, string> = {
   ir: 'IR',
   raman: 'Raman',
   uv: 'UV',
@@ -47,14 +47,6 @@ export const kindLabelMap: Record<MeasurementKind, string> = {
   nmr1h: 'NMR 1H',
   other: 'Other',
 };
-export const kindsLabel: MeasurementKind[] = [
-  'ir',
-  'raman',
-  'uv',
-  'mass',
-  'nmr1h',
-  'other',
-];
 
 export type Processor = (
   fileList: PartialFileList,
