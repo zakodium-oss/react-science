@@ -5,32 +5,30 @@ import { DropZoneContainer, DropZone } from '../src/index';
 
 export default {
   title: 'Layout/DropZone',
-  args: {
-    color: 'black',
-    // eslint-disable-next-line no-alert
-    onDrop: () => alert('files uploaded'),
-  },
+
   argTypes: {
     color: {
-      control: {
-        type: 'color',
-      },
+      type: { name: 'string' },
+      defaultValue: 'black',
+      control: 'color',
     },
     onDrop: {
-      action: 'onDrop',
+      type: { name: 'function' },
+      defaultValue: () => alert('test'),
+      action: 'files uploaded',
     },
   },
-} as Meta;
+} as Meta<DropZoneStoryProps>;
 
-interface DropzoneStoryProps {
+interface DropZoneStoryProps {
   color: string;
   onDrop: (files: File[]) => void;
 }
 
-export function DropZoneControl(props: DropzoneStoryProps) {
+export function DropZoneControl(props: DropZoneStoryProps) {
   return <DropZone color={props.color} onDrop={props.onDrop} />;
 }
-export function DropZoneContainerControl(props: DropzoneStoryProps) {
+export function DropZoneContainerControl(props: DropZoneStoryProps) {
   return (
     <DropZoneContainer color={props.color} onDrop={props.onDrop}>
       <div
