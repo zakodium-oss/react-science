@@ -15,22 +15,27 @@ export default {
       defaultValue: 'black',
       control: { type: 'color' },
     },
+    onDrop: {
+      action: 'files uploaded',
+    },
   },
 } as Meta<DropZoneStoryProps>;
 
 interface DropZoneStoryProps {
   color: string;
+  onDrop: (file: File[]) => void;
 }
 
-export function DropZoneControl(props: DropZoneStoryProps) {
+export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
   const [files, setFiles] = useState<File[]>([]);
   return (
     <div>
       <DropZone
-        color={props.color}
-        onDrop={(files: File[]) =>
-          setFiles((oldFiles) => [...oldFiles, ...files])
-        }
+        color={color}
+        onDrop={(files: File[]) => {
+          setFiles((oldFiles) => [...oldFiles, ...files]);
+          onDrop(files);
+        }}
       />
       {files.length > 0 && (
         <Table>
@@ -49,15 +54,19 @@ export function DropZoneControl(props: DropZoneStoryProps) {
     </div>
   );
 }
-export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
+export function DropZoneContainerControl({
+  color,
+  onDrop,
+}: DropZoneStoryProps) {
   const [files, setFiles] = useState<File[]>([]);
   return (
     <div>
       <DropZoneContainer
         color={color}
-        onDrop={(files: File[]) =>
-          setFiles((oldFiles) => [...oldFiles, ...files])
-        }
+        onDrop={(files: File[]) => {
+          setFiles((oldFiles) => [...oldFiles, ...files]);
+          onDrop(files);
+        }}
       >
         {files.length > 0 ? (
           <Table>
