@@ -5,7 +5,7 @@ export interface DataState {
   measurements: Measurements;
 }
 
-export interface Measurements {
+interface Measurements {
   ir: {
     entries: MeasurementBase[];
   };
@@ -30,8 +30,8 @@ interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
-  meta: Record<string, string | number | undefined>;
-  info: Record<string, string | number | undefined>;
+  meta: Record<string, string | number>;
+  info: Record<string, string | number>;
   data: {
     variables: Record<string, MeasurementVariable>;
   }[];
