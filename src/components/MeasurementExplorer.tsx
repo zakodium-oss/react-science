@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { FaExchangeAlt } from 'react-icons/fa';
+import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
 import { Measurement, MeasurementPlot } from './MeasurementPlot';
 
@@ -154,25 +152,26 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           </select>
         </div>
         <div
-          onClick={() =>
-            setInfo(({ flipHorizontalAxis, ...other }) => ({
-              flipHorizontalAxis: !flipHorizontalAxis,
-              ...other,
-            }))
-          }
           css={css`
-            padding: 2px;
+            padding: 1px;
             display: flex;
           `}
         >
           Flip &quot;{info.xVariableName}&quot; axis:
-          <FontAwesomeIcon
+          <FaArrowsAltH
             css={css`
               cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
             `}
-            width={60}
-            height={30}
-            icon={faArrowsLeftRightToLine}
+            size="28"
+            onClick={() =>
+              setInfo(({ flipHorizontalAxis, ...other }) => ({
+                flipHorizontalAxis: !flipHorizontalAxis,
+                ...other,
+              }))
+            }
           />
         </div>
       </div>
