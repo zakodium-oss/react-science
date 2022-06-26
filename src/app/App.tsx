@@ -99,19 +99,16 @@ export default function App() {
                 }}
               >
                 <Accordion>
-                  <Accordion.Item title="Spectra" defaultOpened>
-                    <div>
-                      {Array(10)
-                        .fill(0)
-                        .map((a, i) => (
-                          <p key={i} style={{ padding: 5 }}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Nostrum quos soluta animi accusantium ipsum
-                            delectus facilis! Modi quis tenetur enim aut beatae
-                            deleniti aspernatur reprehenderit distinctio rerum
-                            eius. Quidem, nam?
-                          </p>
-                        ))}
+                  <Accordion.Item title="Measurement">
+                    <div
+                      style={{
+                        flex: '1 1 0%',
+                        width: '100%',
+                      }}
+                    >
+                      <MeasurementsPanel
+                        measurements={measurements as Measurements}
+                      />
                     </div>
                   </Accordion.Item>
                   <Accordion.Item title="Integral">
@@ -126,19 +123,6 @@ export default function App() {
                         items={items}
                         opened={items[0]}
                       />
-                    </div>
-                  </Accordion.Item>
-                  <Accordion.Item title="Measurement">
-                    <div
-                      style={{
-                        flex: '1 1 0%',
-                        width: '100%',
-                      }}
-                    >
-                      <MeasurementsPanel
-                        measurements={measurements as Measurements}
-                      />
-                      ;
                     </div>
                   </Accordion.Item>
                 </Accordion>
