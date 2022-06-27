@@ -1,24 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { MouseEventHandler, useCallback, useMemo } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { FileError, useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
-export interface DropzoneProps {
+export interface DropZoneProps {
   color?: string;
-  onDrop: (files: File[]) => void;
+  onDrop?: <T extends File>(files: T[]) => void;
+  fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
+  maxFiles?: number;
 }
 
-export function DropZoneContainer(props: {
-  color?: string;
-  children: JSX.Element;
-  onDrop: (files: File[]) => void;
-}) {
-  const { color, children, onDrop } = props;
+export function DropZoneContainer(
+  props: DropZoneProps & {
+    children: JSX.Element;
+  },
+) {
+  const { children, ...other } = props;
   return (
     <DropZoneContent
-      onDrop={onDrop}
-      color={color}
+      {...other}
       isContainer
       onClick={(event) => event.stopPropagation()}
     >
@@ -27,28 +28,37 @@ export function DropZoneContainer(props: {
   );
 }
 
-export function DropZone(props: DropzoneProps) {
-  const { color = 'black', onDrop } = props;
-  return <DropZoneContent color={color} onDrop={onDrop} isContainer={false} />;
+export function DropZone(props: DropZoneProps) {
+  return <DropZoneContent {...props} />;
 }
 
-function DropZoneContent(props: {
-  children?: JSX.Element;
-  isContainer: boolean;
-  color?: string;
-  onDrop: (files: File[]) => void;
-  onClick?: MouseEventHandler<HTMLDivElement>;
-}) {
-  const { color = 'black', children, onDrop, isContainer, onClick } = props;
+function DropZoneContent(
+  props: DropZoneProps & {
+    children?: JSX.Element;
+    isContainer?: boolean;
+    onClick?: MouseEventHandler<HTMLDivElement>;
+  },
+) {
+  const {
+    color = 'black',
+    children,
+    onDrop,
+    isContainer = false,
+    onClick,
+    fileValidator,
+    maxFiles,
+  } = props;
 
   const handleOnDrop = useCallback(
-    (acceptedFiles) => {
-      onDrop(acceptedFiles);
+    <T extends File>(acceptedFiles: T[]) => {
+      onDrop?.(acceptedFiles);
     },
     [onDrop],
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    validator: fileValidator,
     onDrop: handleOnDrop,
+    maxFiles,
   });
 
   const getPropsOptions = useMemo(() => {
@@ -111,6 +121,7 @@ function DropZoneContent(props: {
         )}
       </div>
       <input
+        type="file"
         css={css`
           opacity: 0;
           position: absolute;
