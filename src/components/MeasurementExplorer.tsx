@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { FaExchangeAlt } from 'react-icons/fa';
+import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
 import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
 
@@ -13,6 +13,7 @@ interface ExplorerInfo {
   dataIndex: number;
   xVariableName: string;
   yVariableName: string;
+  flipHorizontalAxis: boolean;
 }
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
   const {
@@ -31,7 +32,10 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         : Object.keys(data[dataIndex].variables)[1],
     };
   }
-  const [info, setInfo] = useState<ExplorerInfo>(defaultInfo(0));
+  const [info, setInfo] = useState<ExplorerInfo>({
+    flipHorizontalAxis: false,
+    ...defaultInfo(0),
+  });
   return (
     <div
       css={css`
@@ -50,10 +54,19 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         <div>
           <label>dataIndex :</label>
           <select
+            css={css`
+              cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
+            `}
             onChange={({ target }) => {
               const value = Number(target.value);
               if (value !== undefined && !isNaN(value)) {
-                setInfo(defaultInfo(value));
+                setInfo(({ flipHorizontalAxis }) => ({
+                  flipHorizontalAxis,
+                  ...defaultInfo(0),
+                }));
               }
             }}
           >
@@ -70,6 +83,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           <select
             css={css`
               cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
             `}
             onChange={({ target }) => {
               const value = target.value;
@@ -93,9 +109,10 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         <div>
           <FaExchangeAlt
             css={css`
+              margin-top: 2px;
               cursor: pointer;
             `}
-            size="25"
+            size="20"
             onClick={() =>
               setInfo(({ xVariableName, yVariableName, ...info }) => ({
                 ...info,
@@ -110,6 +127,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           <select
             css={css`
               cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
             `}
             onChange={({ target }) => {
               const value = target.value;
@@ -129,6 +149,29 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               return null;
             })}
           </select>
+        </div>
+        <div
+          css={css`
+            padding: 1px;
+            display: flex;
+          `}
+        >
+          Flip &quot;{info.xVariableName}&quot; axis:
+          <FaArrowsAltH
+            css={css`
+              cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
+            `}
+            size="28"
+            onClick={() =>
+              setInfo(({ flipHorizontalAxis, ...other }) => ({
+                flipHorizontalAxis: !flipHorizontalAxis,
+                ...other,
+              }))
+            }
+          />
         </div>
       </div>
       <MeasurementPlot {...props} {...info} />
