@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { FileWithPath } from 'react-dropzone';
 
 import {
   DropZoneContainer,
@@ -23,29 +24,29 @@ export default {
 
 interface DropZoneStoryProps {
   color: string;
-  onDrop: (file: File[]) => void;
+  onDrop: (file: FileWithPath[]) => void;
 }
 
 export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZone
         color={color}
-        onDrop={(files: File[]) => {
-          setFiles((oldFiles) => [...oldFiles, ...files]);
+        onDrop={(files: FileWithPath[]) => {
+          setFiles(files);
           onDrop(files);
         }}
       />
       {files.length > 0 && (
         <Table>
           <Table.Header>
-            <ValueRenderers.Title value="webkitRelativePath" />
+            <ValueRenderers.Title value="path" />
             <ValueRenderers.Title value="name" />
           </Table.Header>
-          {files.map(({ name, webkitRelativePath }, i) => (
+          {files.map(({ name, path }, i) => (
             <Table.Row key={i}>
-              <ValueRenderers.Text value={webkitRelativePath} />
+              <ValueRenderers.Text value={path} />
               <ValueRenderers.Text value={name} />
             </Table.Row>
           ))}
@@ -58,25 +59,25 @@ export function DropZoneContainerControl({
   color,
   onDrop,
 }: DropZoneStoryProps) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZoneContainer
         color={color}
-        onDrop={(files: File[]) => {
-          setFiles((oldFiles) => [...oldFiles, ...files]);
+        onDrop={(files: FileWithPath[]) => {
+          setFiles(files);
           onDrop(files);
         }}
       >
         {files.length > 0 ? (
           <Table>
             <Table.Header>
-              <ValueRenderers.Title value="webkitRelativePath" />
+              <ValueRenderers.Title value="path" />
               <ValueRenderers.Title value="name" />
             </Table.Header>
-            {files.map(({ name, webkitRelativePath }, i) => (
+            {files.map(({ name, path }, i) => (
               <Table.Row key={i}>
-                <ValueRenderers.Text value={webkitRelativePath} />
+                <ValueRenderers.Text value={path} />
                 <ValueRenderers.Text value={name} />
               </Table.Row>
             ))}
