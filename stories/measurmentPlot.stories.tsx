@@ -14,8 +14,6 @@ export default {
     yVariableName: 'y',
     width: 800,
     height: 400,
-    zoom: 'horizontal',
-    wheelZoom: 'vertical',
     crossHair: true,
     showHorizontalAxis: true,
     showVerticalAxis: true,
@@ -35,17 +33,17 @@ export default {
       control: 'select',
     },
     zoom: {
-      defaultValue: 'Cross horizontal',
+      defaultValue: 'horizontal',
       options: ['horizontal', 'vertical', 'rectangular', ''],
       control: 'select',
     },
     wheelZoom: {
-      defaultValue: 'Cross horizontal',
+      defaultValue: 'vertical',
       options: ['horizontal', 'vertical', ''],
       control: 'select',
     },
   },
-} as Meta<Omit<MeasurementPlotProps, 'measurement'>>;
+} as Meta;
 
 export function control(props: Omit<MeasurementPlotProps, 'measurement'>) {
   return <MeasurementPlot measurement={data} {...props} />;
