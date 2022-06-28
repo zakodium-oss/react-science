@@ -1,14 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { MouseEventHandler, useCallback, useMemo } from 'react';
-import { FileError, useDropzone } from 'react-dropzone';
+import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export interface DropZoneProps {
   color?: string;
-  onDrop?: <T extends File>(files: T[]) => void;
+  onDrop?: <T extends File>(
+    acceptedFiles: T[],
+    rejectedFiles?: FileRejection[],
+  ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
-  maxFiles?: number;
 }
 
 export function DropZoneContainer(
@@ -20,8 +22,8 @@ export function DropZoneContainer(
   return (
     <DropZoneContent
       {...other}
-      isContainer
       onClick={(event) => event.stopPropagation()}
+      isContainer
     >
       {children}
     </DropZoneContent>
@@ -46,19 +48,17 @@ function DropZoneContent(
     isContainer = false,
     onClick,
     fileValidator,
-    maxFiles,
   } = props;
 
   const handleOnDrop = useCallback(
-    <T extends File>(acceptedFiles: T[]) => {
-      onDrop?.(acceptedFiles);
+    <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
+      onDrop?.(acceptedFiles, rejectedFiles);
     },
     [onDrop],
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     validator: fileValidator,
     onDrop: handleOnDrop,
-    maxFiles,
   });
 
   const getPropsOptions = useMemo(() => {
