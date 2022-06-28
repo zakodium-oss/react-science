@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { FileError, FileWithPath } from 'react-dropzone';
 
 import {
   DropZoneContainer,
@@ -11,6 +12,17 @@ import {
 export default {
   title: 'Layout/DropZone',
   argTypes: {
+    fileValidator: {
+      defaultValue: (file: File) => {
+        if (file.name.length > 20) {
+          // eslint-disable-next-line no-alert
+          alert(`The file "${file.name}" name is larger than 20 characters`);
+          return {
+            code: 'name-too-large',
+          };
+        }
+      },
+    },
     color: {
       defaultValue: 'black',
       control: { type: 'color' },
@@ -23,29 +35,30 @@ export default {
 
 interface DropZoneStoryProps {
   color: string;
-  onDrop: (file: File[]) => void;
+  onDrop: (file: FileWithPath[]) => void;
+  fileValidator?: (file: File) => FileError;
 }
 
-export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
-  const [files, setFiles] = useState<File[]>([]);
+export function DropZoneControl({ onDrop, ...other }: DropZoneStoryProps) {
+  const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZone
-        color={color}
-        onDrop={(files: File[]) => {
-          setFiles((oldFiles) => [...oldFiles, ...files]);
+        {...other}
+        onDrop={(files: FileWithPath[]) => {
+          setFiles(files);
           onDrop(files);
         }}
       />
       {files.length > 0 && (
         <Table>
           <Table.Header>
-            <ValueRenderers.Title value="webkitRelativePath" />
+            <ValueRenderers.Title value="path" />
             <ValueRenderers.Title value="name" />
           </Table.Header>
-          {files.map(({ name, webkitRelativePath }, i) => (
+          {files.map(({ name, path }, i) => (
             <Table.Row key={i}>
-              <ValueRenderers.Text value={webkitRelativePath} />
+              <ValueRenderers.Text value={path} />
               <ValueRenderers.Text value={name} />
             </Table.Row>
           ))}
@@ -55,28 +68,28 @@ export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
   );
 }
 export function DropZoneContainerControl({
-  color,
   onDrop,
+  ...other
 }: DropZoneStoryProps) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZoneContainer
-        color={color}
-        onDrop={(files: File[]) => {
-          setFiles((oldFiles) => [...oldFiles, ...files]);
+        {...other}
+        onDrop={(files: FileWithPath[]) => {
+          setFiles(files);
           onDrop(files);
         }}
       >
         {files.length > 0 ? (
           <Table>
             <Table.Header>
-              <ValueRenderers.Title value="webkitRelativePath" />
+              <ValueRenderers.Title value="path" />
               <ValueRenderers.Title value="name" />
             </Table.Header>
-            {files.map(({ name, webkitRelativePath }, i) => (
+            {files.map(({ name, path }, i) => (
               <Table.Row key={i}>
-                <ValueRenderers.Text value={webkitRelativePath} />
+                <ValueRenderers.Text value={path} />
                 <ValueRenderers.Text value={name} />
               </Table.Row>
             ))}
