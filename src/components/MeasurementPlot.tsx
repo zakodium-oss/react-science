@@ -95,7 +95,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   });
   const axisZoom = useAxisZoom({
     direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
-    axisId: zoom === 'vertical' ? yVariableName : xVariableName,
+    horizontalAxisId: xVariableName,
+    verticalAxisId: yVariableName,
     disabled: !direction.includes(zoom),
   });
   useAxisWheelZoom({
@@ -120,6 +121,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
           x: x.data,
           y: y.data,
         })}
+        xAxis={xVariableName}
+        yAxis={yVariableName}
       />
       <Annotations>
         {rectZoom.annotations}
@@ -127,6 +130,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         {crossHairAnnot.annotations}
       </Annotations>
       <Axis
+        id={xVariableName}
         hidden={!showHorizontalAxis}
         displayPrimaryGridLines={showHorizontalGrid}
         flip={flipHorizontalAxis}
@@ -134,6 +138,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         label={`${x.label}${x.units ? `(${x.units})` : ''}`}
       />
       <Axis
+        id={yVariableName}
         hidden={!showVerticalAxis}
         displayPrimaryGridLines={showVerticalGrid}
         position="left"

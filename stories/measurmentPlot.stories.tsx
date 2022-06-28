@@ -23,6 +23,28 @@ export default {
     showVerticalGrid: true,
     flipHorizontalAxis: false,
   },
+  argTypes: {
+    xVariableName: {
+      defaultValue: 'x',
+      options: ['x', 'y', 't', 'a'],
+      control: 'select',
+    },
+    yVariableName: {
+      defaultValue: 'y',
+      options: ['x', 'y', 't', 'a'],
+      control: 'select',
+    },
+    zoom: {
+      defaultValue: 'Cross horizontal',
+      options: ['horizontal', 'vertical', 'rectangular', ''],
+      control: 'select',
+    },
+    wheelZoom: {
+      defaultValue: 'Cross horizontal',
+      options: ['horizontal', 'vertical', ''],
+      control: 'select',
+    },
+  },
 } as Meta<Omit<MeasurementPlotProps, 'measurement'>>;
 
 export function control(props: Omit<MeasurementPlotProps, 'measurement'>) {
