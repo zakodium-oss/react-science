@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { useState } from 'react';
-import { FileWithPath } from 'react-dropzone';
+import { FileError, FileWithPath } from 'react-dropzone';
 
 import {
   DropZoneContainer,
@@ -12,6 +12,17 @@ import {
 export default {
   title: 'Layout/DropZone',
   argTypes: {
+    fileValidator: {
+      defaultValue: (file: File) => {
+        if (file.name.length > 20) {
+          // eslint-disable-next-line no-alert
+          alert(`The file "${file.name}" name is larger than 20 characters`);
+          return {
+            code: 'name-too-large',
+          };
+        }
+      },
+    },
     color: {
       defaultValue: 'black',
       control: { type: 'color' },
@@ -25,14 +36,15 @@ export default {
 interface DropZoneStoryProps {
   color: string;
   onDrop: (file: FileWithPath[]) => void;
+  fileValidator?: (file: File) => FileError;
 }
 
-export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
+export function DropZoneControl({ onDrop, ...other }: DropZoneStoryProps) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZone
-        color={color}
+        {...other}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
           onDrop(files);
@@ -56,14 +68,14 @@ export function DropZoneControl({ color, onDrop }: DropZoneStoryProps) {
   );
 }
 export function DropZoneContainerControl({
-  color,
   onDrop,
+  ...other
 }: DropZoneStoryProps) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZoneContainer
-        color={color}
+        {...other}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
           onDrop(files);
