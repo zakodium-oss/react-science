@@ -151,7 +151,7 @@ export function SplitPane(props: SplitPaneProps) {
       const size = orientation === 'horizontal' ? width : height;
 
       // if the separator is not touched or minimumSize is defined then the automatic close/open work
-      if (size && minimumSize && !touchedRef.current) {
+      if (size && minimumSize && !touchedRef.current && !initialClosed) {
         /**
          *  if the size is less than or equal to the minimumSize and the panel is not closed yet then save the split pane width to use as
            a reference value for checking if there is enough room to open the panel or not and then close the panel.
