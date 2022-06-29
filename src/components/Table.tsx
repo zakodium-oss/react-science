@@ -2,11 +2,7 @@
 import { css } from '@emotion/react';
 import { Children, isValidElement, ReactElement, ReactNode } from 'react';
 
-import { Boolean } from './Boolean';
-import { Color } from './Color';
-import { Number } from './Number';
-import { Text } from './Text';
-import { Title } from './Title';
+import * as ValueRenderers from './value-renderers/index';
 
 interface TableProps {
   children?: ReactNode;
@@ -55,11 +51,11 @@ function rowChildren(children: ReactNode) {
     if (
       typeof child === 'object' &&
       isValidElement(child) &&
-      (child.type === Color ||
-        child.type === Boolean ||
-        child.type === Text ||
-        child.type === Number ||
-        child.type === Title)
+      (child.type === ValueRenderers.Color ||
+        child.type === ValueRenderers.Boolean ||
+        child.type === ValueRenderers.Text ||
+        child.type === ValueRenderers.Number ||
+        child.type === ValueRenderers.Title)
     ) {
       cells.push(<td css={styles.border}>{child}</td>);
     } else {
