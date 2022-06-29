@@ -72,6 +72,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   } = props;
   const { title = '', data } = measurement;
 
+  const xAxis = useMemo(() => `${xVariableName}-x`, [xVariableName]);
+  const yAxis = useMemo(() => `${yVariableName}-y`, [yVariableName]);
   const { x, y } = useMemo(() => {
     const { variables } = data[dataIndex];
     const { [xVariableName]: x, [yVariableName]: y } = variables;
@@ -89,14 +91,14 @@ function MeasurementComponent(props: MeasurementPlotProps) {
 
   const direction = ['vertical', 'horizontal'];
   const rectZoom = useRectangularZoom({
-    horizontalAxisId: xVariableName,
-    verticalAxisId: yVariableName,
+    horizontalAxisId: xAxis,
+    verticalAxisId: yAxis,
     disabled: zoom !== 'rectangular',
   });
   const axisZoom = useAxisZoom({
     direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
-    horizontalAxisId: xVariableName,
-    verticalAxisId: yVariableName,
+    horizontalAxisId: xAxis,
+    verticalAxisId: yAxis,
     disabled: !direction.includes(zoom),
   });
   useAxisWheelZoom({
@@ -105,14 +107,11 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     disabled: !direction.includes(wheelZoom),
   });
   const crossHairAnnot = useCrossHair({
-    horizontalAxisId: xVariableName,
-    verticalAxisId: yVariableName,
+    horizontalAxisId: xAxis,
+    verticalAxisId: yAxis,
     disabled: !crossHair,
   });
-  usePan({
-    horizontalAxisId: xVariableName,
-    verticalAxisId: yVariableName,
-  });
+  usePan({ horizontalAxisId: xAxis, verticalAxisId: yAxis });
   return (
     <Plot width={width} height={height}>
       <Heading title={title} />
@@ -121,8 +120,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
           x: x.data,
           y: y.data,
         })}
-        xAxis={xVariableName}
-        yAxis={yVariableName}
+        xAxis={xAxis}
+        yAxis={yAxis}
       />
       <Annotations>
         {rectZoom.annotations}
@@ -130,7 +129,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         {crossHairAnnot.annotations}
       </Annotations>
       <Axis
-        id={xVariableName}
+        id={xAxis}
         hidden={!showHorizontalAxis}
         displayPrimaryGridLines={showHorizontalGrid}
         flip={flipHorizontalAxis}
@@ -138,7 +137,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         label={`${x.label}${x.units ? `(${x.units})` : ''}`}
       />
       <Axis
-        id={yVariableName}
+        id={yAxis}
         hidden={!showVerticalAxis}
         displayPrimaryGridLines={showVerticalGrid}
         position="left"
