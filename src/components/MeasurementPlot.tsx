@@ -103,7 +103,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   });
   useAxisWheelZoom({
     direction: wheelZoom === 'vertical' ? 'vertical' : 'horizontal',
-    axisId: wheelZoom === 'vertical' ? yVariableName : xVariableName,
+    axisId: wheelZoom === 'vertical' ? yAxis : xAxis,
     disabled: !direction.includes(wheelZoom),
   });
   const crossHairAnnot = useCrossHair({
