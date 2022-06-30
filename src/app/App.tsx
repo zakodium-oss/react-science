@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -17,10 +17,25 @@ import {
   Tabs,
   Toolbar,
 } from '..';
-import { measurements } from '../../stories/data/measurements.json';
 import { DataState } from '../components/context/data/DataState';
+import { getEmptyDataState } from '../components/context/data/getEmptyDataState';
 
 export default function App() {
+  const [{ loaded, dataState }, setData] = useState<{
+    dataState: DataState;
+    loaded: boolean;
+  }>({ dataState: getEmptyDataState(), loaded: false });
+
+  useEffect(() => {
+    fetch('../../public/measurements.json')
+      .then(async (r) => {
+        const dataState = await r.json();
+        setData({ dataState, loaded: true });
+      })
+      .catch((e) => {
+        throw Error(e);
+      });
+  }, []);
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -109,9 +124,7 @@ export default function App() {
                         width: '100%',
                       }}
                     >
-                      <MeasurementsPanel
-                        measurements={measurements as DataState['measurements']}
-                      />
+                      {loaded && <MeasurementsPanel {...dataState} />}
                     </div>
                   </Accordion.Item>
                   <Accordion.Item title="Integral">
