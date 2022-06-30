@@ -30,7 +30,7 @@ interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
-  meta: Record<string, string>;
+  meta: Record<string, string | number>;
   info: Record<string, string | number>;
   data: {
     variables: Record<string, MeasurementVariable>;

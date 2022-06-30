@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -10,14 +10,38 @@ import {
 import {
   Accordion,
   Header,
+  MeasurementsPanel,
   RootLayout,
   SplitPane,
   TabItem,
   Tabs,
   Toolbar,
 } from '..';
+import { DataState } from '../components/context/data/DataState';
+import { getEmptyDataState } from '../components/context/data/getEmptyDataState';
 
 export default function App() {
+  const [{ loaded, dataState }, setData] = useState<{
+    dataState: DataState;
+    loaded: boolean;
+  }>({ dataState: getEmptyDataState(), loaded: false });
+
+  useEffect(() => {
+    fetch('/measurements.json')
+      .then((response) => {
+        response
+          .json()
+          .then((dataState) => {
+            setData({ dataState, loaded: true });
+          })
+          .catch((e) => {
+            throw Error(e);
+          });
+      })
+      .catch((e) => {
+        throw Error(e);
+      });
+  }, []);
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -99,19 +123,14 @@ export default function App() {
                 }}
               >
                 <Accordion>
-                  <Accordion.Item title="Measurements" defaultOpened>
-                    <div>
-                      {Array(2)
-                        .fill(0)
-                        .map((a, i) => (
-                          <p key={i} style={{ padding: 5 }}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Nostrum quos soluta animi accusantium ipsum
-                            delectus facilis! Modi quis tenetur enim aut beatae
-                            deleniti aspernatur reprehenderit distinctio rerum
-                            eius. Quidem, nam?
-                          </p>
-                        ))}
+                  <Accordion.Item title="Measurement" defaultOpened>
+                    <div
+                      style={{
+                        flex: '1 1 0%',
+                        width: '100%',
+                      }}
+                    >
+                      {loaded && <MeasurementsPanel {...dataState} />}
                     </div>
                   </Accordion.Item>
                   <Accordion.Item title="Integral">
