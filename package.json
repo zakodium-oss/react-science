@@ -54,14 +54,14 @@
     "use-resize-observer": "^9.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.5",
+    "@babel/core": "^7.18.6",
     "@babel/eslint-parser": "^7.18.2",
-    "@playwright/experimental-ct-react": "^1.22.2",
-    "@playwright/test": "^1.22.2",
+    "@playwright/experimental-ct-react": "^1.23.0",
+    "@playwright/test": "^1.23.0",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-storysource": "^6.5.9",
-    "@storybook/builder-vite": "^0.1.36",
+    "@storybook/builder-vite": "^0.1.37",
     "@storybook/react": "^6.5.9",
     "@types/lodash": "^4.14.182",
     "@types/react": "^17.0.44",
@@ -78,11 +78,11 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
     "react-ocl": "^4.3.5",
-    "react-plot": "^0.20.0",
+    "react-plot": "^0.20.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
-    "vite": "^2.9.12",
-    "vitest": "^0.15.2"
+    "vite": "^2.9.13",
+    "vitest": "^0.16.0"
   },
   "repository": {
     "type": "git",
