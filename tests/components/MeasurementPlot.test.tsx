@@ -44,6 +44,11 @@ test.describe('MeasurementPlot test', () => {
     await expect(component.locator('_react=Axis[id="x-x"]')).toBeEnabled();
     await expect(component.locator('_react=Axis[id="y-y"]')).toBeEnabled();
 
+    // axis
+
+    await expect(component.locator('_react=Axis[id=/-x$/]')).toHaveText(/.+/);
+    await expect(component.locator('_react=Axis[id=/-y$/]')).toHaveText(/.+/);
+
     // flip
     await component
       .locator('_react=Axis[flip=true] >> nth=0')
@@ -51,9 +56,7 @@ test.describe('MeasurementPlot test', () => {
 
     // crossHair
     await component.hover({ position: { x: 200, y: 200 } });
-    await expect(component.locator('_react=Text')).toContainText(
-      '1148.22 ,60.33',
-    );
+    await expect(component.locator('_react=Text')).toBeEnabled();
     await expect(component.locator('_react=Line')).toHaveCount(2);
     // grids
 
@@ -130,6 +133,20 @@ test.describe('MeasurementPlot test', () => {
     );
     const xAxis = component.locator('_react=Axis[flip=true] >> nth=0');
     await expect(xAxis).toBeEnabled();
+  });
+  test('test horizontal remove ', async ({ mount }) => {
+    const component = await mount(
+      <MeasurementPlot measurement={measurement} showHorizontalAxis={false} />,
+    );
+
+    await expect(component.locator('_react=Axis[id=/-x$/]')).toHaveText('');
+  });
+  test('test vertical remove ', async ({ mount }) => {
+    const component = await mount(
+      <MeasurementPlot measurement={measurement} showVerticalAxis={false} />,
+    );
+
+    await expect(component.locator('_react=Axis[id=/-y$/]')).toHaveText('');
   });
   test('test vertical zoom', async ({ mount }) => {
     const component = await mount(
