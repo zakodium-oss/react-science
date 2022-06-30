@@ -40,12 +40,14 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
     setState(item);
     onClick?.(item);
   }
-  return (
+  return items.length > 0 ? (
     <Tabs
       orientation="horizontal"
       items={items}
       opened={state}
       onClick={handleClick}
     />
+  ) : (
+    <div>No data available</div>
   );
 }
