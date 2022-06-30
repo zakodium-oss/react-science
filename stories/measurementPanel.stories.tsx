@@ -21,10 +21,16 @@ function MeasurementsPanelStory() {
   }>({ dataState: getEmptyDataState(), loaded: false });
 
   useEffect(() => {
-    fetch('../public/measurements.json')
-      .then(async (r) => {
-        const dataState = await r.json();
-        setData({ dataState, loaded: true });
+    fetch('/measurements.json')
+      .then((response) => {
+        response
+          .json()
+          .then((dataState) => {
+            setData({ dataState, loaded: true });
+          })
+          .catch((e) => {
+            throw Error(e);
+          });
       })
       .catch((e) => {
         throw Error(e);
