@@ -3,13 +3,12 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
-import { Measurement, MeasurementPlot } from './MeasurementPlot';
+import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
 
-export interface MeasurementExplorerProps {
-  measurement: Measurement;
-  width?: number;
-  height?: number;
-}
+export type MeasurementExplorerProps = Omit<
+  MeasurementPlotProps,
+  'xVariableName' | 'yVariableName' | 'dataIndex'
+>;
 interface ExplorerInfo {
   dataIndex: number;
   xVariableName: string;
@@ -66,7 +65,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               if (value !== undefined && !isNaN(value)) {
                 setInfo(({ flipHorizontalAxis }) => ({
                   flipHorizontalAxis,
-                  ...defaultInfo(0),
+                  ...defaultInfo(value),
                 }));
               }
             }}
