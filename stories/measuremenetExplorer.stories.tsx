@@ -11,8 +11,16 @@ export default {
   args: {
     width: 800,
     height: 400,
+    zoom: 'horizontal',
+    wheelZoom: 'vertical',
+    crossHair: true,
+    showHorizontalAxis: true,
+    showVerticalAxis: true,
+    showHorizontalGrid: true,
+    showVerticalGrid: true,
+    flipHorizontalAxis: false,
   },
-} as Meta;
+} as Meta<Omit<MeasurementExplorerProps, 'measurement'>>;
 
 export function control(props: Omit<MeasurementExplorerProps, 'measurement'>) {
   return <MeasurementExplorer measurement={data} {...props} />;
