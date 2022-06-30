@@ -65,7 +65,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               if (value !== undefined && !isNaN(value)) {
                 setInfo(({ flipHorizontalAxis }) => ({
                   flipHorizontalAxis,
-                  ...defaultInfo(0),
+                  ...defaultInfo(value),
                 }));
               }
             }}
