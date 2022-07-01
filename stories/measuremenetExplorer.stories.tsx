@@ -1,7 +1,11 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { MeasurementExplorer, MeasurementExplorerProps } from '../src';
+import {
+  Measurement,
+  MeasurementExplorer,
+  MeasurementExplorerProps,
+} from '../src';
 
 import data from './data/measurement.json';
 
@@ -23,5 +27,5 @@ export default {
 } as Meta<Omit<MeasurementExplorerProps, 'measurement'>>;
 
 export function control(props: Omit<MeasurementExplorerProps, 'measurement'>) {
-  return <MeasurementExplorer measurement={data} {...props} />;
+  return <MeasurementExplorer measurement={data as Measurement} {...props} />;
 }

@@ -14,22 +14,9 @@ import {
   useRectangularZoom,
 } from 'react-plot';
 
-interface Variable {
-  label: string;
-  data: number[];
-  units?: string;
-  symbol?: string;
-}
-interface Data {
-  variables: Record<string, Variable>;
-}
-export interface Measurement {
-  meta?: object;
-  filename?: string;
-  info?: object;
-  title?: string;
-  data: Data[];
-}
+import { MeasurementBase } from './context/data/DataState';
+
+export type Measurement = Omit<MeasurementBase, 'id'>;
 export interface MeasurementPlotProps {
   measurement: Measurement;
   dataIndex?: number;
