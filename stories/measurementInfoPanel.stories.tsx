@@ -1,14 +1,8 @@
 import { Meta } from '@storybook/react';
 import { useState, useEffect } from 'react';
 
-import { Measurement, MeasurementInfoPanel } from '../src';
-import {
-  DataState,
-  MeasurementBase,
-} from '../src/components/context/data/DataState';
-import { getEmptyDataState } from '../src/components/context/data/getEmptyDataState';
-
-import data from './data/measurement.json';
+import { MeasurementInfoPanel } from '../src';
+import { MeasurementBase } from '../src/components/context/data/DataState';
 
 export default {
   title: 'Layout/MeasurementInfoPanel',
