@@ -39,6 +39,7 @@ export {
   Table,
 };
 
+export * from './components/context/data/DataContext';
 export * from './components/DropZone';
 export * from './components/color-picker/ColorPicker';
 export * from './components/MeasurementPlot';

@@ -1,5 +1,5 @@
 import { PartialFileList } from 'filelist-utils';
-import { produce } from 'immer';
+import { Draft, produce } from 'immer';
 
 import { DataState, Processor } from './DataState';
 import { jcampProcessor } from './processors/jcampProcessor';
@@ -16,7 +16,7 @@ interface AppendOptions {
  */
 export async function append(
   fileList: PartialFileList,
-  baseState: DataState,
+  baseState: Draft<DataState>,
   options: AppendOptions = {},
 ) {
   const { processors = defaultProcessors } = options;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ValueRenderers } from '..';
+import { useDataState, ValueRenderers } from '..';
 
 import { Table } from './Table';
 import { TabItem, Tabs } from './Tabs';
@@ -10,14 +10,22 @@ import {
   MeasurementKind,
 } from './context/data/DataState';
 
-export interface MeasurementsPanelProps extends DataState {
+export interface MeasurementsPanelProps {
   /**
    * Callback when change tab
    */
   onClick?: (item: TabItem) => void;
+  dataState: DataState;
 }
+
+export function MeasurementsPanelData() {
+  const dataState = useDataState();
+  return <MeasurementsPanel dataState={dataState} />;
+}
+
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
-  const { onClick, measurements } = props;
+  const { onClick, dataState } = props;
+  const { measurements } = dataState;
   const items: Array<TabItem> = (Object.keys(kindsLabel) as MeasurementKind[])
     .filter((label) => measurements[label]?.entries?.length > 0)
     .map((label) => ({
@@ -40,6 +48,11 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
     setState(item);
     onClick?.(item);
   }
+
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <Tabs
       orientation="horizontal"

@@ -8,40 +8,22 @@ import {
 } from 'react-icons/fa';
 
 import {
+  DataContext,
   Accordion,
   Header,
-  MeasurementsPanel,
+  MeasurementsPanelData,
   RootLayout,
   SplitPane,
   TabItem,
   Tabs,
   Toolbar,
 } from '..';
-import { DataState } from '../components/context/data/DataState';
-import { getEmptyDataState } from '../components/context/data/getEmptyDataState';
+import { AppContext } from '../components/context/app/AppContext';
+import { LayoutContext } from '../components/context/layout/LayoutContext';
+
+import DropFile from './DropFile';
 
 export default function App() {
-  const [{ loaded, dataState }, setData] = useState<{
-    dataState: DataState;
-    loaded: boolean;
-  }>({ dataState: getEmptyDataState(), loaded: false });
-
-  useEffect(() => {
-    fetch('/measurements.json')
-      .then((response) => {
-        response
-          .json()
-          .then((dataState) => {
-            setData({ dataState, loaded: true });
-          })
-          .catch((e) => {
-            throw Error(e);
-          });
-      })
-      .catch((e) => {
-        throw Error(e);
-      });
-  }, []);
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -56,103 +38,118 @@ export default function App() {
 
   return (
     <RootLayout>
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Header>
-            <Toolbar orientation="horizontal">
-              <Toolbar.Item
-                titleOrientation="horizontal"
-                id="logo"
-                title="Logo"
-              >
-                <FaMeteor />
-              </Toolbar.Item>
-            </Toolbar>
-            <Toolbar orientation="horizontal">
-              <Toolbar.Item id="a" title="User manual">
-                <FaBook />
-              </Toolbar.Item>
-              <Toolbar.Item id="b" title="General settings">
-                <FaCogs />
-              </Toolbar.Item>
-              <Toolbar.Item id="c" title="Full screen">
-                <FaTabletAlt />
-              </Toolbar.Item>
-            </Toolbar>
-          </Header>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flex: 1,
-          }}
-        >
-          <div>
-            <Toolbar orientation="vertical">
-              <Toolbar.Item id="a" title="Glasses" active>
-                <FaGlasses />
-              </Toolbar.Item>
-              <Toolbar.Item id="b" title="Open in large mode">
-                <FaTabletAlt />
-              </Toolbar.Item>
-            </Toolbar>
-          </div>
-          <div
-            style={{
-              width: '100%',
-              maxHeight: '100%',
-            }}
-          >
-            <SplitPane
-              initialSeparation="500px"
-              minimumSize={500}
-              sideSeparation="end"
+      <AppContext>
+        <LayoutContext>
+          <DataContext>
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
             >
-              <div style={{ padding: 5 }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-                earum omnis, et voluptatum veniam repellendus similique! Sunt
-                nostrum necessitatibus reprehenderit asperiores excepturi
-                corrupti? Optio soluta illo quae ex nam nulla.
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Header>
+                  <Toolbar orientation="horizontal">
+                    <Toolbar.Item
+                      titleOrientation="horizontal"
+                      id="logo"
+                      title="Logo"
+                    >
+                      <FaMeteor />
+                    </Toolbar.Item>
+                  </Toolbar>
+                  <Toolbar orientation="horizontal">
+                    <Toolbar.Item id="a" title="User manual">
+                      <FaBook />
+                    </Toolbar.Item>
+                    <Toolbar.Item id="b" title="General settings">
+                      <FaCogs />
+                    </Toolbar.Item>
+                    <Toolbar.Item id="c" title="Full screen">
+                      <FaTabletAlt />
+                    </Toolbar.Item>
+                  </Toolbar>
+                </Header>
               </div>
               <div
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  flex: '1 1 0%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flex: 1,
                 }}
               >
-                <Accordion>
-                  <Accordion.Item title="Measurement" defaultOpened>
+                <div>
+                  <Toolbar orientation="vertical">
+                    <Toolbar.Item id="a" title="Glasses" active>
+                      <FaGlasses />
+                    </Toolbar.Item>
+                    <Toolbar.Item id="b" title="Open in large mode">
+                      <FaTabletAlt />
+                    </Toolbar.Item>
+                  </Toolbar>
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    maxHeight: '100%',
+                  }}
+                >
+                  <SplitPane
+                    initialSeparation="500px"
+                    minimumSize={500}
+                    sideSeparation="end"
+                  >
+                    <DropFile>
+                      <div style={{ padding: 5 }}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Illum earum omnis, et voluptatum veniam repellendus
+                        similique! Sunt nostrum necessitatibus reprehenderit
+                        asperiores excepturi corrupti? Optio soluta illo quae ex
+                        nam nulla.
+                      </div>
+                    </DropFile>
                     <div
                       style={{
-                        flex: '1 1 0%',
                         width: '100%',
+                        height: '100%',
+                        flex: '1 1 0%',
                       }}
                     >
-                      {loaded && <MeasurementsPanel {...dataState} />}
+                      <Accordion>
+                        <Accordion.Item title="Measurement" defaultOpened>
+                          <div
+                            style={{
+                              flex: '1 1 0%',
+                              width: '100%',
+                            }}
+                          >
+                            {<MeasurementsPanelData />}
+                          </div>
+                        </Accordion.Item>
+                        <Accordion.Item title="Integral">
+                          <div
+                            style={{
+                              flex: '1 1 0%',
+                              width: '100%',
+                            }}
+                          >
+                            <Tabs
+                              orientation="horizontal"
+                              items={items}
+                              opened={items[0]}
+                            />
+                          </div>
+                        </Accordion.Item>
+                      </Accordion>
                     </div>
-                  </Accordion.Item>
-                  <Accordion.Item title="Integral">
-                    <div
-                      style={{
-                        flex: '1 1 0%',
-                        width: '100%',
-                      }}
-                    >
-                      <Tabs
-                        orientation="horizontal"
-                        items={items}
-                        opened={items[0]}
-                      />
-                    </div>
-                  </Accordion.Item>
-                </Accordion>
+                  </SplitPane>
+                </div>
               </div>
-            </SplitPane>
-          </div>
-        </div>
-      </div>
+            </div>
+          </DataContext>
+        </LayoutContext>
+      </AppContext>
     </RootLayout>
   );
 }
