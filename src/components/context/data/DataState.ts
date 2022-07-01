@@ -26,7 +26,7 @@ interface Measurements {
   };
 }
 
-export interface MeasurementBase {
+interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
