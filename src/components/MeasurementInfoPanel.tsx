@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { Measurement, ValueRenderers } from '..';
+import { ValueRenderers } from '..';
 
 import { Table } from './Table';
+import { MeasurementBase } from './context/data/DataState';
 
 export interface MeasurementInfoPanelProps {
-  measurement: Measurement;
+  measurement: MeasurementBase;
 }
 
 export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
