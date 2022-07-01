@@ -2,7 +2,9 @@
 import { css } from '@emotion/react';
 import React from 'react';
 
-interface TitleProps {
+import { ValueRenderersProps } from '.';
+
+interface TitleProps extends ValueRenderersProps {
   value?: string;
 }
 
@@ -11,6 +13,10 @@ const styles = {
     fontWeight: 'bold',
   }),
 };
-export function Title({ value }: TitleProps) {
-  return <div css={styles.title}>{value}</div>;
+export function Title({ value, ...other }: TitleProps) {
+  return (
+    <div {...other} css={styles.title}>
+      {value}
+    </div>
+  );
 }

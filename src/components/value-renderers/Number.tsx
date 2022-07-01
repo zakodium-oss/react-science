@@ -1,10 +1,14 @@
 import React from 'react';
 
-interface NumberProps {
+import { ValueRenderersProps } from '.';
+
+interface NumberProps extends ValueRenderersProps {
   value?: number;
   fixed?: number;
 }
 
-export function Number({ value, fixed }: NumberProps) {
-  return <div>{value ? (fixed ? value.toFixed(fixed) : value) : ''}</div>;
+export function Number({ value, fixed, ...other }: NumberProps) {
+  return (
+    <div {...other}>{value ? (fixed ? value.toFixed(fixed) : value) : ''}</div>
+  );
 }

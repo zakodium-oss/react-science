@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React from 'react';
 
-interface TextProps {
+import { ValueRenderersProps } from '.';
+
+interface TextProps extends ValueRenderersProps {
   value?: string;
 }
 const styles = {
@@ -11,6 +12,10 @@ const styles = {
   }),
 };
 
-export function Text({ value }: TextProps) {
-  return <div css={styles.text}>{value}</div>;
+export function Text({ value, ...other }: TextProps) {
+  return (
+    <div {...other} css={styles.text}>
+      {value}
+    </div>
+  );
 }

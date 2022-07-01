@@ -2,7 +2,9 @@
 import { css } from '@emotion/react';
 import React from 'react';
 
-interface ColorProps {
+import { ValueRenderersProps } from '.';
+
+interface ColorProps extends ValueRenderersProps {
   value?: string;
 }
 const styles = {
@@ -14,12 +16,14 @@ const styles = {
     bottom: '2px',
   }),
 };
-export function Color({ value }: ColorProps) {
+export function Color({ value, style, onClick }: ColorProps) {
   return (
     <div
+      onClick={onClick}
       css={styles.color}
       style={{
         background: value,
+        ...style,
       }}
     />
   );
