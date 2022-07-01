@@ -13,8 +13,7 @@ import {
 
 interface PanelInfo {
   id: number;
-  kind: MeasurementKind;
-  measurement: MeasurementBase;
+  kinds: Partial<Record<MeasurementKind, MeasurementBase>>;
 }
 export interface MeasurementsPanelProps extends DataState {
   /**
@@ -59,13 +58,21 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
     const measurement = measurements[kind].entries[0];
     onTabSelect?.(kind, measurement);
     onMeasurementSelect?.(measurement);
-    return { id: 0, kind, measurement };
+    return {
+      id: 0,
+      kinds: {
+        [kind]: measurement,
+      },
+    };
   });
 
   function handleClick(item: TabItem) {
     const kind = item.id as MeasurementKind;
     const measurement = measurements[kind].entries[0];
-    setInfo({ id: Object.keys(kindsLabel).indexOf(kind), kind, measurement });
+    setInfo(({ kinds }) => ({
+      id: Object.keys(kindsLabel).indexOf(kind),
+      kinds: { ...kinds, [kind]: measurement },
+    }));
     onTabSelect?.(kind, measurement);
     onMeasurementSelect?.(measurement);
   }
