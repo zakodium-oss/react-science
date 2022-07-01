@@ -8,43 +8,73 @@ import {
   DataState,
   kindsLabel,
   MeasurementKind,
+  MeasurementBase,
 } from './context/data/DataState';
 
+interface PanelInfo {
+  id: number;
+  kind: MeasurementKind;
+  measurement: MeasurementBase;
+}
 export interface MeasurementsPanelProps extends DataState {
   /**
    * Callback when change tab
    */
-  onClick?: (item: TabItem) => void;
+  onTabSelect?: (kind: MeasurementKind, measurement: MeasurementBase) => void;
+  /**
+   * Callback when click on measurement
+   */
+  onMeasurementSelect?: (measurement: MeasurementBase) => void;
 }
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
-  const { onClick, measurements } = props;
+  const { onTabSelect, onMeasurementSelect, measurements } = props;
+
+  const item = (kind: MeasurementKind) => ({
+    id: kind,
+    title: kindsLabel[kind],
+    content: (
+      <Table>
+        {measurements[kind].entries.map((measurement) => (
+          <Table.Row key={measurement.id}>
+            <ValueRenderers.Title
+              onClick={() => onMeasurementSelect?.(measurement)}
+              value={measurement.id}
+            />
+            <ValueRenderers.Title
+              onClick={() => onMeasurementSelect?.(measurement)}
+              value={measurement.title}
+            />
+          </Table.Row>
+        ))}
+      </Table>
+    ),
+  });
+
   const items: Array<TabItem> = (Object.keys(kindsLabel) as MeasurementKind[])
     .filter((label) => measurements[label]?.entries?.length > 0)
-    .map((label) => ({
-      id: label,
-      title: kindsLabel[label],
-      content: (
-        <Table>
-          {measurements[label].entries.map(({ id, title }) => (
-            <Table.Row key={id}>
-              <ValueRenderers.Title value={id} />
-              <ValueRenderers.Title value={title} />
-            </Table.Row>
-          ))}
-        </Table>
-      ),
-    }));
-  const [state, setState] = useState(items[0]);
+    .map(item);
+
+  const [{ id }, setInfo] = useState<PanelInfo>(() => {
+    const kind = 'ir';
+    const measurement = measurements[kind].entries[0];
+    onTabSelect?.(kind, measurement);
+    onMeasurementSelect?.(measurement);
+    return { id: 0, kind, measurement };
+  });
 
   function handleClick(item: TabItem) {
-    setState(item);
-    onClick?.(item);
+    const kind = item.id as MeasurementKind;
+    const measurement = measurements[kind].entries[0];
+    setInfo({ id: Object.keys(kindsLabel).indexOf(kind), kind, measurement });
+    onTabSelect?.(kind, measurement);
+    onMeasurementSelect?.(measurement);
   }
+
   return items.length > 0 ? (
     <Tabs
       orientation="horizontal"
       items={items}
-      opened={state}
+      opened={items[id]}
       onClick={handleClick}
     />
   ) : (
