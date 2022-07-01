@@ -1344,6 +1344,182 @@
                 }
               }
             }
+          ],
+          "peaks": [
+            {
+              "wavenumber": 1604.494622650855,
+              "absorbance": 0.16773114680332007,
+              "transmittance": 0.6796242288000001,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 1643.0642049262024,
+              "absorbance": 0.4261275706472111,
+              "transmittance": 0.374862873,
+              "kind": "S"
+            },
+            {
+              "wavenumber": 1708.6324947942928,
+              "absorbance": 0.2215655798915196,
+              "transmittance": 0.600391341,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 2699.870759270758,
+              "absorbance": 0.08489495905759181,
+              "transmittance": 0.8224415463000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 2742.2972997736424,
+              "absorbance": 0.08582414211209222,
+              "transmittance": 0.8206837947000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 2827.1503807794115,
+              "absorbance": 0.1105204594425909,
+              "transmittance": 0.7753174176000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 2858.006046599691,
+              "absorbance": 0.14176520130752646,
+              "transmittance": 0.721497447,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 2908.1465035576457,
+              "absorbance": 0.19960474380849028,
+              "transmittance": 0.6315318471000001,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 2939.0021693779254,
+              "absorbance": 0.2061484160082087,
+              "transmittance": 0.6220876563000001,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 2973.71479342574,
+              "absorbance": 0.15898149660327218,
+              "transmittance": 0.6934553505000001,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 3012.2843757010896,
+              "absorbance": 0.10054780666725414,
+              "transmittance": 0.7933269234000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3050.8539579764392,
+              "absorbance": 0.08606463599191838,
+              "transmittance": 0.8202294606000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3100.9944149343937,
+              "absorbance": 0.08548531123721065,
+              "transmittance": 0.8213243313,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3201.2753288503027,
+              "absorbance": 0.10373162405399797,
+              "transmittance": 0.7875323016,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3243.7018693531872,
+              "absorbance": 0.12419248021610435,
+              "transmittance": 0.751289847,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3289.9853680836068,
+              "absorbance": 0.154586465860467,
+              "transmittance": 0.7005087012,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 3413.4080313647255,
+              "absorbance": 0.3115938693466424,
+              "transmittance": 0.4879846158,
+              "kind": "S"
+            },
+            {
+              "wavenumber": 3482.833279460355,
+              "absorbance": 0.22040878776075676,
+              "transmittance": 0.6019926825,
+              "kind": "m"
+            },
+            {
+              "wavenumber": 3563.829402238589,
+              "absorbance": 0.10698861087517678,
+              "transmittance": 0.7816483026000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3590.8281098313337,
+              "absorbance": 0.0988711804605934,
+              "transmittance": 0.7963955406000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3648.682483244358,
+              "absorbance": 0.09772730686090589,
+              "transmittance": 0.7984959048,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3675.681190837103,
+              "absorbance": 0.09832320546365125,
+              "transmittance": 0.7974010341000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3710.3938148849174,
+              "absorbance": 0.09236868505833307,
+              "transmittance": 0.8084093259,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3745.106438932732,
+              "absorbance": 0.10887145929442318,
+              "transmittance": 0.7782668652000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3775.9621047530118,
+              "absorbance": 0.0856783336362779,
+              "transmittance": 0.8209593744,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3856.958227531246,
+              "absorbance": 0.10203859388974296,
+              "transmittance": 0.7906083669,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3899.3847680341305,
+              "absorbance": 0.0942413123698116,
+              "transmittance": 0.8049310632000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3926.383475626875,
+              "absorbance": 0.08699632766014309,
+              "transmittance": 0.8184717090000001,
+              "kind": "w"
+            },
+            {
+              "wavenumber": 3949.525224992085,
+              "absorbance": 0.08589903576257997,
+              "transmittance": 0.8205422808,
+              "kind": "w"
+            }
           ]
         },
         {
