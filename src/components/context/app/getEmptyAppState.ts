@@ -1,5 +1,10 @@
 import { AppState } from './AppState';
 
 export function getEmptyAppState(): AppState {
-  return {};
+  return {
+    measurements: {
+      selected: undefined,
+      kind: undefined,
+    },
+  };
 }
