@@ -44,3 +44,4 @@ export * from './components/color-picker/ColorPicker';
 export * from './components/MeasurementPlot';
 export * from './components/MeasurementExplorer';
 export * from './components/MeasurementsPanel';
+export * from './components/IRPeaksPanel';

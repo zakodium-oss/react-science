@@ -25,7 +25,12 @@ interface Measurements {
     entries: MeasurementBase[];
   };
 }
-
+export interface IRPeak {
+  wavenumber: number;
+  absorbance: number;
+  transmittance: number;
+  kind: 'S' | 'w' | 'm';
+}
 interface MeasurementBase {
   id: string;
   title?: string;
