@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ObjectInspector } from 'react-inspector';
 
 import { ValueRenderers } from '..';
 
@@ -17,34 +18,38 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
   const [search, setSearch] = useState('');
   const metaRows = (search: string) =>
     Object.keys(meta).map((key) => {
-      if (!key.toLowerCase().includes(search.toLowerCase())) return null;
       const value = meta[key];
+      if (
+        !key.toLowerCase().includes(search.toLowerCase()) &&
+        !valueSearch(value, search)
+      ) {
+        return null;
+      }
+
       return (
         <Table.Row key={key}>
           <ValueRenderers.Text value={key} />
-          {typeof value === 'number' ? (
-            <ValueRenderers.Number value={value} />
-          ) : (
-            <ValueRenderers.Text value={value} />
-          )}
+          {valueCell(value)}
         </Table.Row>
       );
     });
   const infoRows = (search: string) =>
     Object.keys(info).map((key) => {
-      if (!key.toLowerCase().includes(search.toLowerCase())) return null;
       const value = info[key];
+      if (
+        !key.toLowerCase().includes(search.toLowerCase()) &&
+        !valueSearch(value, search)
+      ) {
+        return null;
+      }
       return (
         <Table.Row key={key}>
           <ValueRenderers.Text value={key} />
-          {typeof value === 'number' ? (
-            <ValueRenderers.Number value={value} />
-          ) : (
-            <ValueRenderers.Text value={value} />
-          )}
+          {valueCell(value)}
         </Table.Row>
       );
     });
+
   return (
     <div>
       <input
@@ -70,4 +75,32 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
       </Table>
     </div>
   );
+}
+
+// get the value cell depending on the type of the value
+function valueCell(value: number | string | object) {
+  switch (typeof value) {
+    case 'number':
+      return <ValueRenderers.Number value={value} />;
+    case 'object':
+      return <ObjectInspector data={value} />;
+    case 'string':
+      return <ValueRenderers.Text value={value} />;
+    default:
+      <ValueRenderers.Text value={value} />;
+  }
+}
+
+// search a string in different type of values
+function valueSearch(value: number | string | object, search: string): boolean {
+  switch (typeof value) {
+    case 'number':
+      return String(value).includes(search.toLowerCase());
+    case 'object':
+      return JSON.stringify(value).toLowerCase().includes(search.toLowerCase());
+    case 'string':
+      return value.toLowerCase().includes(search.toLowerCase());
+    default:
+      return false;
+  }
 }
