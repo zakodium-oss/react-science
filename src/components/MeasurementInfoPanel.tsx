@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { CSSProperties, useState } from 'react';
 
 import { ValueRenderers } from '..';
 
@@ -7,34 +7,25 @@ import { MeasurementBase } from './context/data/DataState';
 
 export interface MeasurementInfoPanelProps {
   measurement: MeasurementBase;
+  metaStyle: CSSProperties;
+  infoStyle: CSSProperties;
 }
 
 export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
   const {
     measurement: { meta, info },
+    metaStyle,
+    infoStyle,
   } = props;
 
   const [search, setSearch] = useState('');
-  const metaRows = (search: string) =>
-    Object.keys(meta).map((key) => {
-      const value = meta[key];
-      if (
-        !key.toLowerCase().includes(search.toLowerCase()) &&
-        !valueSearch(value, search)
-      ) {
-        return null;
-      }
 
-      return (
-        <Table.Row key={key}>
-          <ValueRenderers.Text value={key} />
-          {valueCell(value)}
-        </Table.Row>
-      );
-    });
-  const infoRows = (search: string) =>
-    Object.keys(info).map((key) => {
-      const value = info[key];
+  function viewData(
+    data: Record<string, string | number | object>,
+    style: CSSProperties = {},
+  ) {
+    return Object.keys(data).map((key) => {
+      const value = data[key];
       if (
         !key.toLowerCase().includes(search.toLowerCase()) &&
         !valueSearch(value, search)
@@ -43,11 +34,12 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
       }
       return (
         <Table.Row key={key}>
-          <ValueRenderers.Text value={key} />
+          <ValueRenderers.Text style={style} value={key} />
           {valueCell(value)}
         </Table.Row>
       );
     });
+  }
 
   return (
     <div>
@@ -69,8 +61,8 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
           <ValueRenderers.Title value="Parameter" />
           <ValueRenderers.Title value="Value" />
         </Table.Header>
-        {metaRows(search)}
-        {infoRows(search)}
+        {viewData(info, infoStyle)}
+        {viewData(meta, metaStyle)}
       </Table>
     </div>
   );

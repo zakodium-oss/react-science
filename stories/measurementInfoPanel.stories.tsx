@@ -1,17 +1,29 @@
 import { Meta } from '@storybook/react';
 import { useState, useEffect } from 'react';
 
-import { MeasurementInfoPanel } from '../src';
+import { MeasurementInfoPanel, MeasurementInfoPanelProps } from '../src';
 import { MeasurementBase } from '../src/components/context/data/DataState';
 
 export default {
   title: 'Layout/MeasurementInfoPanel',
   component: MeasurementInfoPanel,
-} as Meta;
-export function control() {
-  return <MeasurementInfoPanelControl />;
+  args: {
+    metaStyle: {
+      backgroundColor: 'red',
+      padding: '0px 6px',
+    },
+    infoStyle: {
+      backgroundColor: 'green',
+      padding: '0px 6px',
+    },
+  },
+} as Meta<Omit<MeasurementInfoPanelProps, 'measurement'>>;
+export function control(props: Omit<MeasurementInfoPanelProps, 'measurement'>) {
+  return <MeasurementInfoPanelControl {...props} />;
 }
-function MeasurementInfoPanelControl() {
+function MeasurementInfoPanelControl(
+  props: Omit<MeasurementInfoPanelProps, 'measurement'>,
+) {
   const [{ loaded, measurement }, setData] = useState<{
     measurement: MeasurementBase;
     loaded: boolean;
@@ -34,5 +46,7 @@ function MeasurementInfoPanelControl() {
         throw Error(e);
       });
   }, []);
-  return loaded ? <MeasurementInfoPanel measurement={measurement} /> : null;
+  return loaded ? (
+    <MeasurementInfoPanel measurement={measurement} {...props} />
+  ) : null;
 }
