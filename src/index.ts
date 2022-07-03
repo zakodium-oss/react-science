@@ -45,3 +45,4 @@ export * from './components/MeasurementPlot';
 export * from './components/MeasurementExplorer';
 export * from './components/MeasurementsPanel';
 export * from './components/MeasurementInfoPanel';
+export * from './components/IRPeaksPanel';
