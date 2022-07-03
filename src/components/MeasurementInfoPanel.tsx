@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { ObjectInspector } from 'react-inspector';
 
 import { ValueRenderers } from '..';
 
@@ -83,7 +82,7 @@ function valueCell(value: number | string | object) {
     case 'number':
       return <ValueRenderers.Number value={value} />;
     case 'object':
-      return <ObjectInspector data={value} />;
+      return <ValueRenderers.Object value={value} />;
     case 'string':
       return <ValueRenderers.Text value={value} />;
     default:
