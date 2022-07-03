@@ -19,16 +19,32 @@ export interface MeasurementsPanelProps extends DataState {
   /**
    * Callback when change tab
    */
-  onTabSelect?: (kind: MeasurementKind, measurement: MeasurementBase) => void;
+  onTabSelect?: (param: {
+    kind: MeasurementKind;
+    measurement: MeasurementBase;
+  }) => void;
   /**
    * Callback when click on measurement
    */
-  onMeasurementSelect?: (measurement: MeasurementBase) => void;
+  onMeasurementSelect?: (param: {
+    kind: MeasurementKind;
+    measurement: MeasurementBase;
+  }) => void;
 }
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
   const { onTabSelect, onMeasurementSelect, measurements } = props;
 
-  const item = (kind: MeasurementKind) => ({
+  const [{ id, kinds }, setInfo] = useState<PanelInfo>(() => {
+    const kind = 'ir';
+    const measurement = measurements[kind].entries[0];
+    onTabSelect?.({ kind, measurement });
+    onMeasurementSelect?.({ kind, measurement });
+    return {
+      id: 0,
+      kinds: { [kind]: measurement },
+    };
+  });
+  const kindItem = (kind: MeasurementKind) => ({
     id: kind,
     title: kindsLabel[kind],
     content: (
@@ -36,45 +52,40 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
         {measurements[kind].entries.map((measurement) => (
           <Table.Row key={measurement.id}>
             <ValueRenderers.Title
-              onClick={() => onMeasurementSelect?.(measurement)}
+              style={{
+                padding: '0px 5px',
+                backgroundColor: kinds[kind] === measurement ? 'green' : '',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                setInfo(({ id, kinds }) => ({
+                  id,
+                  kinds: { ...kinds, [kind]: measurement },
+                }));
+                onMeasurementSelect?.({ kind, measurement });
+              }}
               value={measurement.id}
             />
-            <ValueRenderers.Title
-              onClick={() => onMeasurementSelect?.(measurement)}
-              value={measurement.title}
-            />
+            <ValueRenderers.Text value={measurement.title} />
           </Table.Row>
         ))}
       </Table>
     ),
   });
-
-  const items: Array<TabItem> = (Object.keys(kindsLabel) as MeasurementKind[])
-    .filter((label) => measurements[label]?.entries?.length > 0)
-    .map(item);
-
-  const [{ id }, setInfo] = useState<PanelInfo>(() => {
-    const kind = 'ir';
-    const measurement = measurements[kind].entries[0];
-    onTabSelect?.(kind, measurement);
-    onMeasurementSelect?.(measurement);
-    return {
-      id: 0,
-      kinds: {
-        [kind]: measurement,
-      },
-    };
-  });
+  const availableKinds = (Object.keys(kindsLabel) as MeasurementKind[]).filter(
+    (label) => measurements[label]?.entries?.length > 0,
+  );
+  const items: Array<TabItem> = availableKinds.map(kindItem);
 
   function handleClick(item: TabItem) {
     const kind = item.id as MeasurementKind;
-    const measurement = measurements[kind].entries[0];
+    const measurement = kinds[kind] || measurements[kind].entries[0];
     setInfo(({ kinds }) => ({
-      id: Object.keys(kindsLabel).indexOf(kind),
+      id: availableKinds.indexOf(kind),
       kinds: { ...kinds, [kind]: measurement },
     }));
-    onTabSelect?.(kind, measurement);
-    onMeasurementSelect?.(measurement);
+    onTabSelect?.({ kind, measurement });
+    onMeasurementSelect?.({ kind, measurement });
   }
 
   return items.length > 0 ? (
