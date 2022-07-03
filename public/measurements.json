@@ -23,7 +23,21 @@
             "MINY": 37.48657608,
             "MAXY": 86.29724884,
             "DELTAX": 3.85695822,
-            "NPOINTS": 934
+            "NPOINTS": 934,
+            "instrument": {
+              "brand": "Mattson Instruments",
+              "model": "IR 3000"
+            }
+          },
+          "meta": {
+            "source": "Escherichia coli",
+            "sample": "E.coli",
+            "replicate": "1",
+            "condition": "Control",
+            "time": "0:00:00",
+            "temperature": "25",
+            "operator": "lpatiny",
+            "notes": ""
           },
           "title": "Mattson Instruments",
           "data": [
