@@ -7,7 +7,7 @@ import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
 
 export type MeasurementExplorerProps = Omit<
   MeasurementPlotProps,
-  'xVariableName' | 'yVariableName' | 'dataIndex'
+  keyof ExplorerInfo
 >;
 interface ExplorerInfo {
   dataIndex: number;
