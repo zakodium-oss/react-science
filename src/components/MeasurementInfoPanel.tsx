@@ -68,7 +68,11 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
   );
 }
 
-// get the value cell depending on the type of the value
+/**
+ * Get the value cell depending on the type of the value
+ * @param value - ValueRenderers value.
+ * @returns - ValueRenderers component.
+ */
 function valueCell(value: number | string | object) {
   switch (typeof value) {
     case 'number':
@@ -82,7 +86,13 @@ function valueCell(value: number | string | object) {
   }
 }
 
-// search a string in different type of values
+/**
+ * Search a string in different type of values
+ *
+ * @param value - Value to search in.
+ * @param search - Value to search for.
+ * @returns - If search exist in value
+ */
 function valueSearch(value: number | string | object, search: string): boolean {
   switch (typeof value) {
     case 'number':
