@@ -131,7 +131,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
       <Axis
         id={xAxis}
         hidden={!showHorizontalAxis}
-        displayPrimaryGridLines={showHorizontalGrid}
+        displayPrimaryGridLines={showVerticalGrid}
         flip={flipHorizontalAxis}
         position="bottom"
         label={`${x.label}${x.units ? `(${x.units})` : ''}`}
@@ -139,7 +139,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
       <Axis
         id={yAxis}
         hidden={!showVerticalAxis}
-        displayPrimaryGridLines={showVerticalGrid}
+        displayPrimaryGridLines={showHorizontalGrid}
         position="left"
         label={`${y.label}${y.units ? `(${y.units})` : ''}`}
       />
