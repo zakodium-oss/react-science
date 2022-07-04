@@ -1,9 +1,11 @@
 import React from 'react';
 
-interface BooleanProps {
+import { ValueRenderersProps } from '.';
+
+interface BooleanProps extends ValueRenderersProps {
   value?: boolean;
 }
 
-export function Boolean({ value }: BooleanProps) {
-  return <div>{value !== undefined ? (value ? '✔' : '✘') : ''}</div>;
+export function Boolean({ value, ...other }: BooleanProps) {
+  return <div {...other}>{value !== undefined ? (value ? '✔' : '✘') : ''}</div>;
 }
