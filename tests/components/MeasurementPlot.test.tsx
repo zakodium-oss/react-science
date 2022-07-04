@@ -29,8 +29,8 @@ const beforeZoom = [
   '% Transmittance',
 ].join('');
 
-test.describe('MeasurementPlot test', () => {
-  test('test default', async ({ mount }) => {
+test.describe('MeasurementPlot', () => {
+  test('default props', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} />,
     );
@@ -109,7 +109,7 @@ test.describe('MeasurementPlot test', () => {
     await component.dblclick();
     await expect(component).toContainText(beforeZoom);
   });
-  test('test change variables', async ({ mount }) => {
+  test('change variables', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot
         measurement={measurement}
@@ -127,28 +127,28 @@ test.describe('MeasurementPlot test', () => {
     await expect(xAxis).toContainText('TRANSMITTANCE');
     await expect(yAxis).toContainText('Absorbance');
   });
-  test('test flip axis', async ({ mount }) => {
+  test('flip axis', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} flipHorizontalAxis />,
     );
     const xAxis = component.locator('_react=Axis[flip=true] >> nth=0');
     await expect(xAxis).toBeEnabled();
   });
-  test('test horizontal remove ', async ({ mount }) => {
+  test('remove horizontal axis', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} showHorizontalAxis={false} />,
     );
 
     await expect(component.locator('_react=Axis[id=/-x$/]')).toHaveText('');
   });
-  test('test vertical remove ', async ({ mount }) => {
+  test('remove vertical axis', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} showVerticalAxis={false} />,
     );
 
     await expect(component.locator('_react=Axis[id=/-y$/]')).toHaveText('');
   });
-  test('test vertical zoom', async ({ mount }) => {
+  test('vertical zoom', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} zoom="vertical" />,
     );
@@ -180,7 +180,7 @@ test.describe('MeasurementPlot test', () => {
     ].join('');
     await expect(component).toContainText(afterZoom);
   });
-  test('test rectangular zoom', async ({ mount }) => {
+  test('rectangular zoom', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} zoom="rectangular" />,
     );
@@ -214,7 +214,7 @@ test.describe('MeasurementPlot test', () => {
     ].join('');
     await expect(component).toContainText(afterZoom);
   });
-  test('test horizontal grid', async ({ mount }) => {
+  test('remove horizontal grid', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} showHorizontalGrid={false} />,
     );
@@ -223,7 +223,7 @@ test.describe('MeasurementPlot test', () => {
       component.locator('_react=line[x1="0"][strokeDasharray= "2,2"]'),
     ).toHaveCount(0);
   });
-  test('test vertical grid', async ({ mount }) => {
+  test('remove vertical grid', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} showVerticalGrid={false} />,
     );
@@ -232,7 +232,7 @@ test.describe('MeasurementPlot test', () => {
       component.locator('_react=line[y2="0"][strokeDasharray= "2,2"]'),
     ).toHaveCount(0);
   });
-  test('test crossHair', async ({ mount }) => {
+  test('crossHair', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={measurement} crossHair={false} />,
     );

@@ -4,8 +4,8 @@ import { test, expect } from '@playwright/experimental-ct-react';
 import { MeasurementExplorer } from '../../src';
 import measurement from '../../stories/data/measurement.json';
 
-test.describe('MeasurementExplorer test', () => {
-  test('test initial variables', async ({ mount }) => {
+test.describe('MeasurementExplorer', () => {
+  test('initial variables', async ({ mount }) => {
     const component = await mount(
       <MeasurementExplorer measurement={measurement} />,
     );
@@ -17,7 +17,7 @@ test.describe('MeasurementExplorer test', () => {
     await expect(xVariableName).toHaveValue('x');
     await expect(yVariableName).toHaveValue('y');
   });
-  test('test select variables', async ({ mount }) => {
+  test('select variables', async ({ mount }) => {
     const component = await mount(
       <MeasurementExplorer measurement={measurement} />,
     );
@@ -42,7 +42,7 @@ test.describe('MeasurementExplorer test', () => {
       component.locator('_react=MeasurementPlot[yVariableName="t"]'),
     ).toBeEnabled();
   });
-  test('test reverse btn', async ({ mount }) => {
+  test('reverse btn', async ({ mount }) => {
     const component = await mount(
       <MeasurementExplorer measurement={measurement} />,
     );
@@ -69,7 +69,7 @@ test.describe('MeasurementExplorer test', () => {
       component.locator('_react=MeasurementPlot[yVariableName="x"]'),
     ).toBeEnabled();
   });
-  test('test flip btn', async ({ mount }) => {
+  test('flip btn', async ({ mount }) => {
     const component = await mount(
       <MeasurementExplorer measurement={measurement} />,
     );
