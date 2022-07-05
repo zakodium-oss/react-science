@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { xyToXYObject } from 'ml-spectra-processing';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
   FaMeteor,
@@ -14,6 +14,7 @@ import { Heading, LineSeries, Plot } from 'react-plot';
 import {
   Accordion,
   Header,
+  MeasurementsPanel,
   RootLayout,
   SplitPane,
   TabItem,
@@ -21,6 +22,8 @@ import {
   Toolbar,
 } from '..';
 import { DropZone, DropZoneContainer } from '../components/DropZone';
+import { DataState } from '../components/context/data/DataState';
+import { getEmptyDataState } from '../components/context/data/getEmptyDataState';
 
 interface IrPlot {
   data: { x: number[]; y: number[] };
@@ -30,7 +33,32 @@ interface DataMeasurements {
   irs: IrPlot[];
 }
 export default function App() {
-  const [data, setData] = useState<DataMeasurements>({ irs: [] });
+  const [{ plotData, loaded, dataState }, setData] = useState<{
+    plotData: DataMeasurements;
+    dataState: DataState;
+    loaded: boolean;
+  }>({ plotData: { irs: [] }, dataState: getEmptyDataState(), loaded: false });
+
+  useEffect(() => {
+    fetch('/measurements.json')
+      .then((response) => {
+        response
+          .json()
+          .then((dataState) => {
+            setData(({ plotData: data }) => ({
+              plotData: data,
+              dataState,
+              loaded: true,
+            }));
+          })
+          .catch((e) => {
+            throw Error(e);
+          });
+      })
+      .catch((e) => {
+        throw Error(e);
+      });
+  }, []);
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -57,8 +85,9 @@ export default function App() {
           const data = JSON.parse(d);
           const ir: IrPlot = { data, info };
 
-          setData(({ irs }) => ({
-            irs: [...irs, ir],
+          setData(({ plotData: { irs }, ...other }) => ({
+            plotData: { irs: [...irs, ir] },
+            ...other,
           }));
         })
         .catch((e) => {
@@ -125,7 +154,7 @@ export default function App() {
                 }}
               >
                 <div>
-                  {data.irs.length > 0 ? (
+                  {plotData.irs.length > 0 ? (
                     <DropZoneContainer onDrop={onDrop}>
                       <div
                         style={{
@@ -134,7 +163,7 @@ export default function App() {
                           border: '2px solid black',
                         }}
                       >
-                        {data.irs.map((ir, i) => (
+                        {plotData.irs.map((ir, i) => (
                           <div key={i}>
                             <ResponsiveChart>
                               {({ width }) => (
@@ -162,19 +191,14 @@ export default function App() {
                 }}
               >
                 <Accordion>
-                  <Accordion.Item title="Spectra" defaultOpened>
-                    <div>
-                      {Array(10)
-                        .fill(0)
-                        .map((a, i) => (
-                          <p key={i} style={{ padding: 5 }}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Nostrum quos soluta animi accusantium ipsum
-                            delectus facilis! Modi quis tenetur enim aut beatae
-                            deleniti aspernatur reprehenderit distinctio rerum
-                            eius. Quidem, nam?
-                          </p>
-                        ))}
+                  <Accordion.Item title="Measurement" defaultOpened>
+                    <div
+                      style={{
+                        flex: '1 1 0%',
+                        width: '100%',
+                      }}
+                    >
+                      {loaded && <MeasurementsPanel {...dataState} />}
                     </div>
                   </Accordion.Item>
                   <Accordion.Item title="Integral">
