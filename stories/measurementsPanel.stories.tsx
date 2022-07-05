@@ -6,7 +6,7 @@ import { DataState } from '../src/components/context/data/DataState';
 import { getEmptyDataState } from '../src/components/context/data/getEmptyDataState';
 
 export default {
-  title: 'Layout/MeasurementsPanel',
+  title: 'Panels/MeasurementsPanel',
   component: MeasurementsPanel,
   argTypes: {
     onTabSelect: {

@@ -5,7 +5,7 @@ import { MeasurementInfoPanel, MeasurementInfoPanelProps } from '../src';
 import { MeasurementBase } from '../src/components/context/data/DataState';
 
 export default {
-  title: 'Layout/MeasurementInfoPanel',
+  title: 'Panels/MeasurementInfoPanel',
   component: MeasurementInfoPanel,
   args: {
     metaStyle: {

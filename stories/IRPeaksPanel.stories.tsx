@@ -5,7 +5,7 @@ import { IRPeaksPanel } from '../src';
 import { IRPeak } from '../src/components/context/data/DataState';
 
 export default {
-  title: 'Layout/IRPeaksPanel',
+  title: 'Panels/IRPeaksPanel',
   component: IRPeaksPanel,
 } as Meta;
 
