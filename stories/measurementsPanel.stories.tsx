@@ -1,13 +1,16 @@
 import { Meta } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { MeasurementsPanel, MeasurementsPanelProps } from '../src';
+import {
+  MeasurementsPanel as MeasurementsPanelComponent,
+  MeasurementsPanelProps,
+} from '../src';
 import { DataState } from '../src/components/context/data/DataState';
 import { getEmptyDataState } from '../src/components/context/data/getEmptyDataState';
 
 export default {
-  title: 'Layout/MeasurementsPanel',
-  component: MeasurementsPanel,
+  title: 'Layout/Panels/MeasurementsPanel',
+  component: MeasurementsPanelComponent,
   argTypes: {
     onTabSelect: {
       action: 'Tab changed',
@@ -21,7 +24,7 @@ export default {
   },
 } as Meta;
 
-export function control(props: MeasurementsPanelProps) {
+export function MeasurementsPanel(props: MeasurementsPanelProps) {
   return <MeasurementsPanelStory {...props} />;
 }
 
@@ -47,5 +50,7 @@ function MeasurementsPanelStory(props: MeasurementsPanelProps) {
         throw Error(e);
       });
   }, []);
-  return loaded ? <MeasurementsPanel {...dataState} {...props} /> : null;
+  return loaded ? (
+    <MeasurementsPanelComponent {...dataState} {...props} />
+  ) : null;
 }

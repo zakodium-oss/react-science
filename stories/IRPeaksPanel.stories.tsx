@@ -1,15 +1,15 @@
 import { Meta } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { IRPeaksPanel } from '../src';
+import { IRPeaksPanel as IRPeaksPanelComponent } from '../src';
 import { IRPeak } from '../src/components/context/data/DataState';
 
 export default {
-  title: 'Layout/IRPeaksPanel',
-  component: IRPeaksPanel,
+  title: 'Layout/Panels/IRPeaksPanel',
+  component: IRPeaksPanelComponent,
 } as Meta;
 
-export function control() {
+export function IRPeaksPanel() {
   return <IRPeaksPanelStory />;
 }
 
@@ -41,5 +41,5 @@ function IRPeaksPanelStory() {
         throw Error(e);
       });
   }, []);
-  return loaded ? <IRPeaksPanel peaks={peaks} /> : null;
+  return loaded ? <IRPeaksPanelComponent peaks={peaks} /> : null;
 }
