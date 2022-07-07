@@ -10,24 +10,14 @@ import { useState } from 'react';
 
 import { IRPeak } from './context/data/DataState';
 
-interface Preferences {
-  wavenumber: {
-    display: boolean;
-    format: (val: number) => string | number;
-  };
-  absorbance: {
-    display: boolean;
-    format: (val: number) => string | number;
-  };
-  transmittance: {
-    display: boolean;
-    format: (val: number) => string | number;
-  };
-  kind: {
-    display: boolean;
-    format: (val: string) => string | number;
-  };
-}
+type IRPeakPanelPreferences = Record<
+  keyof IRPeak,
+  {
+    visible: boolean;
+    format: (val: number | string) => string | number;
+    label: string;
+  }
+>;
 export interface IRPeaksPanelProps {
   /**
    * peaks to display in the panel
@@ -38,41 +28,30 @@ export interface IRPeaksPanelProps {
    * The columns to display in the table.
    * @default {}
    */
-  preferences?: Preferences;
+  preferences?: IRPeakPanelPreferences;
 }
 
 export function IRPeaksPanel(props: IRPeaksPanelProps) {
   const {
     peaks,
     preferences = {
-      wavenumber: { format: (x) => x, display: true },
-      transmittance: { format: (x) => x, display: true },
-      absorbance: { format: (x) => x, display: true },
-      kind: { format: (x) => x, display: true },
+      wavenumber: { format: (x) => x, visible: true, label: 'Wavenumber' },
+      transmittance: {
+        format: (x) => x,
+        display: true,
+        label: 'Transmittance',
+      },
+      absorbance: { format: (x) => x, display: true, label: 'Absorbance' },
+      kind: { format: (x) => x, display: true, label: 'Kind' },
     },
   } = props;
-  const columns: ColumnDef<IRPeak>[] = [
-    {
-      header: 'Wavenumber [cm-1]',
-      accessorKey: 'wavenumber',
-      cell: ({ getValue }) => preferences.wavenumber.format(getValue()),
-    },
-    {
-      header: 'Transmittance',
-      accessorKey: 'transmittance',
-      cell: ({ getValue }) => preferences.transmittance.format(getValue()),
-    },
-    {
-      header: 'Absorbance',
-      accessorKey: 'absorbance',
-      cell: ({ getValue }) => preferences.absorbance.format(getValue()),
-    },
-    {
-      header: 'Kind',
-      accessorKey: 'kind',
-      cell: ({ getValue }) => preferences.kind.format(getValue()),
-    },
-  ];
+  const columns: ColumnDef<IRPeak>[] = Object.entries(preferences).map(
+    ([key, { label, format }]) => ({
+      header: label,
+      accessorKey: key,
+      cell: ({ getValue }) => format(getValue()),
+    }),
+  );
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
