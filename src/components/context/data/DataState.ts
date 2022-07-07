@@ -41,6 +41,7 @@ export interface MeasurementBase {
   data: {
     variables: Record<string, MeasurementVariable>;
   }[];
+  peaks?: IRPeak[];
 }
 
 export type MeasurementKind = keyof Measurements;
