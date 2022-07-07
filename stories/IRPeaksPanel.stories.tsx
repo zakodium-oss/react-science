@@ -1,8 +1,9 @@
 import { Meta } from '@storybook/react';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import { IRPeaksPanel as IRPeaksPanelComponent } from '../src';
-import { IRPeak } from '../src/components/context/data/DataState';
+import { DataState, IRPeak } from '../src/components/context/data/DataState';
 
 export default {
   title: 'Layout/Panels/IRPeaksPanel',
@@ -15,11 +16,22 @@ export function IRPeaksPanel() {
 
 function IRPeaksPanelStory() {
   const [{ loaded, peaks }, setData] = useState<{
-    peaks: IRPeak[];
+    peaks?: IRPeak[];
     loaded: boolean;
   }>({ peaks: [], loaded: false });
 
   useEffect(() => {
+    void axios.get<DataState>('/measurements.json').then(
+      ({
+        data: {
+          measurements: {
+            ir: { entries },
+          },
+        },
+      }) => {
+        setData({ peaks: entries[0].peaks, loaded: true });
+      },
+    );
     fetch('/measurements.json')
       .then((response) => {
         response
@@ -41,5 +53,5 @@ function IRPeaksPanelStory() {
         throw Error(e);
       });
   }, []);
-  return loaded ? <IRPeaksPanelComponent peaks={peaks} /> : null;
+  return loaded && peaks ? <IRPeaksPanelComponent peaks={peaks} /> : null;
 }

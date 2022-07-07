@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/react';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import {
@@ -35,20 +36,9 @@ function MeasurementsPanelStory(props: MeasurementsPanelProps) {
   }>({ dataState: getEmptyDataState(), loaded: false });
 
   useEffect(() => {
-    fetch('/measurements.json')
-      .then((response) => {
-        response
-          .json()
-          .then((dataState) => {
-            setData({ dataState, loaded: true });
-          })
-          .catch((e) => {
-            throw Error(e);
-          });
-      })
-      .catch((e) => {
-        throw Error(e);
-      });
+    void axios.get<DataState>('/measurements.json').then(({ data }) => {
+      setData({ dataState: data, loaded: true });
+    });
   }, []);
   return loaded ? (
     <MeasurementsPanelComponent {...dataState} {...props} />

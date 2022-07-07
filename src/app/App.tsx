@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -27,20 +28,9 @@ export default function App() {
   }>({ dataState: getEmptyDataState(), loaded: false });
 
   useEffect(() => {
-    fetch('/measurements.json')
-      .then((response) => {
-        response
-          .json()
-          .then((dataState) => {
-            setData({ dataState, loaded: true });
-          })
-          .catch((e) => {
-            throw Error(e);
-          });
-      })
-      .catch((e) => {
-        throw Error(e);
-      });
+    void axios.get<DataState>('/measurements.json').then(({ data }) => {
+      setData({ dataState: data, loaded: true });
+    });
   }, []);
   const items: Array<TabItem> = [
     {
