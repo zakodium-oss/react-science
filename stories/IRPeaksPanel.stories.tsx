@@ -12,13 +12,22 @@ export default {
   component: IRPeaksPanelComponent,
   args: {
     preferences: {
-      wavenumber: { format: (x: number) => x, display: true },
-      transmittance: { format: (x: number) => x, display: true },
-      absorbance: { format: (x: number) => x, display: true },
-      kind: { format: (x: string) => x, display: true },
+      wavenumber: {
+        visible: true,
+        label: 'Wavenumber',
+      },
+      transmittance: {
+        visible: true,
+        label: 'Transmittance',
+      },
+      absorbance: {
+        visible: true,
+        label: 'Absorbance',
+      },
+      kind: { visible: true, label: 'Kind' },
     },
   },
-} as Meta;
+} as Meta<Omit<IRPeaksPanelProps, 'peaks'>>;
 
 export function IRPeaksPanel(props: Omit<IRPeaksPanelProps, 'peaks'>) {
   return <IRPeaksPanelStory {...props} />;

@@ -13,9 +13,9 @@ import { IRPeak } from './context/data/DataState';
 type IRPeakPanelPreferences = Record<
   keyof IRPeak,
   {
-    visible: boolean;
-    format: (val: number | string) => string | number;
-    label: string;
+    visible?: boolean;
+    format?: (val: number | string) => string | number;
+    label?: string;
   }
 >;
 export interface IRPeaksPanelProps {
@@ -35,18 +35,14 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
   const {
     peaks,
     preferences = {
-      wavenumber: { format: (x) => x, visible: true, label: 'Wavenumber' },
-      transmittance: {
-        format: (x) => x,
-        display: true,
-        label: 'Transmittance',
-      },
-      absorbance: { format: (x) => x, display: true, label: 'Absorbance' },
-      kind: { format: (x) => x, display: true, label: 'Kind' },
+      wavenumber: {},
+      transmittance: {},
+      absorbance: {},
+      kind: {},
     },
   } = props;
   const columns: ColumnDef<IRPeak>[] = Object.entries(preferences).map(
-    ([key, { label, format }]) => ({
+    ([key, { label = key, format = (x: number) => x }]) => ({
       header: label,
       accessorKey: key,
       cell: ({ getValue }) => format(getValue()),
@@ -60,7 +56,8 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
     state: {
       sorting,
       columnVisibility: Object.entries(preferences).reduce(
-        (obj, [key, { display }]) => Object.assign(obj, { [key]: display }),
+        (obj, [key, { visible = true }]) =>
+          Object.assign(obj, { [key]: visible }),
         {},
       ),
     },
