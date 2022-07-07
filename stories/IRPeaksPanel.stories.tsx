@@ -1,19 +1,30 @@
 import { Meta } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { IRPeaksPanel as IRPeaksPanelComponent } from '../src';
+import {
+  IRPeaksPanel as IRPeaksPanelComponent,
+  IRPeaksPanelProps,
+} from '../src';
 import { IRPeak } from '../src/components/context/data/DataState';
 
 export default {
   title: 'Layout/Panels/IRPeaksPanel',
   component: IRPeaksPanelComponent,
+  args: {
+    preferences: {
+      wavenumber: { format: (x: number) => x, display: true },
+      transmittance: { format: (x: number) => x, display: true },
+      absorbance: { format: (x: number) => x, display: true },
+      kind: { format: (x: string) => x, display: true },
+    },
+  },
 } as Meta;
 
-export function IRPeaksPanel() {
-  return <IRPeaksPanelStory />;
+export function IRPeaksPanel(props: Omit<IRPeaksPanelProps, 'peaks'>) {
+  return <IRPeaksPanelStory {...props} />;
 }
 
-function IRPeaksPanelStory() {
+function IRPeaksPanelStory(props: Omit<IRPeaksPanelProps, 'peaks'>) {
   const [{ loaded, peaks }, setData] = useState<{
     peaks: IRPeak[];
     loaded: boolean;
@@ -41,5 +52,5 @@ function IRPeaksPanelStory() {
         throw Error(e);
       });
   }, []);
-  return loaded ? <IRPeaksPanelComponent peaks={peaks} /> : null;
+  return loaded ? <IRPeaksPanelComponent peaks={peaks} {...props} /> : null;
 }
