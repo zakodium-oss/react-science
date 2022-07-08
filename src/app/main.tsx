@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import App from './App';
 
 import './main.css';
 
+const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -22,7 +24,9 @@ ReactDOM.render(
           <a href={`${import.meta.env.BASE_URL}storybook/`}>Open Storybook</a>
         </div>
       ) : null}
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </div>
   </React.StrictMode>,
   document.getElementById('root'),

@@ -1,15 +1,12 @@
 import { Meta } from '@storybook/react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 import {
   MeasurementInfoPanel as MeasurementInfoPanelComponent,
   MeasurementInfoPanelProps,
 } from '../src';
-import {
-  DataState,
-  MeasurementBase,
-} from '../src/components/context/data/DataState';
+import { DataState } from '../src/components/context/data/DataState';
 
 export default {
   title: 'Layout/Panels/MeasurementInfoPanel',
@@ -25,26 +22,30 @@ export default {
     },
   },
 } as Meta<Omit<MeasurementInfoPanelProps, 'measurement'>>;
+
+const queryClient = new QueryClient();
 export function MeasurementInfoPanel(
   props: Omit<MeasurementInfoPanelProps, 'measurement'>,
 ) {
-  return <MeasurementInfoPanelControl {...props} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MeasurementInfoPanelControl {...props} />
+    </QueryClientProvider>
+  );
 }
+
 function MeasurementInfoPanelControl(
   props: Omit<MeasurementInfoPanelProps, 'measurement'>,
 ) {
-  const [{ loaded, measurement }, setData] = useState<{
-    measurement: MeasurementBase;
-    loaded: boolean;
-  }>({ measurement: { id: '', meta: {}, info: {}, data: [] }, loaded: false });
+  const { isLoading, data } = useQuery(['repoData'], () =>
+    axios
+      .get<DataState>('../public/measurements.json')
+      .then(({ data }) => data.measurements.ir.entries[0]),
+  );
 
-  useEffect(() => {
-    void axios.get<DataState>('/measurements.json').then(({ data }) => {
-      const measurement = data.measurements.ir.entries[0];
-      setData({ measurement, loaded: true });
-    });
-  }, []);
-  return loaded ? (
-    <MeasurementInfoPanelComponent measurement={measurement} {...props} />
-  ) : null;
+  return isLoading || !data ? (
+    <div>Loading...</div>
+  ) : (
+    <MeasurementInfoPanelComponent measurement={data} {...props} />
+  );
 }

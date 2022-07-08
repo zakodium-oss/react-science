@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -7,6 +6,7 @@ import {
   FaTabletAlt,
   FaGlasses,
 } from 'react-icons/fa';
+import { useQuery } from 'react-query';
 
 import {
   Accordion,
@@ -19,19 +19,14 @@ import {
   Toolbar,
 } from '..';
 import { DataState } from '../components/context/data/DataState';
-import { getEmptyDataState } from '../components/context/data/getEmptyDataState';
 
 export default function App() {
-  const [{ loaded, dataState }, setData] = useState<{
-    dataState: DataState;
-    loaded: boolean;
-  }>({ dataState: getEmptyDataState(), loaded: false });
+  const { isLoading, data } = useQuery(['repoData'], () =>
+    axios
+      .get<DataState>('../../public/measurements.json')
+      .then(({ data }) => data),
+  );
 
-  useEffect(() => {
-    void axios.get<DataState>('/measurements.json').then(({ data }) => {
-      setData({ dataState: data, loaded: true });
-    });
-  }, []);
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -120,7 +115,11 @@ export default function App() {
                         width: '100%',
                       }}
                     >
-                      {loaded && <MeasurementsPanel {...dataState} />}
+                      {isLoading || !data ? (
+                        'Loading...'
+                      ) : (
+                        <MeasurementsPanel {...data} />
+                      )}
                     </div>
                   </Accordion.Item>
                   <Accordion.Item title="Integral">

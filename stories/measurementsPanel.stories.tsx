@@ -1,13 +1,12 @@
 import { Meta } from '@storybook/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 import {
   MeasurementsPanel as MeasurementsPanelComponent,
   MeasurementsPanelProps,
 } from '../src';
 import { DataState } from '../src/components/context/data/DataState';
-import { getEmptyDataState } from '../src/components/context/data/getEmptyDataState';
 
 export default {
   title: 'Layout/Panels/MeasurementsPanel',
@@ -25,22 +24,25 @@ export default {
   },
 } as Meta;
 
+const queryClient = new QueryClient();
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
-  return <MeasurementsPanelStory {...props} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MeasurementsPanelStory {...props} />
+    </QueryClientProvider>
+  );
 }
 
 function MeasurementsPanelStory(props: MeasurementsPanelProps) {
-  const [{ loaded, dataState }, setData] = useState<{
-    dataState: DataState;
-    loaded: boolean;
-  }>({ dataState: getEmptyDataState(), loaded: false });
+  const { isLoading, data } = useQuery(['repoData'], () =>
+    axios
+      .get<DataState>('../public/measurements.json')
+      .then(({ data }) => data),
+  );
 
-  useEffect(() => {
-    void axios.get<DataState>('/measurements.json').then(({ data }) => {
-      setData({ dataState: data, loaded: true });
-    });
-  }, []);
-  return loaded ? (
-    <MeasurementsPanelComponent {...dataState} {...props} />
-  ) : null;
+  return isLoading || !data ? (
+    <div>Loading...</div>
+  ) : (
+    <MeasurementsPanelComponent {...data} {...props} />
+  );
 }

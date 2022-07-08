@@ -1,57 +1,34 @@
 import { Meta } from '@storybook/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 import { IRPeaksPanel as IRPeaksPanelComponent } from '../src';
-import { DataState, IRPeak } from '../src/components/context/data/DataState';
+import { DataState } from '../src/components/context/data/DataState';
 
 export default {
   title: 'Layout/Panels/IRPeaksPanel',
   component: IRPeaksPanelComponent,
 } as Meta;
 
+const queryClient = new QueryClient();
 export function IRPeaksPanel() {
-  return <IRPeaksPanelStory />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <IRPeaksPanelStory />
+    </QueryClientProvider>
+  );
 }
 
 function IRPeaksPanelStory() {
-  const [{ loaded, peaks }, setData] = useState<{
-    peaks?: IRPeak[];
-    loaded: boolean;
-  }>({ peaks: [], loaded: false });
+  const { isLoading, data } = useQuery(['repoData'], () =>
+    axios
+      .get<DataState>('../public/measurements.json')
+      .then(({ data }) => data.measurements.ir.entries[0].peaks),
+  );
 
-  useEffect(() => {
-    void axios.get<DataState>('/measurements.json').then(
-      ({
-        data: {
-          measurements: {
-            ir: { entries },
-          },
-        },
-      }) => {
-        setData({ peaks: entries[0].peaks, loaded: true });
-      },
-    );
-    fetch('/measurements.json')
-      .then((response) => {
-        response
-          .json()
-          .then(
-            ({
-              measurements: {
-                ir: { entries },
-              },
-            }) => {
-              setData({ peaks: entries[0].peaks, loaded: true });
-            },
-          )
-          .catch((e) => {
-            throw Error(e);
-          });
-      })
-      .catch((e) => {
-        throw Error(e);
-      });
-  }, []);
-  return loaded && peaks ? <IRPeaksPanelComponent peaks={peaks} /> : null;
+  return isLoading || !data ? (
+    <div>Loading...</div>
+  ) : (
+    <IRPeaksPanelComponent peaks={data} />
+  );
 }
