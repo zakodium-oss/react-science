@@ -12,19 +12,28 @@ export default {
   component: IRPeaksPanelComponent,
   args: {
     preferences: {
-      wavenumber: {
-        visible: true,
-        label: 'Wavenumber',
-      },
-      transmittance: {
-        visible: true,
-        label: 'Transmittance',
-      },
-      absorbance: {
-        visible: true,
-        label: 'Absorbance',
-      },
-      kind: { visible: true, label: 'Kind' },
+      columns: [
+        {
+          jpath: 'wavenumber',
+          visible: true,
+          label: 'Wavenumber',
+        },
+        {
+          jpath: 'transmittance',
+          visible: true,
+          label: 'Transmittance',
+        },
+        {
+          jpath: 'absorbance',
+          visible: true,
+          label: 'Absorbance',
+        },
+        {
+          jpath: 'kind',
+          visible: true,
+          label: 'Kind',
+        },
+      ],
     },
   },
 } as Meta<Omit<IRPeaksPanelProps, 'peaks'>>;

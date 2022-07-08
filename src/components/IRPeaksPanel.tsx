@@ -2,22 +2,24 @@ import {
   ColumnDef,
   useReactTable,
   getCoreRowModel,
-  flexRender,
   SortingState,
   getSortedRowModel,
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
+import { Table, ValueRenderers } from '..';
+
 import { IRPeak } from './context/data/DataState';
 
-type IRPeakPanelPreferences = Record<
-  keyof IRPeak,
-  {
-    visible?: boolean;
-    format?: (val: number | string) => string | number;
-    label?: string;
-  }
->;
+interface ColumnPreferences {
+  visible?: boolean;
+  format?: (val: number | string) => string | number;
+  jpath: keyof IRPeak;
+  label?: string;
+}
+interface IRPeakPanelPreferences {
+  columns?: ColumnPreferences[];
+}
 export interface IRPeaksPanelProps {
   /**
    * peaks to display in the panel
@@ -32,86 +34,61 @@ export interface IRPeaksPanelProps {
 }
 
 export function IRPeaksPanel(props: IRPeaksPanelProps) {
-  const {
-    peaks,
-    preferences = {
-      wavenumber: {},
-      transmittance: {},
-      absorbance: {},
-      kind: {},
-    },
-  } = props;
-  const columns: ColumnDef<IRPeak>[] = Object.entries(preferences).map(
-    ([key, { label = key, format = (x: number) => x }]) => ({
+  const { peaks, preferences = {} } = props;
+  const { columns = [] } = preferences;
+
+  const defaultColumns: ColumnDef<IRPeak>[] = columns.map(
+    ({ jpath, label = jpath, format = (x: number) => x }) => ({
       header: label,
-      accessorKey: key,
+      accessorKey: jpath,
       cell: ({ getValue }) => format(getValue()),
     }),
   );
 
+  function getColumnVisibility() {
+    const columnVisibility: Record<string, boolean> = {};
+    columns.forEach(({ jpath, visible = true }) => {
+      columnVisibility[jpath] = visible;
+    });
+    return columnVisibility;
+  }
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data: peaks,
-    columns,
+    columns: defaultColumns,
     state: {
       sorting,
-      columnVisibility: Object.entries(preferences).reduce(
-        (obj, [key, { visible = true }]) =>
-          Object.assign(obj, { [key]: visible }),
-        {},
-      ),
+      columnVisibility: getColumnVisibility(),
     },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
   return (
-    <table>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th
+    <Table>
+      <Table.Header>
+        {table
+          .getHeaderGroups()
+          .map(({ headers }) =>
+            headers.map((header) => (
+              <ValueRenderers.Title
+                style={{ cursor: 'pointer' }}
+                onClick={header.column.getToggleSortingHandler()}
                 key={header.id}
-                colSpan={header.colSpan}
-                style={{ border: 'solid 1px black', padding: '5px' }}
-              >
-                {header.isPlaceholder ? null : (
-                  <div
-                    style={{
-                      cursor: header.column.getCanSort() ? 'pointer' : '',
-                    }}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                    {{
-                      asc: ' 🔼',
-                      desc: ' 🔽',
-                    }[header.column.getIsSorted() as string] ?? null}
-                  </div>
-                )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td
-                key={cell.id}
-                style={{ border: 'solid 1px black', padding: '5px' }}
-              >
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                value={header.column.columnDef.header?.toString()}
+                sorted={header.column.getIsSorted()}
+              />
+            )),
+          )}
+      </Table.Header>
+      {table.getRowModel().rows.map((row) => (
+        <Table.Row key={row.id}>
+          {row.getVisibleCells().map((cell) => (
+            <ValueRenderers.Text key={cell.id} value={cell.getValue()} />
+          ))}
+        </Table.Row>
+      ))}
+    </Table>
   );
 }
