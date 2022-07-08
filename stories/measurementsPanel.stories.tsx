@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import axios from 'axios';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
 import {
   MeasurementsPanel as MeasurementsPanelComponent,
@@ -8,9 +8,12 @@ import {
 } from '../src';
 import { DataState } from '../src/components/context/data/DataState';
 
+import { QueryDecorator } from './utils';
+
 export default {
   title: 'Layout/Panels/MeasurementsPanel',
   component: MeasurementsPanelComponent,
+  decorators: [QueryDecorator],
   argTypes: {
     onTabSelect: {
       action: 'Tab changed',
@@ -24,13 +27,8 @@ export default {
   },
 } as Meta;
 
-const queryClient = new QueryClient();
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MeasurementsPanelStory {...props} />
-    </QueryClientProvider>
-  );
+  return <MeasurementsPanelStory {...props} />;
 }
 
 function MeasurementsPanelStory(props: MeasurementsPanelProps) {
