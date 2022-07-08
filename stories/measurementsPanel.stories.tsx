@@ -36,7 +36,7 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
 function MeasurementsPanelStory(props: MeasurementsPanelProps) {
   const { isLoading, data } = useQuery(['repoData'], () =>
     axios
-      .get<DataState>('../public/measurements.json')
+      .get<DataState>('/measurements.json')
       .then(({ data }) => data),
   );
 
