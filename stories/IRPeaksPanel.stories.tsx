@@ -22,7 +22,7 @@ export function IRPeaksPanel() {
 function IRPeaksPanelStory() {
   const { isLoading, data } = useQuery(['repoData'], () =>
     axios
-      .get<DataState>('/measurements.json')
+      .get<DataState>('../measurements.json')
       .then(({ data }) => data.measurements.ir.entries[0].peaks),
   );
 

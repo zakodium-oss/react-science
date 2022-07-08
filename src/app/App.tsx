@@ -22,7 +22,7 @@ import { DataState } from '../components/context/data/DataState';
 
 export default function App() {
   const { isLoading, data } = useQuery(['repoData'], () =>
-    axios.get<DataState>('/measurements.json').then(({ data }) => data),
+    axios.get<DataState>('../../measurements.json').then(({ data }) => data),
   );
 
   const items: Array<TabItem> = [

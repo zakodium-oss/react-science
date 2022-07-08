@@ -39,7 +39,7 @@ function MeasurementInfoPanelControl(
 ) {
   const { isLoading, data } = useQuery(['repoData'], () =>
     axios
-      .get<DataState>('/measurements.json')
+      .get<DataState>('../measurements.json')
       .then(({ data }) => data.measurements.ir.entries[0]),
   );
 
