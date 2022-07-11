@@ -72,7 +72,7 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
           .getHeaderGroups()
           .map(({ headers }) =>
             headers.map((header) => (
-              <ValueRenderers.Title
+              <ValueRenderers.Header
                 style={{ cursor: 'pointer' }}
                 onClick={header.column.getToggleSortingHandler()}
                 key={header.id}

@@ -4,9 +4,8 @@ import React from 'react';
 
 import { ValueRenderersProps } from '.';
 
-interface TitleProps extends ValueRenderersProps {
+export interface TitleProps extends ValueRenderersProps {
   value?: string;
-  sorted?: 'asc' | 'desc' | false;
 }
 
 const styles = {
@@ -14,16 +13,10 @@ const styles = {
     fontWeight: 'bold',
   }),
 };
-export function Title({ value, sorted = false, ...other }: TitleProps) {
+export function Title({ value, ...other }: TitleProps) {
   return (
     <div {...other} css={styles.title}>
       {value}
-      {sorted
-        ? {
-            asc: ' 🔼',
-            desc: ' 🔽',
-          }[sorted]
-        : null}
     </div>
   );
 }

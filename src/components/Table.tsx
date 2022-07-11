@@ -56,7 +56,8 @@ function rowChildren(children: ReactNode) {
         child.type === ValueRenderers.Text ||
         child.type === ValueRenderers.Number ||
         child.type === ValueRenderers.Title ||
-        child.type === ValueRenderers.Object)
+        child.type === ValueRenderers.Object ||
+        child.type === ValueRenderers.Header)
     ) {
       cells.push(<td css={styles.border}>{child}</td>);
     } else {
