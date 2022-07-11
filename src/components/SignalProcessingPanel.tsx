@@ -8,18 +8,20 @@ import { Table } from './Table';
 
 export interface Filter {
   name: string;
-  options: Record<string, string>;
+  options: Record<string, string | object>;
 }
 interface SignalProcessingPanelProps {
   filters?: Filter[];
   onChange?: (filters: Filter[]) => void;
 }
 export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
-  const { filters: addedFilters = [], onChange } = props;
-  const filters = filterXY.anyOf.map(({ properties }) => {
-    const options: Record<string, string> = {};
-    Object.keys(properties.options?.properties || {}).forEach(
-      (key) => (options[key] = ''),
+  const { filters = [], onChange } = props;
+  const defaultFilters = filterXY.anyOf.map(({ properties }) => {
+    const options: Record<string, string | object> = {};
+    Object.entries(properties.options?.properties || {}).forEach(
+      ([key, value]) => {
+        options[key] = value.default;
+      },
     );
     return {
       name: properties.name.enum[0],
@@ -31,34 +33,53 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
   const [{ index, filter }, setSelected] = useState<{
+    //filter index in default filters
     index: number;
     filter: Filter;
   }>({
     index: 0,
-    filter: filters[0],
+    filter: defaultFilters[0],
   });
   return (
     <div>
-      <Table>
+      <Table border={false}>
         <Table.Header>
+          <ValueRenderers.Title value=" " />
           <ValueRenderers.Title value="Name" />
           <ValueRenderers.Title value="Options" />
         </Table.Header>
-        {addedFilters.map(({ name, options }) => (
-          <Table.Row key={name}>
+        {filters.map(({ name, options }, i) => (
+          <Table.Row key={i}>
+            <ValueRenderers.Component>
+              <Button
+                style={{ width: '10px' }}
+                color={{ basic: 'white' }}
+                backgroundColor={{ basic: 'red' }}
+                onClick={() => {
+                  onChange?.(filters.filter((_, j) => j !== i));
+                }}
+              >
+                -
+              </Button>
+            </ValueRenderers.Component>
             <ValueRenderers.Text value={normalCase(name)} />
-            {Object.entries(options).map(([key, value]) => (
-              <ValueRenderers.Text key={key} value={value} />
-            ))}
+            {Object.entries(options).map(([key, value]) =>
+              typeof value === 'object' ? (
+                <ValueRenderers.Object key={key} value={value} />
+              ) : (
+                <ValueRenderers.Text key={key} value={value} />
+              ),
+            )}
           </Table.Row>
         ))}
       </Table>
       <div style={{ display: 'flex', gap: '4px', margin: '10px 0px' }}>
         <Button
+          style={{ width: '10px', marginLeft: '5px' }}
           color={{ basic: 'white' }}
           backgroundColor={{ basic: 'green' }}
           onClick={() => {
-            onChange?.([...addedFilters, filters[index]]);
+            onChange?.([...filters, filter]);
           }}
         >
           +
@@ -67,22 +88,28 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
           onChange={({ target }) => {
             const value = Number(target.value);
             if (!isNaN(value)) {
-              setSelected({ index: value, filter: filters[value] });
+              setSelected({ index: value, filter: defaultFilters[value] });
             }
           }}
           style={{ border: '1px solid black' }}
         >
-          {filters.map(({ name }, i) => (
+          {defaultFilters.map(({ name }, i) => (
             <option key={name} value={i}>
               {normalCase(name)}
             </option>
           ))}
         </select>
-        {Object.keys(filter.options).map((option, i) => (
+        {Object.keys(filter.options).map((option) => (
           <input
-            key={i}
+            key={`${index}-${option}`}
             style={{ border: '1px solid black', padding: '2px 5px' }}
             placeholder={normalCase(option)}
+            onChange={({ target }) => {
+              const value = target.value;
+              if (value) {
+                filter.options[option] = value;
+              }
+            }}
           />
         ))}
       </div>
