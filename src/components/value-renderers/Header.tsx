@@ -1,5 +1,4 @@
-import { Text } from './Text';
-import { TitleProps } from './Title';
+import { Title, TitleProps } from './Title';
 
 interface HeaderProps extends TitleProps {
   sorted?: 'asc' | 'desc' | false;
@@ -7,7 +6,7 @@ interface HeaderProps extends TitleProps {
 export function Header({ sorted = false, ...other }: HeaderProps) {
   return (
     <div>
-      <Text {...other}>Header</Text>
+      <Title {...other}>Header</Title>
       {sorted
         ? {
             asc: ' 🔼',
