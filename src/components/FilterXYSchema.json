@@ -1,0 +1,511 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "anyOf": [
+    {
+      "properties": {
+        "name": {
+          "enum": ["centerMean"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["centerMedian"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["fromTo"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "from": {
+              "description": "First value for xyIntegration in the X scale",
+              "type": "number"
+            },
+            "fromIndex": {
+              "default": 0,
+              "description": "First point for xyIntegration",
+              "type": "number"
+            },
+            "to": {
+              "description": "Last value for xyIntegration in the X scale",
+              "type": "number"
+            },
+            "toIndex": {
+              "default": "x.length-1",
+              "description": "Last point for xyIntegration",
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["normed"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "algorithm": {
+              "default": "'absolute'",
+              "description": "algorithm can be 'sum' 'max' or 'absolute'",
+              "enum": ["absolute", "max", "sum"],
+              "type": "string"
+            },
+            "value": {
+              "default": 1,
+              "description": "max or sum value",
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["divideBySD"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["rescale"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "max": {
+              "default": 1,
+              "description": "max used for the scaling",
+              "type": "number"
+            },
+            "min": {
+              "default": 0,
+              "description": "min used for the scaling",
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["paretoNormalization"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["airPLSBaseline"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["iterativePolynomialBaseline"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["rollingAverageBaseline"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["rollingBallBaseline"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["rollingMedianBaseline"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["firstDerivative"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "polynomial": {
+              "default": 3,
+              "type": "number"
+            },
+            "windowSize": {
+              "default": 9,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["secondDerivative"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "polynomial": {
+              "default": 3,
+              "type": "number"
+            },
+            "windowSize": {
+              "default": 9,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["thirdDerivative"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "polynomial": {
+              "default": 3,
+              "type": "number"
+            },
+            "windowSize": {
+              "default": 9,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["savitzkyGolay"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "derivative": {
+              "default": 0,
+              "type": "number"
+            },
+            "polynomial": {
+              "default": 3,
+              "type": "number"
+            },
+            "windowSize": {
+              "default": 9,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["ensureGrowing"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["equallySpaced"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "exclusions": {
+              "default": [],
+              "description": "number of points",
+              "items": {
+                "description": "Defines 2 limits as numbers",
+                "properties": {
+                  "from": {
+                    "type": "number"
+                  },
+                  "to": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "from": {
+              "default": "x[0]",
+              "description": "from",
+              "type": "number"
+            },
+            "numberOfPoints": {
+              "default": 100,
+              "description": "number of points",
+              "type": "number"
+            },
+            "to": {
+              "default": "x[x.length - 1]",
+              "description": "to",
+              "type": "number"
+            },
+            "zones": {
+              "default": "[{from,to}]",
+              "description": "array of from / to that should be kept",
+              "items": {
+                "description": "Defines 2 limits as numbers",
+                "properties": {
+                  "from": {
+                    "type": "number"
+                  },
+                  "to": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["filterX"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "exclusions": {
+              "default": [],
+              "description": "number of points",
+              "items": {
+                "description": "Defines 2 limits as numbers",
+                "properties": {
+                  "from": {
+                    "type": "number"
+                  },
+                  "to": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "from": {
+              "default": "x[0]",
+              "description": "from",
+              "type": "number"
+            },
+            "to": {
+              "default": "x[x.length - 1]",
+              "description": "to",
+              "type": "number"
+            },
+            "zones": {
+              "default": "[{from,to}]",
+              "description": "array of from / to that should be kept",
+              "items": {
+                "description": "Defines 2 limits as numbers",
+                "properties": {
+                  "from": {
+                    "type": "number"
+                  },
+                  "to": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["calibrateX"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "from": {
+              "default": "x[0]",
+              "description": "from",
+              "type": "number"
+            },
+            "gsd": {
+              "default": "[{from,to}]",
+              "description": "array of from / to that should be kept",
+              "properties": {
+                "maxCriteria": {
+                  "default": true,
+                  "description": "Peaks are local maxima (true) or minima (false)",
+                  "type": "boolean"
+                },
+                "minMaxRatio": {
+                  "default": 0.00025,
+                  "description": "Minimal height of small peaks based on the ratio between min and max",
+                  "type": "number"
+                },
+                "noiseLevel": {
+                  "description": "Peak under the noiseLevel (or over in case of maxCriteria=false) are ignored.",
+                  "type": "number"
+                },
+                "realTopDetection": {
+                  "default": false,
+                  "description": "Use a quadratic optimizations with the peak and its 3 closest neighbors",
+                  "type": "boolean"
+                },
+                "sgOptions": {
+                  "default": "{windowSize:9,polynomial:3}",
+                  "description": "Options for the Savitzky-Golay generalised algorithm. This algorithm is used\nto calculate the first ans second derivative.\nIt is also used when smoothY:true to smooth the spectrum for peak picking.\nThe Y values in case of smoothY is true will therefore be lower.",
+                  "properties": {
+                    "derivative": {
+                      "default": 0,
+                      "type": "number"
+                    },
+                    "polynomial": {
+                      "default": 3,
+                      "type": "number"
+                    },
+                    "windowSize": {
+                      "default": 9,
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "smoothY": {
+                  "default": false,
+                  "description": "Select the peak intensities from a smoothed version of the independent variables",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "nbPeaks": {
+              "default": 1,
+              "description": "number of points",
+              "type": "number"
+            },
+            "targetX": {
+              "default": 0,
+              "description": "define the new X value",
+              "type": "number"
+            },
+            "to": {
+              "default": "x[x.length-1]",
+              "description": "to",
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["xFunction"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "function": {
+              "default": "''",
+              "description": "Will apply a function on the X variable on each element of the array described as a string\nIn front of sequence of lowercase we will add 'Math.'. This allows to write\n`sin(x) + cos(x)` and it will be replace internally by (x) => (Math.sin(x) + Math.cos(x))",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    {
+      "properties": {
+        "name": {
+          "enum": ["yFunction"],
+          "type": "string"
+        },
+        "options": {
+          "properties": {
+            "function": {
+              "default": "''",
+              "description": "Will apply a function on the Y variable on each element of the array described as a string\nIn front of sequence of lowercase we will add 'Math.'. This allows to write\n`sin(y) + cos(y)` and it will be replace internally by (y) => (Math.sin(y) + Math.cos(y))",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  ]
+}
