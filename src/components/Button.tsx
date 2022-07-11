@@ -12,6 +12,7 @@ interface ButtonProps {
   backgroundColor?: Colorhover;
   color?: Colorhover;
   onClick?: () => void;
+  style?: CSSProperties;
 }
 
 export function Button(props: ButtonProps) {
@@ -21,10 +22,12 @@ export function Button(props: ButtonProps) {
       hover: 'hsl(21deg, 90%, 40%)',
     },
     color = { basic: 'white', hover: 'white' },
+    style,
   } = props;
 
   return (
     <button
+      style={style}
       onClick={props.onClick}
       css={css({
         display: 'flex',
@@ -38,7 +41,7 @@ export function Button(props: ButtonProps) {
         fontSize: 14,
         borderRadius: 6,
         color: color.basic,
-        minWidth: 70,
+        minWidth: 30,
         justifyContent: 'center',
         backgroundColor: backgroundColor.basic,
         ':hover': {
