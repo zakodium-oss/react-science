@@ -14,22 +14,20 @@ export default {
     preferences: {
       columns: [
         {
-          jpath: 'wavenumber',
-          visible: true,
-          label: 'Wavenumber',
+          accessorKey: 'wavenumber',
+          label: 'Wavenumber [cm-1]',
         },
         {
-          jpath: 'transmittance',
+          accessorKey: 'transmittance',
           visible: true,
           label: 'Transmittance',
+          format: (val: number) => `${(100 * val).toFixed(2)}%`,
         },
         {
-          jpath: 'absorbance',
-          visible: true,
-          label: 'Absorbance',
+          accessorKey: 'absorbance',
         },
         {
-          jpath: 'kind',
+          accessorKey: 'kind',
           visible: true,
           label: 'Kind',
         },

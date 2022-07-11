@@ -14,7 +14,7 @@ import { IRPeak } from './context/data/DataState';
 interface ColumnPreferences {
   visible?: boolean;
   format?: (val: number | string) => string | number;
-  jpath: keyof IRPeak;
+  accessorKey: keyof IRPeak;
   label?: string;
 }
 interface IRPeakPanelPreferences {
@@ -38,17 +38,17 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
   const { columns = [] } = preferences;
 
   const defaultColumns: ColumnDef<IRPeak>[] = columns.map(
-    ({ jpath, label = jpath, format = (x: number) => x }) => ({
+    ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
       header: label,
-      accessorKey: jpath,
+      accessorKey,
       cell: ({ getValue }) => format(getValue()),
     }),
   );
 
   function getColumnVisibility() {
     const columnVisibility: Record<string, boolean> = {};
-    columns.forEach(({ jpath, visible = true }) => {
-      columnVisibility[jpath] = visible;
+    columns.forEach(({ accessorKey, visible = true }) => {
+      columnVisibility[accessorKey] = visible;
     });
     return columnVisibility;
   }
@@ -84,9 +84,17 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
       </Table.Header>
       {table.getRowModel().rows.map((row) => (
         <Table.Row key={row.id}>
-          {row.getVisibleCells().map((cell) => (
-            <ValueRenderers.Text key={cell.id} value={cell.getValue()} />
-          ))}
+          {row.getVisibleCells().map((cell) => {
+            const value = (cell.column.columnDef.cell as CallableFunction)(
+              cell.getContext(),
+            );
+            return (
+              <ValueRenderers.Text
+                key={cell.id}
+                value={value !== undefined ? value : cell.getValue()}
+              />
+            );
+          })}
         </Table.Row>
       ))}
     </Table>
