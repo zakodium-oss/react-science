@@ -28,7 +28,7 @@ export default {
         },
         {
           accessorKey: 'kind',
-          visible: true,
+          visible: false,
           label: 'Kind',
         },
       ],
