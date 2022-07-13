@@ -15,9 +15,9 @@ export interface Filter<OptionsType = string | number> {
   name: string;
   options?: Record<string, OptionsType>;
 }
-interface SignalProcessingPanelProps {
-  filters?: Filter[];
-  onChange?: (filters: Filter[]) => void;
+export interface SignalProcessingPanelProps {
+  filters: Filter[];
+  onChange: (filters: Filter[]) => void;
 }
 const defaultFilters: Filter<FilterStateOptions>[] = filterXY.anyOf.map(
   ({ properties }) => {
@@ -60,6 +60,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
               }
             }}
             style={{ border: '1px solid black' }}
+            value={option.value}
           >
             <option value="" disabled selected>
               {normalCase(key)}
