@@ -7,13 +7,13 @@ import { Button } from './Button';
 import { Table } from './Table';
 
 interface FilterStateOptions {
-  value: string;
+  value: string | number;
   enum: string[];
   description: string;
 }
-export interface Filter<OptionsType = string> {
+export interface Filter<OptionsType = string | number> {
   name: string;
-  options: Record<string, OptionsType>;
+  options?: Record<string, OptionsType>;
 }
 interface SignalProcessingPanelProps {
   filters?: Filter[];
@@ -115,13 +115,16 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
             </ValueRenderers.Component>
             <ValueRenderers.Text value={normalCase(name)} />
             {options &&
-              Object.entries(options).map(([key, value]) =>
-                typeof value === 'object' ? (
-                  <ValueRenderers.Object key={key} value={value} />
-                ) : (
-                  <ValueRenderers.Text key={key} value={value} />
-                ),
-              )}
+              Object.entries(options).map(([key, value]) => {
+                if (typeof value === 'object') {
+                  return <ValueRenderers.Object key={key} value={value} />;
+                }
+                if (typeof value === 'string') {
+                  return <ValueRenderers.Text key={key} value={value} />;
+                } else {
+                  return <ValueRenderers.Number key={key} value={value} />;
+                }
+              })}
           </Table.Row>
         ))}
       </Table>
@@ -160,12 +163,13 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
         </select>
       </div>
 
-      {Object.entries(filter.options).map((option) => optionInput(option))}
+      {filter.options &&
+        Object.entries(filter.options).map((option) => optionInput(option))}
     </div>
   );
 }
 function getFilterValue({ options, name }: Filter<FilterStateOptions>) {
-  const result: Record<string, string> = {};
+  const result: Record<string, string | number> = {};
   if (options) {
     Object.entries(options).forEach(([key, { value }]) => {
       result[key] = value;

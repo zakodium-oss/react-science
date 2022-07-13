@@ -1,17 +1,21 @@
 import { Meta } from '@storybook/react';
-import { FilterXYType } from 'ml-signal-processing';
 import { useState } from 'react';
 
-import { SignalProcessingPanel as SignalProcessingPanelComponent } from '../src';
+import { Filter, SignalProcessingPanel } from '../src';
 
 export default {
   title: 'Layout/Panels/SignalProcessingPanel',
-  component: SignalProcessingPanelComponent,
+  component: SignalProcessingPanel,
 } as Meta;
 
-export function SignalProcessingPanel() {
-  const [filters, setFilters] = useState<FilterXYType[]>([]);
-  return (
-    <SignalProcessingPanelComponent filters={filters} onChange={setFilters} />
-  );
+export function Control() {
+  const [filters, setFilters] = useState<Filter[]>([]);
+  return <SignalProcessingPanel filters={filters} onChange={setFilters} />;
+}
+export function LoadFilters() {
+  const [filters, setFilters] = useState<Filter[]>([
+    { name: 'centerMedian' },
+    { name: 'fromTo', options: { from: 2, to: 8 } },
+  ]);
+  return <SignalProcessingPanel filters={filters} onChange={setFilters} />;
 }
