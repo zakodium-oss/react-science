@@ -73,6 +73,7 @@
     "cheminfo-font": "^1.8.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.18.0",
+    "ml-signal-processing": "^0.5.2",
     "ml-spectra-processing": "^11.7.0",
     "prettier": "^2.7.1",
     "react": "^17.0.2",
@@ -82,7 +83,6 @@
     "react-ocl": "^4.4.0",
     "react-plot": "^0.20.1",
     "rimraf": "^3.0.2",
-    "signal-processing": "^0.0.2",
     "typescript": "^4.7.4",
     "vite": "^2.9.13",
     "vitest": "^0.16.0"

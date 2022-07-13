@@ -1,10 +1,8 @@
 import { Meta } from '@storybook/react';
+import { FilterXYType } from 'ml-signal-processing';
 import { useState } from 'react';
 
-import {
-  Filter,
-  SignalProcessingPanel as SignalProcessingPanelComponent,
-} from '../src';
+import { SignalProcessingPanel as SignalProcessingPanelComponent } from '../src';
 
 export default {
   title: 'Layout/Panels/SignalProcessingPanel',
@@ -12,7 +10,7 @@ export default {
 } as Meta;
 
 export function SignalProcessingPanel() {
-  const [filters, setFilters] = useState<Filter[]>([]);
+  const [filters, setFilters] = useState<FilterXYType[]>([]);
   return (
     <SignalProcessingPanelComponent filters={filters} onChange={setFilters} />
   );
