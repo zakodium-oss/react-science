@@ -12,11 +12,6 @@ import {
 
 import * as ValueRenderers from './value-renderers/index';
 
-interface TableProps {
-  children?: ReactNode;
-  border?: boolean;
-}
-
 const styles = {
   border: css({
     border: '0.5px solid rgb(0, 0, 0)',
@@ -29,7 +24,7 @@ const styles = {
   }),
 };
 const TableContext = createContext({ border: true });
-export function useTableContext() {
+function useTableContext() {
   const context = useContext(TableContext);
   return context;
 }
@@ -51,8 +46,13 @@ function splitChildren(children: ReactNode) {
   }
   return { Rows, Header };
 }
+export interface TableProps {
+  children?: ReactNode;
+  border?: boolean;
+}
 
-export function Table({ children, border = true }: TableProps) {
+export function Table(props: TableProps) {
+  const { border = true, children } = props;
   const { Header, Rows } = splitChildren(children);
   const tableContextValue = useMemo(() => ({ border }), [border]);
   return (
@@ -92,15 +92,16 @@ function useRowChildren(children: ReactNode) {
   }
   return { cells };
 }
-function Row({ children }: TableProps) {
+
+function Row({ children, border = false }: TableProps) {
   const { cells } = useRowChildren(children);
-  return <tr>{cells}</tr>;
+  return <tr style={{ border: border ? '1px solid black' : '' }}>{cells}</tr>;
 }
 Table.Row = Row;
-Table.Header = ({ children }: TableProps) => {
+Table.Header = ({ children, border = false }: TableProps) => {
   return (
     <thead>
-      <Table.Row>{children}</Table.Row>
+      <Table.Row border={border}>{children}</Table.Row>
     </thead>
   );
 };
