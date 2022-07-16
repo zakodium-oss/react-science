@@ -15,7 +15,7 @@ export default {
       action: 'Filters modified',
     },
   },
-} as Meta;
+} as Meta<SignalProcessingPanelProps>;
 
 export function Control({ onChange }: SignalProcessingPanelProps) {
   const [filters, setFilters] = useState<Filter[]>([]);
@@ -29,11 +29,11 @@ export function Control({ onChange }: SignalProcessingPanelProps) {
     />
   );
 }
-export function LoadFilters({ onChange }: SignalProcessingPanelProps) {
-  const [filters, setFilters] = useState<Filter[]>([
-    { name: 'centerMedian' },
-    { name: 'fromTo', options: { from: 2, to: 8 } },
-  ]);
+export function LoadFilters({
+  filters: InitialFilters,
+  onChange,
+}: SignalProcessingPanelProps) {
+  const [filters, setFilters] = useState<Filter[]>(InitialFilters);
   return (
     <SignalProcessingPanel
       filters={filters}
@@ -44,3 +44,9 @@ export function LoadFilters({ onChange }: SignalProcessingPanelProps) {
     />
   );
 }
+LoadFilters.args = {
+  filters: [
+    { name: 'centerMedian' },
+    { name: 'fromTo', options: { from: 2, to: 8 } },
+  ],
+};
