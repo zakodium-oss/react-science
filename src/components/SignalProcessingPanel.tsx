@@ -14,8 +14,8 @@ export interface SignalProcessingPanelProps {
   onChange: (filters: Filter[]) => void;
 }
 interface FilterOptionsInfo {
-  value: string | number;
-  choices: string[];
+  defaultValue: string | number;
+  choices?: string[];
   description: string;
 }
 
@@ -25,7 +25,7 @@ const defaultFilters = filterXY.anyOf.map(({ properties }) => {
   Object.entries(properties?.options?.properties || {}).forEach(
     ([key, value]) => {
       options[key] = {
-        value: value.default,
+        defaultValue: value.default,
         choices: value.enum,
         description: value.description,
       };
@@ -60,7 +60,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                     newfilters.splice(
                       i + 1,
                       0,
-                      getFilterValue(defaultFilters[0]),
+                      getDefaultFilter(defaultFilters[0]),
                     );
                     onChange?.(newfilters);
                   }}
@@ -84,7 +84,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                 onChange={({ target }) => {
                   const value = Number(target.value);
                   if (!isNaN(value)) {
-                    const filter = getFilterValue(defaultFilters[value]);
+                    const filter = getDefaultFilter(defaultFilters[value]);
                     const newfilters = [...filters];
                     newfilters[i] = filter;
                     onChange?.(newfilters);
@@ -130,7 +130,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
           color={{ basic: 'white' }}
           backgroundColor={{ basic: 'green' }}
           onClick={() => {
-            const newfilters = [getFilterValue(defaultFilters[0])];
+            const newfilters = [getDefaultFilter(defaultFilters[0])];
             onChange?.(newfilters);
           }}
         >
@@ -140,12 +140,12 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
     </div>
   );
 }
-function getFilterValue({ options, name }: Filter<FilterOptionsInfo>) {
+function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   if (options) {
     const result: Record<string, string | number> = {};
 
-    Object.entries(options).forEach(([key, { value }]) => {
-      result[key] = value;
+    Object.entries(options).forEach(([key, { defaultValue }]) => {
+      result[key] = defaultValue;
     });
     return { name, options: result };
   }
