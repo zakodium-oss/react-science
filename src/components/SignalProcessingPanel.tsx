@@ -57,7 +57,11 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                   backgroundColor={{ basic: 'green' }}
                   onClick={() => {
                     const newfilters = [...filters];
-                    filters.splice(i + 1, 0, getFilterValue(defaultFilters[0]));
+                    newfilters.splice(
+                      i + 1,
+                      0,
+                      getFilterValue(defaultFilters[0]),
+                    );
                     onChange?.(newfilters);
                   }}
                 >
