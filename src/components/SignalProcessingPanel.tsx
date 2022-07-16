@@ -1,3 +1,4 @@
+import { FilterXYType } from 'ml-signal-processing';
 import filterXY from 'ml-signal-processing/FilterXYSchema.json';
 
 import { ValueRenderers } from '..';
@@ -6,7 +7,7 @@ import { Button } from './Button';
 import { Table } from './Table';
 
 export interface Filter<OptionsType = string | number> {
-  name: string;
+  name: FilterXYType['name'];
   options?: Record<string, OptionsType>;
 }
 export interface SignalProcessingPanelProps {
@@ -32,7 +33,7 @@ const defaultFilters = filterXY.anyOf.map(({ properties }) => {
     },
   );
   return {
-    name: properties.name.enum[0],
+    name: properties.name.enum[0] as FilterXYType['name'],
     options,
   };
 });
