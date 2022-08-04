@@ -67,12 +67,12 @@ function rowChildren(children: ReactNode) {
   }
   return { cells };
 }
-Table.Row = ({ children }: TableProps) => {
+Table.Row = function TableRow({ children }: TableProps) {
   const { cells } = rowChildren(children);
   return <tr>{cells}</tr>;
 };
 
-Table.Header = ({ children }: TableProps) => {
+Table.Header = function TableHeader({ children }: TableProps) {
   return (
     <thead>
       <Table.Row>{children}</Table.Row>
