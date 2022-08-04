@@ -1,4 +1,5 @@
 import type { StorybookViteConfig } from '@storybook/builder-vite';
+import { mergeConfig, UserConfig } from 'vite';
 
 const config: StorybookViteConfig = {
   core: {
@@ -7,10 +8,15 @@ const config: StorybookViteConfig = {
   stories: ['../stories/**/*.stories.tsx'],
   staticDirs: [],
   addons: ['@storybook/addon-essentials', '@storybook/addon-storysource'],
-  async viteFinal(config, options) {
+  async viteFinal(baseConfig, options) {
     const base = process.env.VITE_BASE || '/';
-    config.base = base + 'storybook/';
-    return config;
+    const config: UserConfig = {
+      base: base + 'storybook/',
+      esbuild: {
+        jsx: 'automatic',
+      },
+    };
+    return mergeConfig(baseConfig, config);
   },
 };
 
