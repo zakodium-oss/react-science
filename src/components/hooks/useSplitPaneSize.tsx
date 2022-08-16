@@ -53,7 +53,7 @@ export function useSplitPaneSize(options: HookOptions) {
                 },
               );
               if (newSize !== currentSize) {
-                let movement1; //the real movement
+                let movement1: number; //the real movement
                 if (movement * (newSize - currentSize) > 0) {
                   //check that movement and movement1 have the same sign
                   movement1 = newSize - currentSize;
