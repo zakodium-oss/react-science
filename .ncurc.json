@@ -1,4 +1,4 @@
 {
   "dep": "prod,dev",
-  "reject": ["@types/react", "@types/react-dom", "react", "react-dom"]
+  "reject": []
 }

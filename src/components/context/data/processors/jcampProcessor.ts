@@ -46,7 +46,7 @@ export const jcampProcessor: Processor = async function jcampProcessor(
 };
 
 function normalizeSpectra(spectra: any, kind: string) {
-  const data = [];
+  const data: any[] = [];
   for (const spectrum of spectra) {
     let variables = spectrum.variables;
     if (!variables) {
