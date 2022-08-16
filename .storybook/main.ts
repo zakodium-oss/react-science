@@ -1,5 +1,7 @@
 import type { StorybookViteConfig } from '@storybook/builder-vite';
-import { mergeConfig, UserConfig } from 'vite';
+import { mergeConfig, splitVendorChunkPlugin, UserConfig } from 'vite';
+
+import { sharedConfig } from '../vite.config';
 
 const config: StorybookViteConfig = {
   core: {
@@ -8,13 +10,11 @@ const config: StorybookViteConfig = {
   stories: ['../stories/**/*.stories.tsx'],
   staticDirs: [],
   addons: ['@storybook/addon-essentials', '@storybook/addon-storysource'],
-  async viteFinal(baseConfig, options) {
-    const base = process.env.VITE_BASE || '/';
+  async viteFinal(baseConfig) {
     const config: UserConfig = {
-      base: base + 'storybook/',
-      esbuild: {
-        jsx: 'automatic',
-      },
+      ...sharedConfig,
+      base: sharedConfig.base + 'storybook/',
+      plugins: [splitVendorChunkPlugin()],
     };
     return mergeConfig(baseConfig, config);
   },
