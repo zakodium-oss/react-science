@@ -18,6 +18,7 @@
     "build-ts": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
+    "createData": "npm run prepack && node scripts/createData",
     "dev": "npm run storybook",
     "dev-app": "vite --open",
     "eslint": "eslint src stories",
