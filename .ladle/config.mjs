@@ -1,6 +1,7 @@
 export default {
   stories: 'stories/**/*.stories.{js,jsx,ts,tsx}',
-  base: process.env.VITE_BASE
-    ? process.env.VITE_BASE + 'stories/'
+  // Use optional chaining as the config ends up in the browser build.
+  base: process?.env?.VITE_BASE
+    ? process?.env?.VITE_BASE + 'stories/'
     : '/stories/',
 };
