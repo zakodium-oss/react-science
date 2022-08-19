@@ -7,8 +7,8 @@ import { MeasurementBase } from './context/data/DataState';
 
 export interface MeasurementInfoPanelProps {
   measurement: MeasurementBase;
-  metaStyle: CSSProperties;
-  infoStyle: CSSProperties;
+  metaStyle?: CSSProperties;
+  infoStyle?: CSSProperties;
 }
 
 export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {

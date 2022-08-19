@@ -1,52 +1,40 @@
 import { useState } from 'react';
-import { FileError, FileWithPath } from 'react-dropzone';
+import { FileWithPath } from 'react-dropzone';
 
 import {
   DropZoneContainer,
   DropZone,
   Table,
   ValueRenderers,
-} from '../src/index';
+} from '../../src/index';
 
 export default {
-  title: 'Layout/DropZone',
-  argTypes: {
-    fileValidator: {
-      defaultValue: (file: File) => {
-        if (file.name.length > 20) {
-          // eslint-disable-next-line no-alert
-          alert(`The file "${file.name}" name is larger than 20 characters`);
-          return {
-            code: 'name-too-large',
-          };
-        }
-      },
-    },
-    color: {
-      defaultValue: 'black',
-      control: { type: 'color' },
-    },
-    onDrop: {
-      action: 'files uploaded',
-    },
-  },
+  title: 'Components / DropZone',
 };
 
 interface DropZoneStoryProps {
   color: string;
-  onDrop: (file: FileWithPath[]) => void;
-  fileValidator?: (file: File) => FileError;
 }
 
-export function DropZoneControl({ onDrop, ...other }: DropZoneStoryProps) {
+function fileValidator(file: File) {
+  if (file.name.length > 20) {
+    return {
+      message: 'File name is larger than 20 characters',
+      code: 'name-too-large',
+    };
+  }
+  return null;
+}
+
+export function Control({ color }: DropZoneStoryProps) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZone
-        {...other}
+        fileValidator={fileValidator}
+        color={color}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
-          onDrop(files);
         }}
       />
       {files.length > 0 && (
@@ -66,18 +54,20 @@ export function DropZoneControl({ onDrop, ...other }: DropZoneStoryProps) {
     </div>
   );
 }
-export function DropZoneContainerControl({
-  onDrop,
-  ...other
-}: DropZoneStoryProps) {
+
+Control.args = {
+  color: 'black',
+};
+
+export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZoneContainer
-        {...other}
+        fileValidator={fileValidator}
+        color={color}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
-          onDrop(files);
         }}
       >
         {files.length > 0 ? (
@@ -96,7 +86,7 @@ export function DropZoneContainerControl({
         ) : (
           <div
             style={{
-              backgroundColor: 'blue',
+              backgroundColor: 'lightblue',
               height: '150px',
             }}
           >

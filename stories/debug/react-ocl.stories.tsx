@@ -1,7 +1,7 @@
 import { StructureEditor } from 'react-ocl/full';
 
 export default {
-  title: 'Debug/React OCL',
+  title: 'Debug',
 };
 
 export function ReactOCL() {

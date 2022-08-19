@@ -1,8 +1,7 @@
-import { Toolbar } from '../src';
-import LayoutManager, { Layout } from '../src/components/LayoutManager';
+import LayoutManager, { Layout } from '../../src/components/LayoutManager';
 
 export default {
-  title: 'Layout/LayoutManager',
+  title: 'Layout / Layout manager',
 };
 
 const components = {
@@ -92,14 +91,5 @@ function PinkBackground() {
 }
 
 export function fromLayoutObject() {
-  return (
-    <>
-      <Toolbar orientation="vertical">
-        <Toolbar.Item id="A" title="A">
-          A
-        </Toolbar.Item>
-      </Toolbar>
-      <LayoutManager layout={layout} components={components} />
-    </>
-  );
+  return <LayoutManager layout={layout} components={components} />;
 }

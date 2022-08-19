@@ -1,28 +1,9 @@
-import { Accordion, SplitPane } from '../src';
-import { SplitPaneProps } from '../src/components/SplitPane';
-import { AccordionProvider } from '../src/components/context/AccordionContext';
+import { Accordion, SplitPane } from '../../src';
+import { SplitPaneProps } from '../../src/components/SplitPane';
+import { AccordionProvider } from '../../src/components/context/AccordionContext';
 
 export default {
-  title: 'Layout/SplitPane',
-  args: {
-    initialSeparation: '50%',
-    orientation: 'horizontal',
-    sideSeparation: 'end',
-    initialClosed: false,
-    minimumSize: 300,
-  },
-  argTypes: {
-    onChange: { action: 'handle' },
-    orientation: {
-      options: ['vertical', 'horizontal'],
-      control: { type: 'radio' },
-    },
-    sideSeparation: {
-      options: ['start', 'end'],
-      control: { type: 'radio' },
-    },
-  },
-  component: SplitPane,
+  title: 'Components / SplitPane',
 };
 
 export function Control(props: Omit<SplitPaneProps, 'children'>) {
@@ -35,6 +16,25 @@ export function Control(props: Omit<SplitPaneProps, 'children'>) {
     </div>
   );
 }
+
+Control.args = {
+  initialSeparation: '50%',
+  orientation: 'horizontal',
+  sideSeparation: 'end',
+  initialClosed: false,
+  minimumSize: 100,
+};
+
+Control.argTypes = {
+  orientation: {
+    options: ['vertical', 'horizontal'],
+    control: { type: 'radio' },
+  },
+  sideSeparation: {
+    options: ['start', 'end'],
+    control: { type: 'radio' },
+  },
+};
 
 export function Vertical() {
   return (
@@ -137,11 +137,11 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
       <SplitPane key={JSON.stringify(props)} {...props}>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
           {sideSeparation === 'start' &&
-            `Close when size less Than ${minimumSize}px 😊`}
+            `Close when window size less Than ${minimumSize}px 😊`}
         </div>
         <div style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}>
           {sideSeparation === 'end' &&
-            `Close when size less Than ${minimumSize}px 😊`}
+            `Close when window size less Than ${minimumSize}px 😊`}
         </div>
       </SplitPane>
     </div>

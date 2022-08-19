@@ -1,24 +1,11 @@
 import { SvgBioDna } from 'cheminfo-font';
 import { ReactNode, useState } from 'react';
 
-import { Toolbar } from '../src';
-import { ToolbarItemProps } from '../src/components/Toolbar';
+import { Toolbar } from '../../src';
+import { ToolbarItemProps } from '../../src/components/Toolbar';
 
 export default {
-  title: 'Layout/Toolbar',
-  args: {
-    height: 200,
-  },
-  argTypes: {
-    height: {
-      control: {
-        type: 'range',
-        min: 50,
-        max: 500,
-        step: 10,
-      },
-    },
-  },
+  title: 'Components / Toolbar',
 };
 
 const items: Array<{ children: ReactNode; title: string; id: string }> = [
@@ -77,6 +64,10 @@ export function VerticalToolbar(props: { height: number }) {
     </div>
   );
 }
+
+VerticalToolbar.args = {
+  height: 200,
+};
 
 export function HorizontalToolbar() {
   const [state, setState] = useState(items[1]);
