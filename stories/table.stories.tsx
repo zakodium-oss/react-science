@@ -5,7 +5,7 @@ import data from './data/table.json';
 export default {
   title: 'Layout/Table',
   component: Table,
-} as Meta;
+};
 
 export function TableControl() {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
