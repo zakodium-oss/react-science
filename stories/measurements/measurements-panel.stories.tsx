@@ -7,6 +7,7 @@ export default {
 
 export function MeasurementsPanel() {
   return (
+    // @ts-expect-error bad types?
     <MeasurementsPanelComponent measurements={measurements.measurements} />
   );
 }

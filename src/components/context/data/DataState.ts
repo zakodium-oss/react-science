@@ -36,6 +36,8 @@ export interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
+  filename?: string;
+  path?: string;
   meta: Record<string, any>;
   info: Record<string, any>;
   data: {

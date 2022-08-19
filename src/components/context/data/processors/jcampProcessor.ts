@@ -30,11 +30,9 @@ export const jcampProcessor: Processor = async function jcampProcessor(
         if (kind) {
           dataState.measurements[kind].entries.push({
             id: v4(),
-            //@ts-expect-error measurement.info should be ok
             meta: measurement.meta,
             filename: file.name,
             path: file.webkitRelativePath,
-            //@ts-expect-error measurement.info should be ok
             info: measurement.info,
             title: measurement.title,
             data: normalizeSpectra(measurement.spectra, kind),
