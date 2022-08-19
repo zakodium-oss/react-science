@@ -1,14 +1,12 @@
 import { MeasurementPlot, MeasurementPlotProps } from '../../src';
-import data from '../data/measurements.json';
+import measurement from '../data/irMeasurement.json';
 
 export default {
   title: 'Layout/MeasurementPlot',
 };
 
 export function Control(props: Omit<MeasurementPlotProps, 'measurement'>) {
-  return (
-    <MeasurementPlot measurement={data.measurements.ir.entries[0]} {...props} />
-  );
+  return <MeasurementPlot measurement={measurement} {...props} />;
 }
 
 Control.args = {
@@ -29,21 +27,21 @@ Control.argTypes = {
   xVariableName: {
     defaultValue: 'x',
     options: ['x', 'y', 't', 'a'],
-    control: 'select',
+    control: { type: 'select' },
   },
   yVariableName: {
     defaultValue: 'y',
     options: ['x', 'y', 't', 'a'],
-    control: 'select',
+    control: { type: 'select' },
   },
   zoom: {
     defaultValue: 'horizontal',
     options: ['horizontal', 'vertical', 'rectangular', ''],
-    control: 'select',
+    control: { type: 'select' },
   },
   wheelZoom: {
     defaultValue: 'vertical',
     options: ['horizontal', 'vertical', ''],
-    control: 'select',
+    control: { type: 'select' },
   },
 };

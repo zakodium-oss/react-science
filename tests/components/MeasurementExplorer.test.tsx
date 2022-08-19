@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
 import { MeasurementExplorer } from '../../src';
-import data from '../../stories/data/measurements.json';
-
-const measurement = data.measurements.ir.entries[0];
+import measurement from '../../stories/data/irMeasurement.json';
 
 test.describe('MeasurementExplorer', () => {
   test('initial variables', async ({ mount }) => {
@@ -18,8 +16,7 @@ test.describe('MeasurementExplorer', () => {
     await expect(xVariableName).toHaveValue('x');
     await expect(yVariableName).toHaveValue('y');
   });
-  // TODO: bring back measurement with different data.
-  test.skip('select variables', async ({ mount }) => {
+  test('select variables', async ({ mount }) => {
     const component = await mount(
       <MeasurementExplorer measurement={measurement} />,
     );

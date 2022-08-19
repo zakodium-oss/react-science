@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
 import { MeasurementPlot } from '../../src';
-import data from '../../stories/data/measurements.json';
-
-const measurement = data.measurements.ir.entries[0];
+import measurement from '../../stories/data/irMeasurement.json';
 
 const beforeZoom = [
   // horizontal axis default values
@@ -110,8 +108,7 @@ test.describe('MeasurementPlot', () => {
     await component.dblclick();
     await expect(component).toContainText(beforeZoom);
   });
-  // TODO: bring back measurement with different data.
-  test.skip('change variables', async ({ mount }) => {
+  test('change variables', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot
         measurement={measurement}

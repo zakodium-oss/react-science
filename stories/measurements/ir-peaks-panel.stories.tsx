@@ -1,13 +1,12 @@
 import { IRPeaksPanel as IRPeaksPanelComponent } from '../../src';
 import { IRPeak } from '../../src/components/context/data/DataState';
-import data from '../data/measurements.json';
+import measurement from '../data/irMeasurement.json';
 
 export default {
   title: 'Measurements / Panels',
 };
 
 export function IRPeaksPanel() {
-  // @ts-expect-error bad types?
-  const peaks = data.measurements.ir.entries[0].peaks as IRPeak[];
+  const peaks = measurement.peaks as IRPeak[];
   return <IRPeaksPanelComponent peaks={peaks} />;
 }
