@@ -8,3 +8,4 @@
 /playwright/.cache
 /playwright-report
 /coverage
+/stories/data
