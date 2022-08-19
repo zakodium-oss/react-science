@@ -1,5 +1,5 @@
 import { MeasurementExplorer, MeasurementExplorerProps } from '../../src';
-import data from '../data/irMeasurement.json';
+import data from '../data/measurements.json';
 
 export default {
   title: 'Measurements / Measurement explorer',
@@ -19,5 +19,10 @@ export default {
 };
 
 export function Basic(props: Omit<MeasurementExplorerProps, 'measurement'>) {
-  return <MeasurementExplorer measurement={data} {...props} />;
+  return (
+    <MeasurementExplorer
+      measurement={data.measurements.ir.entries[0]}
+      {...props}
+    />
+  );
 }

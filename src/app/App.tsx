@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -17,31 +16,9 @@ import {
   Tabs,
   Toolbar,
 } from '..';
-import { DataState } from '../components/context/data/DataState';
-import { getEmptyDataState } from '../components/context/data/getEmptyDataState';
+import data from '../../stories/data/measurements.json';
 
 export default function App() {
-  const [{ loaded, dataState }, setData] = useState<{
-    dataState: DataState;
-    loaded: boolean;
-  }>({ dataState: getEmptyDataState(), loaded: false });
-
-  useEffect(() => {
-    fetch('/measurements.json')
-      .then((response) => {
-        response
-          .json()
-          .then((dataState) => {
-            setData({ dataState, loaded: true });
-          })
-          .catch((e) => {
-            throw Error(e);
-          });
-      })
-      .catch((e) => {
-        throw Error(e);
-      });
-  }, []);
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -130,7 +107,8 @@ export default function App() {
                         width: '100%',
                       }}
                     >
-                      {loaded && <MeasurementsPanel {...dataState} />}
+                      {/* @ts-expect-error bad types? */}
+                      {<MeasurementsPanel measurements={data.measurements} />}
                     </div>
                   </Accordion.Item>
                   <Accordion.Item title="Integral">

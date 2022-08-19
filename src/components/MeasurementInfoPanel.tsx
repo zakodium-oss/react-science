@@ -20,10 +20,7 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
 
   const [search, setSearch] = useState('');
 
-  function viewData(
-    data: Record<string, string | number | object>,
-    style: CSSProperties = {},
-  ) {
+  function viewData(data: Record<string, any>, style: CSSProperties = {}) {
     return Object.keys(data).map((key) => {
       const value = data[key];
       if (

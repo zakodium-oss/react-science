@@ -1,10 +1,15 @@
 import { MeasurementInfoPanel as MeasurementInfoPanelComponent } from '../../src';
-import measurement from '../data/irMeasurement.json';
+import data from '../data/measurements.json';
 
 export default {
   title: 'Measurements / Panels',
 };
 
 export function MeasurementInfoPanel() {
-  return <MeasurementInfoPanelComponent measurement={measurement} />;
+  return (
+    <MeasurementInfoPanelComponent
+      // @ts-expect-error bad types?
+      measurement={data.measurements.ir.entries[0]}
+    />
+  );
 }
