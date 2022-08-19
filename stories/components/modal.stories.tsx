@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -23,17 +22,17 @@ import {
   Button,
   Tabs,
   TabItem,
-} from '../src';
+} from '../../src';
 
 export default {
-  title: 'Layout/Modal',
+  title: 'Components / Modal',
   argTypes: {
     onSave: { action: 'saved' },
     onCancel: { action: 'canceled' },
   },
-} as Meta;
+};
 
-export function ModalStories(props: { onSave: () => void }) {
+export function Basic(props: { onSave: () => void }) {
   const [isOpen, open, close] = useModal({ defaultOpened: true });
 
   return (
@@ -165,7 +164,7 @@ export function ModalStories(props: { onSave: () => void }) {
   );
 }
 
-export function ConfirmModalStories(props: {
+export function BasicConfirm(props: {
   onSave: () => void;
   onCancel: () => void;
 }) {
@@ -309,7 +308,7 @@ const tabs: Array<TabItem> = [
   },
 ];
 
-export function RealModalStories(props: { onSave: () => void }) {
+export function WithComplexContents(props: { onSave: () => void }) {
   const [isOpen, open, close] = useModal({ defaultOpened: true });
   const [state, setState] = useState(tabs[0]);
 

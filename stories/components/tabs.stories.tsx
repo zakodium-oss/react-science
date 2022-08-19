@@ -1,17 +1,13 @@
-import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { Tabs } from '../src';
-import { TabItem } from '../src/components/Tabs';
+import { Tabs } from '../../src';
+import { TabItem } from '../../src/components/Tabs';
 
 export default {
-  title: 'Layout/Tabs',
-  argTypes: {
-    onClick: { action: 'handle' },
-  },
-} as Meta;
+  title: 'Components / Tabs',
+};
 
-export function Control(props: { onClick: (item: TabItem) => void }) {
+export function Horizontal() {
   const items: Array<TabItem> = [
     { id: '1h', title: '1H', content: 'Hello, World! [a]' },
     { id: '13c', title: '13C', content: 'Hello, World! [b]' },
@@ -23,7 +19,6 @@ export function Control(props: { onClick: (item: TabItem) => void }) {
 
   function handleClick(item: TabItem) {
     setState(item);
-    props.onClick(item);
   }
 
   return (
@@ -36,7 +31,7 @@ export function Control(props: { onClick: (item: TabItem) => void }) {
   );
 }
 
-export function ControlVertical(props: { onClick: (item: TabItem) => void }) {
+export function Vertical() {
   const items: Array<TabItem> = [
     { id: 'controllers', title: 'Controllers', content: 'Hello, World!' },
     {
@@ -51,7 +46,6 @@ export function ControlVertical(props: { onClick: (item: TabItem) => void }) {
 
   function handleClick(item: TabItem) {
     setState(item);
-    props.onClick(item);
   }
 
   return (

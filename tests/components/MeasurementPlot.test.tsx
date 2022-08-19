@@ -1,8 +1,7 @@
-/* eslint-disable jest/no-standalone-expect */
 import { test, expect } from '@playwright/experimental-ct-react';
 
 import { MeasurementPlot } from '../../src';
-import measurement from '../../stories/data/measurement.json';
+import measurement from '../../stories/data/irMeasurement.json';
 
 const beforeZoom = [
   // horizontal axis default values

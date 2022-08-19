@@ -36,8 +36,10 @@ export interface MeasurementBase {
   id: string;
   title?: string;
   instrument?: Instrument;
-  meta: Record<string, string | number | object>;
-  info: Record<string, string | number | object>;
+  filename?: string;
+  path?: string;
+  meta: Record<string, any>;
+  info: Record<string, any>;
   data: {
     variables: Record<string, MeasurementVariable>;
   }[];

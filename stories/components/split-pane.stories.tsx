@@ -1,32 +1,10 @@
-import { ComponentStory, Meta } from '@storybook/react';
-import React from 'react';
-
-import { Accordion, SplitPane } from '../src';
-import { SplitPaneProps } from '../src/components/SplitPane';
-import { AccordionProvider } from '../src/components/context/AccordionContext';
+import { Accordion, SplitPane } from '../../src';
+import { SplitPaneProps } from '../../src/components/SplitPane';
+import { AccordionProvider } from '../../src/components/context/AccordionContext';
 
 export default {
-  title: 'Layout/SplitPane',
-  args: {
-    initialSeparation: '50%',
-    orientation: 'horizontal',
-    sideSeparation: 'end',
-    initialClosed: false,
-    minimumSize: 300,
-  },
-  argTypes: {
-    onChange: { action: 'handle' },
-    orientation: {
-      options: ['vertical', 'horizontal'],
-      control: { type: 'radio' },
-    },
-    sideSeparation: {
-      options: ['start', 'end'],
-      control: { type: 'radio' },
-    },
-  },
-  component: SplitPane,
-} as Meta<SplitPaneProps>;
+  title: 'Components / SplitPane',
+};
 
 export function Control(props: Omit<SplitPaneProps, 'children'>) {
   return (
@@ -38,6 +16,25 @@ export function Control(props: Omit<SplitPaneProps, 'children'>) {
     </div>
   );
 }
+
+Control.args = {
+  initialSeparation: '50%',
+  orientation: 'horizontal',
+  sideSeparation: 'end',
+  initialClosed: false,
+  minimumSize: 100,
+};
+
+Control.argTypes = {
+  orientation: {
+    options: ['vertical', 'horizontal'],
+    control: { type: 'radio' },
+  },
+  sideSeparation: {
+    options: ['start', 'end'],
+    control: { type: 'radio' },
+  },
+};
 
 export function Vertical() {
   return (
@@ -127,9 +124,8 @@ export function WithEvilChild() {
     </div>
   );
 }
-const WithMinimalSizeExample: ComponentStory<typeof SplitPane> = (
-  props: Omit<SplitPaneProps, 'children'>,
-) => {
+
+export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
   const { sideSeparation, minimumSize = 300 } = props;
   return (
     <div
@@ -141,18 +137,17 @@ const WithMinimalSizeExample: ComponentStory<typeof SplitPane> = (
       <SplitPane key={JSON.stringify(props)} {...props}>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
           {sideSeparation === 'start' &&
-            `Close when size less Than ${minimumSize}px 😊`}
+            `Close when window size less Than ${minimumSize}px 😊`}
         </div>
         <div style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}>
           {sideSeparation === 'end' &&
-            `Close when size less Than ${minimumSize}px 😊`}
+            `Close when window size less Than ${minimumSize}px 😊`}
         </div>
       </SplitPane>
     </div>
   );
-};
+}
 
-export const WithMinimalSize = WithMinimalSizeExample.bind({});
 WithMinimalSize.args = {
   initialSeparation: '500px',
   orientation: 'horizontal',

@@ -1,4 +1,4 @@
-name: Deploy storybook and demo app on GitHub pages
+name: Deploy stories and demo app on GitHub pages
 
 on:
   push:

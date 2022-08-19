@@ -1,8 +1,7 @@
-/* eslint-disable jest/no-standalone-expect */
 import { test, expect } from '@playwright/experimental-ct-react';
 
 import { MeasurementExplorer } from '../../src';
-import measurement from '../../stories/data/measurement.json';
+import measurement from '../../stories/data/irMeasurement.json';
 
 test.describe('MeasurementExplorer', () => {
   test('initial variables', async ({ mount }) => {

@@ -1,16 +1,12 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-
-import { Table, ValueRenderers } from '../src';
-
-import data from './data/table.json';
+import { Table, ValueRenderers } from '../../src';
+import data from '../data/table.json';
 
 export default {
-  title: 'Layout/Table',
+  title: 'Components / Table',
   component: Table,
-} as Meta;
+};
 
-export function TableControl() {
+export function Control() {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
     <Table.Row key={id}>
       <ValueRenderers.Text value={id} />
