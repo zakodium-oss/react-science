@@ -1,11 +1,9 @@
-import { defineConfig, UserConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 import { splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
-/*
-  Part of the config shared with storybook.
-*/
-export const sharedConfig: UserConfig = {
+// https://vitejs.dev/config/
+export default defineConfig({
   base: process.env.VITE_BASE || '/',
   esbuild: {
     jsx: 'automatic',
@@ -14,11 +12,6 @@ export const sharedConfig: UserConfig = {
     minify: process.env.NO_MINIFY ? false : 'esbuild',
   },
   plugins: [react(), splitVendorChunkPlugin()],
-};
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  ...sharedConfig,
   test: {
     globals: true,
     dir: 'src',

@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Tabs } from '../src';
 import { TabItem } from '../src/components/Tabs';
@@ -9,7 +8,7 @@ export default {
   argTypes: {
     onClick: { action: 'handle' },
   },
-} as Meta;
+};
 
 export function Control(props: { onClick: (item: TabItem) => void }) {
   const items: Array<TabItem> = [

@@ -1,6 +1,3 @@
-import { ComponentStory, Meta } from '@storybook/react';
-import React from 'react';
-
 import { Accordion, SplitPane } from '../src';
 import { SplitPaneProps } from '../src/components/SplitPane';
 import { AccordionProvider } from '../src/components/context/AccordionContext';
@@ -26,7 +23,7 @@ export default {
     },
   },
   component: SplitPane,
-} as Meta<SplitPaneProps>;
+};
 
 export function Control(props: Omit<SplitPaneProps, 'children'>) {
   return (
@@ -127,9 +124,8 @@ export function WithEvilChild() {
     </div>
   );
 }
-const WithMinimalSizeExample: ComponentStory<typeof SplitPane> = (
-  props: Omit<SplitPaneProps, 'children'>,
-) => {
+
+export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
   const { sideSeparation, minimumSize = 300 } = props;
   return (
     <div
@@ -150,9 +146,8 @@ const WithMinimalSizeExample: ComponentStory<typeof SplitPane> = (
       </SplitPane>
     </div>
   );
-};
+}
 
-export const WithMinimalSize = WithMinimalSizeExample.bind({});
 WithMinimalSize.args = {
   initialSeparation: '500px',
   orientation: 'horizontal',

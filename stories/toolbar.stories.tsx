@@ -1,9 +1,8 @@
-import { Meta } from '@storybook/react';
 import { SvgBioDna } from 'cheminfo-font';
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { Toolbar } from '../src';
-import { ToolbarItemProps, ToolbarProps } from '../src/components/Toolbar';
+import { ToolbarItemProps } from '../src/components/Toolbar';
 
 export default {
   title: 'Layout/Toolbar',
@@ -20,7 +19,7 @@ export default {
       },
     },
   },
-} as Meta<ToolbarProps>;
+};
 
 const items: Array<{ children: ReactNode; title: string; id: string }> = [
   { id: 'copy', children: 'c', title: 'Copy' },

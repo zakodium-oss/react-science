@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
 import { IRPeaksPanel as IRPeaksPanelComponent } from '../src';
@@ -7,7 +6,7 @@ import { IRPeak } from '../src/components/context/data/DataState';
 export default {
   title: 'Layout/Panels/IRPeaksPanel',
   component: IRPeaksPanelComponent,
-} as Meta;
+};
 
 export function IRPeaksPanel() {
   return <IRPeaksPanelStory />;

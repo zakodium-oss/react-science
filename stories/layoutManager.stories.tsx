@@ -1,12 +1,9 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-
 import { Toolbar } from '../src';
 import LayoutManager, { Layout } from '../src/components/LayoutManager';
 
 export default {
   title: 'Layout/LayoutManager',
-} as Meta;
+};
 
 const components = {
   BlueBackground,

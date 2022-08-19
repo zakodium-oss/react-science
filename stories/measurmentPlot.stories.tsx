@@ -1,6 +1,3 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-
 import { MeasurementPlot, MeasurementPlotProps } from '../src';
 
 import data from './data/measurement.json';
@@ -43,7 +40,7 @@ export default {
       control: 'select',
     },
   },
-} as Meta;
+};
 
 export function control(props: Omit<MeasurementPlotProps, 'measurement'>) {
   return <MeasurementPlot measurement={data} {...props} />;

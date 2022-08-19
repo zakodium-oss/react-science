@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
 import {
@@ -22,7 +21,7 @@ export default {
       control: false,
     },
   },
-} as Meta;
+};
 
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
   return <MeasurementsPanelStory {...props} />;

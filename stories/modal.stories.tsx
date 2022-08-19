@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   FaMeteor,
   FaBook,
@@ -31,7 +30,7 @@ export default {
     onSave: { action: 'saved' },
     onCancel: { action: 'canceled' },
   },
-} as Meta;
+};
 
 export function ModalStories(props: { onSave: () => void }) {
   const [isOpen, open, close] = useModal({ defaultOpened: true });

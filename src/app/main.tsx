@@ -19,7 +19,7 @@ ReactDOM.render(
             paddingBlock: 5,
           }}
         >
-          <a href={`${import.meta.env.BASE_URL}storybook/`}>Open Storybook</a>
+          <a href={`${import.meta.env.BASE_URL}stories/`}>Open stories</a>
         </div>
       ) : null}
       <App />

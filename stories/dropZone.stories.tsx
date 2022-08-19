@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react';
 import { useState } from 'react';
 import { FileError, FileWithPath } from 'react-dropzone';
 
@@ -31,7 +30,7 @@ export default {
       action: 'files uploaded',
     },
   },
-} as Meta<DropZoneStoryProps>;
+};
 
 interface DropZoneStoryProps {
   color: string;

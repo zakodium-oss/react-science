@@ -1,11 +1,8 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-
 import { Header, Toolbar } from '../src';
 
 export default {
   title: 'Layout/Header',
-} as Meta;
+};
 
 export function test() {
   return (

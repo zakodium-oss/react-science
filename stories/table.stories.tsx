@@ -1,6 +1,3 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-
 import { Table, ValueRenderers } from '../src';
 
 import data from './data/table.json';

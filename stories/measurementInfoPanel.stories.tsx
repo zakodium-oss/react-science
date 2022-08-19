@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react';
 import { useState, useEffect } from 'react';
 
 import {
@@ -20,7 +19,7 @@ export default {
       padding: '0px 6px',
     },
   },
-} as Meta<Omit<MeasurementInfoPanelProps, 'measurement'>>;
+};
 export function MeasurementInfoPanel(
   props: Omit<MeasurementInfoPanelProps, 'measurement'>,
 ) {

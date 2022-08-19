@@ -1,6 +1,3 @@
-import { Meta } from '@storybook/react';
-import React from 'react';
-
 import { MeasurementExplorer, MeasurementExplorerProps } from '../src';
 
 import data from './data/measurement.json';
@@ -20,7 +17,7 @@ export default {
     showVerticalGrid: true,
     flipHorizontalAxis: false,
   },
-} as Meta<Omit<MeasurementExplorerProps, 'measurement'>>;
+};
 
 export function control(props: Omit<MeasurementExplorerProps, 'measurement'>) {
   return <MeasurementExplorer measurement={data} {...props} />;
