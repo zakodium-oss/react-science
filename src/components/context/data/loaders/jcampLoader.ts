@@ -2,19 +2,14 @@ import { v4 } from '@lukeed/uuid';
 import { PartialFileList } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import { DataState, MeasurementKind, Processor } from '../DataState';
-import { irSpectrumEnhancer } from '../enhancers/irSpectrumEnhancer';
+import { DataState, MeasurementKind, Loader } from '../DataState';
 
-const enhancers: Record<string, typeof irSpectrumEnhancer> = {
-  ir: irSpectrumEnhancer,
-};
-
-export const jcampProcessor: Processor = async function jcampProcessor(
+export const jcampLoader: Loader = async function jcampLoader(
   fileList: PartialFileList,
   dataState: DataState,
 ) {
   for (const file of fileList) {
-    if (/(?:\.jdx|\.dx)$/i.exec(file.name)) {
+    if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
       const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
       for (const measurement of parsed.flatten) {
         let kind: MeasurementKind | '' = '';
@@ -35,7 +30,7 @@ export const jcampProcessor: Processor = async function jcampProcessor(
             path: file.webkitRelativePath,
             info: measurement.info,
             title: measurement.title,
-            data: normalizeSpectra(measurement.spectra, kind),
+            data: normalizeSpectra(measurement.spectra),
           });
         }
       }
@@ -43,7 +38,7 @@ export const jcampProcessor: Processor = async function jcampProcessor(
   }
 };
 
-function normalizeSpectra(spectra: any, kind: string) {
+function normalizeSpectra(spectra: any) {
   const data: any[] = [];
   for (const spectrum of spectra) {
     let variables = spectrum.variables;
@@ -68,10 +63,6 @@ function normalizeSpectra(spectra: any, kind: string) {
           variable.label += ` [${variable.units}]`;
         }
       }
-    }
-
-    if (enhancers[kind]) {
-      enhancers[kind](variables);
     }
 
     data.push({ variables });

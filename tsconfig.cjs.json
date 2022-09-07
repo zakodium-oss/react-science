@@ -4,6 +4,7 @@
     "./src/app",
     "./stories",
     "./tests",
+    "**/__tests__",
     "playwright*.ts",
     "./playwright"
   ],

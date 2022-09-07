@@ -8,8 +8,8 @@ import {
   DataState,
   kindsLabel,
   MeasurementKind,
-  MeasurementBase,
 } from './context/data/DataState';
+import { MeasurementBase } from './context/data/MeasurementBase';
 
 interface PanelInfo {
   id: number;
