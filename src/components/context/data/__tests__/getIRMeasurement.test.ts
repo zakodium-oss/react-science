@@ -1,3 +1,5 @@
+import { expect, test } from 'vitest';
+
 import { getIRMeasurement } from './getIRMeasurement';
 
 test('getIRMeasurement', async () => {

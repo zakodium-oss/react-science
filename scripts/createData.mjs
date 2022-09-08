@@ -1,3 +1,5 @@
+// before running this script you should `npm run prepack`
+
 import { writeFileSync } from 'fs';
 
 import { fileListFromPath } from 'filelist-utils';

@@ -1,4 +1,5 @@
 import { produce } from 'immer';
+import { expect, test } from 'vitest';
 
 import { getIRMeasurement } from '../../__tests__/getIRMeasurement';
 import { irMeasurementEnhancer } from '../irMeasurementEnhancer';
