@@ -4,12 +4,8 @@ import { ValueRenderers } from '..';
 
 import { Table } from './Table';
 import { TabItem, Tabs } from './Tabs';
-import {
-  DataState,
-  kindsLabel,
-  MeasurementKind,
-} from './context/data/DataState';
-import { MeasurementBase } from './context/data/MeasurementBase';
+import { DataState, kindsLabel, MeasurementKind } from '../data/DataState';
+import { MeasurementBase } from '../data/MeasurementBase';
 
 interface PanelInfo {
   id: number;

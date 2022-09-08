@@ -1,5 +1,5 @@
 import { IRPeaksPanel as IRPeaksPanelComponent } from '../../src';
-import { IRPeak } from '../../src/components/context/data/IRPeak';
+import { IRPeak } from '../../src/data/IRPeak';
 import measurement from '../data/irMeasurement.json';
 
 export default {
