@@ -21,17 +21,22 @@ export async function append(
 ) {
   const { loaders = [], enhancers = {} } = options;
 
-  const newEntries = getEmptyDataState();
+  // We don't want that one loader has access to the currently growing new dataState
+  // and therefore each loader starts with an empty dataState
+  const newMeasurements: any[] = [];
   for (const loader of loaders) {
+    const newEntries = getEmptyDataState();
     await loader(fileList, newEntries);
+    enhance(newEntries, enhancers);
+    newMeasurements.push(newEntries);
   }
 
-  enhance(newEntries, enhancers);
-
-  const nextDataState = await produce(baseState, async (draft) => {
-    for (let key in newEntries.measurements) {
-      for (let entry of newEntries.measurements[key].entries) {
-        draft.measurements[key].entries.push(entry);
+  const nextDataState = produce(baseState, (draft) => {
+    for (const newEntries of newMeasurements) {
+      for (let key in newEntries.measurements) {
+        for (let entry of newEntries.measurements[key].entries) {
+          draft.measurements[key].entries.push(entry);
+        }
       }
     }
   });
