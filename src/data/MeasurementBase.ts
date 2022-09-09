@@ -17,8 +17,8 @@ export interface MeasurementBase {
   meta: Record<string, any>;
   info: Record<string, any>;
   data: {
-    meta: Record<string, any>;
-    info: Record<string, any>;
+    meta?: Record<string, any>;
+    info?: Record<string, any>;
     variables: Record<string, MeasurementVariable>;
   }[];
 }

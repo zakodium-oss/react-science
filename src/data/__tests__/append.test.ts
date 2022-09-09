@@ -31,6 +31,7 @@ test('append', async () => {
   const { measurements } = newDataState;
   expect(Object.keys(measurements)).toStrictEqual([
     'ir',
+    'iv',
     'raman',
     'uv',
     'nmr1h',

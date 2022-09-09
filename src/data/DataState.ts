@@ -11,6 +11,9 @@ interface Measurements {
   ir: {
     entries: IRMeasurement[];
   };
+  iv: {
+    entries: MeasurementBase[];
+  };
   raman: {
     entries: MeasurementBase[];
   };
@@ -32,6 +35,7 @@ export type MeasurementKind = keyof Measurements;
 
 export const kindsLabel: Record<MeasurementKind, string> = {
   ir: 'IR',
+  iv: 'IV',
   raman: 'Raman',
   uv: 'UV',
   mass: 'Mass',
