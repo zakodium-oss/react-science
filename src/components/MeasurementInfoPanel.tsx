@@ -3,7 +3,7 @@ import { CSSProperties, useState } from 'react';
 import { ValueRenderers } from '..';
 
 import { Table } from './Table';
-import { MeasurementBase } from './context/data/DataState';
+import { MeasurementBase } from '../data/MeasurementBase';
 
 export interface MeasurementInfoPanelProps {
   measurement: MeasurementBase;

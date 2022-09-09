@@ -1,7 +1,7 @@
 import { ValueRenderers } from '..';
 
 import { Table } from './Table';
-import { IRPeak } from './context/data/DataState';
+import { IRPeak } from '../data/IRPeak';
 
 export interface IRPeaksPanelProps {
   peaks: IRPeak[];

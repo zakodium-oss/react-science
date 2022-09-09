@@ -1,5 +1,7 @@
-import { Instrument, MeasurementVariable } from 'cheminfo-types';
 import { PartialFileList } from 'filelist-utils';
+
+import { IRMeasurement } from './IRMeasurement';
+import { MeasurementBase } from './MeasurementBase';
 
 export interface DataState {
   measurements: Measurements;
@@ -7,6 +9,9 @@ export interface DataState {
 
 interface Measurements {
   ir: {
+    entries: IRMeasurement[];
+  };
+  iv: {
     entries: MeasurementBase[];
   };
   raman: {
@@ -26,29 +31,11 @@ interface Measurements {
   };
 }
 
-export interface IRPeak {
-  wavenumber: number;
-  absorbance: number;
-  transmittance: number;
-  kind: 'S' | 'w' | 'm';
-}
-export interface MeasurementBase {
-  id: string;
-  title?: string;
-  instrument?: Instrument;
-  filename?: string;
-  path?: string;
-  meta: Record<string, any>;
-  info: Record<string, any>;
-  data: {
-    variables: Record<string, MeasurementVariable>;
-  }[];
-}
-
 export type MeasurementKind = keyof Measurements;
 
 export const kindsLabel: Record<MeasurementKind, string> = {
   ir: 'IR',
+  iv: 'IV',
   raman: 'Raman',
   uv: 'UV',
   mass: 'Mass',
@@ -56,7 +43,7 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   other: 'Other',
 };
 
-export type Processor = (
+export type Loader = (
   fileList: PartialFileList,
   dataState: DataState,
 ) => Promise<void>;

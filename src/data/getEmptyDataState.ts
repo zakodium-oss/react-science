@@ -6,6 +6,9 @@ export function getEmptyDataState(): DataState {
       ir: {
         entries: [],
       },
+      iv: {
+        entries: [],
+      },
       raman: {
         entries: [],
       },
