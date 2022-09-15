@@ -76,6 +76,7 @@ function DropZoneContent(
         height: 100%;
         width: 100%;
         ${isDragActive || !isContainer ? `border: 2px dashed ${color};` : null}
+        box-sizing: border-box;
         color: ${color};
         display: flex;
         align-items: center;
