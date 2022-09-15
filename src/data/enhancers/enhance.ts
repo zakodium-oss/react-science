@@ -1,7 +1,6 @@
-import { DataState } from '../DataState';
+import { Measurements } from '../DataState';
 
-export function enhance(dataState: DataState, enhancers = {}) {
-  const measurements = dataState.measurements;
+export function enhance(measurements: Measurements, enhancers = {}) {
   for (let key in measurements) {
     if (
       enhancers[key] &&

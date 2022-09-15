@@ -4,10 +4,10 @@ import { join } from 'path';
 
 import { fileListFromPath } from 'filelist-utils';
 
+import { getEmptyDataState } from '../DataState';
 import { append } from '../append';
 import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
-import { getEmptyDataState } from '../getEmptyDataState';
 import { jcampLoader } from '../loaders/jcampLoader';
 import { wdfLoader } from '../loaders/wdfLoader';
 

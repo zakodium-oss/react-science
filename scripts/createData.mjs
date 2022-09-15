@@ -5,10 +5,10 @@ import { writeFileSync } from 'fs';
 import { fileListFromPath } from 'filelist-utils';
 import { produce } from 'immer';
 
+import { getEmptyDataState } from '../lib/data/DataState.js';
 import { append } from '../lib/data/append.js';
 import { getIRAutoPeakPickingEnhancer } from '../lib/data/enhancers/irAutoPeakPickingEnhancer.js';
 import { irMeasurementEnhancer } from '../lib/data/enhancers/irMeasurementEnhancer.js';
-import { getEmptyDataState } from '../lib/data/getEmptyDataState.js';
 import { jcampLoader } from '../lib/data/loaders/jcampLoader.js';
 import { wdfLoader } from '../lib/data/loaders/wdfLoader.js';
 

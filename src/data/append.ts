@@ -1,9 +1,14 @@
 import { PartialFileList } from 'filelist-utils';
 import { produce } from 'immer';
 
-import { DataState, Loader } from './DataState';
+import {
+  DataState,
+  getEmptyMeasurements,
+  Loader,
+  Measurements,
+  mergeMeasurements,
+} from './DataState';
 import { enhance } from './enhancers/enhance';
-import { getEmptyDataState } from './getEmptyDataState';
 
 interface AppendOptions {
   loaders?: Loader[];
@@ -19,27 +24,31 @@ export async function append(
   baseState: DataState,
   options: AppendOptions = {},
 ) {
-  const { loaders = [], enhancers = {} } = options;
-
   // We don't want that one loader has access to the currently growing new dataState
   // and therefore each loader starts with an empty dataState
-  const newMeasurements: any[] = [];
-  for (const loader of loaders) {
-    const newEntries = getEmptyDataState();
-    await loader(fileList, newEntries);
-    enhance(newEntries, enhancers);
-    newMeasurements.push(newEntries);
-  }
+  const newMeasurements = await loadMeasurements(fileList, options);
 
   const nextDataState = produce(baseState, (draft) => {
-    for (const newEntries of newMeasurements) {
-      for (let key in newEntries.measurements) {
-        for (let entry of newEntries.measurements[key].entries) {
-          draft.measurements[key].entries.push(entry);
-        }
+    for (let key in newMeasurements) {
+      for (let entry of newMeasurements[key].entries) {
+        draft.measurements[key].entries.push(entry);
       }
     }
   });
 
   return { logs: [], dataState: nextDataState };
+}
+
+export async function loadMeasurements(
+  fileList: PartialFileList,
+  options: AppendOptions = {},
+) {
+  const measurements: Measurements = getEmptyMeasurements();
+  const { loaders = [], enhancers = {} } = options;
+  for (const loader of loaders) {
+    const loaderMeasurements = await loader(fileList);
+    enhance(loaderMeasurements, enhancers);
+    mergeMeasurements(measurements, loaderMeasurements);
+  }
+  return measurements;
 }

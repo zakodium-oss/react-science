@@ -7,7 +7,7 @@ export interface DataState {
   measurements: Measurements;
 }
 
-interface Measurements {
+export interface Measurements {
   ir: {
     entries: IRMeasurement[];
   };
@@ -33,6 +33,10 @@ interface Measurements {
 
 export type MeasurementKind = keyof Measurements;
 
+export const measurementKinds = Object.keys(
+  getEmptyMeasurements(),
+) as MeasurementKind[];
+
 export const kindsLabel: Record<MeasurementKind, string> = {
   ir: 'IR',
   iv: 'IV',
@@ -43,7 +47,31 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   other: 'Other',
 };
 
-export type Loader = (
-  fileList: PartialFileList,
-  dataState: DataState,
-) => Promise<void>;
+export type Loader = (fileList: PartialFileList) => Promise<Measurements>;
+
+export function mergeMeasurements(
+  measurements: Measurements,
+  newMeasurements: Measurements,
+) {
+  for (const kind in newMeasurements) {
+    measurements[kind].entries.push(...newMeasurements[kind].entries);
+  }
+}
+
+export function getEmptyMeasurements(): Measurements {
+  return {
+    ir: { entries: [] },
+    iv: { entries: [] },
+    raman: { entries: [] },
+    uv: { entries: [] },
+    nmr1h: { entries: [] },
+    mass: { entries: [] },
+    other: { entries: [] },
+  };
+}
+
+export function getEmptyDataState(): DataState {
+  return {
+    measurements: getEmptyMeasurements(),
+  };
+}

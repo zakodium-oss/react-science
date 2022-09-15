@@ -6,8 +6,8 @@ import { TabsProvider, useTabsContext } from './context/TabsContext';
 
 type TabsOrientation = 'vertical' | 'horizontal';
 
-export interface TabItem {
-  id: string;
+export interface TabItem<T extends string = string> {
+  id: T;
   title: ReactNode;
   content: ReactNode;
 }
@@ -18,11 +18,11 @@ interface TabsItemProps {
   id: string;
 }
 
-interface TabsProps {
-  opened: TabItem;
+interface TabsProps<T extends string = string> {
+  opened?: TabItem<T>;
   orientation?: TabsOrientation;
-  items: Array<TabItem>;
-  onClick?: (item: TabItem) => void;
+  items: Array<TabItem<T>>;
+  onClick?: (item: TabItem<T>) => void;
 }
 
 const styles = {
@@ -54,7 +54,7 @@ const styles = {
   },
 };
 
-export function Tabs(props: TabsProps) {
+export function Tabs<T extends string = string>(props: TabsProps<T>) {
   const { orientation = 'horizontal', items, onClick, opened } = props;
 
   if (orientation === 'horizontal') {
@@ -86,7 +86,9 @@ function TabsItem(props: TabsItemProps & { orientation: TabsOrientation }) {
   );
 }
 
-function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
+function TabsVertical<T extends string = string>(
+  props: Omit<TabsProps<T>, 'orientation' | 'opened'>,
+) {
   const item = useTabsContext();
 
   return (
@@ -115,7 +117,9 @@ function TabsVertical(props: Omit<TabsProps, 'orientation' | 'opened'>) {
   );
 }
 
-function TabsHorizontal(props: Omit<TabsProps, 'orientation' | 'opened'>) {
+function TabsHorizontal<T extends string = string>(
+  props: Omit<TabsProps<T>, 'orientation' | 'opened'>,
+) {
   const item = useTabsContext();
 
   return (

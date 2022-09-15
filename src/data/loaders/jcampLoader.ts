@@ -2,17 +2,23 @@ import { v4 } from '@lukeed/uuid';
 import { PartialFileList } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import { DataState, MeasurementKind, Loader } from '../DataState';
+import {
+  MeasurementKind,
+  Loader,
+  Measurements,
+  getEmptyMeasurements,
+} from '../DataState';
 
 export const jcampLoader: Loader = async function jcampLoader(
   fileList: PartialFileList,
-  dataState: DataState,
 ) {
+  const newMeasurements: Measurements = getEmptyMeasurements();
+
   for (const file of fileList) {
     if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
       const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
       for (const measurement of parsed.flatten) {
-        let kind: MeasurementKind | '' = '';
+        let kind: MeasurementKind | undefined;
         if (measurement?.dataType?.match(/infrared|ir/i)) {
           kind = 'ir';
         }
@@ -23,7 +29,7 @@ export const jcampLoader: Loader = async function jcampLoader(
           kind = 'uv';
         }
         if (kind) {
-          dataState.measurements[kind].entries.push({
+          newMeasurements[kind].entries.push({
             id: v4(),
             meta: measurement.meta,
             filename: file.name,
@@ -36,6 +42,7 @@ export const jcampLoader: Loader = async function jcampLoader(
       }
     }
   }
+  return newMeasurements;
 };
 
 function normalizeSpectra(spectra: any) {
