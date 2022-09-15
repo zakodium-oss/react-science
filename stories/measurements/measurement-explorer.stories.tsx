@@ -1,12 +1,15 @@
 import { MeasurementExplorer, MeasurementExplorerProps } from '../../src';
+import { IRMeasurement } from '../../src/data/IRMeasurement';
 import measurement from '../data/irMeasurement.json';
+
+let irMeasurement = measurement as IRMeasurement;
 
 export default {
   title: 'Measurements / Measurement explorer',
 };
 
 export function Control(props: Omit<MeasurementExplorerProps, 'measurement'>) {
-  return <MeasurementExplorer measurement={measurement} {...props} />;
+  return <MeasurementExplorer measurement={irMeasurement} {...props} />;
 }
 
 Control.args = {

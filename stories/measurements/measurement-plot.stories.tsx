@@ -1,12 +1,15 @@
 import { MeasurementPlot, MeasurementPlotProps } from '../../src';
+import { IRMeasurement } from '../../src/data/IRMeasurement';
 import measurement from '../data/irMeasurement.json';
+
+let irMeasurement = measurement as IRMeasurement;
 
 export default {
   title: 'Layout/MeasurementPlot',
 };
 
 export function Control(props: Omit<MeasurementPlotProps, 'measurement'>) {
-  return <MeasurementPlot measurement={measurement} {...props} />;
+  return <MeasurementPlot measurement={irMeasurement} {...props} />;
 }
 
 Control.args = {
