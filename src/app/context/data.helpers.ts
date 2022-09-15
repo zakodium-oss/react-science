@@ -1,6 +1,8 @@
 import { measurementKinds, Measurements } from '../../data/DataState';
 import { assertNotNull } from '../../utils/assert';
 
+import { AppState } from './appState';
+
 export function getMeasurement(measurements: Measurements, selected: string) {
   for (let kind of measurementKinds) {
     let measurement = measurements[kind].entries.find(
@@ -26,4 +28,12 @@ export function getFirstMeasurement(measurements: Measurements) {
     if (measurement) return { kind, measurement };
   }
   return null;
+}
+
+export function getSelectedMeasurement(state: AppState) {
+  if (!state.view.selectedMeasurement) return null;
+  return getMeasurementOrFail(
+    state.data.measurements,
+    state.view.selectedMeasurement,
+  );
 }

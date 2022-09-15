@@ -14,6 +14,8 @@ import {
   useRectangularZoom,
 } from 'react-plot';
 
+import { MeasurementBase } from '../data/MeasurementBase';
+
 interface Variable {
   label: string;
   data: number[];
@@ -31,7 +33,10 @@ export interface Measurement {
   data: Data[];
 }
 export interface MeasurementPlotProps {
-  measurement: Measurement;
+  measurement: Pick<
+    MeasurementBase,
+    'meta' | 'filename' | 'info' | 'title' | 'data'
+  >;
   dataIndex?: number;
   xVariableName?: string;
   yVariableName?: string;
@@ -86,6 +91,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         ).join(', ')} are available`,
       );
     }
+
     return { x, y };
   }, [data, dataIndex, xVariableName, yVariableName]);
 

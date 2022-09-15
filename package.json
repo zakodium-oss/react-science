@@ -57,6 +57,7 @@
     "ml-gsd": "^12.1.0",
     "ml-peak-shape-generator": "^4.1.2",
     "react-dropzone": "^14.2.2",
+    "react-error-boundary": "^3.1.4",
     "react-shadow": "^19.0.3",
     "spc-parser": "^0.5.2",
     "tinycolor2": "^1.4.2",

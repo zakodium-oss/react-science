@@ -1,3 +1,4 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import {
   FaMeteor,
   FaBook,
@@ -16,6 +17,7 @@ import {
   TabItem,
   Tabs,
   Toolbar,
+  MeasurementPlot,
 } from '..';
 
 import {
@@ -23,6 +25,7 @@ import {
   useAppDispatch,
   useAppState,
 } from './context/appState';
+import { getSelectedMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
 
 export default function App() {
@@ -33,9 +36,22 @@ export default function App() {
   );
 }
 
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button type="button" onClick={resetErrorBoundary}>
+        Try again
+      </button>
+    </div>
+  );
+}
+
 function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
+  const measurement = getSelectedMeasurement(appState);
 
   const items: Array<TabItem> = [
     {
@@ -110,12 +126,20 @@ function DropZoneArea() {
                 minimumSize={500}
                 sideSeparation="end"
               >
-                <div style={{ padding: 5 }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
-                  earum omnis, et voluptatum veniam repellendus similique! Sunt
-                  nostrum necessitatibus reprehenderit asperiores excepturi
-                  corrupti? Optio soluta illo quae ex nam nulla.
-                </div>
+                <ErrorBoundary
+                  FallbackComponent={ErrorFallback}
+                  onReset={() => {
+                    // reset the state of your app so the error doesn't happen again
+                  }}
+                >
+                  <div style={{ padding: 5 }}>
+                    {measurement ? (
+                      <MeasurementPlot measurement={measurement.measurement} />
+                    ) : (
+                      <span>No data, add them with drag and drop</span>
+                    )}
+                  </div>
+                </ErrorBoundary>
                 <div
                   style={{
                     width: '100%',

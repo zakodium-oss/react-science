@@ -17,7 +17,7 @@ import { assertUnreachable } from '../../utils/assert';
 
 import { getFirstMeasurement, getMeasurementOrFail } from './data.helpers';
 
-interface AppState {
+export interface AppState {
   data: DataState;
   isLoading: boolean;
   view: {
