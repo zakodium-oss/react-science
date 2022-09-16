@@ -2,18 +2,19 @@ import { v4 } from '@lukeed/uuid';
 import { PartialFileList } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
-import { DataState, Loader } from '../DataState';
+import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 
 export const wdfLoader: Loader = async function wdfLoader(
   fileList: PartialFileList,
-  dataState: DataState,
 ) {
+  const measurements: Measurements = getEmptyMeasurements();
+
   for (const file of fileList) {
     if (file.name.match(/\.wdf$/i)) {
       const parsed = parse(await file.arrayBuffer());
 
       // for now WDF file format is always expected to be Raman
-      dataState.measurements.raman.entries.push({
+      measurements.raman.entries.push({
         id: v4(),
         meta: parsed.fileHeader,
         filename: file.name,
@@ -24,6 +25,7 @@ export const wdfLoader: Loader = async function wdfLoader(
       });
     }
   }
+  return measurements;
 };
 
 function normalizeSpectra(blocks) {

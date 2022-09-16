@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
 import { MeasurementPlot } from '../../src';
+import { IRMeasurement } from '../../src/data/IRMeasurement';
 import measurement from '../../stories/data/irMeasurement.json';
+
+let irMeasurement = measurement as IRMeasurement;
 
 const beforeZoom = [
   // horizontal axis default values
@@ -31,7 +34,7 @@ const beforeZoom = [
 test.describe('MeasurementPlot', () => {
   test('default props', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} />,
+      <MeasurementPlot measurement={irMeasurement} />,
     );
     const xAxis = component.locator('_react=Axis >> nth=0');
     const yAxis = component.locator('_react=Axis >> nth=1');
@@ -111,7 +114,7 @@ test.describe('MeasurementPlot', () => {
   test('change variables', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot
-        measurement={measurement}
+        measurement={irMeasurement}
         xVariableName="y"
         yVariableName="a"
         dataIndex={1}
@@ -128,28 +131,31 @@ test.describe('MeasurementPlot', () => {
   });
   test('flip axis', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} flipHorizontalAxis />,
+      <MeasurementPlot measurement={irMeasurement} flipHorizontalAxis />,
     );
     const xAxis = component.locator('_react=Axis[flip=true] >> nth=0');
     await expect(xAxis).toBeEnabled();
   });
   test('remove horizontal axis', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} showHorizontalAxis={false} />,
+      <MeasurementPlot
+        measurement={irMeasurement}
+        showHorizontalAxis={false}
+      />,
     );
 
     await expect(component.locator('_react=Axis[id=/-x$/]')).toHaveText('');
   });
   test('remove vertical axis', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} showVerticalAxis={false} />,
+      <MeasurementPlot measurement={irMeasurement} showVerticalAxis={false} />,
     );
 
     await expect(component.locator('_react=Axis[id=/-y$/]')).toHaveText('');
   });
   test('vertical zoom', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} zoom="vertical" />,
+      <MeasurementPlot measurement={irMeasurement} zoom="vertical" />,
     );
     await expect(component).toContainText(beforeZoom);
     await component.dragTo(component, {
@@ -181,7 +187,7 @@ test.describe('MeasurementPlot', () => {
   });
   test('rectangular zoom', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} zoom="rectangular" />,
+      <MeasurementPlot measurement={irMeasurement} zoom="rectangular" />,
     );
     await expect(component).toContainText(beforeZoom);
     await component.dragTo(component, {
@@ -215,7 +221,10 @@ test.describe('MeasurementPlot', () => {
   });
   test('remove horizontal grid', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} showHorizontalGrid={false} />,
+      <MeasurementPlot
+        measurement={irMeasurement}
+        showHorizontalGrid={false}
+      />,
     );
 
     await expect(
@@ -224,7 +233,7 @@ test.describe('MeasurementPlot', () => {
   });
   test('remove vertical grid', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} showVerticalGrid={false} />,
+      <MeasurementPlot measurement={irMeasurement} showVerticalGrid={false} />,
     );
 
     await expect(
@@ -233,7 +242,7 @@ test.describe('MeasurementPlot', () => {
   });
   test('crossHair', async ({ mount }) => {
     const component = await mount(
-      <MeasurementPlot measurement={measurement} crossHair={false} />,
+      <MeasurementPlot measurement={irMeasurement} crossHair={false} />,
     );
     await component.hover({ position: { x: 200, y: 200 } });
     await expect(component.locator('_react=Text')).toHaveCount(0);

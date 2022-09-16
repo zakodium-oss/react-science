@@ -3,8 +3,8 @@ import { join } from 'path';
 import { fileListFromPath } from 'filelist-utils';
 import { expect, test } from 'vitest';
 
+import { getEmptyDataState } from '../DataState';
 import { append } from '../append';
-import { getEmptyDataState } from '../getEmptyDataState';
 import { biologicLoader } from '../loaders/biologicLoader';
 
 test('getIVMeasurement', async () => {

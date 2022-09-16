@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
 import { MeasurementExplorer } from '../../src';
+import { IRMeasurement } from '../../src/data/IRMeasurement';
 import measurement from '../../stories/data/irMeasurement.json';
+
+let irMeasurement = measurement as IRMeasurement;
 
 test.describe('MeasurementExplorer', () => {
   test('initial variables', async ({ mount }) => {
     const component = await mount(
-      <MeasurementExplorer measurement={measurement} />,
+      <MeasurementExplorer measurement={irMeasurement} />,
     );
     const dataIndex = component.locator('select >> nth=0');
     const xVariableName = component.locator('select >> nth=1');
@@ -18,7 +21,7 @@ test.describe('MeasurementExplorer', () => {
   });
   test('select variables', async ({ mount }) => {
     const component = await mount(
-      <MeasurementExplorer measurement={measurement} />,
+      <MeasurementExplorer measurement={irMeasurement} />,
     );
     const dataIndex = component.locator('select >> nth=0');
     const xVariableName = component.locator('select >> nth=1');
@@ -43,7 +46,7 @@ test.describe('MeasurementExplorer', () => {
   });
   test('reverse btn', async ({ mount }) => {
     const component = await mount(
-      <MeasurementExplorer measurement={measurement} />,
+      <MeasurementExplorer measurement={irMeasurement} />,
     );
 
     const reverseBtn = component.locator('_react=FaExchangeAlt');
@@ -70,7 +73,7 @@ test.describe('MeasurementExplorer', () => {
   });
   test('flip btn', async ({ mount }) => {
     const component = await mount(
-      <MeasurementExplorer measurement={measurement} />,
+      <MeasurementExplorer measurement={irMeasurement} />,
     );
 
     const flipBtn = component.locator('_react=FaArrowsAltH');
