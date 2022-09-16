@@ -79,7 +79,7 @@ function TabsItem(props: TabsItemProps & { orientation: TabsOrientation }) {
     <button
       type="button"
       onClick={props.onClick}
-      css={styles.item(item.id === props.id, props.orientation)}
+      css={styles.item(item?.id === props.id, props.orientation)}
     >
       {props.title}
     </button>
@@ -112,7 +112,9 @@ function TabsVertical<T extends string = string>(
           />
         ))}
       </div>
-      <div style={{ flex: '1 1 0%', overflowY: 'auto' }}>{item.content}</div>
+      {item && (
+        <div style={{ flex: '1 1 0%', overflowX: 'auto' }}>{item.content}</div>
+      )}
     </div>
   );
 }
@@ -144,7 +146,9 @@ function TabsHorizontal<T extends string = string>(
           />
         ))}
       </div>
-      <div style={{ flex: '1 1 0%', overflowX: 'auto' }}>{item.content}</div>
+      {item && (
+        <div style={{ flex: '1 1 0%', overflowX: 'auto' }}>{item.content}</div>
+      )}
     </div>
   );
 }

@@ -2,11 +2,11 @@ import React, { createContext, ReactNode, useContext } from 'react';
 
 import { TabItem } from '../Tabs';
 
-const tabsContext = createContext<TabItem | undefined>(undefined);
+const tabsContext = createContext<TabItem | null | undefined>(null);
 
 export function useTabsContext() {
   const context = useContext(tabsContext);
-  if (!context) {
+  if (context === null) {
     throw new Error('TabsContext was not found');
   }
 

@@ -25,7 +25,7 @@ import {
   useAppDispatch,
   useAppState,
 } from './context/appState';
-import { getSelectedMeasurement } from './context/data.helpers';
+import { getCurrentMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
 
 export default function App() {
@@ -51,7 +51,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
-  const measurement = getSelectedMeasurement(appState);
+  const measurement = getCurrentMeasurement(appState);
 
   const items: Array<TabItem> = [
     {
@@ -65,12 +65,12 @@ function DropZoneArea() {
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
   return (
-    <DropZoneContainer
-      onDrop={(files) => {
-        void loadFiles(files, dispatch);
-      }}
-    >
-      <RootLayout>
+    <RootLayout>
+      <DropZoneContainer
+        onDrop={(files) => {
+          void loadFiles(files, dispatch);
+        }}
+      >
         <div
           style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
@@ -134,7 +134,7 @@ function DropZoneArea() {
                 >
                   <div style={{ padding: 5 }}>
                     {measurement ? (
-                      <MeasurementPlot measurement={measurement.measurement} />
+                      <MeasurementPlot measurement={measurement} />
                     ) : (
                       <span>No data, add them with drag and drop</span>
                     )}
@@ -158,13 +158,19 @@ function DropZoneArea() {
                         {
                           <MeasurementsPanel
                             measurements={appState.data.measurements}
+                            onTabSelect={(kind) => {
+                              dispatch({
+                                type: 'SELECT_MEASUREMENT_KIND',
+                                payload: kind,
+                              });
+                            }}
                             selectedMeasurement={
-                              appState.view.selectedMeasurement
+                              appState.view.currentMeasurement
                             }
-                            onMeasurementSelect={({ measurement }) => {
+                            onMeasurementSelect={({ measurement, kind }) => {
                               dispatch({
                                 type: 'SELECT_MEASUREMENT',
-                                payload: measurement.id,
+                                payload: { id: measurement.id, kind },
                               });
                             }}
                           />
@@ -191,7 +197,7 @@ function DropZoneArea() {
             </div>
           </div>
         </div>
-      </RootLayout>
-    </DropZoneContainer>
+      </DropZoneContainer>
+    </RootLayout>
   );
 }

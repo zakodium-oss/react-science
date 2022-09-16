@@ -12,6 +12,8 @@ import {
   Measurements,
   mergeMeasurements,
   getEmptyDataState,
+  MeasurementKind,
+  measurementKinds,
 } from '../../data/DataState';
 import { assertUnreachable } from '../../utils/assert';
 
@@ -21,7 +23,11 @@ export interface AppState {
   data: DataState;
   isLoading: boolean;
   view: {
-    selectedMeasurement?: string;
+    selectedMeasurements: Partial<Record<MeasurementKind, string>>;
+    currentMeasurement?: {
+      kind: MeasurementKind;
+      id: string;
+    };
   };
 }
 
@@ -29,7 +35,9 @@ function getEmptyAppState(): AppState {
   return {
     data: getEmptyDataState(),
     isLoading: false,
-    view: {},
+    view: {
+      selectedMeasurements: {},
+    },
   };
 }
 
@@ -80,7 +88,11 @@ type AppStateAction =
   | { type: 'LOAD_START' }
   | { type: 'LOAD_END' }
   | { type: 'ADD_MEASUREMENTS'; payload: Measurements }
-  | { type: 'SELECT_MEASUREMENT'; payload: string };
+  | {
+      type: 'SELECT_MEASUREMENT';
+      payload: { id: string; kind: MeasurementKind };
+    }
+  | { type: 'SELECT_MEASUREMENT_KIND'; payload: MeasurementKind };
 
 function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
   const type = action.type;
@@ -90,21 +102,53 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       return;
     case 'ADD_MEASUREMENTS': {
       mergeMeasurements(draft.data.measurements, action.payload);
-      if (!draft.view.selectedMeasurement) {
-        const measurement = getFirstMeasurement(draft.data.measurements);
-        if (measurement) {
-          draft.view.selectedMeasurement = measurement.measurement.id;
+      for (let kind of measurementKinds) {
+        if (!draft.view.selectedMeasurements[kind]) {
+          const measurement = getFirstMeasurement(
+            draft.data.measurements,
+            kind,
+          );
+          if (measurement) {
+            draft.view.selectedMeasurements[kind] = measurement.measurement.id;
+            // draft.view.currentMeasurement = {
+            //   kind,
+            //   id: measurement.measurement.id,
+            // };
+          }
         }
       }
+
       return;
     }
     case 'SELECT_MEASUREMENT': {
-      const { measurement } = getMeasurementOrFail(
+      // Check the measurement exists
+      getMeasurementOrFail(
         draft.data.measurements,
-        action.payload,
+        action.payload.kind,
+        action.payload.id,
       );
 
-      draft.view.selectedMeasurement = measurement.id;
+      draft.view.currentMeasurement = action.payload;
+      draft.view.selectedMeasurements[action.payload.kind] = action.payload.id;
+      return;
+    }
+    case 'SELECT_MEASUREMENT_KIND': {
+      const selected = draft.view.selectedMeasurements[action.payload];
+      if (selected) {
+        draft.view.currentMeasurement = {
+          id: selected,
+          kind: action.payload,
+        };
+      } else if (draft.data.measurements[action.payload].entries.length > 0) {
+        const measurement = draft.data.measurements[action.payload].entries[0];
+        draft.view.selectedMeasurements[action.payload] = measurement.id;
+        draft.view.currentMeasurement = {
+          id: measurement.id,
+          kind: action.payload,
+        };
+      } else {
+        draft.view.currentMeasurement = undefined;
+      }
       return;
     }
     case 'LOAD_START': {

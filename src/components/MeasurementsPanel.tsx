@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { ValueRenderers } from '..';
 import { DataState, kindsLabel, MeasurementKind } from '../data/DataState';
 import { MeasurementBase } from '../data/MeasurementBase';
@@ -15,14 +13,17 @@ export interface MeasurementsPanelProps extends DataState {
     kind: MeasurementKind;
     measurement: MeasurementBase;
   }) => void;
-  selectedMeasurement?: string;
+  /**
+   * Callback when click on tab
+   */
+  onTabSelect?: (kind: MeasurementKind) => void;
+  selectedMeasurement?: {
+    id: string;
+    kind: MeasurementKind;
+  };
 }
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
   const { onMeasurementSelect, measurements } = props;
-
-  const [selectedKind, setSelectedKind] = useState<MeasurementKind | undefined>(
-    'ir',
-  );
 
   const kindItem = (kind: MeasurementKind) => ({
     id: kind,
@@ -35,7 +36,9 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
               style={{
                 padding: '0px 5px',
                 backgroundColor:
-                  props.selectedMeasurement === measurement.id ? 'green' : '',
+                  props.selectedMeasurement?.id === measurement.id
+                    ? 'green'
+                    : '',
                 cursor: 'pointer',
               }}
               onClick={() => {
@@ -55,10 +58,12 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
   const items: Array<TabItem<MeasurementKind>> = availableKinds.map(kindItem);
 
   function handleTabSelection(item: TabItem<MeasurementKind>) {
-    setSelectedKind(item.id);
+    props.onTabSelect?.(item.id);
   }
 
-  const openedItem = items.find((item) => item.id === selectedKind);
+  const openedItem = items.find(
+    (item) => item.id === props.selectedMeasurement?.kind,
+  );
 
   return items.length > 0 ? (
     <Tabs<MeasurementKind>
