@@ -1,9 +1,11 @@
 import { ObjectInspector } from 'react-inspector';
 
-interface ObjectRendererProps {
+import { ValueRenderersProps } from '.';
+
+interface ObjectRendererProps extends ValueRenderersProps {
   value?: object;
 }
 
-export function ObjectRenderer({ value }: ObjectRendererProps) {
-  return <ObjectInspector data={value} />;
+export function ObjectRenderer({ value, ...other }: ObjectRendererProps) {
+  return <ObjectInspector data={value} {...other} />;
 }
