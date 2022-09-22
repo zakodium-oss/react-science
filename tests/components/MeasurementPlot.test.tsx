@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
-import { MeasurementPlot } from '../../src';
-import { IRMeasurement } from '../../src/data/IRMeasurement';
 import measurement from '../../stories/data/irMeasurement.json';
+
+import { MeasurementPlot } from '@/app/components';
+import { IRMeasurement } from '@/app/data/IRMeasurement';
 
 let irMeasurement = measurement as IRMeasurement;
 

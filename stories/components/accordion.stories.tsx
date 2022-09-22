@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-import { Accordion, SplitPane, Toolbar, useToggleAccordion } from '../../src';
+import {
+  Accordion,
+  SplitPane,
+  Toolbar,
+  useToggleAccordion,
+} from '@/components';
 
 export default {
   title: 'Components / Accordion',

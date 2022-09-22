@@ -1,8 +1,8 @@
 import { SvgBioDna } from 'cheminfo-font';
 import { ReactNode, useState } from 'react';
 
-import { Toolbar } from '../../src';
-import { ToolbarItemProps } from '../../src/components/Toolbar';
+import { Toolbar } from '@/components';
+import { ToolbarItemProps } from '@/components/Toolbar';
 
 export default {
   title: 'Components / Toolbar',

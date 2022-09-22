@@ -1,4 +1,4 @@
-import { Button } from '../../src';
+import { Button } from '@/components';
 
 export default {
   title: 'Components / Button',

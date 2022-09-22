@@ -7,19 +7,7 @@ import {
   FaGlasses,
 } from 'react-icons/fa';
 
-import {
-  Accordion,
-  DropZoneContainer,
-  Header,
-  MeasurementsPanel,
-  RootLayout,
-  SplitPane,
-  TabItem,
-  Tabs,
-  Toolbar,
-  MeasurementPlot,
-} from '..';
-
+import { MeasurementPlot, MeasurementsPanel } from './components';
 import {
   AppStateProvider,
   useAppDispatch,
@@ -27,6 +15,17 @@ import {
 } from './context/appState';
 import { getCurrentMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
+
+import {
+  Accordion,
+  DropZoneContainer,
+  Header,
+  RootLayout,
+  SplitPane,
+  TabItem,
+  Tabs,
+  Toolbar,
+} from '@/components';
 
 export default function App() {
   return (

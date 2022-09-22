@@ -1,4 +1,4 @@
-import { Header, Toolbar } from '../../src';
+import { Header, Toolbar } from '@/components';
 
 export default {
   title: 'Components / Header',

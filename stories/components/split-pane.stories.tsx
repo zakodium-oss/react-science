@@ -1,6 +1,9 @@
-import { Accordion, SplitPane } from '../../src';
-import { SplitPaneProps } from '../../src/components/SplitPane';
-import { AccordionProvider } from '../../src/components/context/AccordionContext';
+import {
+  Accordion,
+  AccordionProvider,
+  SplitPane,
+  SplitPaneProps,
+} from '@/components';
 
 export default {
   title: 'Components / SplitPane',

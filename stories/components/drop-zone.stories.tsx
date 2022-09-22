@@ -6,7 +6,7 @@ import {
   DropZone,
   Table,
   ValueRenderers,
-} from '../../src/index';
+} from '@/components';
 
 export default {
   title: 'Components / DropZone',
