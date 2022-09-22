@@ -10,7 +10,16 @@ import {
   useMemo,
 } from 'react';
 
-import * as ValueRenderers from './value-renderers/index';
+import {
+  Boolean,
+  Color,
+  Component,
+  Header,
+  Number,
+  Object,
+  Text,
+  Title,
+} from './value-renderers';
 
 const styles = {
   border: css({
@@ -71,19 +80,28 @@ function useRowChildren(children: ReactNode) {
     if (
       typeof child === 'object' &&
       isValidElement(child) &&
-      (child.type === ValueRenderers.Color ||
-        child.type === ValueRenderers.Boolean ||
-        child.type === ValueRenderers.Text ||
-        child.type === ValueRenderers.Number ||
-        child.type === ValueRenderers.Title ||
-        child.type === ValueRenderers.Object ||
-        child.type === ValueRenderers.Component)
+      (child.type === Color ||
+        child.type === Boolean ||
+        child.type === Text ||
+        child.type === Number ||
+        child.type === Title ||
+        child.type === Object ||
+        child.type === Header ||
+        child.type === Component)
     ) {
-      cells.push(
-        <td key={child.key} css={border ? styles.border : styles.noBorder}>
-          {child}
-        </td>,
-      );
+      if (child.type === Header) {
+        cells.push(
+          <th key={child.key} css={border ? styles.border : styles.noBorder}>
+            {child}
+          </th>,
+        );
+      } else {
+        cells.push(
+          <td key={child.key} css={border ? styles.border : styles.noBorder}>
+            {child}
+          </td>,
+        );
+      }
     } else {
       // eslint-disable-next-line no-console
       console.error('Invalid Row child: ', child);

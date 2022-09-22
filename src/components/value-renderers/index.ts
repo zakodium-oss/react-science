@@ -6,6 +6,9 @@ export { Number } from './Number';
 export { Text } from './Text';
 export { Title } from './Title';
 export { Component } from './Component';
+
+export { Header } from './Header';
+
 export { ObjectRenderer as Object } from './ObjectRenderer';
 export interface ValueRenderersProps {
   onClick?: (event: MouseEvent) => void;

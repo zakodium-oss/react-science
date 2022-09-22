@@ -4,7 +4,7 @@ import React from 'react';
 
 import { ValueRenderersProps } from '.';
 
-interface TitleProps extends ValueRenderersProps {
+export interface TitleProps extends ValueRenderersProps {
   value?: string;
 }
 
