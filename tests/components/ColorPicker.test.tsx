@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
-import { ColorPicker } from '../../src';
+import { ColorPicker } from '../../src/components';
 
 test('should load passed hex color', async ({ mount }) => {
   const component = await mount(<ColorPicker color={{ hex: '0099ff' }} />);

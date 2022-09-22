@@ -1,5 +1,5 @@
-import { MeasurementKind, Measurements } from '../../data/DataState';
 import { assertNotNull } from '../../utils/assert';
+import { MeasurementKind, Measurements } from '../data/DataState';
 
 import { AppState } from './appState';
 

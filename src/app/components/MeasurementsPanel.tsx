@@ -1,9 +1,8 @@
-import { ValueRenderers } from '..';
+import { ValueRenderers } from '../../components';
+import { Table } from '../../components/Table';
+import { TabItem, Tabs } from '../../components/Tabs';
 import { DataState, kindsLabel, MeasurementKind } from '../data/DataState';
 import { MeasurementBase } from '../data/MeasurementBase';
-
-import { Table } from './Table';
-import { TabItem, Tabs } from './Tabs';
 
 export interface MeasurementsPanelProps extends DataState {
   /**

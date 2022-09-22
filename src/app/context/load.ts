@@ -1,10 +1,10 @@
-import { loadMeasurements } from '../../data/append';
-import { getIRAutoPeakPickingEnhancer } from '../../data/enhancers/irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../../data/enhancers/irMeasurementEnhancer';
-import { biologicLoader } from '../../data/loaders/biologicLoader';
-import { jcampLoader } from '../../data/loaders/jcampLoader';
-import { spcLoader } from '../../data/loaders/spcLoader';
-import { wdfLoader } from '../../data/loaders/wdfLoader';
+import { loadMeasurements } from '../data/append';
+import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickingEnhancer';
+import { irMeasurementEnhancer } from '../data/enhancers/irMeasurementEnhancer';
+import { biologicLoader } from '../data/loaders/biologicLoader';
+import { jcampLoader } from '../data/loaders/jcampLoader';
+import { spcLoader } from '../data/loaders/spcLoader';
+import { wdfLoader } from '../data/loaders/wdfLoader';
 
 import { AppDispatch } from './appState';
 

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { Button } from '..';
+import { Button } from '.';
 
 interface ConfirmModalProps {
   children: ReactNode;

@@ -1,5 +1,6 @@
-import { MeasurementsPanel as MeasurementsPanelComponent } from '../../src';
-import measurements from '../data/measurements.json';
+import measurements from '../../data/measurements.json';
+
+import { MeasurementsPanel as MeasurementsPanelComponent } from '@/app/components';
 
 export default {
   title: 'Measurements / Panels',

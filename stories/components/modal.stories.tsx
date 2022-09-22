@@ -22,7 +22,7 @@ import {
   Button,
   Tabs,
   TabItem,
-} from '../../src';
+} from '@/components';
 
 export default {
   title: 'Components / Modal',

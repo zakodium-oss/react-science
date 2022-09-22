@@ -7,6 +7,7 @@ import {
   useReducer,
 } from 'react';
 
+import { assertUnreachable } from '../../utils/assert';
 import {
   DataState,
   Measurements,
@@ -14,8 +15,7 @@ import {
   getEmptyDataState,
   MeasurementKind,
   measurementKinds,
-} from '../../data/DataState';
-import { assertUnreachable } from '../../utils/assert';
+} from '../data/DataState';
 
 import { getFirstMeasurement, getMeasurementOrFail } from './data.helpers';
 

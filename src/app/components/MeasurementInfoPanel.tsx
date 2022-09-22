@@ -1,8 +1,7 @@
 import { CSSProperties, useState } from 'react';
 
-import { ValueRenderers } from '..';
-
-import { Table } from './Table';
+import { ValueRenderers } from '../../components';
+import { Table } from '../../components/Table';
 import { MeasurementBase } from '../data/MeasurementBase';
 
 export interface MeasurementInfoPanelProps {
