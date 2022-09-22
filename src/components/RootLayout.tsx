@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
 import { ReactNode, CSSProperties, useState, useCallback } from 'react';
-import root from 'react-shadow/emotion';
+import root from 'react-shadow/emotion.esm';
 
 import { AccordionProvider } from './context/AccordionContext';
 import { RootLayoutProvider } from './context/RootLayoutContext';

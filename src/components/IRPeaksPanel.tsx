@@ -8,17 +8,16 @@ import {
 import { useState } from 'react';
 
 import { Table, ValueRenderers } from '..';
+import { IRPeak } from '../data/IRPeak';
 
-import { IRPeak } from './context/data/DataState';
-
-interface ColumnPreferences {
+export interface IRColumnPreferences<T extends keyof IRPeak = keyof IRPeak> {
   visible?: boolean;
-  format?: (val: number | string) => string | number;
-  accessorKey: keyof IRPeak;
+  format?: (val: IRPeak[T]) => string | number;
+  accessorKey: T;
   label?: string;
 }
 interface IRPeakPanelPreferences {
-  columns?: ColumnPreferences[];
+  columns?: IRColumnPreferences[];
 }
 export interface IRPeaksPanelProps {
   /**
@@ -37,7 +36,7 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
   const { peaks, preferences = {} } = props;
   const { columns = [] } = preferences;
 
-  const defaultColumns: ColumnDef<IRPeak>[] = columns.map(
+  const defaultColumns: ColumnDef<IRPeak, number>[] = columns.map(
     ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
       header: label,
       accessorKey,

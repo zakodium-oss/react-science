@@ -4,7 +4,9 @@
 /dist
 /lib
 /lib-esm
+/build
 /coverage
 /playwright/.cache
 /playwright-report
 /coverage
+/stories/data

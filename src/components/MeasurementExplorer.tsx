@@ -93,11 +93,12 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
                 setInfo((info) => ({ ...info, xVariableName: value }));
               }
             }}
+            value={info.xVariableName}
           >
             {Object.keys(data[info.dataIndex].variables).map((d) => {
               if (d !== info.yVariableName) {
                 return (
-                  <option key={d} value={d} selected={d === info.xVariableName}>
+                  <option key={d} value={d}>
                     {d}
                   </option>
                 );
@@ -137,11 +138,12 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
                 setInfo((info) => ({ ...info, yVariableName: value }));
               }
             }}
+            value={info.yVariableName}
           >
             {Object.keys(data[info.dataIndex].variables).map((d) => {
               if (d !== info.xVariableName) {
                 return (
-                  <option key={d} value={d} selected={d === info.yVariableName}>
+                  <option key={d} value={d}>
                     {d}
                   </option>
                 );

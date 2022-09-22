@@ -4,7 +4,8 @@
     "./src/app",
     "./stories",
     "./tests",
-    "playwright.*.ts",
+    "**/__tests__",
+    "playwright*.ts",
     "./playwright"
   ],
   "compilerOptions": {
