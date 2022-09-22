@@ -106,7 +106,7 @@ typings/
 lib
 lib-esm
 
+build
 dist
-storybook-static
 .DS_Store
 playwright-report

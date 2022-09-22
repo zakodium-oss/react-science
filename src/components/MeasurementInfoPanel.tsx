@@ -3,12 +3,12 @@ import { CSSProperties, useState } from 'react';
 import { ValueRenderers } from '..';
 
 import { Table } from './Table';
-import { MeasurementBase } from './context/data/DataState';
+import { MeasurementBase } from '../data/MeasurementBase';
 
 export interface MeasurementInfoPanelProps {
   measurement: MeasurementBase;
-  metaStyle: CSSProperties;
-  infoStyle: CSSProperties;
+  metaStyle?: CSSProperties;
+  infoStyle?: CSSProperties;
 }
 
 export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
@@ -20,10 +20,7 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
 
   const [search, setSearch] = useState('');
 
-  function viewData(
-    data: Record<string, string | number | object>,
-    style: CSSProperties = {},
-  ) {
+  function viewData(data: Record<string, any>, style: CSSProperties = {}) {
     return Object.keys(data).map((key) => {
       const value = data[key];
       if (

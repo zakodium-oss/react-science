@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "sourceMap": true,
-    "outDir": "lib-esm"
+    "outDir": "lib-esm",
+    "module": "ES2022"
   }
 }

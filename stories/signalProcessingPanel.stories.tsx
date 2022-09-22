@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react';
 import { useState } from 'react';
 
 import {
@@ -10,12 +9,13 @@ import {
 export default {
   title: 'Layout/Panels/SignalProcessingPanel',
   component: SignalProcessingPanel,
-  argTypes: {
-    onChange: {
-      action: 'Filters modified',
-    },
+};
+
+const actions = {
+  onChange: {
+    action: 'Filters modified',
   },
-} as Meta<SignalProcessingPanelProps>;
+};
 
 export function Control({ onChange }: SignalProcessingPanelProps) {
   const [filters, setFilters] = useState<Filter[]>([]);
@@ -29,6 +29,8 @@ export function Control({ onChange }: SignalProcessingPanelProps) {
     />
   );
 }
+
+Control.argTypes = actions;
 export function LoadFilters({
   filters: InitialFilters,
   onChange,
@@ -50,3 +52,4 @@ LoadFilters.args = {
     { name: 'fromTo', options: { from: 2, to: 8 } },
   ],
 };
+LoadFilters.argTypes = actions;

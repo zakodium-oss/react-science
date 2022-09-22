@@ -1,5 +1,5 @@
 import { v4 as uuid } from '@lukeed/uuid';
-import React, { ReactNode } from 'react';
+import React, { ComponentType, ReactNode } from 'react';
 
 import { Accordion } from './Accordion';
 import { DropZone } from './DropZone';
@@ -14,7 +14,7 @@ const layoutComponents: ComponentsMap = {
 };
 
 interface ComponentsMap {
-  [componentName: string]: ReactNode;
+  [componentName: string]: ComponentType<any>;
 }
 
 interface LayoutManagerProps {
@@ -54,7 +54,7 @@ function createLayoutComponent(
         : createElements(children, components);
 
     return React.createElement(
-      componentNode as React.FC,
+      componentNode,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       componentProps as any,
       childrenComp,
@@ -82,7 +82,7 @@ function createElements(
 function findComponent(
   component: LayoutComponent['component'],
   definedComponents: LayoutManagerProps['components'],
-): ReactNode {
+): ComponentType<any> | null {
   if (typeof component === 'function') return component;
 
   if (typeof component === 'string') {

@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.16.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.15.2...v0.16.0) (2022-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* refactor value-renderer components (#171)
+
+### Features
+
+* add DataState utilities ([3b9c9de](https://github.com/zakodium-oss/analysis-ui-components/commit/3b9c9de0a239904f6c1de4f606fcd9a5e82cbcaa))
+* add flip btn in measurementExplorer ([a86520a](https://github.com/zakodium-oss/analysis-ui-components/commit/a86520a6b436367ae17a7462540e9669bb22da61))
+* add MeasurementsPanel ([d5e7c9b](https://github.com/zakodium-oss/analysis-ui-components/commit/d5e7c9b4050baa78cb1a089fd2f1ffd67213f65a))
+* add new properties for zoom in MeasurementPlot ([52878e7](https://github.com/zakodium-oss/analysis-ui-components/commit/52878e7fa51b6f769cfd171063473d2531bc971d))
+* add no data available case in MeasurementsPanel ([#179](https://github.com/zakodium-oss/analysis-ui-components/issues/179)) ([c6f155a](https://github.com/zakodium-oss/analysis-ui-components/commit/c6f155a72eff63ebc0e237470d14e40aaab0cbaf))
+* implement IRPeaksPanel ([#186](https://github.com/zakodium-oss/analysis-ui-components/issues/186)) ([d8a6426](https://github.com/zakodium-oss/analysis-ui-components/commit/d8a642677a4b5779aee8d771ce18011a5aa9fd6c))
+* implement MeasurementInfoPanel ([#188](https://github.com/zakodium-oss/analysis-ui-components/issues/188)) ([46d515c](https://github.com/zakodium-oss/analysis-ui-components/commit/46d515c443c0c811dfda735d62154e7ef6eba039))
+* improve measurement panel ([#187](https://github.com/zakodium-oss/analysis-ui-components/issues/187)) ([fab94d7](https://github.com/zakodium-oss/analysis-ui-components/commit/fab94d7a0833162cb5663c5bf5b97b4f0ef6b676))
+* Measurement explorer ([#150](https://github.com/zakodium-oss/analysis-ui-components/issues/150)) ([63a235e](https://github.com/zakodium-oss/analysis-ui-components/commit/63a235e148a479b2b9c746885b5bd2bdb773222a))
+
+
+### Bug Fixes
+
+* keep side panel closed when initialClosed is passed ([#176](https://github.com/zakodium-oss/analysis-ui-components/issues/176)) ([6a7cb00](https://github.com/zakodium-oss/analysis-ui-components/commit/6a7cb009bacc5d63dffc57956199e73743f1fc46))
+* make ESM build work correctly ([#202](https://github.com/zakodium-oss/analysis-ui-components/issues/202)) ([43a15f4](https://github.com/zakodium-oss/analysis-ui-components/commit/43a15f4f036bb31109c4fd6baa1b4d2f1ddf7eaf))
+
+
+### Miscellaneous Chores
+
+* refactor value-renderer components ([#171](https://github.com/zakodium-oss/analysis-ui-components/issues/171)) ([f279f6c](https://github.com/zakodium-oss/analysis-ui-components/commit/f279f6c2d76b23643bcc551233d21e63d748a4b7))
+
 ## [0.15.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.15.1...v0.15.2) (2022-06-23)
 
 
