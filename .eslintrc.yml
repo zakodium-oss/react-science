@@ -5,3 +5,4 @@ rules:
   # See https://github.com/benmosher/eslint-plugin-import/issues/2132
   'import/no-unresolved': off
   'jest/no-done-callback': off
+  'react/no-unknown-property': ['error', { ignore: ['css'] }]
