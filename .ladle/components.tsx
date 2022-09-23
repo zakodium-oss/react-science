@@ -1,7 +1,7 @@
 import type { GlobalProvider } from '@ladle/react';
 import { StrictMode } from 'react';
 
-import { RootLayout } from '../src';
+import { RootLayout } from '../src/components';
 
 export const Provider: GlobalProvider = ({ children, globalState }) => (
   <StrictMode>
