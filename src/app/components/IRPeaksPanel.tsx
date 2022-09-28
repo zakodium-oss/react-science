@@ -8,7 +8,7 @@ import {
 import { useState } from 'react';
 
 import { Table, ValueRenderers } from '../../components';
-import { IRPeak } from '../data/IRPeak';
+import type { IRPeak } from '../data/IRPeak';
 
 export interface IRColumnPreferences<T extends keyof IRPeak = keyof IRPeak> {
   visible?: boolean;

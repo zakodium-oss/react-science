@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ValueRenderersProps } from '.';
+import type { ValueRenderersProps } from '.';
 
 interface NumberProps extends ValueRenderersProps {
   value?: number;

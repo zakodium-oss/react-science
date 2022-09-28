@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
-import { ToolbarProps } from './Toolbar';
+import type { ToolbarProps } from './Toolbar';
 
 type ReactProps = ReactElement<ToolbarProps>;
 

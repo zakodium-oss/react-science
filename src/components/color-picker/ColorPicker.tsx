@@ -1,11 +1,5 @@
 import lodashDebounce from 'lodash/debounce';
-import React, {
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Saturation, Hue, Alpha, CheckBoard } from './common';
 import * as colorHelper from './helpers/color';

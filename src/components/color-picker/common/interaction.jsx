@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 
-export const handleFocus = (Component, Span = 'span') =>
-  class Focus extends React.Component {
+export const handleFocus = (WrappedComponent, Span = 'span') =>
+  class Focus extends Component {
     state = { focus: false };
     handleFocus = () => this.setState({ focus: true });
     handleBlur = () => this.setState({ focus: false });
@@ -9,7 +9,7 @@ export const handleFocus = (Component, Span = 'span') =>
     render() {
       return (
         <Span onFocus={this.handleFocus} onBlur={this.handleBlur}>
-          <Component {...this.props} {...this.state} />
+          <WrappedComponent {...this.props} {...this.state} />
         </Span>
       );
     }

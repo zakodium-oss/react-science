@@ -1,5 +1,5 @@
 import lodashThrottle from 'lodash/throttle';
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import * as saturation from '../helpers/saturation';
 

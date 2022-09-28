@@ -1,4 +1,4 @@
-import { Layout } from '@/components';
+import type { Layout } from '@/components';
 import LayoutManager from '@/components/LayoutManager';
 
 export default {
@@ -14,13 +14,13 @@ const layout: Layout = {
   layout: {
     id: 'hxulp',
     component: 'SplitPane',
-    orientation: 'horizontal',
+    direction: 'horizontal',
     children: [
       {
         id: 'ala44',
         size: 3, // this is the size of the left part based on 'flex'
         component: 'SplitPane',
-        orientation: 'vertical',
+        direction: 'vertical',
         children: [
           {
             id: 'sdaf',

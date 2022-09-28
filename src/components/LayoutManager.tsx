@@ -1,10 +1,15 @@
 import { v4 as uuid } from '@lukeed/uuid';
-import React, { ComponentType, ReactNode } from 'react';
+import {
+  createElement,
+  FunctionComponent,
+  ComponentType,
+  ReactNode,
+} from 'react';
 
 import { Accordion } from './Accordion';
 import { DropZone } from './DropZone';
 import { Modal } from './Modal';
-import { SplitPane } from './SplitPane';
+import { SplitPane } from './split-pane/SplitPane';
 
 const layoutComponents: ComponentsMap = {
   SplitPane,
@@ -28,7 +33,7 @@ export interface Layout {
 }
 interface LayoutComponent {
   id: string;
-  component: keyof typeof layoutComponents | React.FC | string;
+  component: keyof typeof layoutComponents | FunctionComponent | string;
   children?: LayoutComponent[];
 }
 
@@ -53,7 +58,7 @@ function createLayoutComponent(
         ? children
         : createElements(children, components);
 
-    return React.createElement(
+    return createElement(
       componentNode,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       componentProps as any,

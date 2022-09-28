@@ -6,7 +6,7 @@ import { jcampLoader } from '../data/loaders/jcampLoader';
 import { spcLoader } from '../data/loaders/spcLoader';
 import { wdfLoader } from '../data/loaders/wdfLoader';
 
-import { AppDispatch } from './appState';
+import type { AppDispatch } from './appState';
 
 const options = {
   loaders: [jcampLoader, spcLoader, wdfLoader, biologicLoader],

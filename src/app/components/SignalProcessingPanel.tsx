@@ -1,4 +1,4 @@
-import { FilterXYType } from 'ml-signal-processing';
+import type { FilterXYType } from 'ml-signal-processing';
 import filterXY from 'ml-signal-processing/FilterXYSchema.json';
 
 import { ValueRenderers } from '../../components';

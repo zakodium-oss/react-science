@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 
 import './main.css';
 
-ReactDOM.render(
-  <React.StrictMode>
+createRoot(document.getElementById('root') as HTMLDivElement).render(
+  <StrictMode>
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {import.meta.env.PROD ? (
         <div
@@ -24,6 +24,5 @@ ReactDOM.render(
       ) : null}
       <App />
     </div>
-  </React.StrictMode>,
-  document.getElementById('root'),
+  </StrictMode>,
 );

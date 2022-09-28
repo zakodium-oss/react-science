@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/experimental-ct-react';
 import measurement from '../../stories/data/irMeasurement.json';
 
 import { MeasurementPlot } from '@/app/components';
-import { IRMeasurement } from '@/app/data/IRMeasurement';
+import type { IRMeasurement } from '@/app/data/IRMeasurement';
 
 let irMeasurement = measurement as IRMeasurement;
 

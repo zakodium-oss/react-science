@@ -1,6 +1,6 @@
-import React, { CSSProperties, useCallback } from 'react';
+import { CSSProperties, useCallback } from 'react';
 
-import { HSL, RGB } from '../ColorPicker';
+import type { HSL, RGB } from '../ColorPicker';
 import { EditableInput } from '../common';
 import * as color from '../helpers/color';
 

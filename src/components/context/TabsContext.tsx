@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
-import { TabItem } from '../Tabs';
+import type { TabItem } from '../Tabs';
 
 const tabsContext = createContext<TabItem | null | undefined>(null);
 

@@ -120,11 +120,7 @@ function DropZoneArea() {
                 maxHeight: '100%',
               }}
             >
-              <SplitPane
-                initialSeparation="500px"
-                minimumSize={500}
-                sideSeparation="end"
-              >
+              <SplitPane initialSize="400px" initialClosed={500} mainSide="end">
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
                   onReset={() => {

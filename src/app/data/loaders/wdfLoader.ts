@@ -1,5 +1,5 @@
 import { v4 } from '@lukeed/uuid';
-import { PartialFileList } from 'filelist-utils';
+import type { PartialFileList } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
 import { getEmptyMeasurements, Loader, Measurements } from '../DataState';

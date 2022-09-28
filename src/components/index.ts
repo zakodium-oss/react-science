@@ -7,7 +7,7 @@ export * from './LayoutManager';
 export * from './Modal';
 export * from './RootLayout';
 export * from './Toolbar';
-export * from './SplitPane';
+export * from './split-pane/SplitPane';
 export * from './Table';
 export * from './Tabs';
 
@@ -16,7 +16,6 @@ export * as ValueRenderers from './value-renderers/index';
 
 export * from './context/AccordionContext';
 
-export * from './hooks/useSplitPaneSize';
 export * from './hooks/useToggle';
 export * from './hooks/useModal';
 export * from './hooks/useOnOff';
