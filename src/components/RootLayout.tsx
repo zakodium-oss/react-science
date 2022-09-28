@@ -19,25 +19,25 @@ const style: CSSProperties = {
 };
 
 export function RootLayout(props: RootLayoutProps) {
-  const [state, setState] = useState<HTMLElement | null>(
+  const [rootRef, setRootRef] = useState<HTMLElement | null>(
     typeof document !== 'undefined' ? document.body : null,
   );
 
   const ref = useCallback((node: HTMLDivElement) => {
     if (node !== null) {
-      setState(node);
+      setRootRef(node);
     }
   }, []);
 
   return (
-    <root.div style={{ ...style, ...props.style }}>
+    <root.div style={{ ...style, ...props.style }} id="root">
       <Global styles={preflight} />
       <div
         ref={ref}
         css={customDivPreflight}
         style={{ width: '100%', height: '100%', position: 'relative' }}
       >
-        <RootLayoutProvider innerRef={state}>
+        <RootLayoutProvider innerRef={rootRef}>
           <AccordionProvider>{props.children}</AccordionProvider>
         </RootLayoutProvider>
       </div>
