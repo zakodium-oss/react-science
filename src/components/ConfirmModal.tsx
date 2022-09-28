@@ -5,18 +5,23 @@ import { Button } from '.';
 interface ConfirmModalProps {
   children: ReactNode;
   isOpen: boolean;
-
   onConfirm: () => void;
   onCancel: () => void;
-
   saveText?: string;
   cancelText?: string;
-
   headerColor: string;
+  width?: number;
+  height?: number;
 }
 
 export function ConfirmModal(props: ConfirmModalProps) {
-  const { saveText = 'Save', cancelText = 'Cancel', headerColor } = props;
+  const {
+    saveText = 'Save',
+    cancelText = 'Cancel',
+    headerColor,
+    width,
+    height,
+  } = props;
 
   if (!props.isOpen) {
     return null;
@@ -37,8 +42,8 @@ export function ConfirmModal(props: ConfirmModalProps) {
       <div
         style={{
           backgroundColor: 'white',
-          width: '40%',
-          height: 'max-content',
+          width: width || '400px',
+          height: height || 'max-content',
           margin: 'auto',
           top: 0,
           left: 0,
