@@ -14,7 +14,7 @@ import {
   useRectangularZoom,
 } from 'react-plot';
 
-import { MeasurementBase } from '../data/MeasurementBase';
+import type { MeasurementBase } from '../data/MeasurementBase';
 
 type Measurement = Pick<
   MeasurementBase,

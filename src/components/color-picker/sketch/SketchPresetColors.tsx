@@ -1,4 +1,4 @@
-import React, { CSSProperties, MouseEvent, useCallback } from 'react';
+import { CSSProperties, MouseEvent, useCallback } from 'react';
 
 import { Swatch } from '../common';
 

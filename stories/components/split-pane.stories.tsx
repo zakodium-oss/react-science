@@ -9,10 +9,20 @@ export default {
   title: 'Components / SplitPane',
 };
 
+const directionArgType = {
+  options: ['horizontal', 'vertical'],
+  control: { type: 'radio' },
+};
+
+const sideArgType = {
+  options: ['start', 'end'],
+  control: { type: 'radio' },
+};
+
 export function Control(props: Omit<SplitPaneProps, 'children'>) {
   return (
     <div style={{ backgroundColor: 'greenyellow', height: 400, width: 600 }}>
-      <SplitPane key={props.initialSeparation} {...props}>
+      <SplitPane {...props}>
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -21,28 +31,19 @@ export function Control(props: Omit<SplitPaneProps, 'children'>) {
 }
 
 Control.args = {
-  initialSeparation: '50%',
-  orientation: 'horizontal',
-  sideSeparation: 'end',
+  initialSize: '50%',
   initialClosed: false,
-  minimumSize: 100,
 };
 
 Control.argTypes = {
-  orientation: {
-    options: ['vertical', 'horizontal'],
-    control: { type: 'radio' },
-  },
-  sideSeparation: {
-    options: ['start', 'end'],
-    control: { type: 'radio' },
-  },
+  direction: directionArgType,
+  mainSide: sideArgType,
 };
 
 export function Vertical() {
   return (
     <div style={{ backgroundColor: 'rgba(165, 180, 252)', height: 400 }}>
-      <SplitPane orientation="vertical" initialSeparation="200px">
+      <SplitPane direction="vertical" initialSize="200px">
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -53,7 +54,7 @@ export function Vertical() {
 export function Horizontal() {
   return (
     <div style={{ backgroundColor: 'rgba(147, 197, 253)', height: 200 }}>
-      <SplitPane orientation="horizontal" initialSeparation="200px">
+      <SplitPane direction="horizontal" initialSize="30%">
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -64,8 +65,8 @@ export function Horizontal() {
 export function Inception() {
   return (
     <div style={{ backgroundColor: 'rgba(209, 213, 219)', height: 400 }}>
-      <SplitPane orientation="horizontal">
-        <SplitPane orientation="vertical">
+      <SplitPane direction="horizontal">
+        <SplitPane direction="vertical">
           <p>A</p>
 
           <AccordionProvider>
@@ -97,9 +98,9 @@ export function Inception() {
             </Accordion>
           </AccordionProvider>
         </SplitPane>
-        <SplitPane orientation="vertical">
+        <SplitPane direction="vertical">
           <p>C</p>
-          <SplitPane orientation="vertical">
+          <SplitPane direction="vertical">
             <p>D</p>
             <p>E</p>
           </SplitPane>
@@ -118,7 +119,7 @@ export function WithEvilChild() {
         height: 300,
       }}
     >
-      <SplitPane orientation="horizontal" initialSeparation="300px">
+      <SplitPane direction="horizontal" initialSize="300px">
         <div>I am a good child. 😊</div>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: 300 }}>
           I am an evil child. You cannot make me smaller than 300px 😈
@@ -129,7 +130,8 @@ export function WithEvilChild() {
 }
 
 export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
-  const { sideSeparation, minimumSize = 300 } = props;
+  const { mainSide, initialClosed } = props;
+  const nbPx = String(initialClosed);
   return (
     <div
       style={{
@@ -137,14 +139,14 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
         height: 'calc(100vh - 2.1rem)',
       }}
     >
-      <SplitPane key={JSON.stringify(props)} {...props}>
+      <SplitPane {...props}>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
-          {sideSeparation === 'start' &&
-            `Close when window size less Than ${minimumSize}px 😊`}
+          {mainSide === 'start' &&
+            `Close when container size less Than ${nbPx}px`}
         </div>
         <div style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}>
-          {sideSeparation === 'end' &&
-            `Close when window size less Than ${minimumSize}px 😊`}
+          {mainSide === 'end' &&
+            `Close when container size less Than ${nbPx}px`}
         </div>
       </SplitPane>
     </div>
@@ -152,9 +154,11 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
 }
 
 WithMinimalSize.args = {
-  initialSeparation: '500px',
-  orientation: 'horizontal',
-  sideSeparation: 'end',
-  initialClosed: false,
-  minimumSize: 300,
+  initialSize: '500px',
+  initialClosed: 600,
+};
+
+WithMinimalSize.argTypes = {
+  direction: directionArgType,
+  mainSide: sideArgType,
 };

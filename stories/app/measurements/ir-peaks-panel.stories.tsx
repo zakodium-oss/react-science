@@ -4,7 +4,7 @@ import {
   IRColumnPreferences,
   IRPeaksPanel as IRPeaksPanelComponent,
 } from '@/app/components';
-import { IRPeak } from '@/app/data/IRPeak';
+import type { IRPeak } from '@/app/data/IRPeak';
 
 export default {
   title: 'Measurements / Panels',

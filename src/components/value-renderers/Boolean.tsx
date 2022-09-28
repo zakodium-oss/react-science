@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { ValueRenderersProps } from '.';
+import type { ValueRenderersProps } from '.';
 
 interface BooleanProps extends ValueRenderersProps {
   value?: boolean;

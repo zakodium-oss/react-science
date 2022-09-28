@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
-import { ValueRenderersProps } from '.';
+import type { ValueRenderersProps } from '.';
 
 interface ComponentProps extends ValueRenderersProps {
   children?: ReactElement | ReactElement[];

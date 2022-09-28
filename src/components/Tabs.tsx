@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { TabsProvider, useTabsContext } from './context/TabsContext';
 

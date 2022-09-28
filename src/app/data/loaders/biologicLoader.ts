@@ -1,6 +1,6 @@
 import { v4 } from '@lukeed/uuid';
 import { convert } from 'biologic-converter';
-import { PartialFileList } from 'filelist-utils';
+import type { PartialFileList } from 'filelist-utils';
 
 import { getEmptyMeasurements, Loader } from '../DataState';
 

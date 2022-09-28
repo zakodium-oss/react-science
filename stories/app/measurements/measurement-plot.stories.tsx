@@ -1,7 +1,7 @@
 import measurement from '../../data/irMeasurement.json';
 
 import { MeasurementPlot, MeasurementPlotProps } from '@/app/components';
-import { IRMeasurement } from '@/app/data/IRMeasurement';
+import type { IRMeasurement } from '@/app/data/IRMeasurement';
 
 let irMeasurement = measurement as IRMeasurement;
 

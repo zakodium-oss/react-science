@@ -79,7 +79,7 @@ export function Basic(props: { onSave: () => void }) {
             height: '300px',
           }}
         >
-          <SplitPane initialSeparation="35%">
+          <SplitPane initialSize="35%">
             <div style={{ padding: 5 }}>
               <Button
                 onClick={open}
@@ -214,7 +214,7 @@ export function BasicConfirm(props: {
             height: '300px',
           }}
         >
-          <SplitPane initialSeparation="35%">
+          <SplitPane initialSize="35%">
             <div style={{ padding: 5 }}>
               <Button
                 onClick={open}
@@ -356,7 +356,7 @@ export function WithComplexContents(props: { onSave: () => void }) {
             height: '300px',
           }}
         >
-          <SplitPane initialSeparation="35%">
+          <SplitPane initialSize="35%">
             <div style={{ padding: 5 }}>
               <Button
                 onClick={open}

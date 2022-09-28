@@ -1,7 +1,7 @@
-import { PartialFileList } from 'filelist-utils';
+import type { PartialFileList } from 'filelist-utils';
 
-import { IRMeasurement } from './IRMeasurement';
-import { MeasurementBase } from './MeasurementBase';
+import type { IRMeasurement } from './IRMeasurement';
+import type { MeasurementBase } from './MeasurementBase';
 
 export interface DataState {
   measurements: Measurements;

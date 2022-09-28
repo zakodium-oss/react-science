@@ -92,7 +92,7 @@ function BasicExample() {
             height: '300px',
           }}
         >
-          <SplitPane initialSeparation="35%">
+          <SplitPane initialSize="35%">
             <div style={{ padding: 5 }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
               earum omnis, et voluptatum veniam repellendus similique! Sunt

@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css, CSSObject } from '@emotion/react';
-import React, {
+import {
+  ReactElement,
   ReactFragment,
   ReactNode,
   useLayoutEffect,
@@ -15,8 +16,8 @@ export type ToolbarItemOrientation = 'vertical' | 'horizontal' | 'auto';
 export interface ToolbarProps {
   orientation: ToolbarOrientation;
   children?:
-    | Array<React.ReactElement<ToolbarItemProps>>
-    | React.ReactElement<ToolbarItemProps>
+    | Array<ReactElement<ToolbarItemProps>>
+    | ReactElement<ToolbarItemProps>
     | ReactFragment
     | boolean
     | null;

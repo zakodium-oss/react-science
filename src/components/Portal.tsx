@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import ReactDOM from 'react-dom';
+import type { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 
 import { useRootLayoutContext } from './context/RootLayoutContext';
 
@@ -9,5 +9,5 @@ interface PortalProps {
 
 export function Portal(props: PortalProps) {
   const element = useRootLayoutContext();
-  return ReactDOM.createPortal(props.children, element);
+  return createPortal(props.children, element);
 }

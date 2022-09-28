@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent } from 'react';
+import type { CSSProperties, MouseEvent } from 'react';
 
 export { Color } from './Color';
 export { Boolean } from './Boolean';

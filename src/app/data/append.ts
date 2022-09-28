@@ -1,4 +1,4 @@
-import { PartialFileList } from 'filelist-utils';
+import type { PartialFileList } from 'filelist-utils';
 import { produce } from 'immer';
 
 import {

@@ -1,4 +1,4 @@
-import { Instrument, MeasurementVariable } from 'cheminfo-types';
+import type { Instrument, MeasurementVariable } from 'cheminfo-types';
 
 /**
  * When we have a simple measurement like uv, ir, etc, data should only contain one element
@@ -7,7 +7,6 @@ import { Instrument, MeasurementVariable } from 'cheminfo-types';
  * If we have isotherm with gaz absorption / desorption this format should also be used.
  * The 'info'for each 'Measurement' should be normalized.
  */
-
 export interface MeasurementBase {
   id: string;
   title?: string;

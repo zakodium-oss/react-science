@@ -1,4 +1,4 @@
-import { MeasurementBase } from '../MeasurementBase';
+import type { MeasurementBase } from '../MeasurementBase';
 
 /**
  * we add missing absorbance / transmittance

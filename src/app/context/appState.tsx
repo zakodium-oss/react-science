@@ -42,9 +42,7 @@ function getEmptyAppState(): AppState {
 }
 
 const appStateContext = createContext<AppState | null>(null);
-const appDispatchContext = createContext<React.Dispatch<AppStateAction> | null>(
-  null,
-);
+const appDispatchContext = createContext<Dispatch<AppStateAction> | null>(null);
 
 export function useAppState() {
   const appState = useContext(appStateContext);

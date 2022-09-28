@@ -142,7 +142,7 @@ export function WithToggle() {
             height: '300px',
           }}
         >
-          <SplitPane initialSeparation="35%">
+          <SplitPane initialSize="35%">
             <div style={{ padding: 5, display: 'flex', gap: 5, height: 40 }}>
               <button
                 type="button"

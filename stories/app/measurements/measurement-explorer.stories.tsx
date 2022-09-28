@@ -4,7 +4,7 @@ import {
   MeasurementExplorer,
   MeasurementExplorerProps,
 } from '@/app/components';
-import { IRMeasurement } from '@/app/data/IRMeasurement';
+import type { IRMeasurement } from '@/app/data/IRMeasurement';
 
 let irMeasurement = measurement as IRMeasurement;
 
