@@ -8,7 +8,7 @@ import {
 
 import { Accordion } from './Accordion';
 import { DropZone } from './DropZone';
-import { Modal } from './Modal';
+import { Modal } from './Modal/Modal';
 import { SplitPane } from './split-pane/SplitPane';
 
 const layoutComponents: ComponentsMap = {
