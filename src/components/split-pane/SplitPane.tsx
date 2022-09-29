@@ -99,6 +99,7 @@ export function SplitPane(props: SplitPaneProps) {
 
   const splitterRef = useRef<HTMLDivElement>(null);
   const { onMouseDown } = useSplitPaneSize({
+    mainSide,
     direction,
     splitterRef,
     sizeType,

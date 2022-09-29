@@ -1,8 +1,13 @@
 import type { Dispatch, SetStateAction, RefObject } from 'react';
 
-import type { SplitPaneDirection, SplitPaneType } from './SplitPane';
+import type {
+  SplitPaneDirection,
+  SplitPaneSide,
+  SplitPaneType,
+} from './SplitPane';
 
 interface UseSplitPaneSizeOptions {
+  mainSide: SplitPaneSide;
   direction: SplitPaneDirection;
   splitterRef: RefObject<HTMLDivElement>;
   sizeType: SplitPaneType;
@@ -10,7 +15,13 @@ interface UseSplitPaneSizeOptions {
 }
 
 export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
-  const { direction, splitterRef, sizeType, onSizeChange: setSize } = options;
+  const {
+    mainSide,
+    direction,
+    splitterRef,
+    sizeType,
+    onSizeChange: setSize,
+  } = options;
 
   function mouseDownCallback() {
     function onMouseMove(event: MouseEvent) {
@@ -18,17 +29,21 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
       const { clientX, clientY } = event;
       const parentDiv = splitterRef.current.parentElement as HTMLDivElement;
       const bounds = parentDiv.getBoundingClientRect();
-      const client =
-        direction === 'horizontal'
-          ? clientX - bounds.left
-          : clientY - bounds.top;
       const parentDimension =
         direction === 'horizontal'
           ? parentDiv.clientWidth
           : parentDiv.clientHeight;
+
+      const client =
+        direction === 'horizontal'
+          ? clientX - bounds.left
+          : clientY - bounds.top;
+
+      const value = mainSide === 'start' ? client : parentDimension - client;
+
       if (sizeType === 'px') {
         setSize(() => {
-          const newSize = getValueFromSplitter(client, {
+          const newSize = getValueFromSplitter(value, {
             min: 50,
             max: parentDimension - 50,
           });
@@ -37,8 +52,8 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
         });
       } else if (sizeType === '%') {
         setSize(() => {
-          const clientPer = (client / parentDimension) * 100;
-          let newSize = getValueFromSplitter(clientPer, {
+          const valueDiff = (value / parentDimension) * 100;
+          let newSize = getValueFromSplitter(valueDiff, {
             min: 5,
             max: 95,
           });

@@ -46,6 +46,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
     "@lukeed/uuid": "^2.0.0",
     "@tanstack/react-table": "^8.5.13",
     "biologic-converter": "^0.1.0",
@@ -59,7 +60,7 @@
     "react-dropzone": "^14.2.2",
     "react-error-boundary": "^3.1.4",
     "react-shadow": "^19.0.3",
-    "spc-parser": "^0.6.0",
+    "spc-parser": "^0.5.2",
     "tinycolor2": "^1.4.2",
     "use-resize-observer": "^9.0.2",
     "wdf-parser": "^0.2.1"
@@ -67,7 +68,6 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.19.1",
-    "@emotion/react": "^11.10.4",
     "@ladle/react": "^2.4.3",
     "@playwright/experimental-ct-react": "^1.26.1",
     "@playwright/test": "^1.26.1",
