@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.1...v0.17.2) (2022-09-30)
+
+
+### Bug Fixes
+
+* rename mainSide to controlledSide ([#231](https://github.com/zakodium-oss/analysis-ui-components/issues/231)) ([45084ba](https://github.com/zakodium-oss/analysis-ui-components/commit/45084baff543692513f198830bd23054ba6c9c09))
+
 ## [0.17.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.0...v0.17.1) (2022-09-30)
 
 
