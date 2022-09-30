@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.17.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.16.0...v0.17.0) (2022-09-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* React >=v18 is now mandatory.
+
+### Features
+
+* add signal processing panel ([#201](https://github.com/zakodium-oss/analysis-ui-components/issues/201)) ([868bba2](https://github.com/zakodium-oss/analysis-ui-components/commit/868bba296121a77a3fcdf5568be747486f3517af))
+* drag and drop measurements in App page ([#213](https://github.com/zakodium-oss/analysis-ui-components/issues/213)) ([2df2cc0](https://github.com/zakodium-oss/analysis-ui-components/commit/2df2cc06780a2fb1459d67388fda7495423a1232))
+* improve peak panel ([#199](https://github.com/zakodium-oss/analysis-ui-components/issues/199)) ([c8cb819](https://github.com/zakodium-oss/analysis-ui-components/commit/c8cb819b039a930deabd8eb1b7a9524645f5db37))
+
+
+### Bug Fixes
+
+* split pane ([#228](https://github.com/zakodium-oss/analysis-ui-components/issues/228)) ([bd169fd](https://github.com/zakodium-oss/analysis-ui-components/commit/bd169fd746b53ecd5700d555dc9008b216f57c9b))
+
+
+### Miscellaneous Chores
+
+* update dependencies ([#203](https://github.com/zakodium-oss/analysis-ui-components/issues/203)) ([cd40545](https://github.com/zakodium-oss/analysis-ui-components/commit/cd405453245f6b436516e0cd75b7a8915023035e))
+
 ## [0.16.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.15.2...v0.16.0) (2022-08-04)
 
 
