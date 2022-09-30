@@ -1,8 +1,9 @@
-import type { Dispatch, SetStateAction, RefObject } from 'react';
+import type { RefObject } from 'react';
 
 import type {
   SplitPaneDirection,
   SplitPaneSide,
+  SplitPaneSize,
   SplitPaneType,
 } from './SplitPane';
 
@@ -11,19 +12,16 @@ interface UseSplitPaneSizeOptions {
   direction: SplitPaneDirection;
   splitterRef: RefObject<HTMLDivElement>;
   sizeType: SplitPaneType;
-  onSizeChange: Dispatch<SetStateAction<[number, SplitPaneType]>>;
+  onSizeChange: (newSize: [number, SplitPaneType]) => void;
+  onResize?: (newSize: SplitPaneSize) => void;
 }
 
 export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
-  const {
-    mainSide,
-    direction,
-    splitterRef,
-    sizeType,
-    onSizeChange: setSize,
-  } = options;
+  const { mainSide, direction, splitterRef, sizeType, onSizeChange, onResize } =
+    options;
 
   function mouseDownCallback() {
+    let lastSize: [number, SplitPaneType] | null = null;
     function onMouseMove(event: MouseEvent) {
       if (!splitterRef.current) return;
       const { clientX, clientY } = event;
@@ -42,30 +40,29 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
       const value = mainSide === 'start' ? client : parentDimension - client;
 
       if (sizeType === 'px') {
-        setSize(() => {
-          const newSize = getValueFromSplitter(value, {
-            min: 50,
-            max: parentDimension - 50,
-          });
-
-          return [newSize, sizeType];
+        const newSize = getValueFromSplitter(value, {
+          min: 50,
+          max: parentDimension - 50,
         });
+        lastSize = [newSize, sizeType];
+        onSizeChange(lastSize);
       } else if (sizeType === '%') {
-        setSize(() => {
-          const valueDiff = (value / parentDimension) * 100;
-          let newSize = getValueFromSplitter(valueDiff, {
-            min: 5,
-            max: 95,
-          });
-
-          return [newSize, sizeType];
+        const valueDiff = (value / parentDimension) * 100;
+        const newSize = getValueFromSplitter(valueDiff, {
+          min: 5,
+          max: 95,
         });
+        lastSize = [newSize, sizeType];
+        onSizeChange(lastSize);
       }
     }
 
     function mouseUpCallback() {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', mouseUpCallback);
+      if (lastSize && onResize) {
+        onResize(`${lastSize[0]}${lastSize[1]}`);
+      }
     }
 
     window.addEventListener('mousemove', onMouseMove);

@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 import {
   Accordion,
   AccordionProvider,
   SplitPane,
   SplitPaneProps,
+  SplitPaneSize,
 } from '@/components';
 
 export default {
@@ -20,11 +23,22 @@ const sideArgType = {
 };
 
 export function Control(props: Omit<SplitPaneProps, 'children'>) {
+  const [toggle, setToggle] = useState<boolean | null>(null);
+  const [resize, setResize] = useState<SplitPaneSize | null>(null);
   return (
     <div style={{ backgroundColor: 'greenyellow', height: 400, width: 600 }}>
-      <SplitPane {...props}>
+      <SplitPane onToggle={setToggle} onResize={setResize} {...props}>
         <div>A</div>
-        <div>B</div>
+        <div>
+          <div>
+            {'Last toggle event: '}
+            {toggle === null ? 'none' : toggle ? 'true' : 'false'}
+          </div>
+          <div>
+            {'Last resize event: '}
+            {resize === null ? 'none' : resize}
+          </div>
+        </div>
       </SplitPane>
     </div>
   );

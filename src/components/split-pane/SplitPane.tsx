@@ -84,6 +84,7 @@ export function SplitPane(props: SplitPaneProps) {
     onToggle,
     children,
   } = props;
+
   const minimumSize = typeof initialClosed === 'number' ? initialClosed : null;
 
   // Whether the pane is explicitly closed. If the value is `false`, the pane
@@ -104,10 +105,10 @@ export function SplitPane(props: SplitPaneProps) {
     splitterRef,
     sizeType,
     onSizeChange(value) {
-      onResize?.(`${value[0]}${value[1]}` as SplitPaneSize);
       touch();
       setSize(value);
     },
+    onResize,
   });
 
   const rootSize = useResizeObserver<HTMLDivElement>();
@@ -130,15 +131,15 @@ export function SplitPane(props: SplitPaneProps) {
   function handleToggle() {
     touch();
     if (isFinalClosed) {
-      if (isPaneClosed) {
-        onToggle?.(false);
-      }
       openPane();
-    } else {
-      if (!isPaneClosed) {
-        onToggle?.(true);
+      if (isPaneClosed && onToggle) {
+        onToggle(false);
       }
+    } else {
       closePane();
+      if (!isPaneClosed && onToggle) {
+        onToggle(true);
+      }
     }
   }
 
@@ -166,7 +167,7 @@ export function SplitPane(props: SplitPaneProps) {
 
       <Splitter
         onDoubleClick={handleToggle}
-        onMouseDown={onMouseDown}
+        onMouseDown={isFinalClosed ? undefined : onMouseDown}
         isFinalClosed={isFinalClosed}
         direction={direction}
         splitterRef={splitterRef}
@@ -179,7 +180,7 @@ export function SplitPane(props: SplitPaneProps) {
 
 interface SplitterProps {
   onDoubleClick: () => void;
-  onMouseDown: (event: ReactMouseEvent) => void;
+  onMouseDown?: (event: ReactMouseEvent) => void;
   direction: SplitPaneDirection;
   isFinalClosed: boolean;
   splitterRef: RefObject<HTMLDivElement>;
