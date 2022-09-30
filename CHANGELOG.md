@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.1](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.0...v0.17.1) (2022-09-30)
+
+
+### Bug Fixes
+
+* package exports ([#229](https://github.com/zakodium-oss/analysis-ui-components/issues/229)) ([2093191](https://github.com/zakodium-oss/analysis-ui-components/commit/2093191094157de2ffff642ead617b28c1e786c5))
+
 ## [0.17.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.16.0...v0.17.0) (2022-09-30)
 
 
