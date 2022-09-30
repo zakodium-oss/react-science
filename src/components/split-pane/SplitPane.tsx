@@ -35,9 +35,9 @@ export interface SplitPaneProps {
    * A value of 'start' means 'left' or 'top' (depending on the direction).
    * @default 'start'
    */
-  mainSide?: SplitPaneSide;
+  controlledSide?: SplitPaneSide;
   /**
-   * Initial size of the main side. Unit can be either '%' or 'px'.
+   * Initial size of the controlled side. Unit can be either '%' or 'px'.
    * @default '50%'
    */
   initialSize?: SplitPaneSize;
@@ -77,7 +77,7 @@ export function useSplitPaneContext() {
 export function SplitPane(props: SplitPaneProps) {
   const {
     direction = 'horizontal',
-    mainSide = 'start',
+    controlledSide = 'start',
     initialSize = '50%',
     initialClosed = false,
     onResize,
@@ -100,7 +100,7 @@ export function SplitPane(props: SplitPaneProps) {
 
   const splitterRef = useRef<HTMLDivElement>(null);
   const { onMouseDown } = useSplitPaneSize({
-    mainSide,
+    controlledSide,
     direction,
     splitterRef,
     sizeType,
@@ -146,7 +146,7 @@ export function SplitPane(props: SplitPaneProps) {
   function getSplitSideStyle(side: SplitPaneSide) {
     return getItemStyle(
       isFinalClosed,
-      mainSide === side,
+      controlledSide === side,
       direction,
       size,
       sizeType,

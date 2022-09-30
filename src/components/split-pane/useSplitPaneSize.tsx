@@ -8,7 +8,7 @@ import type {
 } from './SplitPane';
 
 interface UseSplitPaneSizeOptions {
-  mainSide: SplitPaneSide;
+  controlledSide: SplitPaneSide;
   direction: SplitPaneDirection;
   splitterRef: RefObject<HTMLDivElement>;
   sizeType: SplitPaneType;
@@ -17,8 +17,14 @@ interface UseSplitPaneSizeOptions {
 }
 
 export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
-  const { mainSide, direction, splitterRef, sizeType, onSizeChange, onResize } =
-    options;
+  const {
+    controlledSide,
+    direction,
+    splitterRef,
+    sizeType,
+    onSizeChange,
+    onResize,
+  } = options;
 
   function mouseDownCallback() {
     let lastSize: [number, SplitPaneType] | null = null;
@@ -37,7 +43,8 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
           ? clientX - bounds.left
           : clientY - bounds.top;
 
-      const value = mainSide === 'start' ? client : parentDimension - client;
+      const value =
+        controlledSide === 'start' ? client : parentDimension - client;
 
       if (sizeType === 'px') {
         const newSize = getValueFromSplitter(value, {

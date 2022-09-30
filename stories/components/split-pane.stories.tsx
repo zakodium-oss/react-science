@@ -51,7 +51,7 @@ Control.args = {
 
 Control.argTypes = {
   direction: directionArgType,
-  mainSide: sideArgType,
+  controlledSide: sideArgType,
 };
 
 export function Vertical() {
@@ -144,7 +144,7 @@ export function WithEvilChild() {
 }
 
 export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
-  const { mainSide, initialClosed } = props;
+  const { controlledSide, initialClosed } = props;
   const nbPx = String(initialClosed);
   return (
     <div
@@ -155,11 +155,11 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
     >
       <SplitPane {...props}>
         <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
-          {mainSide === 'start' &&
+          {controlledSide === 'start' &&
             `Close when container size less Than ${nbPx}px`}
         </div>
         <div style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}>
-          {mainSide === 'end' &&
+          {controlledSide === 'end' &&
             `Close when container size less Than ${nbPx}px`}
         </div>
       </SplitPane>
@@ -174,5 +174,5 @@ WithMinimalSize.args = {
 
 WithMinimalSize.argTypes = {
   direction: directionArgType,
-  mainSide: sideArgType,
+  controlledSide: sideArgType,
 };
