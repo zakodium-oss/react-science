@@ -2,9 +2,9 @@
   "name": "analysis-ui-components",
   "version": "0.17.0",
   "description": "React components to build analysis UI",
-  "main": "lib/index.js",
-  "module": "lib-esm/index.js",
-  "types": "lib-esm/index.d.ts",
+  "main": "lib/components/index.js",
+  "module": "lib-esm/components/index.js",
+  "types": "lib-esm/components/index.d.ts",
   "files": [
     "lib",
     "lib-esm",
