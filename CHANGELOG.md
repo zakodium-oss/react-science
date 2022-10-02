@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.3](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.2...v0.17.3) (2022-10-02)
+
+
+### Bug Fixes
+
+* split pan cursor in px type ([#235](https://github.com/zakodium-oss/analysis-ui-components/issues/235)) ([09ca0f4](https://github.com/zakodium-oss/analysis-ui-components/commit/09ca0f46502b1837a7d2b6515df98c29691c2ed4))
+
 ## [0.17.2](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.1...v0.17.2) (2022-09-30)
 
 
