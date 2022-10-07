@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode, useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 
 import { Button } from '..';
+import { useDialog } from '../hooks/useDialog';
 
 interface ConfirmModalProps {
   children: ReactNode;
@@ -32,33 +33,16 @@ export function ConfirmModal(props: ConfirmModalProps) {
     requestCloseOnEsc = true,
   } = props;
 
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    function onEsc(event: Event) {
-      event.preventDefault();
-      if (requestCloseOnEsc && onRequestClose) {
-        onRequestClose();
-      }
-    }
-    const dialog = dialogRef.current;
-    if (dialog) {
-      dialog.addEventListener('cancel', onEsc);
-      return () => dialog.removeEventListener('cancel', onEsc);
-    }
-  }, [onRequestClose, requestCloseOnEsc]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (dialog && isOpen) {
-      dialog.showModal();
-      return () => dialog.close();
-    }
-  }, [isOpen]);
+  const { ref, onClick } = useDialog({
+    isOpen,
+    requestCloseOnEsc,
+    requestCloseOnBackdrop,
+    onRequestClose,
+  });
 
   return (
     <dialog
-      ref={dialogRef}
+      ref={ref}
       style={{
         display: 'flex',
         position: 'fixed',
@@ -67,13 +51,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
       css={css`
         ::backdrop: rgba(113, 113, 122, 0.75);
       `}
-      onClick={(event) => {
-        // Since the dialog has no size of itself, this condition is only
-        // `true` when we click on the backdrop.
-        if (event.target === event.currentTarget && requestCloseOnBackdrop) {
-          onRequestClose?.();
-        }
-      }}
+      onClick={onClick}
     >
       {isOpen ? (
         <div
