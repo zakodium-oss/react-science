@@ -30,7 +30,7 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    <root.div style={{ ...style, ...props.style }} id="root">
+    <root.div style={{ ...style, ...props.style }}>
       <Global styles={preflight} />
       <div
         ref={ref}
