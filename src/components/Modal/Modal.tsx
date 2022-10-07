@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactElement, ReactNode, useEffect, useRef } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+
+import { useDialog } from '../hooks/useDialog';
 
 import ModalCloseButton from './ModalCloseButton';
 
@@ -28,33 +30,16 @@ export function Modal(props: ModalProps) {
     height,
     children,
   } = props;
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    function onEsc(event: Event) {
-      event.preventDefault();
-      if (requestCloseOnEsc && onRequestClose) {
-        onRequestClose();
-      }
-    }
-    const dialog = dialogRef.current;
-    if (dialog) {
-      dialog.addEventListener('cancel', onEsc);
-      return () => dialog.removeEventListener('cancel', onEsc);
-    }
-  }, [onRequestClose, requestCloseOnEsc]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (dialog && isOpen) {
-      dialog.showModal();
-      return () => dialog.close();
-    }
-  }, [isOpen]);
+  const { ref, onClick } = useDialog({
+    isOpen,
+    requestCloseOnEsc,
+    requestCloseOnBackdrop,
+    onRequestClose,
+  });
 
   return (
     <dialog
-      ref={dialogRef}
+      ref={ref}
       style={{
         display: 'flex',
         position: 'fixed',
@@ -63,13 +48,7 @@ export function Modal(props: ModalProps) {
       css={css`
         ::backdrop: rgba(113, 113, 122, 0.75);
       `}
-      onClick={(event) => {
-        // Since the dialog has no size of itself, this condition is only
-        // `true` when we click on the backdrop.
-        if (event.target === event.currentTarget && requestCloseOnBackdrop) {
-          onRequestClose?.();
-        }
-      }}
+      onClick={onClick}
     >
       {isOpen ? (
         <div
