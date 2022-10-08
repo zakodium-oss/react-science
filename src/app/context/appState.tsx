@@ -163,42 +163,22 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       return;
     }
     case 'SAVE_AS_IUM': {
-      saveAsJSONHandler(
-        draft,
-        action.payload?.filename,
-        action.payload?.spaceIndent,
-      );
+      saveAsIum(draft, action.payload?.filename, action.payload?.spaceIndent);
       return;
     }
     default:
       assertUnreachable(type);
   }
 }
-function saveAsJSONHandler(
-  state: Draft<AppState>,
-  filename = 'data',
-  spaceIndent = 0,
-) {
+function saveAsIum(state: Draft<AppState>, filename = 'data', spaceIndent = 0) {
   if (JSON.stringify(state.data) !== JSON.stringify(getEmptyDataState())) {
-    setTimeout(() => {
-      async function handle() {
-        saveJson(state, filename, spaceIndent);
-      }
-      void handle();
-    }, 0);
+    const data = JSON.stringify(
+      { data: state.data, view: state.view },
+      (_key, value) =>
+        ArrayBuffer.isView(value) ? Array.from(value as any) : value,
+      spaceIndent,
+    );
+    const blob = new Blob([data], { type: 'text/plain' });
+    saveAs(blob, `${filename}.ium`);
   }
-}
-export function saveJson(
-  state: AppState,
-  filename: string,
-  spaceIndent: number,
-) {
-  const data = JSON.stringify(
-    state,
-    (_key, value) =>
-      ArrayBuffer.isView(value) ? Array.from(value as any) : value,
-    spaceIndent,
-  );
-  const blob = new Blob([data], { type: 'text/plain' });
-  saveAs(blob, `${filename}.ium`);
 }
