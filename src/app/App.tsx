@@ -5,6 +5,7 @@ import {
   FaCogs,
   FaTabletAlt,
   FaGlasses,
+  FaSave,
 } from 'react-icons/fa';
 
 import { MeasurementPlot, MeasurementsPanel } from './components';
@@ -63,6 +64,9 @@ function DropZoneArea() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
+  function saveHandler() {
+    dispatch({ type: 'SAVE_AS_IUM' });
+  }
   return (
     <RootLayout>
       <DropZoneContainer
@@ -82,6 +86,14 @@ function DropZoneArea() {
                   title="Logo"
                 >
                   <FaMeteor />
+                </Toolbar.Item>
+                <Toolbar.Item
+                  titleOrientation="horizontal"
+                  id="save"
+                  title="Save as ium"
+                  onClick={saveHandler}
+                >
+                  <FaSave />
                 </Toolbar.Item>
               </Toolbar>
               <Toolbar orientation="horizontal">
