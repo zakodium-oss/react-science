@@ -1,6 +1,8 @@
 import { Button } from '@/components';
-import { Fullscreen } from '@/components/Fullscreen';
-import { useFullscreen } from '@/components/context/FullscreenContext';
+import {
+  FullScreenProvider,
+  useFullscreen,
+} from '@/components/context/FullscreenContext';
 
 export default {
   title: 'Components / Fullscreen',
@@ -8,9 +10,9 @@ export default {
 
 export function Basic() {
   return (
-    <Fullscreen>
+    <FullScreenProvider>
       <Content />
-    </Fullscreen>
+    </FullScreenProvider>
   );
 }
 function Content() {

@@ -26,11 +26,17 @@ import {
   Tabs,
   Toolbar,
 } from '@/components';
+import {
+  FullScreenProvider,
+  useFullscreen,
+} from '@/components/context/FullscreenContext';
 
 export default function App() {
   return (
     <AppStateProvider>
-      <DropZoneArea />
+      <FullScreenProvider>
+        <DropZoneArea />
+      </FullScreenProvider>
     </AppStateProvider>
   );
 }
@@ -51,7 +57,7 @@ function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurement(appState);
-
+  const { toggle } = useFullscreen();
   const items: Array<TabItem> = [
     {
       id: '1h',
@@ -63,6 +69,7 @@ function DropZoneArea() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
+
   return (
     <RootLayout>
       <DropZoneContainer
@@ -91,7 +98,7 @@ function DropZoneArea() {
                 <Toolbar.Item id="b" title="General settings">
                   <FaCogs />
                 </Toolbar.Item>
-                <Toolbar.Item id="c" title="Full screen">
+                <Toolbar.Item id="c" title="Full screen" onClick={toggle}>
                   <FaTabletAlt />
                 </Toolbar.Item>
               </Toolbar>

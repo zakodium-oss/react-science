@@ -1,15 +1,20 @@
+/* eslint-disable no-alert */
 import {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
+  useEffect,
   useMemo,
-  useState,
+  useReducer,
 } from 'react';
 
+interface FullscreenProps {
+  children: ReactNode;
+}
 interface FullscreenState {
   isFullScreen: boolean;
 }
+
 interface ContextType extends FullscreenState {
   toggle: () => void;
 }
@@ -22,12 +27,8 @@ const FullscreenContext = createContext<ContextType>(fullscreenContextInit);
 export function useFullscreen() {
   return useContext(FullscreenContext);
 }
-export function FullScreenProvider({ children }: { children: ReactNode }) {
-  const [isFullScreen, setFullScreen] = useState<boolean>(false);
-
-  const toggle = useCallback(() => {
-    setFullScreen(!isFullScreen);
-  }, [isFullScreen]);
+export function FullScreenProvider(props: FullscreenProps) {
+  const [isFullScreen, toggle] = useReducer((value: boolean) => !value, false);
 
   const value = useMemo(
     () => ({ isFullScreen, toggle }),
@@ -35,7 +36,23 @@ export function FullScreenProvider({ children }: { children: ReactNode }) {
   );
   return (
     <FullscreenContext.Provider value={value}>
-      {children}
+      <FullscreenInner {...props} />
     </FullscreenContext.Provider>
   );
+}
+function FullscreenInner(props: FullscreenProps) {
+  const { children } = props;
+  const { isFullScreen } = useFullscreen();
+  useEffect(() => {
+    if (isFullScreen && document.fullscreenElement === null) {
+      document.body.requestFullscreen().catch(() => {
+        alert('Fullscreen is not supported');
+      });
+    } else if (document.fullscreenElement !== null) {
+      document.exitFullscreen().catch(() => {
+        alert("Can't exit fullscreen");
+      });
+    }
+  }, [isFullScreen]);
+  return <>{children}</>;
 }
