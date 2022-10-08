@@ -44,11 +44,15 @@ function FullscreenInner(props: FullscreenProps) {
   const { children } = props;
   const { isFullScreen } = useFullscreen();
   useEffect(() => {
-    if (isFullScreen && document.fullscreenElement === null) {
+    if (
+      isFullScreen &&
+      document.fullscreenElement === null &&
+      document.body.requestFullscreen
+    ) {
       document.body.requestFullscreen().catch(() => {
         alert('Fullscreen is not supported');
       });
-    } else if (document.fullscreenElement !== null) {
+    } else if (document.fullscreenElement !== null && document.exitFullscreen) {
       document.exitFullscreen().catch(() => {
         alert("Can't exit fullscreen");
       });
