@@ -78,9 +78,19 @@ function DropZoneArea() {
         }}
       >
         <div
-          style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+          style={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: 'white',
+          }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             <Header>
               <Toolbar orientation="horizontal">
                 <Toolbar.Item
