@@ -54,7 +54,8 @@ export function mergeMeasurements(
   newMeasurements: Measurements,
 ) {
   for (const kind in newMeasurements) {
-    measurements[kind].entries.push(...newMeasurements[kind].entries);
+    const entries: MeasurementBase[] = newMeasurements[kind].entries || [];
+    measurements[kind].entries.push(...entries);
   }
 }
 
