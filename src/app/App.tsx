@@ -7,7 +7,7 @@ import {
   FaGlasses,
 } from 'react-icons/fa';
 
-import { MeasurementPlot, MeasurementsPanel } from './components';
+import { MeasurementExplorer, MeasurementsPanel } from './components';
 import {
   AppStateProvider,
   useAppDispatch,
@@ -133,7 +133,7 @@ function DropZoneArea() {
                 >
                   <div style={{ padding: 5 }}>
                     {measurement ? (
-                      <MeasurementPlot measurement={measurement} />
+                      <MeasurementExplorer measurement={measurement} />
                     ) : (
                       <span>No data, add them with drag and drop</span>
                     )}
