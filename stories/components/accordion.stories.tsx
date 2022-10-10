@@ -2,35 +2,15 @@ import { useState } from 'react';
 
 import {
   Accordion,
-  Button,
   SplitPane,
   Toolbar,
   useToggleAccordion,
 } from '@/components';
-import {
-  FullScreenProvider,
-  useFullscreen,
-} from '@/components/context/FullscreenContext';
 
 export default {
   title: 'Components / Accordion',
 };
-export function Fullscreen() {
-  return (
-    <FullScreenProvider>
-      <ToggleFullscreen />
-      <Fixed />
-    </FullScreenProvider>
-  );
-}
-function ToggleFullscreen() {
-  const { toggle } = useFullscreen();
-  return (
-    <div>
-      <Button onClick={toggle}>Toggle fullscreen</Button>
-    </div>
-  );
-}
+
 export function Fixed() {
   return (
     <Accordion>
