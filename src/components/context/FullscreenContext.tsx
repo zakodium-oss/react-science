@@ -6,6 +6,7 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
 } from 'react';
 
 interface FullscreenProps {
@@ -43,20 +44,33 @@ export function FullScreenProvider(props: FullscreenProps) {
 function FullscreenInner(props: FullscreenProps) {
   const { children } = props;
   const { isFullScreen } = useFullscreen();
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (
-      isFullScreen &&
-      document.fullscreenElement === null &&
-      document.body.requestFullscreen
-    ) {
-      document.body.requestFullscreen().catch(() => {
+    if (isFullScreen && ref.current && document.fullscreenElement === null) {
+      ref.current.requestFullscreen().catch(() => {
         alert('Fullscreen is not supported');
       });
-    } else if (document.fullscreenElement !== null && document.exitFullscreen) {
+    } else if (
+      !isFullScreen &&
+      ref.current &&
+      document.fullscreenElement !== null &&
+      document.exitFullscreen
+    ) {
       document.exitFullscreen().catch(() => {
         alert("Can't exit fullscreen");
       });
     }
   }, [isFullScreen]);
-  return <>{children}</>;
+  return (
+    <div
+      ref={ref}
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'white',
+      }}
+    >
+      {children}
+    </div>
+  );
 }
