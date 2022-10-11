@@ -7,10 +7,24 @@ export function basic() {
   return (
     <div>
       <FullScreenProvider>
-        <Content i="1" />
-      </FullScreenProvider>
-      <FullScreenProvider>
-        <Content i="2" />
+        <div
+          style={{ border: 'solid 1px black', padding: '10px', margin: '10px' }}
+        >
+          Page 1
+          <FullScreenProvider>
+            <div
+              style={{
+                border: 'solid 1px red',
+                padding: '10px',
+                margin: '10px',
+              }}
+            >
+              Page 2
+              <Content i="2" />
+            </div>
+          </FullScreenProvider>
+          <Content i="1" />
+        </div>
       </FullScreenProvider>
     </div>
   );
@@ -18,9 +32,8 @@ export function basic() {
 function Content({ i }) {
   const { toggle } = useFullscreen();
   return (
-    <div style={{ border: 'solid 1px black' }}>
-      Page {i}
-      <Button onClick={toggle}>Toggle fullscreen</Button>
+    <div>
+      <Button onClick={toggle}>Toggle fullscreen {i}</Button>
     </div>
   );
 }
