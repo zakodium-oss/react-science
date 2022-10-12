@@ -46,7 +46,7 @@ function FullscreenInner(props: FullscreenProps) {
   const { isFullScreen } = useFullscreen();
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (isFullScreen && ref.current && document.fullscreenElement === null) {
+    if (isFullScreen && ref.current) {
       ref.current.requestFullscreen().catch(() => {
         alert('Fullscreen is not supported');
       });
