@@ -30,7 +30,7 @@ export function Horizontal() {
   );
 }
 
-export function ManyTabs() {
+export function ManyTabs({ orientation }) {
   const items: Array<TabItem> = [
     { id: 'a', title: '1H', content: 'Hello, World! [a]' },
     { id: 'b', title: '13C', content: 'Hello, World! [b]' },
@@ -47,6 +47,7 @@ export function ManyTabs() {
     { id: 'm', title: '13C', content: 'Hello, World! [m]' },
     { id: 'n', title: '1H,1H', content: 'Hello, World! [n]' },
     { id: 'o', title: '1H,13C', content: 'Hello, World! [o]' },
+    { id: 'p', title: '1H,13C', content: 'Hello, World! [p]' },
   ];
 
   const [state, setState] = useState(items[1]);
@@ -57,13 +58,16 @@ export function ManyTabs() {
 
   return (
     <Tabs
-      orientation="horizontal"
+      orientation={orientation}
       items={items}
       opened={state}
       onClick={handleClick}
     />
   );
 }
+ManyTabs.args = {
+  orientation: 'horizontal',
+};
 export function Vertical() {
   const items: Array<TabItem> = [
     { id: 'controllers', title: 'Controllers', content: 'Hello, World!' },

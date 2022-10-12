@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode, useMemo, useRef } from 'react';
+import type { ReactNode } from 'react';
 
 import { TabsProvider, useTabsContext } from './context/TabsContext';
 
@@ -98,6 +98,7 @@ function TabsVertical<T extends string = string>(
         flexDirection: 'row',
         flex: '1 1 0%',
         overflowY: 'hidden',
+        height: '100%',
       }}
     >
       <div
@@ -105,6 +106,7 @@ function TabsVertical<T extends string = string>(
           display: 'flex',
           flexDirection: 'column',
           borderRight: '1px solid hsl(0deg, 0%, 80%)',
+          overflowY: 'auto',
         }}
       >
         {props.items.map((item) => (
@@ -130,24 +132,16 @@ function TabsHorizontal<T extends string = string>(
   props: Omit<TabsProps<T>, 'orientation' | 'opened'>,
 ) {
   const item = useTabsContext();
-  const divRef = useRef<HTMLDivElement>(null);
-  const hasScroll = useMemo(
-    () =>
-      divRef.current && divRef.current.scrollWidth > divRef.current.clientWidth,
-    [],
-  );
   return (
     <div
       style={{ display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}
     >
       <div
-        ref={divRef}
         style={{
           display: 'flex',
           flexDirection: 'row',
-          height: hasScroll ? 60 : undefined,
           borderBottom: '1px solid hsl(0deg, 0%, 80%)',
-          overflowY: 'auto',
+          overflowX: 'auto',
         }}
       >
         {props.items.map((item) => (
