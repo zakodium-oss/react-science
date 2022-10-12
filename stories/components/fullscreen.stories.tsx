@@ -20,6 +20,18 @@ export function basic() {
               }}
             >
               Page 2
+              <FullScreenProvider>
+                <div
+                  style={{
+                    border: 'solid 1px blue',
+                    padding: '10px',
+                    margin: '10px',
+                  }}
+                >
+                  Page 3
+                  <Content i="3" />
+                </div>
+              </FullScreenProvider>
               <Content i="2" />
             </div>
           </FullScreenProvider>
