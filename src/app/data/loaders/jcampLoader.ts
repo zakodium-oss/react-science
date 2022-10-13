@@ -1,5 +1,4 @@
 import { v4 } from '@lukeed/uuid';
-import type { PartialFileList } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
 import {
@@ -9,12 +8,10 @@ import {
   getEmptyMeasurements,
 } from '../DataState';
 
-export const jcampLoader: Loader = async function jcampLoader(
-  fileList: PartialFileList,
-) {
+export const jcampLoader: Loader = async function jcampLoader(files: FileList) {
   const newMeasurements: Measurements = getEmptyMeasurements();
 
-  for (const file of fileList) {
+  for (const file of files) {
     if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
       const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
       for (const measurement of parsed.flatten) {
@@ -33,7 +30,7 @@ export const jcampLoader: Loader = async function jcampLoader(
             id: v4(),
             meta: measurement.meta,
             filename: file.name,
-            path: file.webkitRelativePath,
+            path: file.webkitRelativePath || '',
             info: measurement.info,
             title: measurement.title,
             data: normalizeSpectra(measurement.spectra),
