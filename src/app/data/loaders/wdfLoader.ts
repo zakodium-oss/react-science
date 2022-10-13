@@ -1,9 +1,12 @@
 import { v4 } from '@lukeed/uuid';
+import type { FileCollection } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
 import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 
-export const wdfLoader: Loader = async function wdfLoader(files: FileList) {
+export const wdfLoader: Loader = async function wdfLoader(
+  files: FileCollection,
+) {
   const measurements: Measurements = getEmptyMeasurements();
 
   for (const file of files) {
@@ -15,7 +18,7 @@ export const wdfLoader: Loader = async function wdfLoader(files: FileList) {
         id: v4(),
         meta: parsed.fileHeader,
         filename: file.name,
-        path: file.webkitRelativePath || '',
+        path: file.relativePath || '',
         info: {},
         title: parsed.fileHeader.title,
         data: normalizeSpectra(parsed.blocks),

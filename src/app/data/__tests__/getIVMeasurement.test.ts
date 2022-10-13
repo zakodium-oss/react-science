@@ -17,8 +17,10 @@ const loaders = [biologicLoader];
 
 export async function getIVMeasurement() {
   const dataState = getEmptyDataState();
-  const fileCollection = await fileCollectionFromPath(join(__dirname, 'data/biologic/'));
-  const ivEntries = (await append(fileCollection, dataState, { loaders })).dataState
-    .measurements.iv;
+  const fileCollection = await fileCollectionFromPath(
+    join(__dirname, 'data/biologic/'),
+  );
+  const ivEntries = (await append(fileCollection, dataState, { loaders }))
+    .dataState.measurements.iv;
   return ivEntries;
 }
