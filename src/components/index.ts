@@ -15,6 +15,7 @@ export * from './color-picker/ColorPicker';
 export * as ValueRenderers from './value-renderers/index';
 
 export * from './context/AccordionContext';
+export * from './context/FullscreenContext';
 
 export * from './hooks/useToggle';
 export * from './hooks/useOnOff';
