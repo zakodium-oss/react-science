@@ -1,26 +1,27 @@
 import { v4 } from '@lukeed/uuid';
-import type { PartialFileList } from 'filelist-utils';
-import { parse } from 'spc-parser';
+import type { FileCollection } from 'filelist-utils';
+import { parse, guessSpectraType } from 'spc-parser';
 
 import { getEmptyMeasurements, Loader } from '../DataState';
+import type { MeasurementBase } from '../MeasurementBase';
 
-export const spcLoader: Loader = async function jcampLoader(
-  fileList: PartialFileList,
+export const spcLoader: Loader = async function spcLoader(
+  fileCollection: FileCollection,
 ) {
-  const measurements = getEmptyMeasurements();
-  for (const file of fileList) {
+  let measurements = getEmptyMeasurements();
+  for (const file of fileCollection) {
     if (file.name.match(/\.spc$/i)) {
       const parsed = parse(await file.arrayBuffer());
+      const spectraType = guessSpectraType(parsed.meta);
 
-      // todo currently only SPC for IR. How to find out the kind it is ????
-      measurements.ir.entries.push({
+      measurements[spectraType].entries.push({
         id: v4(),
         meta: parsed.meta,
         filename: file.name,
-        path: file.webkitRelativePath,
+        path: file.relativePath || '',
         info: {},
         title: parsed.meta.memo,
-        data: parsed.spectra,
+        data: parsed.spectra as unknown as MeasurementBase['data'],
       });
     }
   }
