@@ -21,6 +21,7 @@ export async function getIRMeasurement() {
   const fileCollection = await fileCollectionFromPath(
     join(__dirname, 'data/jdx/'),
   );
+  //todo use 'filter' from fileCollection
   let filteredFileCollection;
   for (let f of fileCollection) {
     if (f.name === 'ir.jdx') {
