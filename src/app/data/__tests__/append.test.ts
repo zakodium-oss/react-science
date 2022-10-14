@@ -34,6 +34,7 @@ test('append', async () => {
     'iv',
     'raman',
     'uv',
+    'uvvis',
     'nmr1h',
     'mass',
     'other',
