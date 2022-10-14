@@ -7,7 +7,7 @@ import { getEmptyDataState } from '../DataState';
 import { append } from '../append';
 import { biologicLoader } from '../loaders/biologicLoader';
 
-test('getIVMeasurement', async () => {
+test.skip('getIVMeasurement', async () => {
   const result = await getIVMeasurement();
 
   expect(result.entries).toHaveLength(2);
