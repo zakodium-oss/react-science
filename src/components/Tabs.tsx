@@ -26,6 +26,18 @@ interface TabsProps<T extends string = string> {
 }
 
 const styles = {
+  scroll: css({
+    '&::-webkit-scrollbar': {
+      height: '7px',
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'rgba(0,0,0,.05)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.2)',
+    },
+  }),
   item: (isSelected: boolean, orientation: TabsOrientation) => {
     return css([
       {
@@ -92,13 +104,23 @@ function TabsVertical<T extends string = string>(
   const item = useTabsContext();
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', flex: '1 1 0%' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flex: '1 1 0%',
+        overflowY: 'hidden',
+        height: '100%',
+      }}
+    >
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           borderRight: '1px solid hsl(0deg, 0%, 80%)',
+          overflowY: 'auto',
         }}
+        css={styles.scroll}
       >
         {props.items.map((item) => (
           <TabsItem
@@ -123,16 +145,18 @@ function TabsHorizontal<T extends string = string>(
   props: Omit<TabsProps<T>, 'orientation' | 'opened'>,
 ) {
   const item = useTabsContext();
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}
+    >
       <div
         style={{
           display: 'flex',
           flexDirection: 'row',
-          height: 38,
           borderBottom: '1px solid hsl(0deg, 0%, 80%)',
+          overflowX: 'auto',
         }}
+        css={styles.scroll}
       >
         {props.items.map((item) => (
           <TabsItem

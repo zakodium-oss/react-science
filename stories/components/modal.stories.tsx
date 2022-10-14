@@ -17,102 +17,31 @@ import {
   Modal,
   SplitPane,
   Toolbar,
-  useModal,
   ConfirmModal,
   Button,
   Tabs,
   TabItem,
+  useOnOff,
 } from '@/components';
 
 export default {
   title: 'Components / Modal',
-  argTypes: {
-    onSave: { action: 'saved' },
-    onCancel: { action: 'canceled' },
-  },
 };
 
-export function Basic(props: { onSave: () => void }) {
-  const [isOpen, open, close] = useModal({ defaultOpened: true });
+const actions = {
+  onSave: { action: 'saved' },
+  onCancel: { action: 'canceled' },
+};
 
+export function Control(props: { onSave: () => void }) {
+  const [isOpen, open, close] = useOnOff();
+
+  const { onSave, ...otherProps } = props;
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Header>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
-              <FaMeteor />
-            </Toolbar.Item>
-          </Toolbar>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item id="a" title="User manual">
-              <FaBook />
-            </Toolbar.Item>
-            <Toolbar.Item id="b" title="General settings">
-              <FaCogs />
-            </Toolbar.Item>
-            <Toolbar.Item id="c" title="Full screen">
-              <FaTabletAlt />
-            </Toolbar.Item>
-          </Toolbar>
-        </Header>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
-        <div>
-          <Toolbar orientation="vertical">
-            <Toolbar.Item id="a" title="Glasses" active>
-              <FaGlasses />
-            </Toolbar.Item>
-            <Toolbar.Item id="b" title="Open in large mode">
-              <FaArrowsAlt />
-            </Toolbar.Item>
-          </Toolbar>
-        </div>
-        <div
-          style={{
-            width: '100%',
-            height: '300px',
-          }}
-        >
-          <SplitPane initialSize="35%">
-            <div style={{ padding: 5 }}>
-              <Button
-                onClick={open}
-                backgroundColor={{
-                  basic: 'hsla(243deg, 75%, 58%, 1)',
-                  hover: 'hsla(245deg, 58%, 50%, 1)',
-                }}
-                color={{ basic: 'white' }}
-              >
-                Open
-              </Button>
-            </div>
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                flex: '1 1 0%',
-              }}
-            >
-              <Accordion>
-                <Accordion.Item title="Spectra" defaultOpened>
-                  <p style={{ padding: 5 }}>Spectra lorem</p>
-                </Accordion.Item>
-                <Accordion.Item title="Integral">
-                  <p style={{ padding: 5 }}>Integral lorem</p>
-                </Accordion.Item>
-              </Accordion>
-            </div>
-          </SplitPane>
-        </div>
-      </div>
-      <Modal isOpen={isOpen}>
-        <Modal.Header onClose={close}>Hello, World!</Modal.Header>
+      <DemoPage openModal={open} />
+      <Modal isOpen={isOpen} onRequestClose={close} {...otherProps}>
+        <Modal.Header>Hello, World!</Modal.Header>
         <Modal.Body>
           <div
             style={{
@@ -148,7 +77,7 @@ export function Basic(props: { onSave: () => void }) {
             }}
           >
             <Button
-              onClick={props.onSave}
+              onClick={onSave}
               backgroundColor={{
                 basic: 'hsla(243deg, 75%, 58%, 1)',
                 hover: 'hsla(245deg, 58%, 50%, 1)',
@@ -164,96 +93,42 @@ export function Basic(props: { onSave: () => void }) {
   );
 }
 
-export function BasicConfirm(props: {
+Control.args = {
+  hasCloseButton: true,
+  height: 400,
+  maxWidth: 600,
+  requestCloseOnBackdrop: true,
+  requestCloseOnEsc: true,
+};
+
+Control.argTypes = actions;
+
+export function ConfirmModalControl({
+  onSave,
+  onCancel,
+  ...otherProps
+}: {
   onSave: () => void;
   onCancel: () => void;
+  headerColor: string;
 }) {
-  const [isOpen, open, close] = useModal({ defaultOpened: true });
+  const [isOpen, open, close] = useOnOff();
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Header>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
-              <FaMeteor />
-            </Toolbar.Item>
-          </Toolbar>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item id="a" title="User manual">
-              <FaBook />
-            </Toolbar.Item>
-            <Toolbar.Item id="b" title="General settings">
-              <FaCogs />
-            </Toolbar.Item>
-            <Toolbar.Item id="c" title="Full screen">
-              <FaTabletAlt />
-            </Toolbar.Item>
-          </Toolbar>
-        </Header>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
-        <div>
-          <Toolbar orientation="vertical">
-            <Toolbar.Item id="a" title="Glasses" active>
-              <FaGlasses />
-            </Toolbar.Item>
-            <Toolbar.Item id="b" title="Open in large mode">
-              <FaArrowsAlt />
-            </Toolbar.Item>
-          </Toolbar>
-        </div>
-        <div
-          style={{
-            width: '100%',
-            height: '300px',
-          }}
-        >
-          <SplitPane initialSize="35%">
-            <div style={{ padding: 5 }}>
-              <Button
-                onClick={open}
-                backgroundColor={{
-                  basic: 'hsla(243deg, 75%, 58%, 1)',
-                  hover: 'hsla(245deg, 58%, 50%, 1)',
-                }}
-                color={{ basic: 'white' }}
-              >
-                Open
-              </Button>
-            </div>
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                flex: '1 1 0%',
-              }}
-            >
-              <Accordion>
-                <Accordion.Item title="Spectra" defaultOpened>
-                  <p style={{ padding: 5 }}>Spectra lorem</p>
-                </Accordion.Item>
-                <Accordion.Item title="Integral">
-                  <p style={{ padding: 5 }}>Integral lorem</p>
-                </Accordion.Item>
-              </Accordion>
-            </div>
-          </SplitPane>
-        </div>
-      </div>
+      <DemoPage openModal={open} />
       <ConfirmModal
-        headerColor="hsl(351deg, 73%, 47%)"
-        onConfirm={props.onSave}
+        onConfirm={() => {
+          onSave();
+          close();
+        }}
         onCancel={() => {
-          props.onCancel();
+          onCancel();
           close();
         }}
         isOpen={isOpen}
+        onRequestClose={close}
+        {...otherProps}
       >
         <div
           style={{
@@ -273,6 +148,15 @@ export function BasicConfirm(props: {
     </>
   );
 }
+
+ConfirmModalControl.args = {
+  maxWidth: 400,
+  requestCloseOnBackdrop: true,
+  requestCloseOnEsc: true,
+  headerColor: 'hsl(351deg, 73%, 47%)',
+};
+
+ConfirmModalControl.argTypes = actions;
 
 const tabs: Array<TabItem> = [
   {
@@ -308,10 +192,63 @@ const tabs: Array<TabItem> = [
   },
 ];
 
-export function WithComplexContents(props: { onSave: () => void }) {
-  const [isOpen, open, close] = useModal({ defaultOpened: true });
+export function WithComplexContents({
+  onSave,
+  ...otherProps
+}: {
+  onSave: () => void;
+}) {
+  const [isOpen, open, close] = useOnOff();
   const [state, setState] = useState(tabs[0]);
 
+  return (
+    <>
+      <DemoPage openModal={open} />
+      <Modal isOpen={isOpen} onRequestClose={close} {...otherProps}>
+        <Modal.Header>General Settings</Modal.Header>
+        <Modal.Body>
+          <Tabs
+            items={tabs}
+            opened={state}
+            onClick={setState}
+            orientation="vertical"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              flex: '1 1 0%',
+            }}
+          >
+            <Button
+              onClick={onSave}
+              backgroundColor={{
+                basic: 'hsla(243deg, 75%, 58%, 1)',
+                hover: 'hsla(245deg, 58%, 50%, 1)',
+              }}
+              color={{ basic: 'white' }}
+            >
+              Save
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
+WithComplexContents.args = {
+  width: 800,
+  height: 600,
+  requestCloseOnBackdrop: true,
+  requestCloseOnEsc: true,
+};
+
+WithComplexContents.argTypes = actions;
+
+function DemoPage(props: { openModal: () => void }) {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -359,7 +296,7 @@ export function WithComplexContents(props: { onSave: () => void }) {
           <SplitPane initialSize="35%">
             <div style={{ padding: 5 }}>
               <Button
-                onClick={open}
+                onClick={props.openModal}
                 backgroundColor={{
                   basic: 'hsla(243deg, 75%, 58%, 1)',
                   hover: 'hsla(245deg, 58%, 50%, 1)',
@@ -388,37 +325,6 @@ export function WithComplexContents(props: { onSave: () => void }) {
           </SplitPane>
         </div>
       </div>
-      <Modal isOpen={isOpen}>
-        <Modal.Header onClose={close}>General Settings</Modal.Header>
-        <Modal.Body>
-          <Tabs
-            items={tabs}
-            opened={state}
-            onClick={setState}
-            orientation="vertical"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              flex: '1 1 0%',
-            }}
-          >
-            <Button
-              onClick={props.onSave}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }

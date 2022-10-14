@@ -1,4 +1,4 @@
-import type { PartialFileList } from 'filelist-utils';
+import type { FileCollection } from 'filelist-utils';
 
 import type { IRMeasurement } from './IRMeasurement';
 import type { MeasurementBase } from './MeasurementBase';
@@ -47,7 +47,7 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   other: 'Other',
 };
 
-export type Loader = (fileList: PartialFileList) => Promise<Measurements>;
+export type Loader = (fileCollection: FileCollection) => Promise<Measurements>;
 
 export function mergeMeasurements(
   measurements: Measurements,
