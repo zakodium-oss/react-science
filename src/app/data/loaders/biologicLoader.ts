@@ -5,10 +5,10 @@ import type { FileCollection } from 'filelist-utils';
 import { getEmptyMeasurements, Loader } from '../DataState';
 
 export const biologicLoader: Loader = async function biologicLoader(
-  files: FileCollection,
+  fileCollection: FileCollection,
 ) {
   let measurements = getEmptyMeasurements();
-  const results = await convert(files);
+  const results = await convert(fileCollection);
   for (let result of results) {
     //still not for plotting, just a schema
     measurements.iv.entries.push({

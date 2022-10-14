@@ -5,11 +5,11 @@ import { parse } from 'wdf-parser';
 import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 
 export const wdfLoader: Loader = async function wdfLoader(
-  files: FileCollection,
+  fileCollection: FileCollection,
 ) {
   const measurements: Measurements = getEmptyMeasurements();
 
-  for (const file of files) {
+  for (const file of fileCollection) {
     if (file.name.match(/\.wdf$/i)) {
       const parsed = parse(await file.arrayBuffer());
 

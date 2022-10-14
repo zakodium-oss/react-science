@@ -20,13 +20,13 @@ interface AppendOptions {
  * could process the data before adding it in the state
  */
 export async function append(
-  files: FileCollection,
+  fileCollection: FileCollection,
   baseState: DataState,
   options: AppendOptions = {},
 ) {
   // We don't want that one loader has access to the currently growing new dataState
   // and therefore each loader starts with an empty dataState
-  const newMeasurements = await loadMeasurements(files, options);
+  const newMeasurements = await loadMeasurements(fileCollection, options);
 
   const nextDataState = produce(baseState, (draft) => {
     for (let key in newMeasurements) {
@@ -40,13 +40,13 @@ export async function append(
 }
 
 export async function loadMeasurements(
-  files: FileCollection,
+  fileCollection: FileCollection,
   options: AppendOptions = {},
 ) {
   const measurements: Measurements = getEmptyMeasurements();
   const { loaders = [], enhancers = {} } = options;
   for (const loader of loaders) {
-    const loaderMeasurements = await loader(files);
+    const loaderMeasurements = await loader(fileCollection);
     enhance(loaderMeasurements, enhancers);
     mergeMeasurements(measurements, loaderMeasurements);
   }

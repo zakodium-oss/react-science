@@ -10,11 +10,11 @@ import {
 } from '../DataState';
 
 export const jcampLoader: Loader = async function jcampLoader(
-  files: FileCollection,
+  fileCollection: FileCollection,
 ) {
   const newMeasurements: Measurements = getEmptyMeasurements();
 
-  for (const file of files) {
+  for (const file of fileCollection) {
     if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
       const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
       for (const measurement of parsed.flatten) {

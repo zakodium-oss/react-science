@@ -6,10 +6,10 @@ import { getEmptyMeasurements, Loader } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 export const spcLoader: Loader = async function spcLoader(
-  files: FileCollection,
+  fileCollection: FileCollection,
 ) {
   let measurements = getEmptyMeasurements();
-  for (const file of files) {
+  for (const file of fileCollection) {
     if (file.name.match(/\.spc$/i)) {
       const parsed = parse(await file.arrayBuffer());
       const spectraType = guessSpectraType(parsed.meta);
