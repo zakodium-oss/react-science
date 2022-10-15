@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
+import { expect, test } from 'vitest';
 
 import { cary500Loader } from '../cary500Loader';
 
