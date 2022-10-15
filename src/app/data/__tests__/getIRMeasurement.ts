@@ -1,5 +1,6 @@
 import { join } from 'path';
 
+
 import { fileCollectionFromPath } from 'filelist-utils';
 
 import { getEmptyDataState } from '../DataState';
@@ -18,6 +19,7 @@ const enhancers = {
 
 export async function getIRMeasurement() {
   const dataState = getEmptyDataState();
+
   const filteredFileCollection = (
     await fileCollectionFromPath(join(__dirname, 'data/jdx/'))
   ).filter((file) => file.name === 'ir.jdx');
