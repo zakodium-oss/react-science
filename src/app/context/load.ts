@@ -5,13 +5,14 @@ import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickin
 import { irMeasurementEnhancer } from '../data/enhancers/irMeasurementEnhancer';
 import { biologicLoader } from '../data/loaders/biologicLoader';
 import { jcampLoader } from '../data/loaders/jcampLoader';
+import { cary500Loader } from '../data/loaders/proprietary/agilent/cary500Loader';
 import { spcLoader } from '../data/loaders/spcLoader';
 import { wdfLoader } from '../data/loaders/wdfLoader';
 
 import type { AppDispatch } from './appState';
 
 const options = {
-  loaders: [jcampLoader, spcLoader, wdfLoader, biologicLoader],
+  loaders: [jcampLoader, spcLoader, wdfLoader, biologicLoader, cary500Loader],
   enhancers: {
     ir: [
       irMeasurementEnhancer,

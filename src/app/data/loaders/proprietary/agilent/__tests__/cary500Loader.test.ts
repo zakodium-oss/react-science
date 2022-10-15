@@ -9,6 +9,5 @@ test('cary500Loader', async () => {
   // we should filter to keep only the right data
   const results = await cary500Loader(fileCollection);
 
-  console.log(results);
-  expect(results);
+  expect(results.uvvis.entries).toHaveLength(8);
 });

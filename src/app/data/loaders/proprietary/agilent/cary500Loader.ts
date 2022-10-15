@@ -19,7 +19,7 @@ export const cary500Loader: Loader = async function cary500Loader(
           path: file.relativePath,
           info: {},
           title: experiment.title,
-          data: [experiment.variables],
+          data: [{ variables: experiment.variables }],
         });
       }
     }
@@ -62,7 +62,7 @@ function convert(text: string) {
       data: data.map((row) => row[column + 1]),
     };
     experiments.push({
-      title: titles[i],
+      title: titles[column],
       meta: JSON.parse(JSON.stringify(meta)),
       variables: { x: xVariable, y: yVariable },
     });
