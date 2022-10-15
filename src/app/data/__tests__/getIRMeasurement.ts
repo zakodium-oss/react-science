@@ -1,6 +1,5 @@
 import { join } from 'path';
 
-
 import { fileCollectionFromPath } from 'filelist-utils';
 
 import { getEmptyDataState } from '../DataState';
