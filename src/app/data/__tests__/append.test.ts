@@ -2,7 +2,7 @@
 
 import { join } from 'path';
 
-import { fileListFromPath } from 'filelist-utils';
+import { fileCollectionFromPath } from 'filelist-utils';
 
 import { getEmptyDataState } from '../DataState';
 import { append } from '../append';
@@ -22,8 +22,8 @@ const enhancers = {
 test('append', async () => {
   const dataState = getEmptyDataState();
 
-  const fileList = await fileListFromPath(join(__dirname, 'data'));
-  let { dataState: newDataState } = await append(fileList, dataState, {
+  const fileCollection = await fileCollectionFromPath(join(__dirname, 'data'));
+  let { dataState: newDataState } = await append(fileCollection, dataState, {
     loaders,
     enhancers,
   });
@@ -34,6 +34,7 @@ test('append', async () => {
     'iv',
     'raman',
     'uv',
+    'uvvis',
     'nmr1h',
     'mass',
     'other',

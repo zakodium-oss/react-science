@@ -1,4 +1,4 @@
-import type { PartialFileList } from 'filelist-utils';
+import type { FileCollection } from 'filelist-utils';
 
 import type { IRMeasurement } from './IRMeasurement';
 import type { MeasurementBase } from './MeasurementBase';
@@ -18,6 +18,9 @@ export interface Measurements {
     entries: MeasurementBase[];
   };
   uv: {
+    entries: MeasurementBase[];
+  };
+  uvvis: {
     entries: MeasurementBase[];
   };
   nmr1h: {
@@ -42,12 +45,13 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   iv: 'IV',
   raman: 'Raman',
   uv: 'UV',
+  uvvis: 'UV-VIS',
   mass: 'Mass',
   nmr1h: 'NMR 1H',
   other: 'Other',
 };
 
-export type Loader = (fileList: PartialFileList) => Promise<Measurements>;
+export type Loader = (fileCollection: FileCollection) => Promise<Measurements>;
 
 export function mergeMeasurements(
   measurements: Measurements,
@@ -65,6 +69,7 @@ export function getEmptyMeasurements(): Measurements {
     iv: { entries: [] },
     raman: { entries: [] },
     uv: { entries: [] },
+    uvvis: { entries: [] },
     nmr1h: { entries: [] },
     mass: { entries: [] },
     other: { entries: [] },
