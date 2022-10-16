@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { FileCollection, fileCollectionFromPath } from 'filelist-utils';
+import { fileCollectionFromPath } from 'filelist-utils';
 
 import { getEmptyDataState } from '../DataState';
 import { append } from '../append';
@@ -18,17 +18,11 @@ const enhancers = {
 
 export async function getIRMeasurement() {
   const dataState = getEmptyDataState();
-  const fileCollection = await fileCollectionFromPath(
-    join(__dirname, 'data/jdx/'),
-  );
-  //todo use 'filter' from fileCollection
-  let filteredFileCollection;
-  for (let f of fileCollection) {
-    if (f.name === 'ir.jdx') {
-      filteredFileCollection = new FileCollection([f]);
-      break;
-    }
-  }
+
+  const filteredFileCollection = (
+    await fileCollectionFromPath(join(__dirname, 'data/jdx/'))
+  ).filter((file) => file.name === 'ir.jdx');
+
   const irEntry = (
     await append(filteredFileCollection, dataState, { loaders, enhancers })
   ).dataState.measurements.ir.entries[0];

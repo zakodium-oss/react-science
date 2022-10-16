@@ -51,7 +51,7 @@
     "@tanstack/react-table": "^8.5.15",
     "biologic-converter": "^0.2.0",
     "cheminfo-types": "^1.4.0",
-    "filelist-utils": "^0.12.0",
+    "filelist-utils": "^1.0.1",
     "immer": "^9.0.15",
     "jcampconverter": "^9.0.2",
     "lodash": "^4.17.21",
@@ -76,7 +76,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-inspector": "^4.0.2",
     "@vitejs/plugin-react": "^2.1.0",
-    "@vitest/coverage-c8": "^0.24.1",
+    "@vitest/coverage-c8": "^0.24.3",
     "@zakodium/eslint-config": "^6.0.0",
     "babel-loader": "^8.2.5",
     "cheminfo-font": "^1.9.0",
@@ -87,7 +87,7 @@
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.4.0",
+    "react-icons": "^4.6.0",
     "react-inspector": "^6.0.1",
     "react-ocl": "^5.0.0",
     "react-plot": "^0.20.2",
@@ -95,7 +95,7 @@
     "typescript": "^4.8.4",
     "vite": "^3.1.8",
     "vite-tsconfig-paths": "^3.5.1",
-    "vitest": "^0.24.1"
+    "vitest": "^0.24.3"
   },
   "repository": {
     "type": "git",
