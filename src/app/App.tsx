@@ -53,9 +53,9 @@ function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurement(appState);
-  const url = useMemo(() => {
-    const paramsString = window.location.href.split('?')[1];
-    const searchParams = new URLSearchParams(paramsString);
+  const filelist = useMemo(() => {
+    const searchParams = new URL(window.location.href).searchParams;
+    console.log(searchParams.get('filelist'));
     return searchParams.get('filelist');
   }, []);
   const items: Array<TabItem> = [
@@ -69,15 +69,16 @@ function DropZoneArea() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
-  async function getData() {
-    if (url) {
-      const filelist = await fileListFromWebservice(url);
-      await loadFiles(filelist, dispatch);
-    }
-  }
+
   useEffect(() => {
-    void getData();
-  });
+    async function getData(url: string | null) {
+      if (url) {
+        const filelist = await fileListFromWebservice(url);
+        await loadFiles(filelist, dispatch);
+      }
+    }
+    void getData(filelist);
+  }, [dispatch, filelist]);
   return (
     <RootLayout>
       <DropZoneContainer
