@@ -1,4 +1,3 @@
-import { saveAs } from 'file-saver';
 import produce, { Draft } from 'immer';
 import {
   createContext,
@@ -86,10 +85,6 @@ type AppStateAction =
   | { type: 'RESET' }
   | { type: 'LOAD_START' }
   | { type: 'LOAD_END' }
-  | {
-      type: 'SAVE_AS_IUM';
-      payload?: { filename?: string; spaceIndent?: number };
-    }
   | { type: 'ADD_MEASUREMENTS'; payload: Measurements }
   | {
       type: 'SELECT_MEASUREMENT';
@@ -162,23 +157,8 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       draft.isLoading = false;
       return;
     }
-    case 'SAVE_AS_IUM': {
-      saveAsIum(draft, action.payload?.filename, action.payload?.spaceIndent);
-      return;
-    }
+
     default:
       assertUnreachable(type);
-  }
-}
-function saveAsIum(state: Draft<AppState>, filename = 'data', spaceIndent = 0) {
-  if (JSON.stringify(state.data) !== JSON.stringify(getEmptyDataState())) {
-    const data = JSON.stringify(
-      { data: state.data, view: state.view },
-      (_key, value) =>
-        ArrayBuffer.isView(value) ? Array.from(value as any) : value,
-      spaceIndent,
-    );
-    const blob = new Blob([data], { type: 'text/plain' });
-    saveAs(blob, `${filename}.ium`);
   }
 }

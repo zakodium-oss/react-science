@@ -16,6 +16,7 @@ import {
 } from './context/appState';
 import { getCurrentMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
+import { download } from './utils';
 
 import {
   Accordion,
@@ -70,8 +71,15 @@ function DropZoneArea() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
-  function saveHandler() {
-    dispatch({ type: 'SAVE_AS_IUM' });
+  function saveHandler(filename = 'file', spaceIndent = 0) {
+    const data = JSON.stringify(
+      { data: appState.data, view: appState.view },
+      (_key, value) =>
+        ArrayBuffer.isView(value) ? Array.from(value as any) : value,
+      spaceIndent,
+    );
+    const blob = new Blob([data], { type: 'text/plain' });
+    download(blob, `${filename}.ium`);
   }
 
   return (
@@ -107,7 +115,7 @@ function DropZoneArea() {
                   titleOrientation="horizontal"
                   id="save"
                   title="Save as ium"
-                  onClick={saveHandler}
+                  onClick={() => saveHandler()}
                 >
                   <FaSave />
                 </Toolbar.Item>
