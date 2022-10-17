@@ -60,7 +60,7 @@ function DropZoneArea() {
   const appState = useAppState();
   const measurement = getCurrentMeasurement(appState);
   const filelist = useMemo(() => {
-    const searchParams = new URL(window.location.href).searchParams;
+    const searchParams = new URLSearchParams(window.location.search);
     return searchParams.get('filelist');
   }, []);
   const { toggle } = useFullscreen();
