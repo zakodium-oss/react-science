@@ -20,13 +20,13 @@ export const biologicLoader: Loader = async function biologicLoader(
       title: '',
     };
     if (mpr !== undefined) {
-      prepare.meta = { settings: mpr.settings };
+      prepare.meta = { ...mpr.settings.variables };
       prepare.data = [{ variables: mpr.data.variables }];
     } else if (mpt !== undefined) {
-      prepare.meta = { settings: mpt.settings };
+      prepare.meta = { ...mpt.settings.variables };
       prepare.data = [{ variables: mpt.data.variables }];
     } else if (mps !== undefined) {
-      prepare.meta = { settings: mps.settings };
+      prepare.meta = { ...mps.settings.variables };
     }
     measurements.iv.entries.push(prepare as MeasurementBase);
   }
