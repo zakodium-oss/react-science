@@ -20,10 +20,10 @@ export const biologicLoader: Loader = async function biologicLoader(
       title: '',
     };
     if (mpr !== undefined) {
-      prepare.meta = { settings: mpr.settings, log: mpr?.log };
+      prepare.meta = { settings: mpr.settings };
       prepare.data = [{ variables: mpr.data.variables }];
     } else if (mpt !== undefined) {
-      prepare.meta = { settings: mpt.settings, log: mpt.log };
+      prepare.meta = { settings: mpt.settings };
       prepare.data = [{ variables: mpt.data.variables }];
     } else if (mps !== undefined) {
       prepare.meta = { settings: mps.settings, log: mps.log };
