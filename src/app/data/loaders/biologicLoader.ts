@@ -26,7 +26,7 @@ export const biologicLoader: Loader = async function biologicLoader(
       prepare.meta = { settings: mpt.settings };
       prepare.data = [{ variables: mpt.data.variables }];
     } else if (mps !== undefined) {
-      prepare.meta = { settings: mps.settings, log: mps.log };
+      prepare.meta = { settings: mps.settings };
     }
     measurements.iv.entries.push(prepare as MeasurementBase);
   }
