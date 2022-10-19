@@ -1,4 +1,4 @@
-import { fileCollectionFromFiles } from 'filelist-utils';
+import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
 import { loadMeasurements } from '../data/append';
 import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickingEnhancer';
@@ -20,10 +20,16 @@ const options = {
     ],
   },
 };
-export async function loadFiles(files: File[], dispatch: AppDispatch) {
+export async function loadFiles(
+  files: File[] | FileCollection,
+  dispatch: AppDispatch,
+) {
   dispatch({ type: 'LOAD_START' });
   try {
-    const fileCollection = await fileCollectionFromFiles(files);
+    const fileCollection =
+      files instanceof FileCollection
+        ? files
+        : await fileCollectionFromFiles(files);
     const measurements = await loadMeasurements(fileCollection, options);
     dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
   } finally {
