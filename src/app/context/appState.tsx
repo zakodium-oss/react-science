@@ -157,6 +157,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       draft.isLoading = false;
       return;
     }
+
     default:
       assertUnreachable(type);
   }

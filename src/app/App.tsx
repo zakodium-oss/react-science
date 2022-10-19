@@ -7,6 +7,7 @@ import {
   FaCogs,
   FaTabletAlt,
   FaGlasses,
+  FaSave,
 } from 'react-icons/fa';
 
 import { MeasurementExplorer, MeasurementsPanel } from './components';
@@ -17,6 +18,7 @@ import {
 } from './context/appState';
 import { getCurrentMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
+import { download } from './utils';
 
 import {
   Accordion,
@@ -75,6 +77,16 @@ function DropZoneArea() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
+  function saveHandler(filename = 'file', spaceIndent = 0) {
+    const data = JSON.stringify(
+      { data: appState.data, view: appState.view },
+      (_key, value) =>
+        ArrayBuffer.isView(value) ? Array.from(value as any) : value,
+      spaceIndent,
+    );
+    const blob = new Blob([data], { type: 'text/plain' });
+    download(blob, `${filename}.ium`);
+  }
 
   useEffect(() => {
     async function getData(url: string | null) {
@@ -113,6 +125,14 @@ function DropZoneArea() {
                   title="Logo"
                 >
                   <FaMeteor />
+                </Toolbar.Item>
+                <Toolbar.Item
+                  titleOrientation="horizontal"
+                  id="save"
+                  title="Save as ium"
+                  onClick={() => saveHandler()}
+                >
+                  <FaSave />
                 </Toolbar.Item>
               </Toolbar>
               <Toolbar orientation="horizontal">
