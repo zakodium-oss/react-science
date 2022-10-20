@@ -52,14 +52,14 @@ function convert(text: string) {
       units: labelUnits[column].includes('(')
         ? labelUnits[column].replace(/.*\((.*)\).*/, '$1')
         : '',
-      data: data.map((row) => row[column]),
+      data: data.map((row) => Number(row[column])),
     };
     const yVariable = {
       label: labelUnits[column + 1].replace(/ \(.*/, ''),
       units: labelUnits[column + 1].includes('(')
         ? labelUnits[column + 1].replace(/.*\((.*)\).*/, '$1')
         : '',
-      data: data.map((row) => row[column + 1]),
+      data: data.map((row) => Number(row[column + 1])),
     };
     experiments.push({
       title: titles[column],

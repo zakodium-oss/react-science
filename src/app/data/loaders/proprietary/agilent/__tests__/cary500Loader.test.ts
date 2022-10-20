@@ -11,4 +11,13 @@ test('cary500Loader', async () => {
   const results = await cary500Loader(fileCollection);
 
   expect(results.uvvis.entries).toHaveLength(8);
+
+  const xNonFinite = results.uvvis.entries[0].data[0].variables.x.data.filter(
+    (datum) => !Number.isFinite(datum),
+  );
+  expect(xNonFinite).toHaveLength(0);
+  const yNonFinite = results.uvvis.entries[0].data[0].variables.y.data.filter(
+    (datum) => !Number.isFinite(datum),
+  );
+  expect(yNonFinite).toHaveLength(0);
 });
