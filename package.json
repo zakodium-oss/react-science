@@ -1,6 +1,6 @@
 {
   "name": "analysis-ui-components",
-  "version": "0.17.3",
+  "version": "0.18.0",
   "description": "React components to build analysis UI",
   "main": "lib/components/index.js",
   "module": "lib-esm/components/index.js",
