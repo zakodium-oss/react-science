@@ -31,6 +31,9 @@ export const jcampLoader: Loader = async function jcampLoader(
         if (measurement?.dataType?.match(/mass/i)) {
           kind = 'mass';
         }
+        if (measurement?.dataType?.match(/nmr/i)) {
+          kind = 'nmr';
+        }
         if (kind) {
           newMeasurements[kind].entries.push({
             id: v4(),
