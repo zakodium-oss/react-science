@@ -182,9 +182,12 @@ function DropZoneArea() {
                     // reset the state of your app so the error doesn't happen again
                   }}
                 >
-                  <div style={{ padding: 5 }}>
+                  <div style={{ padding: 5, width: '100%' }}>
                     {measurement ? (
-                      <MeasurementExplorer measurement={measurement} />
+                      <MeasurementExplorer
+                        measurement={measurement}
+                        width="100%"
+                      />
                     ) : (
                       <span>No data, add them with drag and drop</span>
                     )}

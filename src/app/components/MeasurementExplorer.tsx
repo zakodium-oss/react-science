@@ -37,12 +37,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     ...defaultInfo(0),
   });
   return (
-    <div
-      css={css`
-        width: ${width}px;
-        height: ${height}px;
-      `}
-    >
+    <div style={{ width, height }}>
       <div
         css={css`
           display: flex;

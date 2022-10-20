@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { xyToXYObject } from 'ml-spectra-processing';
 import { useMemo } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
@@ -105,40 +107,51 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   });
   usePan({ horizontalAxisId: xAxis, verticalAxisId: yAxis });
   return (
-    <ResponsiveChart width={width} height={height}>
-      {({ width, height }) => (
-        <Plot width={width} height={height}>
-          <Heading title={title} />
-          <LineSeries
-            data={xyToXYObject({
-              x: x.data,
-              y: y.data,
-            })}
-            xAxis={xAxis}
-            yAxis={yAxis}
-          />
-          <Annotations>
-            {rectZoom.annotations}
-            {axisZoom.annotations}
-            {crossHairAnnot.annotations}
-          </Annotations>
-          <Axis
-            id={xAxis}
-            hidden={!showHorizontalAxis}
-            displayPrimaryGridLines={showVerticalGrid}
-            flip={flipHorizontalAxis}
-            position="bottom"
-            label={`${x.label}${x.units ? `(${x.units})` : ''}`}
-          />
-          <Axis
-            id={yAxis}
-            hidden={!showVerticalAxis}
-            displayPrimaryGridLines={showHorizontalGrid}
-            position="left"
-            label={`${y.label}${y.units ? `(${y.units})` : ''}`}
-          />
-        </Plot>
-      )}
-    </ResponsiveChart>
+    <div
+      css={css`
+        user-drag: none;
+        -webkit-user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      `}
+    >
+      <ResponsiveChart width={width} height={height}>
+        {({ width, height }) => (
+          <Plot width={width} height={height}>
+            <Heading title={title} />
+            <LineSeries
+              data={xyToXYObject({
+                x: x.data,
+                y: y.data,
+              })}
+              xAxis={xAxis}
+              yAxis={yAxis}
+            />
+            <Annotations>
+              {rectZoom.annotations}
+              {axisZoom.annotations}
+              {crossHairAnnot.annotations}
+            </Annotations>
+            <Axis
+              id={xAxis}
+              hidden={!showHorizontalAxis}
+              displayPrimaryGridLines={showVerticalGrid}
+              flip={flipHorizontalAxis}
+              position="bottom"
+              label={`${x.label}${x.units ? `(${x.units})` : ''}`}
+            />
+            <Axis
+              id={yAxis}
+              hidden={!showVerticalAxis}
+              displayPrimaryGridLines={showHorizontalGrid}
+              position="left"
+              label={`${y.label}${y.units ? `(${y.units})` : ''}`}
+            />
+          </Plot>
+        )}
+      </ResponsiveChart>
+    </div>
   );
 }
