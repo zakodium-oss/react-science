@@ -23,7 +23,7 @@ export interface Measurements {
   uvvis: {
     entries: MeasurementBase[];
   };
-  nmr1h: {
+  nmr: {
     entries: MeasurementBase[];
   };
   mass: {
@@ -47,7 +47,7 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   uv: 'UV',
   uvvis: 'UV-VIS',
   mass: 'Mass',
-  nmr1h: 'NMR 1H',
+  nmr: 'NMR',
   other: 'Other',
 };
 
@@ -58,7 +58,8 @@ export function mergeMeasurements(
   newMeasurements: Measurements,
 ) {
   for (const kind in newMeasurements) {
-    measurements[kind].entries.push(...newMeasurements[kind].entries);
+    const entries: MeasurementBase[] = newMeasurements[kind].entries || [];
+    measurements[kind].entries.push(...entries);
   }
 }
 
@@ -69,7 +70,7 @@ export function getEmptyMeasurements(): Measurements {
     raman: { entries: [] },
     uv: { entries: [] },
     uvvis: { entries: [] },
-    nmr1h: { entries: [] },
+    nmr: { entries: [] },
     mass: { entries: [] },
     other: { entries: [] },
   };

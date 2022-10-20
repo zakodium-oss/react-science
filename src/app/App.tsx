@@ -1,3 +1,5 @@
+import { fileCollectionFromWebservice } from 'filelist-utils';
+import { useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   FaMeteor,
@@ -59,6 +61,10 @@ function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurement(appState);
+  const filelist = useMemo(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.get('filelist');
+  }, []);
   const { toggle } = useFullscreen();
   const items: Array<TabItem> = [
     {
@@ -82,6 +88,15 @@ function DropZoneArea() {
     download(blob, `${filename}.ium`);
   }
 
+  useEffect(() => {
+    async function getData(url: string | null) {
+      if (url) {
+        const filelist = await fileCollectionFromWebservice(url);
+        await loadFiles(filelist, dispatch);
+      }
+    }
+    void getData(filelist);
+  }, [dispatch, filelist]);
   return (
     <RootLayout>
       <DropZoneContainer
@@ -190,26 +205,22 @@ function DropZoneArea() {
                           width: '100%',
                         }}
                       >
-                        {
-                          <MeasurementsPanel
-                            measurements={appState.data.measurements}
-                            onTabSelect={(kind) => {
-                              dispatch({
-                                type: 'SELECT_MEASUREMENT_KIND',
-                                payload: kind,
-                              });
-                            }}
-                            selectedMeasurement={
-                              appState.view.currentMeasurement
-                            }
-                            onMeasurementSelect={({ measurement, kind }) => {
-                              dispatch({
-                                type: 'SELECT_MEASUREMENT',
-                                payload: { id: measurement.id, kind },
-                              });
-                            }}
-                          />
-                        }
+                        <MeasurementsPanel
+                          measurements={appState.data.measurements}
+                          onTabSelect={(kind) => {
+                            dispatch({
+                              type: 'SELECT_MEASUREMENT_KIND',
+                              payload: kind,
+                            });
+                          }}
+                          selectedMeasurement={appState.view.currentMeasurement}
+                          onMeasurementSelect={({ measurement, kind }) => {
+                            dispatch({
+                              type: 'SELECT_MEASUREMENT',
+                              payload: { id: measurement.id, kind },
+                            });
+                          }}
+                        />
                       </div>
                     </Accordion.Item>
                     <Accordion.Item title="Integral">
