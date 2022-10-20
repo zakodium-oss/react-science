@@ -13,6 +13,13 @@ React components to build analysis UI
   </p>
 </h3>
 
+## Testing the demo application
+
+- [From some JCAMP-DX files](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/jdx.json)
+- [All the example we have](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/full.json)
+- [From Biologic file format](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/biologic.json)
+- [From a UV-vis file format](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/uvvis.json)
+
 # Installation
 
 ```
