@@ -4,7 +4,7 @@ import type { Loader } from '../DataState';
 
 import { AppState, getEmptyAppState } from '@/app/context/appState';
 
-export const iumLoader: Loader = async function iumLoader(
+export const iumLoader: Loader<AppState> = async function iumLoader(
   fileCollection: FileCollection,
 ) {
   let state: AppState = getEmptyAppState();

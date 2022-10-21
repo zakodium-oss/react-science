@@ -4,7 +4,7 @@ import { parse } from 'wdf-parser';
 
 import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 
-export const wdfLoader: Loader = async function wdfLoader(
+export const wdfLoader: Loader<Measurements> = async function wdfLoader(
   fileCollection: FileCollection,
 ) {
   const measurements: Measurements = getEmptyMeasurements();
