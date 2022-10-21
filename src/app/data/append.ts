@@ -1,6 +1,8 @@
 import type { FileCollection } from 'filelist-utils';
 import { produce } from 'immer';
 
+import { getEmptyAppState } from '../context/appState';
+
 import {
   DataState,
   getEmptyMeasurements,
@@ -26,7 +28,7 @@ export async function append(
 ) {
   // We don't want that one loader has access to the currently growing new dataState
   // and therefore each loader starts with an empty dataState
-  const newMeasurements = await loadMeasurements(fileCollection, options);
+  const newMeasurements = await loadData(fileCollection, options);
 
   const nextDataState = produce(baseState, (draft) => {
     for (let key in newMeasurements) {
@@ -39,16 +41,21 @@ export async function append(
   return { logs: [], dataState: nextDataState };
 }
 
-export async function loadMeasurements(
+export async function loadData(
   fileCollection: FileCollection,
   options: AppendOptions = {},
 ) {
+  let appState = getEmptyAppState();
   const measurements: Measurements = getEmptyMeasurements();
   const { loaders = [], enhancers = {} } = options;
   for (const loader of loaders) {
-    const loaderMeasurements = await loader(fileCollection);
-    enhance(loaderMeasurements, enhancers);
-    mergeMeasurements(measurements, loaderMeasurements);
+    const loaderData = await loader(fileCollection);
+    if ('data' in loaderData) {
+      appState = loaderData;
+    } else {
+      enhance(loaderData, enhancers);
+      mergeMeasurements(measurements, loaderData);
+    }
   }
-  return measurements;
+  return appState.isLoading ? appState : measurements;
 }
