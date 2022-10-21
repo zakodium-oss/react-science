@@ -1,5 +1,6 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
+import type { MeasurementKind } from '../data/DataState';
 import { loadMeasurements } from '../data/append';
 import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../data/enhancers/irMeasurementEnhancer';
@@ -32,6 +33,20 @@ export async function loadFiles(
         : await fileCollectionFromFiles(files);
     const measurements = await loadMeasurements(fileCollection, options);
     dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
+
+    let kind: MeasurementKind | null = null;
+    for (const k in measurements) {
+      if (measurements[k].entries.length > 0) {
+        kind = k as MeasurementKind;
+        break;
+      }
+    }
+    if (kind) {
+      dispatch({
+        type: 'SELECT_MEASUREMENT',
+        payload: { id: measurements[kind].entries[0].id, kind },
+      });
+    }
   } finally {
     dispatch({ type: 'LOAD_END' });
   }
