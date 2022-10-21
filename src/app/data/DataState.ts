@@ -53,9 +53,9 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   other: 'Other',
 };
 
-export type Loader<T extends Measurements | AppState> = (
-  fileCollection: FileCollection,
-) => Promise<T>;
+export type Loader<
+  T extends Measurements | AppState = Measurements | AppState,
+> = (fileCollection: FileCollection) => Promise<T>;
 
 export function mergeMeasurements(
   measurements: Measurements,
