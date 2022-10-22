@@ -109,8 +109,9 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
           if (measurement) {
             const id = measurement.measurement.id;
             draft.view.selectedMeasurements[kind] = id;
-            draft.view.currentMeasurement = { id, kind };
-            break;
+            if (draft.view.currentMeasurement === undefined) {
+              draft.view.currentMeasurement = { id, kind };
+            }
             // draft.view.currentMeasurement = {
             //   kind,
             //   id: measurement.measurement.id,
