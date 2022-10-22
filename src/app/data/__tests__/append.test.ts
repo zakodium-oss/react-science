@@ -35,6 +35,8 @@ test('append', async () => {
     'raman',
     'uv',
     'uvvis',
+    'gclc',
+    'gclcms',
     'nmr',
     'mass',
     'other',
