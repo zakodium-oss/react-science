@@ -13,6 +13,25 @@ React components to build analysis UI
   </p>
 </h3>
 
+## Introduction
+
+Science have specific requirements to display and process data especially in chemistry for which a huge amount of techniques allow to characterize sample.
+
+This project will allow to simplify the process of creating web application that allows not only to visualize but also to process and extract information from measurements.
+
+This project is composed of 2 parts:
+
+- src/components: a set of reusable components that are published in the npm package and can be developed locally using `npm run dev`
+- src/app: a playground in which we combine the components and many other project to test ideas and limitation of the design. It can be tested locally using `npm run dev-app`
+
+## Principle of the application
+
+The application has a state containing 3 properties:
+
+- data: containing information related to data
+- view: containing the information related to what is displayed in which module
+- prefs: that will contain user defined preferences for the application
+
 ## Testing the demo application
 
 - [From some JCAMP-DX files](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/jdx.json)
