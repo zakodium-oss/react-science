@@ -61,24 +61,24 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     flipHorizontalAxis = false,
   } = props;
   const { title = '', data } = measurement;
+  const { variables } = data[dataIndex];
 
-  const xAxis = `${xVariableName}-x`;
-  const yAxis = `${yVariableName}-y`;
+  const xAxis = `${variables[xVariableName].label}-x`;
+  const yAxis = `${variables[yVariableName].label}-y`;
   const { x, y } = useMemo(() => {
-    const { variables } = data[dataIndex];
     const { [xVariableName]: x, [yVariableName]: y } = variables;
     if (x === undefined || y === undefined) {
       throw new Error(
         `Variable "${
           x === undefined ? xVariableName : yVariableName
-        }" is not available in data. Only ${Object.keys(
-          data[dataIndex].variables,
-        ).join(', ')} are available`,
+        }" is not available in data. Only ${Object.keys(variables).join(
+          ', ',
+        )} are available`,
       );
     }
 
     return { x, y };
-  }, [data, dataIndex, xVariableName, yVariableName]);
+  }, [variables, xVariableName, yVariableName]);
 
   const direction = ['vertical', 'horizontal'];
   const rectZoom = useRectangularZoom({
