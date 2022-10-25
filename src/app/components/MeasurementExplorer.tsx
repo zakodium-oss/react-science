@@ -38,11 +38,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
 
   function generateAxisOptions(index: number, oppositeAxis: string) {
     const { variables } = data[index];
-      function optionText(label: string, units:string|undefined) {
+    function optionText(label: string, units: string | undefined) {
       const unit = units ? ` (${units})` : '';
-      return (
-       label + unit
-      );
+      return label + unit;
     }
     return Object.keys(variables).map((d) => {
       if (d !== info[oppositeAxis]) {
@@ -160,7 +158,8 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             display: flex;
           `}
         >
-          Flip &quot;{info.xVariableName}&quot; axis:
+          Flip &quot;{data[info.dataIndex].variables[info.xVariableName].label}
+          &quot; axis:
           <FaArrowsAltH
             css={css`
               cursor: pointer;
