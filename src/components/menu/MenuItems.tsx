@@ -107,7 +107,7 @@ function ItemOption<T>(props: ItemOptionProps<T>) {
       css={css([
         {
           ...styles.item,
-          display: 'grid',
+          display: 'flex',
           flexDirection: 'row',
           gap: 15,
           alignItems: 'center',
