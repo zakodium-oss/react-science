@@ -1,4 +1,5 @@
-import { ClassNames } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { Menu } from '@headlessui/react';
 import type { ReactNode } from 'react';
 
@@ -70,16 +71,12 @@ export function MenuItems<T>(props: MenuItemsProps<T>) {
   const { options, onSelect, itemsStatic } = props;
 
   return (
-    <ClassNames>
-      {({ css }) => (
-        <Menu.Items static={itemsStatic} className={css(styles.items)}>
-          {options.map((option, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Item key={index} onSelect={onSelect} option={option} />
-          ))}
-        </Menu.Items>
-      )}
-    </ClassNames>
+    <Menu.Items static={itemsStatic} css={css(styles.items)}>
+      {options.map((option, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Item key={index} onSelect={onSelect} option={option} />
+      ))}
+    </Menu.Items>
   );
 }
 
@@ -87,16 +84,14 @@ function Item<T>(props: ItemProps<T>) {
   const { option, onSelect } = props;
   const isDivider = option.type === 'divider';
 
+  if (isDivider) {
+    return <hr css={css(styles.divider)} />;
+  }
+
   return (
-    <Menu.Item disabled={!isDivider && option.disabled}>
+    <Menu.Item disabled={option.disabled}>
       {({ active }) => (
-        <>
-          {isDivider ? (
-            <ItemDivider />
-          ) : (
-            <ItemOption onSelect={onSelect} option={option} active={active} />
-          )}
-        </>
+        <ItemOption onSelect={onSelect} option={option} active={active} />
       )}
     </Menu.Item>
   );
@@ -107,46 +102,34 @@ function ItemOption<T>(props: ItemOptionProps<T>) {
   const { disabled } = option;
 
   return (
-    <ClassNames>
-      {({ css }) => (
-        <div
-          onClick={() => onSelect(option)}
-          className={css([
-            {
-              ...styles.item,
-              display: 'flex',
-              flexDirection: 'row',
-              gap: 15,
-              alignItems: 'center',
-              cursor: 'pointer',
-            },
-            disabled && {
-              color: 'rgb(163, 163, 163)',
-              cursor: 'default',
-            },
-            !disabled && {
-              '&:hover': {
-                backgroundColor: 'rgb(243, 244, 246)',
-              },
-            },
-            !disabled &&
-              active && {
-                backgroundColor: 'rgb(243, 244, 246)',
-              },
-          ])}
-        >
-          {option.icon && <span>{option.icon}</span>}
-          <span>{option.label}</span>
-        </div>
-      )}
-    </ClassNames>
-  );
-}
-
-function ItemDivider() {
-  return (
-    <ClassNames>
-      {({ css }) => <hr className={css(styles.divider)} />}
-    </ClassNames>
+    <div
+      onClick={() => onSelect(option)}
+      css={css([
+        {
+          ...styles.item,
+          display: 'grid',
+          flexDirection: 'row',
+          gap: 15,
+          alignItems: 'center',
+          cursor: 'pointer',
+        },
+        disabled && {
+          color: 'rgb(163, 163, 163)',
+          cursor: 'default',
+        },
+        !disabled && {
+          '&:hover': {
+            backgroundColor: 'rgb(243, 244, 246)',
+          },
+        },
+        !disabled &&
+          active && {
+            backgroundColor: 'rgb(243, 244, 246)',
+          },
+      ])}
+    >
+      {option.icon && <span>{option.icon}</span>}
+      <span>{option.label}</span>
+    </div>
   );
 }
