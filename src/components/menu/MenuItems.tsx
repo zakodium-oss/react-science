@@ -107,8 +107,8 @@ function ItemOption<T>(props: ItemOptionProps<T>) {
       css={css([
         {
           ...styles.item,
-          display: 'flex',
-          flexDirection: 'row',
+          display: 'grid',
+          gridTemplateColumns: option.icon ? 'minmax(0px, 14px) auto' : 'auto',
           gap: 15,
           alignItems: 'center',
           cursor: 'pointer',
