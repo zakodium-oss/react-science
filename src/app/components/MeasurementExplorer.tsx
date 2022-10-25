@@ -21,21 +21,41 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     width = 800,
     height = 400,
   } = props;
+
   function defaultInfo(dataIndex: number) {
+    const axes = data[dataIndex].variables;
+    const axesNames = Object.keys(data[dataIndex].variables);
     return {
       dataIndex,
-      xVariableName: Object.keys(data[dataIndex].variables).includes('x')
-        ? 'x'
-        : Object.keys(data[dataIndex].variables)[0],
-      yVariableName: Object.keys(data[dataIndex].variables).includes('y')
-        ? 'y'
-        : Object.keys(data[dataIndex].variables)[1],
+      xVariableName: axes.x ? 'x' : axesNames[0],
+      yVariableName: axes.y ? 'y' : axesNames[1],
     };
   }
   const [info, setInfo] = useState<ExplorerInfo>({
     flipHorizontalAxis: false,
     ...defaultInfo(0),
   });
+
+  function generateAxisOptions(index: number, oppositeAxis: string) {
+    const { variables } = data[index];
+      function optionText(label: string, units:string|undefined) {
+      const unit = units ? ` (${units})` : '';
+      return (
+       label + unit
+      );
+    }
+    return Object.keys(variables).map((d) => {
+      if (d !== info[oppositeAxis]) {
+        return (
+          <option key={d} value={d}>
+            {optionText(variables[d].label, variables[d].units)}
+          </option>
+        );
+      }
+      return null;
+    });
+  }
+
   return (
     <div
       css={css`
@@ -95,16 +115,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             }}
             value={info.xVariableName}
           >
-            {Object.keys(data[info.dataIndex].variables).map((d) => {
-              if (d !== info.yVariableName) {
-                return (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                );
-              }
-              return null;
-            })}
+            {generateAxisOptions(info.dataIndex, info.yVariableName)}
           </select>
         </div>
         <div>
@@ -140,16 +151,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             }}
             value={info.yVariableName}
           >
-            {Object.keys(data[info.dataIndex].variables).map((d) => {
-              if (d !== info.xVariableName) {
-                return (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                );
-              }
-              return null;
-            })}
+            {generateAxisOptions(info.dataIndex, info.xVariableName)}
           </select>
         </div>
         <div
