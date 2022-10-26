@@ -34,44 +34,61 @@ interface ItemOptionProps<T> {
   active: boolean;
 }
 
-const spacing = {
-  width: 180,
-};
-
 const styles = {
-  items: {
-    width: spacing.width,
+  items: css({
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    width: 180,
     borderRadius: 6,
     backgroundColor: 'white',
     boxShadow:
       'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 5px 12px',
     paddingTop: 5,
     paddingBottom: 5,
-  },
-  item: {
-    color: 'black',
-    minWidth: spacing.width,
-    maxWidth: spacing.width,
-    width: 'fit-content',
-    fontSize: '0.875rem',
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-  },
-  divider: {
+  }),
+  item: (active: boolean, option: MenuOption<any>) =>
+    css(
+      {
+        display: 'grid',
+        gridTemplateColumns: option.icon ? 'minmax(0px, 14px) auto' : 'auto',
+        gap: 15,
+        alignItems: 'center',
+        cursor: 'pointer',
+        fontSize: '0.875rem',
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+        color: 'black',
+      },
+      !option.disabled &&
+        active && {
+          backgroundColor: 'rgb(243, 244, 246)',
+        },
+      option.disabled
+        ? {
+            color: 'rgb(163, 163, 163)',
+            cursor: 'default',
+          }
+        : {
+            '&:hover': {
+              backgroundColor: 'rgb(243, 244, 246)',
+            },
+          },
+    ),
+  divider: css({
     width: '100%',
     color: 'rgb(229, 229, 229)',
     marginTop: 5,
     marginBottom: 5,
-  },
+  }),
 };
 
 export function MenuItems<T>(props: MenuItemsProps<T>) {
   const { options, onSelect, itemsStatic } = props;
 
   return (
-    <Menu.Items static={itemsStatic} css={css(styles.items)}>
+    <Menu.Items static={itemsStatic} css={styles.items}>
       {options.map((option, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <Item key={index} onSelect={onSelect} option={option} />
@@ -85,7 +102,7 @@ function Item<T>(props: ItemProps<T>) {
   const isDivider = option.type === 'divider';
 
   if (isDivider) {
-    return <hr css={css(styles.divider)} />;
+    return <hr css={styles.divider} />;
   }
 
   return (
@@ -99,35 +116,9 @@ function Item<T>(props: ItemProps<T>) {
 
 function ItemOption<T>(props: ItemOptionProps<T>) {
   const { onSelect, option, active } = props;
-  const { disabled } = option;
 
   return (
-    <div
-      onClick={() => onSelect(option)}
-      css={css([
-        {
-          ...styles.item,
-          display: 'grid',
-          gridTemplateColumns: option.icon ? 'minmax(0px, 14px) auto' : 'auto',
-          gap: 15,
-          alignItems: 'center',
-          cursor: 'pointer',
-        },
-        disabled && {
-          color: 'rgb(163, 163, 163)',
-          cursor: 'default',
-        },
-        !disabled && {
-          '&:hover': {
-            backgroundColor: 'rgb(243, 244, 246)',
-          },
-        },
-        !disabled &&
-          active && {
-            backgroundColor: 'rgb(243, 244, 246)',
-          },
-      ])}
-    >
+    <div onClick={() => onSelect(option)} css={styles.item(active, option)}>
       {option.icon && <span>{option.icon}</span>}
       <span>{option.label}</span>
     </div>

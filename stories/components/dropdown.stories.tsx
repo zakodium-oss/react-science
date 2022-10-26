@@ -88,3 +88,22 @@ export function WithDivider() {
     </Menu>
   );
 }
+
+export function Complex() {
+  const options = useMemo<MenuOptions<string>>(() => {
+    return [
+      ...defaultOptions,
+      { label: 'Exercise', type: 'option' },
+      { label: 'Go to home page', type: 'option', disabled: true },
+      { label: 'Back', type: 'option' },
+      { label: 'Refresh', type: 'option', icon: <FaMeteor /> },
+      { label: 'Github', type: 'option' },
+    ];
+  }, []);
+
+  return (
+    <Menu>
+      <MenuItems itemsStatic options={options} onSelect={() => {}} />
+    </Menu>
+  );
+}
