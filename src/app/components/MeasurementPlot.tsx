@@ -108,6 +108,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   usePan({ horizontalAxisId: xAxis, verticalAxisId: yAxis });
   return (
     <div
+      style={{ width, height }}
       css={css`
         user-drag: none;
         -webkit-user-drag: none;
