@@ -38,7 +38,7 @@ const styles = {
   items: css({
     display: 'grid',
     gridTemplateColumns: '1fr',
-    width: 180,
+    width: 'fit-content',
     borderRadius: 6,
     backgroundColor: 'white',
     boxShadow:
@@ -50,8 +50,7 @@ const styles = {
     css(
       {
         display: 'grid',
-        gridTemplateColumns: option.icon ? 'minmax(0px, 14px) auto' : 'auto',
-        gap: 15,
+        gridTemplateColumns: 'minmax(0px, 14px) auto',
         alignItems: 'center',
         cursor: 'pointer',
         fontSize: '0.875rem',
@@ -60,6 +59,7 @@ const styles = {
         paddingLeft: '1rem',
         paddingRight: '1rem',
         color: 'black',
+        gap: 15,
       },
       !option.disabled &&
         active && {
@@ -119,7 +119,7 @@ function ItemOption<T>(props: ItemOptionProps<T>) {
 
   return (
     <div onClick={() => onSelect(option)} css={styles.item(active, option)}>
-      {option.icon && <span>{option.icon}</span>}
+      <span>{option.icon}</span>
       <span>{option.label}</span>
     </div>
   );

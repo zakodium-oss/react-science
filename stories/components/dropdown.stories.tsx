@@ -1,6 +1,17 @@
 import { Menu } from '@headlessui/react';
 import { useMemo } from 'react';
-import { FaMeteor } from 'react-icons/fa';
+import {
+  FaMeteor,
+  FaAddressBook,
+  FaAccessibleIcon,
+  Fa500Px,
+  FaAccusoft,
+  FaAcquisitionsIncorporated,
+  FaAd,
+  FaAddressCard,
+  FaAdjust,
+} from 'react-icons/fa';
+import { icons } from 'react-icons/lib';
 
 import DropdownMenu from '@/components/menu/DropdownMenu';
 import { MenuItems, MenuOptions } from '@/components/menu/MenuItems';
@@ -92,12 +103,29 @@ export function WithDivider() {
 export function Complex() {
   const options = useMemo<MenuOptions<string>>(() => {
     return [
-      ...defaultOptions,
-      { label: 'Exercise', type: 'option' },
-      { label: 'Go to home page', type: 'option', disabled: true },
-      { label: 'Back', type: 'option' },
-      { label: 'Refresh', type: 'option', icon: <FaMeteor /> },
-      { label: 'Github', type: 'option' },
+      { label: 'Back', type: 'option', icon: <FaAddressBook /> },
+      {
+        label: 'Forward',
+        type: 'option',
+        disabled: true,
+        icon: <FaAccessibleIcon />,
+      },
+      { label: 'Refresh', type: 'option', icon: <Fa500Px /> },
+      { type: 'divider' },
+      { label: 'Save as', type: 'option', icon: <FaAccusoft /> },
+      { label: 'Print', type: 'option', icon: <FaAcquisitionsIncorporated /> },
+      { label: 'Cast media to device', type: 'option', icon: <FaAd /> },
+      { type: 'divider' },
+      {
+        label: 'Send page to your devices',
+        type: 'option',
+        icon: <FaAddressCard />,
+      },
+      {
+        label: 'Create QR Code for this page',
+        type: 'option',
+        icon: <FaAdjust />,
+      },
     ];
   }, []);
 
