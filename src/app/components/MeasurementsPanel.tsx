@@ -17,7 +17,7 @@ export interface MeasurementsPanelProps extends DataState {
    */
   onTabSelect?: (kind: MeasurementKind) => void;
   selectedMeasurement?: {
-    id: string;
+    ids: Array<string>;
     kind: MeasurementKind;
   };
 }
@@ -34,10 +34,11 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
             <ValueRenderers.Title
               style={{
                 padding: '0px 5px',
-                backgroundColor:
-                  props.selectedMeasurement?.id === measurement.id
-                    ? 'green'
-                    : '',
+                backgroundColor: props.selectedMeasurement?.ids.includes(
+                  measurement.id,
+                )
+                  ? 'green'
+                  : '',
                 cursor: 'pointer',
               }}
               onClick={() => {

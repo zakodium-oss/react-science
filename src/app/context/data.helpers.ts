@@ -38,7 +38,17 @@ export function getFirstMeasurement(
 export function getCurrentMeasurement(state: AppState) {
   const { currentMeasurement } = state.view;
   if (!currentMeasurement) return null;
-  const { kind, id } = currentMeasurement;
+  const { kind, ids } = currentMeasurement;
 
-  return getMeasurement(state.data.measurements, kind, id);
+  return getMeasurements(state.data.measurements, kind, ids);
+}
+export function getMeasurements(
+  measurements: Measurements,
+  kind: MeasurementKind,
+  selected: Array<string>,
+) {
+  const measurement = measurements[kind].entries.filter((entry) =>
+    selected.includes(entry.id),
+  );
+  return measurement;
 }

@@ -183,8 +183,8 @@ function DropZoneArea() {
                   }}
                 >
                   <div style={{ padding: 5 }}>
-                    {measurement ? (
-                      <MeasurementExplorer measurement={measurement} />
+                    {measurement && measurement.length > 0 ? (
+                      <MeasurementExplorer measurement={measurement[0]} />
                     ) : (
                       <span>No data, add them with drag and drop</span>
                     )}

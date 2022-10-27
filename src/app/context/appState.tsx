@@ -26,7 +26,7 @@ export interface AppState {
     selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
     currentMeasurement?: {
       kind: MeasurementKind;
-      id: string;
+      ids: Array<string>;
     };
   };
 }
@@ -110,7 +110,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
             const id = measurement.measurement.id;
             draft.view.selectedMeasurements[kind] = [id];
             if (draft.view.currentMeasurement === undefined) {
-              draft.view.currentMeasurement = { id, kind };
+              draft.view.currentMeasurement = { ids: [id], kind };
             }
             // draft.view.currentMeasurement = {
             //   kind,
@@ -129,25 +129,40 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
         action.payload.kind,
         action.payload.id,
       );
+      const { id, kind } = action.payload;
+      if (
+        draft.view.currentMeasurement &&
+        draft.view.selectedMeasurements[kind] &&
+        draft.view.currentMeasurement.kind === kind
+      ) {
+        if (draft.view.currentMeasurement.ids.includes(id)) {
+          draft.view.currentMeasurement.ids =
+            draft.view.currentMeasurement.ids.filter((s) => s !== id);
+          draft.view.selectedMeasurements[kind] =
+            draft.view.selectedMeasurements[kind]?.filter((s) => s !== id);
+        } else {
+          draft.view.currentMeasurement.ids.push(id);
+          draft.view.selectedMeasurements[kind]?.push(id);
+        }
+      } else {
+        draft.view.currentMeasurement = { ids: [id], kind };
+        draft.view.selectedMeasurements[kind] = [id];
+      }
 
-      draft.view.currentMeasurement = action.payload;
-      draft.view.selectedMeasurements[action.payload.kind] = [
-        action.payload.id,
-      ];
       return;
     }
     case 'SELECT_MEASUREMENT_KIND': {
-      const selected = draft.view.selectedMeasurements[action.payload]?.[0];
+      const selected = draft.view.selectedMeasurements[action.payload];
       if (selected) {
         draft.view.currentMeasurement = {
-          id: selected,
+          ids: selected,
           kind: action.payload,
         };
       } else if (draft.data.measurements[action.payload].entries.length > 0) {
         const measurement = draft.data.measurements[action.payload].entries[0];
         draft.view.selectedMeasurements[action.payload] = [measurement.id];
         draft.view.currentMeasurement = {
-          id: measurement.id,
+          ids: [measurement.id],
           kind: action.payload,
         };
       } else {
