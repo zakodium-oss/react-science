@@ -23,7 +23,7 @@ export interface AppState {
   data: DataState;
   isLoading: boolean;
   view: {
-    selectedMeasurements: Partial<Record<MeasurementKind, string>>;
+    selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
     currentMeasurement?: {
       kind: MeasurementKind;
       id: string;
@@ -108,7 +108,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
           );
           if (measurement) {
             const id = measurement.measurement.id;
-            draft.view.selectedMeasurements[kind] = id;
+            draft.view.selectedMeasurements[kind] = [id];
             if (draft.view.currentMeasurement === undefined) {
               draft.view.currentMeasurement = { id, kind };
             }
@@ -131,11 +131,13 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       );
 
       draft.view.currentMeasurement = action.payload;
-      draft.view.selectedMeasurements[action.payload.kind] = action.payload.id;
+      draft.view.selectedMeasurements[action.payload.kind] = [
+        action.payload.id,
+      ];
       return;
     }
     case 'SELECT_MEASUREMENT_KIND': {
-      const selected = draft.view.selectedMeasurements[action.payload];
+      const selected = draft.view.selectedMeasurements[action.payload]?.[0];
       if (selected) {
         draft.view.currentMeasurement = {
           id: selected,
@@ -143,7 +145,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
         };
       } else if (draft.data.measurements[action.payload].entries.length > 0) {
         const measurement = draft.data.measurements[action.payload].entries[0];
-        draft.view.selectedMeasurements[action.payload] = measurement.id;
+        draft.view.selectedMeasurements[action.payload] = [measurement.id];
         draft.view.currentMeasurement = {
           id: measurement.id,
           kind: action.payload,
