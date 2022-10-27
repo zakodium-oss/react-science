@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from '@emotion/react';
+import { ClassNames } from '@emotion/react';
 import { Menu } from '@headlessui/react';
 import { createPopper, Placement } from '@popperjs/core';
 import { ReactNode, useState } from 'react';
@@ -44,22 +43,24 @@ export type DropdownMenuProps<T> =
   | DropdownMenuContextProps<T>
   | DropdownMenuClickProps<T>;
 
-const styles: Record<'button', SerializedStyles> = {
-  button: css({
-    boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-    color: 'white',
-    fontWeight: 600,
-    fontSize: '0.875rem',
-    lineHeight: '1.25rem',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    backgroundColor: 'rgb(107 114 128)',
-    borderColor: 'transparent',
-    borderRadius: '0.375rem',
-    borderWidth: 1,
-  }),
+const styles = (css: any) => {
+  return {
+    button: css({
+      boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+      color: 'white',
+      fontWeight: 600,
+      fontSize: '0.875rem',
+      lineHeight: '1.25rem',
+      paddingTop: '0.5rem',
+      paddingBottom: '0.5rem',
+      paddingLeft: '1rem',
+      paddingRight: '1rem',
+      backgroundColor: 'rgb(107 114 128)',
+      borderColor: 'transparent',
+      borderRadius: '0.375rem',
+      borderWidth: 1,
+    }),
+  };
 };
 
 export default function DropdownMenu<T>(props: DropdownMenuProps<T>) {
@@ -125,9 +126,13 @@ function DropdownClickMenu<T>(
 
   return (
     <Menu>
-      <Menu.Button ref={setTargetRef} css={styles.button}>
-        {props.children}
-      </Menu.Button>
+      <ClassNames>
+        {({ css }) => (
+          <Menu.Button ref={setTargetRef} className={styles(css).button}>
+            {props.children}
+          </Menu.Button>
+        )}
+      </ClassNames>
       <Portal>
         <div
           ref={setContentRef}
