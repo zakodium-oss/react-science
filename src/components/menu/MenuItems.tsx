@@ -102,7 +102,8 @@ function Item<T>(props: ItemProps<T>) {
   const isDivider = option.type === 'divider';
 
   if (isDivider) {
-    return <hr css={styles.divider} />;
+    // <hr css={styles.divider} />
+    return null;
   }
 
   return (

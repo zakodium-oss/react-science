@@ -11,7 +11,6 @@ import {
   FaAddressCard,
   FaAdjust,
 } from 'react-icons/fa';
-import { icons } from 'react-icons/lib';
 
 import DropdownMenu from '@/components/menu/DropdownMenu';
 import { MenuItems, MenuOptions } from '@/components/menu/MenuItems';
@@ -39,6 +38,22 @@ export function Dropdown() {
     <DropdownMenu onSelect={() => {}} options={options} trigger="click">
       Default workspace
     </DropdownMenu>
+  );
+}
+
+export function ContextDropdown() {
+  const options = useMemo<MenuOptions<string>>(() => {
+    return [
+      { label: 'Default workspace', type: 'option' },
+      { label: 'Exercise', type: 'option', icon: <FaMeteor /> },
+      { type: 'divider' },
+      { label: 'Test', type: 'option', disabled: true },
+      { label: 'Test 2', type: 'option' },
+    ];
+  }, []);
+
+  return (
+    <DropdownMenu onSelect={() => {}} options={options} trigger="contextMenu" />
   );
 }
 

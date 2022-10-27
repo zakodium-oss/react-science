@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css, SerializedStyles } from '@emotion/react';
 import { Menu } from '@headlessui/react';
-import type { Placement } from '@popperjs/core';
+import { createPopper, Placement } from '@popperjs/core';
 import { ReactNode, useState } from 'react';
 import { usePopper } from 'react-popper';
 
@@ -63,7 +63,47 @@ const styles: Record<'button', SerializedStyles> = {
 };
 
 export default function DropdownMenu<T>(props: DropdownMenuProps<T>) {
-  const { trigger, placement, ...otherProps } = props;
+  const { trigger, ...otherProps } = props;
+
+  if (trigger === 'contextMenu') {
+    return <DropdownContextMenu {...otherProps} />;
+  }
+
+  return (
+    <DropdownClickMenu {...otherProps}>{props.children}</DropdownClickMenu>
+  );
+}
+
+function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
+  const virtualElement = {
+    getBoundingClientRect: generateGetBoundingClientRect(),
+  };
+
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+    null,
+  );
+  const { styles, attributes } = usePopper(virtualElement, popperElement);
+  const popper = createPopper(virtualElement, popperElement);
+
+  return (
+    <Menu>
+      <Portal>
+        <div
+          ref={setPopperElement}
+          style={styles.popper}
+          {...attributes.popper}
+        >
+          <MenuItems {...props} />
+        </div>
+      </Portal>
+    </Menu>
+  );
+}
+
+function DropdownClickMenu<T>(
+  props: Omit<DropdownMenuProps<T>, 'trigger'> & { children: ReactNode },
+) {
+  const { placement, ...otherProps } = props;
 
   const [targetRef, setTargetRef] = useState<HTMLButtonElement | null>(null);
   const [contentRef, setContentRef] = useState<HTMLDivElement | null>(null);
@@ -83,10 +123,6 @@ export default function DropdownMenu<T>(props: DropdownMenuProps<T>) {
     },
   );
 
-  if (trigger === 'contextMenu') {
-    return null;
-  }
-
   return (
     <Menu>
       <Menu.Button ref={setTargetRef} css={styles.button}>
@@ -104,3 +140,34 @@ export default function DropdownMenu<T>(props: DropdownMenuProps<T>) {
     </Menu>
   );
 }
+
+function generateGetBoundingClientRect(x = 0, y = 0) {
+  return () => ({
+    width: 0,
+    height: 0,
+    top: y,
+    right: x,
+    bottom: y,
+    left: x,
+    x,
+    y,
+    toJson: () => {},
+  });
+}
+
+/*
+const virtualElement = {
+      getBoundingClientRect: generateGetBoundingClientRect(),
+    };
+
+    const instance = createPopper(virtualElement, contentRef);
+
+    document.addEventListener('mousemove', ({ clientX: x, clientY: y }) => {
+      virtualElement.getBoundingClientRect = generateGetBoundingClientRect(
+        x,
+        y,
+      );
+
+      void instance.update();
+    });
+*/
