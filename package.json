@@ -1,6 +1,6 @@
 {
   "name": "analysis-ui-components",
-  "version": "0.17.3",
+  "version": "0.18.0",
   "description": "React components to build analysis UI",
   "main": "lib/components/index.js",
   "module": "lib-esm/components/index.js",
@@ -57,6 +57,7 @@
     "lodash": "^4.17.21",
     "ml-gsd": "^12.1.2",
     "ml-peak-shape-generator": "^4.1.2",
+    "netcdfjs": "^2.0.2",
     "react-dropzone": "^14.2.3",
     "react-error-boundary": "^3.1.4",
     "react-shadow": "^19.0.3",

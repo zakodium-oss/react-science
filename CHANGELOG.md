@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.18.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.3...v0.18.0) (2022-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* support for fileCollection and guess the spectra type (#246)
+* implement Modal using dialog
+
+### Features
+
+* add api for switching parts of the UI to fullscreen ([#237](https://github.com/zakodium-oss/analysis-ui-components/issues/237)) ([37d42df](https://github.com/zakodium-oss/analysis-ui-components/commit/37d42dff3b9feb9fcd4d038c81da2f455586b95b))
+* add biologic parser ([ab90365](https://github.com/zakodium-oss/analysis-ui-components/commit/ab90365734bbfdf08bc236f0e2880336bfca2708))
+* add width and height props to ConfirmModal ([792cfe7](https://github.com/zakodium-oss/analysis-ui-components/commit/792cfe7688e052aec6466d67e29f69cee77f378b))
+* implement Modal using dialog ([ddfdb59](https://github.com/zakodium-oss/analysis-ui-components/commit/ddfdb59da2892665a7f160badc381666ab62ef96))
+* load data from url ([#240](https://github.com/zakodium-oss/analysis-ui-components/issues/240)) ([d653f67](https://github.com/zakodium-oss/analysis-ui-components/commit/d653f679508d2e7990a35157d9710ca65e15a902))
+* save as ium ([#238](https://github.com/zakodium-oss/analysis-ui-components/issues/238)) ([b7df05d](https://github.com/zakodium-oss/analysis-ui-components/commit/b7df05d94bf5f331616092368bfeae0c2921465b))
+* scroll when tabs overflow ([#242](https://github.com/zakodium-oss/analysis-ui-components/issues/242)) ([4f33be3](https://github.com/zakodium-oss/analysis-ui-components/commit/4f33be3d051865faa0bded861c73ad1b482dca05))
+* use the MeasurementExplorer component in the app ([#241](https://github.com/zakodium-oss/analysis-ui-components/issues/241)) ([91402c5](https://github.com/zakodium-oss/analysis-ui-components/commit/91402c579b5ab0ed3324e1e1315d88d1aa756995))
+
+
+### Bug Fixes
+
+* remove id attribute on RootLayout ([a76cff9](https://github.com/zakodium-oss/analysis-ui-components/commit/a76cff9845323e063ae32088f6657e5558fcc8e4))
+
+
+### update
+
+* support for fileCollection and guess the spectra type ([#246](https://github.com/zakodium-oss/analysis-ui-components/issues/246)) ([0bb78c5](https://github.com/zakodium-oss/analysis-ui-components/commit/0bb78c5a990577c4b4f626baeb04fc895b69c856))
+
 ## [0.17.3](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.2...v0.17.3) (2022-10-02)
 
 
