@@ -38,11 +38,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
   });
   return (
     <div
-      style={{ width, height }}
       css={css`
+        width: ${typeof width === 'number' ? `${width}px` : width};
+        height: ${typeof height === 'number' ? `${height}px` : height};
         display: flex;
         flex-direction: column;
-        gap: 40px;
         justify-content: space-around;
       `}
     >
