@@ -42,13 +42,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
       css={css`
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
       `}
     >
       <div
         css={css`
           display: flex;
-          gap: 40px;
           justify-content: space-around;
           margin-bottom: 20px;
         `}
