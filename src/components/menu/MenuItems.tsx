@@ -35,52 +35,44 @@ interface ItemOptionProps<T> {
 
 const styles = (css: ClassNamesContent['css']) => {
   return {
-    items: css({
-      display: 'grid',
-      gridTemplateColumns: '40px auto',
-      width: 'fit-content',
-      alignItems: 'center',
-      borderRadius: 6,
-      backgroundColor: 'white',
-      boxShadow:
-        'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 5px 12px',
-      paddingTop: 5,
-      paddingBottom: 5,
-    }),
+    items: css`
+      display: grid;
+      grid-template-columns: 40px auto;
+      width: fit-content;
+      align-items: center;
+      border-radius: 6px;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+        rgba(0, 0, 0, 0.22) 0px 5px 12px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    `,
     item: (active: boolean, option: MenuOption<any>) =>
-      css(
-        {
-          display: 'contents',
-          cursor: 'pointer',
-          fontSize: '0.875rem',
-          '& > div': {
-            paddingTop: 2,
-            paddingBottom: 2,
-            ...(!option.disabled
-              ? {
-                  ':hover': {
-                    backgroundColor: 'rgb(243, 244, 246)',
-                  },
-                }
-              : undefined),
-            ...(active
-              ? {
-                  backgroundColor: 'rgb(243, 244, 246)',
-                }
-              : undefined),
-          },
-        },
-        option.disabled && {
-          color: 'rgb(163, 163, 163)',
-          cursor: 'default',
-        },
-      ),
-    divider: css({
-      width: '100%',
-      color: 'rgb(229, 229, 229)',
-      marginTop: 5,
-      marginBottom: 5,
-    }),
+      css`
+        display: contents;
+        cursor: ${option.disabled ? 'default' : 'pointer'};
+        font-size: 0.875rem;
+        color: ${!option.disabled ? 'black' : 'rgb(163, 163, 163)'};
+        & > div {
+          padding-top: 2px;
+          padding-bottom: 2px;
+          ${active && 'background-color: rgb(243, 244, 246);'}
+        }
+
+        ${!option.disabled &&
+        `
+          &:hover > div {
+            background-color: rgb(243, 244, 246);
+          }
+        `}
+      `,
+    divider: css`
+      width: 100%;
+      color: rgb(229, 229, 229);
+      margin-top: 5px;
+      margin-bottom: 5px;
+      grid-column: 1 / span 2;
+    `,
   };
 };
 
@@ -106,8 +98,11 @@ function Item<T>(props: ItemProps<T>) {
   const isDivider = option.type === 'divider';
 
   if (isDivider) {
-    // <hr css={styles.divider} />
-    return null;
+    return (
+      <ClassNames>
+        {({ css }) => <hr className={styles(css).divider} />}
+      </ClassNames>
+    );
   }
 
   return (
