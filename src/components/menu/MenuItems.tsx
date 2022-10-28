@@ -1,4 +1,4 @@
-import { ClassNames } from '@emotion/react';
+import { ClassNames, ClassNamesContent } from '@emotion/react';
 import { Menu } from '@headlessui/react';
 import type { ReactNode } from 'react';
 
@@ -33,12 +33,13 @@ interface ItemOptionProps<T> {
   active: boolean;
 }
 
-const styles = (css: any) => {
+const styles = (css: ClassNamesContent['css']) => {
   return {
     items: css({
       display: 'grid',
-      gridTemplateColumns: '1fr',
+      gridTemplateColumns: '40px auto',
       width: 'fit-content',
+      alignItems: 'center',
       borderRadius: 6,
       backgroundColor: 'white',
       boxShadow:
@@ -49,32 +50,30 @@ const styles = (css: any) => {
     item: (active: boolean, option: MenuOption<any>) =>
       css(
         {
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0px, 14px) auto',
-          alignItems: 'center',
+          display: 'contents',
           cursor: 'pointer',
           fontSize: '0.875rem',
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft: '1rem',
-          paddingRight: '1rem',
-          color: 'black',
-          gap: 15,
-        },
-        !option.disabled &&
-          active && {
-            backgroundColor: 'rgb(243, 244, 246)',
+          '& > div': {
+            paddingTop: 2,
+            paddingBottom: 2,
+            ...(!option.disabled
+              ? {
+                  ':hover': {
+                    backgroundColor: 'rgb(243, 244, 246)',
+                  },
+                }
+              : undefined),
+            ...(active
+              ? {
+                  backgroundColor: 'rgb(243, 244, 246)',
+                }
+              : undefined),
           },
-        option.disabled
-          ? {
-              color: 'rgb(163, 163, 163)',
-              cursor: 'default',
-            }
-          : {
-              '&:hover': {
-                backgroundColor: 'rgb(243, 244, 246)',
-              },
-            },
+        },
+        option.disabled && {
+          color: 'rgb(163, 163, 163)',
+          cursor: 'default',
+        },
       ),
     divider: css({
       width: '100%',
@@ -130,8 +129,19 @@ function ItemOption<T>(props: ItemOptionProps<T>) {
           onClick={() => onSelect(option)}
           className={styles(css).item(active, option)}
         >
-          <span>{option.icon}</span>
-          <span>{option.label}</span>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              paddingLeft: '1rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {option.icon}
+          </div>
+          <div style={{ paddingRight: '1rem' }}>{option.label}</div>
         </div>
       )}
     </ClassNames>
