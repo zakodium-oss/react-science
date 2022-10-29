@@ -35,9 +35,10 @@ export const cdfLoader: Loader = async function cdfLoader(
 
       let index = 0;
       for (let i = 0; i < pointCount.length; i++) {
+         // Taken from: https://github.com/cheminfo/netcdf-gcms
         const size = pointCount[i];
-        const mass = new Array(size);
-        const intensity = new Array(size);
+        const mass = new Float64Array(size);
+        const intensity = new Float64Array(size);
         for (let j = 0; j < size; j++) {
           mass[j] = massValues[index];
           intensity[j] = intensityValues[index++];
