@@ -43,6 +43,20 @@ createRoot(document.getElementById('root') as HTMLDivElement).render(
         <a
           href={`${
             import.meta.env.BASE_URL
+          }?filelist=https://zakodium-oss.github.io/analysis-dataset/hplc.json`}
+        >
+          HPLC
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }?filelist=https://zakodium-oss.github.io/analysis-dataset/gcms.json`}
+        >
+          GC/MS
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
           }?filelist=https://zakodium-oss.github.io/analysis-dataset/full.json`}
         >
           All the data we have
