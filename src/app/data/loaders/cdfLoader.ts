@@ -34,6 +34,9 @@ export const cdfLoader: Loader = async function cdfLoader(
       addMeta(reader, reader.globalAttributes);
 
       let index = 0;
+      const bpc = new Float64Array(time.length);
+      const masses: Float64Array[] = [];
+      const intensities: Float64Array[] = [];
       for (let i = 0; i < pointCount.length; i++) {
         // Taken from: https://github.com/cheminfo/netcdf-gcms
         const size = pointCount[i];
@@ -43,23 +46,26 @@ export const cdfLoader: Loader = async function cdfLoader(
           mass[j] = massValues[index];
           intensity[j] = intensityValues[index++];
         }
-        if (kind) {
-          newMeasurements[kind].entries.push({
-            id: v4(),
-            meta: reader.header.meta,
-            filename: file.name,
-            path: file.relativePath || '',
-            info: reader.getAttribute('experiment_title'),
-            title: reader.getAttribute('experiment_title'),
-            data: normalizeChromatogram({
-              time: time[i],
-              tic: tic[i],
-              bpc: xMaxValue(intensity),
-              mass,
-              intensity,
-            }),
-          });
-        }
+        bpc[i] = xMaxValue(intensity);
+        intensities.push(intensity);
+        masses.push(mass);
+      }
+      if (kind) {
+        newMeasurements[kind].entries.push({
+          id: v4(),
+          meta: reader.header.meta,
+          filename: file.name,
+          path: file.relativePath || '',
+          info: reader.getAttribute('experiment_title'),
+          title: reader.getAttribute('experiment_title'),
+          data: normalizeChromatogram({
+            time,
+            tic,
+            bpc,
+            masses,
+            intensities,
+          }),
+        });
       }
     }
   }
@@ -81,13 +87,13 @@ function normalizeChromatogram(datum: any) {
       symbol: 'X',
       label: 'm/z',
       units: '',
-      data: datum.mass || [],
+      data: datum.masses || [],
     };
     variables.y = {
       symbol: 'Y',
       label: 'relative intensity',
       units: '',
-      data: datum.intensity || [],
+      data: datum.intensities || [],
     };
   }
   data.push({ variables });

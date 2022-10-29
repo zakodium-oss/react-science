@@ -4,5 +4,5 @@ import { getGCMSMeasurement } from './getGCMSMeasurement';
 
 test('getGCMSMeasurement', async () => {
   const result = await getGCMSMeasurement();
-  expect(result).toHaveLength(6401);
+  expect(result).toHaveLength(1);
 });
