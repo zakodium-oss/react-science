@@ -18,7 +18,7 @@ import {
 } from './context/appState';
 import { getCurrentMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
-import { download } from './utils';
+import { saveHandler } from './utils';
 
 import {
   Accordion,
@@ -39,7 +39,7 @@ export default function App() {
   return (
     <AppStateProvider>
       <FullScreenProvider>
-        <DropZoneArea />
+        <AppContent />
       </FullScreenProvider>
     </AppStateProvider>
   );
@@ -57,6 +57,71 @@ function ErrorFallback({ error, resetErrorBoundary }) {
   );
 }
 
+function ExamplesLink() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        borderBottom: '1px solid black',
+        gap: '10px',
+        lineHeight: 1,
+        paddingBlock: 5,
+      }}
+    >
+      <a
+        href={`${
+          import.meta.env.BASE_URL
+        }?filelist=https://zakodium-oss.github.io/analysis-dataset/jdx.json`}
+      >
+        JCAMP-DX
+      </a>
+      <a
+        href={`${
+          import.meta.env.BASE_URL
+        }?filelist=https://zakodium-oss.github.io/analysis-dataset/biologic.json`}
+      >
+        Biologic
+      </a>
+      <a
+        href={`${
+          import.meta.env.BASE_URL
+        }?filelist=https://zakodium-oss.github.io/analysis-dataset/uvvis.json`}
+      >
+        UV-vis
+      </a>
+      <a
+        href={`${
+          import.meta.env.BASE_URL
+        }?filelist=https://zakodium-oss.github.io/analysis-dataset/full.json`}
+      >
+        All the data we have
+      </a>
+      {import.meta.env.PROD ? (
+        <a href={`${import.meta.env.BASE_URL}stories/`}>Open stories</a>
+      ) : null}
+    </div>
+  );
+}
+function AppContent() {
+  const appState = useAppState();
+  return (
+    <div
+      onKeyDown={(e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          saveHandler(appState);
+          e.stopPropagation();
+        }
+      }}
+      style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+    >
+      <ExamplesLink />
+      <DropZoneArea />
+    </div>
+  );
+}
 function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
@@ -77,16 +142,6 @@ function DropZoneArea() {
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
-  function saveHandler(filename = 'file', spaceIndent = 0) {
-    const data = JSON.stringify(
-      { data: appState.data, view: appState.view },
-      (_key, value) =>
-        ArrayBuffer.isView(value) ? Array.from(value as any) : value,
-      spaceIndent,
-    );
-    const blob = new Blob([data], { type: 'text/plain' });
-    download(blob, `${filename}.ium`);
-  }
 
   useEffect(() => {
     async function getData(url: string | null) {
@@ -130,7 +185,7 @@ function DropZoneArea() {
                   titleOrientation="horizontal"
                   id="save"
                   title="Save as ium"
-                  onClick={() => saveHandler()}
+                  onClick={() => saveHandler(appState)}
                 >
                   <FaSave />
                 </Toolbar.Item>
