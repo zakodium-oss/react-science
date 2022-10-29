@@ -2,7 +2,7 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { parse, guessSpectraType } from 'spc-parser';
 
-import { getEmptyMeasurements, Loader } from '../DataState';
+import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 export const spcLoader: Loader = async function spcLoader(

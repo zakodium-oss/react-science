@@ -2,7 +2,7 @@ import { v4 } from '@lukeed/uuid';
 import { convert } from 'biologic-converter';
 import type { FileCollection } from 'filelist-utils';
 
-import { getEmptyMeasurements, Loader } from '../DataState';
+import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 export const biologicLoader: Loader = async function biologicLoader(
