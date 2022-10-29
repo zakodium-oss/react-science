@@ -19,6 +19,7 @@ createRoot(document.getElementById('root') as HTMLDivElement).render(
           paddingBlock: 5,
         }}
       >
+        <a href={import.meta.env.BASE_URL}>Blank</a>
         <a
           href={`${
             import.meta.env.BASE_URL

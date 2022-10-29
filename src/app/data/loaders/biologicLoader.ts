@@ -7,7 +7,7 @@ import type { MeasurementBase } from '../MeasurementBase';
 
 export const biologicLoader: Loader = async function biologicLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   let measurements = getEmptyMeasurements();
   const results = await convert(fileCollection);
   for (let { dir, mpr, mps, mpt } of results) {

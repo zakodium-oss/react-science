@@ -6,7 +6,7 @@ import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 
 export const wdfLoader: Loader = async function wdfLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   const measurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {

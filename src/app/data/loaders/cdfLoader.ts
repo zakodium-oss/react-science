@@ -1,8 +1,8 @@
 import { v4 } from '@lukeed/uuid';
-import type { FileCollection } from 'filelist-utils';
 import type { Value } from 'cheminfo-types';
-import { NetCDFReader } from 'netcdfjs';
+import type { FileCollection } from 'filelist-utils';
 import { xMaxValue } from 'ml-spectra-processing';
+import { NetCDFReader } from 'netcdfjs';
 
 import {
   MeasurementKind,
@@ -13,7 +13,7 @@ import {
 
 export const cdfLoader: Loader = async function cdfLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
   for (const file of fileCollection) {
     if (file.name.match(/(?:\.cdf)$/i)) {
