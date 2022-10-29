@@ -90,6 +90,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-inspector": "^6.0.1",
+    "react-kbs": "^2.0.0",
     "react-ocl": "^5.0.0",
     "react-plot": "^0.20.2",
     "rimraf": "^3.0.2",
