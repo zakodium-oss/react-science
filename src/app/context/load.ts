@@ -4,6 +4,7 @@ import { loadMeasurements } from '../data/append';
 import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../data/enhancers/irMeasurementEnhancer';
 import { biologicLoader } from '../data/loaders/biologicLoader';
+import { cdfLoader } from '../data/loaders/cdfLoader';
 import { jcampLoader } from '../data/loaders/jcampLoader';
 import { cary500Loader } from '../data/loaders/proprietary/agilent/cary500Loader';
 import { spcLoader } from '../data/loaders/spcLoader';
@@ -12,7 +13,14 @@ import { wdfLoader } from '../data/loaders/wdfLoader';
 import type { AppDispatch } from './appState';
 
 const options = {
-  loaders: [jcampLoader, spcLoader, wdfLoader, biologicLoader, cary500Loader],
+  loaders: [
+    jcampLoader,
+    spcLoader,
+    wdfLoader,
+    biologicLoader,
+    cary500Loader,
+    cdfLoader,
+  ],
   enhancers: {
     ir: [
       irMeasurementEnhancer,

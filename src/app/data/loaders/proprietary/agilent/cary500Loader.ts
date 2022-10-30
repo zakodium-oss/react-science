@@ -5,7 +5,7 @@ import { Loader, Measurements, getEmptyMeasurements } from '../../../DataState';
 
 export const cary500Loader: Loader = async function cary500Loader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {
