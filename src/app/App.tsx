@@ -9,6 +9,7 @@ import {
   FaGlasses,
   FaSave,
 } from 'react-icons/fa';
+import { KbsProvider, useKbsGlobal } from 'react-kbs';
 
 import { MeasurementExplorer, MeasurementsPanel } from './components';
 import {
@@ -37,11 +38,13 @@ import {
 
 export default function App() {
   return (
-    <AppStateProvider>
-      <FullScreenProvider>
-        <DropZoneArea />
-      </FullScreenProvider>
-    </AppStateProvider>
+    <KbsProvider>
+      <AppStateProvider>
+        <FullScreenProvider>
+          <DropZoneArea />
+        </FullScreenProvider>
+      </AppStateProvider>
+    </KbsProvider>
   );
 }
 
@@ -87,7 +90,14 @@ function DropZoneArea() {
     const blob = new Blob([data], { type: 'text/plain' });
     download(blob, `${filename}.ium`);
   }
-
+  useKbsGlobal([
+    {
+      shortcut: { key: 's', ctrl: true },
+      handler() {
+        saveHandler();
+      },
+    },
+  ]);
   useEffect(() => {
     async function getData(url: string | null) {
       if (url) {
