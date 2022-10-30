@@ -2,19 +2,25 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
-import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
+import {
+  getEmptyMeasurements,
+  MeasurementKind,
+  Measurements,
+} from '../DataState';
 
-export const wdfLoader: Loader = async function wdfLoader(
+export async function wdfLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   const measurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {
     if (file.name.match(/\.wdf$/i)) {
       const parsed = parse(await file.arrayBuffer());
 
-      // for now WDF file format is always expected to be Raman
-      measurements.raman.entries.push({
+      // this will help us to be consistent with the other loaders
+      // and make sure the kind we use exists in the kindLabel
+      const kind: MeasurementKind = 'raman';
+      measurements[kind].entries.push({
         id: v4(),
         meta: parsed.fileHeader,
         filename: file.name,
@@ -26,7 +32,7 @@ export const wdfLoader: Loader = async function wdfLoader(
     }
   }
   return measurements;
-};
+}
 
 function normalizeSpectra(blocks) {
   const yVariables = getYVariables(blocks);

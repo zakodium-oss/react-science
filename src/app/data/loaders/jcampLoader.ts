@@ -2,17 +2,16 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import {
-  MeasurementKind,
-  Loader,
-  Measurements,
-  getEmptyMeasurements,
-} from '../DataState';
+import { MeasurementKind, getEmptyMeasurements } from '../DataState';
 
-export const jcampLoader: Loader = async function jcampLoader(
-  fileCollection: FileCollection,
-) {
-  const newMeasurements: Measurements = getEmptyMeasurements();
+/**
+ *
+ * @param fileCollection
+ * @returns MeasurementBase for each file in the collection
+ * no need for return type, it is inferred from the return statement
+ */
+export async function jcampLoader(fileCollection: FileCollection) {
+  const newMeasurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {
     if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
@@ -21,17 +20,13 @@ export const jcampLoader: Loader = async function jcampLoader(
         let kind: MeasurementKind | undefined;
         if (measurement?.dataType?.match(/infrared|ir/i)) {
           kind = 'ir';
-        }
-        if (measurement?.dataType?.match(/raman/i)) {
+        } else if (measurement?.dataType?.match(/raman/i)) {
           kind = 'raman';
-        }
-        if (measurement?.dataType?.match(/uv/i)) {
+        } else if (measurement?.dataType?.match(/uv/i)) {
           kind = 'uv';
-        }
-        if (measurement?.dataType?.match(/mass/i)) {
+        } else if (measurement?.dataType?.match(/mass/i)) {
           kind = 'mass';
-        }
-        if (measurement?.dataType?.match(/nmr/i)) {
+        } else if (measurement?.dataType?.match(/nmr/i)) {
           kind = 'nmr';
         }
         if (kind) {
@@ -49,7 +44,7 @@ export const jcampLoader: Loader = async function jcampLoader(
     }
   }
   return newMeasurements;
-};
+}
 
 function normalizeSpectra(spectra: any) {
   const data: any[] = [];
