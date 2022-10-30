@@ -69,7 +69,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.19.1",
-    "@ladle/react": "^2.4.4",
+    "@ladle/react": "^2.4.5",
     "@playwright/experimental-ct-react": "^1.27.1",
     "@playwright/test": "^1.27.1",
     "@types/lodash": "^4.14.186",
@@ -87,6 +87,7 @@
     "ml-spectra-processing": "^11.13.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-d3-utils": "^0.6.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-inspector": "^6.0.1",

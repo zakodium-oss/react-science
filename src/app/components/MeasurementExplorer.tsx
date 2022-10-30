@@ -38,15 +38,15 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
   });
   return (
     <div
+      style={{ width, height }}
       css={css`
-        width: ${width}px;
-        height: ${height}px;
+        display: flex;
+        flex-direction: column;
       `}
     >
       <div
         css={css`
           display: flex;
-          gap: 40px;
           justify-content: space-around;
           margin-bottom: 20px;
         `}
