@@ -36,24 +36,25 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     ...defaultInfo(0),
   });
 
-  function generateAxisOptions(index: number, oppositeAxis: string) {
-    const { variables } = data[index];
-    function optionText(label: string, units: string | undefined) {
+  function dropdownVariables(dataIndex: number, oppositeAxis: string) {
+    //option inner text
+    function formatVar(label: string, units: string | undefined) {
       const unit = units ? ` (${units})` : '';
       return label + unit;
     }
+    //variables for this measurement are mapped into `label (units)`
+    const { variables } = data[dataIndex];
     return Object.keys(variables).map((d) => {
       if (d !== info[oppositeAxis]) {
         return (
           <option key={d} value={d}>
-            {optionText(variables[d].label, variables[d].units)}
+            {formatVar(variables[d].label, variables[d].units)}
           </option>
         );
       }
       return null;
     });
   }
-
   return (
     <div
       css={css`
@@ -70,7 +71,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         `}
       >
         <div>
-          <label>dataIndex :</label>
+          <label>dataIndex: </label>
           <select
             css={css`
               cursor: pointer;
@@ -97,7 +98,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           </select>
         </div>
         <div>
-          <label>xVariable :</label>
+          <label>xVariable: </label>
           <select
             css={css`
               cursor: pointer;
@@ -113,7 +114,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             }}
             value={info.xVariableName}
           >
-            {generateAxisOptions(info.dataIndex, info.yVariableName)}
+            {dropdownVariables(info.dataIndex, info.yVariableName)}
           </select>
         </div>
         <div>
@@ -149,7 +150,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             }}
             value={info.yVariableName}
           >
-            {generateAxisOptions(info.dataIndex, info.xVariableName)}
+            {dropdownVariables(info.dataIndex, info.xVariableName)}
           </select>
         </div>
         <div
