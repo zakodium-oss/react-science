@@ -1,7 +1,5 @@
 import { v4 } from '@lukeed/uuid';
-import type { Value } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
-import { xMaxValue } from 'ml-spectra-processing';
 import { NetCDFReader } from 'netcdfjs';
 
 import {
@@ -18,85 +16,75 @@ export const cdfLoader: Loader = async function cdfLoader(
   for (const file of fileCollection) {
     if (file.name.match(/(?:\.cdf)$/i)) {
       const reader = new NetCDFReader(await file.arrayBuffer(), { meta: true });
-      let kind: MeasurementKind | undefined;
       if (
-        reader.dataVariableExists('mass_values') &&
-        reader.dataVariableExists('time_values')
+        !reader.dataVariableExists('mass_values') ||
+        !reader.dataVariableExists('time_values')
       ) {
-        kind = 'gclcms';
+        return newMeasurements;
       }
 
-      const time = reader.getDataVariable('scan_acquisition_time');
-      const tic = reader.getDataVariable('total_intensity');
+      const kind: MeasurementKind = 'gclcms';
+
+      const times = reader.getDataVariable('scan_acquisition_time');
+      const tics = reader.getDataVariable('total_intensity');
       const pointCount = reader.getDataVariable('point_count');
       const massValues = reader.getDataVariable('mass_values');
       const intensityValues = reader.getDataVariable('intensity_values');
       addMeta(reader, reader.globalAttributes);
 
       let index = 0;
-      const bpc = new Float64Array(time.length);
-      const masses: Float64Array[] = [];
-      const intensities: Float64Array[] = [];
-      for (let i = 0; i < pointCount.length; i++) {
+      const allMasses: Float64Array[] = [];
+      const allIntensities: Float64Array[] = [];
+      for (let size of pointCount) {
         // Taken from: https://github.com/cheminfo/netcdf-gcms
-        const size = pointCount[i];
-        const mass = new Float64Array(size);
-        const intensity = new Float64Array(size);
+        const masses = new Float64Array(size);
+        const intensities = new Float64Array(size);
         for (let j = 0; j < size; j++) {
-          mass[j] = massValues[index];
-          intensity[j] = intensityValues[index++];
+          masses[j] = massValues[index];
+          intensities[j] = intensityValues[index++];
         }
-        bpc[i] = xMaxValue(intensity);
-        intensities.push(intensity);
-        masses.push(mass);
+        allIntensities.push(intensities);
+        allMasses.push(masses);
       }
-      if (kind) {
-        newMeasurements[kind].entries.push({
-          id: v4(),
-          meta: reader.header.meta,
-          filename: file.name,
-          path: file.relativePath || '',
-          info: reader.getAttribute('experiment_title'),
-          title: reader.getAttribute('experiment_title'),
-          data: normalizeChromatogram({
-            time,
-            tic,
-            bpc,
-            masses,
-            intensities,
-          }),
-        });
-      }
+      newMeasurements[kind].entries.push({
+        id: v4(),
+        meta: reader.header.meta,
+        filename: file.name,
+        path: file.relativePath || '',
+        info: {},
+        title: reader.getAttribute('experiment_title'),
+        data: normalizeChromatogram(times, allMasses, allIntensities, tics),
+      });
     }
   }
   return newMeasurements;
 };
 
-function normalizeChromatogram(datum: any) {
+function normalizeChromatogram(time, masses, intensities, tics) {
   let data: any = [];
-  let variables: Variable = {
-    meta: {},
-    info: {
-      time: datum.time,
-      tic: datum.tic,
-      bpc: datum.bpc,
-    },
-  };
-  if (datum) {
-    variables.x = {
-      symbol: 'X',
-      label: 'm/z',
-      units: '',
-      data: datum.masses || [],
-    };
-    variables.y = {
-      symbol: 'Y',
-      label: 'relative intensity',
-      units: '',
-      data: datum.intensities || [],
-    };
+  for (let i = 0; i < time.length; i++) {
+    data.push({
+      meta: {},
+      info: {
+        time: { value: time[i], units: 's' },
+        tic: tics[i],
+      },
+      variables: {
+        x: {
+          symbol: 'X',
+          label: 'm/z',
+          units: '',
+          data: masses[i] || [],
+        },
+        y: {
+          symbol: 'Y',
+          label: 'relative intensity',
+          units: '',
+          data: intensities[i] || [],
+        },
+      },
+    });
   }
-  data.push({ variables });
   return data;
 }
 
@@ -105,22 +93,4 @@ function addMeta(reader, globalAttributes) {
   for (const item of globalAttributes) {
     reader.header.meta[item.name] = item.value;
   }
-}
-
-interface Serie {
-  label?: string;
-  symbol?: string;
-  units?: string;
-  data?: any[];
-}
-
-interface Variable {
-  meta: any;
-  info: {
-    time: Value;
-    tic?: number;
-    bpc?: number;
-  };
-  x?: Serie;
-  y?: Serie;
 }
