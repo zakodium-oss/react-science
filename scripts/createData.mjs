@@ -2,7 +2,7 @@
 
 import { writeFileSync } from 'fs';
 
-import { fileListFromPath } from 'filelist-utils';
+import { fileCollectionFromPath } from 'filelist-utils';
 import { produce } from 'immer';
 
 import { getEmptyDataState } from '../lib/data/DataState.js';
@@ -13,7 +13,7 @@ import { jcampLoader } from '../lib/data/loaders/jcampLoader.js';
 import { wdfLoader } from '../lib/data/loaders/wdfLoader.js';
 
 const dataState = getEmptyDataState();
-const fileList = await fileListFromPath(
+const fileCollection = await fileCollectionFromPath(
   new URL('../src/data/__tests__//data', import.meta.url).pathname,
 );
 
@@ -25,7 +25,7 @@ const enhancers = {
   ],
 };
 
-const { dataState: newDataState } = await append(fileList, dataState, {
+const { dataState: newDataState } = await append(fileCollection, dataState, {
   loaders,
   enhancers,
 });
@@ -55,4 +55,5 @@ writeFileSync(
   ),
 );
 
+// eslint-disable-next-line no-console
 console.log(hackedDataState);

@@ -21,7 +21,7 @@
     "createData": "npm run prepack && node scripts/createData",
     "dev": "ladle serve",
     "dev-app": "vite --open",
-    "eslint": "eslint src stories",
+    "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
     "fix-react-shadow": "node scripts/fix-react-shadow.mjs",
     "playwright": "npm run playwright-ct -- --project chromium && npm run playwright-e2e -- --project chromium",
@@ -35,7 +35,7 @@
     "test-only": "vitest run --coverage "
   },
   "volta": {
-    "node": "16.17.0"
+    "node": "16.18.0"
   },
   "overrides": {
     "react": "^18.2.0",
@@ -46,13 +46,13 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
+    "@emotion/react": "^11.10.5",
     "@lukeed/uuid": "^2.0.0",
-    "@tanstack/react-table": "^8.5.15",
+    "@tanstack/react-table": "^8.5.22",
     "biologic-converter": "^0.3.2",
     "cheminfo-types": "^1.4.0",
-    "filelist-utils": "^1.0.1",
-    "immer": "^9.0.15",
+    "filelist-utils": "^1.1.1",
+    "immer": "^9.0.16",
     "jcampconverter": "^9.0.2",
     "lodash": "^4.17.21",
     "ml-gsd": "^12.1.2",
@@ -67,22 +67,21 @@
     "wdf-parser": "^0.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3",
+    "@babel/core": "^7.19.6",
     "@babel/eslint-parser": "^7.19.1",
     "@ladle/react": "^2.4.5",
     "@playwright/experimental-ct-react": "^1.27.1",
     "@playwright/test": "^1.27.1",
     "@types/lodash": "^4.14.186",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
     "@types/react-inspector": "^4.0.2",
-    "@vitejs/plugin-react": "^2.1.0",
-    "@vitest/coverage-c8": "^0.24.3",
+    "@vitejs/plugin-react": "^2.2.0",
+    "@vitest/coverage-c8": "^0.24.4",
     "@zakodium/eslint-config": "^6.0.0",
-    "babel-loader": "^8.2.5",
     "cheminfo-font": "^1.9.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "ml-signal-processing": "^0.5.2",
     "ml-spectra-processing": "^11.13.0",
     "prettier": "^2.7.1",
@@ -91,14 +90,14 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-inspector": "^6.0.1",
-    "react-kbs": "^2.0.0",
+    "react-kbs": "^2.1.0",
     "react-ocl": "^5.0.0",
-    "react-plot": "^0.20.2",
+    "react-plot": "^0.20.3",
     "rimraf": "^3.0.2",
     "typescript": "^4.8.4",
-    "vite": "^3.1.8",
-    "vite-tsconfig-paths": "^3.5.1",
-    "vitest": "^0.24.3"
+    "vite": "^3.2.2",
+    "vite-tsconfig-paths": "^3.5.2",
+    "vitest": "^0.24.4"
   },
   "repository": {
     "type": "git",

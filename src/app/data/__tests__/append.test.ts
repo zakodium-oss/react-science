@@ -1,8 +1,7 @@
-//@ts-nocheck
-
 import { join } from 'path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
+import { test, expect } from 'vitest';
 
 import { getEmptyDataState } from '../DataState';
 import { append } from '../append';
@@ -46,7 +45,7 @@ test('append', async () => {
 
   expect(ir.entries[0].peaks).toHaveLength(18);
   expect(ir.entries[1].peaks).toHaveLength(42);
-  expect(ir.entries[0].peaks[0]).toStrictEqual({
+  expect(ir.entries[0].peaks?.[0]).toStrictEqual({
     absorbance: 0.16390240095857445,
     kind: 'S',
     transmittance: 0.6856422936,
