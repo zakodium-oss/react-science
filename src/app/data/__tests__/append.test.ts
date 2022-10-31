@@ -1,4 +1,4 @@
-import { join } from 'path';
+import path from 'node:path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 import { test, expect } from 'vitest';
@@ -21,7 +21,9 @@ const enhancers = {
 test('append', async () => {
   const dataState = getEmptyDataState();
 
-  const fileCollection = await fileCollectionFromPath(join(__dirname, 'data'));
+  const fileCollection = await fileCollectionFromPath(
+    path.join(__dirname, 'data'),
+  );
   let { dataState: newDataState } = await append(fileCollection, dataState, {
     loaders,
     enhancers,

@@ -104,7 +104,7 @@ function useRowChildren(children: ReactNode) {
       }
     } else {
       // eslint-disable-next-line no-console
-      console.error('Invalid Row child: ', child);
+      console.error('Invalid Row child:', child);
       throw new Error('invalid Row child');
     }
   }

@@ -1,4 +1,6 @@
-extends: '@zakodium/eslint-config/typescript-react'
+extends:
+  - '@zakodium/eslint-config/typescript-react'
+  - 'cheminfo/unicorn'
 rules:
   # TODO: re-enable this rule once eslint-plugin-import supports the "exports" field.
   # See https://github.com/benmosher/eslint-plugin-import/issues/2132

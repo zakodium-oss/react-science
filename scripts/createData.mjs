@@ -1,6 +1,6 @@
 // before running this script you should `npm run prepack`
 
-import { writeFileSync } from 'fs';
+import { writeFileSync } from 'node:fs';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 import { produce } from 'immer';

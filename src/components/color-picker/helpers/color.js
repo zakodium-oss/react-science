@@ -8,7 +8,7 @@ function simpleCheckForValidColor(data) {
   each(keysToCheck, (letter) => {
     if (data[letter]) {
       checked += 1;
-      if (!isNaN(data[letter])) {
+      if (!Number.isNaN(Number(data[letter]))) {
         passed += 1;
       }
       if (letter === 's' || letter === 'l') {

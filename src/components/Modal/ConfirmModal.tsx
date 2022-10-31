@@ -27,10 +27,11 @@ export function ConfirmModal(props: ConfirmModalProps) {
     headerColor,
     maxWidth,
     onRequestClose,
-    onCancel = props.onRequestClose,
+    onCancel = onRequestClose,
     onConfirm,
     requestCloseOnBackdrop = true,
     requestCloseOnEsc = true,
+    children,
   } = props;
 
   const { ref, onClick } = useDialog({
@@ -71,7 +72,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
           }}
         >
           <div style={{ color: headerColor, display: 'flex', flex: '1 1 0%' }}>
-            {props.children}
+            {children}
           </div>
 
           <div
