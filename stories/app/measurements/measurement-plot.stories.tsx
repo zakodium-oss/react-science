@@ -25,6 +25,7 @@ Control.args = {
   showHorizontalGrid: true,
   showVerticalGrid: true,
   flipHorizontalAxis: false,
+  mass: false,
 };
 
 Control.argTypes = {

@@ -1,8 +1,12 @@
+import IsotopicDistribution from 'isotopic-distribution';
 import { xyToXYObject } from 'ml-spectra-processing';
+import { getBestPeaks } from 'ms-spectrum';
 import { useMemo } from 'react';
 import {
+  Annotation,
   Annotations,
   Axis,
+  BarSeries,
   Heading,
   LineSeries,
   Plot,
@@ -11,10 +15,18 @@ import {
   useAxisZoom,
   useCrossHair,
   usePan,
+  usePlotControllerAxes,
   useRectangularZoom,
 } from 'react-plot';
 
 import type { MeasurementBase } from '../data/MeasurementBase';
+
+interface Peak {
+  label: string;
+  x: number;
+  y: number;
+  shortLabel: string;
+}
 
 type Measurement = Pick<
   MeasurementBase,
@@ -35,6 +47,7 @@ export interface MeasurementPlotProps {
   showHorizontalGrid?: boolean;
   showVerticalGrid?: boolean;
   flipHorizontalAxis?: boolean;
+  mass?: boolean;
 }
 export function MeasurementPlot(props: MeasurementPlotProps) {
   return (
@@ -59,6 +72,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     showHorizontalGrid = true,
     showVerticalGrid = true,
     flipHorizontalAxis = false,
+    mass = false,
   } = props;
   const { title = '', data } = measurement;
 
@@ -103,18 +117,98 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     disabled: !crossHair,
   });
   usePan({ horizontalAxisId: xAxis, verticalAxisId: yAxis });
+
+  const { x: xDomain } = usePlotControllerAxes();
+  const { profile, centroid } = useMemo(() => {
+    if (!mass) {
+      return {
+        profile: [],
+        centroid: [],
+      };
+    }
+    const isotopicDistribution = new IsotopicDistribution({
+      x: x.data,
+      y: y.data,
+    });
+
+    const profileXY = isotopicDistribution.getGaussian({
+      maxValue: 100,
+    });
+    return {
+      profile: xyToXYObject(profileXY),
+      centroid: isotopicDistribution.getTable({
+        maxValue: 100,
+      }),
+    };
+  }, [mass, x.data, y.data]);
+  const bestPeaks = useMemo(
+    () =>
+      mass &&
+      getBestPeaks(centroid, {
+        from: xDomain?.min ?? -Infinity,
+        to: xDomain?.max ?? Infinity,
+        limit: 5,
+        numberSlots: 10,
+        threshold: 0.01,
+      }),
+    [centroid, mass, xDomain?.max, xDomain?.min],
+  );
   return (
     <Plot width={width} height={height}>
       <Heading title={title} />
-      <LineSeries
-        data={xyToXYObject({
-          x: x.data,
-          y: y.data,
-        })}
-        xAxis={xAxis}
-        yAxis={yAxis}
-      />
+      {!mass && (
+        <LineSeries
+          data={xyToXYObject({
+            x: x.data,
+            y: y.data,
+          })}
+          xAxis={xAxis}
+          yAxis={yAxis}
+        />
+      )}
+      {mass && (
+        <LineSeries
+          data={profile}
+          lineStyle={{ stroke: 'green' }}
+          xAxis={xAxis}
+          yAxis={yAxis}
+        />
+      )}
+      {mass && (
+        <BarSeries
+          data={centroid}
+          xAxis={xAxis}
+          yAxis={yAxis}
+          lineStyle={{ stroke: 'red' }}
+        />
+      )}
       <Annotations>
+        {mass &&
+          bestPeaks.map((peak: Peak, i) => (
+            <Annotation.Group key={i} x={peak.x} y={peak.y}>
+              <Annotation.Line
+                x1="0"
+                x2="0"
+                y1="0"
+                y2="-5"
+                style={{ strokeWidth: 2, stroke: 'blue' }}
+              />
+              <Annotation.Text
+                style={{ fontSize: '13px', fontWeight: '600' }}
+                x="2"
+                y="0"
+              >
+                {peak.shortLabel}
+              </Annotation.Text>
+              <Annotation.Text
+                style={{ fontSize: '13px', fontWeight: '600' }}
+                x="2"
+                y="-14"
+              >
+                {peak.x.toFixed(4)}
+              </Annotation.Text>
+            </Annotation.Group>
+          ))}
         {rectZoom.annotations}
         {axisZoom.annotations}
         {crossHairAnnot.annotations}
@@ -133,6 +227,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         displayPrimaryGridLines={showHorizontalGrid}
         position="left"
         label={`${y.label}${y.units ? `(${y.units})` : ''}`}
+        paddingEnd="5%"
+        paddingStart="5%"
       />
     </Plot>
   );
