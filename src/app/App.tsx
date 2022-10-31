@@ -11,7 +11,11 @@ import {
 } from 'react-icons/fa';
 import { KbsProvider, useKbsGlobal } from 'react-kbs';
 
-import { MeasurementExplorer, MeasurementsPanel } from './components';
+import {
+  MeasurementExplorer,
+  MeasurementInfoPanel,
+  MeasurementsPanel,
+} from './components';
 import {
   AppStateProvider,
   useAppDispatch,
@@ -27,8 +31,6 @@ import {
   Header,
   RootLayout,
   SplitPane,
-  TabItem,
-  Tabs,
   Toolbar,
 } from '@/components';
 import {
@@ -69,17 +71,7 @@ function DropZoneArea() {
     return searchParams.get('filelist');
   }, []);
   const { toggle } = useFullscreen();
-  const items: Array<TabItem> = [
-    {
-      id: '1h',
-      title: '1H',
-      content:
-        'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem odit nulla delectus rem et non quis animi molestias pariatur tempora. Corporis consequuntur asperiores odio officia minima fugiat, corrupti hic illum!',
-    },
-    { id: '13c', title: '13C', content: 'Hello, World! [b]' },
-    { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
-    { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
-  ];
+
   function saveHandler(filename = 'file', spaceIndent = 0) {
     const data = JSON.stringify(
       { data: appState.data, view: appState.view },
@@ -243,19 +235,10 @@ function DropZoneArea() {
                         />
                       </div>
                     </Accordion.Item>
-                    <Accordion.Item title="Integral">
-                      <div
-                        style={{
-                          flex: '1 1 0%',
-                          width: '100%',
-                        }}
-                      >
-                        <Tabs
-                          orientation="horizontal"
-                          items={items}
-                          opened={items[0]}
-                        />
-                      </div>
+                    <Accordion.Item title="Info Panel">
+                      {measurement && (
+                        <MeasurementInfoPanel measurement={measurement} />
+                      )}
                     </Accordion.Item>
                   </Accordion>
                 </div>
