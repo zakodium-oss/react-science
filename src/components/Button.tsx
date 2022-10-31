@@ -23,12 +23,14 @@ export function Button(props: ButtonProps) {
     },
     color = { basic: 'white', hover: 'white' },
     style,
+    onClick,
+    children,
   } = props;
 
   return (
     <button
       style={style}
-      onClick={props.onClick}
+      onClick={onClick}
       css={css({
         display: 'flex',
         alignItems: 'center',
@@ -51,7 +53,7 @@ export function Button(props: ButtonProps) {
       })}
       type="button"
     >
-      {props.children}
+      {children}
     </button>
   );
 }

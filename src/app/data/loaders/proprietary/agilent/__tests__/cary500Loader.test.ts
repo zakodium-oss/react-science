@@ -1,4 +1,4 @@
-import { join } from 'path';
+import path from 'node:path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 import { expect, test } from 'vitest';
@@ -6,7 +6,9 @@ import { expect, test } from 'vitest';
 import { cary500Loader } from '../cary500Loader';
 
 test('cary500Loader', async () => {
-  const fileCollection = await fileCollectionFromPath(join(__dirname, 'data'));
+  const fileCollection = await fileCollectionFromPath(
+    path.join(__dirname, 'data'),
+  );
   // we should filter to keep only the right data
   const results = await cary500Loader(fileCollection);
 

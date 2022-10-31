@@ -75,8 +75,8 @@ const Hue = (props) => {
 
   const handleMouseDown = useOnChange(handleChange);
 
-  const { direction = 'horizontal', hsl } = props;
-  const { borderRadius, boxShadow } = props.style;
+  const { direction = 'horizontal', hsl, style, pointer } = props;
+  const { borderRadius, boxShadow } = style;
 
   return (
     <div style={styles.hue(borderRadius, boxShadow)}>
@@ -88,7 +88,7 @@ const Hue = (props) => {
         onTouchStart={handleChange}
       >
         <div style={styles.pointer(direction, hsl)}>
-          {props.pointer ? (
+          {pointer ? (
             <props.pointer {...props} />
           ) : (
             <div style={styles.slider} />

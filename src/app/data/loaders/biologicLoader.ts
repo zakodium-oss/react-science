@@ -2,12 +2,12 @@ import { v4 } from '@lukeed/uuid';
 import { convert } from 'biologic-converter';
 import type { FileCollection } from 'filelist-utils';
 
-import { getEmptyMeasurements, Loader } from '../DataState';
+import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 export const biologicLoader: Loader = async function biologicLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   let measurements = getEmptyMeasurements();
   const results = await convert(fileCollection);
   for (let { dir, mpr, mps, mpt } of results) {

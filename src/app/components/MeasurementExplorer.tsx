@@ -3,12 +3,12 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
-import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
+import { MeasurementMassPlot, MeasurementPlot, MeasurementPlotProps } from '.';
 
-export type MeasurementExplorerProps = Omit<
-  MeasurementPlotProps,
-  keyof ExplorerInfo
->;
+export interface MeasurementExplorerProps
+  extends Omit<MeasurementPlotProps, keyof ExplorerInfo> {
+  kind: 'mass' | '1d';
+}
 interface ExplorerInfo {
   dataIndex: number;
   xVariableName: string;
@@ -20,6 +20,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     measurement: { data },
     width = 800,
     height = 400,
+    kind = '1d',
   } = props;
   function defaultInfo(dataIndex: number) {
     return {
@@ -38,15 +39,15 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
   });
   return (
     <div
+      style={{ width, height }}
       css={css`
-        width: ${width}px;
-        height: ${height}px;
+        display: flex;
+        flex-direction: column;
       `}
     >
       <div
         css={css`
           display: flex;
-          gap: 40px;
           justify-content: space-around;
           margin-bottom: 20px;
         `}
@@ -62,7 +63,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             `}
             onChange={({ target }) => {
               const value = Number(target.value);
-              if (value !== undefined && !isNaN(value)) {
+              if (value !== undefined && !Number.isNaN(value)) {
                 setInfo(({ flipHorizontalAxis }) => ({
                   flipHorizontalAxis,
                   ...defaultInfo(value),
@@ -176,7 +177,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           />
         </div>
       </div>
-      <MeasurementPlot {...props} {...info} />
+      {kind === '1d' ? (
+        <MeasurementPlot {...props} {...info} />
+      ) : (
+        <MeasurementMassPlot {...props} {...info} />
+      )}
     </div>
   );
 }

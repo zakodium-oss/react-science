@@ -6,8 +6,8 @@ export function download(blob: Blob, name: string) {
   link.setAttribute('href', url);
   link.setAttribute('download', name);
   link.style.visibility = 'hidden';
-  document.body.appendChild(link);
+  document.body.append(link);
   link.click();
-  document.body.removeChild(link);
+  link.remove();
   URL.revokeObjectURL(url);
 }

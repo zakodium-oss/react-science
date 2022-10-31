@@ -1,11 +1,11 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const rootLayoutFile = new URL(
-  './../lib/components/RootLayout.js',
+  '../lib/components/RootLayout.js',
   import.meta.url,
 );
 
-const rootLayout = await readFile(rootLayoutFile, 'utf-8');
+const rootLayout = await readFile(rootLayoutFile, 'utf8');
 if (!rootLayout.includes('react-shadow/emotion')) {
   throw new Error(
     'react-shadow/emotion not found in lib/components/RootLayout.js',

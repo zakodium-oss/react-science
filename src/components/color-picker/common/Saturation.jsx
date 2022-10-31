@@ -50,7 +50,7 @@ const styles = {
 };
 
 const Saturation = (props) => {
-  const { onChange, hsl } = props;
+  const { onChange, hsl, hsv, pointer } = props;
 
   const throttle = useRef(
     lodashThrottle((fn, data, e) => {
@@ -77,7 +77,7 @@ const Saturation = (props) => {
 
   return (
     <div
-      style={styles.color(props.hsl)}
+      style={styles.color(hsl)}
       ref={containerRef}
       onMouseDown={handleMouseDown}
       onTouchMove={handleChange}
@@ -85,8 +85,8 @@ const Saturation = (props) => {
     >
       <div style={styles.white()}>
         <div style={styles.black()} />
-        <div style={styles.pointer(props.hsv)}>
-          {props.pointer ? (
+        <div style={styles.pointer(hsv)}>
+          {pointer ? (
             <props.pointer {...props} />
           ) : (
             <div style={styles.circle} />

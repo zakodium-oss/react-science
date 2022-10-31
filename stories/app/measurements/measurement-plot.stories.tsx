@@ -1,6 +1,10 @@
 import measurement from '../../data/irMeasurement.json';
 
-import { MeasurementPlot, MeasurementPlotProps } from '@/app/components';
+import {
+  MeasurementMassPlot,
+  MeasurementPlot,
+  MeasurementPlotProps,
+} from '@/app/components';
 import type { IRMeasurement } from '@/app/data/IRMeasurement';
 
 let irMeasurement = measurement as IRMeasurement;
@@ -12,20 +16,21 @@ export default {
 export function Control(props: Omit<MeasurementPlotProps, 'measurement'>) {
   return <MeasurementPlot measurement={irMeasurement} {...props} />;
 }
-
+export function Mass(props: Omit<MeasurementPlotProps, 'measurement'>) {
+  return <MeasurementMassPlot measurement={irMeasurement} {...props} />;
+}
 Control.args = {
   dataIndex: 0,
   xVariableName: 'x',
   yVariableName: 'y',
-  width: 800,
-  height: 400,
+  width: '100%',
+  height: 300,
   crossHair: true,
   showHorizontalAxis: true,
   showVerticalAxis: true,
   showHorizontalGrid: true,
   showVerticalGrid: true,
   flipHorizontalAxis: false,
-  mass: false,
 };
 
 Control.argTypes = {

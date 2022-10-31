@@ -5,7 +5,7 @@ import App from './App';
 
 import './main.css';
 
-createRoot(document.getElementById('root') as HTMLDivElement).render(
+createRoot(document.querySelector('#root') as HTMLDivElement).render(
   <StrictMode>
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <div
@@ -19,6 +19,7 @@ createRoot(document.getElementById('root') as HTMLDivElement).render(
           paddingBlock: 5,
         }}
       >
+        <a href={import.meta.env.BASE_URL}>Blank</a>
         <a
           href={`${
             import.meta.env.BASE_URL
@@ -39,6 +40,20 @@ createRoot(document.getElementById('root') as HTMLDivElement).render(
           }?filelist=https://zakodium-oss.github.io/analysis-dataset/uvvis.json`}
         >
           UV-vis
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }?filelist=https://zakodium-oss.github.io/analysis-dataset/hplc.json`}
+        >
+          HPLC
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }?filelist=https://zakodium-oss.github.io/analysis-dataset/gcms.json`}
+        >
+          GC/MS
         </a>
         <a
           href={`${
