@@ -1,4 +1,4 @@
-import { join } from 'path';
+import path from 'node:path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 import { expect, test } from 'vitest';
@@ -18,9 +18,8 @@ const loaders = [biologicLoader];
 export async function getIVMeasurement() {
   const dataState = getEmptyDataState();
   const fileCollection = await fileCollectionFromPath(
-    join(__dirname, 'data/biologic/'),
+    path.join(__dirname, 'data/biologic/'),
   );
-  const ivEntries = (await append(fileCollection, dataState, { loaders }))
-    .dataState.measurements.iv;
-  return ivEntries;
+  const appended = await append(fileCollection, dataState, { loaders });
+  return appended.dataState.measurements.iv;
 }

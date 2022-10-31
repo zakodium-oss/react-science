@@ -46,9 +46,9 @@ export function IRPeaksPanel(props: IRPeaksPanelProps) {
 
   function getColumnVisibility() {
     const columnVisibility: Record<string, boolean> = {};
-    columns.forEach(({ accessorKey, visible = true }) => {
+    for (const { accessorKey, visible = true } of columns) {
       columnVisibility[accessorKey] = visible;
-    });
+    }
     return columnVisibility;
   }
 

@@ -22,15 +22,16 @@ interface FilterOptionsInfo {
 // get filters information & default options values
 const defaultFilters = filterXY.anyOf.map(({ properties }) => {
   const options: Record<string, FilterOptionsInfo> = {};
-  Object.entries(properties?.options?.properties || {}).forEach(
-    ([key, value]) => {
-      options[key] = {
-        defaultValue: value.default,
-        choices: value.enum,
-        description: value.description,
-      };
-    },
-  );
+  for (const [key, value] of Object.entries(
+    properties?.options?.properties || {},
+  )) {
+    options[key] = {
+      defaultValue: value.default,
+      choices: value.enum,
+      description: value.description,
+    };
+  }
+
   return {
     name: properties.name.enum[0] as FilterXYType['name'],
     options,
@@ -83,7 +84,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
               <select
                 onChange={({ target }) => {
                   const value = Number(target.value);
-                  if (!isNaN(value)) {
+                  if (!Number.isNaN(value)) {
                     const filter = getDefaultFilter(defaultFilters[value]);
                     const newfilters = [...filters];
                     newfilters[i] = filter;
@@ -144,9 +145,9 @@ function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   if (options) {
     const result: Record<string, string | number> = {};
 
-    Object.entries(options).forEach(([key, { defaultValue }]) => {
+    for (const [key, { defaultValue }] of Object.entries(options)) {
       result[key] = defaultValue;
-    });
+    }
     return { name, options: result };
   }
   return { name };

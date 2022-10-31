@@ -62,7 +62,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             `}
             onChange={({ target }) => {
               const value = Number(target.value);
-              if (value !== undefined && !isNaN(value)) {
+              if (value !== undefined && !Number.isNaN(value)) {
                 setInfo(({ flipHorizontalAxis }) => ({
                   flipHorizontalAxis,
                   ...defaultInfo(value),

@@ -164,7 +164,7 @@ const tabs: Array<TabItem> = [
     title: 'Controllers',
     content: (
       <div style={{ height: 150, backgroundColor: 'hsl(0deg, 0%, 90%)' }}>
-        {Array(10)
+        {new Array(10)
           .fill(`Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur ex
         nam temporibus delectus repellendus, dolorem cupiditate molestias
         aliquid illum perspiciatis quis similique perferendis. Expedita beatae

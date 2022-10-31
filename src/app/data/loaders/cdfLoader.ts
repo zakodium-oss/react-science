@@ -14,7 +14,7 @@ export const cdfLoader: Loader = async function cdfLoader(
 ): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
   for (const file of fileCollection) {
-    if (file.name.match(/(?:\.cdf)$/i)) {
+    if (file.name.match(/\.cdf$/i)) {
       const reader = new NetCDFReader(await file.arrayBuffer(), { meta: true });
       if (
         !reader.dataVariableExists('mass_values') ||

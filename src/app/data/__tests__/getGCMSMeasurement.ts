@@ -1,4 +1,4 @@
-import { join } from 'path';
+import path from 'node:path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 
@@ -9,12 +9,16 @@ import { cdfLoader } from '../loaders/cdfLoader';
 export async function getGCMSMeasurement() {
   const dataState = getEmptyDataState();
 
-  const filteredFileCollection = (
-    await fileCollectionFromPath(join(__dirname, 'data/cdf/'))
-  ).filter((file) => file.name === 'agilent-gcms.cdf');
+  const fileCollection = await fileCollectionFromPath(
+    path.join(__dirname, 'data/cdf/'),
+  );
+  const filteredFileCollection = fileCollection.filter(
+    (file) => file.name === 'agilent-gcms.cdf',
+  );
 
-  const gcmsEntry = (
-    await append(filteredFileCollection, dataState, { loaders: [cdfLoader] })
-  ).dataState.measurements.gclcms.entries;
+  const appended = await append(filteredFileCollection, dataState, {
+    loaders: [cdfLoader],
+  });
+  const gcmsEntry = appended.dataState.measurements.gclcms.entries;
   return gcmsEntry;
 }

@@ -5,7 +5,7 @@ import App from './App';
 
 import './main.css';
 
-createRoot(document.getElementById('root') as HTMLDivElement).render(
+createRoot(document.querySelector('#root') as HTMLDivElement).render(
   <StrictMode>
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <div

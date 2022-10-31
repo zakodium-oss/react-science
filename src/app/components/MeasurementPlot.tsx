@@ -83,7 +83,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     return { x, y };
   }, [data, dataIndex, xVariableName, yVariableName]);
 
-  const direction = ['vertical', 'horizontal'];
+  const direction = new Set(['vertical', 'horizontal']);
   const rectZoom = useRectangularZoom({
     horizontalAxisId: xAxis,
     verticalAxisId: yAxis,
@@ -93,12 +93,12 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
     horizontalAxisId: xAxis,
     verticalAxisId: yAxis,
-    disabled: !direction.includes(zoom),
+    disabled: !direction.has(zoom),
   });
   useAxisWheelZoom({
     direction: wheelZoom === 'vertical' ? 'vertical' : 'horizontal',
     axisId: wheelZoom === 'vertical' ? yAxis : xAxis,
-    disabled: !direction.includes(wheelZoom),
+    disabled: !direction.has(wheelZoom),
   });
   const crossHairAnnot = useCrossHair({
     horizontalAxisId: xAxis,

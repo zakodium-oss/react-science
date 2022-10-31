@@ -22,7 +22,7 @@ export interface MeasurementsPanelProps extends DataState {
   };
 }
 export function MeasurementsPanel(props: MeasurementsPanelProps) {
-  const { onMeasurementSelect, measurements } = props;
+  const { onMeasurementSelect, measurements, selectedMeasurement } = props;
 
   const kindItem = (kind: MeasurementKind) => ({
     id: kind,
@@ -35,9 +35,7 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
               style={{
                 padding: '0px 5px',
                 backgroundColor:
-                  props.selectedMeasurement?.id === measurement.id
-                    ? 'green'
-                    : '',
+                  selectedMeasurement?.id === measurement.id ? 'green' : '',
                 cursor: 'pointer',
               }}
               onClick={() => {
@@ -61,7 +59,7 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
   }
 
   const openedItem = items.find(
-    (item) => item.id === props.selectedMeasurement?.kind,
+    (item) => item.id === selectedMeasurement?.kind,
   );
 
   return items.length > 0 ? (
