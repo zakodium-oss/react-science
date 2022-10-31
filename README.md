@@ -44,10 +44,10 @@ When create a new loader you also need to specify that it should be used when pr
 
 ## Testing the demo application
 
-- [From some JCAMP-DX files](https://analysis-ui-components.pages.dev/?filelist=https://zakodium-oss.github.io/analysis-dataset/jdx.json)
-- [From Biologic file format](https://analysis-ui-components.pages.dev/?filelist=https://zakodium-oss.github.io/analysis-dataset/biologic.json)
-- [From a UV-vis file format](https://analysis-ui-components.pages.dev/?filelist=https://zakodium-oss.github.io/analysis-dataset/uvvis.json)
-- [All the examples we have](https://analysis-ui-components.pages.dev/?filelist=https://zakodium-oss.github.io/analysis-dataset/full.json)
+- [From some JCAMP-DX files](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json)
+- [From Biologic file format](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json)
+- [From a UV-vis file format](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fuvvis.json)
+- [All the examples we have](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json)
 
 # Installation
 
