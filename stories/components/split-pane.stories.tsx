@@ -129,14 +129,21 @@ export function WithEvilChild() {
     <div
       style={{
         backgroundColor: 'rgba(251, 207, 232)',
-        width: 600,
+        width: 800,
         height: 300,
       }}
     >
       <SplitPane direction="horizontal" initialSize="300px">
         <div>I am a good child. 😊</div>
-        <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: 300 }}>
-          I am an evil child. You cannot make me smaller than 300px 😈
+        <div
+          style={{
+            backgroundColor: 'rgba(252, 165, 165)',
+            width: 300,
+            whiteSpace: 'nowrap',
+            overflow: 'auto',
+          }}
+        >
+          I am an evil child. My size will stay at 300px 😈
         </div>
       </SplitPane>
     </div>
