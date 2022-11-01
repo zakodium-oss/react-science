@@ -7,7 +7,7 @@ import { MeasurementMassPlot, MeasurementPlot, MeasurementPlotProps } from '.';
 
 export interface MeasurementExplorerProps
   extends Omit<MeasurementPlotProps, keyof ExplorerInfo> {
-  kind: 'mass' | '1d';
+  kind?: 'mass' | '1d';
 }
 interface ExplorerInfo {
   dataIndex: number;
