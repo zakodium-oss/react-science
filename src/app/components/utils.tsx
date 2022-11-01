@@ -117,7 +117,6 @@ export function BasicComponent(
               displayPrimaryGridLines={showHorizontalGrid}
               position="left"
               label={`${y.label}${y.units ? `(${y.units})` : ''}`}
-              paddingEnd="40"
             />
           </Plot>
         )}
