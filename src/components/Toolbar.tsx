@@ -158,7 +158,10 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = props;
 
   return (
-    <div style={{ position: 'relative', padding: 4 }} {...other}>
+    <div
+      style={{ position: 'relative', padding: 4, fontSize: '1.25em' }}
+      {...other}
+    >
       <button
         type="button"
         css={styles.item(active)}
