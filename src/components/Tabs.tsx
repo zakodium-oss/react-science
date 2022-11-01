@@ -41,9 +41,9 @@ const styles = {
   item: (isSelected: boolean, orientation: TabsOrientation) => {
     return css([
       {
-        padding: '0.5rem 2rem',
+        padding: '0.25em 1em',
         border: '1px solid hsl(0deg, 0%, 80%)',
-        fontSize: 14,
+        fontSize: '1.125em',
         ':hover': {
           backgroundColor: 'hsl(0deg, 0%, 90%)',
         },

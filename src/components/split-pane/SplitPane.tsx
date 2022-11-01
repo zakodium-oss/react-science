@@ -196,7 +196,7 @@ function Splitter(props: SplitterProps) {
       css={getSeparatorStyle(direction, !isFinalClosed)}
       ref={splitterRef}
     >
-      <div style={{ fontSize: 10 }}>
+      <div style={{ fontSize: '0.875em' }}>
         {direction === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
       </div>
     </div>
