@@ -1,21 +1,25 @@
 import type { FileCollection } from 'filelist-utils';
 
-import type { Loader } from '../DataState';
+import {
+  getEmptyMeasurements,
+  Loader,
+  Measurements,
+  mergeMeasurements,
+} from '../DataState';
 
-import { AppState, getEmptyAppState } from '@/app/context/appState';
+import { assert } from '@/utils/assert';
 
-export const iumLoader: Loader<AppState> = async function iumLoader(
+export const iumLoader: Loader = async function iumLoader(
   fileCollection: FileCollection,
 ) {
-  let state: AppState = getEmptyAppState();
+  const measurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {
-    if (file.name.match(/(?:\.ium)$/i)) {
-      state = {
-        ...JSON.parse(await file.text()),
-        isLoading: true,
-      };
+    if (file.name.match(/\.ium$/i)) {
+      const parsed: Measurements = JSON.parse(await file.text()).measurements;
+      assert(parsed, `measurements is missing in ${file.name} file`);
+      mergeMeasurements(measurements, parsed);
     }
   }
-  return state;
+  return measurements;
 };

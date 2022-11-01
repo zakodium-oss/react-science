@@ -5,7 +5,7 @@ import { parse, guessSpectraType } from 'spc-parser';
 import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
-export const spcLoader: Loader<Measurements> = async function spcLoader(
+export const spcLoader: Loader = async function spcLoader(
   fileCollection: FileCollection,
 ): Promise<Measurements> {
   let measurements = getEmptyMeasurements();

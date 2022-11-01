@@ -1,8 +1,6 @@
 import type { FileCollection } from 'filelist-utils';
 import { produce } from 'immer';
 
-import { getEmptyAppState } from '../context/appState';
-
 import {
   DataState,
   getEmptyMeasurements,
@@ -45,17 +43,12 @@ export async function loadData(
   fileCollection: FileCollection,
   options: AppendOptions = {},
 ) {
-  let appState = getEmptyAppState();
   const measurements: Measurements = getEmptyMeasurements();
   const { loaders = [], enhancers = {} } = options;
   for (const loader of loaders) {
     const loaderData = await loader(fileCollection);
-    if ('data' in loaderData) {
-      appState = loaderData;
-    } else {
-      enhance(loaderData, enhancers);
-      mergeMeasurements(measurements, loaderData);
-    }
+    enhance(loaderData, enhancers);
+    mergeMeasurements(measurements, loaderData);
   }
-  return appState.isLoading ? appState : measurements;
+  return measurements;
 }

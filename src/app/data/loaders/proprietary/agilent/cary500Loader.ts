@@ -3,7 +3,7 @@ import type { FileCollection } from 'filelist-utils';
 
 import { Loader, Measurements, getEmptyMeasurements } from '../../../DataState';
 
-export const cary500Loader: Loader<Measurements> = async function cary500Loader(
+export const cary500Loader: Loader = async function cary500Loader(
   fileCollection: FileCollection,
 ): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();

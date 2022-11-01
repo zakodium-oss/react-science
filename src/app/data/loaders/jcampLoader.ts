@@ -9,7 +9,7 @@ import {
   getEmptyMeasurements,
 } from '../DataState';
 
-export const jcampLoader: Loader<Measurements> = async function jcampLoader(
+export const jcampLoader: Loader = async function jcampLoader(
   fileCollection: FileCollection,
 ): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
