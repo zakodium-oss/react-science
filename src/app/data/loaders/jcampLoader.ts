@@ -11,7 +11,7 @@ import {
 
 export const jcampLoader: Loader<Measurements> = async function jcampLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {

@@ -7,7 +7,7 @@ import type { MeasurementBase } from '../MeasurementBase';
 
 export const spcLoader: Loader<Measurements> = async function spcLoader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   let measurements = getEmptyMeasurements();
   for (const file of fileCollection) {
     if (file.name.match(/\.spc$/i)) {

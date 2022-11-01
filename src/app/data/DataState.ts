@@ -25,6 +25,12 @@ export interface Measurements {
   uvvis: {
     entries: MeasurementBase[];
   };
+  gclc: {
+    entries: MeasurementBase[];
+  };
+  gclcms: {
+    entries: MeasurementBase[];
+  };
   nmr: {
     entries: MeasurementBase[];
   };
@@ -49,6 +55,8 @@ export const kindsLabel: Record<MeasurementKind, string> = {
   uv: 'UV',
   uvvis: 'UV-VIS',
   mass: 'Mass',
+  gclc: 'GC/LC',
+  gclcms: 'GC/LC MS',
   nmr: 'NMR',
   other: 'Other',
 };
@@ -74,6 +82,8 @@ export function getEmptyMeasurements(): Measurements {
     raman: { entries: [] },
     uv: { entries: [] },
     uvvis: { entries: [] },
+    gclc: { entries: [] },
+    gclcms: { entries: [] },
     nmr: { entries: [] },
     mass: { entries: [] },
     other: { entries: [] },

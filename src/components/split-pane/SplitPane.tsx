@@ -196,7 +196,7 @@ function Splitter(props: SplitterProps) {
       css={getSeparatorStyle(direction, !isFinalClosed)}
       ref={splitterRef}
     >
-      <div style={{ fontSize: 10 }}>
+      <div style={{ fontSize: '0.875em' }}>
         {direction === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
       </div>
     </div>
@@ -235,6 +235,7 @@ function getItemStyle(
   size: number,
   type: SplitPaneType,
 ) {
+  const isHorizontal = direction === 'horizontal';
   if (isClosed) {
     return isControlledSide
       ? { display: 'none' }
@@ -246,10 +247,15 @@ function getItemStyle(
   } else {
     return isControlledSide
       ? {
-          [direction === 'horizontal' ? 'width' : 'height']: size,
+          [isHorizontal ? 'width' : 'height']: size,
           display: 'flex',
         }
-      : { flex: '1 1 0%', display: 'flex' };
+      : {
+          flex: '1 1 0%',
+          display: 'flex',
+          minWidth: isHorizontal ? 0 : undefined,
+          minHeight: isHorizontal ? undefined : 0,
+        };
   }
 }
 

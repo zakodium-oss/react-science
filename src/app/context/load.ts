@@ -4,6 +4,7 @@ import { loadData } from '../data/append';
 import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../data/enhancers/irMeasurementEnhancer';
 import { biologicLoader } from '../data/loaders/biologicLoader';
+import { cdfLoader } from '../data/loaders/cdfLoader';
 import { iumLoader } from '../data/loaders/iumLoader';
 import { jcampLoader } from '../data/loaders/jcampLoader';
 import { cary500Loader } from '../data/loaders/proprietary/agilent/cary500Loader';
@@ -20,6 +21,7 @@ const options = {
     biologicLoader,
     cary500Loader,
     iumLoader,
+    cdfLoader,
   ],
   enhancers: {
     ir: [

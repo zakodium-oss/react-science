@@ -47,7 +47,7 @@ const SketchPresetColors = (props: SketchPresetColorsProps) => {
   );
 
   return (
-    <div style={styles.colors(!colors || !colors.length)}>
+    <div style={styles.colors(!colors || colors.length === 0)}>
       {colors.map((colorObjOrString) => {
         const c =
           typeof colorObjOrString === 'string'
