@@ -80,7 +80,6 @@ function DropZoneContent(
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5em;
       `}
     >
       <div
@@ -101,27 +100,29 @@ function DropZoneContent(
           {children}
         </div>
 
-        {isDragActive ? (
-          <div
-            css={css`
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            `}
-          >
-            <FaCloudUploadAlt
-              size={70}
+        <div style={{ fontSize: '1.5em' }}>
+          {isDragActive ? (
+            <div
               css={css`
-                margin: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
               `}
-            />
+            >
+              <FaCloudUploadAlt
+                size={70}
+                css={css`
+                  margin: auto;
+                `}
+              />
 
-            <p>Drop the files here</p>
-          </div>
-        ) : isContainer ? null : (
-          <p>Drag and drop your files here, or click to select files</p>
-        )}
+              <p>Drop the files here</p>
+            </div>
+          ) : isContainer ? null : (
+            <p>Drag and drop your files here, or click to select files</p>
+          )}
+        </div>
       </div>
       <input
         type="file"
