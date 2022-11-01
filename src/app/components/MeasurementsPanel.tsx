@@ -17,7 +17,7 @@ export interface MeasurementsPanelProps extends DataState {
    */
   onTabSelect?: (kind: MeasurementKind) => void;
   selectedMeasurement?: {
-    id: string;
+    id?: string;
     kind: MeasurementKind;
   };
 }

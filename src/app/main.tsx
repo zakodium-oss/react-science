@@ -51,6 +51,13 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
         <a
           href={`${
             import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fmass.json`}
+        >
+          Mass
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
           }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fgcms.json`}
         >
           GC/MS
