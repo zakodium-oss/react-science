@@ -80,7 +80,7 @@ const styles = {
       right: '0px',
       width: 'fit-content',
       height: '50%',
-      fontSize: '10px',
+      fontSize: '0.875em',
       whiteSpace: 'nowrap',
       paddingLeft: '3px',
       paddingRight: '3px',

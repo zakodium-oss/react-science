@@ -40,7 +40,7 @@ export function Button(props: ButtonProps) {
         paddingBottom: 6,
         borderWidth: 1,
         borderColor: 'transparent',
-        fontSize: 14,
+        fontSize: '1.125em',
         borderRadius: 6,
         color: color.basic,
         minWidth: 30,

@@ -80,6 +80,7 @@ function DropZoneContent(
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 1.5em;
       `}
     >
       <div
