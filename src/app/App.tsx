@@ -1,5 +1,5 @@
 import { fileCollectionFromWebservice } from 'filelist-utils';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   FaMeteor,
@@ -23,6 +23,7 @@ import {
 } from './context/appState';
 import { getCurrentMeasurement } from './context/data.helpers';
 import { loadFiles } from './context/load';
+import { useHashSearchParams } from './hooks/useHashSearchParams';
 import { download } from './utils';
 
 import {
@@ -66,10 +67,8 @@ function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurement(appState);
-  const filelist = useMemo(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    return searchParams.get('filelist');
-  }, []);
+  const hashSearchParams = useHashSearchParams();
+  const fileListParam = hashSearchParams.get('filelist');
   const { toggle } = useFullscreen();
 
   function saveHandler(filename = 'file', spaceIndent = 0) {
@@ -97,8 +96,8 @@ function DropZoneArea() {
         await loadFiles(filelist, dispatch);
       }
     }
-    void getData(filelist);
-  }, [dispatch, filelist]);
+    void getData(fileListParam);
+  }, [dispatch, fileListParam]);
   return (
     <RootLayout>
       <DropZoneContainer

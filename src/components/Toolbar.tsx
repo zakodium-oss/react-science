@@ -80,7 +80,7 @@ const styles = {
       right: '0px',
       width: 'fit-content',
       height: '50%',
-      fontSize: '10px',
+      fontSize: '0.875em',
       whiteSpace: 'nowrap',
       paddingLeft: '3px',
       paddingRight: '3px',
@@ -158,7 +158,10 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = props;
 
   return (
-    <div style={{ position: 'relative', padding: 4 }} {...other}>
+    <div
+      style={{ position: 'relative', padding: 4, fontSize: '1.25em' }}
+      {...other}
+    >
       <button
         type="button"
         css={styles.item(active)}

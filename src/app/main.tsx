@@ -23,42 +23,49 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
         <a
           href={`${
             import.meta.env.BASE_URL
-          }?filelist=https://zakodium-oss.github.io/analysis-dataset/jdx.json`}
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json`}
         >
           JCAMP-DX
         </a>
         <a
           href={`${
             import.meta.env.BASE_URL
-          }?filelist=https://zakodium-oss.github.io/analysis-dataset/biologic.json`}
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json`}
         >
           Biologic
         </a>
         <a
           href={`${
             import.meta.env.BASE_URL
-          }?filelist=https://zakodium-oss.github.io/analysis-dataset/uvvis.json`}
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fuvvis.json`}
         >
           UV-vis
         </a>
         <a
           href={`${
             import.meta.env.BASE_URL
-          }?filelist=https://zakodium-oss.github.io/analysis-dataset/hplc.json`}
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fhplc.json`}
         >
           HPLC
         </a>
         <a
           href={`${
             import.meta.env.BASE_URL
-          }?filelist=https://zakodium-oss.github.io/analysis-dataset/gcms.json`}
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fmass.json`}
+        >
+          Mass
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fgcms.json`}
         >
           GC/MS
         </a>
         <a
           href={`${
             import.meta.env.BASE_URL
-          }?filelist=https://zakodium-oss.github.io/analysis-dataset/full.json`}
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json`}
         >
           All the data we have
         </a>

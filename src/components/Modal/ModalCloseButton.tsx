@@ -11,7 +11,6 @@ export default function ModalCloseButton(props: { onClick?: () => void }) {
         onClick={props.onClick}
         css={css({
           color: 'rgba(239, 68, 68)',
-          fontSize: 18,
           ':hover': { color: 'rgba(185, 28, 28)' },
         })}
       >
