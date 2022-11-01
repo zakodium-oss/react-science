@@ -47,6 +47,7 @@ const styles = {
         ':hover': {
           backgroundColor: 'hsl(0deg, 0%, 90%)',
         },
+        whiteSpace: 'nowrap',
       },
       isSelected && {
         backgroundColor: 'hsl(0deg, 0%, 95%)',
