@@ -48,7 +48,7 @@ function createLayoutComponent(
   props = {},
 ): JSX.Element | null {
   const { id, component, children, ...compProps } = com;
-  const componentId = id ? id : uuid();
+  const componentId = id || uuid();
   const componentNode = findComponent(component, components);
 
   if (componentNode) {

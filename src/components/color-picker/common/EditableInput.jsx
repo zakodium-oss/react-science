@@ -4,8 +4,8 @@ const DEFAULT_ARROW_OFFSET = 1;
 
 const UP_KEY_CODE = 38;
 const DOWN_KEY_CODE = 40;
-const VALID_KEY_CODES = [UP_KEY_CODE, DOWN_KEY_CODE];
-const isValidKeyCode = (keyCode) => VALID_KEY_CODES.indexOf(keyCode) > -1;
+const VALID_KEY_CODES = new Set([UP_KEY_CODE, DOWN_KEY_CODE]);
+const isValidKeyCode = (keyCode) => VALID_KEY_CODES.has(keyCode);
 const getNumberValue = (value) => Number(String(value).replace(/%/g, ''));
 
 let idCounter = 1;
@@ -80,7 +80,7 @@ const EditableInput = (props) => {
       // https://github.com/casesandberg/react-color/issues/383
       const value = getNumberValue(e.target.value);
       const offset = props.arrowOffset || DEFAULT_ARROW_OFFSET;
-      if (!isNaN(value) && isValidKeyCode(e.keyCode)) {
+      if (!Number.isNaN(value) && isValidKeyCode(e.keyCode)) {
         const updatedValue =
           e.keyCode === UP_KEY_CODE ? value + offset : value - offset;
 

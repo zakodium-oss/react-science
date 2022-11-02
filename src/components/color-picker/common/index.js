@@ -1,8 +1,6 @@
-import Alpha from './Alpha';
-import CheckBoard from './CheckBoard';
-import EditableInput from './EditableInput';
-import Hue from './Hue';
-import Saturation from './Saturation';
-import Swatch from './Swatch';
-
-export { Alpha, CheckBoard, EditableInput, Hue, Saturation, Swatch };
+export { default as Alpha } from './Alpha';
+export { default as CheckBoard } from './CheckBoard';
+export { default as EditableInput } from './EditableInput';
+export { default as Saturation } from './Saturation';
+export { default as Hue } from './Hue';
+export { default as Swatch } from './Swatch';

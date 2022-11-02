@@ -15,9 +15,9 @@ React components to build analysis UI
 
 ## Introduction
 
-Science have specific requirements to display and process data especially in chemistry for which a huge amount of techniques allow to characterize sample.
+Science has specific requirements to display and process data. This is especially true in chemistry where a large number of techniques are used to extract important information (or characterize) samples.
 
-This project will allow to simplify the process of creating web application that allows not only to visualize but also to process and extract information from measurements.
+This project simplifies the process of creating web applications for visualizing, processing and extracting information from measurements.
 
 This project is composed of 2 parts:
 
@@ -34,7 +34,7 @@ The application has a state containing 3 properties:
 
 ### Loading new data in the application
 
-Adding new data can be achieved either using drag/drop or by adding in the URL a link to a webservice that returns a list of files. This later will use [FileCollectionFromWebservice](https://cheminfo.github.io/filelist-utils/modules.html#fileCollectionFromWebservice). You can find an example of the webservice [here](https://zakodium-oss.github.io/analysis-dataset/jdx.json)
+New data can be added by drag/drop or by adding in the URL a link to a webservice that returns a list of files. This later will use [FileCollectionFromWebservice](https://cheminfo.github.io/filelist-utils/modules.html#fileCollectionFromWebservice). You can find an example of the webservice [here](https://zakodium-oss.github.io/analysis-dataset/jdx.json)
 
 Both approach will generate internally a `FileCollection` (see https://cheminfo.github.io/filelist-utils/classes/FileCollection.html and https://github.com/cheminfo/filelist-utils).
 
@@ -44,10 +44,10 @@ When create a new loader you also need to specify that it should be used when pr
 
 ## Testing the demo application
 
-- [From some JCAMP-DX files](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/jdx.json)
-- [All the example we have](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/full.json)
-- [From Biologic file format](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/biologic.json)
-- [From a UV-vis file format](https://zakodium-oss.github.io/analysis-ui-components/?filelist=https://zakodium-oss.github.io/analysis-dataset/uvvis.json)
+- [From some JCAMP-DX files](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json)
+- [From Biologic file format](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json)
+- [From a UV-vis file format](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fuvvis.json)
+- [All the examples we have](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json)
 
 # Installation
 

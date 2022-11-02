@@ -1,20 +1,10 @@
 import { xyToXYObject } from 'ml-spectra-processing';
 import { useMemo } from 'react';
-import {
-  Annotations,
-  Axis,
-  Heading,
-  LineSeries,
-  Plot,
-  PlotController,
-  useAxisWheelZoom,
-  useAxisZoom,
-  useCrossHair,
-  usePan,
-  useRectangularZoom,
-} from 'react-plot';
+import { LineSeries, PlotController } from 'react-plot';
 
 import type { MeasurementBase } from '../data/MeasurementBase';
+
+import { BasicComponent } from './utils';
 
 type Measurement = Pick<
   MeasurementBase,
@@ -25,8 +15,8 @@ export interface MeasurementPlotProps {
   dataIndex?: number;
   xVariableName?: string;
   yVariableName?: string;
-  width?: number;
-  height?: number;
+  width?: number | `${number}%`;
+  height?: number | `${number}%`;
   zoom?: 'horizontal' | 'vertical' | 'rectangular' | '';
   wheelZoom?: 'vertical' | 'horizontal' | '';
   crossHair?: boolean;
@@ -45,22 +35,11 @@ export function MeasurementPlot(props: MeasurementPlotProps) {
 }
 function MeasurementComponent(props: MeasurementPlotProps) {
   const {
-    measurement,
+    measurement: { data },
     dataIndex = 0,
     xVariableName = 'x',
     yVariableName = 'y',
-    width = 800,
-    height = 400,
-    zoom = 'horizontal',
-    wheelZoom = 'vertical',
-    crossHair = true,
-    showHorizontalAxis = true,
-    showVerticalAxis = true,
-    showHorizontalGrid = true,
-    showVerticalGrid = true,
-    flipHorizontalAxis = false,
   } = props;
-  const { title = '', data } = measurement;
 
   const xAxis = `${xVariableName}-x`;
   const yAxis = `${yVariableName}-y`;
@@ -80,32 +59,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     return { x, y };
   }, [data, dataIndex, xVariableName, yVariableName]);
 
-  const direction = ['vertical', 'horizontal'];
-  const rectZoom = useRectangularZoom({
-    horizontalAxisId: xAxis,
-    verticalAxisId: yAxis,
-    disabled: zoom !== 'rectangular',
-  });
-  const axisZoom = useAxisZoom({
-    direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
-    horizontalAxisId: xAxis,
-    verticalAxisId: yAxis,
-    disabled: !direction.includes(zoom),
-  });
-  useAxisWheelZoom({
-    direction: wheelZoom === 'vertical' ? 'vertical' : 'horizontal',
-    axisId: wheelZoom === 'vertical' ? yAxis : xAxis,
-    disabled: !direction.includes(wheelZoom),
-  });
-  const crossHairAnnot = useCrossHair({
-    horizontalAxisId: xAxis,
-    verticalAxisId: yAxis,
-    disabled: !crossHair,
-  });
-  usePan({ horizontalAxisId: xAxis, verticalAxisId: yAxis });
   return (
-    <Plot width={width} height={height}>
-      <Heading title={title} />
+    <BasicComponent {...props}>
       <LineSeries
         data={xyToXYObject({
           x: x.data,
@@ -114,26 +69,6 @@ function MeasurementComponent(props: MeasurementPlotProps) {
         xAxis={xAxis}
         yAxis={yAxis}
       />
-      <Annotations>
-        {rectZoom.annotations}
-        {axisZoom.annotations}
-        {crossHairAnnot.annotations}
-      </Annotations>
-      <Axis
-        id={xAxis}
-        hidden={!showHorizontalAxis}
-        displayPrimaryGridLines={showVerticalGrid}
-        flip={flipHorizontalAxis}
-        position="bottom"
-        label={`${x.label}${x.units ? `(${x.units})` : ''}`}
-      />
-      <Axis
-        id={yAxis}
-        hidden={!showVerticalAxis}
-        displayPrimaryGridLines={showHorizontalGrid}
-        position="left"
-        label={`${y.label}${y.units ? `(${y.units})` : ''}`}
-      />
-    </Plot>
+    </BasicComponent>
   );
 }

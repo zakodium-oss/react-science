@@ -5,23 +5,74 @@ import App from './App';
 
 import './main.css';
 
-createRoot(document.getElementById('root') as HTMLDivElement).render(
+createRoot(document.querySelector('#root') as HTMLDivElement).render(
   <StrictMode>
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {import.meta.env.PROD ? (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            borderBottom: '1px solid black',
-            lineHeight: 1,
-            paddingBlock: 5,
-          }}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          borderBottom: '1px solid black',
+          gap: '10px',
+          lineHeight: 1,
+          paddingBlock: 5,
+        }}
+      >
+        <a href={import.meta.env.BASE_URL}>Blank</a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json`}
         >
+          JCAMP-DX
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json`}
+        >
+          Biologic
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fuvvis.json`}
+        >
+          UV-vis
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fhplc.json`}
+        >
+          HPLC
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fmass.json`}
+        >
+          Mass
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fgcms.json`}
+        >
+          GC/MS
+        </a>
+        <a
+          href={`${
+            import.meta.env.BASE_URL
+          }#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json`}
+        >
+          All the data we have
+        </a>
+        {import.meta.env.PROD ? (
           <a href={`${import.meta.env.BASE_URL}stories/`}>Open stories</a>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
       <App />
     </div>
   </StrictMode>,

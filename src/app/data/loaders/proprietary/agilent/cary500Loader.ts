@@ -5,11 +5,11 @@ import { Loader, Measurements, getEmptyMeasurements } from '../../../DataState';
 
 export const cary500Loader: Loader = async function cary500Loader(
   fileCollection: FileCollection,
-) {
+): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {
-    if (file.name.match(/(?:\.csv)$/i)) {
+    if (file.name.match(/\.csv$/i)) {
       const experiments = convert(await file.text());
       for (let experiment of experiments) {
         newMeasurements.uvvis.entries.push({
@@ -36,7 +36,7 @@ function convert(text: string) {
 
   let lastDataIndex;
   for (lastDataIndex = 2; lastDataIndex < lines.length; lastDataIndex++) {
-    if (!lines[lastDataIndex].match(/^[0-9eE.,-]+$/)) {
+    if (!lines[lastDataIndex].match(/^[\d,.Ee-]+$/)) {
       break;
     }
   }

@@ -41,7 +41,7 @@ const styles = {
     padding: '5px 12px',
     display: 'flex',
     alignItems: 'center',
-    fontSize: '11px',
+    fontSize: '1em',
     borderColor: 'rgb(213, 213, 213) currentcolor currentcolor',
     borderStyle: 'solid none none',
     color: 'rgb(45, 45, 45)',
