@@ -16,25 +16,6 @@ export interface MenuDivider {
 
 export type MenuOptions<T> = Array<MenuOption<T> | MenuDivider>;
 
-export interface MenuItemsProps<T> {
-  options: MenuOptions<T>;
-  onSelect: (selected: MenuOption<T>) => void;
-  itemsStatic?: boolean;
-}
-
-interface ItemProps<T> {
-  option: MenuOptions<T>[number];
-  dividerSpan: number;
-  onSelect: MenuItemsProps<T>['onSelect'];
-}
-
-interface ItemOptionProps<T> {
-  option: MenuOption<T>;
-  onSelect: MenuItemsProps<T>['onSelect'];
-  active: boolean;
-  hasOneIconOrMore: boolean;
-}
-
 const ItemDiv = styled.div<{
   disabled: boolean;
   active: boolean;
@@ -58,12 +39,12 @@ const ItemDiv = styled.div<{
         `}
 `;
 
-const Divider = styled.hr<{ span: number }>`
+const Divider = styled.hr`
   width: 100%;
   color: rgb(229, 229, 229);
   margin-top: 5px;
   margin-bottom: 5px;
-  grid-column: 1 / span ${(props) => props.span};
+  grid-column: 1 / -1;
 `;
 
 const ItemsDiv = styled.div<{
@@ -78,12 +59,28 @@ const ItemsDiv = styled.div<{
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 5px 12px;
   padding-top: 5px;
   padding-bottom: 5px;
+  --cell-padding: 16px;
 `;
 
-const LabelDiv = styled.div<{ hasOneIconOrMore: boolean }>`
-  padding-right: 1rem;
-  ${(props) => !props.hasOneIconOrMore && `padding-left: 1rem;`}
+const LabelDiv = styled.div`
+  padding-right: var(--cell-padding);
+  padding-left: var(--cell-padding);
 `;
+
+const IconDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-left: var(--cell-padding);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export interface MenuItemsProps<T> {
+  options: MenuOptions<T>;
+  onSelect: (selected: MenuOption<T>) => void;
+  itemsStatic?: boolean;
+}
 
 export function MenuItems<T>(props: MenuItemsProps<T>) {
   const { options, onSelect, itemsStatic } = props;
@@ -103,37 +100,42 @@ export function MenuItems<T>(props: MenuItemsProps<T>) {
           key={index}
           onSelect={onSelect}
           option={option}
-          dividerSpan={hasOneOrMoreIcon ? 2 : 1}
         />
       ))}
     </Menu.Items>
   );
 }
 
+interface ItemProps<T> {
+  option: MenuOptions<T>[number];
+  onSelect: MenuItemsProps<T>['onSelect'];
+}
+
 function Item<T>(props: ItemProps<T>) {
-  const { option, onSelect, dividerSpan } = props;
+  const { option, onSelect } = props;
   const isDivider = option.type === 'divider';
 
   if (isDivider) {
-    return <Divider span={dividerSpan} />;
+    return <Divider />;
   }
 
   return (
     <Menu.Item disabled={option.disabled}>
       {({ active }) => (
-        <ItemOption
-          onSelect={onSelect}
-          option={option}
-          active={active}
-          hasOneIconOrMore={dividerSpan === 2}
-        />
+        <ItemOption onSelect={onSelect} option={option} active={active} />
       )}
     </Menu.Item>
   );
 }
 
+interface ItemOptionProps<T> {
+  option: MenuOption<T>;
+  onSelect: MenuItemsProps<T>['onSelect'];
+  active: boolean;
+}
+
 function ItemOption<T>(props: ItemOptionProps<T>) {
-  const { onSelect, option, active, hasOneIconOrMore } = props;
+  const { onSelect, option, active } = props;
 
   return (
     <ItemDiv
@@ -141,19 +143,8 @@ function ItemOption<T>(props: ItemOptionProps<T>) {
       active={active}
       disabled={option.disabled || false}
     >
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          paddingLeft: '1rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {option.icon}
-      </div>
-      <LabelDiv hasOneIconOrMore={hasOneIconOrMore}>{option.label}</LabelDiv>
+      <IconDiv>{option.icon}</IconDiv>
+      <LabelDiv>{option.label}</LabelDiv>
     </ItemDiv>
   );
 }
