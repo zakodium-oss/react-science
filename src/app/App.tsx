@@ -195,6 +195,11 @@ function DropZoneArea() {
                         measurement={measurement}
                         width="100%"
                         height="100%"
+                        kind={
+                          appState.view.currentMeasurement?.kind === 'mass'
+                            ? 'mass'
+                            : '1d'
+                        }
                       />
                     ) : (
                       <span>No data, add them with drag and drop</span>
