@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Menu } from '@headlessui/react';
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 export interface MenuOption<T> {
   type: 'option';
@@ -51,7 +51,8 @@ const ItemsDiv = styled.div<{
   hasOneIconOrMore: boolean;
 }>`
   display: grid;
-  grid-template-columns: ${(props) => props.hasOneIconOrMore && '40px'} auto;
+  grid-template-columns: [icon-start] ${(props) =>
+      props.hasOneIconOrMore ? '40px' : '0px'} [label-start] auto;
   width: fit-content;
   align-items: center;
   border-radius: 6px;
@@ -63,11 +64,13 @@ const ItemsDiv = styled.div<{
 `;
 
 const LabelDiv = styled.div`
+  grid-column-start: label-start;
   padding-right: var(--cell-padding);
   padding-left: var(--cell-padding);
 `;
 
 const IconDiv = styled.div`
+  grid-column-start: icon-start;
   width: 100%;
   height: 100%;
   padding-left: var(--cell-padding);

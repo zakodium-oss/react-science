@@ -14,6 +14,7 @@ import {
 
 import DropdownMenu from '@/components/menu/DropdownMenu';
 import { MenuItems, MenuOptions } from '@/components/menu/MenuItems';
+import styled from '@emotion/styled';
 
 export default {
   title: 'Components / DropdownMenu',
@@ -22,6 +23,22 @@ export default {
 const defaultOptions: MenuOptions<string> = [
   { label: 'Default workspace', type: 'option' },
 ];
+
+const ButtonStyled = styled.span`
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: rgb(107 114 128);
+  border-color: transparent;
+  border-radius: 0.375rem;
+  border-width: 1;
+`;
 
 export function Dropdown() {
   const options = useMemo<MenuOptions<string>>(() => {
@@ -35,25 +52,9 @@ export function Dropdown() {
   }, []);
 
   return (
-    <DropdownMenu onSelect={() => {}} options={options} trigger="click">
-      Default workspace
+    <DropdownMenu onSelect={() => {}} options={options}>
+      <ButtonStyled>Default workspace</ButtonStyled>
     </DropdownMenu>
-  );
-}
-
-export function ContextDropdown() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Default workspace', type: 'option' },
-      { label: 'Exercise', type: 'option', icon: <FaMeteor /> },
-      { type: 'divider' },
-      { label: 'Test', type: 'option', disabled: true },
-      { label: 'Test 2', type: 'option' },
-    ];
-  }, []);
-
-  return (
-    <DropdownMenu onSelect={() => {}} options={options} trigger="contextMenu" />
   );
 }
 
