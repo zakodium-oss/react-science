@@ -1,5 +1,4 @@
 import { fileCollectionFromWebservice } from 'filelist-utils';
-import { isEqual } from 'lodash';
 import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
@@ -19,12 +18,11 @@ import {
 } from './components';
 import {
   AppStateProvider,
-  getEmptyAppState,
   useAppDispatch,
   useAppState,
 } from './context/appState';
 import { getCurrentMeasurement } from './context/data.helpers';
-import { loadFiles, loadIUM } from './context/load';
+import { loadFiles } from './context/load';
 import { useHashSearchParams } from './hooks/useHashSearchParams';
 import { download } from './utils';
 
@@ -104,15 +102,7 @@ function DropZoneArea() {
     <RootLayout>
       <DropZoneContainer
         onDrop={(files) => {
-          if (
-            isEqual(appState, getEmptyAppState()) &&
-            files.length === 1 &&
-            files[0].name.match(/\.ium$/i)
-          ) {
-            void loadIUM(files[0], dispatch);
-          } else {
-            void loadFiles(files, dispatch);
-          }
+          void loadFiles(files, dispatch);
         }}
       >
         <div

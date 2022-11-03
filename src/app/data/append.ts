@@ -26,7 +26,7 @@ export async function append(
 ) {
   // We don't want that one loader has access to the currently growing new dataState
   // and therefore each loader starts with an empty dataState
-  const newMeasurements = await loadData(fileCollection, options);
+  const newMeasurements = await loadMeasurements(fileCollection, options);
 
   const nextDataState = produce(baseState, (draft) => {
     for (let key in newMeasurements) {
@@ -39,7 +39,7 @@ export async function append(
   return { logs: [], dataState: nextDataState };
 }
 
-export async function loadData(
+export async function loadMeasurements(
   fileCollection: FileCollection,
   options: AppendOptions = {},
 ) {
