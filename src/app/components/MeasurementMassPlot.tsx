@@ -106,13 +106,7 @@ function MassComponent(props: MeasurementPlotProps) {
       />
       <Annotations>
         {bestPeaks.map(({ x, y, shortLabel }: Peak) => (
-          <Annotation.Group
-            key={x}
-            x={x}
-            y={y}
-            horizontalAlign="none"
-            verticalAlign="none"
-          >
+          <Annotation.Group key={x} x={x} y={y} xAxis={xAxis} yAxis={yAxis}>
             <Annotation.Line
               x1="0"
               x2="0"
