@@ -39,7 +39,7 @@ function DropdownClickMenu<T>(
 ) {
   const { placement = 'bottom-start', ...otherProps } = props;
 
-  const [isOpened, openItems, closeItems, toggle] = useOnOff(false);
+  const [isOpened, , closeItems, toggle] = useOnOff(false);
   const [targetRef, setTargetRef] = useState<HTMLButtonElement | null>(null);
   const [contentRef, setContentRef] = useState<HTMLDivElement | null>(null);
 

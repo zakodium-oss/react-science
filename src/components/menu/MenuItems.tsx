@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Menu } from '@headlessui/react';
-import type { ReactNode, Ref } from 'react';
+import type { ReactNode } from 'react';
 
 export interface MenuOption<T> {
   type: 'option';
