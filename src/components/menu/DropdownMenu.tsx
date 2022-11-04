@@ -1,7 +1,6 @@
-import { assertNotNull } from '@/utils/assert';
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
-import { ReactNode, Ref, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { useOnClickOutside } from '../hooks/useOnClickOutside';
 import { useOnOff } from '../hooks/useOnOff';
@@ -60,12 +59,11 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
     setPopperElement,
     styles,
     attributes,
-  } = useContextMenuPlacement();
+  } = useContextMenuPlacement(otherProps.placement || 'right-start');
 
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, closePopperElement);
 
-  console.log(isPopperElementOpen);
   return (
     <div
       id="test"

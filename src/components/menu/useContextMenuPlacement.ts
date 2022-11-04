@@ -1,3 +1,4 @@
+import type { Placement } from '@popperjs/core';
 import React, { useCallback, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
@@ -8,7 +9,7 @@ interface PositionState {
   pageY: number;
 }
 
-export function useContextMenuPlacement() {
+export function useContextMenuPlacement(placement: Placement) {
   const [positionState, setPositionState] = useState<PositionState | null>(
     null,
   );
@@ -47,7 +48,7 @@ export function useContextMenuPlacement() {
     return {
       getBoundingClientRect: () => boudingClientRect,
     };
-  }, [positionState]);
+  }, [positionState, boudingClientRect]);
 
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
     null,
@@ -56,6 +57,9 @@ export function useContextMenuPlacement() {
   const { styles, attributes, state } = usePopper(
     virtualElement,
     popperElement,
+    {
+      placement,
+    },
   );
 
   return {
