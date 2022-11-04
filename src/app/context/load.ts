@@ -37,14 +37,10 @@ export async function loadFiles(
   try {
     if (files[0] && !files[1] && files[0].name.match(/\.ium$/i)) {
       const data = await files[0].text();
-      const appState = JSON.parse(data);
-      const payload: AppState = {
-        ...appState,
-        isLoading: true,
-      };
+      const appState: Omit<AppState, 'isLoading'> = JSON.parse(data);
       dispatch({
         type: 'LOAD_STATE',
-        payload,
+        payload: appState,
       });
     } else {
       const fileCollection =

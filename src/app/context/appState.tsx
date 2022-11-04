@@ -86,7 +86,7 @@ type AppStateAction =
   | { type: 'LOAD_START' }
   | { type: 'LOAD_END' }
   | { type: 'ADD_MEASUREMENTS'; payload: Measurements }
-  | { type: 'LOAD_STATE'; payload: AppState }
+  | { type: 'LOAD_STATE'; payload: Omit<AppState, 'isLoading'> }
   | {
       type: 'SELECT_MEASUREMENT';
       payload: { id: string; kind: MeasurementKind };
