@@ -15,6 +15,8 @@ interface ExplorerInfo {
   yVariableName: string;
   flipHorizontalAxis: boolean;
 }
+type XOrY = keyof Pick<ExplorerInfo, 'xVariableName' | 'yVariableName'>;
+
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
   const {
     measurement: { data },
@@ -23,20 +25,40 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     kind = '1d',
   } = props;
   function defaultInfo(dataIndex: number) {
+    const varNames = new Set(Object.keys(data[dataIndex].variables));
     return {
       dataIndex,
-      xVariableName: Object.keys(data[dataIndex].variables).includes('x')
-        ? 'x'
-        : Object.keys(data[dataIndex].variables)[0],
-      yVariableName: Object.keys(data[dataIndex].variables).includes('y')
-        ? 'y'
-        : Object.keys(data[dataIndex].variables)[1],
+      xVariableName: varNames.has('x') ? 'x' : varNames[0],
+      yVariableName: varNames.has('y') ? 'y' : varNames[1],
     };
   }
   const [info, setInfo] = useState<ExplorerInfo>({
     flipHorizontalAxis: false,
     ...defaultInfo(0),
   });
+  /* variables for this measurement are mapped into `id - label (units)`
+    `id` necessary bc files may have repeated labels
+  */
+  function dropdownVariables(axis: 'x' | 'y') {
+    function formatVar(varKey: string) {
+      const { label, units } = variables[varKey];
+      const formatUnit = units ? ` (${units})` : '';
+      const formatVarKey = `${varKey} - `;
+      return formatVarKey + label + formatUnit;
+    }
+    const { variables } = data[info.dataIndex];
+    const oppositeAxis: XOrY = axis === 'x' ? 'yVariableName' : 'xVariableName';
+    return Object.keys(variables).map((d) => {
+      if (d !== info[oppositeAxis]) {
+        return (
+          <option key={d} value={d}>
+            {formatVar(d)}
+          </option>
+        );
+      }
+      return null;
+    });
+  }
   return (
     <div
       style={{ width, height }}
@@ -54,7 +76,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           `}
         >
           <div>
-            <label>dataIndex :</label>
+            <label>dataIndex: </label>
             <select
               css={css`
                 cursor: pointer;
@@ -81,7 +103,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             </select>
           </div>
           <div>
-            <label>xVariable :</label>
+            <label>xVariable: </label>
             <select
               css={css`
                 cursor: pointer;
@@ -97,16 +119,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               }}
               value={info.xVariableName}
             >
-              {Object.keys(data[info.dataIndex].variables).map((d) => {
-                if (d !== info.yVariableName) {
-                  return (
-                    <option key={d} value={d}>
-                      {d}
-                    </option>
-                  );
-                }
-                return null;
-              })}
+              {dropdownVariables('x')}
             </select>
           </div>
           <div>
@@ -142,16 +155,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               }}
               value={info.yVariableName}
             >
-              {Object.keys(data[info.dataIndex].variables).map((d) => {
-                if (d !== info.xVariableName) {
-                  return (
-                    <option key={d} value={d}>
-                      {d}
-                    </option>
-                  );
-                }
-                return null;
-              })}
+              {dropdownVariables('y')}
             </select>
           </div>
           <div
@@ -160,7 +164,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               display: flex;
             `}
           >
-            Flip &quot;{info.xVariableName}&quot; axis:
+            Flip &quot; x &quot; axis:
             <FaArrowsAltH
               css={css`
                 cursor: pointer;
