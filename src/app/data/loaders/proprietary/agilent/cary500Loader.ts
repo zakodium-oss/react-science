@@ -1,33 +1,27 @@
 import { v4 } from '@lukeed/uuid';
-import type { FileCollection } from 'filelist-utils';
+import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 
-import { Loader, Measurements, getEmptyMeasurements } from '../../../DataState';
+import { Measurements, getEmptyMeasurements } from '../../../DataState';
+import type { MeasurementBase } from '../../../MeasurementBase';
 
-export const cary500Loader: Loader = async function cary500Loader(
+export async function cary500Loader(
   fileCollection: FileCollection,
 ): Promise<Measurements> {
   const newMeasurements: Measurements = getEmptyMeasurements();
 
   for (const file of fileCollection) {
     if (file.name.match(/\.csv$/i)) {
-      const experiments = convert(await file.text());
-      for (let experiment of experiments) {
-        newMeasurements.uvvis.entries.push({
-          id: v4(),
-          meta: experiment.meta,
-          filename: file.name,
-          path: file.relativePath,
-          info: {},
-          title: experiment.title,
-          data: [{ variables: experiment.variables }],
-        });
+      const experiments = await convert(file);
+      for (const experiment of experiments) {
+        newMeasurements.uvvis.entries.push(experiment);
       }
     }
   }
   return newMeasurements;
-};
+}
 
-function convert(text: string) {
+async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
+  const text = await file.text();
   // this format allows many experiments in one file
   const lines = text.split(/\r?\n/).map((line) => line.trim());
 
@@ -44,28 +38,38 @@ function convert(text: string) {
   const meta = lines.slice(lastDataIndex);
   const nbExperiments = Math.floor(labelUnits.length / 2);
 
-  const experiments: any[] = [];
+  const experiments: MeasurementBase[] = [];
   for (let i = 0; i < nbExperiments; i++) {
     const column = i * 2;
     const xVariable = {
-      label: labelUnits[column].replace(/ \(.*/, ''),
-      units: labelUnits[column].includes('(')
-        ? labelUnits[column].replace(/.*\((.*)\).*/, '$1')
-        : '',
+      ...labelAndUnits(labelUnits[column]),
       data: data.map((row) => Number(row[column])),
     };
     const yVariable = {
-      label: labelUnits[column + 1].replace(/ \(.*/, ''),
-      units: labelUnits[column + 1].includes('(')
-        ? labelUnits[column + 1].replace(/.*\((.*)\).*/, '$1')
-        : '',
+      ...labelAndUnits(labelUnits[column + 1]),
       data: data.map((row) => Number(row[column + 1])),
     };
     experiments.push({
+      id: v4(),
+      filename: file.name,
+      path: file.relativePath,
+      info: {},
       title: titles[column],
       meta: JSON.parse(JSON.stringify(meta)),
-      variables: { x: xVariable, y: yVariable },
+      data: [{ variables: { x: xVariable, y: yVariable } }],
     });
   }
   return experiments;
+}
+
+function labelAndUnits(labelUnits: string) {
+  if (labelUnits.includes('(')) {
+    // + units
+    let [label, rest] = labelUnits.split('('); //want to split at first '('
+    label = label.trim();
+    const regex = /(?<units>.*)\)/.exec(rest);
+    return { label, units: regex?.groups?.units ?? '' };
+  } else {
+    return { label: labelUnits.trim(), units: '' };
+  }
 }
