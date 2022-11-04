@@ -2,10 +2,10 @@ import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
 import { ReactNode, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
-import { useOnClickOutside } from '../hooks/useOnClickOutside';
-import { useOnOff } from '../hooks/useOnOff';
 
 import { Portal } from '../Portal';
+import { useOnClickOutside } from '../hooks/useOnClickOutside';
+import { useOnOff } from '../hooks/useOnOff';
 
 import { MenuItems, MenuOption, MenuOptions } from './MenuItems';
 

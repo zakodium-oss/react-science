@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Menu } from '@headlessui/react';
 import { useMemo } from 'react';
 import {
@@ -14,7 +15,6 @@ import {
 
 import DropdownMenu from '@/components/menu/DropdownMenu';
 import { MenuItems, MenuOptions } from '@/components/menu/MenuItems';
-import styled from '@emotion/styled';
 
 export default {
   title: 'Components / DropdownMenu',
