@@ -44,13 +44,14 @@ test.describe('MeasurementPlot', () => {
     await expect(xAxis).toContainText('1/CM');
     await expect(yAxis).toContainText('% Transmittance');
     await expect(component).toContainText('Mattson Instruments');
-    await expect(component.locator('_react=Axis[id="x"]')).toBeEnabled();
-    await expect(component.locator('_react=Axis[id="y"]')).toBeEnabled();
+
+    await expect(xAxis).toBeVisible();
+    await expect(yAxis).toBeVisible();
 
     // axis
 
-    await expect(component.locator('_react=Axis[id="x"]')).toHaveText(/.+/);
-    await expect(component.locator('_react=Axis[id="y"]')).toHaveText(/.+/);
+    await expect(xAxis).toHaveText(/.+/);
+    await expect(yAxis).toHaveText(/.+/);
 
     // flip
     await component
@@ -59,7 +60,7 @@ test.describe('MeasurementPlot', () => {
 
     // crossHair
     await component.hover({ position: { x: 200, y: 200 } });
-    await expect(component.locator('_react=Text')).toBeEnabled();
+    await expect(component.locator('_react=Text')).toBeVisible();
     await expect(component.locator('_react=Line')).toHaveCount(2);
     // grids
 
@@ -124,8 +125,8 @@ test.describe('MeasurementPlot', () => {
     const xAxis = component.locator('_react=Axis >> nth=0');
     const yAxis = component.locator('_react=Axis >> nth=1');
 
-    await expect(component.locator('_react=Axis[id="x"]')).toBeEnabled();
-    await expect(component.locator('_react=Axis[id="y"]')).toBeEnabled();
+    await expect(xAxis).toBeVisible();
+    await expect(yAxis).toBeVisible();
 
     await expect(xAxis).toContainText('TRANSMITTANCE');
     await expect(yAxis).toContainText('Absorbance');
@@ -135,7 +136,7 @@ test.describe('MeasurementPlot', () => {
       <MeasurementPlot measurement={irMeasurement} flipHorizontalAxis />,
     );
     const xAxis = component.locator('_react=Axis[flip=true] >> nth=0');
-    await expect(xAxis).toBeEnabled();
+    await expect(xAxis).toBeVisible();
   });
   test('remove horizontal axis', async ({ mount }) => {
     const component = await mount(
@@ -145,14 +146,16 @@ test.describe('MeasurementPlot', () => {
       />,
     );
 
-    await expect(component.locator('_react=Axis[id="x"]')).toHaveText('');
+    const xAxis = component.locator('_react=Axis >> nth=0');
+    await expect(xAxis).toHaveText('');
   });
   test('remove vertical axis', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={irMeasurement} showVerticalAxis={false} />,
     );
 
-    await expect(component.locator('_react=Axis[id="y"]')).toHaveText('');
+    const yAxis = component.locator('_react=Axis >> nth=1');
+    await expect(yAxis).toHaveText('');
   });
   test('vertical zoom', async ({ mount }) => {
     const component = await mount(
