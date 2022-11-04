@@ -52,8 +52,37 @@ export function Dropdown() {
   }, []);
 
   return (
-    <DropdownMenu onSelect={() => {}} options={options}>
+    <DropdownMenu trigger="click" onSelect={() => {}} options={options}>
       <ButtonStyled>Default workspace</ButtonStyled>
+    </DropdownMenu>
+  );
+}
+
+export function ContextDropdown() {
+  const options = useMemo<MenuOptions<string>>(() => {
+    return [
+      { label: 'Default workspace', type: 'option' },
+      { label: 'Exercise', type: 'option', icon: <FaMeteor /> },
+      { type: 'divider' },
+      { label: 'Test', type: 'option', disabled: true },
+      { label: 'Test 2', type: 'option' },
+    ];
+  }, []);
+
+  return (
+    <DropdownMenu trigger="contextMenu" onSelect={() => {}} options={options}>
+      <div
+        style={{
+          height: '500px',
+          width: '500px',
+          border: '1px solid black',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <p>Hello, World!</p>
+      </div>
     </DropdownMenu>
   );
 }
