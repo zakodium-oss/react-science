@@ -2,17 +2,15 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { parse, guessSpectraType } from 'spc-parser';
 
-import { getEmptyMeasurements, Loader, Measurements } from '../DataState';
+import { getEmptyMeasurements, MeasurementKind } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
-export const spcLoader: Loader = async function spcLoader(
-  fileCollection: FileCollection,
-): Promise<Measurements> {
+export async function spcLoader(fileCollection: FileCollection) {
   let measurements = getEmptyMeasurements();
   for (const file of fileCollection) {
     if (file.name.match(/\.spc$/i)) {
       const parsed = parse(await file.arrayBuffer());
-      const spectraType = guessSpectraType(parsed.meta);
+      const spectraType: MeasurementKind = guessSpectraType(parsed.meta);
 
       measurements[spectraType].entries.push({
         id: v4(),
@@ -26,4 +24,4 @@ export const spcLoader: Loader = async function spcLoader(
     }
   }
   return measurements;
-};
+}
