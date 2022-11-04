@@ -40,8 +40,6 @@ export function BasicComponent(
   } = props;
   const { title = '', data } = measurement;
 
-  const xAxis = `${xVariableName}-x`;
-  const yAxis = `${yVariableName}-y`;
   const { x, y } = useMemo(() => {
     const { variables } = data[dataIndex];
     const { [xVariableName]: x, [yVariableName]: y } = variables;
@@ -59,27 +57,21 @@ export function BasicComponent(
   }, [data, dataIndex, xVariableName, yVariableName]);
   const direction = new Set(['vertical', 'horizontal']);
   const rectZoom = useRectangularZoom({
-    horizontalAxisId: xAxis,
-    verticalAxisId: yAxis,
     disabled: zoom !== 'rectangular',
   });
   const axisZoom = useAxisZoom({
     direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
-    horizontalAxisId: xAxis,
-    verticalAxisId: yAxis,
     disabled: !direction.has(zoom),
   });
   useAxisWheelZoom({
     direction: wheelZoom === 'vertical' ? 'vertical' : 'horizontal',
-    axisId: wheelZoom === 'vertical' ? yAxis : xAxis,
+    axisId: wheelZoom === 'vertical' ? 'y' : 'x',
     disabled: !direction.has(wheelZoom),
   });
   const crossHairAnnot = useCrossHair({
-    horizontalAxisId: xAxis,
-    verticalAxisId: yAxis,
     disabled: !crossHair,
   });
-  usePan({ horizontalAxisId: xAxis, verticalAxisId: yAxis });
+  usePan();
 
   return (
     <div
@@ -104,7 +96,6 @@ export function BasicComponent(
               {crossHairAnnot.annotations}
             </Annotations>
             <Axis
-              id={xAxis}
               hidden={!showHorizontalAxis}
               displayPrimaryGridLines={showVerticalGrid}
               flip={flipHorizontalAxis}
@@ -112,7 +103,6 @@ export function BasicComponent(
               label={`${x.label}${x.units ? `(${x.units})` : ''}`}
             />
             <Axis
-              id={yAxis}
               hidden={!showVerticalAxis}
               displayPrimaryGridLines={showHorizontalGrid}
               position="left"

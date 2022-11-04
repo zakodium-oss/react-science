@@ -1,5 +1,5 @@
 import { xyToXYObject } from 'ml-spectra-processing';
-import { getBestPeaks, getPeaks } from 'ms-spectrum';
+import { getBestPeaks, Spectrum } from 'ms-spectrum';
 import { useMemo } from 'react';
 import {
   Annotation,
@@ -21,6 +21,25 @@ interface Peak {
 }
 
 export function MeasurementMassPlot(props: MeasurementPlotProps) {
+  const { measurement } = props;
+  if (!measurement.data) {
+    throw new Error(
+      'This is weird, the data property is not available on measurement',
+    );
+  }
+  if (measurement.data.length === 0) {
+    throw new Error('Data property is empty');
+  }
+  if (measurement.data.length > 1) {
+    throw new Error('Length of data property is larger than 1');
+  }
+  if (!measurement.data[0].variables.x) {
+    throw new Error('x variable in undefined');
+  }
+  if (!measurement.data[0].variables.y) {
+    throw new Error('y variable in undefined');
+  }
+
   return (
     <PlotController>
       <MassComponent {...props} />
@@ -29,48 +48,39 @@ export function MeasurementMassPlot(props: MeasurementPlotProps) {
 }
 
 function MassComponent(props: MeasurementPlotProps) {
-  const {
-    measurement,
-    dataIndex = 0,
-    xVariableName = 'x',
-    yVariableName = 'y',
-  } = props;
-  const { data } = measurement;
-  const xAxis = `${xVariableName}-x`;
-  const yAxis = `${yVariableName}-y`;
-  const { x, y } = useMemo(() => {
-    const { variables } = data[dataIndex];
-    const { [xVariableName]: x, [yVariableName]: y } = variables;
-    if (x === undefined || y === undefined) {
-      throw new Error(
-        `Variable "${
-          x === undefined ? xVariableName : yVariableName
-        }" is not available in data. Only ${Object.keys(
-          data[dataIndex].variables,
-        ).join(', ')} are available`,
-      );
-    }
+  const { measurement } = props;
 
-    return { x, y };
-  }, [data, dataIndex, xVariableName, yVariableName]);
+  const { data } = measurement;
+  const { variables } = data[0];
+
+  const { x, y } = useMemo(() => {
+    return { x: variables.x, y: variables.y };
+  }, [variables]);
 
   const { x: xDomain } = usePlotControllerAxes();
   const { profile, peaks } = useMemo(() => {
-    const profile = xyToXYObject({
+    const spectrum = new Spectrum({
       x: x.data,
       y: y.data,
     });
+    const isContinuous = spectrum.isContinuous();
+    const profile =
+      isContinuous &&
+      xyToXYObject({
+        x: x.data,
+        y: y.data,
+      });
     return {
       profile,
-      peaks: getPeaks(profile),
+      peaks: spectrum.getPeaks(profile),
     };
   }, [x.data, y.data]);
   const bestPeaks = useMemo(
     () =>
       getBestPeaks(peaks, {
-        from: xDomain?.min ?? Number.NEGATIVE_INFINITY,
-        to: xDomain?.max ?? Number.POSITIVE_INFINITY,
-        limit: 5,
+        from: xDomain?.min,
+        to: xDomain?.max,
+        limit: 10,
         numberSlots: 10,
         threshold: 0.01,
       }),
@@ -78,28 +88,11 @@ function MassComponent(props: MeasurementPlotProps) {
   );
   return (
     <BasicComponent {...props}>
-      <LineSeries
-        data={profile}
-        lineStyle={{ stroke: 'green' }}
-        xAxis={xAxis}
-        yAxis={yAxis}
-      />
-
-      <BarSeries
-        data={peaks}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        lineStyle={{ stroke: 'red' }}
-      />
+      {profile && <LineSeries data={profile} lineStyle={{ stroke: 'green' }} />}
+      <BarSeries data={peaks} lineStyle={{ stroke: 'red' }} />
       <Annotations>
         {bestPeaks.map(({ x, y, shortLabel }: Peak) => (
-          <Annotation.Group
-            key={x}
-            x={x}
-            y={y}
-            horizontalAlign="none"
-            verticalAlign="none"
-          >
+          <Annotation.Group key={x} x={x} y={y}>
             <Annotation.Line
               x1="0"
               x2="0"

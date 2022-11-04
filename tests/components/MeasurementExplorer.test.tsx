@@ -40,10 +40,10 @@ test.describe('MeasurementExplorer', () => {
     await component.locator('_react=MeasurementPlot[dataIndex=1]').isEnabled();
     await expect(
       component.locator('_react=MeasurementPlot[xVariableName="a"]'),
-    ).toBeEnabled();
+    ).toBeVisible();
     await expect(
       component.locator('_react=MeasurementPlot[yVariableName="t"]'),
-    ).toBeEnabled();
+    ).toBeVisible();
   });
   test('reverse btn', async ({ mount }) => {
     const component = await mount(
@@ -67,10 +67,10 @@ test.describe('MeasurementExplorer', () => {
     // test MeasurementPlot props after reverse
     await expect(
       component.locator('_react=MeasurementPlot[xVariableName="y"]'),
-    ).toBeEnabled();
+    ).toBeVisible();
     await expect(
       component.locator('_react=MeasurementPlot[yVariableName="x"]'),
-    ).toBeEnabled();
+    ).toBeVisible();
   });
   test('flip btn', async ({ mount }) => {
     const component = await mount(
@@ -86,13 +86,13 @@ test.describe('MeasurementExplorer', () => {
     );
 
     // test MeasurementPlot props before flipping axis
-    await expect(noFlippedPlot).toBeEnabled();
+    await expect(noFlippedPlot).toBeVisible();
     await expect(FlippedPlot).toHaveCount(0);
 
     await flipBtn.click();
 
     // test MeasurementPlot props after flipping axis
     await expect(noFlippedPlot).toHaveCount(0);
-    await expect(FlippedPlot).toBeEnabled();
+    await expect(FlippedPlot).toBeVisible();
   });
 });
