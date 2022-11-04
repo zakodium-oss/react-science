@@ -1,8 +1,8 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
-import { loadMeasurements } from '../data/append';
 import { getIRAutoPeakPickingEnhancer } from '../data/enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../data/enhancers/irMeasurementEnhancer';
+import { loadMeasurements } from '../data/loadMeasurements';
 import { biologicLoader } from '../data/loaders/biologicLoader';
 import { cdfLoader } from '../data/loaders/cdfLoader';
 import { jcampLoader } from '../data/loaders/jcampLoader';
