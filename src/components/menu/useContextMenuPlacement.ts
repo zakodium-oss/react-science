@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
-interface RefState {
+interface PositionState {
   clientX: number;
   clientY: number;
   pageX: number;
@@ -9,7 +9,9 @@ interface RefState {
 }
 
 export function useContextMenuPlacement() {
-  const [positionState, setPositionState] = useState<RefState | null>(null);
+  const [positionState, setPositionState] = useState<PositionState | null>(
+    null,
+  );
 
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
