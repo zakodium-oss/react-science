@@ -111,21 +111,21 @@ function setDefault(
 ) {
   for (let varum in variables) {
     // find the key that has the label (or skip if not found)
-    if (variables[varum].label === label) {
-      //if not already at the right key
-      if (varum !== storeAt) {
-        // populate key, if there is no data there.
-        if (!variables[storeAt]) {
-          variables[storeAt] = variables[varum];
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-          delete variables[varum];
-        } else {
-          // if the storeAt is already occupied, we swap the two
-          const originalX = variables[storeAt];
-          const newX = variables[varum];
-          variables[storeAt] = newX;
-          variables[varum] = originalX;
-        }
+    if (
+      variables[varum].label === label && //if not already at the right key
+      varum !== storeAt
+    ) {
+      // populate key, if there is no data there.
+      if (!variables[storeAt]) {
+        variables[storeAt] = variables[varum];
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete variables[varum];
+      } else {
+        // if the storeAt is already occupied, we swap the two
+        const originalX = variables[storeAt];
+        const newX = variables[varum];
+        variables[storeAt] = newX;
+        variables[varum] = originalX;
       }
     }
   }
