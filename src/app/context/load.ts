@@ -10,7 +10,7 @@ import { cary500Loader } from '../data/loaders/proprietary/agilent/cary500Loader
 import { spcLoader } from '../data/loaders/spcLoader';
 import { wdfLoader } from '../data/loaders/wdfLoader';
 
-import type { AppDispatch } from './appState';
+import type { AppDispatch, AppState } from './appState';
 
 const options = {
   loaders: [
@@ -28,18 +28,28 @@ const options = {
     ],
   },
 };
+
 export async function loadFiles(
   files: File[] | FileCollection,
   dispatch: AppDispatch,
 ) {
   dispatch({ type: 'LOAD_START' });
   try {
-    const fileCollection =
-      files instanceof FileCollection
-        ? files
-        : await fileCollectionFromFiles(files);
-    const measurements = await loadMeasurements(fileCollection, options);
-    dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
+    if (files[0] && !files[1] && files[0].name.match(/\.ium$/i)) {
+      const data = await files[0].text();
+      const appState: Omit<AppState, 'isLoading'> = JSON.parse(data);
+      dispatch({
+        type: 'LOAD_STATE',
+        payload: appState,
+      });
+    } else {
+      const fileCollection =
+        files instanceof FileCollection
+          ? files
+          : await fileCollectionFromFiles(files);
+      const data = await loadMeasurements(fileCollection, options);
+      dispatch({ type: 'ADD_MEASUREMENTS', payload: data });
+    }
   } finally {
     dispatch({ type: 'LOAD_END' });
   }

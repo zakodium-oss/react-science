@@ -31,7 +31,7 @@ export interface AppState {
   };
 }
 
-function getEmptyAppState(): AppState {
+export function getEmptyAppState(): AppState {
   return {
     data: getEmptyDataState(),
     isLoading: false,
@@ -86,6 +86,7 @@ type AppStateAction =
   | { type: 'LOAD_START' }
   | { type: 'LOAD_END' }
   | { type: 'ADD_MEASUREMENTS'; payload: Measurements }
+  | { type: 'LOAD_STATE'; payload: Omit<AppState, 'isLoading'> }
   | {
       type: 'SELECT_MEASUREMENT';
       payload: { id: string; kind: MeasurementKind };
@@ -161,6 +162,12 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
     }
     case 'LOAD_END': {
       draft.isLoading = false;
+      return;
+    }
+    case 'LOAD_STATE': {
+      const { data, view } = action.payload;
+      draft.data = data;
+      draft.view = view;
       return;
     }
 

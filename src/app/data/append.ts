@@ -46,9 +46,9 @@ export async function loadMeasurements(
   const measurements: Measurements = getEmptyMeasurements();
   const { loaders = [], enhancers = {} } = options;
   for (const loader of loaders) {
-    const loaderMeasurements = await loader(fileCollection);
-    enhance(loaderMeasurements, enhancers);
-    mergeMeasurements(measurements, loaderMeasurements);
+    const loaderData = await loader(fileCollection);
+    enhance(loaderData, enhancers);
+    mergeMeasurements(measurements, loaderData);
   }
   return measurements;
 }
