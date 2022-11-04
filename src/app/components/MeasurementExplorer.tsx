@@ -15,7 +15,6 @@ interface ExplorerInfo {
   yVariableName: string;
   flipHorizontalAxis: boolean;
 }
-type XOrY = keyof Pick<ExplorerInfo, 'xVariableName' | 'yVariableName'>;
 
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
   const {
@@ -47,7 +46,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
       return formatVarKey + label + formatUnit;
     }
     const { variables } = data[info.dataIndex];
-    const oppositeAxis: XOrY = axis === 'x' ? 'yVariableName' : 'xVariableName';
+    const oppositeAxis = axis === 'x' ? 'yVariableName' : 'xVariableName';
     return Object.keys(variables).map((d) => {
       if (d !== info[oppositeAxis]) {
         return (
