@@ -53,8 +53,6 @@ function MassComponent(props: MeasurementPlotProps) {
   const { data } = measurement;
   const { variables } = data[0];
 
-  const xAxis = `x-x`; // why such a weird name ???
-  const yAxis = `y-y`;
   const { x, y } = useMemo(() => {
     return { x: variables.x, y: variables.y };
   }, [variables]);
@@ -94,19 +92,19 @@ function MassComponent(props: MeasurementPlotProps) {
         <LineSeries
           data={profile}
           lineStyle={{ stroke: 'green' }}
-          xAxis={xAxis}
-          yAxis={yAxis}
+          xAxis="x"
+          yAxis="y"
         />
       )}
       <BarSeries
         data={peaks}
-        xAxis={xAxis}
-        yAxis={yAxis}
+        xAxis="x"
+        yAxis="y"
         lineStyle={{ stroke: 'red' }}
       />
       <Annotations>
         {bestPeaks.map(({ x, y, shortLabel }: Peak) => (
-          <Annotation.Group key={x} x={x} y={y} xAxis={xAxis} yAxis={yAxis}>
+          <Annotation.Group key={x} x={x} y={y} xAxis="x" yAxis="y">
             <Annotation.Line
               x1="0"
               x2="0"

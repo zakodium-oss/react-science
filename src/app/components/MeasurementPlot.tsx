@@ -41,8 +41,6 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     yVariableName = 'y',
   } = props;
 
-  const xAxis = `${xVariableName}-x`;
-  const yAxis = `${yVariableName}-y`;
   const { x, y } = useMemo(() => {
     const { variables } = data[dataIndex];
     const { [xVariableName]: x, [yVariableName]: y } = variables;
@@ -66,8 +64,8 @@ function MeasurementComponent(props: MeasurementPlotProps) {
           x: x.data,
           y: y.data,
         })}
-        xAxis={xAxis}
-        yAxis={yAxis}
+        xAxis="x"
+        yAxis="y"
       />
     </BasicComponent>
   );
