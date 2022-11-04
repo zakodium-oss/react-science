@@ -57,14 +57,10 @@ export function BasicComponent(
   }, [data, dataIndex, xVariableName, yVariableName]);
   const direction = new Set(['vertical', 'horizontal']);
   const rectZoom = useRectangularZoom({
-    horizontalAxisId: 'x',
-    verticalAxisId: 'y',
     disabled: zoom !== 'rectangular',
   });
   const axisZoom = useAxisZoom({
     direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
-    horizontalAxisId: 'x',
-    verticalAxisId: 'y',
     disabled: !direction.has(zoom),
   });
   useAxisWheelZoom({
@@ -73,11 +69,9 @@ export function BasicComponent(
     disabled: !direction.has(wheelZoom),
   });
   const crossHairAnnot = useCrossHair({
-    horizontalAxisId: 'x',
-    verticalAxisId: 'y',
     disabled: !crossHair,
   });
-  usePan({ horizontalAxisId: 'x', verticalAxisId: 'y' });
+  usePan();
 
   return (
     <div
@@ -102,7 +96,6 @@ export function BasicComponent(
               {crossHairAnnot.annotations}
             </Annotations>
             <Axis
-              id="x"
               hidden={!showHorizontalAxis}
               displayPrimaryGridLines={showVerticalGrid}
               flip={flipHorizontalAxis}
@@ -110,7 +103,6 @@ export function BasicComponent(
               label={`${x.label}${x.units ? `(${x.units})` : ''}`}
             />
             <Axis
-              id="y"
               hidden={!showVerticalAxis}
               displayPrimaryGridLines={showHorizontalGrid}
               position="left"

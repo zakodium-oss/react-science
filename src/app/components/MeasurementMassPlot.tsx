@@ -88,23 +88,11 @@ function MassComponent(props: MeasurementPlotProps) {
   );
   return (
     <BasicComponent {...props}>
-      {profile && (
-        <LineSeries
-          data={profile}
-          lineStyle={{ stroke: 'green' }}
-          xAxis="x"
-          yAxis="y"
-        />
-      )}
-      <BarSeries
-        data={peaks}
-        xAxis="x"
-        yAxis="y"
-        lineStyle={{ stroke: 'red' }}
-      />
+      {profile && <LineSeries data={profile} lineStyle={{ stroke: 'green' }} />}
+      <BarSeries data={peaks} lineStyle={{ stroke: 'red' }} />
       <Annotations>
         {bestPeaks.map(({ x, y, shortLabel }: Peak) => (
-          <Annotation.Group key={x} x={x} y={y} xAxis="x" yAxis="y">
+          <Annotation.Group key={x} x={x} y={y}>
             <Annotation.Line
               x1="0"
               x2="0"

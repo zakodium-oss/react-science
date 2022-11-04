@@ -64,8 +64,6 @@ function MeasurementComponent(props: MeasurementPlotProps) {
           x: x.data,
           y: y.data,
         })}
-        xAxis="x"
-        yAxis="y"
       />
     </BasicComponent>
   );
