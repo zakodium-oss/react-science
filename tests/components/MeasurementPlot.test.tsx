@@ -44,13 +44,13 @@ test.describe('MeasurementPlot', () => {
     await expect(xAxis).toContainText('1/CM');
     await expect(yAxis).toContainText('% Transmittance');
     await expect(component).toContainText('Mattson Instruments');
-    await expect(component.locator('_react=Axis[id="x-x"]')).toBeEnabled();
-    await expect(component.locator('_react=Axis[id="y-y"]')).toBeEnabled();
+    await expect(component.locator('_react=Axis[id="x"]')).toBeEnabled();
+    await expect(component.locator('_react=Axis[id="y"]')).toBeEnabled();
 
     // axis
 
-    await expect(component.locator('_react=Axis[id=/-x$/]')).toHaveText(/.+/);
-    await expect(component.locator('_react=Axis[id=/-y$/]')).toHaveText(/.+/);
+    await expect(component.locator('_react=Axis[id="x"]')).toHaveText(/.+/);
+    await expect(component.locator('_react=Axis[id="y"]')).toHaveText(/.+/);
 
     // flip
     await component
@@ -124,8 +124,8 @@ test.describe('MeasurementPlot', () => {
     const xAxis = component.locator('_react=Axis >> nth=0');
     const yAxis = component.locator('_react=Axis >> nth=1');
 
-    await expect(component.locator('_react=Axis[id="y-x"]')).toBeEnabled();
-    await expect(component.locator('_react=Axis[id="a-y"]')).toBeEnabled();
+    await expect(component.locator('_react=Axis[id="x"]')).toBeEnabled();
+    await expect(component.locator('_react=Axis[id="y"]')).toBeEnabled();
 
     await expect(xAxis).toContainText('TRANSMITTANCE');
     await expect(yAxis).toContainText('Absorbance');
@@ -145,14 +145,14 @@ test.describe('MeasurementPlot', () => {
       />,
     );
 
-    await expect(component.locator('_react=Axis[id=/-x$/]')).toHaveText('');
+    await expect(component.locator('_react=Axis[id="x"]')).toHaveText('');
   });
   test('remove vertical axis', async ({ mount }) => {
     const component = await mount(
       <MeasurementPlot measurement={irMeasurement} showVerticalAxis={false} />,
     );
 
-    await expect(component.locator('_react=Axis[id=/-y$/]')).toHaveText('');
+    await expect(component.locator('_react=Axis[id="y"]')).toHaveText('');
   });
   test('vertical zoom', async ({ mount }) => {
     const component = await mount(
