@@ -2,10 +2,9 @@ import { join } from 'node:path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 
-import { getEmptyDataState } from '../DataState';
-import { append } from '../append';
 import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
+import { loadMeasurements } from '../loadMeasurements';
 import { jcampLoader } from '../loaders/jcampLoader';
 
 const loaders = [jcampLoader];
@@ -17,8 +16,6 @@ const enhancers = {
 };
 
 export async function getIRMeasurement() {
-  const dataState = getEmptyDataState();
-
   const fileCollection = await fileCollectionFromPath(
     join(__dirname, 'data/jdx/'),
   );
@@ -26,9 +23,9 @@ export async function getIRMeasurement() {
     (file) => file.name === 'ir.jdx',
   );
 
-  const appended = await append(filteredFileCollection, dataState, {
+  const measurements = await loadMeasurements(filteredFileCollection, {
     loaders,
     enhancers,
   });
-  return appended.dataState.measurements.ir.entries[0];
+  return measurements.ir.entries[0];
 }

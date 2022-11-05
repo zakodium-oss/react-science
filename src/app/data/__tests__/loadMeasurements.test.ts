@@ -3,10 +3,9 @@ import path from 'node:path';
 import { fileCollectionFromPath } from 'filelist-utils';
 import { test, expect } from 'vitest';
 
-import { getEmptyDataState } from '../DataState';
-import { append } from '../append';
 import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
+import { loadMeasurements } from '../loadMeasurements';
 import { jcampLoader } from '../loaders/jcampLoader';
 import { wdfLoader } from '../loaders/wdfLoader';
 
@@ -18,18 +17,16 @@ const enhancers = {
   ],
 };
 
-test('append', async () => {
-  const dataState = getEmptyDataState();
-
+test('loadMeasurements function', async () => {
   const fileCollection = await fileCollectionFromPath(
     path.join(__dirname, 'data'),
   );
-  let { dataState: newDataState } = await append(fileCollection, dataState, {
+
+  const measurements = await loadMeasurements(fileCollection, {
     loaders,
     enhancers,
   });
 
-  const { measurements } = newDataState;
   expect(Object.keys(measurements)).toStrictEqual([
     'ir',
     'iv',
