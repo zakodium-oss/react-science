@@ -163,7 +163,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               display: flex;
             `}
           >
-            Flip &quot; x &quot; axis:
+            Flip horizontal axis:
             <FaArrowsAltH
               css={css`
                 cursor: pointer;
