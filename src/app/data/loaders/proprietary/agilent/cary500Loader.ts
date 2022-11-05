@@ -64,5 +64,7 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
 
 function labelAndUnits(labelUnits: string) {
   const groups = labelUnits.match(/(?<label>.*) \((?<units>.*)\)/)?.groups;
-  return groups || { label: labelUnits, units: '' };
+  return groups
+    ? { label: groups.label, units: groups.units }
+    : { label: labelUnits, units: '' };
 }
