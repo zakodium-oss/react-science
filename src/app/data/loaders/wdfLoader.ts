@@ -17,8 +17,7 @@ export async function wdfLoader(
     if (file.name.match(/\.wdf$/i)) {
       const parsed = parse(await file.arrayBuffer());
 
-      // this will help us to be consistent with the other loaders
-      // and make sure the kind we use exists in the kindLabel
+      // for now WDF file format is always expected to be Raman
       const kind: MeasurementKind = 'raman';
       measurements[kind].entries.push({
         id: v4(),
@@ -55,10 +54,14 @@ function getXVariable(blocks) {
   const xBlock = blocks.find(
     (block) => block.blockType === 'WDF_BLOCKID_XLIST',
   );
-  const regex = /(?<label>.*) \((?<units>.*)\)/.exec(xBlock.xList.units);
+
+  const groups = xBlock.xList.units.match(
+    /(?<label>.*) \((?<units>.*)\)/,
+  )?.groups;
+
   return {
-    label: regex?.groups?.label || 'Arbitrary Units',
-    units: regex?.groups?.units || '',
+    label: groups?.label || 'Arbitrary Units',
+    units: groups?.units || '',
     data: xBlock.xList.values.slice(),
   };
 }
