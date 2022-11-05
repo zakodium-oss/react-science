@@ -63,13 +63,6 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
 }
 
 function labelAndUnits(labelUnits: string) {
-  if (labelUnits.includes('(')) {
-    // + units
-    let [label, rest] = labelUnits.split('('); //want to split at first '('
-    label = label.trim();
-    const regex = /(?<units>.*)\)/.exec(rest);
-    return { label, units: regex?.groups?.units ?? '' };
-  } else {
-    return { label: labelUnits.trim(), units: '' };
-  }
+  const groups = labelUnits.match(/(?<label>.*) \((?<units>.*)\)/)?.groups;
+  return groups || { label: labelUnits, units: '' };
 }
