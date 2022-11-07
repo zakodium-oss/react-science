@@ -1,8 +1,6 @@
 extends:
-  - '@zakodium/eslint-config/typescript-react'
-  - 'cheminfo/unicorn'
+  - zakodium/ts
+  - zakodium/react
+  - zakodium/unicorn
 rules:
-  # TODO: re-enable this rule once eslint-plugin-import supports the "exports" field.
-  # See https://github.com/benmosher/eslint-plugin-import/issues/2132
-  'import/no-unresolved': off
   'react/no-unknown-property': ['error', { ignore: ['css'] }]
