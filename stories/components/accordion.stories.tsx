@@ -5,7 +5,7 @@ import {
   SplitPane,
   Toolbar,
   useToggleAccordion,
-} from '@/components';
+} from '../../src/components/index';
 
 export default {
   title: 'Components / Accordion',

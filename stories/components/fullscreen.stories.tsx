@@ -1,4 +1,8 @@
-import { Button, FullScreenProvider, useFullscreen } from '@/components';
+import {
+  Button,
+  FullScreenProvider,
+  useFullscreen,
+} from '../../src/components/index';
 
 export default {
   title: 'Components / Fullscreen',

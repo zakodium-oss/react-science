@@ -1,6 +1,5 @@
+import { Table, ValueRenderers } from '../../src/components/index';
 import data from '../data/table.json';
-
-import { Table, ValueRenderers } from '@/components';
 
 interface TableStoryProps {
   border: boolean;

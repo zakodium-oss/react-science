@@ -7,8 +7,8 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import { Table, ValueRenderers } from '../../components';
-import type { IRPeak } from '../data/IRPeak';
+import type { IRPeak } from '../../app-data/index';
+import { Table, ValueRenderers } from '../../components/index';
 
 export interface IRColumnPreferences<T extends keyof IRPeak = keyof IRPeak> {
   visible?: boolean;

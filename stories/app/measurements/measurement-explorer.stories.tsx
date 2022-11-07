@@ -1,10 +1,9 @@
-import measurement from '../../data/irMeasurement.json';
-
+import type { IRMeasurement } from '../../../src/app-data/index';
 import {
   MeasurementExplorer,
   MeasurementExplorerProps,
-} from '@/app/components';
-import type { IRMeasurement } from '@/app/data/IRMeasurement';
+} from '../../../src/app/index';
+import measurement from '../../data/irMeasurement.json';
 
 let irMeasurement = measurement as IRMeasurement;
 

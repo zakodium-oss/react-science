@@ -4,7 +4,7 @@ import {
   Filter,
   SignalProcessingPanel,
   SignalProcessingPanelProps,
-} from '@/app/components';
+} from '../../src/app/index';
 
 export default {
   title: 'Layout/Panels/SignalProcessingPanel',

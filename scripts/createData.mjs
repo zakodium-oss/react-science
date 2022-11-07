@@ -1,6 +1,7 @@
-// before running this script you should `npm run prepack`
+// Before running this script you should `npm run prepack`
 
 import { writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 import { produce } from 'immer';
@@ -14,7 +15,7 @@ import { wdfLoader } from '../lib/data/loaders/wdfLoader.js';
 
 const dataState = getEmptyDataState();
 const fileCollection = await fileCollectionFromPath(
-  new URL('../src/data/__tests__//data', import.meta.url).pathname,
+  fileURLToPath(new URL('../test-data', import.meta.url)),
 );
 
 const loaders = [jcampLoader, wdfLoader];

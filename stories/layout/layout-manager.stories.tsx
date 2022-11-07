@@ -1,5 +1,4 @@
-import type { Layout } from '@/components';
-import LayoutManager from '@/components/LayoutManager';
+import { Layout, LayoutManager } from '../../src/components/index';
 
 export default {
   title: 'Layout / Layout manager',
