@@ -1,12 +1,15 @@
-/node_modules
-/CHANGELOG.md
-/package-lock.json
+# Same as in .eslintignore
+/build
+/coverage
 /dist
 /lib
 /lib-esm
-/build
-/coverage
+/node_modules
 /playwright/.cache
 /playwright-report
-/coverage
+
+# Specific to .prettierignore
+/CHANGELOG.md
+/package-lock.json
 /stories/data
+/test-data
