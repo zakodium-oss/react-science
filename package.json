@@ -33,8 +33,9 @@
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
     "createData": "npm run prepack && node scripts/createData",
-    "dev": "ladle serve",
-    "dev-app": "vite --open",
+    "dev": "echo Use npm run dev-app or npm run dev-stories && exit 1",
+    "dev-stories": "ladle serve",
+    "dev-app": "vite --open /pages/demo.html",
     "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
     "fix-react-shadow": "node scripts/fix-react-shadow.mjs",
@@ -49,7 +50,7 @@
     "test-only": "vitest run --coverage "
   },
   "volta": {
-    "node": "16.18.0"
+    "node": "16.18.1"
   },
   "overrides": {
     "react": "^18.2.0",

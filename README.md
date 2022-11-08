@@ -21,8 +21,8 @@ This project simplifies the process of creating web applications for visualizing
 
 This project is composed of 2 parts:
 
-- src/components: a set of reusable components that are published in the npm package and can be developed locally using `npm run dev`
-- src/app: a playground in which we combine the components and many other project to test ideas and limitation of the design. It can be tested locally using `npm run dev-app`
+- src/components: a set of reusable components that are published in the npm package and can be developed locally using `npm run dev-stories`
+- src/pages: playgrounds in which we combine the components and many other project to test ideas and limitation of the design. It can be tested locally using `npm run dev-app`
 
 ## Principle of the application
 
@@ -44,10 +44,10 @@ When create a new loader you also need to specify that it should be used when pr
 
 ## Testing the demo application
 
-- [From some JCAMP-DX files](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json)
-- [From Biologic file format](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json)
-- [From a UV-vis file format](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fuvvis.json)
-- [All the examples we have](https://analysis-ui-components.pages.dev/#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json)
+- [From some JCAMP-DX files](https://analysis-ui-components.pages.dev/pages/demo.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json)
+- [From Biologic file format](https://analysis-ui-components.pages.dev/pages/demo.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json)
+- [From a UV-vis file format](https://analysis-ui-components.pages.dev/pages/demo.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fuvvis.json)
+- [All the examples we have](https://analysis-ui-components.pages.dev/pages/demo.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json)
 
 # Installation
 

@@ -1,4 +1,4 @@
-import { getDemoFileCollection } from '../../utils/test-utils';
+import { getTestFileCollection } from '../../utils/test-utils';
 import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
 import { loadMeasurements } from '../loadMeasurements';
@@ -13,7 +13,7 @@ const enhancers = {
 };
 
 export async function getIRMeasurement() {
-  const fileCollection = await getDemoFileCollection('jdx');
+  const fileCollection = await getTestFileCollection('jdx');
   const filteredFileCollection = fileCollection.filter(
     (file) => file.name === 'ir.jdx',
   );

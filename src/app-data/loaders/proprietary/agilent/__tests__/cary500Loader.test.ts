@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest';
 
-import { getDemoFileCollection } from '../../../../../utils/test-utils';
+import { getTestFileCollection } from '../../../../../utils/test-utils';
 import { cary500Loader } from '../cary500Loader';
 
 test('cary500Loader', async () => {
-  const fileCollection = await getDemoFileCollection('cary500');
+  const fileCollection = await getTestFileCollection('cary500');
   // we should filter to keep only the right data
   const results = await cary500Loader(fileCollection);
 

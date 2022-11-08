@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest';
 
-import { getDemoFileCollection } from '../../utils/test-utils';
+import { getTestFileCollection } from '../../utils/test-utils';
 import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
 import { loadMeasurements } from '../loadMeasurements';
@@ -16,7 +16,7 @@ const enhancers = {
 };
 
 test('loadMeasurements function', async () => {
-  const fileCollection = await getDemoFileCollection();
+  const fileCollection = await getTestFileCollection();
 
   const measurements = await loadMeasurements(fileCollection, {
     loaders,

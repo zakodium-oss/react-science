@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { getDemoFileCollection } from '../../utils/test-utils';
+import { getTestFileCollection } from '../../utils/test-utils';
 import { loadMeasurements } from '../loadMeasurements';
 import { biologicLoader } from '../loaders/biologicLoader';
 
@@ -12,7 +12,7 @@ test('getIVMeasurement', async () => {
 const loaders = [biologicLoader];
 
 async function getIVMeasurement() {
-  const fileCollection = await getDemoFileCollection('biologic');
+  const fileCollection = await getTestFileCollection('biologic');
   const measurements = await loadMeasurements(fileCollection, { loaders });
   return measurements.iv;
 }

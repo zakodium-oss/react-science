@@ -1,15 +1,15 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
-import { getIRAutoPeakPickingEnhancer } from '../app-data/enhancers/irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../app-data/enhancers/irMeasurementEnhancer';
-import type { AppDispatch, AppState } from '../app-data/index';
-import { loadMeasurements } from '../app-data/loadMeasurements';
-import { biologicLoader } from '../app-data/loaders/biologicLoader';
-import { cdfLoader } from '../app-data/loaders/cdfLoader';
-import { jcampLoader } from '../app-data/loaders/jcampLoader';
-import { cary500Loader } from '../app-data/loaders/proprietary/agilent/cary500Loader';
-import { spcLoader } from '../app-data/loaders/spcLoader';
-import { wdfLoader } from '../app-data/loaders/wdfLoader';
+import { getIRAutoPeakPickingEnhancer } from '../../app-data/enhancers/irAutoPeakPickingEnhancer';
+import { irMeasurementEnhancer } from '../../app-data/enhancers/irMeasurementEnhancer';
+import type { AppDispatch, AppState } from '../../app-data/index';
+import { loadMeasurements } from '../../app-data/loadMeasurements';
+import { biologicLoader } from '../../app-data/loaders/biologicLoader';
+import { cdfLoader } from '../../app-data/loaders/cdfLoader';
+import { jcampLoader } from '../../app-data/loaders/jcampLoader';
+import { cary500Loader } from '../../app-data/loaders/proprietary/agilent/cary500Loader';
+import { spcLoader } from '../../app-data/loaders/spcLoader';
+import { wdfLoader } from '../../app-data/loaders/wdfLoader';
 
 const options = {
   loaders: [
