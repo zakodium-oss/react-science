@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
+import type { MeasurementKind } from '../../../src/app-data/index';
+import { MeasurementsPanel as MeasurementsPanelComponent } from '../../../src/app/index';
 import measurements from '../../data/measurements.json';
-
-import { MeasurementsPanel as MeasurementsPanelComponent } from '@/app/components';
-import type { MeasurementKind } from '@/app/data/DataState';
 
 export default {
   title: 'Measurements / Panels',

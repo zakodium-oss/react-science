@@ -13,8 +13,11 @@ import {
   FaAdjust,
 } from 'react-icons/fa';
 
-import DropdownMenu from '@/components/menu/DropdownMenu';
-import { MenuItems, MenuOptions } from '@/components/menu/MenuItems';
+import {
+  MenuItems,
+  MenuOptions,
+} from '../../src/components/dropdown-menu/MenuItems';
+import { DropdownMenu } from '../../src/components/index';
 
 export default {
   title: 'Components / DropdownMenu',

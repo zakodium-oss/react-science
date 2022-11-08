@@ -22,7 +22,7 @@ import {
   Tabs,
   TabItem,
   useOnOff,
-} from '@/components';
+} from '../../src/components/index';
 
 export default {
   title: 'Components / Modal',

@@ -6,7 +6,7 @@ import {
   SplitPane,
   SplitPaneProps,
   SplitPaneSize,
-} from '@/components';
+} from '../../src/components/index';
 
 export default {
   title: 'Components / SplitPane',

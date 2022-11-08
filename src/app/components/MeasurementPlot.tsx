@@ -2,7 +2,7 @@ import { xyToXYObject } from 'ml-spectra-processing';
 import { useMemo } from 'react';
 import { LineSeries, PlotController } from 'react-plot';
 
-import type { MeasurementBase } from '../data/MeasurementBase';
+import type { MeasurementBase } from '../../app-data/index';
 
 import { BasicComponent } from './utils';
 

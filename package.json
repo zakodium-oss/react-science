@@ -2,9 +2,23 @@
   "name": "analysis-ui-components",
   "version": "0.18.0",
   "description": "React components to build analysis UI",
-  "main": "lib/components/index.js",
-  "module": "lib-esm/components/index.js",
-  "types": "lib-esm/components/index.d.ts",
+  "exports": {
+    "./app": {
+      "types": "./lib-esm/app/index.d.ts",
+      "require": "./lib/app/index.js",
+      "default": "./lib-esm/app/index.js"
+    },
+    "./app-data": {
+      "types": "./lib-esm/app-data/index.d.ts",
+      "require": "./lib/app-data/index.js",
+      "default": "./lib-esm/app-data/index.js"
+    },
+    "./ui": {
+      "types": "./lib-esm/components/index.d.ts",
+      "require": "./lib/components/index.js",
+      "default": "./lib-esm/components/index.js"
+    }
+  },
   "files": [
     "lib",
     "lib-esm",
@@ -102,7 +116,6 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.8.4",
     "vite": "^3.2.3",
-    "vite-tsconfig-paths": "^3.5.2",
     "vitest": "^0.24.5"
   },
   "repository": {

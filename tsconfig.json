@@ -15,11 +15,7 @@
     "jsx": "react-jsx",
     "outDir": "lib",
     "noImplicitAny": false,
-    "importsNotUsedAsValues": "error",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "baseUrl": "."
+    "importsNotUsedAsValues": "error"
   },
   "include": [
     "./src",

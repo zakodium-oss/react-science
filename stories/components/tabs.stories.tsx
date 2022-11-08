@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Tabs, TabItem } from '@/components';
+import { Tabs, TabItem } from '../../src/components/index';
 
 export default {
   title: 'Components / Tabs',
