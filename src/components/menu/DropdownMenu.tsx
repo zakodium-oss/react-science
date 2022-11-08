@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
 import { ReactNode, useRef, useState } from 'react';
@@ -49,6 +50,10 @@ export default function DropdownMenu<T>(props: DropdownMenuProps<T>) {
   );
 }
 
+const HandleMenuContextDiv = styled.div`
+  display: contents;
+`;
+
 function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
   const { children, ...otherProps } = props;
 
@@ -65,11 +70,7 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
   useOnClickOutside(ref, closePopperElement);
 
   return (
-    <div
-      id="test"
-      onContextMenu={handleContextMenu}
-      style={{ display: 'contents' }}
-    >
+    <HandleMenuContextDiv onContextMenu={handleContextMenu}>
       {isPopperElementOpen && (
         <div ref={ref}>
           <div
@@ -85,7 +86,7 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
       )}
 
       {children}
-    </div>
+    </HandleMenuContextDiv>
   );
 }
 

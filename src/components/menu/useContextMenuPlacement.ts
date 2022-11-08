@@ -48,7 +48,7 @@ export function useContextMenuPlacement(placement: Placement) {
     return {
       getBoundingClientRect: () => boudingClientRect,
     };
-  }, [positionState, boudingClientRect]);
+  }, [boudingClientRect]);
 
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
     null,

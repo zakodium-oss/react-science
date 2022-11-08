@@ -58,6 +58,15 @@ export function Dropdown() {
   );
 }
 
+const DivContextDropdown = styled.div`
+  height: 500px;
+  width: 500px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export function ContextDropdown() {
   const options = useMemo<MenuOptions<string>>(() => {
     return [
@@ -71,18 +80,9 @@ export function ContextDropdown() {
 
   return (
     <DropdownMenu trigger="contextMenu" onSelect={() => {}} options={options}>
-      <div
-        style={{
-          height: '500px',
-          width: '500px',
-          border: '1px solid black',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+      <DivContextDropdown tabIndex={1}>
         <p>Hello, World!</p>
-      </div>
+      </DivContextDropdown>
     </DropdownMenu>
   );
 }
