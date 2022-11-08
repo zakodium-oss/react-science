@@ -2,10 +2,10 @@ import path from 'node:path';
 
 import { fileCollectionFromPath } from 'filelist-utils';
 
-export function getDemoDataPath(...subpaths: string[]) {
+export function getTestDataPath(...subpaths: string[]) {
   return path.join(__dirname, '..', '..', 'test-data', ...subpaths);
 }
 
-export function getDemoFileCollection(...subpaths: string[]) {
-  return fileCollectionFromPath(getDemoDataPath(...subpaths));
+export function getTestFileCollection(...subpaths: string[]) {
+  return fileCollectionFromPath(getTestDataPath(...subpaths));
 }

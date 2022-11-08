@@ -17,12 +17,12 @@ import {
   useAppState,
   getCurrentMeasurement,
   download,
-} from '../app-data/index';
+} from '../../app-data/index';
 import {
   MeasurementExplorer,
   MeasurementInfoPanel,
   MeasurementsPanel,
-} from '../app/index';
+} from '../../app/index';
 import {
   Accordion,
   DropZoneContainer,
@@ -33,7 +33,7 @@ import {
   FullScreenProvider,
   useFullscreen,
   useHashSearchParams,
-} from '../components/index';
+} from '../../components/index';
 
 import { loadFiles } from './load';
 

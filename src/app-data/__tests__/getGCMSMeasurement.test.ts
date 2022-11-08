@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest';
 
-import { getDemoFileCollection } from '../../utils/test-utils';
+import { getTestFileCollection } from '../../utils/test-utils';
 import { loadMeasurements } from '../loadMeasurements';
 import { cdfLoader } from '../loaders/cdfLoader';
 
-const fileCollection = await getDemoFileCollection('cdf');
+const fileCollection = await getTestFileCollection('cdf');
 
 const filteredFileCollection = fileCollection.filter(
   (file) => file.name === 'agilent-gcms.cdf',
