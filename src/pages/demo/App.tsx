@@ -15,7 +15,7 @@ import {
   AppStateProvider,
   useAppDispatch,
   useAppState,
-  getSelectedKind,
+  getCurrentMeasurement,
   download,
   getSelectedMeasurement,
 } from '../../app-data/index';
@@ -65,7 +65,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
-  const measurement = getSelectedKind(appState);
+  const measurement = getCurrentMeasurement(appState);
   const hashSearchParams = useHashSearchParams();
   const fileListParam = hashSearchParams.get('filelist');
   const { toggle } = useFullscreen();

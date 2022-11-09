@@ -35,7 +35,7 @@ export function getFirstMeasurement(
   return null;
 }
 
-export function getSelectedKind(state: AppState) {
+export function getCurrentMeasurement(state: AppState) {
   const selectedMeasurement = getSelectedMeasurement(state);
   if (!selectedMeasurement) return null;
   return getMeasurement(
