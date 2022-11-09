@@ -15,6 +15,7 @@ import {
   useAppState,
   getCurrentMeasurement,
   download,
+  getSelectedMeasurement,
 } from '../../app-data/index';
 import {
   MeasurementExplorer,
@@ -179,9 +180,7 @@ function DropZoneArea() {
                         width="100%"
                         height="100%"
                         kind={
-                          appState.view.currentMeasurement?.kind === 'mass'
-                            ? 'mass'
-                            : '1d'
+                          appState.view.selectedKind === 'mass' ? 'mass' : '1d'
                         }
                       />
                     ) : (
@@ -212,7 +211,7 @@ function DropZoneArea() {
                               payload: kind,
                             });
                           }}
-                          selectedMeasurement={appState.view.currentMeasurement}
+                          selectedMeasurement={getSelectedMeasurement(appState)}
                           onMeasurementSelect={({ measurement, kind }) => {
                             dispatch({
                               type: 'SELECT_MEASUREMENT',

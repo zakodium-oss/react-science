@@ -36,9 +36,22 @@ export function getFirstMeasurement(
 }
 
 export function getCurrentMeasurement(state: AppState) {
-  const { currentMeasurement } = state.view;
-  if (!currentMeasurement) return null;
-  const { kind, id } = currentMeasurement;
+  const selectedMeasurement = getSelectedMeasurement(state);
+  if (!selectedMeasurement) return null;
+  return getMeasurement(
+    state.data.measurements,
+    selectedMeasurement.kind,
+    selectedMeasurement.id,
+  );
+}
 
-  return getMeasurement(state.data.measurements, kind, id);
+export function getSelectedMeasurement(state: AppState) {
+  const { selectedKind, selectedMeasurements } = state.view;
+  if (!selectedKind) return undefined;
+  const kind = selectedKind;
+  const currentMeasurements = selectedMeasurements[kind];
+  if (!currentMeasurements) return undefined;
+  // todo: change to return all selected measurements
+  const id = currentMeasurements[0];
+  return { kind, id };
 }
