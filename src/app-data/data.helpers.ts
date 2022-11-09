@@ -34,7 +34,15 @@ export function getFirstMeasurement(
 
   return null;
 }
+export function getFirstMeasurementOrFail(
+  measurements: Measurements,
+  kind: MeasurementKind,
+) {
+  const measurement = measurements[kind].entries[0];
+  assertNotNull(measurement);
 
+  return { kind, measurement };
+}
 export function getCurrentMeasurement(state: AppState) {
   const { currentMeasurement } = state.view;
   if (!currentMeasurement) return null;
