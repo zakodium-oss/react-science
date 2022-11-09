@@ -24,10 +24,7 @@ export interface AppState {
   isLoading: boolean;
   view: {
     selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
-    currentMeasurement?: {
-      kind: MeasurementKind;
-      id: string;
-    };
+    selectedKind?: MeasurementKind;
   };
 }
 
@@ -110,8 +107,8 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
           if (measurement) {
             const id = measurement.measurement.id;
             draft.view.selectedMeasurements[kind] = [id];
-            if (draft.view.currentMeasurement === undefined) {
-              draft.view.currentMeasurement = { id, kind };
+            if (draft.view.selectedKind === undefined) {
+              draft.view.selectedKind = kind;
             }
             // draft.view.currentMeasurement = {
             //   kind,
@@ -131,7 +128,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
         action.payload.id,
       );
 
-      draft.view.currentMeasurement = action.payload;
+      draft.view.selectedKind = action.payload.kind;
       draft.view.selectedMeasurements[action.payload.kind] = [
         action.payload.id,
       ];
@@ -140,19 +137,13 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
     case 'SELECT_MEASUREMENT_KIND': {
       const selected = draft.view.selectedMeasurements[action.payload]?.[0];
       if (selected) {
-        draft.view.currentMeasurement = {
-          id: selected,
-          kind: action.payload,
-        };
+        draft.view.selectedKind = action.payload;
       } else if (draft.data.measurements[action.payload].entries.length > 0) {
         const measurement = draft.data.measurements[action.payload].entries[0];
         draft.view.selectedMeasurements[action.payload] = [measurement.id];
-        draft.view.currentMeasurement = {
-          id: measurement.id,
-          kind: action.payload,
-        };
+        draft.view.selectedKind = action.payload;
       } else {
-        draft.view.currentMeasurement = undefined;
+        draft.view.selectedKind = undefined;
       }
       return;
     }
