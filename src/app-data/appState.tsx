@@ -15,10 +15,8 @@ import {
   mergeMeasurements,
   getEmptyDataState,
   MeasurementKind,
-  measurementKinds,
 } from './DataState';
 import {
-  getFirstMeasurement,
   getFirstMeasurementOrFail,
   getMeasurementOrFail,
 } from './data.helpers';
