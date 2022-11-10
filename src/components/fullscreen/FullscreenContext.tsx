@@ -51,16 +51,15 @@ function FullscreenInner(props: FullscreenProps) {
       if (!value && isFullScreen) toggle();
     }
     const div = ref.current;
-    div?.addEventListener('fullscreenchange', onFullscreenChange);
-    div?.addEventListener('mozfullscreenchange', onFullscreenChange);
-    div?.addEventListener('MSFullscreenChange', onFullscreenChange);
-    div?.addEventListener('webkitfullscreenchange', onFullscreenChange);
+    if (!div) {
+      return;
+    }
+    div.addEventListener('fullscreenchange', onFullscreenChange);
+    div.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
     return () => {
-      div?.removeEventListener('fullscreenchange', onFullscreenChange);
-      div?.addEventListener('mozfullscreenchange', onFullscreenChange);
-      div?.addEventListener('MSFullscreenChange', onFullscreenChange);
-      div?.addEventListener('webkitfullscreenchange', onFullscreenChange);
+      div.removeEventListener('fullscreenchange', onFullscreenChange);
+      div.removeEventListener('webkitfullscreenchange', onFullscreenChange);
     };
   }, [isFullScreen, toggle]);
   useEffect(() => {
