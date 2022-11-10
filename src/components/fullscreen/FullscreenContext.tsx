@@ -43,20 +43,34 @@ export function FullScreenProvider(props: FullscreenProps) {
 }
 function FullscreenInner(props: FullscreenProps) {
   const { children } = props;
-  const { isFullScreen } = useFullscreen();
+  const { isFullScreen, toggle } = useFullscreen();
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (isFullScreen && ref.current) {
-      ref.current.requestFullscreen().catch(() => {
+    function onFullscreenChange() {
+      const value = Boolean(document.fullscreenElement);
+      if (!value && isFullScreen) toggle();
+    }
+    const div = ref.current;
+    div?.addEventListener('fullscreenchange', onFullscreenChange);
+    div?.addEventListener('mozfullscreenchange', onFullscreenChange);
+    div?.addEventListener('MSFullscreenChange', onFullscreenChange);
+    div?.addEventListener('webkitfullscreenchange', onFullscreenChange);
+
+    return () => {
+      div?.removeEventListener('fullscreenchange', onFullscreenChange);
+      div?.addEventListener('mozfullscreenchange', onFullscreenChange);
+      div?.addEventListener('MSFullscreenChange', onFullscreenChange);
+      div?.addEventListener('webkitfullscreenchange', onFullscreenChange);
+    };
+  }, [isFullScreen, toggle]);
+  useEffect(() => {
+    if (isFullScreen) {
+      ref.current?.requestFullscreen().catch(() => {
         alert('Fullscreen is not supported');
       });
-    } else if (
-      !isFullScreen &&
-      ref.current &&
-      document.fullscreenElement !== null &&
-      document.exitFullscreen
-    ) {
-      document.exitFullscreen().catch(() => {
+    }
+    if (!isFullScreen && document.fullscreenElement) {
+      document.exitFullscreen?.().catch(() => {
         alert("Can't exit fullscreen");
       });
     }
