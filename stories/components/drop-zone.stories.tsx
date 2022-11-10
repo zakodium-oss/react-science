@@ -17,7 +17,7 @@ interface DropZoneStoryProps {
 }
 
 function fileValidator(file: File) {
-  if (file.name.length > 20) {
+  if (file?.name?.length > 20) {
     return {
       message: 'File name is larger than 20 characters',
       code: 'name-too-large',

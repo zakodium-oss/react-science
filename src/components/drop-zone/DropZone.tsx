@@ -60,7 +60,6 @@ function DropZoneContent(
     validator: fileValidator,
     onDrop: handleOnDrop,
   });
-
   const getPropsOptions = useMemo(() => {
     if (onClick) {
       return { onClick };
@@ -120,19 +119,23 @@ function DropZoneContent(
               <p>Drop the files here</p>
             </div>
           ) : isContainer ? null : (
-            <p>Drag and drop your files here, or click to select files</p>
+            <p
+              css={css`
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              `}
+            >
+              Drag and drop your files here, or click to select files
+            </p>
           )}
         </div>
       </div>
       <input
         type="file"
         css={css`
-          opacity: 0;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
+          test-align: center;
         `}
         {...getInputProps()}
       />
