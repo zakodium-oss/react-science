@@ -2,24 +2,18 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
-import {
-  getEmptyMeasurements,
-  MeasurementKind,
-  Measurements,
-} from '../DataState';
+import type { Measurements } from '../DataState';
+import type { MeasurementBase } from '../MeasurementBase';
 
-export async function wdfLoader(
-  fileCollection: FileCollection,
-): Promise<Measurements> {
-  const measurements: Measurements = getEmptyMeasurements();
-
+export async function wdfLoader(fileCollection: FileCollection) {
+  const measurements: Partial<Measurements> = {};
+  const entries: MeasurementBase[] = [];
   for (const file of fileCollection) {
     if (file.name.match(/\.wdf$/i)) {
       const parsed = parse(await file.arrayBuffer());
 
       // for now WDF file format is always expected to be Raman
-      const kind: MeasurementKind = 'raman';
-      measurements[kind].entries.push({
+      entries.push({
         id: v4(),
         meta: parsed.fileHeader,
         filename: file.name,
@@ -30,6 +24,7 @@ export async function wdfLoader(
       });
     }
   }
+  measurements.raman = { entries };
   return measurements;
 }
 

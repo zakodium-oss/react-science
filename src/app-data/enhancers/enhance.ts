@@ -1,6 +1,6 @@
 import type { Measurements } from '../DataState';
 
-export function enhance(measurements: Measurements, enhancers = {}) {
+export function enhance(measurements: Partial<Measurements>, enhancers = {}) {
   for (let key in measurements) {
     if (
       enhancers[key] &&
