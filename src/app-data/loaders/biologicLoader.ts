@@ -3,7 +3,7 @@ import { convert } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
 
-import { MeasurementKind, getEmptyMeasurements } from '../DataState';
+import type { Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 /* the MeasurementBase has got a data key,
@@ -15,7 +15,8 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
  * @returns iv-MeasurementBase for each file in the collection
  */
 export async function biologicLoader(fileCollection: FileCollection) {
-  let measurements = getEmptyMeasurements();
+  const measurements: Partial<Measurements> = {};
+  const entries: MeasurementBase[] = [];
   const results = await convert(fileCollection);
   for (let { dir, mpr, mpt } of results) {
     const prepare: Partial<MeasurementBase> = {
@@ -48,9 +49,9 @@ export async function biologicLoader(fileCollection: FileCollection) {
       continue;
     }
     //will notify if the key is not a valid kind
-    const kind: MeasurementKind = 'iv';
-    measurements[kind].entries.push(prepare as MeasurementBase);
+    entries.push(prepare as MeasurementBase);
   }
+  measurements.iv = { entries };
   return measurements;
 }
 

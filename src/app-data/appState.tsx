@@ -15,9 +15,11 @@ import {
   mergeMeasurements,
   getEmptyDataState,
   MeasurementKind,
-  measurementKinds,
 } from './DataState';
-import { getFirstMeasurement, getMeasurementOrFail } from './data.helpers';
+import {
+  getFirstMeasurementOrFail,
+  getMeasurementOrFail,
+} from './data.helpers';
 
 export interface AppState {
   data: DataState;
@@ -82,7 +84,7 @@ type AppStateAction =
   | { type: 'RESET' }
   | { type: 'LOAD_START' }
   | { type: 'LOAD_END' }
-  | { type: 'ADD_MEASUREMENTS'; payload: Measurements }
+  | { type: 'ADD_MEASUREMENTS'; payload: Partial<Measurements> }
   | { type: 'LOAD_STATE'; payload: Omit<AppState, 'isLoading'> }
   | {
       type: 'SELECT_MEASUREMENT';
@@ -98,9 +100,9 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       return;
     case 'ADD_MEASUREMENTS': {
       mergeMeasurements(draft.data.measurements, action.payload);
-      for (let kind of measurementKinds) {
+      for (let kind of Object.keys(action.payload) as MeasurementKind[]) {
         if (!draft.view.selectedMeasurements[kind]) {
-          const measurement = getFirstMeasurement(
+          const measurement = getFirstMeasurementOrFail(
             draft.data.measurements,
             kind,
           );

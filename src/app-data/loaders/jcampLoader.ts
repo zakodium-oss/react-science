@@ -2,7 +2,8 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import { MeasurementKind, getEmptyMeasurements } from '../DataState';
+import { assert } from '../../utils/assert';
+import type { MeasurementKind, Measurements } from '../DataState';
 
 /**
  *
@@ -11,7 +12,7 @@ import { MeasurementKind, getEmptyMeasurements } from '../DataState';
  * no need for return type, it is inferred from the return statement
  */
 export async function jcampLoader(fileCollection: FileCollection) {
-  const newMeasurements = getEmptyMeasurements();
+  const newMeasurements: Partial<Measurements> = {};
 
   for (const file of fileCollection) {
     if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
@@ -30,7 +31,14 @@ export async function jcampLoader(fileCollection: FileCollection) {
           kind = 'nmr';
         }
         if (kind) {
-          newMeasurements[kind].entries.push({
+          if (!newMeasurements[kind]) {
+            newMeasurements[kind] = { entries: [] };
+          }
+          assert(
+            newMeasurements[kind],
+            'Error while loading, kind is not defined',
+          );
+          newMeasurements[kind]?.entries.push({
             id: v4(),
             meta: measurement.meta,
             filename: file.name,

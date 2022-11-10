@@ -1,4 +1,5 @@
 import { getTestFileCollection } from '../../utils/test-utils';
+import type { IRMeasurement } from '../IRMeasurement';
 import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
 import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
 import { loadMeasurements } from '../loadMeasurements';
@@ -22,5 +23,5 @@ export async function getIRMeasurement() {
     loaders,
     enhancers,
   });
-  return measurements.ir.entries[0];
+  return measurements.ir?.entries[0] as IRMeasurement;
 }

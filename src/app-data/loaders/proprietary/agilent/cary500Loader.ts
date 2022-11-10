@@ -1,22 +1,22 @@
 import { v4 } from '@lukeed/uuid';
 import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 
-import { Measurements, getEmptyMeasurements } from '../../../DataState';
+import type { Measurements } from '../../../DataState';
 import type { MeasurementBase } from '../../../MeasurementBase';
 
-export async function cary500Loader(
-  fileCollection: FileCollection,
-): Promise<Measurements> {
-  const newMeasurements: Measurements = getEmptyMeasurements();
+export async function cary500Loader(fileCollection: FileCollection) {
+  const newMeasurements: Partial<Measurements> = {};
+  const entries: MeasurementBase[] = [];
 
   for (const file of fileCollection) {
     if (file.name.match(/\.csv$/i)) {
       const experiments = await convert(file);
       for (const experiment of experiments) {
-        newMeasurements.uvvis.entries.push(experiment);
+        entries.push(experiment);
       }
     }
   }
+  newMeasurements.uvvis = { entries };
   return newMeasurements;
 }
 
