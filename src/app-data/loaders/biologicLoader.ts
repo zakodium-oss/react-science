@@ -1,10 +1,12 @@
-import { v4 } from '@lukeed/uuid';
 import { convert } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
 
-import type { Measurements } from '../DataState';
+import { MeasurementKind, getEmptyMeasurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
+
+import { templateFromFile } from './utility/templateFromFile';
+import { createLogEntry, ParserLog } from './utility/parserLog';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */
@@ -15,43 +17,56 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
  * @returns iv-MeasurementBase for each file in the collection
  */
 export async function biologicLoader(fileCollection: FileCollection) {
-  const measurements: Partial<Measurements> = {};
-  const entries: MeasurementBase[] = [];
-  const results = await convert(fileCollection);
-  for (let { dir, mpr, mpt } of results) {
-    const prepare: Partial<MeasurementBase> = {
-      id: v4(),
-      filename: '',
-      path: dir,
-      info: {},
-      title: '',
-    };
-    if (mpr !== undefined) {
-      prepare.meta = { ...mpr.settings.variables };
-      // puts the "useful" variables at x and y for default plot.
-      const variables = preferredXY(prepare.meta.technique, mpr.data.variables);
-      prepare.data = [{ variables }];
-    } else if (mpt !== undefined) {
-      prepare.meta = { ...mpt.settings?.variables };
-      if (mpt.data?.variables) {
-        // puts the "useful" variables at x and y for default plot.
-        const variables = preferredXY(
-          prepare.meta?.technique,
-          mpt.data.variables,
-        );
-        prepare.data = [{ variables }];
+  const measurements = getEmptyMeasurements();
+  const kind: MeasurementKind = 'iv';
+  const logs: ParserLog[] = [];
+  let result: MeasurementBase;
+
+  for (const file of fileCollection.files) {
+    try {
+      if (file.name.endsWith('.mpr')) {
+        const mpr = await convert(await file.arrayBuffer(), 'mpr')?.mpr;
+        if (mpr !== undefined) {
+          const prepare = templateFromFile(file);
+          // puts the "useful" variables at x and y for default plot.
+          const variables = preferredXY(
+            prepare.meta.technique,
+            mpr.data.variables,
+          );
+          result = {
+            ...prepare,
+            meta: mpr.settings.variables,
+            data: [{ variables }],
+          };
+          measurements[kind].entries.push(result);
+        }
+      } else if (file.name.endsWith('.mpt')) {
+        const mpt = await convert(await file.arrayBuffer(), 'mpt')?.mpt;
+        if (mpt !== undefined) {
+          const prepare = templateFromFile(file);
+          if (mpt.data?.variables) {
+            // puts the "useful" variables at x and y for default plot.
+            const variables = preferredXY(
+              prepare.meta?.technique,
+              mpt.data.variables,
+            );
+            result = {
+              ...prepare,
+              meta: mpt.settings?.variables || {},
+              data: [{ variables }],
+            };
+            measurements[kind].entries.push(result);
+          }
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        logs.push(createLogEntry({ error, relativePath: file.relativePath }));
       }
     }
-    if (!prepare.data) {
-      // no data ? skip this file
-      // need a way to dispatch an error with the filename and a custom
-      // message
-      continue;
-    }
-    //will notify if the key is not a valid kind
-    entries.push(prepare as MeasurementBase);
   }
-  measurements.iv = { entries };
+  // eslint-disable-next-line no-console
+  console.error(logs);
   return measurements;
 }
 
