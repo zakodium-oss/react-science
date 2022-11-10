@@ -87,7 +87,7 @@ type AppStateAction =
   | { type: 'RESET' }
   | { type: 'LOAD_START' }
   | { type: 'LOAD_END' }
-  | { type: 'ADD_MEASUREMENTS'; payload: Measurements }
+  | { type: 'ADD_MEASUREMENTS'; payload: Partial<Measurements> }
   | { type: 'LOAD_STATE'; payload: Omit<AppState, 'isLoading'> }
   | {
       type: 'SELECT_MEASUREMENT';

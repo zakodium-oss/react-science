@@ -14,6 +14,6 @@ test('getGCMSMeasurement', async () => {
   const measurements = await loadMeasurements(filteredFileCollection, {
     loaders: [cdfLoader],
   });
-  const result = measurements.gclcms.entries;
+  const result = measurements.gclcms?.entries;
   expect(result).toHaveLength(1);
 });

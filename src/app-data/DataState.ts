@@ -1,5 +1,7 @@
 import type { FileCollection } from 'filelist-utils';
 
+import { assert } from '../utils/assert';
+
 import type { IRMeasurement } from './IRMeasurement';
 import type { MeasurementBase } from './MeasurementBase';
 
@@ -64,10 +66,14 @@ export type Loader = (
 ) => Promise<Partial<Measurements>>;
 
 export function mergeMeasurements(
-  measurements: Measurements,
+  measurements: Partial<Measurements>,
   newMeasurements: Partial<Measurements>,
 ) {
   for (const kind in newMeasurements) {
+    if (!measurements[kind]) {
+      measurements[kind] = { entries: [] };
+    }
+    assert(measurements[kind], 'Error while loading, kind is not defined');
     const entries: MeasurementBase[] = newMeasurements[kind].entries || [];
     measurements[kind].entries.push(...entries);
   }
