@@ -20,7 +20,6 @@ export async function biologicLoader(fileCollection: FileCollection) {
   const measurements = getEmptyMeasurements();
   const kind: MeasurementKind = 'iv';
   const logs: ParserLog[] = [];
-  let result: MeasurementBase;
 
   for (const file of fileCollection.files) {
     try {
@@ -32,7 +31,7 @@ export async function biologicLoader(fileCollection: FileCollection) {
           mpr.settings.variables.technique,
           mpr.data.variables,
         );
-        result = {
+        const result: MeasurementBase = {
           ...info,
           meta: mpr.settings.variables,
           data: [{ variables }],
@@ -47,7 +46,7 @@ export async function biologicLoader(fileCollection: FileCollection) {
             mpt.settings?.technique,
             mpt.data.variables,
           );
-          result = {
+          const result: MeasurementBase = {
             ...info,
             meta: mpt.settings?.variables || {},
             data: [{ variables }],
@@ -104,7 +103,7 @@ function preferredXY(
       break;
     }
     default:
-      return variables;
+      break;
   }
   return variables;
 }
@@ -121,7 +120,7 @@ function setDefault(
   label: string,
   storeAt: 'x' | 'y',
 ) {
-  for (let varum in variables) {
+  for (const varum in variables) {
     // find the key that has the label (or skip if not found)
     if (
       variables[varum].label === label && //if not already at the right key
@@ -133,7 +132,7 @@ function setDefault(
         // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete variables[varum];
       } else {
-        // if the storeAt is already occupied, we swap the two
+        // if the storeAt is already occupied, swap the two
         const originalX = variables[storeAt];
         const newX = variables[varum];
         variables[storeAt] = newX;
