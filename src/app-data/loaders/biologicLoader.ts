@@ -26,29 +26,29 @@ export async function biologicLoader(fileCollection: FileCollection) {
     try {
       if (file.name.endsWith('.mpr')) {
         const mpr = parseMPR(await file.arrayBuffer());
-        const prepare = templateFromFile(file);
+        const info = templateFromFile(file);
         // puts the "useful" variables at x and y for default plot.
         const variables = preferredXY(
-          prepare.meta.technique,
+          mpr.settings.variables.technique,
           mpr.data.variables,
         );
         result = {
-          ...prepare,
+          ...info,
           meta: mpr.settings.variables,
           data: [{ variables }],
         };
         measurements[kind].entries.push(result);
       } else if (file.name.endsWith('.mpt')) {
         const mpt = parseMPT(await file.arrayBuffer());
-        const prepare = templateFromFile(file);
+        const info = templateFromFile(file);
         if (mpt.data?.variables) {
           // puts the "useful" variables at x and y for default plot.
           const variables = preferredXY(
-            prepare.meta?.technique,
+            mpt.settings?.technique,
             mpt.data.variables,
           );
           result = {
-            ...prepare,
+            ...info,
             meta: mpt.settings?.variables || {},
             data: [{ variables }],
           };
