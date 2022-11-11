@@ -12,7 +12,12 @@ export interface DropZoneProps {
   ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
-
+const centerStyle = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 export function DropZoneContainer(
   props: DropZoneProps & {
     children: JSX.Element;
@@ -101,14 +106,7 @@ function DropZoneContent(
 
         <div style={{ fontSize: '1.5em' }}>
           {isDragActive ? (
-            <div
-              css={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              `}
-            >
+            <div css={centerStyle}>
               <FaCloudUploadAlt
                 size={70}
                 css={css`
@@ -119,14 +117,7 @@ function DropZoneContent(
               <p>Drop the files here</p>
             </div>
           ) : isContainer ? null : (
-            <p
-              css={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              `}
-            >
+            <p css={centerStyle}>
               Drag and drop your files here, or click to select files
             </p>
           )}
