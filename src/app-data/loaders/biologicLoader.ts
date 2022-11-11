@@ -32,6 +32,7 @@ export async function biologicLoader(fileCollection: FileCollection) {
           mpr.data.variables,
         );
         const result: MeasurementBase = {
+          title: file.name,
           ...info,
           meta: mpr.settings.variables,
           data: [{ variables }],
@@ -43,10 +44,11 @@ export async function biologicLoader(fileCollection: FileCollection) {
         if (mpt.data?.variables) {
           // puts the "useful" variables at x and y for default plot.
           const variables = preferredXY(
-            mpt.settings?.technique,
+            mpt.settings?.variables.technique,
             mpt.data.variables,
           );
           const result: MeasurementBase = {
+            title: file.name,
             ...info,
             meta: mpt.settings?.variables || {},
             data: [{ variables }],
