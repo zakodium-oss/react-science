@@ -5,7 +5,7 @@ import viteConfig from './vite.config';
 const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   retries: 0,
-  reporter: process.env.CI ? 'github' : [['list'], ['html']],
+  reporter: process.env.CI ? 'github' : 'list',
   use: {
     headless: true,
     ignoreHTTPSErrors: true,
