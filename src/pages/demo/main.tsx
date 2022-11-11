@@ -23,6 +23,9 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
         <a href="#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json">
           JCAMP-DX
         </a>
+        <a href="#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbigmap.json">
+          BIG-MAP
+        </a>
         <a href="#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json">
           Biologic
         </a>
