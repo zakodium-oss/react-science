@@ -5,8 +5,8 @@ import type { FileCollection } from 'filelist-utils';
 import { MeasurementKind, getEmptyMeasurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
-import { templateFromFile } from './utility/templateFromFile';
 import { createLogEntry, ParserLog } from './utility/parserLog';
+import { templateFromFile } from './utility/templateFromFile';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */
