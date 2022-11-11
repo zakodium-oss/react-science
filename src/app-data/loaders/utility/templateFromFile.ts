@@ -2,8 +2,9 @@ import { v4 } from '@lukeed/uuid';
 import type { FileCollectionItem } from 'filelist-utils';
 
 /**
- * loaders accepting a FileCollectionItem as input can use this function
- * to create a template for the MeasurementBase (part)
+ * creates a template for the MeasurementBase (part)
+ * generated from just the file metadata only and id
+ * @param obj - file as collection item.
  */
 export function templateFromFile({
   name,
