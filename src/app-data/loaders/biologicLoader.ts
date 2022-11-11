@@ -23,7 +23,7 @@ export async function biologicLoader(fileCollection: FileCollection) {
 
   for (const file of fileCollection.files) {
     try {
-      if (file.name.endsWith('.mpr')) {
+      if (/\.mpr$/i.test(file.name)) {
         const mpr = parseMPR(await file.arrayBuffer());
         const info = templateFromFile(file);
         // puts the "useful" variables at x and y for default plot.
@@ -38,7 +38,7 @@ export async function biologicLoader(fileCollection: FileCollection) {
           data: [{ variables }],
         };
         measurements[kind].entries.push(result);
-      } else if (file.name.endsWith('.mpt')) {
+      } else if (/\.mpt$/i.test(file.name)) {
         const mpt = parseMPT(await file.arrayBuffer());
         const info = templateFromFile(file);
         if (mpt.data?.variables) {
@@ -123,7 +123,7 @@ function setDefault(
   storeAt: 'x' | 'y',
 ) {
   for (const varum in variables) {
-    // find the key that has the label (or skip if not found)
+    // find the key with `label` (or skip if not found)
     if (
       variables[varum].label === label && //if not already at the right key
       varum !== storeAt
