@@ -1,20 +1,43 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 
-import type { Measurements } from '../../../DataState';
+import { getEmptyMeasurements } from '../../../DataState';
 import type { MeasurementBase } from '../../../MeasurementBase';
+import { ParserLog, createLogEntry } from '../../utility/parserLog';
+import { templateFromFile } from '../../utility/templateFromFile';
 
-export async function cary500Loader(fileCollection: FileCollection) {
-  const newMeasurements: Partial<Measurements> = {};
+export async function cary500Loader(
+  fileCollection: FileCollection,
+  logger?: boolean,
+) {
+  const newMeasurements = getEmptyMeasurements();
   const entries: MeasurementBase[] = [];
+  const logs: ParserLog[] = [];
 
   for (const file of fileCollection) {
     if (file.name.match(/\.csv$/i)) {
-      const experiments = await convert(file);
-      for (const experiment of experiments) {
-        entries.push(experiment);
+      try {
+        const experiments = await convert(file);
+        for (const experiment of experiments) {
+          entries.push(experiment);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          logs.push(
+            createLogEntry({
+              kind: 'error',
+              parser: 'cary500Loader',
+              message: 'Error parsing cary500 experiment.',
+              error,
+              relativePath: file.relativePath,
+            }),
+          );
+        }
       }
     }
+  }
+  if (logger && logs.length > 0) {
+    // eslint-disable-next-line no-console
+    console.error(logs);
   }
   newMeasurements.uvvis = { entries };
   return newMeasurements;
@@ -50,10 +73,7 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
       data: data.map((row) => Number(row[column + 1])),
     };
     experiments.push({
-      id: v4(),
-      filename: file.name,
-      path: file.relativePath,
-      info: {},
+      ...templateFromFile(file),
       title: titles[column],
       meta: JSON.parse(JSON.stringify(meta)),
       data: [{ variables: { x: xVariable, y: yVariable } }],
