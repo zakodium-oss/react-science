@@ -63,11 +63,12 @@ export const kindsLabel: Record<MeasurementKind, string> = {
 
 export type Loader = (
   fileCollection: FileCollection,
-) => Promise<Partial<Measurements>>;
+  logger?: boolean,
+) => Promise<Measurements>;
 
 export function mergeMeasurements(
-  measurements: Partial<Measurements>,
-  newMeasurements: Partial<Measurements>,
+  measurements: Measurements,
+  newMeasurements: Measurements,
 ) {
   for (const kind in newMeasurements) {
     if (!measurements[kind]) {

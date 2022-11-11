@@ -1,6 +1,6 @@
 import type { FileCollection } from 'filelist-utils';
 
-import { Loader, Measurements, mergeMeasurements } from './DataState';
+import { getEmptyMeasurements, Loader, mergeMeasurements } from './DataState';
 import { enhance } from './enhancers/enhance';
 
 interface LoadOptions {
@@ -12,10 +12,10 @@ export async function loadMeasurements(
   fileCollection: FileCollection,
   options: LoadOptions = {},
 ) {
-  const measurements: Partial<Measurements> = {};
+  const measurements = getEmptyMeasurements();
   const { loaders = [], enhancers = {} } = options;
   for (const loader of loaders) {
-    const loaderData = await loader(fileCollection);
+    const loaderData = await loader(fileCollection, true);
     enhance(loaderData, enhancers);
     mergeMeasurements(measurements, loaderData);
   }

@@ -1,57 +1,74 @@
-import { v4 } from '@lukeed/uuid';
-import { convert } from 'biologic-converter';
+import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
 
-import type { Measurements } from '../DataState';
+import { MeasurementKind, getEmptyMeasurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
+
+import { createLogEntry, ParserLog } from './utility/parserLog';
+import { templateFromFile } from './utility/templateFromFile';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */
 type MeasurementDataVariable = Record<string, MeasurementVariable>;
 /**
- * Loader for biologic files, using biologic-converter
- * @param fileCollection
- * @returns iv-MeasurementBase for each file in the collection
+ *
+ * @param fileCollection - the dragged file/files
+ * @param logger - whether to log to console or not
+ * @returns - new measurements object to be merged
  */
-export async function biologicLoader(fileCollection: FileCollection) {
-  const measurements: Partial<Measurements> = {};
-  const entries: MeasurementBase[] = [];
-  const results = await convert(fileCollection);
-  for (let { dir, mpr, mpt } of results) {
-    const prepare: Partial<MeasurementBase> = {
-      id: v4(),
-      filename: '',
-      path: dir,
-      info: {},
-      title: '',
-    };
-    if (mpr !== undefined) {
-      prepare.meta = { ...mpr.settings.variables };
-      // puts the "useful" variables at x and y for default plot.
-      const variables = preferredXY(prepare.meta.technique, mpr.data.variables);
-      prepare.data = [{ variables }];
-    } else if (mpt !== undefined) {
-      prepare.meta = { ...mpt.settings?.variables };
-      if (mpt.data?.variables) {
+export async function biologicLoader(
+  fileCollection: FileCollection,
+  logger?: boolean,
+) {
+  const measurements = getEmptyMeasurements();
+  const kind: MeasurementKind = 'iv';
+  const logs: ParserLog[] = [];
+
+  for (const file of fileCollection.files) {
+    try {
+      if (/\.mpr$/i.test(file.name)) {
+        const mpr = parseMPR(await file.arrayBuffer());
+        const info = templateFromFile(file);
         // puts the "useful" variables at x and y for default plot.
         const variables = preferredXY(
-          prepare.meta?.technique,
-          mpt.data.variables,
+          mpr.settings.variables.technique,
+          mpr.data.variables,
         );
-        prepare.data = [{ variables }];
+        const result: MeasurementBase = {
+          title: file.name,
+          ...info,
+          meta: mpr.settings.variables,
+          data: [{ variables }],
+        };
+        measurements[kind].entries.push(result);
+      } else if (/\.mpt$/i.test(file.name)) {
+        const mpt = parseMPT(await file.arrayBuffer());
+        const info = templateFromFile(file);
+        if (mpt.data?.variables) {
+          // puts the "useful" variables at x and y for default plot.
+          const variables = preferredXY(
+            mpt.settings?.variables.technique,
+            mpt.data.variables,
+          );
+          const result: MeasurementBase = {
+            title: file.name,
+            ...info,
+            meta: mpt.settings?.variables || {},
+            data: [{ variables }],
+          };
+          measurements[kind].entries.push(result);
+        }
+      }
+    } catch (error) {
+      //send error to UI to show to User ?
+      if (error instanceof Error) {
+        logs.push(createLogEntry({ error, relativePath: file.relativePath }));
       }
     }
-    if (!prepare.data) {
-      // no data ? skip this file
-      // need a way to dispatch an error with the filename and a custom
-      // message
-      continue;
-    }
-    //will notify if the key is not a valid kind
-    entries.push(prepare as MeasurementBase);
   }
-  measurements.iv = { entries };
+  // eslint-disable-next-line no-console
+  if (logger && logs.length > 0) console.log(logs);
   return measurements;
 }
 
@@ -93,7 +110,7 @@ function preferredXY(
       break;
     }
     default:
-      return variables;
+      break;
   }
   return variables;
 }
@@ -110,8 +127,8 @@ function setDefault(
   label: string,
   storeAt: 'x' | 'y',
 ) {
-  for (let varum in variables) {
-    // find the key that has the label (or skip if not found)
+  for (const varum in variables) {
+    // find the key with `label` (or skip if not found)
     if (
       variables[varum].label === label && //if not already at the right key
       varum !== storeAt
@@ -122,7 +139,7 @@ function setDefault(
         // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete variables[varum];
       } else {
-        // if the storeAt is already occupied, we swap the two
+        // if the storeAt is already occupied, swap the two
         const originalX = variables[storeAt];
         const newX = variables[varum];
         variables[storeAt] = newX;

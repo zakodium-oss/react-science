@@ -1,30 +1,52 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
-import type { Measurements } from '../DataState';
-import type { MeasurementBase } from '../MeasurementBase';
+import { getEmptyMeasurements, Measurements } from '../DataState';
 
-export async function wdfLoader(fileCollection: FileCollection) {
-  const measurements: Partial<Measurements> = {};
-  const entries: MeasurementBase[] = [];
+import { ParserLog, createLogEntry } from './utility/parserLog';
+import { templateFromFile } from './utility/templateFromFile';
+
+/**
+ *
+ * @param fileCollection - the dragged file/files
+ * @param logger - whether to log to console or not
+ * @returns - new measurements object to be merged
+ */
+export async function wdfLoader(
+  fileCollection: FileCollection,
+  logger?: boolean,
+): Promise<Measurements> {
+  const measurements = getEmptyMeasurements();
+  const logs: ParserLog[] = [];
+
   for (const file of fileCollection) {
-    if (file.name.match(/\.wdf$/i)) {
-      const parsed = parse(await file.arrayBuffer());
-
-      // for now WDF file format is always expected to be Raman
-      entries.push({
-        id: v4(),
-        meta: parsed.fileHeader,
-        filename: file.name,
-        path: file.relativePath || '',
-        info: {},
-        title: parsed.fileHeader.title,
-        data: normalizeSpectra(parsed.blocks),
-      });
+    if (/\.wdf$/i.test(file.name)) {
+      try {
+        const parsed = parse(await file.arrayBuffer());
+        measurements.raman.entries.push({
+          meta: parsed.fileHeader,
+          ...templateFromFile(file),
+          title: parsed.fileHeader.title,
+          data: normalizeSpectra(parsed.blocks),
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          logs.push(
+            createLogEntry({
+              parser: 'wdf',
+              error,
+              message: 'error reading wdf file',
+              relativePath: file.relativePath,
+            }),
+          );
+        }
+      }
     }
   }
-  measurements.raman = { entries };
+  if (logger && logs.length > 0) {
+    // eslint-disable-next-line no-console
+    console.error(logs);
+  }
   return measurements;
 }
 

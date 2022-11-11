@@ -1,54 +1,76 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
-import { assert } from '../../utils/assert';
-import type { MeasurementKind, Loader, Measurements } from '../DataState';
+import {
+  Measurements,
+  MeasurementKind,
+  getEmptyMeasurements,
+} from '../DataState';
 
-export const cdfLoader: Loader = async function cdfLoader(
+import { ParserLog, createLogEntry } from './utility/parserLog';
+import { templateFromFile } from './utility/templateFromFile';
+
+export async function cdfLoader(
   fileCollection: FileCollection,
-) {
-  const newMeasurements: Partial<Measurements> = {};
+  logger?: boolean,
+): Promise<Measurements> {
+  const newMeasurements = getEmptyMeasurements();
+  const logs: ParserLog[] = [];
   for (const file of fileCollection) {
-    if (file.name.match(/\.cdf$/i)) {
-      const reader = new NetCDFReader(await file.arrayBuffer(), { meta: true });
-      let kind: MeasurementKind | undefined;
-      if (
-        reader.dataVariableExists('mass_values') &&
-        reader.dataVariableExists('time_values')
-      ) {
-        kind = 'gclcms';
-      } else if (
-        reader.dataVariableExists('ordinate_values') &&
-        reader.getAttribute('detector_name') &&
-        reader.getAttribute('detector_name').match(/dad|tic/i)
-      ) {
-        kind = 'gclc';
-      } else {
-        return newMeasurements;
-      }
+    let kind: MeasurementKind;
+    if (/\.cdf$/i.test(file.name)) {
+      try {
+        const reader = new NetCDFReader(await file.arrayBuffer(), {
+          meta: true,
+        });
 
-      addMeta(reader, reader.globalAttributes);
-      if (!newMeasurements[kind]) {
-        newMeasurements[kind] = { entries: [] };
+        if (
+          reader.dataVariableExists('mass_values') &&
+          reader.dataVariableExists('time_values')
+        ) {
+          kind = 'gclcms';
+        } else if (
+          reader.dataVariableExists('ordinate_values') &&
+          reader.getAttribute('detector_name') &&
+          reader.getAttribute('detector_name').match(/dad|tic/i)
+        ) {
+          kind = 'gclc';
+        } else {
+          return newMeasurements;
+        }
+
+        addMeta(reader, reader.globalAttributes);
+
+        newMeasurements[kind].entries.push({
+          ...templateFromFile(file),
+          meta: reader.header.meta,
+          title: reader.getAttribute('experiment_title'),
+          data:
+            kind === 'gclcms'
+              ? chromatogramWithMassSpectra(reader)
+              : chromatogram(reader),
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          //send error to UI ?
+          logs.push(
+            createLogEntry({
+              error,
+              parser: 'cdfLoader',
+              message: 'error parsing file from cdfLoader',
+              relativePath: file.relativePath,
+            }),
+          );
+        }
       }
-      assert(newMeasurements[kind], 'Error while loading, kind is not defined');
-      newMeasurements[kind]?.entries.push({
-        id: v4(),
-        meta: reader.header.meta,
-        filename: file.name,
-        path: file.relativePath || '',
-        info: {},
-        title: reader.getAttribute('experiment_title'),
-        data:
-          kind === 'gclcms'
-            ? chromatogramWithMassSpectra(reader)
-            : chromatogram(reader),
-      });
     }
   }
+  if (logger && logs.length > 0) {
+    // eslint-disable-next-line no-console
+    console.error(logs);
+  }
   return newMeasurements;
-};
+}
 
 function chromatogramWithMassSpectra(reader) {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
