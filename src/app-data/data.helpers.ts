@@ -38,7 +38,7 @@ export function getFirstMeasurementOrFail(
   measurements: Measurements,
   kind: MeasurementKind,
 ) {
-  const measurement = measurements[kind].entries[0];
+  const measurement = measurements[kind].entries[0] || null;
   assertNotNull(measurement);
 
   return { kind, measurement };

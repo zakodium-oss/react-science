@@ -15,6 +15,7 @@ import {
   mergeMeasurements,
   getEmptyDataState,
   MeasurementKind,
+  kindsLabel,
 } from './DataState';
 import {
   getFirstMeasurementOrFail,
@@ -100,22 +101,22 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       return;
     case 'ADD_MEASUREMENTS': {
       mergeMeasurements(draft.data.measurements, action.payload);
-      for (let kind of Object.keys(action.payload) as MeasurementKind[]) {
-        if (!draft.view.selectedMeasurements[kind]) {
-          const measurement = getFirstMeasurementOrFail(
+
+      for (const kind of Object.keys(kindsLabel).filter(
+        (k) => k in action.payload,
+      ) as MeasurementKind[]) {
+        if (
+          !draft.view.selectedMeasurements[kind] &&
+          draft.data.measurements[kind].entries.length > 0
+        ) {
+          const { measurement } = getFirstMeasurementOrFail(
             draft.data.measurements,
             kind,
           );
-          if (measurement) {
-            const id = measurement.measurement.id;
-            draft.view.selectedMeasurements[kind] = [id];
-            if (draft.view.selectedKind === undefined) {
-              draft.view.selectedKind = kind;
-            }
-            // draft.view.currentMeasurement = {
-            //   kind,
-            //   id: measurement.measurement.id,
-            // };
+          const id = measurement.id;
+          draft.view.selectedMeasurements[kind] = [id];
+          if (draft.view.selectedKind === undefined) {
+            draft.view.selectedKind = kind;
           }
         }
       }
