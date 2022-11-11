@@ -35,7 +35,11 @@ export function DropZoneContainer(
   );
 }
 
-export function DropZone(props: DropZoneProps) {
+export function DropZone(
+  props: DropZoneProps & {
+    emptyText?: string;
+  },
+) {
   return <DropZoneContent {...props} />;
 }
 
@@ -44,12 +48,14 @@ function DropZoneContent(
     children?: JSX.Element;
     isContainer?: boolean;
     onClick?: MouseEventHandler<HTMLDivElement>;
+    emptyText?: string;
   },
 ) {
   const {
     color = 'black',
     children,
     onDrop,
+    emptyText = 'Drag and drop your files here, or click to select files',
     isContainer = false,
     onClick,
     fileValidator,
@@ -117,9 +123,7 @@ function DropZoneContent(
               <p>Drop the files here</p>
             </div>
           ) : isContainer ? null : (
-            <p css={centerStyle}>
-              Drag and drop your files here, or click to select files
-            </p>
+            <p css={centerStyle}>{emptyText}</p>
           )}
         </div>
       </div>
