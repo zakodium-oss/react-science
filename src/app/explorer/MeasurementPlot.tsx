@@ -4,7 +4,7 @@ import { LineSeries, PlotController } from 'react-plot';
 
 import type { MeasurementBase } from '../../app-data/index';
 
-import { BasicComponent } from './utils';
+import { BasicComponent } from '../helpers/react-plot';
 
 type Measurement = Pick<
   MeasurementBase,

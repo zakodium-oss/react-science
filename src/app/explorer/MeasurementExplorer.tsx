@@ -3,7 +3,9 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
-import { MeasurementMassPlot, MeasurementPlot, MeasurementPlotProps } from '.';
+import { MeasurementMassPlot } from '../kinds/mass/MeasurementMassPlot';
+
+import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
 
 export interface MeasurementExplorerProps
   extends Omit<MeasurementPlotProps, keyof ExplorerInfo> {

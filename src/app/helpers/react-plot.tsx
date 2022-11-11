@@ -14,7 +14,7 @@ import {
   Axis,
 } from 'react-plot';
 
-import type { MeasurementPlotProps } from './MeasurementPlot';
+import type { MeasurementPlotProps } from '../explorer/MeasurementPlot';
 
 export function BasicComponent(
   props: MeasurementPlotProps & {
