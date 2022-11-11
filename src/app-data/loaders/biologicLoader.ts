@@ -1,4 +1,4 @@
-import { convert } from 'biologic-converter';
+import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
 
@@ -25,38 +25,34 @@ export async function biologicLoader(fileCollection: FileCollection) {
   for (const file of fileCollection.files) {
     try {
       if (file.name.endsWith('.mpr')) {
-        const mpr = await convert(await file.arrayBuffer(), 'mpr')?.mpr;
-        if (mpr !== undefined) {
-          const prepare = templateFromFile(file);
+        const mpr = parseMPR(await file.arrayBuffer());
+        const prepare = templateFromFile(file);
+        // puts the "useful" variables at x and y for default plot.
+        const variables = preferredXY(
+          prepare.meta.technique,
+          mpr.data.variables,
+        );
+        result = {
+          ...prepare,
+          meta: mpr.settings.variables,
+          data: [{ variables }],
+        };
+        measurements[kind].entries.push(result);
+      } else if (file.name.endsWith('.mpt')) {
+        const mpt = parseMPT(await file.arrayBuffer());
+        const prepare = templateFromFile(file);
+        if (mpt.data?.variables) {
           // puts the "useful" variables at x and y for default plot.
           const variables = preferredXY(
-            prepare.meta.technique,
-            mpr.data.variables,
+            prepare.meta?.technique,
+            mpt.data.variables,
           );
           result = {
             ...prepare,
-            meta: mpr.settings.variables,
+            meta: mpt.settings?.variables || {},
             data: [{ variables }],
           };
           measurements[kind].entries.push(result);
-        }
-      } else if (file.name.endsWith('.mpt')) {
-        const mpt = await convert(await file.arrayBuffer(), 'mpt')?.mpt;
-        if (mpt !== undefined) {
-          const prepare = templateFromFile(file);
-          if (mpt.data?.variables) {
-            // puts the "useful" variables at x and y for default plot.
-            const variables = preferredXY(
-              prepare.meta?.technique,
-              mpt.data.variables,
-            );
-            result = {
-              ...prepare,
-              meta: mpt.settings?.variables || {},
-              data: [{ variables }],
-            };
-            measurements[kind].entries.push(result);
-          }
         }
       }
     } catch (error) {
