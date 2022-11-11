@@ -63,7 +63,7 @@ export async function biologicLoader(fileCollection: FileCollection) {
     }
   }
   // eslint-disable-next-line no-console
-  console.error(logs);
+  if (logs.length > 0) console.log(logs);
   return measurements;
 }
 
