@@ -89,30 +89,23 @@ function DropZoneArea() {
           flexDirection: 'column',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Header>
-            <Toolbar orientation="horizontal">
-              <Toolbar.Item titleOrientation="horizontal" title="Logo">
-                <FaMeteor />
-              </Toolbar.Item>
-              <Toolbar.Item
-                titleOrientation="horizontal"
-                title="Save as ium"
-                onClick={() => saveHandler()}
-              >
-                <FaSave />
-              </Toolbar.Item>
-            </Toolbar>
-            <Toolbar orientation="horizontal">
-              <FullscreenToolbarButton />
-            </Toolbar>
-          </Header>
-        </div>
+        <Header>
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item titleOrientation="horizontal" title="Logo">
+              <FaMeteor />
+            </Toolbar.Item>
+            <Toolbar.Item
+              titleOrientation="horizontal"
+              title="Save as ium"
+              onClick={() => saveHandler()}
+            >
+              <FaSave />
+            </Toolbar.Item>
+          </Toolbar>
+          <Toolbar orientation="horizontal">
+            <FullscreenToolbarButton />
+          </Toolbar>
+        </Header>
         <div
           style={{
             display: 'flex',
