@@ -2,8 +2,8 @@ import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 
 import type { Measurements } from '../../../DataState';
 import type { MeasurementBase } from '../../../MeasurementBase';
+import { getMeasurementInfoFromFile } from '../../utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from '../../utility/parserLog';
-import { templateFromFile } from '../../utility/getMeasurementInfoFromFile';
 
 export async function cary500Loader(
   fileCollection: FileCollection,
@@ -14,7 +14,7 @@ export async function cary500Loader(
   const logs: ParserLog[] = [];
 
   for (const file of fileCollection) {
-    if (file.name.match(/\.csv$/i)) {
+    if (/\.csv$/i.test(file.name)) {
       try {
         const experiments = await convert(file);
         for (const experiment of experiments) {
@@ -73,7 +73,7 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
       data: data.map((row) => Number(row[column + 1])),
     };
     experiments.push({
-      ...templateFromFile(file),
+      ...getMeasurementInfoFromFile(file),
       title: titles[column],
       meta: JSON.parse(JSON.stringify(meta)),
       data: [{ variables: { x: xVariable, y: yVariable } }],

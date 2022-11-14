@@ -4,8 +4,8 @@ import { NetCDFReader } from 'netcdfjs';
 import { assert } from '../../utils/assert';
 import type { Measurements, MeasurementKind } from '../DataState';
 
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from './utility/parserLog';
-import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 export async function cdfLoader(
   fileCollection: FileCollection,
@@ -45,7 +45,7 @@ export async function cdfLoader(
           'Error while loading, kind is not defined',
         );
         newMeasurements[kind]?.entries.push({
-          ...templateFromFile(file),
+          ...getMeasurementInfoFromFile(file),
           meta: reader.header.meta,
           title: reader.getAttribute('experiment_title'),
           data:

@@ -5,8 +5,8 @@ import type { FileCollection } from 'filelist-utils';
 import type { Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { createLogEntry, ParserLog } from './utility/parserLog';
-import { templateFromFile } from './utility/templateFromFile';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */
@@ -29,7 +29,7 @@ export async function biologicLoader(
     try {
       if (/\.mpr$/i.test(file.name)) {
         const mpr = parseMPR(await file.arrayBuffer());
-        const info = templateFromFile(file);
+        const info = getMeasurementInfoFromFile(file);
         const meta = mpr.settings.variables;
         // puts the "useful" variables at x and y for default plot.
         const variables = preferredXY(meta.technique, mpr.data.variables);
@@ -42,7 +42,7 @@ export async function biologicLoader(
         entries.push(result);
       } else if (/\.mpt$/i.test(file.name)) {
         const { data, settings } = parseMPT(await file.arrayBuffer());
-        const info = templateFromFile(file);
+        const info = getMeasurementInfoFromFile(file);
         if (data?.variables) {
           // puts the "useful" variables at x and y for default plot.
           const metaData = settings?.variables;

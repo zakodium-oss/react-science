@@ -4,8 +4,8 @@ import { convert } from 'jcampconverter';
 import { assert } from '../../utils/assert';
 import type { MeasurementKind, Measurements } from '../DataState';
 
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { createLogEntry, ParserLog } from './utility/parserLog';
-import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 /**
  *
@@ -46,7 +46,7 @@ export async function jcampLoader(
             );
             newMeasurements[kind]?.entries.push({
               meta: measurement.meta,
-              ...templateFromFile(file),
+              ...getMeasurementInfoFromFile(file),
               info: measurement.info,
               title: measurement.title,
               data: normalizeSpectra(measurement.spectra),

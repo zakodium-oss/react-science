@@ -4,8 +4,8 @@ import { parse } from 'wdf-parser';
 import type { Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from './utility/parserLog';
-import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 /**
  *
@@ -27,7 +27,7 @@ export async function wdfLoader(
         const parsed = parse(await file.arrayBuffer());
         entries.push({
           meta: parsed.fileHeader,
-          ...templateFromFile(file),
+          ...getMeasurementInfoFromFile(file),
           title: parsed.fileHeader.title,
           data: normalizeSpectra(parsed.blocks),
         });

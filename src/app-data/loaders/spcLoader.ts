@@ -5,8 +5,8 @@ import { assert } from '../../utils/assert';
 import type { MeasurementKind, Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from './utility/parserLog';
-import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 /**
  *
@@ -34,7 +34,7 @@ export async function spcLoader(
         );
         measurements[spectraType]?.entries.push({
           meta: parsed.meta,
-          ...templateFromFile(file),
+          ...getMeasurementInfoFromFile(file),
           title: parsed.meta.memo,
           data: parsed.spectra as unknown as MeasurementBase['data'],
         });
