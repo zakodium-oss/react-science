@@ -2,7 +2,8 @@ import { KbsProvider } from 'react-kbs';
 
 import { AppStateProvider } from '../../app-data/index';
 import { RootLayout, FullScreenProvider } from '../../components/index';
-import MainLayout from '../big-map/MainLayout';
+
+import MainLayout from './MainLayout';
 
 export default function App() {
   return (
