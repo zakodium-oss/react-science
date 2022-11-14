@@ -6,6 +6,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export interface DropZoneProps {
   color?: string;
+  borderColor?: string;
   onDrop?: <T extends File>(
     acceptedFiles: T[],
     rejectedFiles?: FileRejection[],
@@ -14,23 +15,51 @@ export interface DropZoneProps {
   emptyText?: string;
 }
 
-const messageStyle = css`
-  font-weight: 600;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+const dropZoneCss = {
+  root: css`
+    position: relative;
+    height: 100%;
+    width: 100%;
+  `,
+  dragActive: css`
+    font-size: 1.5em;
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.7;
+    background-color: white;
+    border: 5px dashed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `,
+  empty: css`
+    font-size: 1.5em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    border: 5px dashed;
+    cursor: pointer;
+  `,
+};
+
+export function DropZone(props: DropZoneProps) {
+  return <DropZoneContent {...props} />;
+}
 
 export interface DropZoneContainerProps extends DropZoneProps {
   children: JSX.Element | null;
 }
 
 export function DropZoneContainer(props: DropZoneContainerProps) {
-  return <DropZoneContent {...props} />;
-}
-
-export function DropZone(props: DropZoneProps) {
   return <DropZoneContent {...props} />;
 }
 
@@ -43,6 +72,7 @@ function DropZoneContent(
 ) {
   const {
     color = 'black',
+    borderColor = 'gray',
     children = null,
     onDrop,
     emptyText = 'Click or drag and drop to add data.',
@@ -58,75 +88,45 @@ function DropZoneContent(
     },
     [onDrop],
   );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     noClick: hasChildren,
     validator: fileValidator,
     onDrop: handleOnDrop,
   });
+
   const getPropsOptions = useMemo(() => {
     if (onClick) {
       return { onClick };
     }
   }, [onClick]);
+
   return (
-    <div
-      {...getRootProps(getPropsOptions)}
-      css={css`
-        overflow: hidden;
-        position: relative;
-        ${hasChildren ? null : 'min-height: 150px; cursor: pointer;'}
-        height: 100%;
-        width: 100%;
-      `}
-      style={{
-        border:
-          isDragActive || !hasChildren ? `2px dashed ${color}` : undefined,
-      }}
-    >
-      <div
-        css={css`
-          width: 100%;
-          height: 100%;
-          display: flex;
-        `}
-      >
-        {hasChildren ? (
-          <div
-            css={css`
-              width: 100%;
-              opacity: ${isDragActive ? 0.3 : 1};
-            `}
-          >
-            {children}
-          </div>
-        ) : null}
-
-        <div style={{ fontSize: '1.5em' }}>
-          {isDragActive ? (
-            <div css={messageStyle} style={{ color }}>
-              <FaCloudUploadAlt
-                size={70}
-                css={css`
-                  margin: auto;
-                `}
-              />
-
-              <p>Drop the files here.</p>
-            </div>
-          ) : hasChildren ? null : (
-            <p css={messageStyle} style={{ color }}>
-              {emptyText}
-            </p>
-          )}
+    <div {...getRootProps(getPropsOptions)} css={dropZoneCss.root}>
+      {children}
+      {isDragActive ? (
+        <div
+          css={dropZoneCss.dragActive}
+          style={{
+            borderColor,
+            color,
+          }}
+        >
+          <FaCloudUploadAlt size={70} />
+          <p>Drop the files here.</p>
         </div>
-      </div>
-      <input
-        type="file"
-        css={css`
-          text-align: center;
-        `}
-        {...getInputProps()}
-      />
+      ) : !hasChildren ? (
+        <div
+          css={dropZoneCss.empty}
+          style={{
+            borderColor,
+            color,
+          }}
+        >
+          {emptyText}
+        </div>
+      ) : null}
+      <input {...getInputProps()} />
     </div>
   );
 }
