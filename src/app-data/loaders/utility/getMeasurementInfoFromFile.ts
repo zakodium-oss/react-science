@@ -6,7 +6,7 @@ import type { FileCollectionItem } from 'filelist-utils';
  * generated from just the file metadata only and id
  * @param obj - file as collection item.
  */
-export function templateFromFile({
+export function getMeasurementInfoFromFile({
   name,
   relativePath,
   lastModified,

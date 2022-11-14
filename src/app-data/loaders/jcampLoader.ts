@@ -5,7 +5,7 @@ import { assert } from '../../utils/assert';
 import type { MeasurementKind, Measurements } from '../DataState';
 
 import { createLogEntry, ParserLog } from './utility/parserLog';
-import { templateFromFile } from './utility/templateFromFile';
+import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 /**
  *

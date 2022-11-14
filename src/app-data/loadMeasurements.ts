@@ -6,6 +6,7 @@ import { enhance } from './enhancers/enhance';
 interface LoadOptions {
   loaders?: Loader[];
   enhancers?;
+  logger?: boolean;
 }
 
 export async function loadMeasurements(
@@ -13,9 +14,9 @@ export async function loadMeasurements(
   options: LoadOptions = {},
 ) {
   const measurements: Partial<Measurements> = {};
-  const { loaders = [], enhancers = {} } = options;
+  const { loaders = [], enhancers = {}, logger = true } = options;
   for (const loader of loaders) {
-    const loaderData = await loader(fileCollection, true);
+    const loaderData = await loader(fileCollection, logger);
     enhance(loaderData, enhancers);
     mergeMeasurements(measurements, loaderData);
   }

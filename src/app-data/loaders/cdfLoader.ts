@@ -5,7 +5,7 @@ import { assert } from '../../utils/assert';
 import type { Measurements, MeasurementKind } from '../DataState';
 
 import { ParserLog, createLogEntry } from './utility/parserLog';
-import { templateFromFile } from './utility/templateFromFile';
+import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 export async function cdfLoader(
   fileCollection: FileCollection,

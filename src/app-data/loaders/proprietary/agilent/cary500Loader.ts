@@ -3,7 +3,7 @@ import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 import type { Measurements } from '../../../DataState';
 import type { MeasurementBase } from '../../../MeasurementBase';
 import { ParserLog, createLogEntry } from '../../utility/parserLog';
-import { templateFromFile } from '../../utility/templateFromFile';
+import { templateFromFile } from '../../utility/getMeasurementInfoFromFile';
 
 export async function cary500Loader(
   fileCollection: FileCollection,

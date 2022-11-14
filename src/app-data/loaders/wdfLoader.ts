@@ -5,7 +5,7 @@ import type { Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 import { ParserLog, createLogEntry } from './utility/parserLog';
-import { templateFromFile } from './utility/templateFromFile';
+import { templateFromFile } from './utility/getMeasurementInfoFromFile';
 
 /**
  *
