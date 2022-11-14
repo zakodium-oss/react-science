@@ -27,7 +27,7 @@ export function VerticalToolbar(props: { height: number }) {
   const [state, setState] = useState(items[1]);
 
   function handleChange({ id, children, title }: ToolbarItemProps) {
-    setState({ id, children, title });
+    setState({ id: id as string, children, title });
   }
 
   return (
@@ -52,7 +52,7 @@ export function VerticalToolbar(props: { height: number }) {
             {item.children}
           </Toolbar.Item>
         ))}
-        <Toolbar.Item id="test" title="Test">
+        <Toolbar.Item title="Test">
           <SvgBioDna style={{ width: 16, height: 16, display: 'block' }} />
         </Toolbar.Item>
       </Toolbar>
@@ -72,7 +72,7 @@ export function HorizontalToolbar() {
   const [state, setState] = useState(items[1]);
 
   function handleChange({ id, children, title }: ToolbarItemProps) {
-    setState({ id, children, title });
+    setState({ id: id as string, children, title });
   }
 
   return (
