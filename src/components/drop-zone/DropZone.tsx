@@ -12,12 +12,15 @@ export interface DropZoneProps {
   ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
-const centerStyle = css`
+
+const messageStyle = css`
+  font-weight: 600;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
 export function DropZoneContainer(
   props: DropZoneProps & {
     children: JSX.Element;
@@ -55,7 +58,7 @@ function DropZoneContent(
     color = 'black',
     children,
     onDrop,
-    emptyText = 'Drag and drop your files here, or click to select files',
+    emptyText = 'Click or drag and drop to add data.',
     isContainer = false,
     onClick,
     fileValidator,
@@ -85,17 +88,14 @@ function DropZoneContent(
         ${isContainer ? null : 'min-height: 150px; cursor: pointer;'}
         height: 100%;
         width: 100%;
-        ${isDragActive || !isContainer ? `border: 2px dashed ${color};` : null}
-        color: ${color};
-        display: flex;
-        align-items: center;
-        justify-content: center;
       `}
+      style={{
+        border:
+          isDragActive || !isContainer ? `2px dashed ${color}` : undefined,
+      }}
     >
       <div
         css={css`
-          text-align: center;
-          font-weight: 600;
           width: 100%;
           height: 100%;
           display: flex;
@@ -112,7 +112,7 @@ function DropZoneContent(
 
         <div style={{ fontSize: '1.5em' }}>
           {isDragActive ? (
-            <div css={centerStyle}>
+            <div css={messageStyle} style={{ color }}>
               <FaCloudUploadAlt
                 size={70}
                 css={css`
@@ -120,10 +120,12 @@ function DropZoneContent(
                 `}
               />
 
-              <p>Drop the files here</p>
+              <p>Drop the files here.</p>
             </div>
           ) : isContainer ? null : (
-            <p css={centerStyle}>{emptyText}</p>
+            <p css={messageStyle} style={{ color }}>
+              {emptyText}
+            </p>
           )}
         </div>
       </div>
