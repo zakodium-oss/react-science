@@ -9,6 +9,14 @@ import {
   useRef,
 } from 'react';
 
+type ElementType = HTMLDivElement & {
+  webkitRequestFullscreen(): Promise<void>;
+};
+
+type DocumentType = Document & {
+  webkitExitFullscreen(): Promise<void>;
+  webkitFullscreenElement: Element | null;
+};
 interface FullscreenProps {
   children: ReactNode;
 }
@@ -44,10 +52,13 @@ export function FullScreenProvider(props: FullscreenProps) {
 function FullscreenInner(props: FullscreenProps) {
   const { children } = props;
   const { isFullScreen, toggle } = useFullscreen();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<ElementType>(null);
   useEffect(() => {
     function onFullscreenChange() {
-      const value = Boolean(document.fullscreenElement);
+      const document = window.document as DocumentType;
+      const value = Boolean(
+        document.fullscreenElement || document.webkitFullscreenElement,
+      );
       if (!value && isFullScreen) toggle();
     }
     const div = ref.current;
@@ -63,15 +74,28 @@ function FullscreenInner(props: FullscreenProps) {
     };
   }, [isFullScreen, toggle]);
   useEffect(() => {
-    if (isFullScreen) {
-      ref.current?.requestFullscreen().catch(() => {
-        alert('Fullscreen is not supported');
-      });
+    if (isFullScreen && ref.current) {
+      if (ref.current.requestFullscreen) {
+        ref.current.requestFullscreen().catch(() => {
+          alert('Fullscreen is not supported');
+        });
+      } else if (ref.current.webkitRequestFullscreen) {
+        ref.current.webkitRequestFullscreen()?.catch(() => {
+          alert('Fullscreen is not supported');
+        });
+      }
     }
+    const document = window.document as DocumentType;
     if (!isFullScreen && document.fullscreenElement) {
-      document.exitFullscreen?.().catch(() => {
-        alert("Can't exit fullscreen");
-      });
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {
+          alert("Can't exit fullscreen");
+        });
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen().catch(() => {
+          alert("Can't exit fullscreen");
+        });
+      }
     }
   }, [isFullScreen]);
   return (
