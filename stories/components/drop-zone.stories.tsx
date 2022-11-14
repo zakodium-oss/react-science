@@ -63,7 +63,7 @@ export function Control({
 
 Control.args = {
   color: 'black',
-  emptyText: 'Drag and drop your files',
+  emptyText: 'Click or drag and drop to add data.',
 };
 
 export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
