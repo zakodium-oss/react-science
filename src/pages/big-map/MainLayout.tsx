@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+
 import {
   getCurrentMeasurement,
   getSelectedMeasurement,
@@ -11,7 +14,6 @@ import {
 } from '../../app/index';
 import {
   Accordion,
-  DropZone,
   DropZoneContainer,
   FullscreenToolbarButton,
   Header,
@@ -19,19 +21,43 @@ import {
   Toolbar,
 } from '../../components/index';
 
+import { useLoadFiles } from './hooks/useLoadFiles';
+
+const mainCss = {
+  root: css`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  `,
+  bottom: css`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+  `,
+  contents: css`
+    width: 100%;
+    height: 100%;
+  `,
+  measurement: css`
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+  `,
+  panels: css`
+    width: 100%;
+    height: 100%;
+    flex: 1 1 0%;
+  `,
+};
+
 export default function MainLayout() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurement(appState);
+  const loadFiles = useLoadFiles();
 
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <div css={mainCss.root}>
       <Header>
         <Toolbar orientation="horizontal">
           <div />
@@ -40,83 +66,51 @@ export default function MainLayout() {
           <FullscreenToolbarButton />
         </Toolbar>
       </Header>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flex: 1,
-        }}
-      >
+      <div css={mainCss.bottom}>
         <div>
           <Toolbar orientation="vertical">
             <div />
           </Toolbar>
         </div>
-        <div
-          style={{
-            width: '100%',
-            maxHeight: '100%',
-          }}
-        >
+        <div css={mainCss.contents}>
           <SplitPane
             initialSize="400px"
             initialClosed={500}
             controlledSide="end"
           >
-            <div
-              style={{
-                padding: 5,
-                width: '100%',
-                height: '100%',
-              }}
-            >
-              {measurement ? (
-                <DropZoneContainer>
+            <div css={mainCss.measurement}>
+              <DropZoneContainer onDrop={loadFiles}>
+                {measurement ? (
                   <MeasurementExplorer
                     measurement={measurement}
                     width="100%"
                     height="100%"
                     kind={appState.view.selectedKind === 'mass' ? 'mass' : '1d'}
                   />
-                </DropZoneContainer>
-              ) : (
-                <DropZone />
-              )}
+                ) : null}
+              </DropZoneContainer>
             </div>
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                flex: '1 1 0%',
-              }}
-            >
+            <div css={mainCss.panels}>
               <Accordion>
-                <Accordion.Item title="Measurement" defaultOpened>
-                  <div
-                    style={{
-                      flex: '1 1 0%',
-                      width: '100%',
+                <Accordion.Item title="Measurements" defaultOpened>
+                  <MeasurementsPanel
+                    measurements={appState.data.measurements}
+                    onTabSelect={(kind) => {
+                      dispatch({
+                        type: 'SELECT_MEASUREMENT_KIND',
+                        payload: kind,
+                      });
                     }}
-                  >
-                    <MeasurementsPanel
-                      measurements={appState.data.measurements}
-                      onTabSelect={(kind) => {
-                        dispatch({
-                          type: 'SELECT_MEASUREMENT_KIND',
-                          payload: kind,
-                        });
-                      }}
-                      selectedMeasurement={getSelectedMeasurement(appState)}
-                      onMeasurementSelect={({ measurement, kind }) => {
-                        dispatch({
-                          type: 'SELECT_MEASUREMENT',
-                          payload: { id: measurement.id, kind },
-                        });
-                      }}
-                    />
-                  </div>
+                    selectedMeasurement={getSelectedMeasurement(appState)}
+                    onMeasurementSelect={({ measurement, kind }) => {
+                      dispatch({
+                        type: 'SELECT_MEASUREMENT',
+                        payload: { id: measurement.id, kind },
+                      });
+                    }}
+                  />
                 </Accordion.Item>
-                <Accordion.Item title="Info Panel">
+                <Accordion.Item title="Measurement info" defaultOpened>
                   {measurement && (
                     <MeasurementInfoPanel measurement={measurement} />
                   )}

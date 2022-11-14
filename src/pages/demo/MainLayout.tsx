@@ -33,7 +33,7 @@ import {
   useHashSearchParams,
 } from '../../components/index';
 
-import { loadFiles } from './load';
+import { useLoadFiles } from './hooks/useLoadFiles';
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -53,6 +53,7 @@ export default function DropZoneArea() {
   const measurement = getCurrentMeasurement(appState);
   const hashSearchParams = useHashSearchParams();
   const fileListParam = hashSearchParams.get('filelist');
+  const loadFiles = useLoadFiles();
 
   function saveHandler(filename = 'file', spaceIndent = 0) {
     const data = JSON.stringify(
@@ -75,89 +76,85 @@ export default function DropZoneArea() {
   useEffect(() => {
     async function getData(url: string | null) {
       if (url) {
-        const filelist = await fileCollectionFromWebservice(url);
-        await loadFiles(filelist, dispatch);
+        const fileCollection = await fileCollectionFromWebservice(url);
+        loadFiles(fileCollection);
       }
     }
     void getData(fileListParam);
-  }, [dispatch, fileListParam]);
+  }, [loadFiles, fileListParam]);
   return (
-    <DropZoneContainer
-      onDrop={(files) => {
-        void loadFiles(files, dispatch);
+    <div
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
+      <Header>
+        <Toolbar orientation="horizontal">
+          <Toolbar.Item titleOrientation="horizontal" title="Logo">
+            <FaMeteor />
+          </Toolbar.Item>
+          <Toolbar.Item
+            titleOrientation="horizontal"
+            title="Save as ium"
+            onClick={() => saveHandler()}
+          >
+            <FaSave />
+          </Toolbar.Item>
+        </Toolbar>
+        <Toolbar orientation="horizontal">
+          <Toolbar.Item title="User manual">
+            <FaBook />
+          </Toolbar.Item>
+          <Toolbar.Item title="General settings">
+            <FaCogs />
+          </Toolbar.Item>
+          <FullscreenToolbarButton />
+        </Toolbar>
+      </Header>
       <div
         style={{
-          height: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
+          flex: 1,
         }}
       >
-        <Header>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item titleOrientation="horizontal" title="Logo">
-              <FaMeteor />
+        <div>
+          <Toolbar orientation="vertical">
+            <Toolbar.Item title="Glasses" active>
+              <FaGlasses />
             </Toolbar.Item>
-            <Toolbar.Item
-              titleOrientation="horizontal"
-              title="Save as ium"
-              onClick={() => saveHandler()}
-            >
-              <FaSave />
+            <Toolbar.Item title="Open in large mode">
+              <FaTabletAlt />
             </Toolbar.Item>
           </Toolbar>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item title="User manual">
-              <FaBook />
-            </Toolbar.Item>
-            <Toolbar.Item title="General settings">
-              <FaCogs />
-            </Toolbar.Item>
-            <FullscreenToolbarButton />
-          </Toolbar>
-        </Header>
+        </div>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flex: 1,
+            width: '100%',
+            maxHeight: '100%',
           }}
         >
-          <div>
-            <Toolbar orientation="vertical">
-              <Toolbar.Item title="Glasses" active>
-                <FaGlasses />
-              </Toolbar.Item>
-              <Toolbar.Item title="Open in large mode">
-                <FaTabletAlt />
-              </Toolbar.Item>
-            </Toolbar>
-          </div>
-          <div
-            style={{
-              width: '100%',
-              maxHeight: '100%',
-            }}
+          <SplitPane
+            initialSize="400px"
+            initialClosed={500}
+            controlledSide="end"
           >
-            <SplitPane
-              initialSize="400px"
-              initialClosed={500}
-              controlledSide="end"
+            <ErrorBoundary
+              FallbackComponent={ErrorFallback}
+              onReset={() => {
+                // reset the state of your app so the error doesn't happen again
+              }}
             >
-              <ErrorBoundary
-                FallbackComponent={ErrorFallback}
-                onReset={() => {
-                  // reset the state of your app so the error doesn't happen again
+              <div
+                style={{
+                  padding: 5,
+                  width: '100%',
+                  height: '100%',
                 }}
               >
-                <div
-                  style={{
-                    padding: 5,
-                    width: '100%',
-                    height: '100%',
-                  }}
-                >
+                <DropZoneContainer onDrop={loadFiles}>
                   {measurement ? (
                     <MeasurementExplorer
                       measurement={measurement}
@@ -167,55 +164,53 @@ export default function DropZoneArea() {
                         appState.view.selectedKind === 'mass' ? 'mass' : '1d'
                       }
                     />
-                  ) : (
-                    <span>No data, add them with drag and drop</span>
-                  )}
-                </div>
-              </ErrorBoundary>
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  flex: '1 1 0%',
-                }}
-              >
-                <Accordion>
-                  <Accordion.Item title="Measurement" defaultOpened>
-                    <div
-                      style={{
-                        flex: '1 1 0%',
-                        width: '100%',
-                      }}
-                    >
-                      <MeasurementsPanel
-                        measurements={appState.data.measurements}
-                        onTabSelect={(kind) => {
-                          dispatch({
-                            type: 'SELECT_MEASUREMENT_KIND',
-                            payload: kind,
-                          });
-                        }}
-                        selectedMeasurement={getSelectedMeasurement(appState)}
-                        onMeasurementSelect={({ measurement, kind }) => {
-                          dispatch({
-                            type: 'SELECT_MEASUREMENT',
-                            payload: { id: measurement.id, kind },
-                          });
-                        }}
-                      />
-                    </div>
-                  </Accordion.Item>
-                  <Accordion.Item title="Info Panel">
-                    {measurement && (
-                      <MeasurementInfoPanel measurement={measurement} />
-                    )}
-                  </Accordion.Item>
-                </Accordion>
+                  ) : null}
+                </DropZoneContainer>
               </div>
-            </SplitPane>
-          </div>
+            </ErrorBoundary>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                flex: '1 1 0%',
+              }}
+            >
+              <Accordion>
+                <Accordion.Item title="Measurement" defaultOpened>
+                  <div
+                    style={{
+                      flex: '1 1 0%',
+                      width: '100%',
+                    }}
+                  >
+                    <MeasurementsPanel
+                      measurements={appState.data.measurements}
+                      onTabSelect={(kind) => {
+                        dispatch({
+                          type: 'SELECT_MEASUREMENT_KIND',
+                          payload: kind,
+                        });
+                      }}
+                      selectedMeasurement={getSelectedMeasurement(appState)}
+                      onMeasurementSelect={({ measurement, kind }) => {
+                        dispatch({
+                          type: 'SELECT_MEASUREMENT',
+                          payload: { id: measurement.id, kind },
+                        });
+                      }}
+                    />
+                  </div>
+                </Accordion.Item>
+                <Accordion.Item title="Info Panel">
+                  {measurement && (
+                    <MeasurementInfoPanel measurement={measurement} />
+                  )}
+                </Accordion.Item>
+              </Accordion>
+            </div>
+          </SplitPane>
         </div>
       </div>
-    </DropZoneContainer>
+    </div>
   );
 }
