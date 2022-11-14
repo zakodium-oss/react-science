@@ -1,7 +1,8 @@
 import type { FileCollection } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
-import { getEmptyMeasurements, Measurements } from '../DataState';
+import type { Measurements } from '../DataState';
+import type { MeasurementBase } from '../MeasurementBase';
 
 import { ParserLog, createLogEntry } from './utility/parserLog';
 import { templateFromFile } from './utility/templateFromFile';
@@ -15,15 +16,16 @@ import { templateFromFile } from './utility/templateFromFile';
 export async function wdfLoader(
   fileCollection: FileCollection,
   logger?: boolean,
-): Promise<Measurements> {
-  const measurements = getEmptyMeasurements();
+): Promise<Partial<Measurements>> {
+  const measurements: Partial<Measurements> = {};
+  const entries: MeasurementBase[] = [];
   const logs: ParserLog[] = [];
 
   for (const file of fileCollection) {
     if (/\.wdf$/i.test(file.name)) {
       try {
         const parsed = parse(await file.arrayBuffer());
-        measurements.raman.entries.push({
+        entries.push({
           meta: parsed.fileHeader,
           ...templateFromFile(file),
           title: parsed.fileHeader.title,
@@ -47,6 +49,7 @@ export async function wdfLoader(
     // eslint-disable-next-line no-console
     console.error(logs);
   }
+  measurements.raman = { entries };
   return measurements;
 }
 

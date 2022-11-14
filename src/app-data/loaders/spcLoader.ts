@@ -1,12 +1,8 @@
 import type { FileCollection } from 'filelist-utils';
 import { parse, guessSpectraType } from 'spc-parser';
 
-import {
-  getEmptyMeasurements,
-  measurementKinds,
-  MeasurementKind,
-  Measurements,
-} from '../DataState';
+import { assert } from '../../utils/assert';
+import type { MeasurementKind, Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 import { ParserLog, createLogEntry } from './utility/parserLog';
@@ -21,22 +17,27 @@ import { templateFromFile } from './utility/templateFromFile';
 export async function spcLoader(
   fileCollection: FileCollection,
   logger?: boolean,
-) {
-  const measurements: Measurements = getEmptyMeasurements();
+): Promise<Partial<Measurements>> {
+  const measurements: Partial<Measurements> = {};
   const logs: ParserLog[] = [];
   for (const file of fileCollection) {
     if (/\.spc$/i.test(file.name)) {
       try {
         const parsed = parse(await file.arrayBuffer());
         const spectraType: MeasurementKind = guessSpectraType(parsed.meta);
-        if (measurementKinds.includes(spectraType)) {
-          measurements[spectraType].entries.push({
-            meta: parsed.meta,
-            ...templateFromFile(file),
-            title: parsed.meta.memo,
-            data: parsed.spectra as unknown as MeasurementBase['data'],
-          });
+        if (!measurements[spectraType]) {
+          measurements[spectraType] = { entries: [] };
         }
+        assert(
+          measurements[spectraType],
+          'Error while loading, kind is not defined',
+        );
+        measurements[spectraType]?.entries.push({
+          meta: parsed.meta,
+          ...templateFromFile(file),
+          title: parsed.meta.memo,
+          data: parsed.spectra as unknown as MeasurementBase['data'],
+        });
       } catch (error) {
         if (error instanceof Error) {
           logs.push(

@@ -1,11 +1,8 @@
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import {
-  getEmptyMeasurements,
-  MeasurementKind,
-  Measurements,
-} from '../DataState';
+import { assert } from '../../utils/assert';
+import type { MeasurementKind, Measurements } from '../DataState';
 
 import { createLogEntry, ParserLog } from './utility/parserLog';
 import { templateFromFile } from './utility/templateFromFile';
@@ -19,8 +16,8 @@ import { templateFromFile } from './utility/templateFromFile';
 export async function jcampLoader(
   fileCollection: FileCollection,
   logger?: boolean,
-): Promise<Measurements> {
-  const newMeasurements = getEmptyMeasurements();
+): Promise<Partial<Measurements>> {
+  const newMeasurements: Partial<Measurements> = {};
   const logs: ParserLog[] = [];
   for (const file of fileCollection) {
     if (/(?:\.jdx|\.dx)$/i.test(file.name)) {
@@ -40,7 +37,14 @@ export async function jcampLoader(
             kind = 'nmr';
           }
           if (kind) {
-            newMeasurements[kind].entries.push({
+            if (!newMeasurements[kind]) {
+              newMeasurements[kind] = { entries: [] };
+            }
+            assert(
+              newMeasurements[kind],
+              'Error while loading, kind is not defined',
+            );
+            newMeasurements[kind]?.entries.push({
               meta: measurement.meta,
               ...templateFromFile(file),
               info: measurement.info,

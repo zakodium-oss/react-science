@@ -1,6 +1,6 @@
 import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 
-import { getEmptyMeasurements } from '../../../DataState';
+import type { Measurements } from '../../../DataState';
 import type { MeasurementBase } from '../../../MeasurementBase';
 import { ParserLog, createLogEntry } from '../../utility/parserLog';
 import { templateFromFile } from '../../utility/templateFromFile';
@@ -8,8 +8,8 @@ import { templateFromFile } from '../../utility/templateFromFile';
 export async function cary500Loader(
   fileCollection: FileCollection,
   logger?: boolean,
-) {
-  const newMeasurements = getEmptyMeasurements();
+): Promise<Partial<Measurements>> {
+  const newMeasurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
   const logs: ParserLog[] = [];
 

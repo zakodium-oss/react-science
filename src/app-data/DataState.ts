@@ -67,8 +67,8 @@ export type Loader = (
 ) => Promise<Measurements>;
 
 export function mergeMeasurements(
-  measurements: Measurements,
-  newMeasurements: Measurements,
+  measurements: Partial<Measurements>,
+  newMeasurements: Partial<Measurements>,
 ) {
   for (const kind in newMeasurements) {
     if (!measurements[kind]) {

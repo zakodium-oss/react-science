@@ -2,7 +2,7 @@ import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
 
-import { MeasurementKind, getEmptyMeasurements } from '../DataState';
+import type { Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
 import { createLogEntry, ParserLog } from './utility/parserLog';
@@ -20,9 +20,9 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
 export async function biologicLoader(
   fileCollection: FileCollection,
   logger?: boolean,
-) {
-  const measurements = getEmptyMeasurements();
-  const kind: MeasurementKind = 'iv';
+): Promise<Partial<Measurements>> {
+  const measurements: Partial<Measurements> = {};
+  const entries: MeasurementBase[] = [];
   const logs: ParserLog[] = [];
 
   for (const file of fileCollection.files) {
@@ -41,7 +41,7 @@ export async function biologicLoader(
           meta: mpr.settings.variables,
           data: [{ variables }],
         };
-        measurements[kind].entries.push(result);
+        entries.push(result);
       } else if (/\.mpt$/i.test(file.name)) {
         const mpt = parseMPT(await file.arrayBuffer());
         const info = templateFromFile(file);
@@ -57,7 +57,7 @@ export async function biologicLoader(
             meta: mpt.settings?.variables || {},
             data: [{ variables }],
           };
-          measurements[kind].entries.push(result);
+          entries.push(result);
         }
       }
     } catch (error) {
@@ -69,6 +69,7 @@ export async function biologicLoader(
   }
   // eslint-disable-next-line no-console
   if (logger && logs.length > 0) console.log(logs);
+  measurements.iv = { entries };
   return measurements;
 }
 

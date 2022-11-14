@@ -1,11 +1,8 @@
 import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
-import {
-  Measurements,
-  MeasurementKind,
-  getEmptyMeasurements,
-} from '../DataState';
+import { assert } from '../../utils/assert';
+import type { Measurements, MeasurementKind } from '../DataState';
 
 import { ParserLog, createLogEntry } from './utility/parserLog';
 import { templateFromFile } from './utility/templateFromFile';
@@ -13,11 +10,11 @@ import { templateFromFile } from './utility/templateFromFile';
 export async function cdfLoader(
   fileCollection: FileCollection,
   logger?: boolean,
-): Promise<Measurements> {
-  const newMeasurements = getEmptyMeasurements();
+): Promise<Partial<Measurements>> {
+  const newMeasurements: Partial<Measurements> = {};
+  let kind: MeasurementKind | undefined;
   const logs: ParserLog[] = [];
   for (const file of fileCollection) {
-    let kind: MeasurementKind;
     if (/\.cdf$/i.test(file.name)) {
       try {
         const reader = new NetCDFReader(await file.arrayBuffer(), {
@@ -40,8 +37,14 @@ export async function cdfLoader(
         }
 
         addMeta(reader, reader.globalAttributes);
-
-        newMeasurements[kind].entries.push({
+        if (!newMeasurements[kind]) {
+          newMeasurements[kind] = { entries: [] };
+        }
+        assert(
+          newMeasurements[kind],
+          'Error while loading, kind is not defined',
+        );
+        newMeasurements[kind]?.entries.push({
           ...templateFromFile(file),
           meta: reader.header.meta,
           title: reader.getAttribute('experiment_title'),
