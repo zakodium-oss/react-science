@@ -24,6 +24,7 @@ test('loadMeasurements function', async () => {
   });
 
   const { ir, raman, uv } = measurements;
+  expect(Object.keys(measurements)).toStrictEqual(['nmr', 'ir', 'uv', 'raman']);
   expect(ir?.entries).toHaveLength(2);
 
   expect(ir?.entries[0].peaks).toHaveLength(18);
