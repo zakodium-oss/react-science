@@ -30,31 +30,29 @@ export async function biologicLoader(
       if (/\.mpr$/i.test(file.name)) {
         const mpr = parseMPR(await file.arrayBuffer());
         const info = templateFromFile(file);
+        const meta = mpr.settings.variables;
         // puts the "useful" variables at x and y for default plot.
-        const variables = preferredXY(
-          mpr.settings.variables.technique,
-          mpr.data.variables,
-        );
+        const variables = preferredXY(meta.technique, mpr.data.variables);
         const result: MeasurementBase = {
-          title: file.name,
+          title: `Experiment: ${meta.technique}`,
           ...info,
-          meta: mpr.settings.variables,
+          meta,
           data: [{ variables }],
         };
         entries.push(result);
       } else if (/\.mpt$/i.test(file.name)) {
-        const mpt = parseMPT(await file.arrayBuffer());
+        const { data, settings } = parseMPT(await file.arrayBuffer());
         const info = templateFromFile(file);
-        if (mpt.data?.variables) {
+        if (data?.variables) {
           // puts the "useful" variables at x and y for default plot.
-          const variables = preferredXY(
-            mpt.settings?.variables.technique,
-            mpt.data.variables,
-          );
+          const metaData = settings?.variables;
+          const variables = preferredXY(metaData?.technique, data.variables);
           const result: MeasurementBase = {
-            title: file.name,
+            title: metaData.technique
+              ? `Experiment: ${metaData.technique}`
+              : file.name,
             ...info,
-            meta: mpt.settings?.variables || {},
+            meta: metaData || {},
             data: [{ variables }],
           };
           entries.push(result);
@@ -68,7 +66,7 @@ export async function biologicLoader(
     }
   }
   // eslint-disable-next-line no-console
-  if (logger && logs.length > 0) console.log(logs);
+  if (logger && logs.length > 0) console.error(logs);
   measurements.iv = { entries };
   return measurements;
 }
@@ -91,23 +89,26 @@ function preferredXY(
 
   switch (technique) {
     case 'CA': {
-      //Chronoamperometry or Chronocoulometry
-      variables = setDefault(variables, 'time', 'x');
-      // I am not sure how to find out whether it is Chronoamperometry or Chronocoulometry
-      // (same experiment just changes what user is interested in.)
+      //Chronoamperometry or Chronocoulometry (how distinguish?)
       variables = setDefault(variables, 'I', 'y');
+      variables = setDefault(variables, 'time', 'x');
       break;
     }
     case 'CP': {
       //Chronopotentiometry
+      variables = setDefault(variables, '<Ewe>', 'y');
       variables = setDefault(variables, 'time', 'x');
-      variables = setDefault(variables, '<I>', 'y');
       break;
     }
     case 'CV': {
       //cyclic voltammetry
       variables = setDefault(variables, '<I>', 'y');
       variables = setDefault(variables, 'Ewe', 'x');
+      break;
+    }
+    case 'GCPL': {
+      variables = setDefault(variables, 'Ewe', 'y');
+      variables = setDefault(variables, 'time', 'x');
       break;
     }
     default:
