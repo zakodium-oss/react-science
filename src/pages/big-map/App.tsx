@@ -15,8 +15,8 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
 } from '../../app/index';
-import { FullscreenToolbarButton } from '../../components/fullscreen/FullscreenToolbarButton';
 import {
+  FullscreenToolbarButton,
   Accordion,
   DropZoneContainer,
   Header,

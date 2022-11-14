@@ -24,7 +24,6 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
 } from '../../app/index';
-import { FullscreenToolbarButton } from '../../components/fullscreen/FullscreenToolbarButton';
 import {
   Accordion,
   DropZoneContainer,
@@ -34,6 +33,7 @@ import {
   Toolbar,
   FullScreenProvider,
   useHashSearchParams,
+  FullscreenToolbarButton,
 } from '../../components/index';
 
 import { loadFiles } from './load';
