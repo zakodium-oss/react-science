@@ -5,14 +5,16 @@ import { createLogEntry } from '../parserLog';
 test('create a parser log object', () => {
   expect(
     createLogEntry({
-      relativePath: 'test/path',
+      relativePath: 'test/path.txt',
       branch: 'test-branch',
+      error: new Error('test error'),
     }),
   ).toStrictEqual({
     parser: 'biologic-converter',
     message: 'Error parsing biologic experiment.',
-    branch: 'test-branch',
     kind: 'error',
-    path: 'test/path',
+    branch: 'test-branch',
+    relativePath: 'test/path.txt',
+    error: new Error('test error'),
   });
 });

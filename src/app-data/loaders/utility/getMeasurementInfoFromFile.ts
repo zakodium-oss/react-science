@@ -15,7 +15,7 @@ export function getMeasurementInfoFromFile({
   return {
     id: v4(),
     filename: name,
-    path: relativePath,
+    relativePath,
     info: { lastModified, size },
   };
 }
