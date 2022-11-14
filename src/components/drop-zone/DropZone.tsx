@@ -12,7 +12,12 @@ export interface DropZoneProps {
   ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
 }
-
+const centerStyle = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 export function DropZoneContainer(
   props: DropZoneProps & {
     children: JSX.Element;
@@ -30,7 +35,11 @@ export function DropZoneContainer(
   );
 }
 
-export function DropZone(props: DropZoneProps) {
+export function DropZone(
+  props: DropZoneProps & {
+    emptyText?: string;
+  },
+) {
   return <DropZoneContent {...props} />;
 }
 
@@ -39,12 +48,14 @@ function DropZoneContent(
     children?: JSX.Element;
     isContainer?: boolean;
     onClick?: MouseEventHandler<HTMLDivElement>;
+    emptyText?: string;
   },
 ) {
   const {
     color = 'black',
     children,
     onDrop,
+    emptyText = 'Drag and drop your files here, or click to select files',
     isContainer = false,
     onClick,
     fileValidator,
@@ -60,7 +71,6 @@ function DropZoneContent(
     validator: fileValidator,
     onDrop: handleOnDrop,
   });
-
   const getPropsOptions = useMemo(() => {
     if (onClick) {
       return { onClick };
@@ -102,14 +112,7 @@ function DropZoneContent(
 
         <div style={{ fontSize: '1.5em' }}>
           {isDragActive ? (
-            <div
-              css={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              `}
-            >
+            <div css={centerStyle}>
               <FaCloudUploadAlt
                 size={70}
                 css={css`
@@ -120,19 +123,14 @@ function DropZoneContent(
               <p>Drop the files here</p>
             </div>
           ) : isContainer ? null : (
-            <p>Drag and drop your files here, or click to select files</p>
+            <p css={centerStyle}>{emptyText}</p>
           )}
         </div>
       </div>
       <input
         type="file"
         css={css`
-          opacity: 0;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
+          test-align: center;
         `}
         {...getInputProps()}
       />

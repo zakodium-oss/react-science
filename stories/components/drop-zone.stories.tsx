@@ -17,7 +17,7 @@ interface DropZoneStoryProps {
 }
 
 function fileValidator(file: File) {
-  if (file.name.length > 20) {
+  if (file?.name?.length > 20) {
     return {
       message: 'File name is larger than 20 characters',
       code: 'name-too-large',
@@ -26,13 +26,19 @@ function fileValidator(file: File) {
   return null;
 }
 
-export function Control({ color }: DropZoneStoryProps) {
+export function Control({
+  color,
+  emptyText,
+}: DropZoneStoryProps & {
+  emptyText?: string;
+}) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div>
       <DropZone
         fileValidator={fileValidator}
         color={color}
+        emptyText={emptyText}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
         }}
@@ -57,6 +63,7 @@ export function Control({ color }: DropZoneStoryProps) {
 
 Control.args = {
   color: 'black',
+  emptyText: 'Drag and drop your files',
 };
 
 export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
