@@ -130,7 +130,7 @@ function DropZoneContent(
       <input
         type="file"
         css={css`
-          test-align: center;
+          text-align: center;
         `}
         {...getInputProps()}
       />
