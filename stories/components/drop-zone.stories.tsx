@@ -34,15 +34,27 @@ export function Control({
 }) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
-    <div>
-      <DropZone
-        fileValidator={fileValidator}
-        color={color}
-        emptyText={emptyText}
-        onDrop={(files: FileWithPath[]) => {
-          setFiles(files);
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1em',
+      }}
+    >
+      <div
+        style={{
+          height: 200,
         }}
-      />
+      >
+        <DropZone
+          fileValidator={fileValidator}
+          color={color}
+          emptyText={emptyText}
+          onDrop={(files: FileWithPath[]) => {
+            setFiles(files);
+          }}
+        />
+      </div>
       {files.length > 0 && (
         <Table>
           <Table.Header>
@@ -69,7 +81,7 @@ Control.args = {
 export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
-    <div>
+    <div style={{ height: 500 }}>
       <DropZoneContainer
         fileValidator={fileValidator}
         color={color}
