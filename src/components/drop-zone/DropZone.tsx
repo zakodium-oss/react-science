@@ -11,6 +11,7 @@ export interface DropZoneProps {
     rejectedFiles?: FileRejection[],
   ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
+  emptyText?: string;
 }
 
 const messageStyle = css`
@@ -21,48 +22,35 @@ const messageStyle = css`
   transform: translate(-50%, -50%);
 `;
 
-export function DropZoneContainer(
-  props: DropZoneProps & {
-    children: JSX.Element;
-  },
-) {
-  const { children, ...other } = props;
-  return (
-    <DropZoneContent
-      {...other}
-      onClick={(event) => event.stopPropagation()}
-      isContainer
-    >
-      {children}
-    </DropZoneContent>
-  );
+export interface DropZoneContainerProps extends DropZoneProps {
+  children: JSX.Element | null;
 }
 
-export function DropZone(
-  props: DropZoneProps & {
-    emptyText?: string;
-  },
-) {
+export function DropZoneContainer(props: DropZoneContainerProps) {
+  return <DropZoneContent {...props} />;
+}
+
+export function DropZone(props: DropZoneProps) {
   return <DropZoneContent {...props} />;
 }
 
 function DropZoneContent(
   props: DropZoneProps & {
-    children?: JSX.Element;
-    isContainer?: boolean;
+    children?: JSX.Element | null;
     onClick?: MouseEventHandler<HTMLDivElement>;
     emptyText?: string;
   },
 ) {
   const {
     color = 'black',
-    children,
+    children = null,
     onDrop,
     emptyText = 'Click or drag and drop to add data.',
-    isContainer = false,
     onClick,
     fileValidator,
   } = props;
+
+  const hasChildren = children !== null;
 
   const handleOnDrop = useCallback(
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
@@ -71,6 +59,7 @@ function DropZoneContent(
     [onDrop],
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    noClick: hasChildren,
     validator: fileValidator,
     onDrop: handleOnDrop,
   });
@@ -85,13 +74,13 @@ function DropZoneContent(
       css={css`
         overflow: hidden;
         position: relative;
-        ${isContainer ? null : 'min-height: 150px; cursor: pointer;'}
+        ${hasChildren ? null : 'min-height: 150px; cursor: pointer;'}
         height: 100%;
         width: 100%;
       `}
       style={{
         border:
-          isDragActive || !isContainer ? `2px dashed ${color}` : undefined,
+          isDragActive || !hasChildren ? `2px dashed ${color}` : undefined,
       }}
     >
       <div
@@ -101,14 +90,16 @@ function DropZoneContent(
           display: flex;
         `}
       >
-        <div
-          css={css`
-            width: 100%;
-            opacity: ${isDragActive ? 0.3 : 1};
-          `}
-        >
-          {children}
-        </div>
+        {hasChildren ? (
+          <div
+            css={css`
+              width: 100%;
+              opacity: ${isDragActive ? 0.3 : 1};
+            `}
+          >
+            {children}
+          </div>
+        ) : null}
 
         <div style={{ fontSize: '1.5em' }}>
           {isDragActive ? (
@@ -122,7 +113,7 @@ function DropZoneContent(
 
               <p>Drop the files here.</p>
             </div>
-          ) : isContainer ? null : (
+          ) : hasChildren ? null : (
             <p css={messageStyle} style={{ color }}>
               {emptyText}
             </p>
