@@ -22,12 +22,8 @@ export function Fixed() {
       </Accordion.Item>
       <Accordion.Item title="With Toolbar">
         <Toolbar orientation="horizontal">
-          <Toolbar.Item id="A" title="Test A">
-            A
-          </Toolbar.Item>
-          <Toolbar.Item id="B" title="Test B">
-            B
-          </Toolbar.Item>
+          <Toolbar.Item title="Test A">A</Toolbar.Item>
+          <Toolbar.Item title="Test B">B</Toolbar.Item>
         </Toolbar>
       </Accordion.Item>
     </Accordion>

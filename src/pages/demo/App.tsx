@@ -24,6 +24,7 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
 } from '../../app/index';
+import { FullscreenToolbarButton } from '../../components/fullscreen/FullscreenToolbarButton';
 import {
   Accordion,
   DropZoneContainer,
@@ -32,7 +33,6 @@ import {
   SplitPane,
   Toolbar,
   FullScreenProvider,
-  useFullscreen,
   useHashSearchParams,
 } from '../../components/index';
 
@@ -68,7 +68,6 @@ function DropZoneArea() {
   const measurement = getCurrentMeasurement(appState);
   const hashSearchParams = useHashSearchParams();
   const fileListParam = hashSearchParams.get('filelist');
-  const { toggle } = useFullscreen();
 
   function saveHandler(filename = 'file', spaceIndent = 0) {
     const data = JSON.stringify(
@@ -119,16 +118,11 @@ function DropZoneArea() {
           >
             <Header>
               <Toolbar orientation="horizontal">
-                <Toolbar.Item
-                  titleOrientation="horizontal"
-                  id="logo"
-                  title="Logo"
-                >
+                <Toolbar.Item titleOrientation="horizontal" title="Logo">
                   <FaMeteor />
                 </Toolbar.Item>
                 <Toolbar.Item
                   titleOrientation="horizontal"
-                  id="save"
                   title="Save as ium"
                   onClick={() => saveHandler()}
                 >
@@ -136,15 +130,13 @@ function DropZoneArea() {
                 </Toolbar.Item>
               </Toolbar>
               <Toolbar orientation="horizontal">
-                <Toolbar.Item id="a" title="User manual">
+                <Toolbar.Item title="User manual">
                   <FaBook />
                 </Toolbar.Item>
-                <Toolbar.Item id="b" title="General settings">
+                <Toolbar.Item title="General settings">
                   <FaCogs />
                 </Toolbar.Item>
-                <Toolbar.Item id="c" title="Full screen" onClick={toggle}>
-                  <FaTabletAlt />
-                </Toolbar.Item>
+                <FullscreenToolbarButton />
               </Toolbar>
             </Header>
           </div>
@@ -157,10 +149,10 @@ function DropZoneArea() {
           >
             <div>
               <Toolbar orientation="vertical">
-                <Toolbar.Item id="a" title="Glasses" active>
+                <Toolbar.Item title="Glasses" active>
                   <FaGlasses />
                 </Toolbar.Item>
-                <Toolbar.Item id="b" title="Open in large mode">
+                <Toolbar.Item title="Open in large mode">
                   <FaTabletAlt />
                 </Toolbar.Item>
               </Toolbar>

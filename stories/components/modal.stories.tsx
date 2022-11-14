@@ -51,13 +51,13 @@ export function Control(props: { onSave: () => void }) {
             }}
           >
             <Toolbar orientation="vertical">
-              <Toolbar.Item id="react" title="react">
+              <Toolbar.Item title="react">
                 <FaReact />
               </Toolbar.Item>
-              <Toolbar.Item id="npm" title="npm">
+              <Toolbar.Item title="npm">
                 <FaNpm />
               </Toolbar.Item>
-              <Toolbar.Item id="nodejs" title="nodejs">
+              <Toolbar.Item title="nodejs">
                 <FaNodeJs />
               </Toolbar.Item>
             </Toolbar>
@@ -254,18 +254,18 @@ function DemoPage(props: { openModal: () => void }) {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar orientation="horizontal">
-            <Toolbar.Item titleOrientation="horizontal" id="logo" title="Logo">
+            <Toolbar.Item titleOrientation="horizontal" title="Logo">
               <FaMeteor />
             </Toolbar.Item>
           </Toolbar>
           <Toolbar orientation="horizontal">
-            <Toolbar.Item id="a" title="User manual">
+            <Toolbar.Item title="User manual">
               <FaBook />
             </Toolbar.Item>
-            <Toolbar.Item id="b" title="General settings">
+            <Toolbar.Item title="General settings">
               <FaCogs />
             </Toolbar.Item>
-            <Toolbar.Item id="c" title="Full screen">
+            <Toolbar.Item title="Full screen">
               <FaTabletAlt />
             </Toolbar.Item>
           </Toolbar>
@@ -279,10 +279,10 @@ function DemoPage(props: { openModal: () => void }) {
       >
         <div>
           <Toolbar orientation="vertical">
-            <Toolbar.Item id="a" title="Glasses" active>
+            <Toolbar.Item title="Glasses" active>
               <FaGlasses />
             </Toolbar.Item>
-            <Toolbar.Item id="b" title="Open in large mode">
+            <Toolbar.Item title="Open in large mode">
               <FaArrowsAlt />
             </Toolbar.Item>
           </Toolbar>
