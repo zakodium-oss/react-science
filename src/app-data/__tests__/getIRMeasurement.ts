@@ -22,5 +22,5 @@ export async function getIRMeasurement() {
     loaders,
     enhancers,
   });
-  return measurements.ir.entries[0];
+  return measurements?.ir.entries[0];
 }
