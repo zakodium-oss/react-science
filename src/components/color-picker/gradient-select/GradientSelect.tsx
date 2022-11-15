@@ -74,8 +74,8 @@ export function GradientSelect(props: GradientSelectProps) {
       <GradientSelectListbox>
         <Listbox.Button as={GradientSelectButton}>
           <GradientPreview scale={scales[value]} />
+          <GradientSelectChevron />
         </Listbox.Button>
-        <GradientSelectChevron />
         <Listbox.Options as={GradientSelectOptions}>
           {scaleOptions.map((option) => (
             <Listbox.Option as={Fragment} key={option} value={option}>
