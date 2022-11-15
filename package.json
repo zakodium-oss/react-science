@@ -1,6 +1,6 @@
 {
   "name": "analysis-ui-components",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "React components to build analysis UI",
   "exports": {
     "./app": {

@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.19.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.18.0...v0.19.0) (2022-11-15)
+
+
+### Features
+
+* accept many measurement in each kind ([#285](https://github.com/zakodium-oss/analysis-ui-components/issues/285)) ([c39abde](https://github.com/zakodium-oss/analysis-ui-components/commit/c39abde9d821ecee103a5c7c529f41ac330bf054))
+* add context menu dropdown ([#317](https://github.com/zakodium-oss/analysis-ui-components/issues/317)) ([f71c83c](https://github.com/zakodium-oss/analysis-ui-components/commit/f71c83cabadebb4b1dd6069a64da6646401a55dc))
+* add FullscreenToolbarButton ([#352](https://github.com/zakodium-oss/analysis-ui-components/issues/352)) ([225526d](https://github.com/zakodium-oss/analysis-ui-components/commit/225526d247951f7f7f2a4164923cfcfb4a0f59c3))
+* add GradientSelect component ([4112f5b](https://github.com/zakodium-oss/analysis-ui-components/commit/4112f5b7b43e04ad7ae7562ab3c061ce52075aa0))
+* add info panel to app ([#295](https://github.com/zakodium-oss/analysis-ui-components/issues/295)) ([110a25a](https://github.com/zakodium-oss/analysis-ui-components/commit/110a25a6b8423b6f8ef8cf2f6d03d7072950851e))
+* add Mass plot ([#303](https://github.com/zakodium-oss/analysis-ui-components/issues/303)) ([102fd1a](https://github.com/zakodium-oss/analysis-ui-components/commit/102fd1ab05ae1ac52bcd53fab28b49623f2c53f8))
+* add responsive chart option ([#256](https://github.com/zakodium-oss/analysis-ui-components/issues/256)) ([6d7b5a0](https://github.com/zakodium-oss/analysis-ui-components/commit/6d7b5a09f2039a3edfd3979fd667be7a55b0b932))
+* add the possibility to not select any measurement in measurement panel ([d5d9d73](https://github.com/zakodium-oss/analysis-ui-components/commit/d5d9d73f20ef60caf3cce8a835a1f4fe4b27ddcf))
+* cdf loader for gcms added ([#290](https://github.com/zakodium-oss/analysis-ui-components/issues/290)) ([79f9147](https://github.com/zakodium-oss/analysis-ui-components/commit/79f9147ed2db8bae7e4b874e92de997822da8486))
+* customize measurement stroke color ([#358](https://github.com/zakodium-oss/analysis-ui-components/issues/358)) ([d3c41f8](https://github.com/zakodium-oss/analysis-ui-components/commit/d3c41f820f3f6dc4b3134d91ac821eed784de988))
+* implement DropDownMenu ([#283](https://github.com/zakodium-oss/analysis-ui-components/issues/283)) ([800a5a1](https://github.com/zakodium-oss/analysis-ui-components/commit/800a5a172dfec1e4f078aefe813847add6c767f1))
+* improved cdf loader to work with hplc close [#298](https://github.com/zakodium-oss/analysis-ui-components/issues/298) ([#310](https://github.com/zakodium-oss/analysis-ui-components/issues/310)) ([0babd2a](https://github.com/zakodium-oss/analysis-ui-components/commit/0babd2a9e7d387044e74c6c10cc9fec3c6615bd3))
+* load state from .ium file ([#267](https://github.com/zakodium-oss/analysis-ui-components/issues/267)) ([443572a](https://github.com/zakodium-oss/analysis-ui-components/commit/443572a18291ef4a84c951d6a2496fe77df8dd7f))
+* save using ctrl+s ([#296](https://github.com/zakodium-oss/analysis-ui-components/issues/296)) ([e76a9db](https://github.com/zakodium-oss/analysis-ui-components/commit/e76a9db00c86f0b887deef4c4b1bf11136a91e75))
+* select measurement on drop ([#268](https://github.com/zakodium-oss/analysis-ui-components/issues/268)) ([d078aeb](https://github.com/zakodium-oss/analysis-ui-components/commit/d078aeb186703ade0394299684a7535daa351c35))
+* use smaller base size in components and express font sizes in em instead of pixel ([e819cf7](https://github.com/zakodium-oss/analysis-ui-components/commit/e819cf707ba7ab6e6ea7e9b831431a25ee9424b8))
+
+
+### Bug Fixes
+
+* add measurements ([#344](https://github.com/zakodium-oss/analysis-ui-components/issues/344)) ([09ed2cc](https://github.com/zakodium-oss/analysis-ui-components/commit/09ed2cc49c89868cab7a8b25283d0f0fb5ea742d))
+* add padding to y axis ([#360](https://github.com/zakodium-oss/analysis-ui-components/issues/360)) ([e419707](https://github.com/zakodium-oss/analysis-ui-components/commit/e419707314edc19c0d0e67e36809a068a656be3b))
+* add safari fullscreen case ([#356](https://github.com/zakodium-oss/analysis-ui-components/issues/356)) ([0aef859](https://github.com/zakodium-oss/analysis-ui-components/commit/0aef859ce0ad9cf7768620ed450485e8aa1bbf50))
+* avoid DropZone leaking style to children ([a267efa](https://github.com/zakodium-oss/analysis-ui-components/commit/a267efa2343e3ae16622ccf2455e39661d25c222))
+* do not propagate font size from DropZone to  children ([0386cb0](https://github.com/zakodium-oss/analysis-ui-components/commit/0386cb0c6d68e68d7cd9240bb9787fb8de5710a9))
+* do not wrap text in tabs ([4958f2e](https://github.com/zakodium-oss/analysis-ui-components/commit/4958f2eb875cce21a1e5c25aca23e590246ccf1e))
+* escape key to exit fullscreen ([#334](https://github.com/zakodium-oss/analysis-ui-components/issues/334)) ([7365d88](https://github.com/zakodium-oss/analysis-ui-components/commit/7365d88451a80df983ddb7d2a5d23304fb9ad9bf))
+* fix Dropzone layout ([#338](https://github.com/zakodium-oss/analysis-ui-components/issues/338)) ([f2c23f8](https://github.com/zakodium-oss/analysis-ui-components/commit/f2c23f8952f036e230e2a02706ade65bd60c1cdc))
+* **gradient-select:** allow to click on the chevron ([#362](https://github.com/zakodium-oss/analysis-ui-components/issues/362)) ([1febf3c](https://github.com/zakodium-oss/analysis-ui-components/commit/1febf3cd260c5fbb250927455d9cf1a62db51b14))
+* improve DropZone layout and style ([7738172](https://github.com/zakodium-oss/analysis-ui-components/commit/7738172aec969db6054c93eba23f630ac58134fe))
+* let split pane be resized with fixed-sized children ([#306](https://github.com/zakodium-oss/analysis-ui-components/issues/306)) ([0b9ccdd](https://github.com/zakodium-oss/analysis-ui-components/commit/0b9ccddf95a779c8c2208f4f32536e0c6f562008))
+* plot mass with labels ([#309](https://github.com/zakodium-oss/analysis-ui-components/issues/309)) ([1d45352](https://github.com/zakodium-oss/analysis-ui-components/commit/1d45352d937471e25a73f7fc9cc5f7f39a8b6e7a))
+* reduce icon size less drastically ([e6235f6](https://github.com/zakodium-oss/analysis-ui-components/commit/e6235f6d58c25bfa98599b18df696d632e2a78b4))
+
+
+### Documentation
+
+* add bigmap ([#348](https://github.com/zakodium-oss/analysis-ui-components/issues/348)) ([f969c8f](https://github.com/zakodium-oss/analysis-ui-components/commit/f969c8f94afd9589567a45864566b5c3b3f02a82))
+* add demo links on readme ([#265](https://github.com/zakodium-oss/analysis-ui-components/issues/265)) ([6aa3b0e](https://github.com/zakodium-oss/analysis-ui-components/commit/6aa3b0e9beb11e0b18ce5b45f6c8e50e930d6ce9))
+* add general info ([#271](https://github.com/zakodium-oss/analysis-ui-components/issues/271)) ([6f36ab0](https://github.com/zakodium-oss/analysis-ui-components/commit/6f36ab05af11f848d4ed98eb10c99184a713ae97))
+* add link to mass.json ([d2b58cd](https://github.com/zakodium-oss/analysis-ui-components/commit/d2b58cd65d5dbc421cf925e774d9484fcc64c70d))
+* adding info about loading new data ([b9d33af](https://github.com/zakodium-oss/analysis-ui-components/commit/b9d33af5eb262a03f75aef1a7cca484a479438bb))
+
 ## [0.18.0](https://github.com/zakodium-oss/analysis-ui-components/compare/v0.17.3...v0.18.0) (2022-10-20)
 
 
