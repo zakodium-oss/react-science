@@ -1,56 +1,77 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
 import { assert } from '../../utils/assert';
 import type { MeasurementKind, Measurements } from '../DataState';
 
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
+import { createLogEntry, ParserLog } from './utility/parserLog';
+
 /**
  *
- * @param fileCollection
- * @returns MeasurementBase for each file in the collection
- * no need for return type, it is inferred from the return statement
+ * @param fileCollection - the dragged file/files
+ * @param logger - whether to log to console or not
+ * @returns - new measurements object to be merged
  */
-export async function jcampLoader(fileCollection: FileCollection) {
+export async function jcampLoader(
+  fileCollection: FileCollection,
+  logs?: ParserLog[],
+): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
-
   for (const file of fileCollection) {
-    if (file.name.match(/(?:\.jdx|\.dx)$/i)) {
-      const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
-      for (const measurement of parsed.flatten) {
-        let kind: MeasurementKind | undefined;
-        if (measurement?.dataType?.match(/infrared|ir/i)) {
-          kind = 'ir';
-        } else if (measurement?.dataType?.match(/raman/i)) {
-          kind = 'raman';
-        } else if (measurement?.dataType?.match(/uv/i)) {
-          kind = 'uv';
-        } else if (measurement?.dataType?.match(/mass/i)) {
-          kind = 'mass';
-        } else if (measurement?.dataType?.match(/nmr/i)) {
-          kind = 'nmr';
-        }
-        if (kind) {
-          if (!newMeasurements[kind]) {
-            newMeasurements[kind] = { entries: [] };
+    if (/(?:\.jdx|\.dx)$/i.test(file.name)) {
+      try {
+        const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
+        for (const measurement of parsed.flatten) {
+          let kind: MeasurementKind | undefined;
+          if (measurement?.dataType?.match(/infrared|ir/i)) {
+            kind = 'ir';
+          } else if (measurement?.dataType?.match(/raman/i)) {
+            kind = 'raman';
+          } else if (measurement?.dataType?.match(/uv/i)) {
+            kind = 'uv';
+          } else if (measurement?.dataType?.match(/mass/i)) {
+            kind = 'mass';
+          } else if (measurement?.dataType?.match(/nmr/i)) {
+            kind = 'nmr';
           }
-          assert(
-            newMeasurements[kind],
-            'Error while loading, kind is not defined',
-          );
-          newMeasurements[kind]?.entries.push({
-            id: v4(),
-            meta: measurement.meta,
-            filename: file.name,
-            path: file.relativePath || '',
-            info: measurement.info,
-            title: measurement.title,
-            data: normalizeSpectra(measurement.spectra),
-          });
+          if (kind) {
+            if (!newMeasurements[kind]) {
+              newMeasurements[kind] = { entries: [] };
+            }
+            assert(
+              newMeasurements[kind],
+              'Error while loading, kind is not defined',
+            );
+            newMeasurements[kind]?.entries.push({
+              meta: measurement.meta,
+              ...getMeasurementInfoFromFile(file),
+              info: measurement.info,
+              title: measurement.title,
+              data: normalizeSpectra(measurement.spectra),
+            });
+          }
+        }
+      } catch (error) {
+        // send error to UI ?
+        if (error instanceof Error) {
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                error,
+                parser: 'jcamp converter',
+                relativePath: file.relativePath,
+                message: 'error parsing jdx or dx file',
+              }),
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
   }
+
   return newMeasurements;
 }
 
@@ -80,7 +101,6 @@ function normalizeSpectra(spectra: any) {
         }
       }
     }
-
     data.push({ variables });
   }
   return data;

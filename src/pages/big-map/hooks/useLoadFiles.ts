@@ -12,7 +12,9 @@ export function useLoadFiles() {
   function loadFiles(files) {
     fileCollectionFromFiles(files)
       .then((fileCollection) => loadMeasurements(fileCollection, options))
-      .then((data) => dispatch({ type: 'ADD_MEASUREMENTS', payload: data }))
+      .then(({ measurements }) =>
+        dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements }),
+      )
       .catch((error) => {
         // TODO: handle error
         reportError(error);

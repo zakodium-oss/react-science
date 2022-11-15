@@ -47,8 +47,8 @@ async function doLoadFiles(
         files instanceof FileCollection
           ? files
           : await fileCollectionFromFiles(files);
-      const data = await loadMeasurements(fileCollection, options);
-      dispatch({ type: 'ADD_MEASUREMENTS', payload: data });
+      const { measurements } = await loadMeasurements(fileCollection, options);
+      dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
     }
   } catch (error) {
     reportError(error);

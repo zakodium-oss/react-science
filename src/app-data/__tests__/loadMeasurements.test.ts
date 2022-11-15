@@ -18,13 +18,13 @@ const enhancers = {
 test('loadMeasurements function', async () => {
   const fileCollection = await getTestFileCollection();
 
-  const measurements = await loadMeasurements(fileCollection, {
+  const { measurements } = await loadMeasurements(fileCollection, {
     loaders,
     enhancers,
   });
 
-  expect(Object.keys(measurements)).toStrictEqual(['nmr', 'ir', 'uv', 'raman']);
   const { ir, raman, uv } = measurements;
+  expect(Object.keys(measurements)).toStrictEqual(['nmr', 'ir', 'uv', 'raman']);
   expect(ir?.entries).toHaveLength(2);
 
   expect(ir?.entries[0].peaks).toHaveLength(18);

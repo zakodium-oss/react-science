@@ -4,6 +4,7 @@ import { assert } from '../utils/assert';
 
 import type { IRMeasurement } from './IRMeasurement';
 import type { MeasurementBase } from './MeasurementBase';
+import type { ParserLog } from './loaders/utility/parserLog';
 
 export interface DataState {
   measurements: Measurements;
@@ -63,6 +64,7 @@ export const kindsLabel: Record<MeasurementKind, string> = {
 
 export type Loader = (
   fileCollection: FileCollection,
+  logs?: ParserLog[],
 ) => Promise<Partial<Measurements>>;
 
 export function mergeMeasurements(

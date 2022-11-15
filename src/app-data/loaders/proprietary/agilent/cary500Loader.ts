@@ -1,18 +1,40 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollectionItem, FileCollection } from 'filelist-utils';
 
 import type { Measurements } from '../../../DataState';
 import type { MeasurementBase } from '../../../MeasurementBase';
+import { getMeasurementInfoFromFile } from '../../utility/getMeasurementInfoFromFile';
+import { ParserLog, createLogEntry } from '../../utility/parserLog';
 
-export async function cary500Loader(fileCollection: FileCollection) {
+export async function cary500Loader(
+  fileCollection: FileCollection,
+  logs?: ParserLog[],
+): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
 
   for (const file of fileCollection) {
-    if (file.name.match(/\.csv$/i)) {
-      const experiments = await convert(file);
-      for (const experiment of experiments) {
-        entries.push(experiment);
+    if (/\.csv$/i.test(file.name)) {
+      try {
+        const experiments = await convert(file);
+        for (const experiment of experiments) {
+          entries.push(experiment);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                kind: 'error',
+                parser: 'cary500Loader',
+                message: 'Error parsing cary500 experiment.',
+                error,
+                relativePath: file.relativePath,
+              }),
+            );
+          } else {
+            throw error;
+          }
+        }
       }
     }
   }
@@ -50,10 +72,7 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
       data: data.map((row) => Number(row[column + 1])),
     };
     experiments.push({
-      id: v4(),
-      filename: file.name,
-      path: file.relativePath,
-      info: {},
+      ...getMeasurementInfoFromFile(file),
       title: titles[column],
       meta: JSON.parse(JSON.stringify(meta)),
       data: [{ variables: { x: xVariable, y: yVariable } }],

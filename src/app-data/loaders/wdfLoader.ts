@@ -1,29 +1,54 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollection } from 'filelist-utils';
 import { parse } from 'wdf-parser';
 
 import type { Measurements } from '../DataState';
 import type { MeasurementBase } from '../MeasurementBase';
 
-export async function wdfLoader(fileCollection: FileCollection) {
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
+import { ParserLog, createLogEntry } from './utility/parserLog';
+
+/**
+ *
+ * @param fileCollection - the dragged file/files
+ * @param logger - whether to log to console or not
+ * @returns - new measurements object to be merged
+ */
+export async function wdfLoader(
+  fileCollection: FileCollection,
+  logs?: ParserLog[],
+): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
-  for (const file of fileCollection) {
-    if (file.name.match(/\.wdf$/i)) {
-      const parsed = parse(await file.arrayBuffer());
 
-      // for now WDF file format is always expected to be Raman
-      entries.push({
-        id: v4(),
-        meta: parsed.fileHeader,
-        filename: file.name,
-        path: file.relativePath || '',
-        info: {},
-        title: parsed.fileHeader.title,
-        data: normalizeSpectra(parsed.blocks),
-      });
+  for (const file of fileCollection) {
+    if (/\.wdf$/i.test(file.name)) {
+      try {
+        const parsed = parse(await file.arrayBuffer());
+        entries.push({
+          meta: parsed.fileHeader,
+          ...getMeasurementInfoFromFile(file),
+          title: parsed.fileHeader.title,
+          data: normalizeSpectra(parsed.blocks),
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                parser: 'wdf',
+                error,
+                message: 'error reading wdf file',
+                relativePath: file.relativePath,
+              }),
+            );
+          } else {
+            throw error;
+          }
+        }
+      }
     }
   }
+
   measurements.raman = { entries };
   return measurements;
 }
