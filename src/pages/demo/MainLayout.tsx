@@ -13,7 +13,7 @@ import { useKbsGlobal } from 'react-kbs';
 
 import {
   download,
-  getCurrentMeasurement,
+  getCurrentMeasurementData,
   getSelectedMeasurement,
   useAppDispatch,
   useAppState,
@@ -23,6 +23,7 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
 } from '../../app/index';
+import { MeasurementPanel } from '../../app/panels/MeasurementPanel';
 import {
   Accordion,
   DropZoneContainer,
@@ -50,7 +51,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 export default function DropZoneArea() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
-  const measurement = getCurrentMeasurement(appState);
+  const measurement = getCurrentMeasurementData(appState);
   const hashSearchParams = useHashSearchParams();
   const fileListParam = hashSearchParams.get('filelist');
   const loadFiles = useLoadFiles();
@@ -157,7 +158,8 @@ export default function DropZoneArea() {
                 <DropZoneContainer onDrop={loadFiles}>
                   {measurement ? (
                     <MeasurementExplorer
-                      measurement={measurement}
+                      measurementDisplay={measurement.display}
+                      measurement={measurement.data}
                       width="100%"
                       height="100%"
                       kind={
@@ -201,9 +203,17 @@ export default function DropZoneArea() {
                     />
                   </div>
                 </Accordion.Item>
+                {measurement ? (
+                  <Accordion.Item title="Measurement display">
+                    <MeasurementPanel
+                      measurement={measurement.kindAndId}
+                      measurementDisplay={measurement.display}
+                    />
+                  </Accordion.Item>
+                ) : null}
                 <Accordion.Item title="Info Panel">
                   {measurement && (
-                    <MeasurementInfoPanel measurement={measurement} />
+                    <MeasurementInfoPanel measurement={measurement.data} />
                   )}
                 </Accordion.Item>
               </Accordion>

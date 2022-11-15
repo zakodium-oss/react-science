@@ -2,8 +2,7 @@
 import { css } from '@emotion/react';
 
 import {
-  getCurrentMeasurement,
-  getSelectedMeasurement,
+  getCurrentMeasurementData,
   useAppDispatch,
   useAppState,
 } from '../../app-data/index';
@@ -12,6 +11,7 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
 } from '../../app/index';
+import { MeasurementPanel } from '../../app/panels/MeasurementPanel';
 import {
   Accordion,
   DropZoneContainer,
@@ -53,7 +53,8 @@ const mainCss = {
 export default function MainLayout() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
-  const measurement = getCurrentMeasurement(appState);
+
+  const measurement = getCurrentMeasurementData(appState);
   const loadFiles = useLoadFiles();
 
   return (
@@ -82,7 +83,8 @@ export default function MainLayout() {
               <DropZoneContainer onDrop={loadFiles}>
                 {measurement ? (
                   <MeasurementExplorer
-                    measurement={measurement}
+                    measurementDisplay={measurement.display}
+                    measurement={measurement.data}
                     width="100%"
                     height="100%"
                     kind={appState.view.selectedKind === 'mass' ? 'mass' : '1d'}
@@ -101,7 +103,7 @@ export default function MainLayout() {
                         payload: kind,
                       });
                     }}
-                    selectedMeasurement={getSelectedMeasurement(appState)}
+                    selectedMeasurement={measurement?.kindAndId}
                     onMeasurementSelect={({ measurement, kind }) => {
                       dispatch({
                         type: 'SELECT_MEASUREMENT',
@@ -110,9 +112,17 @@ export default function MainLayout() {
                     }}
                   />
                 </Accordion.Item>
+                {measurement ? (
+                  <Accordion.Item title="Measurement display" defaultOpened>
+                    <MeasurementPanel
+                      measurement={measurement.kindAndId}
+                      measurementDisplay={measurement.display}
+                    />
+                  </Accordion.Item>
+                ) : null}
                 <Accordion.Item title="Measurement info" defaultOpened>
                   {measurement && (
-                    <MeasurementInfoPanel measurement={measurement} />
+                    <MeasurementInfoPanel measurement={measurement.data} />
                   )}
                 </Accordion.Item>
               </Accordion>
