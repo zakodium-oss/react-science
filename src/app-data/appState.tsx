@@ -115,10 +115,11 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       draft.data = getEmptyDataState();
       return;
     case 'ADD_MEASUREMENTS': {
-      mergeMeasurements(draft.data.measurements, action.payload);
+      const newMeasurements = action.payload;
+      mergeMeasurements(draft.data.measurements, newMeasurements);
 
       for (const kind of Object.keys(kindsLabel).filter(
-        (k) => k in action.payload,
+        (k) => k in newMeasurements,
       ) as MeasurementKind[]) {
         if (
           !draft.view.selectedMeasurements[kind] &&
@@ -136,9 +137,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
         }
       }
 
-      for (let measurement of iterateMeasurementEntries(
-        draft.data.measurements,
-      )) {
+      for (let measurement of iterateMeasurementEntries(newMeasurements)) {
         draft.view.measurements[measurement.id] = {
           lineStroke: 'red',
         };

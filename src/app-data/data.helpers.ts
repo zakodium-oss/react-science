@@ -100,9 +100,10 @@ export function getSelectedMeasurementOrFail(state: AppState) {
   return selected;
 }
 
-export function* iterateMeasurementEntries(measurements: Measurements) {
-  for (let kind of measurementKinds) {
-    const measurementData = measurements[kind];
+export function* iterateMeasurementEntries(
+  measurements: Partial<Measurements>,
+) {
+  for (const measurementData of Object.values(measurements)) {
     for (let x of measurementData.entries) {
       yield x;
     }
