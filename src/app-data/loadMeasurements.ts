@@ -22,6 +22,5 @@ export async function loadMeasurements(
     enhance(loaderData, enhancers);
     mergeMeasurements(measurements, loaderData);
   }
-  console.log(logs);
   return { measurements, logs };
 }
