@@ -20,7 +20,13 @@ import {
 import {
   getFirstMeasurementOrFail,
   getMeasurementOrFail,
+  iterateMeasurementEntries,
+  MeasurementKindAndId,
 } from './data.helpers';
+
+export interface MeasurementDisplay {
+  lineStroke: string;
+}
 
 export interface AppState {
   data: DataState;
@@ -28,6 +34,7 @@ export interface AppState {
   view: {
     selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
     selectedKind?: MeasurementKind;
+    measurements: Record<string, MeasurementDisplay>;
   };
 }
 
@@ -37,6 +44,7 @@ export function getEmptyAppState(): AppState {
     isLoading: false,
     view: {
       selectedMeasurements: {},
+      measurements: {},
     },
   };
 }
@@ -89,9 +97,16 @@ type AppStateAction =
   | { type: 'LOAD_STATE'; payload: Omit<AppState, 'isLoading'> }
   | {
       type: 'SELECT_MEASUREMENT';
-      payload: { id: string; kind: MeasurementKind };
+      payload: MeasurementKindAndId;
     }
-  | { type: 'SELECT_MEASUREMENT_KIND'; payload: MeasurementKind };
+  | { type: 'SELECT_MEASUREMENT_KIND'; payload: MeasurementKind }
+  | {
+      type: 'CHANGE_MEASUREMENT_DISPLAY';
+      payload: {
+        measurement: MeasurementKindAndId;
+        display: Partial<MeasurementDisplay>;
+      };
+    };
 
 function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
   const type = action.type;
@@ -121,6 +136,14 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
         }
       }
 
+      for (let measurement of iterateMeasurementEntries(
+        draft.data.measurements,
+      )) {
+        draft.view.measurements[measurement.id] = {
+          lineStroke: 'red',
+        };
+      }
+
       return;
     }
     case 'SELECT_MEASUREMENT': {
@@ -148,6 +171,18 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       } else {
         draft.view.selectedKind = undefined;
       }
+      return;
+    }
+    case 'CHANGE_MEASUREMENT_DISPLAY': {
+      const measurement = getMeasurementOrFail(
+        draft.data.measurements,
+        action.payload.measurement.kind,
+        action.payload.measurement.id,
+      );
+      draft.view.measurements[measurement.id] = {
+        ...draft.view.measurements[measurement.id],
+        ...action.payload.display,
+      };
       return;
     }
     case 'LOAD_START': {

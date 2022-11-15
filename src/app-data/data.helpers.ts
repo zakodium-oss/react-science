@@ -1,6 +1,6 @@
-import { assertNotNull } from '../utils/assert';
+import { assert, assertNotNull } from '../utils/assert';
 
-import type { MeasurementKind, Measurements } from './DataState';
+import { MeasurementKind, measurementKinds, Measurements } from './DataState';
 import type { AppState } from './appState';
 
 export function getMeasurement(
@@ -53,7 +53,37 @@ export function getCurrentMeasurement(state: AppState) {
   );
 }
 
-export function getSelectedMeasurement(state: AppState) {
+export function getCurrentMeasurementData(state: AppState) {
+  const selectedMeasurement = getCurrentMeasurement(state);
+  if (!selectedMeasurement) return null;
+  const kindAndId = getMeasurementKindAndId(state, selectedMeasurement.id);
+  const display = state.view.measurements[selectedMeasurement.id];
+  return { data: selectedMeasurement, display, kindAndId };
+}
+
+export interface MeasurementKindAndId {
+  kind: MeasurementKind;
+  id: string;
+}
+
+export function getMeasurementKindAndId(
+  state: AppState,
+  measurementId: string,
+) {
+  for (let kind of measurementKinds) {
+    const measurement = getMeasurement(
+      state.data.measurements,
+      kind,
+      measurementId,
+    );
+    if (measurement) return { kind, id: measurementId };
+  }
+  throw new Error(`Measurement kind for ${measurementId} not found`);
+}
+
+export function getSelectedMeasurement(
+  state: AppState,
+): MeasurementKindAndId | undefined {
   const { selectedKind, selectedMeasurements } = state.view;
   if (!selectedKind) return undefined;
   const kind = selectedKind;
@@ -62,4 +92,19 @@ export function getSelectedMeasurement(state: AppState) {
   // todo: change to return all selected measurements
   const id = currentMeasurements[0];
   return { kind, id };
+}
+
+export function getSelectedMeasurementOrFail(state: AppState) {
+  const selected = getSelectedMeasurement(state);
+  assert(selected);
+  return selected;
+}
+
+export function* iterateMeasurementEntries(measurements: Measurements) {
+  for (let kind of measurementKinds) {
+    const measurementData = measurements[kind];
+    for (let x of measurementData.entries) {
+      yield x;
+    }
+  }
 }
