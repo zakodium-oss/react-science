@@ -24,7 +24,7 @@ export interface ToolbarProps {
 }
 
 export interface ToolbarItemProps {
-  id: string;
+  id?: string;
   title: string;
   children: ReactNode;
 

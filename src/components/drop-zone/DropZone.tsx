@@ -6,49 +6,81 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export interface DropZoneProps {
   color?: string;
+  borderColor?: string;
   onDrop?: <T extends File>(
     acceptedFiles: T[],
     rejectedFiles?: FileRejection[],
   ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
+  emptyText?: string;
 }
 
-export function DropZoneContainer(
-  props: DropZoneProps & {
-    children: JSX.Element;
-  },
-) {
-  const { children, ...other } = props;
-  return (
-    <DropZoneContent
-      {...other}
-      onClick={(event) => event.stopPropagation()}
-      isContainer
-    >
-      {children}
-    </DropZoneContent>
-  );
-}
+const dropZoneCss = {
+  root: css`
+    position: relative;
+    height: 100%;
+    width: 100%;
+  `,
+  dragActive: css`
+    font-size: 1.5em;
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.7;
+    background-color: white;
+    border: 5px dashed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `,
+  empty: css`
+    font-size: 1.5em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    border: 5px dashed;
+    cursor: pointer;
+  `,
+};
 
 export function DropZone(props: DropZoneProps) {
   return <DropZoneContent {...props} />;
 }
 
+export interface DropZoneContainerProps extends DropZoneProps {
+  children: JSX.Element | null;
+}
+
+export function DropZoneContainer(props: DropZoneContainerProps) {
+  return <DropZoneContent {...props} />;
+}
+
 function DropZoneContent(
   props: DropZoneProps & {
-    children?: JSX.Element;
-    isContainer?: boolean;
+    children?: JSX.Element | null;
     onClick?: MouseEventHandler<HTMLDivElement>;
+    emptyText?: string;
   },
 ) {
   const {
     color = 'black',
-    children,
+    borderColor = 'gray',
+    children = null,
     onDrop,
-    isContainer = false,
+    emptyText = 'Click or drag and drop to add data.',
     onClick,
     fileValidator,
   } = props;
+
+  const hasChildren = children !== null;
 
   const handleOnDrop = useCallback(
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
@@ -56,7 +88,9 @@ function DropZoneContent(
     },
     [onDrop],
   );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    noClick: hasChildren,
     validator: fileValidator,
     onDrop: handleOnDrop,
   });
@@ -66,76 +100,33 @@ function DropZoneContent(
       return { onClick };
     }
   }, [onClick]);
+
   return (
-    <div
-      {...getRootProps(getPropsOptions)}
-      css={css`
-        overflow: hidden;
-        position: relative;
-        ${isContainer ? null : 'min-height: 150px; cursor: pointer;'}
-        height: 100%;
-        width: 100%;
-        ${isDragActive || !isContainer ? `border: 2px dashed ${color};` : null}
-        color: ${color};
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      `}
-    >
-      <div
-        css={css`
-          text-align: center;
-          font-weight: 600;
-          width: 100%;
-          height: 100%;
-          display: flex;
-        `}
-      >
+    <div {...getRootProps(getPropsOptions)} css={dropZoneCss.root}>
+      {children}
+      {isDragActive ? (
         <div
-          css={css`
-            width: 100%;
-            opacity: ${isDragActive ? 0.3 : 1};
-          `}
+          css={dropZoneCss.dragActive}
+          style={{
+            borderColor,
+            color,
+          }}
         >
-          {children}
+          <FaCloudUploadAlt size={70} />
+          <p>Drop the files here.</p>
         </div>
-
-        <div style={{ fontSize: '1.5em' }}>
-          {isDragActive ? (
-            <div
-              css={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              `}
-            >
-              <FaCloudUploadAlt
-                size={70}
-                css={css`
-                  margin: auto;
-                `}
-              />
-
-              <p>Drop the files here</p>
-            </div>
-          ) : isContainer ? null : (
-            <p>Drag and drop your files here, or click to select files</p>
-          )}
+      ) : !hasChildren ? (
+        <div
+          css={dropZoneCss.empty}
+          style={{
+            borderColor,
+            color,
+          }}
+        >
+          {emptyText}
         </div>
-      </div>
-      <input
-        type="file"
-        css={css`
-          opacity: 0;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        `}
-        {...getInputProps()}
-      />
+      ) : null}
+      <input {...getInputProps()} />
     </div>
   );
 }
