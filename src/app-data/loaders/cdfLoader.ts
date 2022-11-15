@@ -9,11 +9,10 @@ import { ParserLog, createLogEntry } from './utility/parserLog';
 
 export async function cdfLoader(
   fileCollection: FileCollection,
-  logger?: boolean,
+  logs?: ParserLog[],
 ): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
   let kind: MeasurementKind | undefined;
-  const logs: ParserLog[] = [];
   for (const file of fileCollection) {
     if (/\.cdf$/i.test(file.name)) {
       try {
@@ -56,22 +55,23 @@ export async function cdfLoader(
       } catch (error) {
         if (error instanceof Error) {
           //send error to UI ?
-          logs.push(
-            createLogEntry({
-              error,
-              parser: 'cdfLoader',
-              message: 'error parsing file from cdfLoader',
-              relativePath: file.relativePath,
-            }),
-          );
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                error,
+                parser: 'cdfLoader',
+                message: 'error parsing file from cdfLoader',
+                relativePath: file.relativePath,
+              }),
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
   }
-  if (logger && logs.length > 0) {
-    // eslint-disable-next-line no-console
-    console.error(logs);
-  }
+
   return newMeasurements;
 }
 

@@ -15,11 +15,10 @@ import { ParserLog, createLogEntry } from './utility/parserLog';
  */
 export async function wdfLoader(
   fileCollection: FileCollection,
-  logger?: boolean,
+  logs?: ParserLog[],
 ): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
-  const logs: ParserLog[] = [];
 
   for (const file of fileCollection) {
     if (/\.wdf$/i.test(file.name)) {
@@ -33,22 +32,23 @@ export async function wdfLoader(
         });
       } catch (error) {
         if (error instanceof Error) {
-          logs.push(
-            createLogEntry({
-              parser: 'wdf',
-              error,
-              message: 'error reading wdf file',
-              relativePath: file.relativePath,
-            }),
-          );
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                parser: 'wdf',
+                error,
+                message: 'error reading wdf file',
+                relativePath: file.relativePath,
+              }),
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
   }
-  if (logger && logs.length > 0) {
-    // eslint-disable-next-line no-console
-    console.error(logs);
-  }
+
   measurements.raman = { entries };
   return measurements;
 }

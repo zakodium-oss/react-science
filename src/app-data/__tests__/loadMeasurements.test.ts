@@ -18,7 +18,7 @@ const enhancers = {
 test('loadMeasurements function', async () => {
   const fileCollection = await getTestFileCollection();
 
-  const measurements = await loadMeasurements(fileCollection, {
+  const { measurements } = await loadMeasurements(fileCollection, {
     loaders,
     enhancers,
   });

@@ -16,10 +16,9 @@ import { ParserLog, createLogEntry } from './utility/parserLog';
  */
 export async function spcLoader(
   fileCollection: FileCollection,
-  logger?: boolean,
+  logs?: ParserLog[],
 ): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
-  const logs: ParserLog[] = [];
   for (const file of fileCollection) {
     if (/\.spc$/i.test(file.name)) {
       try {
@@ -39,7 +38,7 @@ export async function spcLoader(
           data: parsed.spectra as unknown as MeasurementBase['data'],
         });
       } catch (error) {
-        if (error instanceof Error) {
+        if (error instanceof Error && logs) {
           logs.push(
             createLogEntry({
               parser: 'spc-parser',
@@ -47,13 +46,12 @@ export async function spcLoader(
               error,
             }),
           );
+        } else {
+          throw error;
         }
       }
     }
   }
-  if (logger && logs.length > 0) {
-    // eslint-disable-next-line no-console
-    console.error(logs);
-  }
+
   return measurements;
 }

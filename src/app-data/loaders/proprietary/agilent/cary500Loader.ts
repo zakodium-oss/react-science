@@ -7,11 +7,10 @@ import { ParserLog, createLogEntry } from '../../utility/parserLog';
 
 export async function cary500Loader(
   fileCollection: FileCollection,
-  logger?: boolean,
+  logs?: ParserLog[],
 ): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
-  const logs: ParserLog[] = [];
 
   for (const file of fileCollection) {
     if (/\.csv$/i.test(file.name)) {
@@ -22,22 +21,22 @@ export async function cary500Loader(
         }
       } catch (error) {
         if (error instanceof Error) {
-          logs.push(
-            createLogEntry({
-              kind: 'error',
-              parser: 'cary500Loader',
-              message: 'Error parsing cary500 experiment.',
-              error,
-              relativePath: file.relativePath,
-            }),
-          );
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                kind: 'error',
+                parser: 'cary500Loader',
+                message: 'Error parsing cary500 experiment.',
+                error,
+                relativePath: file.relativePath,
+              }),
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
-  }
-  if (logger && logs.length > 0) {
-    // eslint-disable-next-line no-console
-    console.error(logs);
   }
   newMeasurements.uvvis = { entries };
   return newMeasurements;

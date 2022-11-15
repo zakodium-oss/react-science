@@ -19,7 +19,7 @@ export async function getIRMeasurement() {
     (file) => file.name === 'ir.jdx',
   );
 
-  const measurements = await loadMeasurements(filteredFileCollection, {
+  const { measurements } = await loadMeasurements(filteredFileCollection, {
     loaders,
     enhancers,
   });

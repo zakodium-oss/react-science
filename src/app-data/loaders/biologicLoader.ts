@@ -14,16 +14,15 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
 /**
  *
  * @param fileCollection - the dragged file/files
- * @param logger - whether to log to console or not
+ * @param logs - pass to append errors to the logs, it mutates the external array.
  * @returns - new measurements object to be merged
  */
 export async function biologicLoader(
   fileCollection: FileCollection,
-  logger?: boolean,
+  logs?: ParserLog[],
 ): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
-  const logs: ParserLog[] = [];
 
   for (const file of fileCollection.files) {
     try {
@@ -61,12 +60,14 @@ export async function biologicLoader(
     } catch (error) {
       //send error to UI to show to User ?
       if (error instanceof Error) {
-        logs.push(createLogEntry({ error, relativePath: file.relativePath }));
+        if (logs) {
+          logs.push(createLogEntry({ error, relativePath: file.relativePath }));
+        } else {
+          throw error;
+        }
       }
     }
   }
-  // eslint-disable-next-line no-console
-  if (logger && logs.length > 0) console.error(logs);
   measurements.iv = { entries };
   return measurements;
 }

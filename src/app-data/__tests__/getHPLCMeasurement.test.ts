@@ -11,7 +11,7 @@ const filteredFileCollection = fileCollection.filter(
 );
 
 test('getHPLCMeasurement', async () => {
-  const measurements = await loadMeasurements(filteredFileCollection, {
+  const { measurements } = await loadMeasurements(filteredFileCollection, {
     loaders: [cdfLoader],
   });
   const result = measurements.gclc?.entries || [];

@@ -46,7 +46,10 @@ export async function loadFiles(
         files instanceof FileCollection
           ? files
           : await fileCollectionFromFiles(files);
-      const data = await loadMeasurements(fileCollection, options);
+      const { measurements: data } = await loadMeasurements(
+        fileCollection,
+        options,
+      );
       dispatch({ type: 'ADD_MEASUREMENTS', payload: data });
     }
   } finally {

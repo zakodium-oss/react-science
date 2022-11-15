@@ -15,10 +15,9 @@ import { createLogEntry, ParserLog } from './utility/parserLog';
  */
 export async function jcampLoader(
   fileCollection: FileCollection,
-  logger?: boolean,
+  logs?: ParserLog[],
 ): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
-  const logs: ParserLog[] = [];
   for (const file of fileCollection) {
     if (/(?:\.jdx|\.dx)$/i.test(file.name)) {
       try {
@@ -56,20 +55,23 @@ export async function jcampLoader(
       } catch (error) {
         // send error to UI ?
         if (error instanceof Error) {
-          logs.push(
-            createLogEntry({
-              error,
-              parser: 'jcamp converter',
-              relativePath: file.relativePath,
-              message: 'error parsing jdx or dx file',
-            }),
-          );
+          if (logs) {
+            logs.push(
+              createLogEntry({
+                error,
+                parser: 'jcamp converter',
+                relativePath: file.relativePath,
+                message: 'error parsing jdx or dx file',
+              }),
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
   }
-  // eslint-disable-next-line no-console
-  if (logger && logs.length > 0) console.error(logs);
+
   return newMeasurements;
 }
 
