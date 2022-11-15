@@ -1,1 +1,1 @@
-export * from './ColorPicker';
+export * from './react-color/ColorPicker';
