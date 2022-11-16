@@ -1,4 +1,4 @@
-import type { MeasurementBase } from '../../MeasurementBase';
+import type { MeasurementBase } from '../../index';
 
 import type { IRPeak } from './IRPeak';
 

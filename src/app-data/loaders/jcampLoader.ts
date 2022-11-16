@@ -2,7 +2,7 @@ import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
 import { assert } from '../../utils/assert';
-import type { MeasurementKind, Measurements } from '../DataState';
+import type { MeasurementKind, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { createLogEntry, ParserLog } from './utility/parserLog';

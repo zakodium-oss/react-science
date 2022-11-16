@@ -1,8 +1,9 @@
 import {
   DataState,
-  kindsLabel,
+  kindLabels,
   MeasurementKind,
   MeasurementBase,
+  measurementKinds,
 } from '../../app-data/index';
 import { ValueRenderers, Table, TabItem, Tabs } from '../../components/index';
 
@@ -28,7 +29,7 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
 
   const kindItem = (kind: MeasurementKind) => ({
     id: kind,
-    title: kindsLabel[kind],
+    title: kindLabels[kind],
     content: (
       <Table>
         {measurements[kind].entries.map((measurement) => (
@@ -51,8 +52,8 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
       </Table>
     ),
   });
-  const availableKinds = (Object.keys(kindsLabel) as MeasurementKind[]).filter(
-    (label) => measurements[label]?.entries?.length > 0,
+  const availableKinds = measurementKinds.filter(
+    (label) => measurements[label].entries.length > 0,
   );
   const items: Array<TabItem<MeasurementKind>> = availableKinds.map(kindItem);
 

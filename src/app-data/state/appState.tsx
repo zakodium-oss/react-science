@@ -7,22 +7,20 @@ import {
   useReducer,
 } from 'react';
 
-import { assertUnreachable } from '../utils/assert';
+import { assertUnreachable } from '../../utils/assert';
+import { mergeMeasurements } from '../loaders/index';
 
 import {
   DataState,
   Measurements,
-  mergeMeasurements,
   getEmptyDataState,
   MeasurementKind,
-  kindsLabel,
-} from './DataState';
-import {
+  kindLabels,
   getFirstMeasurementOrFail,
   getMeasurementOrFail,
   iterateMeasurementEntries,
   MeasurementKindAndId,
-} from './data.helpers';
+} from './data/index';
 
 export interface MeasurementDisplay {
   lineStroke: string;
@@ -118,7 +116,7 @@ function actionHandler(draft: Draft<AppState>, action: AppStateAction) {
       const newMeasurements = action.payload;
       mergeMeasurements(draft.data.measurements, newMeasurements);
 
-      for (const kind of Object.keys(kindsLabel).filter(
+      for (const kind of Object.keys(kindLabels).filter(
         (k) => k in newMeasurements,
       ) as MeasurementKind[]) {
         if (

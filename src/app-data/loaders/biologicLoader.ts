@@ -2,8 +2,7 @@ import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
 
-import type { Measurements } from '../DataState';
-import type { MeasurementBase } from '../MeasurementBase';
+import type { Measurements, MeasurementBase } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { createLogEntry, ParserLog } from './utility/parserLog';
