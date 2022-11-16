@@ -2,8 +2,12 @@ import { xyToXYObject } from 'ml-spectra-processing';
 import { useMemo } from 'react';
 import { LineSeries, PlotController } from 'react-plot';
 
-import type { MeasurementBase, MeasurementDisplay } from '../../app-data/index';
-import { BasicComponent } from '../helpers/index';
+import type {
+  MeasurementBase,
+  MeasurementViewState,
+} from '../../app-data/index';
+
+import { BasicComponent } from './index';
 
 type Measurement = Pick<
   MeasurementBase,
@@ -11,7 +15,7 @@ type Measurement = Pick<
 >;
 export interface MeasurementPlotProps {
   measurement: Measurement;
-  measurementDisplay: MeasurementDisplay;
+  measurementDisplay: MeasurementViewState;
   dataIndex?: number;
   xVariableName?: string;
   yVariableName?: string;

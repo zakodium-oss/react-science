@@ -19,10 +19,10 @@ import {
   useAppState,
 } from '../../app-data/index';
 import {
-  MeasurementExplorer,
   MeasurementInfoPanel,
   MeasurementsPanel,
   MeasurementPanel,
+  ExplorerMainView,
 } from '../../app/index';
 import {
   Accordion,
@@ -156,17 +156,7 @@ export default function DropZoneArea() {
                 }}
               >
                 <DropZoneContainer onDrop={loadFiles}>
-                  {measurement ? (
-                    <MeasurementExplorer
-                      measurementDisplay={measurement.display}
-                      measurement={measurement.data}
-                      width="100%"
-                      height="100%"
-                      kind={
-                        appState.view.selectedKind === 'mass' ? 'mass' : '1d'
-                      }
-                    />
-                  ) : null}
+                  {measurement ? <ExplorerMainView /> : null}
                 </DropZoneContainer>
               </div>
             </ErrorBoundary>

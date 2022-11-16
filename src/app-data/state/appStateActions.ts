@@ -4,7 +4,7 @@ import {
   MeasurementKindAndId,
   Measurements,
 } from './data/index';
-import { MeasurementDisplay } from './view/index';
+import { MeasurementViewState } from './view/index';
 
 type ActionType<Action, Payload = void> = Payload extends void
   ? { type: Action }
@@ -19,6 +19,6 @@ export type AppStateAction =
       'CHANGE_MEASUREMENT_DISPLAY',
       {
         measurement: MeasurementKindAndId;
-        display: Partial<MeasurementDisplay>;
+        display: Partial<MeasurementViewState>;
       }
     >;

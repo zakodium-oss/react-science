@@ -14,7 +14,7 @@ import {
   Axis,
 } from 'react-plot';
 
-import type { MeasurementPlotProps } from '../explorer/MeasurementPlot';
+import type { MeasurementPlotProps } from './MeasurementPlot';
 
 export function BasicComponent(
   props: MeasurementPlotProps & {
@@ -27,8 +27,8 @@ export function BasicComponent(
     dataIndex = 0,
     xVariableName = 'x',
     yVariableName = 'y',
-    width = 800,
-    height = 400,
+    width = '100%',
+    height = '100%',
     zoom = 'horizontal',
     wheelZoom = 'vertical',
     crossHair = true,

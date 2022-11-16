@@ -3,10 +3,13 @@ export function assertUnreachable(x: never): never {
 }
 
 export function assertNotNull<T>(
-  value: T | null,
-): asserts value is Exclude<T, null> {
+  value: T | null | undefined,
+): asserts value is Exclude<T, null | undefined> {
   if (value === null) {
     throw new Error('unexpected null value');
+  }
+  if (value === undefined) {
+    throw new Error('unexpected undefined value');
   }
 }
 

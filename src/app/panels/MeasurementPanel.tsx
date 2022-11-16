@@ -1,9 +1,9 @@
-import { MeasurementDisplay, useAppDispatch } from '../../app-data/index';
+import { MeasurementViewState, useAppDispatch } from '../../app-data/index';
 import type { MeasurementKindAndId } from '../../app-data/index';
 import { ColorPicker } from '../../components/index';
 
 export function MeasurementPanel(props: {
-  measurementDisplay: MeasurementDisplay;
+  measurementDisplay: MeasurementViewState;
   measurement: MeasurementKindAndId;
 }) {
   const { measurement, measurementDisplay } = props;

@@ -1,4 +1,4 @@
-import { assert, assertNotNull } from '../../../utils/assert';
+import { assertNotNull } from '../../../utils/assert';
 import type { AppState } from '../index';
 
 import type { MeasurementKind, Measurements } from './DataState';
@@ -22,7 +22,6 @@ export function getMeasurementOrFail(
 ) {
   const result = getMeasurement(measurements, kind, selected);
   assertNotNull(result);
-
   return result;
 }
 
@@ -39,11 +38,11 @@ export function getFirstMeasurementOrFail(
   measurements: Measurements,
   kind: MeasurementKind,
 ) {
-  const measurement = measurements[kind].entries[0] || null;
+  const measurement = measurements[kind].entries[0];
   assertNotNull(measurement);
-
   return { kind, measurement };
 }
+
 export function getCurrentMeasurement(state: AppState) {
   const selectedMeasurement = getSelectedMeasurement(state);
   if (!selectedMeasurement) return null;
@@ -97,7 +96,7 @@ export function getSelectedMeasurement(
 
 export function getSelectedMeasurementOrFail(state: AppState) {
   const selected = getSelectedMeasurement(state);
-  assert(selected);
+  assertNotNull(selected);
   return selected;
 }
 
