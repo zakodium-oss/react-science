@@ -7,10 +7,10 @@ import {
   useAppState,
 } from '../../app-data/index';
 import {
-  MeasurementExplorer,
   MeasurementInfoPanel,
   MeasurementsPanel,
   MeasurementPanel,
+  IvMainView,
 } from '../../app/index';
 import {
   Accordion,
@@ -20,6 +20,7 @@ import {
   SplitPane,
   Toolbar,
 } from '../../components/index';
+import { assert } from '../../utils/assert';
 
 import { useLoadFiles } from './hooks/useLoadFiles';
 
@@ -55,6 +56,8 @@ export default function MainLayout() {
   const appState = useAppState();
 
   const measurement = getCurrentMeasurementData(appState);
+  assert(!measurement || measurement.kindAndId.kind === 'iv');
+
   const loadFiles = useLoadFiles();
 
   return (
@@ -82,12 +85,9 @@ export default function MainLayout() {
             <div css={mainCss.measurement}>
               <DropZoneContainer onDrop={loadFiles}>
                 {measurement ? (
-                  <MeasurementExplorer
-                    measurementDisplay={measurement.display}
+                  <IvMainView
                     measurement={measurement.data}
-                    width="100%"
-                    height="100%"
-                    kind={appState.view.selectedKind === 'mass' ? 'mass' : '1d'}
+                    measurementDisplay={measurement.display}
                   />
                 ) : null}
               </DropZoneContainer>

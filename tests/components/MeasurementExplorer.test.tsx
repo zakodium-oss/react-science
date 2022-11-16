@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
-import type { IRMeasurement, MeasurementDisplay } from '../../src/app-data';
+import type { IRMeasurement, MeasurementViewState } from '../../src/app-data';
 import { MeasurementExplorer } from '../../src/app/index';
 import measurement from '../../stories/data/irMeasurement.json';
 
 let irMeasurement = measurement as IRMeasurement;
 
-const measurementDisplay: MeasurementDisplay = {
+const measurementDisplay: MeasurementViewState = {
   lineStroke: 'red',
 };
 

@@ -13,19 +13,24 @@ export interface DataState {
  * If we have isotherm with gaz absorption / desorption this format should also be used.
  * The 'info'for each 'Measurement' should be normalized.
  */
+
+type UUID = string;
+
 export interface MeasurementBase {
-  id: string;
+  id: UUID;
   title?: string;
   instrument?: Instrument;
   filename?: string;
   path?: string;
-  meta: Record<string, any>;
+  // Structured object
   info: Record<string, any>;
-  data: {
-    meta?: Record<string, any>;
+  // Unstructured object
+  meta: Record<string, any>;
+  data: Array<{
     info?: Record<string, any>;
+    meta?: Record<string, any>;
     variables: Record<string, MeasurementVariable>;
-  }[];
+  }>;
 }
 
 export interface Measurements {

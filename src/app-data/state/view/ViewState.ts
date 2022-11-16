@@ -1,11 +1,27 @@
 import type { MeasurementKind } from '../index';
 
 export interface ViewState {
-  selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
   selectedKind?: MeasurementKind;
-  measurements: Record<string, MeasurementDisplay>;
+  selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
+  measurements: Record<string, MeasurementViewState>;
+  // TODO: implement this.
+  // plot: {
+  //   [key in MeasurementKind]: PlotView;
+  // };
 }
 
-export interface MeasurementDisplay {
+// export interface PlotView {
+//   zoom: {
+//     x: [number, number];
+//     y: [number, number];
+//   };
+// }
+
+export interface MeasurementViewState {
   lineStroke: string;
+  // TODO: implement this.
+  // color: ColorConfig;
+  // visible: boolean;
 }
+
+// type ColorConfig = any;

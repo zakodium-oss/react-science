@@ -3,14 +3,10 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
-import { MeasurementMassPlot } from '../kinds/mass/MeasurementMassPlot';
-
-import { MeasurementPlot, MeasurementPlotProps } from './MeasurementPlot';
+import { MeasurementPlot, MeasurementPlotProps } from '../helpers/index';
 
 export interface MeasurementExplorerProps
-  extends Omit<MeasurementPlotProps, keyof ExplorerInfo> {
-  kind?: 'mass' | '1d';
-}
+  extends Omit<MeasurementPlotProps, keyof ExplorerInfo> {}
 interface ExplorerInfo {
   dataIndex: number;
   xVariableName: string;
@@ -21,9 +17,8 @@ interface ExplorerInfo {
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
   const {
     measurement: { data },
-    width = 800,
-    height = 400,
-    kind = '1d',
+    width = '100%',
+    height = '100%',
   } = props;
   function defaultInfo(dataIndex: number) {
     const varNames = new Set(Object.keys(data[dataIndex].variables));
@@ -68,127 +63,121 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         flex-direction: column;
       `}
     >
-      {kind === '1d' && (
+      <div
+        css={css`
+          display: flex;
+          justify-content: space-around;
+          margin-bottom: 20px;
+        `}
+      >
+        <div>
+          <label>dataIndex: </label>
+          <select
+            css={css`
+              cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
+            `}
+            onChange={({ target }) => {
+              const value = Number(target.value);
+              if (value !== undefined && !Number.isNaN(value)) {
+                setInfo(({ flipHorizontalAxis }) => ({
+                  flipHorizontalAxis,
+                  ...defaultInfo(value),
+                }));
+              }
+            }}
+          >
+            {data.map((d, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <option key={i} value={i}>
+                {i}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>xVariable: </label>
+          <select
+            css={css`
+              cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
+            `}
+            onChange={({ target }) => {
+              const value = target.value;
+              if (value) {
+                setInfo((info) => ({ ...info, xVariableName: value }));
+              }
+            }}
+            value={info.xVariableName}
+          >
+            {dropdownVariables('x')}
+          </select>
+        </div>
+        <div>
+          <FaExchangeAlt
+            css={css`
+              margin-top: 2px;
+              cursor: pointer;
+            `}
+            size="20"
+            onClick={() =>
+              setInfo(({ xVariableName, yVariableName, ...info }) => ({
+                ...info,
+                xVariableName: yVariableName,
+                yVariableName: xVariableName,
+              }))
+            }
+          />
+        </div>
+        <div>
+          <label>yVariable :</label>
+          <select
+            css={css`
+              cursor: pointer;
+              border: 1px solid black;
+              padding: 1px;
+              margin-left: 2px;
+            `}
+            onChange={({ target }) => {
+              const value = target.value;
+              if (value) {
+                setInfo((info) => ({ ...info, yVariableName: value }));
+              }
+            }}
+            value={info.yVariableName}
+          >
+            {dropdownVariables('y')}
+          </select>
+        </div>
         <div
           css={css`
+            padding: 1px;
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
           `}
         >
-          <div>
-            <label>dataIndex: </label>
-            <select
-              css={css`
-                cursor: pointer;
-                border: 1px solid black;
-                padding: 1px;
-                margin-left: 2px;
-              `}
-              onChange={({ target }) => {
-                const value = Number(target.value);
-                if (value !== undefined && !Number.isNaN(value)) {
-                  setInfo(({ flipHorizontalAxis }) => ({
-                    flipHorizontalAxis,
-                    ...defaultInfo(value),
-                  }));
-                }
-              }}
-            >
-              {data.map((d, i) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label>xVariable: </label>
-            <select
-              css={css`
-                cursor: pointer;
-                border: 1px solid black;
-                padding: 1px;
-                margin-left: 2px;
-              `}
-              onChange={({ target }) => {
-                const value = target.value;
-                if (value) {
-                  setInfo((info) => ({ ...info, xVariableName: value }));
-                }
-              }}
-              value={info.xVariableName}
-            >
-              {dropdownVariables('x')}
-            </select>
-          </div>
-          <div>
-            <FaExchangeAlt
-              css={css`
-                margin-top: 2px;
-                cursor: pointer;
-              `}
-              size="20"
-              onClick={() =>
-                setInfo(({ xVariableName, yVariableName, ...info }) => ({
-                  ...info,
-                  xVariableName: yVariableName,
-                  yVariableName: xVariableName,
-                }))
-              }
-            />
-          </div>
-          <div>
-            <label>yVariable :</label>
-            <select
-              css={css`
-                cursor: pointer;
-                border: 1px solid black;
-                padding: 1px;
-                margin-left: 2px;
-              `}
-              onChange={({ target }) => {
-                const value = target.value;
-                if (value) {
-                  setInfo((info) => ({ ...info, yVariableName: value }));
-                }
-              }}
-              value={info.yVariableName}
-            >
-              {dropdownVariables('y')}
-            </select>
-          </div>
-          <div
+          Flip horizontal axis:
+          <FaArrowsAltH
             css={css`
+              cursor: pointer;
+              border: 1px solid black;
               padding: 1px;
-              display: flex;
+              margin-left: 2px;
             `}
-          >
-            Flip horizontal axis:
-            <FaArrowsAltH
-              css={css`
-                cursor: pointer;
-                border: 1px solid black;
-                padding: 1px;
-                margin-left: 2px;
-              `}
-              size="28"
-              onClick={() =>
-                setInfo(({ flipHorizontalAxis, ...other }) => ({
-                  flipHorizontalAxis: !flipHorizontalAxis,
-                  ...other,
-                }))
-              }
-            />
-          </div>
+            size="28"
+            onClick={() =>
+              setInfo(({ flipHorizontalAxis, ...other }) => ({
+                flipHorizontalAxis: !flipHorizontalAxis,
+                ...other,
+              }))
+            }
+          />
         </div>
-      )}
-      {kind === '1d' ? (
-        <MeasurementPlot {...props} {...info} />
-      ) : (
-        <MeasurementMassPlot {...props} {...info} />
-      )}
+      </div>
+      <MeasurementPlot {...props} {...info} />
     </div>
   );
 }

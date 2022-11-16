@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
-import { MeasurementPlot } from '../../src/app';
 import type {
   IRMeasurement,
-  MeasurementDisplay,
+  MeasurementViewState,
 } from '../../src/app-data/index';
+import { MeasurementPlot } from '../../src/app/helpers/index';
 import measurement from '../../stories/data/irMeasurement.json';
 
 let irMeasurement = measurement as IRMeasurement;
-const measurementDisplay: MeasurementDisplay = {
+const measurementDisplay: MeasurementViewState = {
   lineStroke: 'red',
 };
 
@@ -91,15 +91,20 @@ test.describe('MeasurementPlot', () => {
     });
     const afterZoom = [
       // new horizontal axis values after zoom
+      580,
+      600,
+      620,
+      640,
+      660,
+      680,
       700,
-      750,
+      720,
+      740,
+      760,
+      780,
       800,
-      850,
-      900,
-      950,
-      1000,
-      1050,
-      1100,
+      820,
+      840,
       '1/CM',
 
       // vertical axis default values
@@ -200,13 +205,13 @@ test.describe('MeasurementPlot', () => {
       '1/CM',
 
       // new vertical axis values after zoom
-      62,
-      64,
-      66,
-      68,
-      70,
-      72,
       74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
       '% Transmittance',
     ].join('');
     await expect(component).toContainText(afterZoom);
@@ -226,25 +231,30 @@ test.describe('MeasurementPlot', () => {
     });
     const afterZoom = [
       // horizontal axis default values
+      580,
+      600,
+      620,
+      640,
+      660,
+      680,
       700,
-      750,
+      720,
+      740,
+      760,
+      780,
       800,
-      850,
-      900,
-      950,
-      1000,
-      1050,
-      1100,
+      820,
+      840,
       '1/CM',
 
       // new vertical axis values after zoom
-      62,
-      64,
-      66,
-      68,
-      70,
-      72,
       74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
       '% Transmittance',
     ].join('');
     await expect(component).toContainText(afterZoom);
