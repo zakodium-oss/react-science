@@ -1,11 +1,15 @@
 import type { FileCollection } from 'filelist-utils';
 
-import { Measurements, Loader, mergeMeasurements } from './DataState';
-import { enhance } from './enhancers/enhance';
-import type { ParserLog } from './loaders/utility/parserLog';
+import { Measurements, enhance } from '../index';
+
+import {
+  MeasurementsLoader,
+  mergeMeasurements,
+} from './utility/measurementLoader';
+import type { ParserLog } from './utility/parserLog';
 
 interface LoadOptions {
-  loaders?: Loader[];
+  loaders?: MeasurementsLoader[];
   enhancers?;
   logger?: boolean;
 }

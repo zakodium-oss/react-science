@@ -1,7 +1,10 @@
 import { fileCollectionFromFiles } from 'filelist-utils';
 
-import { loadMeasurements, useAppDispatch } from '../../../app-data/index';
-import { biologicLoader } from '../../../app-data/loaders/biologicLoader';
+import {
+  loadMeasurements,
+  useAppDispatch,
+  biologicLoader,
+} from '../../../app-data/index';
 
 const options = {
   loaders: [biologicLoader],

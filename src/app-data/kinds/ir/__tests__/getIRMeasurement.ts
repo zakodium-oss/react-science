@@ -1,9 +1,11 @@
 import { getTestFileCollection } from '../../../../utils/test-utils';
-import { loadMeasurements } from '../../../loadMeasurements';
-import { jcampLoader } from '../../../loaders/jcampLoader';
-import type { IRMeasurement } from '../IRMeasurement';
-import { getIRAutoPeakPickingEnhancer } from '../irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../irMeasurementEnhancer';
+import {
+  loadMeasurements,
+  jcampLoader,
+  IRMeasurement,
+  getIRAutoPeakPickingEnhancer,
+  irMeasurementEnhancer,
+} from '../../../index';
 
 const loaders = [jcampLoader];
 const enhancers = {

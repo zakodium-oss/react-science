@@ -1,16 +1,20 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 import { useCallback } from 'react';
 
-import { getIRAutoPeakPickingEnhancer } from '../../../app-data/kinds/ir/irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../../../app-data/kinds/ir/irMeasurementEnhancer';
-import { AppDispatch, AppState, useAppDispatch } from '../../../app-data/index';
-import { loadMeasurements } from '../../../app-data/loadMeasurements';
-import { biologicLoader } from '../../../app-data/loaders/biologicLoader';
-import { cdfLoader } from '../../../app-data/loaders/cdfLoader';
-import { jcampLoader } from '../../../app-data/loaders/jcampLoader';
-import { cary500Loader } from '../../../app-data/loaders/proprietary/agilent/cary500Loader';
-import { spcLoader } from '../../../app-data/loaders/spcLoader';
-import { wdfLoader } from '../../../app-data/loaders/wdfLoader';
+import {
+  getIRAutoPeakPickingEnhancer,
+  irMeasurementEnhancer,
+  AppDispatch,
+  AppState,
+  useAppDispatch,
+  biologicLoader,
+  cdfLoader,
+  jcampLoader,
+  cary500Loader,
+  spcLoader,
+  wdfLoader,
+  loadMeasurements,
+} from '../../../app-data/index';
 
 const options = {
   loaders: [

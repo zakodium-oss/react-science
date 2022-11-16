@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { LineSeries, PlotController } from 'react-plot';
 
 import type { MeasurementBase, MeasurementDisplay } from '../../app-data/index';
-import { BasicComponent } from '../helpers/react-plot';
+import { BasicComponent } from '../helpers/index';
 
 type Measurement = Pick<
   MeasurementBase,

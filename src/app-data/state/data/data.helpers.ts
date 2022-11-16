@@ -1,7 +1,8 @@
-import { assert, assertNotNull } from '../utils/assert';
+import { assert, assertNotNull } from '../../../utils/assert';
+import type { AppState } from '../index';
 
-import { MeasurementKind, measurementKinds, Measurements } from './DataState';
-import type { AppState } from './appState';
+import type { MeasurementKind, Measurements } from './DataState';
+import { measurementKinds } from './kinds';
 
 export function getMeasurement(
   measurements: Measurements,

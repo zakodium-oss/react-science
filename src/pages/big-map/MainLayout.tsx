@@ -10,8 +10,8 @@ import {
   MeasurementExplorer,
   MeasurementInfoPanel,
   MeasurementsPanel,
+  MeasurementPanel,
 } from '../../app/index';
-import { MeasurementPanel } from '../../app/panels/MeasurementPanel';
 import {
   Accordion,
   DropZoneContainer,

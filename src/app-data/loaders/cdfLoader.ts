@@ -2,7 +2,7 @@ import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../utils/assert';
-import type { Measurements, MeasurementKind } from '../DataState';
+import type { Measurements, MeasurementKind } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from './utility/parserLog';

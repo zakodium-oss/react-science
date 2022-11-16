@@ -1,4 +1,4 @@
-import type { Measurements } from '../DataState';
+import type { Measurements } from '../index';
 
 export function enhance(measurements: Partial<Measurements>, enhancers = {}) {
   for (let key in measurements) {
