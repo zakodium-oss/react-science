@@ -1,1 +1,2 @@
-export type DummyView = string;
+export * from './getEmptyViewState';
+export * from './ViewState';
