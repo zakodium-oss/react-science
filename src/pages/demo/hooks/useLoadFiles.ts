@@ -37,13 +37,12 @@ async function doLoadFiles(
   files: File[] | FileCollection,
   dispatch: AppDispatch,
 ) {
-  dispatch({ type: 'LOAD_START' });
   try {
     if (files[0] && !files[1] && files[0].name.match(/\.ium$/i)) {
       const data = await files[0].text();
-      const appState: Omit<AppState, 'isLoading'> = JSON.parse(data);
+      const appState: AppState = JSON.parse(data);
       dispatch({
-        type: 'LOAD_STATE',
+        type: 'LOAD_FULL_STATE',
         payload: appState,
       });
     } else {
@@ -56,8 +55,6 @@ async function doLoadFiles(
     }
   } catch (error) {
     reportError(error);
-  } finally {
-    dispatch({ type: 'LOAD_END' });
   }
 }
 

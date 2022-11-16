@@ -14,8 +14,7 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "outDir": "lib",
-    "noImplicitAny": false,
-    "importsNotUsedAsValues": "error"
+    "noImplicitAny": false
   },
   "include": [
     "./src",
