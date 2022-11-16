@@ -1,8 +1,8 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 import { useCallback } from 'react';
 
-import { getIRAutoPeakPickingEnhancer } from '../../../app-data/enhancers/irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../../../app-data/enhancers/irMeasurementEnhancer';
+import { getIRAutoPeakPickingEnhancer } from '../../../app-data/kinds/ir/irAutoPeakPickingEnhancer';
+import { irMeasurementEnhancer } from '../../../app-data/kinds/ir/irMeasurementEnhancer';
 import { AppDispatch, AppState, useAppDispatch } from '../../../app-data/index';
 import { loadMeasurements } from '../../../app-data/loadMeasurements';
 import { biologicLoader } from '../../../app-data/loaders/biologicLoader';

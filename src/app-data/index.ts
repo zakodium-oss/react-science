@@ -1,5 +1,5 @@
-export * from './IRPeak';
-export * from './IRMeasurement';
+export * from './kinds/ir/IRPeak';
+export * from './kinds/ir/IRMeasurement';
 export * from './loadMeasurements';
 export * from './MeasurementBase';
 export * from './DataState';

@@ -2,8 +2,8 @@ import { gsd, GSDOptions } from 'ml-gsd';
 import type { Shape1D } from 'ml-peak-shape-generator';
 import { xMinMaxValues } from 'ml-spectra-processing';
 
-import type { IRMeasurement } from '../IRMeasurement';
-import type { IRPeak, IRPeakKind } from '../IRPeak';
+import type { IRMeasurement } from './IRMeasurement';
+import type { IRPeak, IRPeakKind } from './IRPeak';
 
 export interface AutoPeakPickingOptions extends GSDOptions {
   /** x variable label, by default 'x' */
