@@ -2,7 +2,7 @@ import type { FileCollection } from 'filelist-utils';
 
 import { assert } from '../utils/assert';
 
-import type { IRMeasurement } from './IRMeasurement';
+import type { IRMeasurement } from './kinds/ir/IRMeasurement';
 import type { MeasurementBase } from './MeasurementBase';
 import type { ParserLog } from './loaders/utility/parserLog';
 

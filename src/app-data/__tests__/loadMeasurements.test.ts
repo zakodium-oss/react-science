@@ -1,8 +1,8 @@
 import { test, expect } from 'vitest';
 
 import { getTestFileCollection } from '../../utils/test-utils';
-import { getIRAutoPeakPickingEnhancer } from '../enhancers/irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../enhancers/irMeasurementEnhancer';
+import { getIRAutoPeakPickingEnhancer } from '../kinds/ir/irAutoPeakPickingEnhancer';
+import { irMeasurementEnhancer } from '../kinds/ir/irMeasurementEnhancer';
 import { loadMeasurements } from '../loadMeasurements';
 import { jcampLoader } from '../loaders/jcampLoader';
 import { wdfLoader } from '../loaders/wdfLoader';

@@ -1,5 +1,6 @@
+import type { MeasurementBase } from '../../MeasurementBase';
+
 import type { IRPeak } from './IRPeak';
-import type { MeasurementBase } from './MeasurementBase';
 
 /**
  * When we have a simple measurement like uv, ir, etc, data should only contain one element
