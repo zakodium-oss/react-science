@@ -1,10 +1,10 @@
 import { GradientScaleName } from '../../../components/index';
 import type { MeasurementKind } from '../index';
 
-export interface ViewState {
+export interface AppView {
   selectedKind?: MeasurementKind;
   selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
-  measurements: Record<string, MeasurementViewState>;
+  measurements: Record<string, MeasurementAppView>;
   // TODO: implement this.
   // plot: {
   //   [key in MeasurementKind]: PlotView;
@@ -18,7 +18,7 @@ export interface ViewState {
 //   };
 // }
 
-export interface MeasurementViewState {
+export interface MeasurementAppView {
   color: ColorConfig;
   // TODO: implement this.
   // visible: boolean;
