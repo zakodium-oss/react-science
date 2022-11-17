@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../../../../utils/test-utils';
+import { getTestFileCollection } from '../../../../../test-utils';
 import { cary500Loader } from '../cary500Loader';
 
 test('cary500Loader', async () => {

@@ -1,7 +1,7 @@
 import type { FileCollectionItem } from 'filelist-utils';
 import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../../../utils/test-utils';
+import { getTestFileCollection } from '../../../../test-utils';
 import { getMeasurementInfoFromFile } from '../getMeasurementInfoFromFile';
 
 test('getMeasurementInfoFromFile', async () => {

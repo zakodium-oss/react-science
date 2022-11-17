@@ -1,7 +1,7 @@
 import type { FileCollection } from 'filelist-utils';
 import { parse, guessSpectraType } from 'spc-parser';
 
-import { assert } from '../../utils/assert';
+import { assert } from '../../components/index';
 import type { MeasurementKind, Measurements, MeasurementBase } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';

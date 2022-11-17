@@ -1,31 +1,25 @@
 import {
-  DataState,
   kindLabels,
   MeasurementKind,
-  MeasurementBase,
   measurementKinds,
-} from '../../app-data/index';
-import { ValueRenderers, Table, TabItem, Tabs } from '../../components/index';
+  useAppState,
+  getCurrentMeasurementData,
+  useAppDispatch,
+} from '../../../app-data/index';
+import {
+  ValueRenderers,
+  Table,
+  TabItem,
+  Tabs,
+} from '../../../components/index';
 
-export interface MeasurementsPanelProps extends DataState {
-  /**
-   * Callback when click on measurement
-   */
-  onMeasurementSelect?: (param: {
-    kind: MeasurementKind;
-    measurement: MeasurementBase;
-  }) => void;
-  /**
-   * Callback when click on tab
-   */
-  onTabSelect?: (kind: MeasurementKind) => void;
-  selectedMeasurement?: {
-    id?: string;
-    kind: MeasurementKind;
-  };
-}
-export function MeasurementsPanel(props: MeasurementsPanelProps) {
-  const { onMeasurementSelect, measurements, selectedMeasurement } = props;
+export function MeasurementsPanel() {
+  const appState = useAppState();
+  const measurement = getCurrentMeasurementData(appState);
+  const dispatch = useAppDispatch();
+
+  const measurements = appState.data.measurements;
+  const selectedMeasurement = measurement?.kindAndId;
 
   const kindItem = (kind: MeasurementKind) => ({
     id: kind,
@@ -42,7 +36,10 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
                 cursor: 'pointer',
               }}
               onClick={() => {
-                onMeasurementSelect?.({ kind, measurement });
+                dispatch({
+                  type: 'SELECT_MEASUREMENT',
+                  payload: { id: measurement.id, kind },
+                });
               }}
               value={measurement.id}
             />
@@ -58,21 +55,28 @@ export function MeasurementsPanel(props: MeasurementsPanelProps) {
   const items: Array<TabItem<MeasurementKind>> = availableKinds.map(kindItem);
 
   function handleTabSelection(item: TabItem<MeasurementKind>) {
-    props.onTabSelect?.(item.id);
+    dispatch({
+      type: 'SELECT_MEASUREMENT_KIND',
+      payload: item.id,
+    });
   }
 
   const openedItem = items.find(
     (item) => item.id === selectedMeasurement?.kind,
   );
 
-  return items.length > 0 ? (
+  return items.length > 1 ? (
     <Tabs<MeasurementKind>
       orientation="horizontal"
       items={items}
       opened={openedItem}
       onClick={handleTabSelection}
     />
+  ) : items.length === 1 && items[0].content ? (
+    <>{items[0].content}</>
   ) : (
-    <div>No data available</div>
+    <div style={{ paddingTop: '1rem', marginInline: 'auto' }}>
+      No data available
+    </div>
   );
 }

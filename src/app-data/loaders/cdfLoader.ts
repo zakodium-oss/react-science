@@ -1,7 +1,7 @@
 import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
-import { assert } from '../../utils/assert';
+import { assert } from '../../components/index';
 import type { Measurements, MeasurementKind } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';

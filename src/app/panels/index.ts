@@ -1,4 +1,4 @@
-export * from './MeasurementInfoPanel';
-export * from './MeasurementPanel';
-export * from './MeasurementsPanel';
+export * from './measurement-info/index';
+export * from './measurement-config/index';
+export * from './measurements/index';
 export * from './SignalProcessingPanel';

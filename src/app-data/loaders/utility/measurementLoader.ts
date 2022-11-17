@@ -1,6 +1,6 @@
 import type { FileCollection } from 'filelist-utils';
 
-import { assert } from '../../../utils/assert';
+import { assert } from '../../../components/index';
 import type { MeasurementBase, Measurements } from '../../index';
 
 import type { ParserLog } from './parserLog';
