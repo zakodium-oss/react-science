@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
-import { ReactNode, useRef, useState } from 'react';
-import { usePopper } from 'react-popper';
+import { ReactNode, useRef } from 'react';
 
+import { useModifiedPopper } from '../hooks/useModifiedPopper';
 import { useOnClickOutside } from '../hooks/useOnClickOutside';
 import { useOnOff } from '../hooks/useOnOff';
 import { Portal } from '../root-layout/Portal';
@@ -96,26 +96,11 @@ function DropdownClickMenu<T>(
   const { placement = 'bottom-start', ...otherProps } = props;
 
   const [isOpened, , closeItems, toggle] = useOnOff(false);
-  const [targetRef, setTargetRef] = useState<HTMLButtonElement | null>(null);
-  const [contentRef, setContentRef] = useState<HTMLDivElement | null>(null);
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const { styles: popperStyles, attributes: popperAttribues } = usePopper(
-    targetRef,
-    contentRef,
-    {
-      placement,
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 6],
-          },
-        },
-      ],
-    },
-  );
+  const { setReferenceElement, setPopperElement, popperProps } =
+    useModifiedPopper<HTMLButtonElement>({ placement, offset: 6 });
 
   useOnClickOutside(ref, () => {
     closeItems();
@@ -124,16 +109,12 @@ function DropdownClickMenu<T>(
   return (
     <div ref={ref}>
       <Menu>
-        <Menu.Button ref={setTargetRef} onClick={toggle}>
+        <Menu.Button ref={setReferenceElement} onClick={toggle}>
           {props.children}
         </Menu.Button>
         {isOpened && (
           <Portal>
-            <div
-              ref={setContentRef}
-              style={popperStyles.popper}
-              {...popperAttribues.popper}
-            >
+            <div ref={setPopperElement} {...popperProps}>
               <MenuItems itemsStatic {...otherProps} />
             </div>
           </Portal>

@@ -125,29 +125,15 @@ function Item<T>(props: ItemProps<T>) {
   return (
     <Menu.Item disabled={option.disabled}>
       {({ active }) => (
-        <ItemOption onSelect={onSelect} option={option} active={active} />
+        <ItemDiv
+          onClick={() => onSelect(option)}
+          active={active}
+          disabled={option.disabled || false}
+        >
+          <IconDiv>{option.icon}</IconDiv>
+          <LabelDiv>{option.label}</LabelDiv>
+        </ItemDiv>
       )}
     </Menu.Item>
-  );
-}
-
-interface ItemOptionProps<T> {
-  option: MenuOption<T>;
-  onSelect: MenuItemsProps<T>['onSelect'];
-  active: boolean;
-}
-
-function ItemOption<T>(props: ItemOptionProps<T>) {
-  const { onSelect, option, active } = props;
-
-  return (
-    <ItemDiv
-      onClick={() => onSelect(option)}
-      active={active}
-      disabled={option.disabled || false}
-    >
-      <IconDiv>{option.icon}</IconDiv>
-      <LabelDiv>{option.label}</LabelDiv>
-    </ItemDiv>
   );
 }
