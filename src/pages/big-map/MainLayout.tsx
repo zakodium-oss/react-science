@@ -7,6 +7,10 @@ import {
   useAppState,
 } from '../../app-data/index';
 import {
+  useDropFiles,
+  useLoadFileCollectionFromHash,
+} from '../../app/hooks/file-loading';
+import {
   MeasurementInfoPanel,
   MeasurementsPanel,
   MeasurementPanel,
@@ -22,7 +26,7 @@ import {
 } from '../../components/index';
 import { assert } from '../../utils/assert';
 
-import { useLoadFiles } from './hooks/useLoadFiles';
+import { loadFiles } from './helpers/loadFiles';
 
 const mainCss = {
   root: css`
@@ -58,7 +62,8 @@ export default function MainLayout() {
   const measurement = getCurrentMeasurementData(appState);
   assert(!measurement || measurement.kindAndId.kind === 'iv');
 
-  const loadFiles = useLoadFiles();
+  useLoadFileCollectionFromHash(loadFiles);
+  const onDrop = useDropFiles(loadFiles);
 
   return (
     <div css={mainCss.root}>
@@ -83,7 +88,7 @@ export default function MainLayout() {
             controlledSide="end"
           >
             <div css={mainCss.measurement}>
-              <DropZoneContainer onDrop={loadFiles}>
+              <DropZoneContainer onDrop={onDrop}>
                 {measurement ? (
                   <IvMainView
                     measurement={measurement.data}

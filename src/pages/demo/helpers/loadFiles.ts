@@ -1,12 +1,10 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
-import { useCallback } from 'react';
 
 import {
   getIRAutoPeakPickingEnhancer,
   irMeasurementEnhancer,
   AppDispatch,
   AppState,
-  useAppDispatch,
   biologicLoader,
   cdfLoader,
   jcampLoader,
@@ -33,7 +31,7 @@ const options = {
   },
 };
 
-async function doLoadFiles(
+export async function loadFiles(
   files: File[] | FileCollection,
   dispatch: AppDispatch,
 ) {
@@ -56,14 +54,4 @@ async function doLoadFiles(
   } catch (error) {
     reportError(error);
   }
-}
-
-export function useLoadFiles() {
-  const dispatch = useAppDispatch();
-  return useCallback(
-    (files: File[] | FileCollection) => {
-      void doLoadFiles(files, dispatch);
-    },
-    [dispatch],
-  );
 }

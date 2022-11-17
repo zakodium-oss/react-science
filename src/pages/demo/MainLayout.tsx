@@ -1,5 +1,3 @@
-import { fileCollectionFromWebservice } from 'filelist-utils';
-import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   FaBook,
@@ -19,6 +17,10 @@ import {
   useAppState,
 } from '../../app-data/index';
 import {
+  useLoadFileCollectionFromHash,
+  useDropFiles,
+} from '../../app/hooks/file-loading';
+import {
   MeasurementInfoPanel,
   MeasurementsPanel,
   MeasurementPanel,
@@ -31,10 +33,9 @@ import {
   Header,
   SplitPane,
   Toolbar,
-  useHashSearchParams,
 } from '../../components/index';
 
-import { useLoadFiles } from './hooks/useLoadFiles';
+import { loadFiles } from './helpers/loadFiles';
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -48,13 +49,12 @@ function ErrorFallback({ error, resetErrorBoundary }) {
   );
 }
 
-export default function DropZoneArea() {
+export default function MainLayout() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurementData(appState);
-  const hashSearchParams = useHashSearchParams();
-  const fileListParam = hashSearchParams.get('filelist');
-  const loadFiles = useLoadFiles();
+  useLoadFileCollectionFromHash(loadFiles);
+  const onDrop = useDropFiles(loadFiles);
 
   function saveHandler(filename = 'file', spaceIndent = 0) {
     const data = JSON.stringify(
@@ -74,15 +74,6 @@ export default function DropZoneArea() {
       },
     },
   ]);
-  useEffect(() => {
-    async function getData(url: string | null) {
-      if (url) {
-        const fileCollection = await fileCollectionFromWebservice(url);
-        loadFiles(fileCollection);
-      }
-    }
-    void getData(fileListParam);
-  }, [loadFiles, fileListParam]);
   return (
     <div
       style={{
@@ -155,7 +146,7 @@ export default function DropZoneArea() {
                   height: '100%',
                 }}
               >
-                <DropZoneContainer onDrop={loadFiles}>
+                <DropZoneContainer onDrop={onDrop}>
                   {measurement ? <ExplorerMainView /> : null}
                 </DropZoneContainer>
               </div>
