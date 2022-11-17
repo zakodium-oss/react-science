@@ -1,2 +1,2 @@
-export * from './MassMainView';
+export * from './MassPlotView';
 export * from './MeasurementMassPlot';

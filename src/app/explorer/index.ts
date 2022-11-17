@@ -1,2 +1,2 @@
-export * from './ExplorerMainView';
+export * from './ExplorerPlotView';
 export * from './MeasurementExplorer';
