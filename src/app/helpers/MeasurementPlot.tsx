@@ -62,11 +62,16 @@ function MeasurementComponent(props: MeasurementPlotProps) {
     return { x, y };
   }, [data, dataIndex, xVariableName, yVariableName]);
 
+  const { color } = measurementDisplay;
+  if (color.kind !== 'fixed') {
+    throw new Error(`unimplemented stroke for kind ${color.kind}`);
+  }
+
   return (
     <BasicComponent {...props}>
       <LineSeries
         lineStyle={{
-          stroke: measurementDisplay.lineStroke,
+          stroke: color.color,
         }}
         data={xyToXYObject({
           x: x.data,

@@ -11,12 +11,18 @@ export function MeasurementConfigPanel() {
   const measurement = getCurrentMeasurementData(appState);
   if (!measurement) return null;
 
+  const { color } = measurement.display;
+
+  if (color.kind !== 'fixed') {
+    throw new Error(`unimplemented color edition for kind ${color.kind}`);
+  }
+
   return (
     <div style={{ display: 'flex', padding: 8 }}>
       <div style={{ flex: '1 1 0' }}>Stroke color</div>
       <ColorPicker
         color={{
-          hex: measurement.display.lineStroke,
+          hex: color.color,
         }}
         onChangeComplete={({ hex }) => {
           dispatch({
@@ -24,7 +30,10 @@ export function MeasurementConfigPanel() {
             payload: {
               measurement: measurement.kindAndId,
               display: {
-                lineStroke: hex,
+                color: {
+                  kind: 'fixed',
+                  color: hex,
+                },
               },
             },
           });
