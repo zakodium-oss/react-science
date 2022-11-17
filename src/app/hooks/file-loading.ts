@@ -22,6 +22,7 @@ export function useLoadFileCollectionFromHash(onLoad: LoadFn) {
       }
       const fileCollection = await fileCollectionFromWebservice(filelistUrl);
       void onLoad(fileCollection, appDispatch);
+      return true;
     },
   });
   return query;
