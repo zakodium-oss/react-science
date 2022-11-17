@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode, CSSProperties, useState, useCallback } from 'react';
 import root from 'react-shadow/emotion.esm';
 
@@ -8,6 +9,7 @@ import { AccordionProvider } from '../accordion/AccordionContext';
 import { RootLayoutProvider } from './RootLayoutContext';
 import { customDivPreflight } from './css-reset/customPreflight';
 import { preflight } from './css-reset/preflight';
+import { queryClient } from './queryClient';
 
 interface RootLayoutProps {
   style?: CSSProperties;
@@ -40,7 +42,9 @@ export function RootLayout(props: RootLayoutProps) {
         style={{ width: '100%', height: '100%', position: 'relative' }}
       >
         <RootLayoutProvider innerRef={rootRef}>
-          <AccordionProvider>{props.children}</AccordionProvider>
+          <QueryClientProvider client={queryClient}>
+            <AccordionProvider>{props.children}</AccordionProvider>
+          </QueryClientProvider>
         </RootLayoutProvider>
       </div>
     </root.div>
