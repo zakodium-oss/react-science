@@ -10,17 +10,21 @@ import {
 import { AppStateAction } from './appStateActions';
 import { DataState, getEmptyDataState } from './data/index';
 import { appStateProducer } from './producers/index';
+import { SettingsState } from './settings/SettingsState';
+import { getEmptySettingsState } from './settings/getEmptySettingsState';
 import { getEmptyViewState, ViewState } from './view/index';
 
 export interface AppState {
   data: DataState;
   view: ViewState;
+  settings: SettingsState;
 }
 
 function getEmptyAppState(): AppState {
   return {
     data: getEmptyDataState(),
     view: getEmptyViewState(),
+    settings: getEmptySettingsState(),
   };
 }
 

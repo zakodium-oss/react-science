@@ -1,1 +1,2 @@
-export type DummySettings = string;
+export * from './SettingsState';
+export * from './getEmptySettingsState';
