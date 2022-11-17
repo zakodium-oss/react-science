@@ -27,7 +27,7 @@ const defaultOptions: MenuOptions<string> = [
   { label: 'Default workspace', type: 'option' },
 ];
 
-const ButtonStyled = styled.span`
+const ButtonStyled = styled.div`
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   color: white;
   font-weight: 600;
@@ -40,7 +40,7 @@ const ButtonStyled = styled.span`
   background-color: rgb(107 114 128);
   border-color: transparent;
   border-radius: 0.375rem;
-  border-width: 1;
+  border-width: 1px;
 `;
 
 export function Dropdown() {

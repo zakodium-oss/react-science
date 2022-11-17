@@ -29,7 +29,7 @@ export function useContextMenuPlacement(placement: Placement) {
     [],
   );
 
-  const boudingClientRect = useMemo(() => {
+  const boundingClientRect = useMemo(() => {
     return {
       top: positionState?.clientY || 0,
       left: positionState?.clientX || 0,
@@ -46,9 +46,9 @@ export function useContextMenuPlacement(placement: Placement) {
 
   const virtualElement = useMemo(() => {
     return {
-      getBoundingClientRect: () => boudingClientRect,
+      getBoundingClientRect: () => boundingClientRect,
     };
-  }, [boudingClientRect]);
+  }, [boundingClientRect]);
 
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
     null,
