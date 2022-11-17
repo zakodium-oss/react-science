@@ -2,7 +2,7 @@ import type { Instrument, MeasurementVariable } from 'cheminfo-types';
 
 import type { IRMeasurement } from '../../index';
 
-export interface DataState {
+export interface AppData {
   measurements: Measurements;
 }
 

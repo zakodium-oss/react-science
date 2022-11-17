@@ -1,6 +1,6 @@
-import type { DataState } from './DataState';
+import type { AppData } from './AppData';
 
-export function getEmptyDataState(): DataState {
+export function getEmptyAppData(): AppData {
   return {
     measurements: {
       ir: { entries: [] },

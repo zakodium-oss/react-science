@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 
-import type { IRMeasurement, MeasurementViewState } from '../../src/app-data';
+import type { IRMeasurement, MeasurementAppView } from '../../src/app-data';
 import { MeasurementExplorer } from '../../src/app/index';
 import measurement from '../../stories/data/irMeasurement.json';
 
 let irMeasurement = measurement as IRMeasurement;
 
-const measurementDisplay: MeasurementViewState = {
+const measurementDisplay: MeasurementAppView = {
   color: {
     kind: 'fixed',
     color: 'red',

@@ -1,7 +1,7 @@
 import { assertNotNull } from '../../../components/index';
-import type { AppState } from '../index';
+import type { AppState, AppView } from '../index';
 
-import type { MeasurementKind, Measurements } from './DataState';
+import type { AppData, MeasurementKind, Measurements } from './AppData';
 import { measurementKinds } from './kinds';
 
 export function getMeasurement(
@@ -44,7 +44,7 @@ export function getFirstMeasurementOrFail(
 }
 
 export function getCurrentMeasurement(state: AppState) {
-  const selectedMeasurement = getSelectedMeasurement(state);
+  const selectedMeasurement = getSelectedMeasurement(state.view);
   if (!selectedMeasurement) return null;
   return getMeasurement(
     state.data.measurements,
@@ -56,7 +56,7 @@ export function getCurrentMeasurement(state: AppState) {
 export function getCurrentMeasurementData(state: AppState) {
   const selectedMeasurement = getCurrentMeasurement(state);
   if (!selectedMeasurement) return null;
-  const kindAndId = getMeasurementKindAndId(state, selectedMeasurement.id);
+  const kindAndId = getMeasurementKindAndId(state.data, selectedMeasurement.id);
   const display = state.view.measurements[selectedMeasurement.id];
   return { data: selectedMeasurement, display, kindAndId };
 }
@@ -66,25 +66,18 @@ export interface MeasurementKindAndId {
   id: string;
 }
 
-export function getMeasurementKindAndId(
-  state: AppState,
-  measurementId: string,
-) {
+export function getMeasurementKindAndId(data: AppData, measurementId: string) {
   for (let kind of measurementKinds) {
-    const measurement = getMeasurement(
-      state.data.measurements,
-      kind,
-      measurementId,
-    );
+    const measurement = getMeasurement(data.measurements, kind, measurementId);
     if (measurement) return { kind, id: measurementId };
   }
   throw new Error(`Measurement kind for ${measurementId} not found`);
 }
 
 export function getSelectedMeasurement(
-  state: AppState,
+  view: AppView,
 ): MeasurementKindAndId | undefined {
-  const { selectedKind, selectedMeasurements } = state.view;
+  const { selectedKind, selectedMeasurements } = view;
   if (!selectedKind) return undefined;
   const kind = selectedKind;
   const currentMeasurements = selectedMeasurements[kind];
@@ -94,8 +87,8 @@ export function getSelectedMeasurement(
   return { kind, id };
 }
 
-export function getSelectedMeasurementOrFail(state: AppState) {
-  const selected = getSelectedMeasurement(state);
+export function getSelectedMeasurementOrFail(view: AppView) {
+  const selected = getSelectedMeasurement(view);
   assertNotNull(selected);
   return selected;
 }

@@ -8,23 +8,23 @@ import {
 } from 'react';
 
 import { AppStateAction } from './appStateActions';
-import { DataState, getEmptyDataState } from './data/index';
+import { AppData, getEmptyAppData } from './data/index';
 import { appStateProducer } from './producers/index';
-import { SettingsState } from './settings/SettingsState';
-import { getEmptySettingsState } from './settings/getEmptySettingsState';
-import { getEmptyViewState, ViewState } from './view/index';
+import { AppSettings } from './settings/AppSettings';
+import { getEmptyAppSettings } from './settings/getEmptyAppSettings';
+import { getEmptyAppView, AppView } from './view/index';
 
 export interface AppState {
-  data: DataState;
-  view: ViewState;
-  settings: SettingsState;
+  data: AppData;
+  view: AppView;
+  settings: AppSettings;
 }
 
 function getEmptyAppState(): AppState {
   return {
-    data: getEmptyDataState(),
-    view: getEmptyViewState(),
-    settings: getEmptySettingsState(),
+    data: getEmptyAppData(),
+    view: getEmptyAppView(),
+    settings: getEmptyAppSettings(),
   };
 }
 
@@ -48,6 +48,18 @@ export function useAppDispatch(): AppDispatch {
     throw new Error('useAppDispatch must be used within an AppStateProvider');
   }
   return appDispatch;
+}
+
+export function useAppData(): AppData {
+  return useAppState().data;
+}
+
+export function useAppView(): AppView {
+  return useAppState().view;
+}
+
+export function useAppSettings(): AppSettings {
+  return useAppState().settings;
 }
 
 const appReducer = produce(appStateProducer);

@@ -1,2 +1,2 @@
-export * from './getEmptyViewState';
-export * from './ViewState';
+export * from './getEmptyAppView';
+export * from './AppView';

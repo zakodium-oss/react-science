@@ -1,4 +1,4 @@
-import type { MeasurementKind } from './DataState';
+import type { MeasurementKind } from './AppData';
 
 export const kindLabels: Record<MeasurementKind, string> = {
   ir: 'IR',

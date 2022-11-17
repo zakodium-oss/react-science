@@ -1,2 +1,2 @@
-export * from './SettingsState';
-export * from './getEmptySettingsState';
+export * from './AppSettings';
+export * from './getEmptyAppSettings';
