@@ -1,11 +1,11 @@
 import { MeasurementBase, MeasurementViewState } from '../../../app-data/index';
 import { MeasurementPlot } from '../../helpers/index';
 
-interface IvMainViewProps {
+interface IvPlotViewProps {
   measurement: MeasurementBase;
   measurementDisplay: MeasurementViewState;
 }
 
-export function IvMainView(props: IvMainViewProps) {
+export function IvPlotView(props: IvPlotViewProps) {
   return <MeasurementPlot {...props} />;
 }

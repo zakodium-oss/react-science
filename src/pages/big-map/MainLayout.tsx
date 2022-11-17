@@ -14,7 +14,7 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
   MeasurementPanel,
-  IvMainView,
+  IvPlotView,
 } from '../../app/index';
 import {
   Accordion,
@@ -90,7 +90,7 @@ export default function MainLayout() {
             <div css={mainCss.measurement}>
               <DropZoneContainer onDrop={onDrop}>
                 {measurement ? (
-                  <IvMainView
+                  <IvPlotView
                     measurement={measurement.data}
                     measurementDisplay={measurement.display}
                   />

@@ -1,1 +1,1 @@
-export * from './IvMainView';
+export * from './IvPlotView';

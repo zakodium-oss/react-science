@@ -24,7 +24,7 @@ import {
   MeasurementInfoPanel,
   MeasurementsPanel,
   MeasurementPanel,
-  ExplorerMainView,
+  ExplorerPlotView,
 } from '../../app/index';
 import {
   Accordion,
@@ -147,7 +147,7 @@ export default function MainLayout() {
                 }}
               >
                 <DropZoneContainer onDrop={onDrop}>
-                  {measurement ? <ExplorerMainView /> : null}
+                  {measurement ? <ExplorerPlotView /> : null}
                 </DropZoneContainer>
               </div>
             </ErrorBoundary>

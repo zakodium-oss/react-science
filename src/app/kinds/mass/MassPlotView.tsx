@@ -2,11 +2,11 @@ import { MeasurementBase, MeasurementViewState } from '../../../app-data/index';
 
 import { MeasurementMassPlot } from './MeasurementMassPlot';
 
-interface MassMainViewProps {
+interface MassPlotViewProps {
   measurement: MeasurementBase;
   measurementDisplay: MeasurementViewState;
 }
 
-export function MassMainView(props: MassMainViewProps) {
+export function MassPlotView(props: MassPlotViewProps) {
   return <MeasurementMassPlot {...props} />;
 }
