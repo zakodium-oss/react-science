@@ -1,7 +1,7 @@
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import { assert } from '../../utils/assert';
+import { assert } from '../../components/index';
 import type { MeasurementKind, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';

@@ -1,24 +1,19 @@
-import { CSSProperties, useState } from 'react';
+import { useState } from 'react';
 
-import type { MeasurementBase } from '../../app-data/index';
-import { ValueRenderers, Table } from '../../components/index';
+import {
+  getCurrentMeasurementData,
+  useAppState,
+} from '../../../app-data/index';
+import { ValueRenderers, Table } from '../../../components/index';
 
-export interface MeasurementInfoPanelProps {
-  measurement: MeasurementBase;
-  metaStyle?: CSSProperties;
-  infoStyle?: CSSProperties;
-}
-
-export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
-  const {
-    measurement: { meta, info },
-    metaStyle,
-    infoStyle,
-  } = props;
-
+export function MeasurementInfoPanel() {
+  const appState = useAppState();
+  const measurement = getCurrentMeasurementData(appState);
   const [search, setSearch] = useState('');
+  if (!measurement) return null;
+  const { meta, info } = measurement.data;
 
-  function viewData(data: Record<string, any>, style: CSSProperties = {}) {
+  function viewData(data: Record<string, any>) {
     return Object.keys(data).map((key) => {
       const value = data[key];
       if (
@@ -29,7 +24,7 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
       }
       return (
         <Table.Row key={key}>
-          <ValueRenderers.Text style={style} value={key} />
+          <ValueRenderers.Text value={key} />
           {valueCell(value)}
         </Table.Row>
       );
@@ -56,8 +51,8 @@ export function MeasurementInfoPanel(props: MeasurementInfoPanelProps) {
           <ValueRenderers.Title value="Parameter" />
           <ValueRenderers.Title value="Value" />
         </Table.Header>
-        {viewData(info, infoStyle)}
-        {viewData(meta, metaStyle)}
+        {viewData(info)}
+        {viewData(meta)}
       </Table>
     </div>
   );

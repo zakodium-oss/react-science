@@ -1,4 +1,4 @@
-import { assertNotNull } from '../../../utils/assert';
+import { assertNotNull } from '../../../components/index';
 import type { AppState } from '../index';
 
 import type { MeasurementKind, Measurements } from './DataState';
@@ -108,4 +108,16 @@ export function* iterateMeasurementEntries(
       yield x;
     }
   }
+}
+
+export function getExistingMeasurementKinds(
+  measurements: Partial<Measurements>,
+): MeasurementKind[] {
+  const result: MeasurementKind[] = [];
+  for (const [kind, { entries }] of Object.entries(measurements)) {
+    if (entries.length > 0) {
+      result.push(kind as MeasurementKind);
+    }
+  }
+  return result;
 }

@@ -1,4 +1,4 @@
-import { getTestFileCollection } from '../../../../utils/test-utils';
+import { getTestFileCollection } from '../../../../test-utils';
 import {
   loadMeasurements,
   jcampLoader,

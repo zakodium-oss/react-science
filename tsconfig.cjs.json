@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "exclude": [
     "./src/pages",
+    "./src/test-utils.ts",
     "./stories",
     "./tests",
     "**/__tests__",

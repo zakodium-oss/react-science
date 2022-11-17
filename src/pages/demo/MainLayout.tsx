@@ -12,19 +12,15 @@ import { useKbsGlobal } from 'react-kbs';
 import {
   download,
   getCurrentMeasurementData,
-  getSelectedMeasurement,
-  useAppDispatch,
   useAppState,
 } from '../../app-data/index';
 import {
+  MeasurementsPanelAccordion,
+  ExplorerPlotView,
   useLoadFileCollectionFromHash,
   useDropFiles,
-} from '../../app/hooks/file-loading';
-import {
-  MeasurementInfoPanel,
-  MeasurementsPanel,
-  MeasurementPanel,
-  ExplorerPlotView,
+  MeasurementInfoPanelAccordion,
+  MeasurementConfigPanelAccordion,
 } from '../../app/index';
 import {
   Accordion,
@@ -50,7 +46,6 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 }
 
 export default function MainLayout() {
-  const dispatch = useAppDispatch();
   const appState = useAppState();
   const measurement = getCurrentMeasurementData(appState);
   useLoadFileCollectionFromHash(loadFiles);
@@ -159,44 +154,9 @@ export default function MainLayout() {
               }}
             >
               <Accordion>
-                <Accordion.Item title="Measurement" defaultOpened>
-                  <div
-                    style={{
-                      flex: '1 1 0%',
-                      width: '100%',
-                    }}
-                  >
-                    <MeasurementsPanel
-                      measurements={appState.data.measurements}
-                      onTabSelect={(kind) => {
-                        dispatch({
-                          type: 'SELECT_MEASUREMENT_KIND',
-                          payload: kind,
-                        });
-                      }}
-                      selectedMeasurement={getSelectedMeasurement(appState)}
-                      onMeasurementSelect={({ measurement, kind }) => {
-                        dispatch({
-                          type: 'SELECT_MEASUREMENT',
-                          payload: { id: measurement.id, kind },
-                        });
-                      }}
-                    />
-                  </div>
-                </Accordion.Item>
-                {measurement ? (
-                  <Accordion.Item title="Measurement display">
-                    <MeasurementPanel
-                      measurement={measurement.kindAndId}
-                      measurementDisplay={measurement.display}
-                    />
-                  </Accordion.Item>
-                ) : null}
-                <Accordion.Item title="Info Panel">
-                  {measurement && (
-                    <MeasurementInfoPanel measurement={measurement.data} />
-                  )}
-                </Accordion.Item>
+                <MeasurementsPanelAccordion />
+                <MeasurementConfigPanelAccordion />
+                <MeasurementInfoPanelAccordion />
               </Accordion>
             </div>
           </SplitPane>

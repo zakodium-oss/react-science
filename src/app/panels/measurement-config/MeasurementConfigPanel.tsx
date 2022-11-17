@@ -1,26 +1,28 @@
-import { MeasurementViewState, useAppDispatch } from '../../app-data/index';
-import type { MeasurementKindAndId } from '../../app-data/index';
-import { ColorPicker } from '../../components/index';
+import {
+  getCurrentMeasurementData,
+  useAppDispatch,
+  useAppState,
+} from '../../../app-data/index';
+import { ColorPicker } from '../../../components/index';
 
-export function MeasurementPanel(props: {
-  measurementDisplay: MeasurementViewState;
-  measurement: MeasurementKindAndId;
-}) {
-  const { measurement, measurementDisplay } = props;
+export function MeasurementConfigPanel() {
   const dispatch = useAppDispatch();
+  const appState = useAppState();
+  const measurement = getCurrentMeasurementData(appState);
+  if (!measurement) return null;
 
   return (
     <div style={{ display: 'flex', padding: 8 }}>
       <div style={{ flex: '1 1 0' }}>Stroke color</div>
       <ColorPicker
         color={{
-          hex: measurementDisplay.lineStroke,
+          hex: measurement.display.lineStroke,
         }}
         onChangeComplete={({ hex }) => {
           dispatch({
             type: 'CHANGE_MEASUREMENT_DISPLAY',
             payload: {
-              measurement,
+              measurement: measurement.kindAndId,
               display: {
                 lineStroke: hex,
               },

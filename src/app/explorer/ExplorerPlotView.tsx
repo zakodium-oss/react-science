@@ -1,6 +1,6 @@
 import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
-import { assertNotNull } from '../../utils/assert';
-import { IvPlotView, MassPlotView } from '../kinds/index';
+import { assertNotNull } from '../../components/index';
+import { IvPlotView, MassPlotView } from '../index';
 
 import { MeasurementExplorer } from './MeasurementExplorer';
 
