@@ -1,3 +1,4 @@
+import { GradientScaleName } from '../../../components/index';
 import type { MeasurementKind } from '../index';
 
 export interface ViewState {
@@ -18,10 +19,11 @@ export interface ViewState {
 // }
 
 export interface MeasurementViewState {
-  lineStroke: string;
+  color: ColorConfig;
   // TODO: implement this.
-  // color: ColorConfig;
   // visible: boolean;
 }
 
-// type ColorConfig = any;
+type ColorConfig =
+  | { kind: 'fixed'; color: string }
+  | { kind: 'fixedGradient'; gradient: GradientScaleName };

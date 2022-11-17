@@ -9,7 +9,10 @@ import measurement from '../../stories/data/irMeasurement.json';
 
 let irMeasurement = measurement as IRMeasurement;
 const measurementDisplay: MeasurementViewState = {
-  lineStroke: 'red',
+  color: {
+    kind: 'fixed',
+    color: 'red',
+  },
 };
 
 const beforeZoom = [
