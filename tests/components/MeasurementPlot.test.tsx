@@ -13,6 +13,7 @@ const measurementDisplay: MeasurementAppView = {
     kind: 'fixed',
     color: 'red',
   },
+  visible: true,
 };
 
 const beforeZoom = [

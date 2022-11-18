@@ -20,8 +20,7 @@ export interface AppView {
 
 export interface MeasurementAppView {
   color: ColorConfig;
-  // TODO: implement this.
-  // visible: boolean;
+  visible: boolean;
 }
 
 type ColorConfig =

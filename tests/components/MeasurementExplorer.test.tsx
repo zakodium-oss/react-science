@@ -11,6 +11,7 @@ const measurementDisplay: MeasurementAppView = {
     kind: 'fixed',
     color: 'red',
   },
+  visible: true,
 };
 
 test.describe('MeasurementExplorer', () => {
