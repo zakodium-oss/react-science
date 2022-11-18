@@ -1,1 +1,1 @@
-export * from './IRPeaksPanel';
+export * from './IrPeaksPanel';

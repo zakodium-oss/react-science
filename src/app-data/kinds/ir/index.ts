@@ -1,4 +1,4 @@
 export * from './irAutoPeakPickingEnhancer';
-export * from './IRMeasurement';
+export * from './IrMeasurement';
 export * from './irMeasurementEnhancer';
-export * from './IRPeak';
+export * from './IrPeak';

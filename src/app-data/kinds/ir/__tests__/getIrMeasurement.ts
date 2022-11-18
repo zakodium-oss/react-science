@@ -2,8 +2,8 @@ import { getTestFileCollection } from '../../../../test-utils';
 import {
   loadMeasurements,
   jcampLoader,
-  IRMeasurement,
-  getIRAutoPeakPickingEnhancer,
+  IrMeasurement,
+  getIrAutoPeakPickingEnhancer,
   irMeasurementEnhancer,
 } from '../../../index';
 
@@ -11,11 +11,11 @@ const loaders = [jcampLoader];
 const enhancers = {
   ir: [
     irMeasurementEnhancer,
-    getIRAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
+    getIrAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
   ],
 };
 
-export async function getIRMeasurement() {
+export async function getIrMeasurement() {
   const fileCollection = await getTestFileCollection('jdx');
   const filteredFileCollection = fileCollection.filter(
     (file) => file.name === 'ir.jdx',
@@ -25,5 +25,5 @@ export async function getIRMeasurement() {
     loaders,
     enhancers,
   });
-  return measurements.ir?.entries[0] as IRMeasurement;
+  return measurements.ir?.entries[0] as IrMeasurement;
 }

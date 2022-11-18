@@ -1,7 +1,7 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
 import {
-  getIRAutoPeakPickingEnhancer,
+  getIrAutoPeakPickingEnhancer,
   irMeasurementEnhancer,
   AppDispatch,
   AppState,
@@ -26,7 +26,7 @@ const options = {
   enhancers: {
     ir: [
       irMeasurementEnhancer,
-      getIRAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
+      getIrAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
     ],
   },
 };
