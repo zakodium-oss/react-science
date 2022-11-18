@@ -29,7 +29,7 @@ const colorPickerDropdownCss = {
   `,
 };
 
-export default function ColorPickerDropdown(props: ColorPickerDopdpownProps) {
+export function ColorPickerDropdown(props: ColorPickerDopdpownProps) {
   const { color, ...otherProps } = props;
 
   const ref = useRef<HTMLDivElement>(null);

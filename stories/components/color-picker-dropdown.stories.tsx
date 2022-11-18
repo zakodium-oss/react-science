@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import ColorPickerDropdown from '../../src/components/color-picker/color-picker-dropdown/ColorPickerDropdown';
+import { ColorPickerDropdown } from '../../src/components/index';
 
 export default {
   title: 'Components / Color Pickers Dropdown',

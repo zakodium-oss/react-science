@@ -3,7 +3,7 @@ import {
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index';
-import ColorPickerDropdown from '../../../components/color-picker/color-picker-dropdown/ColorPickerDropdown';
+import { ColorPickerDropdown } from '../../../components/index';
 
 export function MeasurementConfigPanel() {
   const dispatch = useAppDispatch();
