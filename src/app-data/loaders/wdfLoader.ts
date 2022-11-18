@@ -25,8 +25,7 @@ export async function wdfLoader(
         const parsed = parse(await file.arrayBuffer());
         entries.push({
           meta: parsed.fileHeader,
-          ...getMeasurementInfoFromFile(file),
-          title: parsed.fileHeader.title,
+          ...getMeasurementInfoFromFile(file, parsed.fileHeader.title),
           data: normalizeSpectra(parsed.blocks),
         });
       } catch (error) {

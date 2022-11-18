@@ -5,6 +5,7 @@ import {
   useAppState,
   getCurrentMeasurementData,
   useAppDispatch,
+  MeasurementBase,
 } from '../../../app-data/index';
 import {
   ValueRenderers,
@@ -26,7 +27,7 @@ export function MeasurementsPanel() {
     title: kindLabels[kind],
     content: (
       <Table>
-        {measurements[kind].entries.map((measurement) => (
+        {measurements[kind].entries.map((measurement: MeasurementBase) => (
           <Table.Row key={measurement.id}>
             <ValueRenderers.Title
               style={{
@@ -43,7 +44,7 @@ export function MeasurementsPanel() {
               }}
               value={measurement.id}
             />
-            <ValueRenderers.Text value={measurement.title} />
+            <ValueRenderers.Text value={measurement.info.title} />
           </Table.Row>
         ))}
       </Table>

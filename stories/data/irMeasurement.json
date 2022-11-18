@@ -1,10 +1,13 @@
 {
   "id": "ce33d234-f21d-45e3-b6be-ca9a44406c16",
-  "meta": {},
-  "filename": "ir.jdx",
-  "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/jdx/ir.jdx",
   "info": {
-    "TITLE": "Mattson Instruments",
+    "title": "Mattson Instruments",
+    "file": {
+      "name": "ir.jdx",
+      "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/jdx/ir.jdx"
+    }
+  },
+  "meta": {
     "JCAMPDX": 4.24,
     "OWNER": "",
     "ORIGIN": "",
@@ -21,7 +24,6 @@
     "DELTAX": 3.85695822,
     "NPOINTS": 934
   },
-  "title": "Mattson Instruments",
   "data": [
     {
       "variables": {

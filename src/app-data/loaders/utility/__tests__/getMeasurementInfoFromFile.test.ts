@@ -7,11 +7,14 @@ import { getMeasurementInfoFromFile } from '../getMeasurementInfoFromFile';
 test('getMeasurementInfoFromFile', async () => {
   const { files } = await getTestFileCollection('jdx');
   const jdx = files.find((f) => f.name === '1h.jdx') as FileCollectionItem;
-  expect(getMeasurementInfoFromFile(jdx)).toMatchObject({
-    filename: '1h.jdx',
-    relativePath: 'jdx/1h.jdx',
+  expect(getMeasurementInfoFromFile(jdx, 'jdx title')).toMatchObject({
     info: {
-      size: 175555,
+      title: 'jdx title',
+      file: {
+        name: '1h.jdx',
+        path: 'jdx/1h.jdx',
+        size: 175555,
+      },
     },
   });
 });

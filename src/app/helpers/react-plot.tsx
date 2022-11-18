@@ -38,7 +38,10 @@ export function BasicComponent(
     showVerticalGrid = true,
     flipHorizontalAxis = false,
   } = props;
-  const { title = '', data } = measurement;
+  const {
+    info: { title },
+    data,
+  } = measurement;
 
   const { x, y } = useMemo(() => {
     const { variables } = data[dataIndex];

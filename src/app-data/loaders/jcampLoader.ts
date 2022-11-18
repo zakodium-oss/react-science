@@ -43,13 +43,13 @@ export async function jcampLoader(
               newMeasurements[kind],
               'Error while loading, kind is not defined',
             );
-            newMeasurements[kind]?.entries.push({
+            const newMeasurement = {
+              ...getMeasurementInfoFromFile(file, measurement.title || ''),
               meta: measurement.meta,
-              ...getMeasurementInfoFromFile(file),
-              info: measurement.info,
-              title: measurement.title,
               data: normalizeSpectra(measurement.spectra),
-            });
+            };
+            Object.assign(newMeasurement.info, measurement.info);
+            newMeasurements[kind]?.entries.push(newMeasurement);
           }
         }
       } catch (error) {

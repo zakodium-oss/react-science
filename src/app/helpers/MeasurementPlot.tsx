@@ -6,10 +6,7 @@ import type { MeasurementBase, MeasurementAppView } from '../../app-data/index';
 
 import { BasicComponent } from './index';
 
-type Measurement = Pick<
-  MeasurementBase,
-  'meta' | 'filename' | 'info' | 'title' | 'data'
->;
+type Measurement = Pick<MeasurementBase, 'meta' | 'info' | 'data'>;
 export interface MeasurementPlotProps {
   measurement: Measurement;
   measurementDisplay: MeasurementAppView;

@@ -43,15 +43,18 @@ export async function cdfLoader(
           newMeasurements[kind],
           'Error while loading, kind is not defined',
         );
-        newMeasurements[kind]?.entries.push({
-          ...getMeasurementInfoFromFile(file),
+        const newMeasurement = {
+          ...getMeasurementInfoFromFile(
+            file,
+            reader.getAttribute('experiment_title'),
+          ),
           meta: reader.header.meta,
-          title: reader.getAttribute('experiment_title'),
           data:
             kind === 'gclcms'
               ? chromatogramWithMassSpectra(reader)
               : chromatogram(reader),
-        });
+        };
+        newMeasurements[kind]?.entries.push(newMeasurement);
       } catch (error) {
         if (error instanceof Error) {
           //send error to UI ?
