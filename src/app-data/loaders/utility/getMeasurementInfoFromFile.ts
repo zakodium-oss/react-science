@@ -6,16 +6,15 @@ import type { FileCollectionItem } from 'filelist-utils';
  * generated from just the file metadata only and id
  * @param obj - file as collection item.
  */
-export function getMeasurementInfoFromFile({
-  name,
-  relativePath,
-  lastModified,
-  size,
-}: FileCollectionItem) {
+export function getMeasurementInfoFromFile(
+  { name, relativePath, lastModified, size }: FileCollectionItem,
+  title: string,
+) {
   return {
     id: v4(),
-    filename: name,
-    relativePath,
-    info: { lastModified, size },
+    info: {
+      title,
+      file: { name, path: relativePath, lastModified, size },
+    },
   };
 }

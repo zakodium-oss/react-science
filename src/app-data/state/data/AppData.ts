@@ -18,12 +18,7 @@ type UUID = string;
 
 export interface MeasurementBase {
   id: UUID;
-  title?: string;
-  instrument?: Instrument;
-  filename?: string;
-  path?: string;
-  // Structured object
-  info: Record<string, any>;
+  info: MeasurementBaseInfo;
   // Unstructured object
   meta: Record<string, any>;
   data: Array<{
@@ -31,6 +26,19 @@ export interface MeasurementBase {
     meta?: Record<string, any>;
     variables: Record<string, MeasurementVariable>;
   }>;
+}
+
+export interface MeasurementBaseInfo {
+  title: string;
+  file?: MeasurementFile;
+  instrument?: Instrument;
+}
+
+export interface MeasurementFile {
+  name: string;
+  path?: string;
+  size?: number;
+  lastModified?: number;
 }
 
 export interface Measurements {

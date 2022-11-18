@@ -75,8 +75,7 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
       data: data.map((row) => Number(row[column + 1])),
     };
     experiments.push({
-      ...getMeasurementInfoFromFile(file),
-      title: titles[column],
+      ...getMeasurementInfoFromFile(file, titles[column]),
       meta: JSON.parse(JSON.stringify(meta)),
       data: [{ variables: { x: xVariable, y: yVariable } }],
     });

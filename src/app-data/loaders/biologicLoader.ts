@@ -27,12 +27,14 @@ export async function biologicLoader(
     try {
       if (/\.mpr$/i.test(file.name)) {
         const mpr = parseMPR(await file.arrayBuffer());
-        const info = getMeasurementInfoFromFile(file);
         const meta = mpr.settings.variables;
+        const info = getMeasurementInfoFromFile(
+          file,
+          `Experiment: ${meta.technique}`,
+        );
         // puts the "useful" variables at x and y for default plot.
         const variables = preferredXY(meta.technique, mpr.data.variables);
         const result: MeasurementBase = {
-          title: `Experiment: ${meta.technique}`,
           ...info,
           meta,
           data: [{ variables }],
@@ -40,15 +42,17 @@ export async function biologicLoader(
         entries.push(result);
       } else if (/\.mpt$/i.test(file.name)) {
         const { data, settings } = parseMPT(await file.arrayBuffer());
-        const info = getMeasurementInfoFromFile(file);
         if (data?.variables) {
-          // puts the "useful" variables at x and y for default plot.
           const metaData = settings?.variables;
-          const variables = preferredXY(metaData?.technique, data.variables);
-          const result: MeasurementBase = {
-            title: metaData.technique
+          const info = getMeasurementInfoFromFile(
+            file,
+            metaData.technique
               ? `Experiment: ${metaData.technique}`
               : file.name,
+          );
+          // puts the "useful" variables at x and y for default plot.
+          const variables = preferredXY(metaData?.technique, data.variables);
+          const result: MeasurementBase = {
             ...info,
             meta: metaData || {},
             data: [{ variables }],

@@ -32,8 +32,7 @@ export async function spcLoader(
         );
         measurements[spectraType]?.entries.push({
           meta: parsed.meta,
-          ...getMeasurementInfoFromFile(file),
-          title: parsed.meta.memo,
+          ...getMeasurementInfoFromFile(file, parsed.meta.memo),
           data: parsed.spectra as unknown as MeasurementBase['data'],
         });
       } catch (error) {
