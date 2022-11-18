@@ -38,6 +38,7 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   for (let measurement of iterateMeasurementEntries(newMeasurements)) {
     draft.view.measurements[measurement.id] = {
       color: { kind: 'fixed', color: 'red' },
+      visible: true,
     };
   }
 };
