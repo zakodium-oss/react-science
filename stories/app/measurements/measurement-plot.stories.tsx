@@ -3,7 +3,6 @@ import {
   MeasurementPlot,
   MeasurementPlotProps,
 } from '../../../src/app/helpers/index';
-import { MeasurementMassPlot } from '../../../src/app/index';
 import measurement from '../../data/irMeasurement.json';
 
 let irMeasurement = measurement as IRMeasurement;
@@ -15,9 +14,7 @@ export default {
 export function Control(props: Omit<MeasurementPlotProps, 'measurement'>) {
   return <MeasurementPlot measurement={irMeasurement} {...props} />;
 }
-export function Mass(props: Omit<MeasurementPlotProps, 'measurement'>) {
-  return <MeasurementMassPlot measurement={irMeasurement} {...props} />;
-}
+
 Control.args = {
   dataIndex: 0,
   xVariableName: 'x',

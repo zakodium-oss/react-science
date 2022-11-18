@@ -1,11 +1,18 @@
-import { MeasurementBase, MeasurementAppView } from '../../../app-data/index';
+import {
+  getCurrentMeasurementData,
+  useAppState,
+} from '../../../app-data/index';
+import { assertNotNull } from '../../../components/index';
 import { MeasurementPlot } from '../../helpers/index';
 
-interface IvPlotViewProps {
-  measurement: MeasurementBase;
-  measurementDisplay: MeasurementAppView;
-}
-
-export function IvPlotView(props: IvPlotViewProps) {
-  return <MeasurementPlot {...props} />;
+export function IvPlotView() {
+  const appState = useAppState();
+  const data = getCurrentMeasurementData(appState);
+  assertNotNull(data);
+  return (
+    <MeasurementPlot
+      measurement={data.data}
+      measurementDisplay={data.display}
+    />
+  );
 }

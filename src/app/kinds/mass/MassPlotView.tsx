@@ -1,12 +1,19 @@
-import { MeasurementBase, MeasurementAppView } from '../../../app-data/index';
+import {
+  getCurrentMeasurementData,
+  useAppState,
+} from '../../../app-data/index';
+import { assertNotNull } from '../../../components/index';
 
 import { MeasurementMassPlot } from './MeasurementMassPlot';
 
-interface MassPlotViewProps {
-  measurement: MeasurementBase;
-  measurementDisplay: MeasurementAppView;
-}
-
-export function MassPlotView(props: MassPlotViewProps) {
-  return <MeasurementMassPlot {...props} />;
+export function MassPlotView() {
+  const appState = useAppState();
+  const data = getCurrentMeasurementData(appState);
+  assertNotNull(data);
+  return (
+    <MeasurementMassPlot
+      measurement={data.data}
+      measurementDisplay={data.display}
+    />
+  );
 }
