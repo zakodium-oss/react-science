@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { Listbox } from '@headlessui/react';
 import * as scaleChromatic from 'd3-scale-chromatic';
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+
+import GradientPreview from '../gradient-preview/GradiantPreview';
 
 const scales = {
   turbo: scaleChromatic.interpolateTurbo,
@@ -56,12 +58,6 @@ const GradientSelectOption = styled.li<{ active: boolean }>`
   ${(props) => props.active && 'font-weight: bold;'}
 `;
 
-const GradientPreviewElement = styled.div`
-  height: 100%;
-  width: 100%;
-  border-radius: 0.125rem;
-`;
-
 export interface GradientSelectProps {
   value: GradientScaleName;
   onChange: (value: GradientScaleName) => void;
@@ -93,20 +89,4 @@ export function GradientSelect(props: GradientSelectProps) {
       </GradientSelectListbox>
     </Listbox>
   );
-}
-
-interface GradientPreviewProps {
-  scale: (t: number) => string;
-}
-
-function GradientPreview(props: GradientPreviewProps) {
-  const { scale } = props;
-  const gradient = useMemo(() => {
-    const stops: string[] = [];
-    for (let i = 0; i <= 100; i++) {
-      stops.push(scale(i / 100));
-    }
-    return `linear-gradient(to right, ${stops.join(', ')})`;
-  }, [scale]);
-  return <GradientPreviewElement style={{ background: gradient }} />;
 }

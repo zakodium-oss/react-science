@@ -3,7 +3,7 @@ import {
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index';
-import { ColorPicker } from '../../../components/index';
+import ColorPickerDropdown from '../../../components/color-picker/color-picker-dropdown/ColorPickerDropdown';
 
 export function MeasurementConfigPanel() {
   const dispatch = useAppDispatch();
@@ -20,25 +20,25 @@ export function MeasurementConfigPanel() {
   return (
     <div style={{ display: 'flex', padding: 8 }}>
       <div style={{ flex: '1 1 0' }}>Stroke color</div>
-      <ColorPicker
-        color={{
-          hex: color.color,
-        }}
-        onChangeComplete={({ hex }) => {
-          dispatch({
-            type: 'CHANGE_MEASUREMENT_DISPLAY',
-            payload: {
-              measurement: measurement.kindAndId,
-              display: {
-                color: {
-                  kind: 'fixed',
-                  color: hex,
+      <div style={{ flex: '1 1 0' }}>
+        <ColorPickerDropdown
+          color={{ hex: color.color }}
+          onChangeComplete={({ hex }) => {
+            dispatch({
+              type: 'CHANGE_MEASUREMENT_DISPLAY',
+              payload: {
+                measurement: measurement.kindAndId,
+                display: {
+                  color: {
+                    kind: 'fixed',
+                    color: hex,
+                  },
                 },
               },
-            },
-          });
-        }}
-      />
+            });
+          }}
+        />
+      </div>
     </div>
   );
 }
