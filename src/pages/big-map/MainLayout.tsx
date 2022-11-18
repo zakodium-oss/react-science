@@ -82,12 +82,7 @@ export default function MainLayout() {
           >
             <div css={mainCss.measurement}>
               <DropZoneContainer onDrop={onDrop}>
-                {measurement ? (
-                  <IvPlotView
-                    measurement={measurement.data}
-                    measurementDisplay={measurement.display}
-                  />
-                ) : null}
+                {measurement ? <IvPlotView /> : null}
               </DropZoneContainer>
             </div>
             <div css={mainCss.panels}>

@@ -103,6 +103,22 @@ export function* iterateMeasurementEntries(
   }
 }
 
+export type MeasurementAndView<Kind extends MeasurementKind> = {
+  measurement: Measurements[Kind]['entries'][number];
+  view: AppView['measurements'][string];
+};
+
+export function* iterateKindMeasurementsAndView<Kind extends MeasurementKind>(
+  state: AppState,
+  kind: Kind,
+): IterableIterator<MeasurementAndView<Kind>> {
+  const measurements = state.data.measurements[kind];
+  const view = state.view.measurements;
+  for (let measurement of measurements.entries) {
+    yield { measurement, view: view[measurement.id] };
+  }
+}
+
 export function getExistingMeasurementKinds(
   measurements: Partial<Measurements>,
 ): MeasurementKind[] {
