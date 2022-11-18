@@ -23,6 +23,6 @@ export interface MeasurementAppView {
   visible: boolean;
 }
 
-type ColorConfig =
+export type ColorConfig =
   | { kind: 'fixed'; color: string }
   | { kind: 'fixedGradient'; gradient: GradientScaleName };
