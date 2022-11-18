@@ -1,6 +1,6 @@
 import type { Instrument, MeasurementVariable } from 'cheminfo-types';
 
-import type { IRMeasurement } from '../../index';
+import type { IrMeasurement } from '../../index';
 
 export interface AppData {
   measurements: Measurements;
@@ -43,7 +43,7 @@ export interface MeasurementFile {
 
 export interface Measurements {
   ir: {
-    entries: IRMeasurement[];
+    entries: IrMeasurement[];
   };
   iv: {
     entries: MeasurementBase[];

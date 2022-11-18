@@ -1,6 +1,6 @@
 import type { MeasurementBase } from '../../index';
 
-import type { IRPeak } from './IRPeak';
+import type { IrPeak } from './IrPeak';
 
 /**
  * When we have a simple measurement like uv, ir, etc, data should only contain one element
@@ -10,6 +10,6 @@ import type { IRPeak } from './IRPeak';
  * The 'info'for each 'Measurement' should be normalized.
  */
 
-export interface IRMeasurement extends MeasurementBase {
-  peaks?: IRPeak[];
+export interface IrMeasurement extends MeasurementBase {
+  peaks?: IrPeak[];
 }

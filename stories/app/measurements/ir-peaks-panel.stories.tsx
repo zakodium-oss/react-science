@@ -1,7 +1,7 @@
-import type { IRPeak } from '../../../src/app-data';
+import type { IrPeak } from '../../../src/app-data';
 import {
-  IRColumnPreferences,
-  IRPeaksPanel as IRPeaksPanelComponent,
+  IrColumnPreferences,
+  IrPeaksPanel as IrPeaksPanelComponent,
 } from '../../../src/app/index';
 import measurement from '../../data/irMeasurement.json';
 
@@ -9,7 +9,7 @@ export default {
   title: 'Measurements / Panels',
 };
 
-const columns: IRColumnPreferences[] = [
+const columns: IrColumnPreferences[] = [
   {
     accessorKey: 'wavenumber',
     label: 'Wavenumber [cm-1]',
@@ -30,10 +30,10 @@ const columns: IRColumnPreferences[] = [
   },
 ];
 
-export function IRPeaksPanel() {
-  const peaks = measurement.peaks as IRPeak[];
+export function IrPeaksPanel() {
+  const peaks = measurement.peaks as IrPeak[];
   return (
-    <IRPeaksPanelComponent
+    <IrPeaksPanelComponent
       peaks={peaks}
       preferences={{
         columns,

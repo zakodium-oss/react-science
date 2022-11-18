@@ -7,36 +7,36 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import type { IRPeak } from '../../../app-data/index';
+import type { IrPeak } from '../../../app-data/index';
 import { Table, ValueRenderers } from '../../../components/index';
 
-export interface IRColumnPreferences<T extends keyof IRPeak = keyof IRPeak> {
+export interface IrColumnPreferences<T extends keyof IrPeak = keyof IrPeak> {
   visible?: boolean;
-  format?: (val: IRPeak[T]) => string | number;
+  format?: (val: IrPeak[T]) => string | number;
   accessorKey: T;
   label?: string;
 }
-interface IRPeakPanelPreferences {
-  columns?: IRColumnPreferences[];
+interface IrPeakPanelPreferences {
+  columns?: IrColumnPreferences[];
 }
-export interface IRPeaksPanelProps {
+export interface IrPeaksPanelProps {
   /**
    * peaks to display in the panel
    *
    */
-  peaks: IRPeak[];
+  peaks: IrPeak[];
   /**
    * The columns to display in the table.
    * @default {}
    */
-  preferences?: IRPeakPanelPreferences;
+  preferences?: IrPeakPanelPreferences;
 }
 
-export function IRPeaksPanel(props: IRPeaksPanelProps) {
+export function IrPeaksPanel(props: IrPeaksPanelProps) {
   const { peaks, preferences = {} } = props;
   const { columns = [] } = preferences;
 
-  const defaultColumns: ColumnDef<IRPeak, number>[] = columns.map(
+  const defaultColumns: ColumnDef<IrPeak, number>[] = columns.map(
     ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
       header: label,
       accessorKey,

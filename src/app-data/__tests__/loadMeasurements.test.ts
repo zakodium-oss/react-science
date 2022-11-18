@@ -5,7 +5,7 @@ import {
   loadMeasurements,
   jcampLoader,
   wdfLoader,
-  getIRAutoPeakPickingEnhancer,
+  getIrAutoPeakPickingEnhancer,
   irMeasurementEnhancer,
 } from '../index';
 
@@ -13,7 +13,7 @@ const loaders = [jcampLoader, wdfLoader];
 const enhancers = {
   ir: [
     irMeasurementEnhancer,
-    getIRAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
+    getIrAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
   ],
 };
 

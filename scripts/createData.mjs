@@ -8,7 +8,7 @@ import { produce } from 'immer';
 
 import { getEmptyAppData } from '../lib/data/AppData.js';
 import { append } from '../lib/data/append.js';
-import { getIRAutoPeakPickingEnhancer } from '../lib/data/enhancers/irAutoPeakPickingEnhancer.js';
+import { getIrAutoPeakPickingEnhancer } from '../lib/data/enhancers/irAutoPeakPickingEnhancer.js';
 import { irMeasurementEnhancer } from '../lib/data/enhancers/irMeasurementEnhancer.js';
 import { jcampLoader } from '../lib/data/loaders/jcampLoader.js';
 import { wdfLoader } from '../lib/data/loaders/wdfLoader.js';
@@ -22,7 +22,7 @@ const loaders = [jcampLoader, wdfLoader];
 const enhancers = {
   ir: [
     irMeasurementEnhancer,
-    getIRAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
+    getIrAutoPeakPickingEnhancer({ xVariable: 'x', yVariable: 'a' }),
   ],
 };
 

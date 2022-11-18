@@ -2,8 +2,8 @@ import { gsd, GSDOptions } from 'ml-gsd';
 import type { Shape1D } from 'ml-peak-shape-generator';
 import { xMinMaxValues } from 'ml-spectra-processing';
 
-import type { IRMeasurement } from './IRMeasurement';
-import type { IRPeak, IRPeakKind } from './IRPeak';
+import type { IrMeasurement } from './IrMeasurement';
+import type { IrPeak, IrPeakKind } from './IrPeak';
 
 export interface AutoPeakPickingOptions extends GSDOptions {
   /** x variable label, by default 'x' */
@@ -21,7 +21,7 @@ export interface AutoPeakPickingOptions extends GSDOptions {
 
 /** Based on a x value we will return a peak*/
 export function irAutoPeakPickingEnhancer(
-  measurement: IRMeasurement,
+  measurement: IrMeasurement,
   options: AutoPeakPickingOptions = {},
 ) {
   const { xVariable = 'x', yVariable = 'y', minPeakWidth } = options;
@@ -56,7 +56,7 @@ export function irAutoPeakPickingEnhancer(
   }
 
   const minMaxTransmittance = xMinMaxValues(datum.variables.t.data);
-  const results: IRPeak[] = peaks.map((peak) => ({
+  const results: IrPeak[] = peaks.map((peak) => ({
     wavenumber: datum.variables.x.data[peak.index],
     absorbance: datum.variables.a.data[peak.index],
     transmittance: datum.variables.t.data[peak.index] / 100,
@@ -70,7 +70,7 @@ export function irAutoPeakPickingEnhancer(
   measurement.peaks = results;
 }
 
-export function getIRAutoPeakPickingEnhancer(options) {
+export function getIrAutoPeakPickingEnhancer(options) {
   return (measurement) => irAutoPeakPickingEnhancer(measurement, options);
 }
 
@@ -78,7 +78,7 @@ function getPeakKind(
   transmittance,
   minTransmittance,
   maxTransmittance,
-): IRPeakKind {
+): IrPeakKind {
   let position =
     (maxTransmittance - transmittance) / (maxTransmittance - minTransmittance);
   if (position < 0.33) {

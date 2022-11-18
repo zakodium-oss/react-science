@@ -3,10 +3,10 @@ import { expect, test } from 'vitest';
 
 import { irMeasurementEnhancer } from '../irMeasurementEnhancer';
 
-import { getIRMeasurement } from './getIRMeasurement';
+import { getIrMeasurement } from './getIrMeasurement';
 
 test('irMeasurementEnhancer', async () => {
-  const measurement = await getIRMeasurement();
+  const measurement = await getIrMeasurement();
   const nextState = produce(measurement, (draft) => {
     irMeasurementEnhancer(draft);
   });
