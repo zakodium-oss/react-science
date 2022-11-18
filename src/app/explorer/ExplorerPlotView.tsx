@@ -1,32 +1,20 @@
-import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
+import { useAppView } from '../../app-data/index';
 import { assertNotNull } from '../../components/index';
 import { IvPlotView, MassPlotView } from '../index';
 
-import { MeasurementExplorer } from './MeasurementExplorer';
+import MeasurementExplorerWithState from './MeasurementExplorerWithState';
 
 export function ExplorerPlotView() {
-  const appState = useAppState();
-  const data = getCurrentMeasurementData(appState);
-  assertNotNull(data);
-  switch (data.kindAndId.kind) {
+  const appView = useAppView();
+  const selectedKind = appView.selectedKind;
+  assertNotNull(selectedKind);
+  switch (selectedKind) {
     case 'mass':
-      return (
-        <MassPlotView
-          measurement={data.data}
-          measurementDisplay={data.display}
-        />
-      );
+      return <MassPlotView />;
     case 'iv':
-      return (
-        <IvPlotView measurement={data.data} measurementDisplay={data.display} />
-      );
+      return <IvPlotView />;
     default: {
-      return (
-        <MeasurementExplorer
-          measurement={data.data}
-          measurementDisplay={data.display}
-        />
-      );
+      return <MeasurementExplorerWithState />;
     }
   }
 }
