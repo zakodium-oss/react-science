@@ -101,6 +101,7 @@
     "@ladle/react": "^2.4.5",
     "@playwright/experimental-ct-react": "^1.28.0",
     "@playwright/test": "^1.28.0",
+    "@types/babel__core": "^7.1.20",
     "@types/d3-scale-chromatic": "^3.0.0",
     "@types/lodash": "^4.14.189",
     "@types/react": "^18.0.25",
