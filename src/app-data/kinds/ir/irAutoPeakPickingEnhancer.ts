@@ -61,7 +61,7 @@ export function irAutoPeakPickingEnhancer(
     absorbance: datum.variables.a.data[peak.index],
     transmittance: datum.variables.t.data[peak.index] / 100,
     kind: getPeakKind(
-      datum.variables.t.data,
+      datum.variables.t.data[peak.index],
       minMaxTransmittance.min,
       minMaxTransmittance.max,
     ),
@@ -70,14 +70,17 @@ export function irAutoPeakPickingEnhancer(
   measurement.peaks = results;
 }
 
-export function getIrAutoPeakPickingEnhancer(options) {
-  return (measurement) => irAutoPeakPickingEnhancer(measurement, options);
+export function getIrAutoPeakPickingEnhancer(
+  options: AutoPeakPickingOptions | undefined,
+) {
+  return (measurement: IrMeasurement) =>
+    irAutoPeakPickingEnhancer(measurement, options);
 }
 
 function getPeakKind(
-  transmittance,
-  minTransmittance,
-  maxTransmittance,
+  transmittance: number,
+  minTransmittance: number,
+  maxTransmittance: number,
 ): IrPeakKind {
   let position =
     (maxTransmittance - transmittance) / (maxTransmittance - minTransmittance);
