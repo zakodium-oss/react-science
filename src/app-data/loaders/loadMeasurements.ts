@@ -1,6 +1,6 @@
 import type { FileCollection } from 'filelist-utils';
 
-import { Measurements, enhance } from '../index';
+import { Measurements, enhance, Enhancers } from '../index';
 
 import {
   MeasurementsLoader,
@@ -10,7 +10,7 @@ import type { ParserLog } from './utility/parserLog';
 
 interface LoadOptions {
   loaders?: MeasurementsLoader[];
-  enhancers?;
+  enhancers?: Partial<Enhancers>;
   logger?: boolean;
 }
 
