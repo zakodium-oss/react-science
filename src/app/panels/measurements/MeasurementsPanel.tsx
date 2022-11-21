@@ -13,15 +13,14 @@ import {
   Tabs,
 } from '../../../components/index';
 
+import MeasurementVisibilityToggle from './MeasurementVisibilityToggle';
+
 export function MeasurementsPanel() {
   const appState = useAppState();
-  const {
-    data: { measurements },
-    view: { selectedKind, selectedMeasurements },
-  } = appState;
+  const { data, view } = appState;
 
-  const selectedKindMeasurements = selectedKind
-    ? selectedMeasurements[selectedKind] ?? []
+  const selectedKindMeasurements = view.selectedKind
+    ? view.selectedMeasurements[view.selectedKind] ?? []
     : [];
 
   const dispatch = useAppDispatch();
@@ -32,11 +31,18 @@ export function MeasurementsPanel() {
     content: (
       <Table>
         <Table.Header>
+          <ValueRenderers.Header value="" />
           <ValueRenderers.Header value="ID" />
           <ValueRenderers.Header value="Title" />
         </Table.Header>
-        {measurements[kind].entries.map((measurement: MeasurementBase) => (
+        {data.measurements[kind].entries.map((measurement: MeasurementBase) => (
           <Table.Row key={measurement.id}>
+            <ValueRenderers.Component>
+              <MeasurementVisibilityToggle
+                id={measurement.id}
+                isVisible={view.measurements[measurement.id].visible}
+              />
+            </ValueRenderers.Component>
             <ValueRenderers.Title
               style={{
                 padding: '0px 5px',
@@ -62,7 +68,7 @@ export function MeasurementsPanel() {
     ),
   });
   const availableKinds = measurementKinds.filter(
-    (label) => measurements[label].entries.length > 0,
+    (label) => data.measurements[label].entries.length > 0,
   );
   const items: Array<TabItem<MeasurementKind>> = availableKinds.map(kindItem);
 
@@ -73,7 +79,7 @@ export function MeasurementsPanel() {
     });
   }
 
-  const openedItem = items.find((item) => item.id === selectedKind);
+  const openedItem = items.find((item) => item.id === view.selectedKind);
 
   return items.length > 1 ? (
     <Tabs<MeasurementKind>
