@@ -4,9 +4,9 @@ import * as scaleChromatic from 'd3-scale-chromatic';
 import { Fragment } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
-import GradientPreview from './GradientPreview';
+import FixedGradientPreview from '../preview/FixedGradientPreview';
 
-const scales = {
+export const scales = {
   turbo: scaleChromatic.interpolateTurbo,
   viridis: scaleChromatic.interpolateViridis,
   inferno: scaleChromatic.interpolateInferno,
@@ -69,7 +69,7 @@ export function GradientSelect(props: GradientSelectProps) {
     <Listbox value={value} onChange={onChange}>
       <GradientSelectListbox>
         <Listbox.Button as={GradientSelectButton}>
-          <GradientPreview scale={scales[value]} />
+          <FixedGradientPreview gradient={value} />
           <GradientSelectChevron />
         </Listbox.Button>
         <Listbox.Options as={GradientSelectOptions}>
@@ -79,7 +79,7 @@ export function GradientSelect(props: GradientSelectProps) {
                 <GradientSelectOption active={active}>
                   {option}
                   <div style={{ height: 15 }}>
-                    <GradientPreview scale={scales[option]} />
+                    <FixedGradientPreview gradient={option} />
                   </div>
                 </GradientSelectOption>
               )}

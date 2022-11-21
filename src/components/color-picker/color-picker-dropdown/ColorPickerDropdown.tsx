@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useModifiedPopper } from '../../hooks/useModifiedPopper';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useOnOff } from '../../hooks/useOnOff';
+import FixedColorPreview from '../preview/FixedColorPreview';
 import { ColorPicker, ColorPickerProps } from '../react-color/ColorPicker';
 import * as colorHelper from '../react-color/helpers/color';
 
@@ -49,10 +50,9 @@ export function ColorPickerDropdown(props: ColorPickerDopdpownProps) {
         css={colorPickerDropdownCss.root}
         onClick={toggleMenu}
       >
-        <div
-          css={colorPickerDropdownCss.preview}
-          style={{ backgroundColor: hex }}
-        />
+        <div css={colorPickerDropdownCss.preview}>
+          <FixedColorPreview color={hex} />
+        </div>
       </div>
       {isOpened && (
         <div ref={setPopperElement} {...popperProps}>
