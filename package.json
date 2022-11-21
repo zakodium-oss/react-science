@@ -68,7 +68,7 @@
     "@popperjs/core": "^2.11.6",
     "@tanstack/react-query": "^4.16.1",
     "@tanstack/react-table": "^8.5.30",
-    "biologic-converter": "^0.5.0",
+    "biologic-converter": "^0.6.0",
     "cheminfo-types": "^1.4.0",
     "d3-scale-chromatic": "^3.0.0",
     "filelist-utils": "^1.2.0",
@@ -93,7 +93,7 @@
     "spc-parser": "^0.7.1",
     "tinycolor2": "^1.4.2",
     "use-resize-observer": "^9.0.2",
-    "wdf-parser": "^0.2.1"
+    "wdf-parser": "^0.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
