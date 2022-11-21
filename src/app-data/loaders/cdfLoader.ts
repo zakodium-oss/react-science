@@ -78,7 +78,7 @@ export async function cdfLoader(
   return newMeasurements;
 }
 
-function chromatogramWithMassSpectra(reader) {
+function chromatogramWithMassSpectra(reader: NetCDFReader) {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
   const pointCount = reader.getDataVariable('point_count');
   const massValues = reader.getDataVariable('mass_values');
@@ -126,16 +126,18 @@ function chromatogramWithMassSpectra(reader) {
   return data;
 }
 
-function chromatogram(reader) {
+function chromatogram(reader: NetCDFReader) {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
   let data: any = [];
   const intensities: number[] = reader.getDataVariable('ordinate_values');
   const numberPoints = intensities.length;
   const detector: string = reader.getAttribute('detector_name');
   let channel: string;
-  if (detector.match(/dad/i)) {
-    channel = `uv${Number(detector.replace(/.*Sig=(\d+).*/, '$1'))}`;
-  } else if (detector.match(/tic/i)) {
+  if (/dad/i.test(detector)) {
+    const uvNumber = detector.match(/.*Sig=(?<uvNumber>\d+).*/)?.groups
+      ?.uvNumber;
+    channel = `uv${Number(uvNumber) || ''}`;
+  } else if (/tic/i.test(detector)) {
     channel = 'tic';
   } else {
     channel = 'unknown';
@@ -187,7 +189,10 @@ function chromatogram(reader) {
   return data;
 }
 
-function addMeta(reader, globalAttributes) {
+function addMeta(
+  reader: NetCDFReader,
+  globalAttributes: NetCDFReader.globalAttributes,
+) {
   reader.header.meta = {};
   for (const item of globalAttributes) {
     reader.header.meta[item.name] = item.value;

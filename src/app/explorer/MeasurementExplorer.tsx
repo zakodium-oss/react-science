@@ -21,11 +21,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     height = '100%',
   } = props;
   function defaultInfo(dataIndex: number) {
-    const varNames = new Set(Object.keys(data[dataIndex].variables));
+    const varNames = Object.keys(data[dataIndex].variables);
     return {
       dataIndex,
-      xVariableName: varNames.has('x') ? 'x' : varNames[0],
-      yVariableName: varNames.has('y') ? 'y' : varNames[1],
+      xVariableName: varNames.includes('x') ? 'x' : varNames[0],
+      yVariableName: varNames.includes('y') ? 'y' : varNames[1],
     };
   }
   const [info, setInfo] = useState<ExplorerInfo>({
