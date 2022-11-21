@@ -2,7 +2,7 @@ import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../components/index';
-import type { Measurements, MeasurementKind } from '../index';
+import type { MeasurementBase, Measurements, MeasurementKind } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from './utility/parserLog';
@@ -78,7 +78,9 @@ export async function cdfLoader(
   return newMeasurements;
 }
 
-function chromatogramWithMassSpectra(reader: NetCDFReader) {
+function chromatogramWithMassSpectra(
+  reader: NetCDFReader,
+): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
   const pointCount = reader.getDataVariable('point_count');
   const massValues = reader.getDataVariable('mass_values');
@@ -99,10 +101,9 @@ function chromatogramWithMassSpectra(reader: NetCDFReader) {
     allIntensities.push(intensities);
     allMasses.push(masses);
   }
-  let data: any = [];
+  let data: MeasurementBase['data'] = [];
   for (let i = 0; i < times.length; i++) {
     data.push({
-      meta: {},
       info: {
         time: { value: times[i], units: 's' },
         tic: tics[i],
@@ -126,9 +127,9 @@ function chromatogramWithMassSpectra(reader: NetCDFReader) {
   return data;
 }
 
-function chromatogram(reader: NetCDFReader) {
+function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
-  let data: any = [];
+  let data: MeasurementBase['data'] = [];
   const intensities: number[] = reader.getDataVariable('ordinate_values');
   const numberPoints = intensities.length;
   const detector: string = reader.getAttribute('detector_name');
@@ -169,8 +170,6 @@ function chromatogram(reader: NetCDFReader) {
   }
 
   data.push({
-    meta: {},
-    info: {},
     variables: {
       x: {
         symbol: 'X',
