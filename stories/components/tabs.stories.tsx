@@ -30,7 +30,11 @@ export function Horizontal() {
   );
 }
 
-export function ManyTabs({ orientation }) {
+export function ManyTabs({
+  orientation,
+}: {
+  orientation: 'horizontal' | 'vertical';
+}) {
   const items: Array<TabItem> = [
     { id: 'a', title: '1H', content: 'Hello, World! [a]' },
     { id: 'b', title: '13C', content: 'Hello, World! [b]' },

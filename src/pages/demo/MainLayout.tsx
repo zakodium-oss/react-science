@@ -33,7 +33,13 @@ import {
 
 import { loadFiles } from './helpers/loadFiles';
 
-function ErrorFallback({ error, resetErrorBoundary }) {
+function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error: Error;
+  resetErrorBoundary: () => void;
+}) {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
