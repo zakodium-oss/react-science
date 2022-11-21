@@ -4,7 +4,7 @@ import * as scaleChromatic from 'd3-scale-chromatic';
 import { Fragment } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
-import GradientPreview from '../gradient-preview/GradiantPreview';
+import GradientPreview from './GradientPreview';
 
 const scales = {
   turbo: scaleChromatic.interpolateTurbo,
