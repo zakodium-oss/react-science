@@ -18,6 +18,7 @@ import {
   SplitPane,
   Toolbar,
   assert,
+  FullSpinner,
 } from '../../components/index';
 
 import { loadFiles } from './helpers/loadFiles';
@@ -80,11 +81,17 @@ export default function MainLayout() {
             initialClosed={500}
             controlledSide="end"
           >
-            <div css={mainCss.measurement}>
-              <DropZoneContainer onDrop={onDrop}>
-                {measurement ? <IvPlotView /> : null}
-              </DropZoneContainer>
-            </div>
+            {!measurement ? (
+              <div style={{ width: '100%', height: '100%' }}>
+                <FullSpinner />
+              </div>
+            ) : (
+              <div css={mainCss.measurement}>
+                <DropZoneContainer onDrop={onDrop}>
+                  {measurement ? <IvPlotView /> : null}
+                </DropZoneContainer>
+              </div>
+            )}
             <div css={mainCss.panels}>
               <Accordion>
                 <MeasurementsPanelAccordion />

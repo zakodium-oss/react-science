@@ -9,6 +9,7 @@ export * from './hooks/index';
 export * from './layout-manager/index';
 export * from './modal/index';
 export * from './root-layout/index';
+export * from './spinner/index';
 export * from './split-pane/index';
 export * from './table/index';
 export * from './tabs/index';
