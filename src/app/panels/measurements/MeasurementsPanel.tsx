@@ -3,7 +3,6 @@ import {
   MeasurementKind,
   measurementKinds,
   useAppState,
-  getCurrentMeasurementData,
   useAppDispatch,
   MeasurementBase,
 } from '../../../app-data/index';
@@ -16,24 +15,36 @@ import {
 
 export function MeasurementsPanel() {
   const appState = useAppState();
-  const measurement = getCurrentMeasurementData(appState);
-  const dispatch = useAppDispatch();
+  const {
+    data: { measurements },
+    view: { selectedKind, selectedMeasurements },
+  } = appState;
 
-  const measurements = appState.data.measurements;
-  const selectedMeasurement = measurement?.kindAndId;
+  const selectedKindMeasurements = selectedKind
+    ? selectedMeasurements[selectedKind] ?? []
+    : [];
+
+  const dispatch = useAppDispatch();
 
   const kindItem = (kind: MeasurementKind) => ({
     id: kind,
     title: kindLabels[kind],
     content: (
       <Table>
+        <Table.Header>
+          <ValueRenderers.Header value="ID" />
+          <ValueRenderers.Header value="Title" />
+        </Table.Header>
         {measurements[kind].entries.map((measurement: MeasurementBase) => (
           <Table.Row key={measurement.id}>
             <ValueRenderers.Title
               style={{
                 padding: '0px 5px',
-                backgroundColor:
-                  selectedMeasurement?.id === measurement.id ? 'green' : '',
+                backgroundColor: selectedKindMeasurements.includes(
+                  measurement.id,
+                )
+                  ? 'green'
+                  : '',
                 cursor: 'pointer',
               }}
               onClick={() => {
@@ -62,9 +73,7 @@ export function MeasurementsPanel() {
     });
   }
 
-  const openedItem = items.find(
-    (item) => item.id === selectedMeasurement?.kind,
-  );
+  const openedItem = items.find((item) => item.id === selectedKind);
 
   return items.length > 1 ? (
     <Tabs<MeasurementKind>
