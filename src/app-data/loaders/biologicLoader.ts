@@ -42,11 +42,11 @@ export async function biologicLoader(
         entries.push(result);
       } else if (/\.mpt$/i.test(file.name)) {
         const { data, settings } = parseMPT(await file.arrayBuffer());
-        if (data?.variables) {
+        if (data.variables) {
           const metaData = settings?.variables;
           const info = getMeasurementInfoFromFile(
             file,
-            metaData.technique
+            metaData?.technique
               ? `Experiment: ${metaData.technique}`
               : file.name,
           );
@@ -93,24 +93,29 @@ function preferredXY(
 
   switch (technique) {
     case 'CA': {
-      //Chronoamperometry or Chronocoulometry (how distinguish?)
+      //Chronoamperometry or Chronocoulometry (distinguish?)
       variables = setDefault(variables, 'I', 'y');
       variables = setDefault(variables, 'time', 'x');
       break;
     }
     case 'CP': {
-      //Chronopotentiometry
+      //Chronopotentiometry. <average>
       variables = setDefault(variables, '<Ewe>', 'y');
       variables = setDefault(variables, 'time', 'x');
       break;
     }
     case 'CV': {
-      //cyclic voltammetry
+      //cyclic voltammetry. <average>
       variables = setDefault(variables, '<I>', 'y');
       variables = setDefault(variables, 'Ewe', 'x');
       break;
     }
     case 'GCPL': {
+      variables = setDefault(variables, 'Ewe', 'y');
+      variables = setDefault(variables, 'time', 'x');
+      break;
+    }
+    case 'OCV': {
       variables = setDefault(variables, 'Ewe', 'y');
       variables = setDefault(variables, 'time', 'x');
       break;
