@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ColorPickerDropdown } from '../../src/components/index';
 
 export default {
-  title: 'Components / Color Pickers Dropdown',
+  title: 'Components / Color Pickers',
 };
 
 export function ColorPickerDropdownStory() {

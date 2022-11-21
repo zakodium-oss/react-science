@@ -13,6 +13,7 @@ import {
   Tabs,
 } from '../../../components/index';
 
+import MeasurementColorPreview from './MeasurementColorPreview';
 import MeasurementVisibilityToggle from './MeasurementVisibilityToggle';
 
 export function MeasurementsPanel() {
@@ -37,10 +38,15 @@ export function MeasurementsPanel() {
         </Table.Header>
         {data.measurements[kind].entries.map((measurement: MeasurementBase) => (
           <Table.Row key={measurement.id}>
-            <ValueRenderers.Component>
+            <ValueRenderers.Component
+              style={{ display: 'flex', flexDirection: 'row', gap: '0.5em' }}
+            >
               <MeasurementVisibilityToggle
                 id={measurement.id}
                 isVisible={view.measurements[measurement.id].visible}
+              />
+              <MeasurementColorPreview
+                color={view.measurements[measurement.id].color}
               />
             </ValueRenderers.Component>
             <ValueRenderers.Title
