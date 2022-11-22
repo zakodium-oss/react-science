@@ -23,11 +23,11 @@ export function AboutDialogToolbarButton(props: AboutDialogToolbarButtonProps) {
 
   return (
     <>
-      <Toolbar.Item title={name} onClick={openDialog}>
+      <Toolbar.Item title={`About ${name}`} onClick={openDialog}>
         {icon}
       </Toolbar.Item>
       <Modal isOpen={isOpenDialog} onRequestClose={closeDialog}>
-        <Modal.Header>Analysis UI Components - BIG MAP</Modal.Header>
+        <Modal.Header>{name}</Modal.Header>
         <Modal.Body>
           <div css={aboutDialogToolbarButtonCss.root}>{body}</div>
         </Modal.Body>

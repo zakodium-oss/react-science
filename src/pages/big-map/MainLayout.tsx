@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { FaInfo } from 'react-icons/fa';
 
 import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
+import { AboutInformation } from '../../app/about/AboutInformation';
 import {
   IvPlotView,
   useDropFiles,
@@ -64,9 +65,8 @@ export default function MainLayout() {
     <div css={mainCss.root}>
       <Header>
         <Toolbar orientation="horizontal">
-          <div />
           <AboutDialogToolbarButton
-            name="test"
+            name="Analysis UI Components - BIG MAP"
             icon={<FaInfo />}
             body={<AboutInformation />}
           />
@@ -102,59 +102,6 @@ export default function MainLayout() {
           </SplitPane>
         </div>
       </div>
-    </div>
-  );
-}
-
-const aboutInformationCss = {
-  root: css`
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-  `,
-  link: css`
-    color: rgb(150, 150, 150);
-    &:hover {
-      color: rgb(0, 188, 212);
-    }
-  `,
-  separator: css`
-    border-bottom: 1px solid gray;
-    width: 15px;
-    height: 1px;
-    margin: 10px 0px;
-  `,
-};
-
-function AboutInformation() {
-  return (
-    <div css={aboutInformationCss.root}>
-      <p>LOGO</p>
-      <div>
-        <p>Version</p>
-        <a
-          css={aboutInformationCss.link}
-          href="https://github.com/zakodium-oss/analysis-ui-components"
-        >
-          HEAD
-        </a>
-      </div>
-      <span css={aboutInformationCss.separator} />
-      <a
-        css={aboutInformationCss.link}
-        href="https://github.com/zakodium-oss/analysis-ui-components"
-      >
-        GitHub ( https://github.com/zakodium-oss/analysis-ui-components )
-      </a>
-      <span css={aboutInformationCss.separator} />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, officiis
-        saepe natus illo tenetur eaque porro nihil reprehenderit magnam ipsa
-        ipsam dolores ipsum? Ad vero eos, consequuntur voluptatum incidunt
-        voluptatem.
-      </p>
     </div>
   );
 }
