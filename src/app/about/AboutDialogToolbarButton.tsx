@@ -23,7 +23,11 @@ export function AboutDialogToolbarButton(props: AboutDialogToolbarButtonProps) {
 
   return (
     <>
-      <Toolbar.Item title={`About ${name}`} onClick={openDialog}>
+      <Toolbar.Item
+        titleOrientation="horizontal"
+        title={`About ${name}`}
+        onClick={openDialog}
+      >
         {icon}
       </Toolbar.Item>
       <Modal isOpen={isOpenDialog} onRequestClose={closeDialog}>

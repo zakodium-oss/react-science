@@ -1,4 +1,4 @@
-import { FaChevronDown } from 'react-icons/fa';
+import { FaMeteor } from 'react-icons/fa';
 
 import { AboutDialogToolbarButton } from '../../src/app/index';
 import { Toolbar } from '../../src/components/index';
@@ -11,7 +11,7 @@ export function DisplayAboutDialog() {
   return (
     <Toolbar orientation="horizontal">
       <AboutDialogToolbarButton
-        icon={<FaChevronDown />}
+        icon={<FaMeteor />}
         name="tooltip"
         body={
           <p>

@@ -21,6 +21,7 @@ import {
   useDropFiles,
   MeasurementInfoPanelAccordion,
   MeasurementConfigPanelAccordion,
+  AboutDialogToolbarButton,
 } from '../../app/index';
 import {
   Accordion,
@@ -79,9 +80,18 @@ export default function MainLayout() {
     >
       <Header>
         <Toolbar orientation="horizontal">
-          <Toolbar.Item titleOrientation="horizontal" title="Logo">
-            <FaMeteor />
-          </Toolbar.Item>
+          <AboutDialogToolbarButton
+            icon={<FaMeteor />}
+            name="Logo"
+            body={
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                vitae rerum laboriosam, quisquam deleniti quaerat culpa incidunt
+                ipsum, laborum pariatur facere amet modi reprehenderit. Vero a
+                corporis accusantium magnam aperiam!
+              </p>
+            }
+          />
           <Toolbar.Item
             titleOrientation="horizontal"
             title="Save as ium"
