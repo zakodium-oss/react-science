@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import { FaInfo } from 'react-icons/fa';
 
 import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
-import { AboutInformation } from '../../app/about/AboutInformation';
 import {
   IvPlotView,
   useDropFiles,
@@ -23,6 +22,7 @@ import {
   assert,
 } from '../../components/index';
 
+import { AboutInformation } from './components/AboutInformation';
 import { loadFiles } from './helpers/loadFiles';
 
 const mainCss = {
