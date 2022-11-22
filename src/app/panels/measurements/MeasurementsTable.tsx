@@ -37,18 +37,37 @@ const measurementsTableCss = {
   tbody: css`
     background-color: white;
   `,
-  td: css`
-    padding-left: 2rem;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    border-bottom-width: 1px;
-
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  `,
   tr: css`
+    height: 50px;
+    max-height: 50px;
+    overflow: hidden;
     cursor: pointer;
+    & {
+      padding-left: 2rem;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      border-bottom-width: 1px;
+
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+  `,
+  header: css`
+    & {
+      border-bottom-width: 1px;
+      font-weight: 500;
+      text-align: left;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      padding-left: 2rem;
+    }
+    & :first-child {
+      width: 50px;
+    }
+    & :nth-child(2) {
+      width: 150px;
+    }
   `,
 };
 
@@ -74,11 +93,10 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
 function MeasurementsTableHeader() {
   return (
     <thead>
-      <tr>
-        <th css={measurementsTableCss.th} style={{ width: 150 }}>
-          Id
-        </th>
-        <th css={measurementsTableCss.th}>Experiment</th>
+      <tr css={measurementsTableCss.header}>
+        <th />
+        <th style={{ width: '60%' }}>Id</th>
+        <th>Experiment</th>
       </tr>
     </thead>
   );
@@ -106,17 +124,13 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       css={measurementsTableCss.tr}
       style={{
         backgroundColor:
-          selectedMeasurement?.id === item.id ? 'green' : 'white',
+          selectedMeasurement?.id === item.id ? 'rgb(209 213 219)' : 'white',
       }}
     >
-      <td
-        title={item.id}
-        css={measurementsTableCss.td}
-        style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
-      >
-        {item.id}
-      </td>
-      <td css={measurementsTableCss.td}>{item.info.title}</td>
+      {/* Preparation for https://github.com/zakodium-oss/analysis-ui-components/issues/387 */}
+      <td />
+      <td title={item.id}>{item.id}</td>
+      <td>{item.info.title}</td>
     </tr>
   );
 }

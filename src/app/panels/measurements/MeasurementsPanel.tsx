@@ -34,16 +34,22 @@ export function MeasurementsPanel() {
     });
   }
 
-  return items.length > 1 ? (
-    <Tabs<MeasurementKind>
-      orientation="horizontal"
-      items={items}
-      opened={view.selectedKind}
-      onClick={handleTabSelection}
-    />
-  ) : items.length === 1 && items[0].content ? (
-    <>{items[0].content}</>
-  ) : (
+  if (items.length > 1) {
+    return (
+      <Tabs<MeasurementKind>
+        orientation="horizontal"
+        items={items}
+        opened={view.selectedKind}
+        onClick={handleTabSelection}
+      />
+    );
+  }
+
+  if (items.length === 1 && items[0].content) {
+    return <>{items[0].content}</>;
+  }
+
+  return (
     <div style={{ paddingTop: '1rem', marginInline: 'auto' }}>
       No data available
     </div>
