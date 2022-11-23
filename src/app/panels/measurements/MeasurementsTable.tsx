@@ -100,7 +100,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
 
   return (
     <table css={measurementsTableCss.root}>
-      <MeasurementsTableHeader />
+      <MeasurementsTableHeader kind={kind} />
       <tbody css={measurementsTableCss.tbody}>
         {measurements[kind].entries.map((element) => (
           <MeasurementsTableRow key={element.id} item={element} kind={kind} />
@@ -110,11 +110,39 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   );
 }
 
-function MeasurementsTableHeader() {
+function MeasurementsTableHeader(props: {
+  kind: MeasurementsTableRowProps['kind'];
+}) {
+  const dispatch = useAppDispatch();
+
+  const {
+    data: { measurements },
+    view: { selectedMeasurements },
+  } = useAppState();
+
+  const isChecked =
+    selectedMeasurements[props.kind]?.length ===
+    measurements[props.kind].entries.length;
+
+  function onSelectCheckbox() {
+    dispatch({
+      type: 'SELECT_ALL_MEASUREMENTS',
+      payload: {
+        kind: props.kind,
+        select: !isChecked,
+      },
+    });
+  }
+
   return (
     <thead>
       <tr css={measurementsTableCss.header}>
-        <th />
+        <th>
+          <MeasurementCheckbox
+            checked={isChecked}
+            onSelectCheckbox={onSelectCheckbox}
+          />
+        </th>
         <th style={{ width: '60%' }}>Id</th>
         <th>Experiment</th>
       </tr>
@@ -134,22 +162,17 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   function onSelectRow() {
     dispatch({
       type: 'SELECT_MEASUREMENT',
-      payload: { id: item.id, kind },
+      payload: { id: item.id, kind, acc: 'replace' },
     });
   }
 
   function onSelectCheckbox() {
-    if (selectedMeasurements[kind]?.includes(item.id)) {
-      dispatch({
-        type: 'UNSELECT_MEASUREMENT',
-        payload: { id: item.id, kind },
-      });
-    } else {
-      dispatch({
-        type: 'ADD_SELECTED_MEASUREMENT',
-        payload: { id: item.id, kind },
-      });
-    }
+    const isAlreadyChecked = selectedMeasurements[kind]?.includes(item.id);
+
+    dispatch({
+      type: 'SELECT_MEASUREMENT',
+      payload: { id: item.id, kind, acc: isAlreadyChecked ? 'remove' : 'add' },
+    });
   }
 
   return (
@@ -160,11 +183,9 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
           isVisible={measurements[item.id].visible}
         />
         <MeasurementColorPreview color={measurements[item.id].color} />
-        <input
-          css={measurementsTableCss.checkbox}
-          type="checkbox"
-          checked={selectedMeasurements[kind]?.includes(item.id)}
-          onChange={onSelectCheckbox}
+        <MeasurementCheckbox
+          checked={selectedMeasurements[kind]?.includes(item.id) || false}
+          onSelectCheckbox={onSelectCheckbox}
         />
       </td>
       <td
@@ -176,5 +197,23 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       </td>
       <td onClick={onSelectRow}>{item.info.title}</td>
     </tr>
+  );
+}
+
+interface MeasurementCheckboxProps {
+  checked: boolean;
+  onSelectCheckbox: () => void;
+}
+
+function MeasurementCheckbox(props: MeasurementCheckboxProps) {
+  const { checked, onSelectCheckbox } = props;
+
+  return (
+    <input
+      css={measurementsTableCss.checkbox}
+      type="checkbox"
+      checked={checked}
+      onChange={onSelectCheckbox}
+    />
   );
 }

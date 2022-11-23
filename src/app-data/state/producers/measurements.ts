@@ -43,66 +43,51 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   }
 };
 
-export const unselectedMeasurement: AppStateProducer<'UNSELECT_MEASUREMENT'> = (
-  draft,
-  action,
-) => {
-  // Check the measurement exists
-  getMeasurementOrFail(
-    draft.data.measurements,
-    action.payload.kind,
-    action.payload.id,
-  );
-
-  draft.view.selectedKind = action.payload.kind;
-  const oldState = draft.view.selectedMeasurements[action.payload.kind] || [];
-
-  draft.view.selectedMeasurements[action.payload.kind] = oldState.filter(
-    (element) => element !== action.payload.id,
-  );
-};
-
-export const addSelectedMeasurement: AppStateProducer<
-  'ADD_SELECTED_MEASUREMENT'
+export const selectOrUnselectAllMeasurement: AppStateProducer<
+  'SELECT_ALL_MEASUREMENTS'
 > = (draft, action) => {
-  // Check the measurement exists
-  getMeasurementOrFail(
-    draft.data.measurements,
-    action.payload.kind,
-    action.payload.id,
-  );
+  const {
+    payload: { kind, select },
+  } = action;
 
-  draft.view.selectedKind = action.payload.kind;
-  const oldState = draft.view.selectedMeasurements[action.payload.kind] || [];
-  draft.view.selectedMeasurements[action.payload.kind] = [
-    ...oldState,
-    action.payload.id,
-  ];
+  draft.view.selectedKind = kind;
+  draft.view.selectedMeasurements[kind] = select
+    ? draft.data.measurements[kind].entries.map((element) => element.id)
+    : [];
 };
 
 export const selectMeasurement: AppStateProducer<'SELECT_MEASUREMENT'> = (
   draft,
   action,
 ) => {
+  const {
+    payload: { acc, id, kind },
+  } = action;
+
   // Check the measurement exists
-  getMeasurementOrFail(
-    draft.data.measurements,
-    action.payload.kind,
-    action.payload.id,
-  );
+  getMeasurementOrFail(draft.data.measurements, kind, id);
+  draft.view.selectedKind = kind;
 
-  draft.view.selectedKind = action.payload.kind;
-  draft.view.selectedMeasurements[action.payload.kind] = [action.payload.id];
+  const oldState = draft.view.selectedMeasurements[kind] || [];
+  switch (acc) {
+    case 'add': {
+      draft.view.selectedMeasurements[kind] = [...oldState, id];
+      break;
+    }
+    case 'remove': {
+      draft.view.selectedMeasurements[kind] = oldState.filter(
+        (element) => element !== id,
+      );
+      break;
+    }
+    case 'replace': {
+      draft.view.selectedMeasurements[kind] = [id];
+      break;
+    }
+    default:
+      break;
+  }
 };
-
-/*
-
-  const oldState = draft.view.selectedMeasurements[action.payload.kind] || [];
-  draft.view.selectedMeasurements[action.payload.kind] = [
-    ...oldState,
-    action.payload.id,
-  ];
-*/
 
 export const selectMeasurementKind: AppStateProducer<
   'SELECT_MEASUREMENT_KIND'
