@@ -17,8 +17,6 @@ export type AppStateAction =
       'SELECT_MEASUREMENT',
       MeasurementKindAndId & { acc: 'add' | 'remove' | 'replace' }
     >
-  // | ActionType<'ADD_SELECTED_MEASUREMENT', MeasurementKindAndId> //'add' 'remove' 'replace'
-  // | ActionType<'UNSELECT_MEASUREMENT', MeasurementKindAndId>
   | ActionType<
       'SELECT_ALL_MEASUREMENTS',
       { select: boolean; kind: MeasurementKind }

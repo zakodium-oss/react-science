@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useLayoutEffect, useRef } from 'react';
 
 import {
   MeasurementBase,
@@ -141,6 +142,9 @@ function MeasurementsTableHeader(props: {
           <MeasurementCheckbox
             checked={isChecked}
             onSelectCheckbox={onSelectCheckbox}
+            indeterminate={
+              !isChecked && (selectedMeasurements[props.kind] || []).length > 0
+            }
           />
         </th>
         <th style={{ width: '60%' }}>Id</th>
@@ -203,10 +207,18 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
 interface MeasurementCheckboxProps {
   checked: boolean;
   onSelectCheckbox: () => void;
+  indeterminate?: boolean;
 }
 
 function MeasurementCheckbox(props: MeasurementCheckboxProps) {
-  const { checked, onSelectCheckbox } = props;
+  const { checked, onSelectCheckbox, indeterminate } = props;
+  const ref = useRef<HTMLInputElement>(null);
+
+  useLayoutEffect(() => {
+    if (ref.current && indeterminate !== undefined) {
+      ref.current.indeterminate = indeterminate;
+    }
+  }, [indeterminate]);
 
   return (
     <input
@@ -214,6 +226,7 @@ function MeasurementCheckbox(props: MeasurementCheckboxProps) {
       type="checkbox"
       checked={checked}
       onChange={onSelectCheckbox}
+      ref={ref}
     />
   );
 }
