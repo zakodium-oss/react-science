@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import type { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 
 import { TabsProvider, useTabsContext } from './TabsContext';
 
@@ -19,10 +19,10 @@ interface TabsItemProps {
 }
 
 interface TabsProps<T extends string = string> {
-  opened?: TabItem<T>;
+  opened?: T;
   orientation?: TabsOrientation;
   items: Array<TabItem<T>>;
-  onClick?: (item: TabItem<T>) => void;
+  onClick?: (id: T) => void;
 }
 
 const styles = {
@@ -69,17 +69,20 @@ const styles = {
 
 export function Tabs<T extends string = string>(props: TabsProps<T>) {
   const { orientation = 'horizontal', items, onClick, opened } = props;
-
+  const item = useMemo(
+    () => items.find(({ id: itemId }) => itemId === opened),
+    [items, opened],
+  );
   if (orientation === 'horizontal') {
     return (
-      <TabsProvider opened={opened}>
+      <TabsProvider opened={item}>
         <TabsHorizontal items={items} onClick={onClick} />
       </TabsProvider>
     );
   }
 
   return (
-    <TabsProvider opened={opened}>
+    <TabsProvider opened={item}>
       <TabsVertical items={items} onClick={onClick} />
     </TabsProvider>
   );
@@ -102,8 +105,8 @@ function TabsItem(props: TabsItemProps & { orientation: TabsOrientation }) {
 function TabsVertical<T extends string = string>(
   props: Omit<TabsProps<T>, 'orientation' | 'opened'>,
 ) {
+  const { items, onClick } = props;
   const item = useTabsContext();
-
   return (
     <div
       style={{
@@ -123,14 +126,14 @@ function TabsVertical<T extends string = string>(
         }}
         css={styles.scroll}
       >
-        {props.items.map((item) => (
+        {items.map((item) => (
           <TabsItem
             orientation="vertical"
             key={item.id}
             title={item.title}
             id={item.id}
             onClick={() => {
-              props.onClick?.(item);
+              onClick?.(item.id);
             }}
           />
         ))}
@@ -145,6 +148,7 @@ function TabsVertical<T extends string = string>(
 function TabsHorizontal<T extends string = string>(
   props: Omit<TabsProps<T>, 'orientation' | 'opened'>,
 ) {
+  const { items, onClick } = props;
   const item = useTabsContext();
   return (
     <div
@@ -159,14 +163,14 @@ function TabsHorizontal<T extends string = string>(
         }}
         css={styles.scroll}
       >
-        {props.items.map((item) => (
+        {items.map((item) => (
           <TabsItem
             key={item.id}
             orientation="horizontal"
             id={item.id}
             title={item.title}
             onClick={() => {
-              props.onClick?.(item);
+              onClick?.(item.id);
             }}
           />
         ))}

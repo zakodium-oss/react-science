@@ -14,10 +14,10 @@ export function Horizontal() {
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
 
-  const [state, setState] = useState(items[1]);
+  const [state, setState] = useState(items[1].id);
 
-  function handleClick(item: TabItem) {
-    setState(item);
+  function handleClick(id: string) {
+    setState(id);
   }
 
   return (
@@ -50,10 +50,10 @@ export function ManyTabs({ orientation }) {
     { id: 'p', title: '1H,13C', content: 'Hello, World! [p]' },
   ];
 
-  const [state, setState] = useState(items[1]);
+  const [state, setState] = useState(items[1].id);
 
-  function handleClick(item: TabItem) {
-    setState(item);
+  function handleClick(id: string) {
+    setState(id);
   }
 
   return (
@@ -79,10 +79,10 @@ export function Vertical() {
     { id: 'display', title: 'Controllers', content: 'Hello, World!' },
   ];
 
-  const [state, setState] = useState(items[1]);
+  const [state, setState] = useState(items[1].id);
 
-  function handleClick(item: TabItem) {
-    setState(item);
+  function handleClick(id: string) {
+    setState(id);
   }
 
   return (
