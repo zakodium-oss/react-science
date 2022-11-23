@@ -78,20 +78,18 @@ export function MeasurementsPanel() {
   );
   const items: Array<TabItem<MeasurementKind>> = availableKinds.map(kindItem);
 
-  function handleTabSelection(item: TabItem<MeasurementKind>) {
+  function handleTabSelection(id: MeasurementKind) {
     dispatch({
       type: 'SELECT_MEASUREMENT_KIND',
-      payload: item.id,
+      payload: id,
     });
   }
-
-  const openedItem = items.find((item) => item.id === view.selectedKind);
 
   return items.length > 1 ? (
     <Tabs<MeasurementKind>
       orientation="horizontal"
       items={items}
-      opened={openedItem}
+      opened={view.selectedKind}
       onClick={handleTabSelection}
     />
   ) : items.length === 1 && items[0].content ? (

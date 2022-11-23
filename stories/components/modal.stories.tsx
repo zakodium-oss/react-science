@@ -199,7 +199,7 @@ export function WithComplexContents({
   onSave: () => void;
 }) {
   const [isOpen, open, close] = useOnOff();
-  const [state, setState] = useState(tabs[0]);
+  const [state, setState] = useState(tabs[0].id);
 
   return (
     <>
