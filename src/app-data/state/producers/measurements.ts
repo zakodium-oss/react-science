@@ -43,6 +43,43 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   }
 };
 
+export const unselectedMeasurement: AppStateProducer<'UNSELECT_MEASUREMENT'> = (
+  draft,
+  action,
+) => {
+  // Check the measurement exists
+  getMeasurementOrFail(
+    draft.data.measurements,
+    action.payload.kind,
+    action.payload.id,
+  );
+
+  draft.view.selectedKind = action.payload.kind;
+  const oldState = draft.view.selectedMeasurements[action.payload.kind] || [];
+
+  draft.view.selectedMeasurements[action.payload.kind] = oldState.filter(
+    (element) => element !== action.payload.id,
+  );
+};
+
+export const addSelectedMeasurement: AppStateProducer<
+  'ADD_SELECTED_MEASUREMENT'
+> = (draft, action) => {
+  // Check the measurement exists
+  getMeasurementOrFail(
+    draft.data.measurements,
+    action.payload.kind,
+    action.payload.id,
+  );
+
+  draft.view.selectedKind = action.payload.kind;
+  const oldState = draft.view.selectedMeasurements[action.payload.kind] || [];
+  draft.view.selectedMeasurements[action.payload.kind] = [
+    ...oldState,
+    action.payload.id,
+  ];
+};
+
 export const selectMeasurement: AppStateProducer<'SELECT_MEASUREMENT'> = (
   draft,
   action,
@@ -57,6 +94,15 @@ export const selectMeasurement: AppStateProducer<'SELECT_MEASUREMENT'> = (
   draft.view.selectedKind = action.payload.kind;
   draft.view.selectedMeasurements[action.payload.kind] = [action.payload.id];
 };
+
+/*
+
+  const oldState = draft.view.selectedMeasurements[action.payload.kind] || [];
+  draft.view.selectedMeasurements[action.payload.kind] = [
+    ...oldState,
+    action.payload.id,
+  ];
+*/
 
 export const selectMeasurementKind: AppStateProducer<
   'SELECT_MEASUREMENT_KIND'

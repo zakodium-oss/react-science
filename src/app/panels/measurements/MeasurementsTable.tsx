@@ -2,12 +2,14 @@
 import { css } from '@emotion/react';
 
 import {
-  getCurrentMeasurementData,
   MeasurementBase,
   MeasurementKind,
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index';
+
+import MeasurementColorPreview from './MeasurementColorPreview';
+import MeasurementVisibilityToggle from './MeasurementVisibilityToggle';
 
 export interface MeasurementsTableProps {
   kind: MeasurementKind;
@@ -63,11 +65,29 @@ const measurementsTableCss = {
       padding-left: 2rem;
     }
     & :first-child {
-      width: 50px;
+      width: 70px;
     }
     & :nth-child(2) {
       width: 150px;
     }
+  `,
+  iconsContainer: css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    height: 50px;
+    flex-direction: row;
+    gap: 0.5rem;
+    cursor: default;
+  `,
+  checkbox: css`
+    color: #6366f1;
+    border-color: #d1d5db;
+    border-radius: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-width: 1px;
   `,
 };
 
@@ -105,11 +125,11 @@ function MeasurementsTableHeader() {
 function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   const { item, kind } = props;
 
-  const appState = useAppState();
-  const dispatch = useAppDispatch();
+  const {
+    view: { selectedMeasurements, measurements },
+  } = useAppState();
 
-  const measurement = getCurrentMeasurementData(appState);
-  const selectedMeasurement = measurement?.kindAndId;
+  const dispatch = useAppDispatch();
 
   function onSelectRow() {
     dispatch({
@@ -118,19 +138,43 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
     });
   }
 
+  function onSelectCheckbox() {
+    if (selectedMeasurements[kind]?.includes(item.id)) {
+      dispatch({
+        type: 'UNSELECT_MEASUREMENT',
+        payload: { id: item.id, kind },
+      });
+    } else {
+      dispatch({
+        type: 'ADD_SELECTED_MEASUREMENT',
+        payload: { id: item.id, kind },
+      });
+    }
+  }
+
   return (
-    <tr
-      onClick={onSelectRow}
-      css={measurementsTableCss.tr}
-      style={{
-        backgroundColor:
-          selectedMeasurement?.id === item.id ? 'rgb(209 213 219)' : 'white',
-      }}
-    >
-      {/* Preparation for https://github.com/zakodium-oss/analysis-ui-components/issues/387 */}
-      <td />
-      <td title={item.id}>{item.id}</td>
-      <td>{item.info.title}</td>
+    <tr css={measurementsTableCss.tr}>
+      <td css={measurementsTableCss.iconsContainer}>
+        <MeasurementVisibilityToggle
+          id={item.id}
+          isVisible={measurements[item.id].visible}
+        />
+        <MeasurementColorPreview color={measurements[item.id].color} />
+        <input
+          css={measurementsTableCss.checkbox}
+          type="checkbox"
+          checked={selectedMeasurements[kind]?.includes(item.id)}
+          onChange={onSelectCheckbox}
+        />
+      </td>
+      <td
+        onClick={onSelectRow}
+        style={{ width: '60%', overflow: 'hidden' }}
+        title={item.id}
+      >
+        {item.id}
+      </td>
+      <td onClick={onSelectRow}>{item.info.title}</td>
     </tr>
   );
 }

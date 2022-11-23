@@ -14,6 +14,8 @@ export type AppStateAction =
   | ActionType<'ADD_MEASUREMENTS', Partial<Measurements>>
   | ActionType<'LOAD_FULL_STATE', AppState>
   | ActionType<'SELECT_MEASUREMENT', MeasurementKindAndId>
+  | ActionType<'ADD_SELECTED_MEASUREMENT', MeasurementKindAndId>
+  | ActionType<'UNSELECT_MEASUREMENT', MeasurementKindAndId>
   | ActionType<'SELECT_MEASUREMENT_KIND', MeasurementKind>
   | ActionType<'SET_MEASUREMENT_VISIBILITY', { id: string; isVisible: boolean }>
   | ActionType<
