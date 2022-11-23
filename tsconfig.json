@@ -12,8 +12,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "outDir": "lib",
-    "noImplicitAny": true
+    "outDir": "lib"
   },
   "include": [
     "./src",
