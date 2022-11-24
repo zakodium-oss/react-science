@@ -76,13 +76,12 @@ export function getMeasurementKindAndId(data: AppData, measurementId: string) {
 
 export function getSelectedMeasurement(
   view: AppView,
-): MeasurementKindAndId | undefined {
+): MeasurementKindAndId | null {
   const { selectedKind, selectedMeasurements } = view;
-  if (!selectedKind) return undefined;
+  if (!selectedKind) return null;
   const kind = selectedKind;
   const currentMeasurements = selectedMeasurements[kind];
-  if (!currentMeasurements) return undefined;
-  // todo: change to return all selected measurements
+  if (!currentMeasurements || currentMeasurements.length !== 1) return null;
   const id = currentMeasurements[0];
   return { kind, id };
 }

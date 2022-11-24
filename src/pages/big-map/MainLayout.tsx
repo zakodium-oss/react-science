@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { FaInfo } from 'react-icons/fa';
 
-import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
+import { getExistingMeasurementKinds, useAppState } from '../../app-data/index';
 import {
   IvPlotView,
   useDropFiles,
@@ -56,8 +56,10 @@ const mainCss = {
 export default function MainLayout() {
   const appState = useAppState();
 
-  const measurement = getCurrentMeasurementData(appState);
-  assert(!measurement || measurement.kindAndId.kind === 'iv');
+  const measurementKinds = getExistingMeasurementKinds(
+    appState.data.measurements,
+  );
+  assert(measurementKinds.length === 0 || measurementKinds.includes('iv'));
 
   useLoadFileCollectionFromHash(loadFiles);
   const onDrop = useDropFiles(loadFiles);
@@ -88,14 +90,14 @@ export default function MainLayout() {
             initialClosed={500}
             controlledSide="end"
           >
-            {!measurement ? (
+            {measurementKinds.length === 0 ? (
               <div style={{ width: '100%', height: '100%' }}>
                 <FullSpinner />
               </div>
             ) : (
               <div css={mainCss.measurement}>
                 <DropZoneContainer onDrop={onDrop}>
-                  {measurement ? <IvPlotView /> : null}
+                  {measurementKinds.length > 0 ? <IvPlotView /> : null}
                 </DropZoneContainer>
               </div>
             )}
