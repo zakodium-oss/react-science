@@ -1,4 +1,5 @@
 import type { FileCollection } from 'filelist-utils';
+// @ts-expect-error netcdfjs has no types at the moment.
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../components/index';
