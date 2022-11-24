@@ -29,6 +29,7 @@ export default defineConfig({
     jsx: 'automatic',
   },
   build: {
+    target: 'esnext',
     rollupOptions,
     minify: process.env.NO_MINIFY ? false : 'esbuild',
   },
