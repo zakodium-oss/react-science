@@ -147,8 +147,8 @@ function MeasurementsTableHeader(props: {
             }
           />
         </th>
-        <th style={{ width: '60%' }}>Id</th>
-        <th>Experiment</th>
+        <th style={{ width: '60%' }}>Filename</th>
+        <th>Technique</th>
       </tr>
     </thead>
   );
@@ -197,9 +197,9 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
         style={{ width: '60%', overflow: 'hidden' }}
         title={item.id}
       >
-        {item.id}
+        {item.info.file?.name ?? item.info.title}
       </td>
-      <td onClick={onSelectRow}>{item.info.title}</td>
+      <td onClick={onSelectRow}>{item.meta.technique}</td>
     </tr>
   );
 }
