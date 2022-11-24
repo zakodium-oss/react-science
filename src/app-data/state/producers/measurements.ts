@@ -1,3 +1,4 @@
+import { assertUnreachable } from '../../../components/index';
 import {
   getFirstMeasurementOrFail,
   getMeasurementOrFail,
@@ -43,7 +44,7 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   }
 };
 
-export const selectOrUnselectAllMeasurement: AppStateProducer<
+export const selectOrUnselectAllMeasurements: AppStateProducer<
   'SELECT_ALL_MEASUREMENTS'
 > = (draft, action) => {
   const {
@@ -85,7 +86,7 @@ export const selectMeasurement: AppStateProducer<'SELECT_MEASUREMENT'> = (
       break;
     }
     default:
-      break;
+      assertUnreachable(acc);
   }
 };
 
