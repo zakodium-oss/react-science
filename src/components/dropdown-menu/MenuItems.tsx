@@ -126,7 +126,11 @@ function Item<T>(props: ItemProps<T>) {
     <Menu.Item disabled={option.disabled}>
       {({ active }) => (
         <ItemDiv
-          onClick={() => onSelect(option)}
+          onClick={() => {
+            if (!option.disabled) {
+              onSelect(option);
+            }
+          }}
           active={active}
           disabled={option.disabled || false}
         >

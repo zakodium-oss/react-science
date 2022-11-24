@@ -55,7 +55,7 @@ const HandleMenuContextDiv = styled.div`
 `;
 
 function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
-  const { children, ...otherProps } = props;
+  const { children, onSelect, ...otherProps } = props;
 
   const {
     isPopperElementOpen,
@@ -79,7 +79,14 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
             {...attributes.popper}
           >
             <Menu>
-              <MenuItems itemsStatic {...otherProps} />
+              <MenuItems
+                itemsStatic
+                onSelect={(selected) => {
+                  closePopperElement();
+                  onSelect(selected);
+                }}
+                {...otherProps}
+              />
             </Menu>
           </div>
         </div>
@@ -93,33 +100,37 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
 function DropdownClickMenu<T>(
   props: Omit<DropdownMenuProps<T>, 'trigger'> & { children: ReactNode },
 ) {
-  const { placement = 'bottom-start', ...otherProps } = props;
+  const { placement = 'bottom-start', onSelect, ...otherProps } = props;
 
   const [isOpened, , closeItems, toggle] = useOnOff(false);
 
   const ref = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref, closeItems);
 
   const { setReferenceElement, setPopperElement, popperProps } =
     useModifiedPopper<HTMLButtonElement>({ placement, offset: 6 });
 
-  useOnClickOutside(ref, () => {
-    closeItems();
-  });
-
   return (
-    <div ref={ref}>
-      <Menu>
-        <Menu.Button ref={setReferenceElement} onClick={toggle}>
-          {props.children}
-        </Menu.Button>
-        {isOpened && (
-          <Portal>
+    <Menu>
+      <Menu.Button ref={setReferenceElement} onClick={toggle}>
+        {props.children}
+      </Menu.Button>
+      {isOpened && (
+        <Portal>
+          <div ref={ref}>
             <div ref={setPopperElement} {...popperProps}>
-              <MenuItems itemsStatic {...otherProps} />
+              <MenuItems
+                itemsStatic
+                onSelect={(selected) => {
+                  closeItems();
+                  onSelect(selected);
+                }}
+                {...otherProps}
+              />
             </div>
-          </Portal>
-        )}
-      </Menu>
-    </div>
+          </div>
+        </Portal>
+      )}
+    </Menu>
   );
 }
