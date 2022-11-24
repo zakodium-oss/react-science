@@ -32,11 +32,13 @@ const styles = {
     position: 'relative',
   }),
 };
+
 const TableContext = createContext({ border: true });
 function useTableContext() {
   const context = useContext(TableContext);
   return context;
 }
+
 function splitChildren(children: ReactNode) {
   const Rows: ReactElement[] = [];
   let Header: ReactElement | null = null;
@@ -73,6 +75,7 @@ export function Table(props: TableProps) {
     </TableContext.Provider>
   );
 }
+
 function useRowChildren(children: ReactNode) {
   const cells: ReactElement[] = [];
   const { border } = useTableContext();

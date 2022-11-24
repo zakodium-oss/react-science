@@ -1,3 +1,4 @@
+import { assertUnreachable } from '../../../components/index';
 import {
   getFirstMeasurementOrFail,
   getMeasurementOrFail,
@@ -43,19 +44,50 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   }
 };
 
+export const selectOrUnselectAllMeasurements: AppStateProducer<
+  'SELECT_ALL_MEASUREMENTS'
+> = (draft, action) => {
+  const {
+    payload: { kind, select },
+  } = action;
+
+  draft.view.selectedKind = kind;
+  draft.view.selectedMeasurements[kind] = select
+    ? draft.data.measurements[kind].entries.map((element) => element.id)
+    : [];
+};
+
 export const selectMeasurement: AppStateProducer<'SELECT_MEASUREMENT'> = (
   draft,
   action,
 ) => {
-  // Check the measurement exists
-  getMeasurementOrFail(
-    draft.data.measurements,
-    action.payload.kind,
-    action.payload.id,
-  );
+  const {
+    payload: { acc, id, kind },
+  } = action;
 
-  draft.view.selectedKind = action.payload.kind;
-  draft.view.selectedMeasurements[action.payload.kind] = [action.payload.id];
+  // Check the measurement exists
+  getMeasurementOrFail(draft.data.measurements, kind, id);
+  draft.view.selectedKind = kind;
+
+  const oldState = draft.view.selectedMeasurements[kind] || [];
+  switch (acc) {
+    case 'add': {
+      draft.view.selectedMeasurements[kind] = [...oldState, id];
+      break;
+    }
+    case 'remove': {
+      draft.view.selectedMeasurements[kind] = oldState.filter(
+        (element) => element !== id,
+      );
+      break;
+    }
+    case 'replace': {
+      draft.view.selectedMeasurements[kind] = [id];
+      break;
+    }
+    default:
+      assertUnreachable(acc);
+  }
 };
 
 export const selectMeasurementKind: AppStateProducer<
@@ -71,6 +103,13 @@ export const selectMeasurementKind: AppStateProducer<
   } else {
     draft.view.selectedKind = undefined;
   }
+};
+
+export const setMeasurementVisibility: AppStateProducer<
+  'SET_MEASUREMENT_VISIBILITY'
+> = (draft, action) => {
+  const measurementView = draft.view.measurements[action.payload.id];
+  measurementView.visible = action.payload.isVisible;
 };
 
 export const changeMeasurementDisplay: AppStateProducer<

@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import { Listbox } from '@headlessui/react';
 import * as scaleChromatic from 'd3-scale-chromatic';
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
-const scales = {
+import FixedGradientPreview from '../preview/FixedGradientPreview';
+
+export const scales = {
   turbo: scaleChromatic.interpolateTurbo,
   viridis: scaleChromatic.interpolateViridis,
   inferno: scaleChromatic.interpolateInferno,
@@ -56,12 +58,6 @@ const GradientSelectOption = styled.li<{ active: boolean }>`
   ${(props) => props.active && 'font-weight: bold;'}
 `;
 
-const GradientPreviewElement = styled.div`
-  height: 100%;
-  width: 100%;
-  border-radius: 0.125rem;
-`;
-
 export interface GradientSelectProps {
   value: GradientScaleName;
   onChange: (value: GradientScaleName) => void;
@@ -73,7 +69,7 @@ export function GradientSelect(props: GradientSelectProps) {
     <Listbox value={value} onChange={onChange}>
       <GradientSelectListbox>
         <Listbox.Button as={GradientSelectButton}>
-          <GradientPreview scale={scales[value]} />
+          <FixedGradientPreview gradient={value} />
           <GradientSelectChevron />
         </Listbox.Button>
         <Listbox.Options as={GradientSelectOptions}>
@@ -83,7 +79,7 @@ export function GradientSelect(props: GradientSelectProps) {
                 <GradientSelectOption active={active}>
                   {option}
                   <div style={{ height: 15 }}>
-                    <GradientPreview scale={scales[option]} />
+                    <FixedGradientPreview gradient={option} />
                   </div>
                 </GradientSelectOption>
               )}
@@ -93,20 +89,4 @@ export function GradientSelect(props: GradientSelectProps) {
       </GradientSelectListbox>
     </Listbox>
   );
-}
-
-interface GradientPreviewProps {
-  scale: (t: number) => string;
-}
-
-function GradientPreview(props: GradientPreviewProps) {
-  const { scale } = props;
-  const gradient = useMemo(() => {
-    const stops: string[] = [];
-    for (let i = 0; i <= 100; i++) {
-      stops.push(scale(i / 100));
-    }
-    return `linear-gradient(to right, ${stops.join(', ')})`;
-  }, [scale]);
-  return <GradientPreviewElement style={{ background: gradient }} />;
 }

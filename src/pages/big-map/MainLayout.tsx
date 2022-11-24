@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { FaInfo } from 'react-icons/fa';
 
 import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
 import {
@@ -9,6 +10,7 @@ import {
   MeasurementsPanelAccordion,
   MeasurementInfoPanelAccordion,
   MeasurementConfigPanelAccordion,
+  AboutDialogToolbarButton,
 } from '../../app/index';
 import {
   Accordion,
@@ -18,8 +20,10 @@ import {
   SplitPane,
   Toolbar,
   assert,
+  FullSpinner,
 } from '../../components/index';
 
+import { AboutInformation } from './components/AboutInformation';
 import { loadFiles } from './helpers/loadFiles';
 
 const mainCss = {
@@ -62,7 +66,11 @@ export default function MainLayout() {
     <div css={mainCss.root}>
       <Header>
         <Toolbar orientation="horizontal">
-          <div />
+          <AboutDialogToolbarButton
+            name="Analysis UI Components - BIG MAP"
+            icon={<FaInfo />}
+            body={<AboutInformation />}
+          />
         </Toolbar>
         <Toolbar orientation="horizontal">
           <FullscreenToolbarButton />
@@ -80,11 +88,17 @@ export default function MainLayout() {
             initialClosed={500}
             controlledSide="end"
           >
-            <div css={mainCss.measurement}>
-              <DropZoneContainer onDrop={onDrop}>
-                {measurement ? <IvPlotView /> : null}
-              </DropZoneContainer>
-            </div>
+            {!measurement ? (
+              <div style={{ width: '100%', height: '100%' }}>
+                <FullSpinner />
+              </div>
+            ) : (
+              <div css={mainCss.measurement}>
+                <DropZoneContainer onDrop={onDrop}>
+                  {measurement ? <IvPlotView /> : null}
+                </DropZoneContainer>
+              </div>
+            )}
             <div css={mainCss.panels}>
               <Accordion>
                 <MeasurementsPanelAccordion />

@@ -17,9 +17,6 @@ export function TabsProvider<T extends string = string>(props: {
   children: ReactNode;
   opened?: TabItem<T>;
 }) {
-  return (
-    <tabsContext.Provider value={props.opened}>
-      {props.children}
-    </tabsContext.Provider>
-  );
+  const { children, opened } = props;
+  return <tabsContext.Provider value={opened}>{children}</tabsContext.Provider>;
 }

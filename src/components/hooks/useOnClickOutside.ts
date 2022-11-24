@@ -1,9 +1,13 @@
 import { useEffect, RefObject } from 'react';
 
+import { useRootLayoutContext } from '../root-layout/RootLayoutContext';
+
 export function useOnClickOutside<T extends Node = Node>(
   ref: RefObject<T>,
   handler: (event: Event) => void,
 ) {
+  const shadowElement = useRootLayoutContext();
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
@@ -15,12 +19,12 @@ export function useOnClickOutside<T extends Node = Node>(
       handler(event);
     };
 
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
+    shadowElement.addEventListener('mousedown', listener);
+    shadowElement.addEventListener('touchstart', listener);
 
     return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
+      shadowElement.removeEventListener('mousedown', listener);
+      shadowElement.removeEventListener('touchstart', listener);
     };
-  }, [ref, handler]);
+  }, [ref, handler, shadowElement]);
 }
