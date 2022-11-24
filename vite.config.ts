@@ -28,7 +28,13 @@ export default defineConfig({
   esbuild: {
     jsx: 'automatic',
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext',
+    },
+  },
   build: {
+    target: 'esnext',
     rollupOptions,
     minify: process.env.NO_MINIFY ? false : 'esbuild',
   },

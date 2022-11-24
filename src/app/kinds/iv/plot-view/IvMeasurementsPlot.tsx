@@ -49,8 +49,10 @@ function getSeries(
   colorConfig: ColorConfig,
   opacity?: number,
 ) {
-  const xVariable = measurement.data[0].variables.x;
-  const yVariable = measurement.data[0].variables.y;
+  const xVariable =
+    measurement.data[0].variables.x ?? measurement.data[0].variables.a;
+  const yVariable =
+    measurement.data[0].variables.y ?? measurement.data[0].variables.b;
   const data = xyToXYObject({ x: xVariable.data, y: yVariable.data });
   return (
     <LineSeries

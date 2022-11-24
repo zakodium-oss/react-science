@@ -33,7 +33,7 @@ test('loadMeasurements function', async () => {
   expect(ir?.entries[1].peaks).toHaveLength(42);
   expect(ir?.entries[0].peaks?.[0]).toStrictEqual({
     absorbance: 0.16390240095857445,
-    kind: 'S',
+    kind: 'm',
     transmittance: 0.6856422936,
     wavenumber: 1049.0926378858535,
   });

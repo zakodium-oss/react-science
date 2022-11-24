@@ -3,7 +3,6 @@
     "target": "ES2020",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["vite/client"],
-    "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -12,9 +11,9 @@
     "module": "ES2022",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "allowJs": true,
     "jsx": "react-jsx",
-    "outDir": "lib",
-    "noImplicitAny": false
+    "outDir": "lib"
   },
   "include": [
     "./src",

@@ -1,8 +1,9 @@
 import type { FileCollection } from 'filelist-utils';
+// @ts-expect-error netcdfjs has no types at the moment.
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../components/index';
-import type { Measurements, MeasurementKind } from '../index';
+import type { MeasurementBase, Measurements, MeasurementKind } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
 import { ParserLog, createLogEntry } from './utility/parserLog';
@@ -78,7 +79,9 @@ export async function cdfLoader(
   return newMeasurements;
 }
 
-function chromatogramWithMassSpectra(reader) {
+function chromatogramWithMassSpectra(
+  reader: NetCDFReader,
+): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
   const pointCount = reader.getDataVariable('point_count');
   const massValues = reader.getDataVariable('mass_values');
@@ -99,10 +102,9 @@ function chromatogramWithMassSpectra(reader) {
     allIntensities.push(intensities);
     allMasses.push(masses);
   }
-  let data: any = [];
+  let data: MeasurementBase['data'] = [];
   for (let i = 0; i < times.length; i++) {
     data.push({
-      meta: {},
       info: {
         time: { value: times[i], units: 's' },
         tic: tics[i],
@@ -126,16 +128,18 @@ function chromatogramWithMassSpectra(reader) {
   return data;
 }
 
-function chromatogram(reader) {
+function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
-  let data: any = [];
+  let data: MeasurementBase['data'] = [];
   const intensities: number[] = reader.getDataVariable('ordinate_values');
   const numberPoints = intensities.length;
   const detector: string = reader.getAttribute('detector_name');
   let channel: string;
-  if (detector.match(/dad/i)) {
-    channel = `uv${Number(detector.replace(/.*Sig=(\d+).*/, '$1'))}`;
-  } else if (detector.match(/tic/i)) {
+  if (/dad/i.test(detector)) {
+    const uvNumber = detector.match(/.*Sig=(?<uvNumber>\d+).*/)?.groups
+      ?.uvNumber;
+    channel = `uv${Number(uvNumber) || ''}`;
+  } else if (/tic/i.test(detector)) {
     channel = 'tic';
   } else {
     channel = 'unknown';
@@ -167,8 +171,6 @@ function chromatogram(reader) {
   }
 
   data.push({
-    meta: {},
-    info: {},
     variables: {
       x: {
         symbol: 'X',
@@ -187,7 +189,10 @@ function chromatogram(reader) {
   return data;
 }
 
-function addMeta(reader, globalAttributes) {
+function addMeta(
+  reader: NetCDFReader,
+  globalAttributes: NetCDFReader.globalAttributes,
+) {
   reader.header.meta = {};
   for (const item of globalAttributes) {
     reader.header.meta[item.name] = item.value;

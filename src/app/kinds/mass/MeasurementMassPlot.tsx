@@ -1,4 +1,5 @@
 import { xyToXYObject } from 'ml-spectra-processing';
+// @ts-expect-error ms-spectrum has no types at the moment.
 import { getBestPeaks, Spectrum } from 'ms-spectrum';
 import { useMemo } from 'react';
 import {

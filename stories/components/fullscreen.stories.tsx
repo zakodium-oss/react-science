@@ -45,7 +45,7 @@ export function basic() {
     </div>
   );
 }
-function Content({ i }) {
+function Content({ i }: { i: string }) {
   const { toggle } = useFullscreen();
   return (
     <div>

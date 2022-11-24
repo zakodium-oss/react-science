@@ -14,12 +14,14 @@ export function mergeMeasurements(
   measurements: Partial<Measurements>,
   newMeasurements: Partial<Measurements>,
 ) {
-  for (const kind in newMeasurements) {
+  //fixes for putting type "string" to key
+  let kind: keyof typeof newMeasurements;
+  for (kind in newMeasurements) {
     if (!measurements[kind]) {
       measurements[kind] = { entries: [] };
     }
     assert(measurements[kind], 'Error while loading, kind is not defined');
-    const entries: MeasurementBase[] = newMeasurements[kind].entries || [];
-    measurements[kind].entries.push(...entries);
+    const entries: MeasurementBase[] = newMeasurements[kind]?.entries || [];
+    measurements[kind]?.entries.push(...entries);
   }
 }

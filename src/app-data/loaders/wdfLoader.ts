@@ -1,5 +1,6 @@
+import { MeasurementVariable } from 'cheminfo-types';
 import type { FileCollection } from 'filelist-utils';
-import { parse } from 'wdf-parser';
+import { parse, Wdf } from 'wdf-parser';
 
 import type { Measurements, MeasurementBase } from '../index';
 
@@ -51,73 +52,93 @@ export async function wdfLoader(
   return measurements;
 }
 
-function normalizeSpectra(blocks) {
+function normalizeSpectra(blocks: Wdf['blocks']) {
   const yVariables = getYVariables(blocks);
   const origins = getOrigins(blocks);
 
-  const data: any = [];
+  const results: MeasurementBase['data'] = [];
+
   for (let i = 0; i < yVariables.length; i++) {
     const yVariable = yVariables[i];
     let origin = origins[i] || {};
 
-    data.push({
+    results.push({
       variables: { x: getXVariable(blocks), y: yVariable },
       meta: { ...origin },
     });
   }
-  return data;
+  return results;
 }
 
-function getXVariable(blocks) {
+function getXVariable(blocks: Wdf['blocks']) {
   const xBlock = blocks.find(
     (block) => block.blockType === 'WDF_BLOCKID_XLIST',
   );
 
-  const groups = xBlock.xList.units.match(
-    /(?<label>.*) \((?<units>.*)\)/,
-  )?.groups;
+  const xList = xBlock?.xList;
+  const groups = xList?.units.match(/(?<label>.*) \((?<units>.*)\)/)?.groups;
 
-  return {
+  if (!xList) {
+    throw new Error('no xList data found in wdf file');
+  }
+
+  const xVariable: MeasurementVariable = {
     label: groups?.label || 'Arbitrary Units',
     units: groups?.units || '',
-    data: xBlock.xList.values.slice(),
+    data: Array.from(xList.values),
   };
+  return xVariable;
 }
 
-function getYVariables(blocks) {
+function getYVariables(blocks: Wdf['blocks']) {
   const dataBlock = blocks.find(
     (block) => block.blockType === 'WDF_BLOCKID_DATA',
   );
-  const yVariables: any[] = [];
-  for (let spectrum of dataBlock.spectrum) {
+
+  if (!dataBlock?.spectra) {
+    throw new Error('no spectrum found in data block of wdf file');
+  }
+
+  const yVariables: MeasurementVariable[] = [];
+  for (const spectrum of dataBlock.spectra) {
     yVariables.push({
+      data: Array.from(spectrum),
+      units: '',
       label: 'Arbitrary Intensity',
-      data: spectrum,
     });
   }
+
   return yVariables;
 }
 
-function getOrigins(blocks) {
+type Origin = {
+  xPositionUnits: string;
+  yPositionUnits: string;
+  xPosition: number | bigint;
+  yPosition: number | bigint;
+};
+function getOrigins(blocks: Wdf['blocks']) {
   const originBlock = blocks.find(
     (block) => block.blockType === 'WDF_BLOCKID_ORIGIN',
   );
   if (!originBlock) return [];
 
-  const xPositions = originBlock.origins.find((entry) => entry.label === 'X');
-  const yPositions = originBlock.origins.find((entry) => entry.label === 'Y');
+  const xPositions = originBlock.origins?.find((entry) => entry.label === 'X');
+  const yPositions = originBlock.origins?.find((entry) => entry.label === 'Y');
+  const xOrigins = xPositions?.axisOrigins;
+  const yOrigins = yPositions?.axisOrigins;
 
-  if (!xPositions || !yPositions) return [];
-
-  const origins: any[] = [];
-  for (let i = 0; i < xPositions.axisOrigins.length; i++) {
-    // we should add some xIndex and yIndex based on https://github.com/cheminfo/raman-spectrum/blob/1d3bc62ebe2930f8c35fcf65689b090f5b22ba9e/src/utils/surfaceAnalysis.js#L15-L70
-    origins.push({
-      xPositionUnits: xPositions.unit,
-      yPositionUnits: yPositions.unit,
-      xPosition: xPositions.axisOrigins[i],
-      yPosition: yPositions.axisOrigins[i],
-    });
+  const origins: Origin[] = [];
+  if (xOrigins && yOrigins) {
+    for (let i = 0; i < xOrigins.length; i++) {
+      // we should add some xIndex and yIndex based on https://github.com/cheminfo/raman-spectrum/blob/1d3bc62ebe2930f8c35fcf65689b090f5b22ba9e/src/utils/surfaceAnalysis.js#L15-L70
+      origins.push({
+        xPositionUnits: xPositions.unit,
+        yPositionUnits: yPositions.unit,
+        xPosition: xOrigins[i],
+        yPosition: yOrigins[i],
+      });
+    }
   }
   return origins;
 }

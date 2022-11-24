@@ -64,7 +64,7 @@ const SketchFields = ({
   disableAlpha,
 }: SketchFieldsProps) => {
   const handleChange = useCallback(
-    (data, e) => {
+    (data: any, e: any) => {
       if (data.hex) {
         if (color.isValidHex(data.hex)) {
           onChange(

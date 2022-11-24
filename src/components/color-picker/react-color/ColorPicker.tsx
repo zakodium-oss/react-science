@@ -180,7 +180,7 @@ export function ColorPicker(props: ColorPickerProps) {
   }, [color]);
 
   const handleChange = useCallback(
-    (data, event) => {
+    (data: any, event: any) => {
       const isValidColor = colorHelper.simpleCheckForValidColor(data);
       if (isValidColor) {
         const colors = colorHelper.toState(data, data.h || state.oldHue);
@@ -197,7 +197,7 @@ export function ColorPicker(props: ColorPickerProps) {
   );
 
   const handleSwatchHover = useCallback(
-    (data, event) => {
+    (data: any, event: any) => {
       const isValidColor = colorHelper.simpleCheckForValidColor(data);
       if (isValidColor) {
         const colors = colorHelper.toState(data, data.h || state.oldHue);
