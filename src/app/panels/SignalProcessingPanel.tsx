@@ -1,5 +1,4 @@
 import type { FilterXYType } from 'ml-signal-processing';
-import filterXY from 'ml-signal-processing/FilterXYSchema.json';
 
 import { Button, Table, ValueRenderers } from '../../components/index';
 
@@ -17,10 +16,13 @@ interface FilterOptionsInfo {
   description: string;
 }
 
+// import filterXY from 'ml-signal-processing/FilterXYSchema.json';
+const filterXY: any = { anyOf: [] };
+
 // get filters information & default options values
-const defaultFilters = filterXY.anyOf.map(({ properties }) => {
+const defaultFilters = filterXY.anyOf.map(({ properties }: any) => {
   const options: Record<string, FilterOptionsInfo> = {};
-  for (const [key, value] of Object.entries(
+  for (const [key, value] of Object.entries<any>(
     properties?.options?.properties || {},
   )) {
     options[key] = {
@@ -90,9 +92,9 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                   }
                 }}
                 style={{ border: '1px solid black' }}
-                value={defaultFilters.findIndex((f) => f.name === name)}
+                value={defaultFilters.findIndex((f: any) => f.name === name)}
               >
-                {defaultFilters.map(({ name }, i) => (
+                {defaultFilters.map(({ name }: any, i: number) => (
                   <option key={name} value={i}>
                     {normalCase(name)}
                   </option>
@@ -102,8 +104,9 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
             {options && (
               <ValueRenderers.Component>
                 {Object.entries(
-                  defaultFilters.find((f) => f.name === name)?.options || {},
-                ).map((option) =>
+                  defaultFilters.find((f: any) => f.name === name)?.options ||
+                    {},
+                ).map((option: any) =>
                   optionInput(option, options, (value) => {
                     const FilterOptions = {
                       ...filters[i].options,
