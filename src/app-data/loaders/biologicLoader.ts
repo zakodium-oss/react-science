@@ -1,11 +1,13 @@
 import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
-import type { FileCollection } from 'filelist-utils';
 
 import type { Measurements, MeasurementBase } from '../index';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { createLogEntry, ParserLog } from './utility/parserLog';
+import {
+  MeasurementsLoader,
+  getMeasurementInfoFromFile,
+  createLogEntry,
+} from './utility/index';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */
@@ -16,10 +18,10 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
  * @param logs - pass to append errors to the logs, it mutates the external array.
  * @returns - new measurements object to be merged
  */
-export async function biologicLoader(
-  fileCollection: FileCollection,
-  logs?: ParserLog[],
-): Promise<Partial<Measurements>> {
+export const biologicLoader: MeasurementsLoader = async function biologicLoader(
+  fileCollection,
+  logs,
+) {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
 
@@ -73,7 +75,7 @@ export async function biologicLoader(
   }
   measurements.iv = { entries };
   return measurements;
-}
+};
 
 /**
  * Each biologic experiment stores measurement variables (not just `x` and `y`) in the

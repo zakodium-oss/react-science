@@ -1,17 +1,19 @@
-import type { FileCollection } from 'filelist-utils';
 // @ts-expect-error netcdfjs has no types at the moment.
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../components/index';
-import type { MeasurementBase, Measurements, MeasurementKind } from '../index';
+import type { Measurements, MeasurementKind, MeasurementBase } from '../index';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { ParserLog, createLogEntry } from './utility/parserLog';
+import {
+  MeasurementsLoader,
+  getMeasurementInfoFromFile,
+  createLogEntry,
+} from './utility/index';
 
-export async function cdfLoader(
-  fileCollection: FileCollection,
-  logs?: ParserLog[],
-): Promise<Partial<Measurements>> {
+export const cdfLoader: MeasurementsLoader = async function cdfLoader(
+  fileCollection,
+  logs,
+) {
   const newMeasurements: Partial<Measurements> = {};
   let kind: MeasurementKind | undefined;
   for (const file of fileCollection) {
@@ -77,7 +79,7 @@ export async function cdfLoader(
   }
 
   return newMeasurements;
-}
+};
 
 function chromatogramWithMassSpectra(
   reader: NetCDFReader,

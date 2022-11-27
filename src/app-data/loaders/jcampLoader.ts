@@ -1,22 +1,24 @@
-import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
 import { assert } from '../../components/index';
-import type { MeasurementKind, Measurements } from '../index';
+import type { Measurements, MeasurementBase, MeasurementKind } from '../index';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { createLogEntry, ParserLog } from './utility/parserLog';
+import {
+  MeasurementsLoader,
+  getMeasurementInfoFromFile,
+  createLogEntry,
+} from './utility/index';
 
 /**
  *
  * @param fileCollection - the dragged file/files
- * @param logger - whether to log to console or not
+ * @param logger - (optional) whether to log to console or not
  * @returns - new measurements object to be merged
  */
-export async function jcampLoader(
-  fileCollection: FileCollection,
-  logs?: ParserLog[],
-): Promise<Partial<Measurements>> {
+export const jcampLoader: MeasurementsLoader = async function jcampLoader(
+  fileCollection,
+  logs,
+) {
   const newMeasurements: Partial<Measurements> = {};
   for (const file of fileCollection) {
     if (/(?:\.jdx|\.dx)$/i.test(file.name)) {
@@ -73,10 +75,10 @@ export async function jcampLoader(
   }
 
   return newMeasurements;
-}
+};
 
 function normalizeSpectra(spectra: any) {
-  const data: any[] = [];
+  const data: MeasurementBase['data'] = [];
   for (const spectrum of spectra) {
     let variables = spectrum.variables;
     if (!variables) {

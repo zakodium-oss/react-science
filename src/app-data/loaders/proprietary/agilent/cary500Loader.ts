@@ -1,17 +1,16 @@
-import type { FileCollectionItem, FileCollection } from 'filelist-utils';
+import type { FileCollectionItem } from 'filelist-utils';
 
+import type { Measurements, MeasurementBase } from '../../../index';
 import {
-  Measurements,
-  MeasurementBase,
+  MeasurementsLoader,
   getMeasurementInfoFromFile,
-  ParserLog,
   createLogEntry,
-} from '../../../index';
+} from '../../utility/index';
 
-export async function cary500Loader(
-  fileCollection: FileCollection,
-  logs?: ParserLog[],
-): Promise<Partial<Measurements>> {
+export const cary500Loader: MeasurementsLoader = async function cary500Loader(
+  fileCollection,
+  logs,
+) {
   const newMeasurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
 
@@ -43,7 +42,7 @@ export async function cary500Loader(
   }
   newMeasurements.uvvis = { entries };
   return newMeasurements;
-}
+};
 
 async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
   const text = await file.text();

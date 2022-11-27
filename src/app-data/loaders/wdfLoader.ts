@@ -1,11 +1,13 @@
 import { MeasurementVariable } from 'cheminfo-types';
-import type { FileCollection } from 'filelist-utils';
 import { parse, Wdf } from 'wdf-parser';
 
 import type { Measurements, MeasurementBase } from '../index';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { ParserLog, createLogEntry } from './utility/parserLog';
+import {
+  MeasurementsLoader,
+  getMeasurementInfoFromFile,
+  createLogEntry,
+} from './utility/index';
 
 /**
  *
@@ -13,10 +15,10 @@ import { ParserLog, createLogEntry } from './utility/parserLog';
  * @param logger - whether to log to console or not
  * @returns - new measurements object to be merged
  */
-export async function wdfLoader(
-  fileCollection: FileCollection,
-  logs?: ParserLog[],
-): Promise<Partial<Measurements>> {
+export const wdfLoader: MeasurementsLoader = async function wdfLoader(
+  fileCollection,
+  logs,
+) {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
 
@@ -50,7 +52,7 @@ export async function wdfLoader(
 
   measurements.raman = { entries };
   return measurements;
-}
+};
 
 function normalizeSpectra(blocks: Wdf['blocks']) {
   const yVariables = getYVariables(blocks);

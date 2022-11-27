@@ -1,22 +1,23 @@
-import type { FileCollection } from 'filelist-utils';
 import { parse, guessSpectraType } from 'spc-parser';
 
 import { assert } from '../../components/index';
-import type { MeasurementKind, Measurements, MeasurementBase } from '../index';
+import type { Measurements, MeasurementBase, MeasurementKind } from '../index';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { ParserLog, createLogEntry } from './utility/parserLog';
-
+import {
+  MeasurementsLoader,
+  getMeasurementInfoFromFile,
+  createLogEntry,
+} from './utility/index';
 /**
  *
  * @param fileCollection - the dragged file/files
  * @param logger - whether to log to console or not
  * @returns - new measurements object to be merged
  */
-export async function spcLoader(
-  fileCollection: FileCollection,
-  logs?: ParserLog[],
-): Promise<Partial<Measurements>> {
+export const spcLoader: MeasurementsLoader = async function spcLoader(
+  fileCollection,
+  logs,
+) {
   const measurements: Partial<Measurements> = {};
   for (const file of fileCollection) {
     if (/\.spc$/i.test(file.name)) {
@@ -52,4 +53,4 @@ export async function spcLoader(
   }
 
   return measurements;
-}
+};
