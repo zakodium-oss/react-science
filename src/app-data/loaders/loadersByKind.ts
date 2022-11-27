@@ -2,16 +2,16 @@
  * User may only want to analyze one type of data (e.g. only IR)
  */
 
-import type { MeasurementKind } from '../../state/index';
-import type { MeasurementsLoader } from '../index';
-import {
-  biologicLoader,
-  jcampLoader,
-  spcLoader,
-  wdfLoader,
-  cary500Loader,
-  cdfLoader,
-} from '../index';
+import type { MeasurementKind } from '../state/index';
+
+import { biologicLoader } from './biologicLoader';
+import { cdfLoader } from './cdfLoader';
+import { jcampLoader } from './jcampLoader';
+import { cary500Loader } from './proprietary/agilent/cary500Loader';
+import { spcLoader } from './spcLoader';
+import { wdfLoader } from './wdfLoader';
+
+import type { MeasurementsLoader } from './index';
 
 export type KindToLoader = Record<MeasurementKind, MeasurementsLoader[]>;
 

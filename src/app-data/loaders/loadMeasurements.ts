@@ -2,9 +2,9 @@ import type { FileCollection } from 'filelist-utils';
 
 import { Measurements, MeasurementKind, Enhancers, enhance } from '../index';
 
+import { selectLoaderByKind } from './loadersByKind';
 import {
   ParserLog,
-  selectLoaderByKind,
   mergeMeasurements,
   MeasurementsLoader,
 } from './utility/index';
@@ -20,7 +20,7 @@ export async function loadMeasurements(
   options: LoadOptions = {},
 ) {
   const measurements: Partial<Measurements> = {};
-  let logs: ParserLog[] = [];
+  const logs: ParserLog[] = [];
   const { loadKind = 'other', enhancers = {}, logger = true } = options;
   const selectedLoaders: MeasurementsLoader[] = selectLoaderByKind[loadKind];
   for (const loader of selectedLoaders) {
