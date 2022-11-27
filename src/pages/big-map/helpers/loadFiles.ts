@@ -1,13 +1,9 @@
 import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
-import {
-  loadMeasurements,
-  biologicLoader,
-  AppDispatch,
-} from '../../../app-data/index';
+import { loadMeasurements, AppDispatch } from '../../../app-data/index';
 
-const options = {
-  loaders: [biologicLoader],
+const options: Parameters<typeof loadMeasurements>[1] = {
+  loadKind: 'iv',
 };
 
 export async function loadFiles(
