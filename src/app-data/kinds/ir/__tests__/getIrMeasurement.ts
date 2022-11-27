@@ -1,13 +1,11 @@
 import { getTestFileCollection } from '../../../../test-utils';
 import {
   loadMeasurements,
-  jcampLoader,
   IrMeasurement,
   getIrAutoPeakPickingEnhancer,
   irMeasurementEnhancer,
 } from '../../../index';
 
-const loaders = [jcampLoader];
 const enhancers = {
   ir: [
     irMeasurementEnhancer,
@@ -22,7 +20,7 @@ export async function getIrMeasurement() {
   );
 
   const { measurements } = await loadMeasurements(filteredFileCollection, {
-    loaders,
+    loadKind: 'ir',
     enhancers,
   });
   return measurements.ir?.entries[0] as IrMeasurement;
