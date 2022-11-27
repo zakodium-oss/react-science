@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
 import { getTestFileCollection } from '../../test-utils';
-import { loadMeasurements, cdfLoader } from '../index';
+import { loadMeasurements } from '../index';
 
 const fileCollection = await getTestFileCollection('cdf');
 
@@ -11,7 +11,7 @@ const filteredFileCollection = fileCollection.filter(
 
 test('getGCMSMeasurement', async () => {
   const { measurements } = await loadMeasurements(filteredFileCollection, {
-    loaders: [cdfLoader],
+    loadKind: 'gclcms',
   });
   const result = measurements.gclcms?.entries;
   expect(result).toHaveLength(1);

@@ -1,17 +1,17 @@
 import { expect, test } from 'vitest';
 
 import { getTestFileCollection } from '../../test-utils';
-import { loadMeasurements, biologicLoader } from '../index';
+import { loadMeasurements } from '../index';
 
 test('getIVMeasurement', async () => {
   const result = await getIVMeasurement();
   expect(result.entries).toHaveLength(2);
 });
 
-const loaders = [biologicLoader];
-
 async function getIVMeasurement() {
   const fileCollection = await getTestFileCollection('biologic');
-  const { measurements } = await loadMeasurements(fileCollection, { loaders });
+  const { measurements } = await loadMeasurements(fileCollection, {
+    loadKind: 'iv',
+  });
   return measurements.iv || { entries: [] };
 }
