@@ -1,15 +1,16 @@
 import type { FileCollection } from 'filelist-utils';
 
-import { Measurements, enhance, Enhancers } from '../index';
+import { Measurements, MeasurementKind, Enhancers, enhance } from '../index';
 
 import {
-  MeasurementsLoader,
+  ParserLog,
+  selectLoaderByKind,
   mergeMeasurements,
-} from './utility/measurementLoader';
-import type { ParserLog } from './utility/parserLog';
+  MeasurementsLoader,
+} from './utility/index';
 
 interface LoadOptions {
-  loaders?: MeasurementsLoader[];
+  loadKind?: MeasurementKind;
   enhancers?: Partial<Enhancers>;
   logger?: boolean;
 }
@@ -20,8 +21,9 @@ export async function loadMeasurements(
 ) {
   const measurements: Partial<Measurements> = {};
   let logs: ParserLog[] = [];
-  const { loaders = [], enhancers = {}, logger = true } = options;
-  for (const loader of loaders) {
+  const { loadKind = 'other', enhancers = {}, logger = true } = options;
+  const selectedLoaders: MeasurementsLoader[] = selectLoaderByKind[loadKind];
+  for (const loader of selectedLoaders) {
     const loaderData = await loader(fileCollection, logger ? logs : undefined);
     enhance(loaderData, enhancers);
     mergeMeasurements(measurements, loaderData);
