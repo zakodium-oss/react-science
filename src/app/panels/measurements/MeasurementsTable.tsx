@@ -168,7 +168,11 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
           id={item.id}
           isVisible={measurements[item.id].visible}
         />
-        <MeasurementColorPreview color={measurements[item.id].color} />
+        <MeasurementColorPreview
+          measurementId={item.id}
+          kind={kind}
+          color={measurements[item.id].color}
+        />
         <MeasurementCheckbox
           checked={selectedMeasurements[kind]?.includes(item.id) || false}
           onSelectCheckbox={onSelectCheckbox}
