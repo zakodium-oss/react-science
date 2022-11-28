@@ -14,6 +14,7 @@ export async function loadFiles(
   files: File[] | FileCollection,
   dispatch: AppDispatch,
 ) {
+  dispatch({ type: 'LOAD_START' });
   try {
     const fileCollection =
       files instanceof FileCollection
@@ -23,5 +24,7 @@ export async function loadFiles(
     dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
   } catch (error) {
     reportError(error);
+  } finally {
+    dispatch({ type: 'LOAD_STOP' });
   }
 }

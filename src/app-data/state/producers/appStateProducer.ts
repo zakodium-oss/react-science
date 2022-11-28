@@ -24,6 +24,12 @@ export const loadFullState: AppStateProducer<'LOAD_FULL_STATE'> = (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const producers: Record<ActionType, AppStateProducer<any>> = {
+  LOAD_START: (draft) => {
+    draft.load.isLoading = true;
+  },
+  LOAD_STOP: (draft) => {
+    draft.load.isLoading = false;
+  },
   ADD_MEASUREMENTS: addMeasurements,
   SELECT_MEASUREMENT: selectMeasurement,
   SELECT_MEASUREMENT_KIND: selectMeasurementKind,

@@ -11,7 +11,7 @@ import { useKbsGlobal } from 'react-kbs';
 
 import {
   download,
-  getCurrentMeasurementData,
+  getExistingMeasurementKinds,
   useAppState,
 } from '../../app-data/index';
 import {
@@ -27,6 +27,7 @@ import {
   Accordion,
   DropZoneContainer,
   FullscreenToolbarButton,
+  FullSpinner,
   Header,
   SplitPane,
   Toolbar,
@@ -54,7 +55,10 @@ function ErrorFallback({
 
 export default function MainLayout() {
   const appState = useAppState();
-  const measurement = getCurrentMeasurementData(appState);
+
+  const measurementKinds = getExistingMeasurementKinds(
+    appState.data.measurements,
+  );
   useLoadFileCollectionFromHash(loadFiles);
   const onDrop = useDropFiles(loadFiles);
 
@@ -157,9 +161,15 @@ export default function MainLayout() {
                   height: '100%',
                 }}
               >
-                <DropZoneContainer onDrop={onDrop}>
-                  {measurement ? <ExplorerPlotView /> : null}
-                </DropZoneContainer>
+                {appState.load.isLoading ? (
+                  <div style={{ width: '100%', height: '100%' }}>
+                    <FullSpinner />
+                  </div>
+                ) : (
+                  <DropZoneContainer onDrop={onDrop}>
+                    {measurementKinds.length > 0 ? <ExplorerPlotView /> : null}
+                  </DropZoneContainer>
+                )}
               </div>
             </ErrorBoundary>
             <div

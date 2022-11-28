@@ -15,13 +15,21 @@ import { getEmptyAppSettings } from './settings/getEmptyAppSettings';
 import { getEmptyAppView, AppView } from './view/index';
 
 export interface AppState {
+  load: AppLoad;
   data: AppData;
   view: AppView;
   settings: AppSettings;
 }
 
+export interface AppLoad {
+  isLoading: boolean;
+}
+
 function getEmptyAppState(): AppState {
   return {
+    load: {
+      isLoading: false,
+    },
     data: getEmptyAppData(),
     view: getEmptyAppView(),
     settings: getEmptyAppSettings(),

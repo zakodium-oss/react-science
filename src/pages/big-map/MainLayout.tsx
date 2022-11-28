@@ -90,7 +90,7 @@ export default function MainLayout() {
             initialClosed={500}
             controlledSide="end"
           >
-            {measurementKinds.length === 0 ? (
+            {appState.load.isLoading ? (
               <div style={{ width: '100%', height: '100%' }}>
                 <FullSpinner />
               </div>

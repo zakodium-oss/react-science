@@ -39,6 +39,7 @@ export async function loadFiles(
   files: File[] | FileCollection,
   dispatch: AppDispatch,
 ) {
+  dispatch({ type: 'LOAD_START' });
   try {
     // try FC and File[] separately to avoid indexing error
     if (files instanceof FileCollection) {
@@ -61,6 +62,8 @@ export async function loadFiles(
     }
   } catch (error) {
     reportError(error);
+  } finally {
+    dispatch({ type: 'LOAD_STOP' });
   }
 }
 
