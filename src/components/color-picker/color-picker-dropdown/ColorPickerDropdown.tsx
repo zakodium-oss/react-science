@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useModifiedPopper } from '../../hooks/useModifiedPopper';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useOnOff } from '../../hooks/useOnOff';
+import { Portal } from '../../root-layout/Portal';
 import FixedColorPreview from '../preview/FixedColorPreview';
 import { ColorPicker, ColorPickerProps } from '../react-color/ColorPicker';
 import * as colorHelper from '../react-color/helpers/color';
@@ -59,15 +60,17 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
         </div>
       </button>
       {isOpened && (
-        <div
-          ref={(div) => {
-            setPopperElement(div);
-            ref.current = div;
-          }}
-          {...popperProps}
-        >
-          <ColorPicker color={color} {...otherProps} />
-        </div>
+        <Portal>
+          <div
+            ref={(div) => {
+              setPopperElement(div);
+              ref.current = div;
+            }}
+            {...popperProps}
+          >
+            <ColorPicker color={color} {...otherProps} />
+          </div>
+        </Portal>
       )}
     </>
   );
