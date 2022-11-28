@@ -19,7 +19,13 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
           paddingBlock: 5,
         }}
       >
-        <a href="">Blank</a>
+        {import.meta.env.PROD ? (
+          <>
+            <a href={`${import.meta.env.BASE_URL}stories/`}>Open stories</a>
+            <span>|</span>
+          </>
+        ) : null}
+        <a href="">Empty</a>
         <a href="#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fjdx.json">
           JCAMP-DX
         </a>
@@ -52,9 +58,6 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
         <a href="big-map.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbigmap.json">
           Data (small)
         </a>
-        {import.meta.env.PROD ? (
-          <a href={`${import.meta.env.BASE_URL}stories/`}>Open stories</a>
-        ) : null}
       </div>
       <App />
     </div>
