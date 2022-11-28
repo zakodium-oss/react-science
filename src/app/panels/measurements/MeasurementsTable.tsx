@@ -45,32 +45,22 @@ const measurementsTableCss = {
     max-height: 50px;
     overflow: hidden;
     cursor: pointer;
-    & {
-      padding-left: 2rem;
-      padding-bottom: 10px;
-      padding-top: 10px;
-      border-bottom-width: 1px;
+    padding-left: 2rem;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom-width: 1px;
 
-      font-weight: 500;
-      font-size: 0.875rem;
-      line-height: 1.25rem;
-    }
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   `,
   header: css`
-    & {
-      border-bottom-width: 1px;
-      font-weight: 500;
-      text-align: left;
-      padding-bottom: 10px;
-      padding-top: 10px;
-      padding-left: 2rem;
-    }
-    & :first-child {
-      width: 70px;
-    }
-    & :nth-child(2) {
-      width: 150px;
-    }
+    border-bottom-width: 1px;
+    font-weight: 500;
+    text-align: left;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 2rem;
   `,
   iconsContainer: css`
     display: flex;
@@ -138,7 +128,7 @@ function MeasurementsTableHeader(props: {
   return (
     <thead>
       <tr css={measurementsTableCss.header}>
-        <th>
+        <th style={{ width: 70 }}>
           <MeasurementCheckbox
             checked={isChecked}
             onSelectCheckbox={onSelectCheckbox}
@@ -148,7 +138,7 @@ function MeasurementsTableHeader(props: {
           />
         </th>
         <th style={{ width: '60%' }}>Filename</th>
-        <th>Technique</th>
+        <th style={{ width: 150 }}>Technique</th>
       </tr>
     </thead>
   );
