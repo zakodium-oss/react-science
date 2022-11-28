@@ -10,7 +10,9 @@ import {
 
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
-import MeasurementVisibilityToggle from './MeasurementVisibilityToggle';
+import MeasurementVisibilityToggle, {
+  MeasurementAllVisibilityToggle,
+} from './MeasurementVisibilityToggle';
 
 export interface MeasurementsTableProps {
   kind: MeasurementKind;
@@ -128,8 +130,8 @@ function MeasurementsTableHeader(props: {
             width: 70,
           }}
         >
-          <MeasurementVisibilityToggle
-            id={null}
+          <MeasurementAllVisibilityToggle
+            kind={props.kind}
             isVisible={
               !Object.keys(viewMeasurements)
                 .map((id) => viewMeasurements[id].visible)

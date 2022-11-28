@@ -8,6 +8,7 @@ import {
   changeMeasurementDisplay,
   selectMeasurement,
   selectMeasurementKind,
+  setAllMeasurementVisibility,
   setMeasurementVisibility,
   selectOrUnselectAllMeasurements,
 } from './measurements';
@@ -35,6 +36,7 @@ const producers: Record<ActionType, AppStateProducer<any>> = {
   SELECT_MEASUREMENT_KIND: selectMeasurementKind,
   SELECT_ALL_MEASUREMENTS: selectOrUnselectAllMeasurements,
   SET_MEASUREMENT_VISIBILITY: setMeasurementVisibility,
+  SET_ALL_MEASUREMENT_VISIBILITY: setAllMeasurementVisibility,
   CHANGE_MEASUREMENT_DISPLAY: changeMeasurementDisplay,
   LOAD_FULL_STATE: loadFullState,
 };

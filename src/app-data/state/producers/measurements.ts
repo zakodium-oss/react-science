@@ -124,17 +124,17 @@ export const selectMeasurementKind: AppStateProducer<
 export const setMeasurementVisibility: AppStateProducer<
   'SET_MEASUREMENT_VISIBILITY'
 > = (draft, action) => {
-  if (action.payload.id === null) {
-    for (const id of Object.keys(draft.view.measurements)) {
-      const measurementView = draft.view.measurements[id];
-      measurementView.visible = action.payload.isVisible;
-    }
-
-    return;
-  }
-
   const measurementView = draft.view.measurements[action.payload.id];
   measurementView.visible = action.payload.isVisible;
+};
+
+export const setAllMeasurementVisibility: AppStateProducer<
+  'SET_ALL_MEASUREMENT_VISIBILITY'
+> = (draft, action) => {
+  for (const id of draft.view.selectedMeasurements[action.payload.kind] || []) {
+    const measurementView = draft.view.measurements[id];
+    measurementView.visible = action.payload.isVisible;
+  }
 };
 
 export const changeMeasurementDisplay: AppStateProducer<
