@@ -11,6 +11,8 @@ type ActionType<Action, Payload = void> = Payload extends void
   : { type: Action; payload: Payload };
 
 export type AppStateAction =
+  | ActionType<'LOAD_START'>
+  | ActionType<'LOAD_STOP'>
   | ActionType<'ADD_MEASUREMENTS', Partial<Measurements>>
   | ActionType<'LOAD_FULL_STATE', AppState>
   | ActionType<
