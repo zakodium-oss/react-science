@@ -44,9 +44,13 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
         <a href="#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json">
           All the data we have
         </a>
-        <a href="big-map.html">BIG-MAP App</a>
+        <span>| BIG-MAP:</span>
+        <a href="big-map.html">Empty</a>
         <a href="big-map.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json">
-          BIG-MAP App + Data
+          Data
+        </a>
+        <a href="big-map.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbigmap.json">
+          Data (small)
         </a>
         {import.meta.env.PROD ? (
           <a href={`${import.meta.env.BASE_URL}stories/`}>Open stories</a>
