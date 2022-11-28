@@ -1,6 +1,8 @@
 import lodashDebounce from 'lodash/debounce';
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 
+import { defaultColorPalette } from '../palette';
+
 import { Saturation, Hue, Alpha, CheckBoard } from './common';
 import * as colorHelper from './helpers/color';
 import SketchFields from './sketch/SketchFields';
@@ -51,24 +53,6 @@ export interface ColorPickerProps {
   onSwatchHover?: (props: ChangeCallbackProps, event?: Event) => void;
   style?: CSSProperties;
 }
-
-const presetColorsList = [
-  '#D0021B',
-  '#F5A623',
-  '#F8E71C',
-  '#8B572A',
-  '#7ED321',
-  '#417505',
-  '#BD10E0',
-  '#9013FE',
-  '#4A90E2',
-  '#50E3C2',
-  '#B8E986',
-  '#000000',
-  '#4A4A4A',
-  '#9B9B9B',
-  '#FFFFFF',
-];
 
 const defaultColor = {
   h: 250,
@@ -160,7 +144,7 @@ export function ColorPicker(props: ColorPickerProps) {
     onChange,
     onSwatchHover,
     disableAlpha = false,
-    presetColors = presetColorsList,
+    presetColors = defaultColorPalette,
     className = '',
     color = defaultColor,
     onChangeComplete,
