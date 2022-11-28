@@ -1,28 +1,34 @@
-import { xyToXYObject } from 'ml-spectra-processing';
 import { ResponsiveChart } from 'react-d3-utils';
-import { Axis, LineSeries, Plot } from 'react-plot';
+import { Annotations, Axis, Plot, Series, useCrossHair } from 'react-plot';
 
-import {
-  ColorConfig,
-  IvMeasurement,
-  useAppState,
-} from '../../../../app-data/index';
-import { getColorFromConfig, splitEntries } from '../../../helpers/index';
+import { useAppState } from '../../../../app-data/index';
+import { splitEntries } from '../../../helpers/index';
+
+import IvSeries from './IvSeries';
 
 export default function IvMeasurementsPlot() {
   const appState = useAppState();
+  const crossHair = useCrossHair();
   const { unselectedOpacity } = appState.settings.plot;
   const { selectedEntries, unselectedEntries } = splitEntries(appState, 'iv');
 
   const series: JSX.Element[] = [];
   for (const { measurement, view } of unselectedEntries) {
     series.push(
-      getSeries(measurement, view.color, view.visible ? unselectedOpacity : 0),
+      <IvSeries
+        measurement={measurement}
+        colorConfig={view.color}
+        opacity={view.visible ? unselectedOpacity : 0}
+      />,
     );
   }
   for (const { measurement, view } of selectedEntries) {
     series.push(
-      getSeries(measurement, view.color, view.visible ? undefined : 0),
+      <IvSeries
+        measurement={measurement}
+        colorConfig={view.color}
+        opacity={view.visible ? undefined : 0}
+      />,
     );
   }
 
@@ -30,7 +36,8 @@ export default function IvMeasurementsPlot() {
     <ResponsiveChart>
       {({ width, height }) => (
         <Plot width={width} height={height}>
-          {series}
+          <Series>{series}</Series>
+          <Annotations>{crossHair.annotations}</Annotations>
           <Axis displayPrimaryGridLines position="bottom" label="X" />
           <Axis
             displayPrimaryGridLines
@@ -41,27 +48,5 @@ export default function IvMeasurementsPlot() {
         </Plot>
       )}
     </ResponsiveChart>
-  );
-}
-
-function getSeries(
-  measurement: IvMeasurement,
-  colorConfig: ColorConfig,
-  opacity?: number,
-) {
-  const xVariable =
-    measurement.data[0].variables.x ?? measurement.data[0].variables.a;
-  const yVariable =
-    measurement.data[0].variables.y ?? measurement.data[0].variables.b;
-  const data = xyToXYObject({ x: xVariable.data, y: yVariable.data });
-  return (
-    <LineSeries
-      key={measurement.id}
-      data={data}
-      lineStyle={{
-        opacity,
-        stroke: getColorFromConfig(colorConfig),
-      }}
-    />
   );
 }

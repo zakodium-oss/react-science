@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { PlotController } from 'react-plot';
 
 import IvMeasurementsPlot from './IvMeasurementsPlot';
 
@@ -13,7 +14,9 @@ export function IvPlotView() {
         width: 100%;
       `}
     >
-      <IvMeasurementsPlot />
+      <PlotController>
+        <IvMeasurementsPlot />
+      </PlotController>
       <div>TODO: add variable selectors</div>
     </div>
   );
