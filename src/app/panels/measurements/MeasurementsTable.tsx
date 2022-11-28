@@ -11,7 +11,7 @@ import {
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
 import MeasurementVisibilityToggle, {
-  MeasurementAllVisibilityToggle,
+  MeasurementSelectedVisibilityChange,
 } from './MeasurementVisibilityToggle';
 
 export interface MeasurementsTableProps {
@@ -102,7 +102,7 @@ function MeasurementsTableHeader(props: {
 
   const {
     data: { measurements },
-    view: { selectedMeasurements, measurements: viewMeasurements },
+    view: { selectedMeasurements },
   } = useAppState();
 
   const isChecked =
@@ -130,14 +130,12 @@ function MeasurementsTableHeader(props: {
             width: 70,
           }}
         >
-          <MeasurementAllVisibilityToggle
+          <MeasurementSelectedVisibilityChange kind={props.kind} openedEyes />
+          <MeasurementSelectedVisibilityChange
             kind={props.kind}
-            isVisible={
-              !Object.keys(viewMeasurements)
-                .map((id) => viewMeasurements[id].visible)
-                .includes(false)
-            }
+            openedEyes={false}
           />
+
           <MeasurementCheckbox
             checked={isChecked}
             onSelectCheckbox={onSelectCheckbox}

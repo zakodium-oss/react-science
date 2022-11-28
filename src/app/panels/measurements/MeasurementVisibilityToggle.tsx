@@ -32,22 +32,21 @@ export default function MeasurementVisibilityToggle(
   );
 }
 
-export function MeasurementAllVisibilityToggle(
-  props: Omit<MeasurementVisibilityToggleProps, 'id'> & {
-    kind: MeasurementsTableProps['kind'];
-  },
-) {
-  const { kind, isVisible } = props;
+export function MeasurementSelectedVisibilityChange(props: {
+  openedEyes: boolean;
+  kind: MeasurementsTableProps['kind'];
+}) {
+  const { kind, openedEyes } = props;
   const dispatch = useAppDispatch();
 
   function setVisibility(isVisible: boolean) {
     dispatch({
       type: 'SET_ALL_MEASUREMENT_VISIBILITY',
-      payload: { kind, isVisible },
+      payload: { kind, isVisible: !isVisible },
     });
   }
 
-  return isVisible ? (
+  return openedEyes ? (
     <FaEye onClick={() => setVisibility(false)} style={{ cursor: 'pointer' }} />
   ) : (
     <FaEyeSlash
