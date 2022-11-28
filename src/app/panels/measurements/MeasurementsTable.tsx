@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useLayoutEffect, useRef } from 'react';
 
 import {
   MeasurementBase,
@@ -9,6 +8,7 @@ import {
   useAppState,
 } from '../../../app-data/index';
 
+import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
 import MeasurementVisibilityToggle from './MeasurementVisibilityToggle';
 
@@ -71,14 +71,6 @@ const measurementsTableCss = {
     flex-direction: row;
     gap: 0.5rem;
     cursor: default;
-  `,
-  checkbox: css`
-    color: #6366f1;
-    border-color: #d1d5db;
-    border-radius: 0.25rem;
-    width: 1rem;
-    height: 1rem;
-    border-width: 1px;
   `,
 };
 
@@ -191,32 +183,5 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       </td>
       <td onClick={onSelectRow}>{item.meta.technique}</td>
     </tr>
-  );
-}
-
-interface MeasurementCheckboxProps {
-  checked: boolean;
-  onSelectCheckbox: () => void;
-  indeterminate?: boolean;
-}
-
-function MeasurementCheckbox(props: MeasurementCheckboxProps) {
-  const { checked, onSelectCheckbox, indeterminate } = props;
-  const ref = useRef<HTMLInputElement>(null);
-
-  useLayoutEffect(() => {
-    if (ref.current && indeterminate !== undefined) {
-      ref.current.indeterminate = indeterminate;
-    }
-  }, [indeterminate]);
-
-  return (
-    <input
-      css={measurementsTableCss.checkbox}
-      type="checkbox"
-      checked={checked}
-      onChange={onSelectCheckbox}
-      ref={ref}
-    />
   );
 }
