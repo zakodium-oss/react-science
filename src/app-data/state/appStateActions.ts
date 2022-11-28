@@ -24,7 +24,11 @@ export type AppStateAction =
       { select: boolean; kind: MeasurementKind }
     >
   | ActionType<'SELECT_MEASUREMENT_KIND', MeasurementKind>
-  | ActionType<'SET_MEASUREMENT_VISIBILITY', { id: string; isVisible: boolean }>
+  // if id is null, change all the measurement visibility
+  | ActionType<
+      'SET_MEASUREMENT_VISIBILITY',
+      { id: string | null; isVisible: boolean }
+    >
   | ActionType<
       'CHANGE_MEASUREMENT_DISPLAY',
       {

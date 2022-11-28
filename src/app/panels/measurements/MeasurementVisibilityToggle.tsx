@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useAppDispatch } from '../../../app-data/index';
 
 interface MeasurementVisibilityToggleProps {
-  id: string;
+  id: string | null;
   isVisible: boolean;
 }
 

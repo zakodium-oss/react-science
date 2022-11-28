@@ -100,7 +100,7 @@ function MeasurementsTableHeader(props: {
 
   const {
     data: { measurements },
-    view: { selectedMeasurements },
+    view: { selectedMeasurements, measurements: viewMeasurements },
   } = useAppState();
 
   const isChecked =
@@ -120,7 +120,22 @@ function MeasurementsTableHeader(props: {
   return (
     <thead>
       <tr css={measurementsTableCss.header}>
-        <th style={{ width: 70 }}>
+        <th
+          style={{
+            display: 'flex',
+            flex: '1 1 0%',
+            alignItems: 'center',
+            width: 70,
+          }}
+        >
+          <MeasurementVisibilityToggle
+            id={null}
+            isVisible={
+              !Object.keys(viewMeasurements)
+                .map((id) => viewMeasurements[id].visible)
+                .includes(false)
+            }
+          />
           <MeasurementCheckbox
             checked={isChecked}
             onSelectCheckbox={onSelectCheckbox}
