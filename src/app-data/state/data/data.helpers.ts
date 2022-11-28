@@ -95,9 +95,11 @@ export function getSelectedMeasurementOrFail(view: AppView) {
 export function* iterateMeasurementEntries(
   measurements: Partial<Measurements>,
 ) {
-  for (const measurementData of Object.values(measurements)) {
-    for (let x of measurementData.entries) {
-      yield x;
+  for (const [measurementKind, measurementData] of Object.entries(
+    measurements,
+  )) {
+    for (let measurement of measurementData.entries) {
+      yield { kind: measurementKind as MeasurementKind, measurement };
     }
   }
 }

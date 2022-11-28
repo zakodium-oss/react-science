@@ -1,4 +1,7 @@
-import { assertUnreachable } from '../../../components/index';
+import {
+  assertUnreachable,
+  defaultColorPalette,
+} from '../../../components/index';
 import {
   getFirstMeasurementOrFail,
   getMeasurementOrFail,
@@ -15,6 +18,12 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   action,
 ) => {
   const newMeasurements = action.payload;
+
+  const counts: Partial<Record<MeasurementKind, number>> = {};
+  for (const [kind, measurements] of Object.entries(draft.data.measurements)) {
+    counts[kind as MeasurementKind] = measurements.entries.length;
+  }
+
   mergeMeasurements(draft.data.measurements, newMeasurements);
 
   for (const kind of Object.keys(kindLabels).filter(
@@ -36,11 +45,18 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
     }
   }
 
-  for (let measurement of iterateMeasurementEntries(newMeasurements)) {
+  for (const { kind, measurement } of iterateMeasurementEntries(
+    newMeasurements,
+  )) {
+    const count = counts[kind] ?? 0;
     draft.view.measurements[measurement.id] = {
-      color: { kind: 'fixed', color: 'red' },
+      color: {
+        kind: 'fixed',
+        color: defaultColorPalette[count % defaultColorPalette.length],
+      },
       visible: true,
     };
+    counts[kind] = count + 1;
   }
 };
 
