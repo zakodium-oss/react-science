@@ -9,7 +9,7 @@ import FixedColorPreview from '../preview/FixedColorPreview';
 import { ColorPicker, ColorPickerProps } from '../react-color/ColorPicker';
 import * as colorHelper from '../react-color/helpers/color';
 
-type ColorPickerDopdpownProps = Pick<
+type ColorPickerDropdownProps = Pick<
   ColorPickerProps,
   'color' | 'presetColors' | 'disableAlpha' | 'onChange' | 'onChangeComplete'
 >;
@@ -30,37 +30,45 @@ const colorPickerDropdownCss = {
   `,
 };
 
-export function ColorPickerDropdown(props: ColorPickerDopdpownProps) {
+export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
   const { color, ...otherProps } = props;
 
-  const ref = useRef<HTMLDivElement>(null);
-  const [isOpened, , closeMenu, toggleMenu] = useOnOff(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isOpened, , close, toggle] = useOnOff(false);
 
   const { hex } = colorHelper.toState(color || 'white');
 
   const { setReferenceElement, setPopperElement, popperProps } =
-    useModifiedPopper({ placement: 'bottom-start', offset: 6 });
+    useModifiedPopper<HTMLButtonElement>({
+      placement: 'bottom-start',
+      offset: 6,
+    });
 
-  useOnClickOutside(ref, closeMenu);
+  useOnClickOutside(ref, close);
 
   return (
-    <div>
-      <div
+    <>
+      <button
+        type="button"
         ref={setReferenceElement}
         css={colorPickerDropdownCss.root}
-        onClick={toggleMenu}
+        onClick={toggle}
       >
         <div css={colorPickerDropdownCss.preview}>
           <FixedColorPreview color={hex} />
         </div>
-      </div>
+      </button>
       {isOpened && (
-        <div ref={setPopperElement} {...popperProps}>
-          <div ref={ref}>
-            <ColorPicker color={color} {...otherProps} />
-          </div>
+        <div
+          ref={(div) => {
+            setPopperElement(div);
+            ref.current = div;
+          }}
+          {...popperProps}
+        >
+          <ColorPicker color={color} {...otherProps} />
         </div>
       )}
-    </div>
+    </>
   );
 }
