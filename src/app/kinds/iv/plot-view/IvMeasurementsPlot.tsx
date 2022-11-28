@@ -16,6 +16,7 @@ export default function IvMeasurementsPlot() {
   for (const { measurement, view } of unselectedEntries) {
     series.push(
       <IvSeries
+        key={measurement.id}
         measurement={measurement}
         colorConfig={view.color}
         opacity={view.visible ? unselectedOpacity : 0}
@@ -25,6 +26,7 @@ export default function IvMeasurementsPlot() {
   for (const { measurement, view } of selectedEntries) {
     series.push(
       <IvSeries
+        key={measurement.id}
         measurement={measurement}
         colorConfig={view.color}
         opacity={view.visible ? undefined : 0}
