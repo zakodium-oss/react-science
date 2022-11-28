@@ -41,7 +41,7 @@ export function MeasurementSelectedVisibilityChange(props: {
 
   function setVisibility(isVisible: boolean) {
     dispatch({
-      type: 'SET_ALL_MEASUREMENT_VISIBILITY',
+      type: 'SET_SELECTED_MEASUREMENTS_VISIBILITY',
       payload: { kind, isVisible: !isVisible },
     });
   }

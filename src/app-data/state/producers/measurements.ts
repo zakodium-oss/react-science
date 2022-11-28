@@ -129,7 +129,7 @@ export const setMeasurementVisibility: AppStateProducer<
 };
 
 export const setAllMeasurementVisibility: AppStateProducer<
-  'SET_ALL_MEASUREMENT_VISIBILITY'
+  'SET_SELECTED_MEASUREMENTS_VISIBILITY'
 > = (draft, action) => {
   for (const id of draft.view.selectedMeasurements[action.payload.kind] || []) {
     const measurementView = draft.view.measurements[id];
