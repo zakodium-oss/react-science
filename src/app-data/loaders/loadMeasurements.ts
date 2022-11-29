@@ -8,7 +8,7 @@ import {
 } from './utility/measurementLoader';
 import type { ParserLog } from './utility/parserLog';
 
-interface LoadOptions {
+export interface LoadOptions {
   loaders?: MeasurementsLoader[];
   enhancers?: Partial<Enhancers>;
   logger?: boolean;
