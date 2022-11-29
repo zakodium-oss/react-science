@@ -29,7 +29,6 @@ const measurementsTableCss = {
     line-height: 1.25rem;
     border-collapse: collapse;
     table-layout: fixed;
-    width: 100%;
   `,
   th: css`
     border-bottom-width: 1px;
@@ -73,6 +72,7 @@ const measurementsTableCss = {
     flex-direction: row;
     gap: 0.5rem;
     cursor: default;
+    width: 70px;
   `,
 };
 
@@ -125,7 +125,7 @@ function MeasurementsTableHeader(props: {
         <th
           style={{
             display: 'flex',
-            flex: '1 1 0%',
+            gap: 5,
             alignItems: 'center',
             width: 70,
           }}
@@ -135,7 +135,6 @@ function MeasurementsTableHeader(props: {
             kind={props.kind}
             openedEyes={false}
           />
-
           <MeasurementCheckbox
             checked={isChecked}
             onSelectCheckbox={onSelectCheckbox}
