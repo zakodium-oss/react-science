@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { FaTrash } from 'react-icons/fa';
 
 import {
   MeasurementBase,
@@ -100,6 +101,10 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
     });
   }
 
+  function onRemove() {
+    dispatch({ type: 'REMOVE_SELECTED_MEASUREMENTS', payload: { kind } });
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <div
@@ -118,6 +123,8 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
         <span css={styles.linkButton} onClick={() => onSelectLink(false)}>
           Unselect all
         </span>
+
+        <FaTrash style={{ cursor: 'pointer' }} onClick={onRemove} />
       </div>
 
       <table css={styles.root}>
