@@ -4,5 +4,6 @@ export function getEmptyAppView(): AppView {
   return {
     selectedMeasurements: {},
     measurements: {},
+    plot: {},
   };
 }

@@ -12,6 +12,7 @@ import {
   mergeMeasurements,
 } from '../../index';
 
+import { updateZoom } from './plot-view/helpers/zoom';
 import { AppStateProducer } from './types';
 
 export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
@@ -58,6 +59,8 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
       visible: true,
     };
     counts[kind] = count + 1;
+
+    updateZoom(draft, kind, measurement);
   }
 };
 
