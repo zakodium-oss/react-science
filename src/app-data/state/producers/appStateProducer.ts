@@ -13,6 +13,7 @@ import {
   setMeasurementVisibility,
   selectOrUnselectAllMeasurements,
 } from './measurements';
+import { plotZoom, plotZoomOut } from './plot-view/plot-view';
 import { ActionType, AppStateProducer } from './types';
 
 export const loadFullState: AppStateProducer<'LOAD_FULL_STATE'> = (
@@ -32,6 +33,8 @@ const producers: Record<ActionType, AppStateProducer<any>> = {
   LOAD_STOP: (draft) => {
     draft.load.isLoading = false;
   },
+  PLOT_ZOOM: plotZoom,
+  PLOT_ZOOM_OUT: plotZoomOut,
   ADD_MEASUREMENTS: addMeasurements,
   SELECT_MEASUREMENT: selectMeasurement,
   SELECT_MEASUREMENT_KIND: selectMeasurementKind,

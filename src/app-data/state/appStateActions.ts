@@ -4,7 +4,7 @@ import {
   MeasurementKindAndId,
   Measurements,
 } from './data/index';
-import { MeasurementAppView } from './view/index';
+import { MeasurementAppView, Plot2DZoom } from './view/index';
 
 type ActionType<Action, Payload = void> = Payload extends void
   ? { type: Action }
@@ -15,6 +15,8 @@ export type AppStateAction =
   | ActionType<'LOAD_STOP'>
   | ActionType<'ADD_MEASUREMENTS', Partial<Measurements>>
   | ActionType<'LOAD_FULL_STATE', AppState>
+  | ActionType<'PLOT_ZOOM', { kind: MeasurementKind; zoom: Plot2DZoom }>
+  | ActionType<'PLOT_ZOOM_OUT', { kind: MeasurementKind }>
   | ActionType<
       'SELECT_MEASUREMENT',
       MeasurementKindAndId & { acc: 'add' | 'remove' | 'replace' }
