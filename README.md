@@ -36,7 +36,7 @@ The application has a state containing 3 properties:
 
 - data: containing information related to data
 - view: containing the information related to what is displayed in which module
-- prefs: that will contain user defined preferences for the application
+- settings: that will contain user defined preferences for the application
 
 ### Loading new data in the application
 
