@@ -59,6 +59,7 @@ export default function MainLayout() {
   const measurementKinds = getExistingMeasurementKinds(
     appState.data.measurements,
   );
+
   assert(measurementKinds.length === 0 || measurementKinds.includes('iv'));
 
   useLoadFileCollectionFromHash(loadFiles);

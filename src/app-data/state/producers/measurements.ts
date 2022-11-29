@@ -1,4 +1,5 @@
 import {
+  assert,
   assertUnreachable,
   defaultColorPalette,
 } from '../../../components/index';
@@ -145,8 +146,23 @@ export const changeMeasurementDisplay: AppStateProducer<
     action.payload.measurement.kind,
     action.payload.measurement.id,
   );
+
   draft.view.measurements[measurement.id] = {
     ...draft.view.measurements[measurement.id],
     ...action.payload.display,
   };
+};
+
+export const changeMeasurementsDisplay: AppStateProducer<
+  'CHANGE_MEASUREMENTS_DISPLAY'
+> = (draft, action) => {
+  assert(draft.view.selectedKind);
+
+  for (const id of draft.view.selectedMeasurements[draft.view.selectedKind] ||
+    []) {
+    draft.view.measurements[id] = {
+      ...draft.view.measurements[id],
+      ...action.payload.display,
+    };
+  }
 };

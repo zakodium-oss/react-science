@@ -1,17 +1,25 @@
-import {
-  getCurrentMeasurementData,
-  useAppState,
-} from '../../../app-data/index';
+import { useAppState } from '../../../app-data/index';
 import { Accordion } from '../../../components/index';
 
 import { MeasurementConfigPanel } from './MeasurementConfigPanel';
 
 export function MeasurementConfigPanelAccordion() {
   const appState = useAppState();
-  const measurement = getCurrentMeasurementData(appState);
-  if (!measurement) return null;
+
+  const {
+    view: { selectedMeasurements, selectedKind },
+  } = appState;
+
+  if (!selectedKind) {
+    return null;
+  }
+
+  const size = (selectedMeasurements[selectedKind] || []).length;
   return (
-    <Accordion.Item title="Measurement config" defaultOpened>
+    <Accordion.Item
+      title={`Measurement${size > 1 ? 's' : ''} config`}
+      defaultOpened
+    >
       <MeasurementConfigPanel />
     </Accordion.Item>
   );
