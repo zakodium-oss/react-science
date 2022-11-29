@@ -30,6 +30,10 @@ export type AppStateAction =
       { kind: MeasurementKind; isVisible: boolean }
     >
   | ActionType<
+      'CHANGE_MEASUREMENTS_DISPLAY',
+      { display: Partial<MeasurementAppView> }
+    >
+  | ActionType<
       'CHANGE_MEASUREMENT_DISPLAY',
       {
         measurement: MeasurementKindAndId;

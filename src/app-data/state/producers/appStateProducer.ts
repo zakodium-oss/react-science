@@ -6,6 +6,7 @@ import { AppStateAction } from '../appStateActions';
 import {
   addMeasurements,
   changeMeasurementDisplay,
+  changeMeasurementsDisplay,
   selectMeasurement,
   selectMeasurementKind,
   setSelectedMeasurementVisibility,
@@ -38,6 +39,7 @@ const producers: Record<ActionType, AppStateProducer<any>> = {
   SET_MEASUREMENT_VISIBILITY: setMeasurementVisibility,
   SET_SELECTED_MEASUREMENTS_VISIBILITY: setSelectedMeasurementVisibility,
   CHANGE_MEASUREMENT_DISPLAY: changeMeasurementDisplay,
+  CHANGE_MEASUREMENTS_DISPLAY: changeMeasurementsDisplay,
   LOAD_FULL_STATE: loadFullState,
 };
 

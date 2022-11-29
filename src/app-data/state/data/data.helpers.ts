@@ -46,6 +46,7 @@ export function getFirstMeasurementOrFail(
 export function getCurrentMeasurement(state: AppState) {
   const selectedMeasurement = getSelectedMeasurement(state.view);
   if (!selectedMeasurement) return null;
+
   return getMeasurement(
     state.data.measurements,
     selectedMeasurement.kind,
@@ -59,6 +60,31 @@ export function getCurrentMeasurementData(state: AppState) {
   const kindAndId = getMeasurementKindAndId(state.data, selectedMeasurement.id);
   const display = state.view.measurements[selectedMeasurement.id];
   return { data: selectedMeasurement, display, kindAndId };
+}
+
+export function getFirstSelectedMeasurementData(state: AppState) {
+  const {
+    data,
+    view: {
+      selectedMeasurements,
+      selectedKind,
+      measurements: measurementsView,
+    },
+  } = state;
+  if (!selectedKind) return null;
+
+  const measurements = selectedMeasurements[selectedKind];
+  if (measurements?.length === 0) return null;
+  assertNotNull(measurements);
+
+  const measurementId = measurements[0];
+  const measurement = getMeasurement(
+    data.measurements,
+    selectedKind,
+    measurementId,
+  );
+
+  return { data: measurement, display: measurementsView[measurementId] };
 }
 
 export interface MeasurementKindAndId {
