@@ -1,4 +1,5 @@
 import type { FilterXYType } from 'ml-signal-processing';
+import filterXY from 'ml-signal-processing/FilterXYSchema.json';
 
 import { Button, Table, ValueRenderers } from '../../components/index';
 
@@ -15,9 +16,6 @@ interface FilterOptionsInfo {
   choices?: string[];
   description: string;
 }
-
-// import filterXY from 'ml-signal-processing/FilterXYSchema.json';
-const filterXY: any = { anyOf: [] };
 
 // get filters information & default options values
 const defaultFilters = filterXY.anyOf.map(({ properties }: any) => {
