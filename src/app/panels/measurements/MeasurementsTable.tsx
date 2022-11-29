@@ -10,7 +10,9 @@ import {
 
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
-import MeasurementVisibilityToggle from './MeasurementVisibilityToggle';
+import MeasurementVisibilityToggle, {
+  MeasurementSelectedVisibilityChange,
+} from './MeasurementVisibilityToggle';
 
 export interface MeasurementsTableProps {
   kind: MeasurementKind;
@@ -27,7 +29,6 @@ const measurementsTableCss = {
     line-height: 1.25rem;
     border-collapse: collapse;
     table-layout: fixed;
-    width: 100%;
   `,
   th: css`
     border-bottom-width: 1px;
@@ -71,6 +72,7 @@ const measurementsTableCss = {
     flex-direction: row;
     gap: 0.5rem;
     cursor: default;
+    width: 70px;
   `,
 };
 
@@ -120,7 +122,19 @@ function MeasurementsTableHeader(props: {
   return (
     <thead>
       <tr css={measurementsTableCss.header}>
-        <th style={{ width: 70 }}>
+        <th
+          style={{
+            display: 'flex',
+            gap: 5,
+            alignItems: 'center',
+            width: 70,
+          }}
+        >
+          <MeasurementSelectedVisibilityChange kind={props.kind} openedEyes />
+          <MeasurementSelectedVisibilityChange
+            kind={props.kind}
+            openedEyes={false}
+          />
           <MeasurementCheckbox
             checked={isChecked}
             onSelectCheckbox={onSelectCheckbox}
