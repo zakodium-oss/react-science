@@ -73,7 +73,7 @@
     "d3-scale-chromatic": "^3.0.0",
     "filelist-utils": "^1.2.0",
     "immer": "^9.0.16",
-    "jcampconverter": "^9.0.4",
+    "jcampconverter": "^9.0.5",
     "lodash": "^4.17.21",
     "ml-gsd": "^12.1.2",
     "ml-peak-shape-generator": "^4.1.2",
