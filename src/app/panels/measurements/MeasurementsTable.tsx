@@ -23,7 +23,7 @@ interface MeasurementsTableRowProps {
   kind: MeasurementsTableProps['kind'];
 }
 
-const measurementsTableCss = {
+const styles = {
   root: css`
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -74,6 +74,12 @@ const measurementsTableCss = {
     cursor: default;
     width: 70px;
   `,
+  linkButton: css`
+    cursor: pointer;
+    :hover {
+      text-decoration: underline;
+    }
+  `,
 };
 
 export function MeasurementsTable(props: MeasurementsTableProps) {
@@ -82,46 +88,54 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   const {
     data: { measurements },
   } = useAppState();
-
-  return (
-    <table css={measurementsTableCss.root}>
-      <MeasurementsTableHeader kind={kind} />
-      <tbody css={measurementsTableCss.tbody}>
-        {measurements[kind].entries.map((element) => (
-          <MeasurementsTableRow key={element.id} item={element} kind={kind} />
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
-function MeasurementsTableHeader(props: {
-  kind: MeasurementsTableRowProps['kind'];
-}) {
   const dispatch = useAppDispatch();
 
-  const {
-    data: { measurements },
-    view: { selectedMeasurements },
-  } = useAppState();
-
-  const isChecked =
-    selectedMeasurements[props.kind]?.length ===
-    measurements[props.kind].entries.length;
-
-  function onSelectCheckbox() {
+  function onSelectLink(select: boolean) {
     dispatch({
       type: 'SELECT_ALL_MEASUREMENTS',
       payload: {
-        kind: props.kind,
-        select: !isChecked,
+        kind,
+        select,
       },
     });
   }
 
   return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 10,
+          alignItems: 'center',
+        }}
+      >
+        <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
+        <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
+        <span css={styles.linkButton} onClick={() => onSelectLink(true)}>
+          Select all
+        </span>
+        <span css={styles.linkButton} onClick={() => onSelectLink(false)}>
+          Unselect all
+        </span>
+      </div>
+
+      <table css={styles.root}>
+        <MeasurementsTableHeader />
+        <tbody css={styles.tbody}>
+          {measurements[kind].entries.map((element) => (
+            <MeasurementsTableRow key={element.id} item={element} kind={kind} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function MeasurementsTableHeader() {
+  return (
     <thead>
-      <tr css={measurementsTableCss.header}>
+      <tr css={styles.header}>
         <th
           style={{
             display: 'flex',
@@ -129,20 +143,7 @@ function MeasurementsTableHeader(props: {
             alignItems: 'center',
             width: 70,
           }}
-        >
-          <MeasurementSelectedVisibilityChange kind={props.kind} openedEyes />
-          <MeasurementSelectedVisibilityChange
-            kind={props.kind}
-            openedEyes={false}
-          />
-          <MeasurementCheckbox
-            checked={isChecked}
-            onSelectCheckbox={onSelectCheckbox}
-            indeterminate={
-              !isChecked && (selectedMeasurements[props.kind] || []).length > 0
-            }
-          />
-        </th>
+        />
         <th style={{ width: '60%' }}>Filename</th>
         <th style={{ width: 150 }}>Technique</th>
       </tr>
@@ -176,8 +177,8 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   }
 
   return (
-    <tr css={measurementsTableCss.tr}>
-      <td css={measurementsTableCss.iconsContainer}>
+    <tr css={styles.tr}>
+      <td css={styles.iconsContainer}>
         <MeasurementVisibilityToggle
           id={item.id}
           isVisible={measurements[item.id].visible}
