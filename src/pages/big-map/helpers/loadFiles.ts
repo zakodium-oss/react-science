@@ -4,9 +4,10 @@ import {
   loadMeasurements,
   biologicLoader,
   AppDispatch,
+  LoadOptions,
 } from '../../../app-data/index';
 
-const options = {
+const options: LoadOptions = {
   loaders: [biologicLoader],
 };
 
@@ -20,7 +21,13 @@ export async function loadFiles(
       files instanceof FileCollection
         ? files
         : await fileCollectionFromFiles(files);
-    const { measurements } = await loadMeasurements(fileCollection, options);
+    const { measurements, logs } = await loadMeasurements(
+      fileCollection,
+      options,
+    );
+    if (logs.length > 0) {
+      reportError(logs);
+    }
     dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
   } catch (error) {
     reportError(error);

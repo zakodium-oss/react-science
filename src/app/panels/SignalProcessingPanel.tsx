@@ -18,9 +18,9 @@ interface FilterOptionsInfo {
 }
 
 // get filters information & default options values
-const defaultFilters = filterXY.anyOf.map(({ properties }: any) => {
+const defaultFilters = filterXY.anyOf.map(({ properties }) => {
   const options: Record<string, FilterOptionsInfo> = {};
-  for (const [key, value] of Object.entries<any>(
+  for (const [key, value] of Object.entries(
     properties?.options?.properties || {},
   )) {
     options[key] = {
@@ -47,7 +47,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
           <ValueRenderers.Title value="Options" />
         </Table.Header>
         {filters.map(({ name, options }, i) => (
-          <Table.Row key={i} border>
+          <Table.Row key={name} border>
             <ValueRenderers.Component>
               <div style={{ display: 'flex', gap: '3px' }}>
                 <Button
@@ -55,13 +55,13 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                   color={{ basic: 'white' }}
                   backgroundColor={{ basic: 'green' }}
                   onClick={() => {
-                    const newfilters = [...filters];
-                    newfilters.splice(
+                    const newFilters = [...filters];
+                    newFilters.splice(
                       i + 1,
                       0,
                       getDefaultFilter(defaultFilters[0]),
                     );
-                    onChange?.(newfilters);
+                    onChange?.(newFilters);
                   }}
                 >
                   +
@@ -84,15 +84,15 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                   const value = Number(target.value);
                   if (!Number.isNaN(value)) {
                     const filter = getDefaultFilter(defaultFilters[value]);
-                    const newfilters = [...filters];
-                    newfilters[i] = filter;
-                    onChange?.(newfilters);
+                    const newFilters = [...filters];
+                    newFilters[i] = filter;
+                    onChange?.(newFilters);
                   }
                 }}
                 style={{ border: '1px solid black' }}
-                value={defaultFilters.findIndex((f: any) => f.name === name)}
+                value={defaultFilters.findIndex((f) => f.name === name)}
               >
-                {defaultFilters.map(({ name }: any, i: number) => (
+                {defaultFilters.map(({ name }, i: number) => (
                   <option key={name} value={i}>
                     {normalCase(name)}
                   </option>
@@ -102,9 +102,8 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
             {options && (
               <ValueRenderers.Component>
                 {Object.entries(
-                  defaultFilters.find((f: any) => f.name === name)?.options ||
-                    {},
-                ).map((option: any) =>
+                  defaultFilters.find((f) => f.name === name)?.options || {},
+                ).map((option) =>
                   optionInput(option, options, (value) => {
                     const FilterOptions = {
                       ...filters[i].options,
@@ -114,9 +113,9 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                       name: filters[i].name,
                       options: FilterOptions,
                     };
-                    const newfilters = [...filters];
-                    newfilters[i] = filter;
-                    onChange?.(newfilters);
+                    const newFilters = [...filters];
+                    newFilters[i] = filter;
+                    onChange?.(newFilters);
                   }),
                 )}
               </ValueRenderers.Component>
@@ -130,8 +129,8 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
           color={{ basic: 'white' }}
           backgroundColor={{ basic: 'green' }}
           onClick={() => {
-            const newfilters = [getDefaultFilter(defaultFilters[0])];
-            onChange?.(newfilters);
+            const newFilters = [getDefaultFilter(defaultFilters[0])];
+            onChange?.(newFilters);
           }}
         >
           +
@@ -152,7 +151,7 @@ function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   return { name };
 }
 function normalCase(str: string) {
-  const result = str.replace(/([A-Z])/g, ' $1').trim();
+  const result = str.replace(/(?<upper>[A-Z])/g, ' $<upper>').trim();
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
 function optionInput(

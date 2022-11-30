@@ -16,9 +16,10 @@ import {
   spcLoader,
   wdfLoader,
   loadMeasurements,
+  LoadOptions,
 } from '../../../app-data/index';
 
-const options = {
+const options: LoadOptions = {
   loaders: [
     jcampLoader,
     spcLoader,
@@ -48,7 +49,10 @@ export async function loadFiles(
         await loadFullState(files.files[0], dispatch);
       } else {
         // multiple items in FileCollection
-        const { measurements } = await loadMeasurements(files, options);
+        const { measurements, logs } = await loadMeasurements(files, options);
+        if (logs.length > 0) {
+          reportError(logs);
+        }
         dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
       }
     } else if (files.length === 1 && files[0].name.match(/\.ium$/i)) {
@@ -57,7 +61,13 @@ export async function loadFiles(
     } else {
       //multiple items in File[]
       const fileCollection = await fileCollectionFromFiles(files);
-      const { measurements } = await loadMeasurements(fileCollection, options);
+      const { measurements, logs } = await loadMeasurements(
+        fileCollection,
+        options,
+      );
+      if (logs.length > 0) {
+        reportError(logs);
+      }
       dispatch({ type: 'ADD_MEASUREMENTS', payload: measurements });
     }
   } catch (error) {

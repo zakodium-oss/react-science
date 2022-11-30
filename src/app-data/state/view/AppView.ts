@@ -5,18 +5,17 @@ export interface AppView {
   selectedKind?: MeasurementKind;
   selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
   measurements: Record<string, MeasurementAppView>;
-  // TODO: implement this.
-  // plot: {
-  //   [key in MeasurementKind]: PlotView;
-  // };
+  plot: Partial<Record<MeasurementKind, PlotView>>;
 }
 
-// export interface PlotView {
-//   zoom: {
-//     x: [number, number];
-//     y: [number, number];
-//   };
-// }
+export interface PlotView {
+  zoom: Plot2DZoom;
+}
+
+export interface Plot2DZoom {
+  x: { min: number; max: number };
+  y: { min: number; max: number };
+}
 
 export interface MeasurementAppView {
   color: ColorConfig;

@@ -1,15 +1,52 @@
 import { ResponsiveChart } from 'react-d3-utils';
-import { Annotations, Axis, Plot, Series, useCrossHair } from 'react-plot';
+import {
+  Annotations,
+  Axis,
+  Plot,
+  Series,
+  useCrossHair,
+  useDrawRectangle,
+  usePlotEvents,
+} from 'react-plot';
 
-import { useAppState } from '../../../../app-data/index';
+import { useAppDispatch, useAppState } from '../../../../app-data/index';
+import { assert } from '../../../../components/index';
 import { splitEntries } from '../../../helpers/index';
 
 import IvSeries from './IvSeries';
 
 export default function IvMeasurementsPlot() {
   const appState = useAppState();
+  const dispatch = useAppDispatch();
   const crossHair = useCrossHair();
+  const drawRectangle = useDrawRectangle({
+    onEnd(rectangle) {
+      dispatch({
+        type: 'PLOT_ZOOM',
+        payload: {
+          kind: 'iv',
+          zoom: {
+            x: {
+              min: Math.min(rectangle.x1, rectangle.x2),
+              max: Math.max(rectangle.x2, rectangle.x1),
+            },
+            y: {
+              min: Math.min(rectangle.y1, rectangle.y2),
+              max: Math.max(rectangle.y2, rectangle.y1),
+            },
+          },
+        },
+      });
+    },
+  });
+  usePlotEvents({
+    onDoubleClick() {
+      dispatch({ type: 'PLOT_ZOOM_OUT', payload: { kind: 'iv' } });
+    },
+  });
   const { unselectedOpacity } = appState.settings.plot;
+  const ivView = appState.view.plot.iv;
+  assert(ivView);
   const { selectedEntries, unselectedEntries } = splitEntries(appState, 'iv');
 
   const series: JSX.Element[] = [];
@@ -39,13 +76,24 @@ export default function IvMeasurementsPlot() {
       {({ width, height }) => (
         <Plot width={width} height={height}>
           <Series>{series}</Series>
-          <Annotations>{crossHair.annotations}</Annotations>
-          <Axis displayPrimaryGridLines position="bottom" label="X" />
+          <Annotations>
+            {crossHair.annotations}
+            {drawRectangle.annotations}
+          </Annotations>
+          <Axis
+            displayPrimaryGridLines
+            position="bottom"
+            label="X"
+            min={ivView.zoom.x.min}
+            max={ivView.zoom.x.max}
+          />
           <Axis
             displayPrimaryGridLines
             position="left"
             paddingStart="10"
             paddingEnd="10"
+            min={ivView.zoom.y.min}
+            max={ivView.zoom.y.max}
           />
         </Plot>
       )}
