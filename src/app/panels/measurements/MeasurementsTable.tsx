@@ -81,6 +81,20 @@ const styles = {
       text-decoration: underline;
     }
   `,
+  container: css`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  `,
+  headerColumn: css`
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    padding-left: 5px;
+
+    border-bottom: 1px solid black;
+  `,
 };
 
 export function MeasurementsTable(props: MeasurementsTableProps) {
@@ -106,15 +120,8 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 10,
-          alignItems: 'center',
-        }}
-      >
+    <div css={styles.container}>
+      <div css={styles.headerColumn}>
         <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
         <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
         <span css={styles.linkButton} onClick={() => onSelectLink(true)}>
@@ -139,20 +146,32 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   );
 }
 
+const tableHeaderStyles = {
+  thStyleEmpty: css`
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    width: 70px;
+  `,
+  thStyleFilename: css`
+    width: 60%;
+  `,
+  thStyleTechnique: css`
+    width: 150px;
+  `,
+  tdName: css`
+    width: 60%;
+    overflow: hidden;
+  `,
+};
+
 function MeasurementsTableHeader() {
   return (
     <thead>
       <tr css={styles.header}>
-        <th
-          style={{
-            display: 'flex',
-            gap: 5,
-            alignItems: 'center',
-            width: 70,
-          }}
-        />
-        <th style={{ width: '60%' }}>Filename</th>
-        <th style={{ width: 150 }}>Technique</th>
+        <th css={tableHeaderStyles.thStyleEmpty} />
+        <th css={tableHeaderStyles.thStyleFilename}>Filename</th>
+        <th css={tableHeaderStyles.thStyleTechnique}>Technique</th>
       </tr>
     </thead>
   );
@@ -200,11 +219,7 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
           onSelectCheckbox={onSelectCheckbox}
         />
       </td>
-      <td
-        onClick={onSelectRow}
-        style={{ width: '60%', overflow: 'hidden' }}
-        title={item.id}
-      >
+      <td css={tableHeaderStyles.tdName} onClick={onSelectRow} title={item.id}>
         {item.info.file?.name ?? item.info.title}
       </td>
       <td onClick={onSelectRow}>{item.meta.technique}</td>
