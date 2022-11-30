@@ -1,6 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 
 import { Input } from '../../src/components/forms/Input';
+import {
+  Field,
+  Fields,
+} from '../../src/components/forms/context/FieldsContext';
 
 export default {
   title: 'Forms / Input',
@@ -15,5 +19,21 @@ export function BasicExample() {
 
   return (
     <Input placeholder="Basic example" value={state} onChange={onChange} />
+  );
+}
+
+export function LabelExample() {
+  const [state, setState] = useState('Hello, World!');
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    setState(event.target.value);
+  }
+
+  return (
+    <Fields>
+      <Field name="inputLabel" label="Label">
+        <Input placeholder="Label example" value={state} onChange={onChange} />
+      </Field>
+    </Fields>
   );
 }

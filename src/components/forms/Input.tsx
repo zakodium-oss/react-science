@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
+import { useFieldsContext } from './context/FieldsContext';
+
 const styles = {
   input: css`
     box-sizing: border-box;
@@ -21,5 +23,14 @@ const styles = {
 };
 
 export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input css={styles.input} {...props} />;
+  const fieldsContext = useFieldsContext();
+
+  return (
+    <input
+      id={fieldsContext}
+      name={fieldsContext}
+      css={styles.input}
+      {...props}
+    />
+  );
 }
