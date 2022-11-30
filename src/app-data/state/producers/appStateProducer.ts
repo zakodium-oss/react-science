@@ -12,6 +12,7 @@ import {
   setSelectedMeasurementVisibility,
   setMeasurementVisibility,
   selectOrUnselectAllMeasurements,
+  removeSelectedMeasurements,
 } from './measurements';
 import { plotZoom, plotZoomOut } from './plot-view/plot-view';
 import { ActionType, AppStateProducer } from './types';
@@ -44,6 +45,7 @@ const producers: Record<ActionType, AppStateProducer<any>> = {
   CHANGE_MEASUREMENT_DISPLAY: changeMeasurementDisplay,
   CHANGE_MEASUREMENTS_DISPLAY: changeMeasurementsDisplay,
   LOAD_FULL_STATE: loadFullState,
+  REMOVE_SELECTED_MEASUREMENTS: removeSelectedMeasurements,
 };
 
 export function appStateProducer(

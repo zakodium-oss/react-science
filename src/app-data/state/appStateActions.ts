@@ -41,4 +41,5 @@ export type AppStateAction =
         measurement: MeasurementKindAndId;
         display: Partial<MeasurementAppView>;
       }
-    >;
+    >
+  | ActionType<'REMOVE_SELECTED_MEASUREMENTS', { kind: MeasurementKind }>;

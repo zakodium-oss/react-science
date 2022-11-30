@@ -169,3 +169,28 @@ export const changeMeasurementsDisplay: AppStateProducer<
     };
   }
 };
+
+export const removeSelectedMeasurements: AppStateProducer<
+  'REMOVE_SELECTED_MEASUREMENTS'
+> = (draft, action) => {
+  const {
+    payload: { kind },
+  } = action;
+
+  const selectedMeasurements = draft.view.selectedMeasurements[kind];
+  if (!selectedMeasurements) {
+    return;
+  }
+
+  delete draft.view.selectedMeasurements[kind];
+
+  draft.data.measurements[kind].entries = draft.data.measurements[
+    kind
+  ].entries.filter((measurement) => {
+    return !selectedMeasurements.includes(measurement.id);
+  });
+
+  for (const id of selectedMeasurements) {
+    delete draft.view.measurements[id];
+  }
+};

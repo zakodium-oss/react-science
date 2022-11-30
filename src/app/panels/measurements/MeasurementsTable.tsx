@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { FaTrash } from 'react-icons/fa';
 
 import {
   MeasurementBase,
@@ -23,7 +24,7 @@ interface MeasurementsTableRowProps {
   kind: MeasurementsTableProps['kind'];
 }
 
-const measurementsTableCss = {
+const styles = {
   root: css`
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -74,6 +75,26 @@ const measurementsTableCss = {
     cursor: default;
     width: 70px;
   `,
+  linkButton: css`
+    cursor: pointer;
+    :hover {
+      text-decoration: underline;
+    }
+  `,
+  container: css`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  `,
+  headerColumn: css`
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    padding-left: 5px;
+
+    border-bottom: 1px solid black;
+  `,
 };
 
 export function MeasurementsTable(props: MeasurementsTableProps) {
@@ -82,69 +103,75 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   const {
     data: { measurements },
   } = useAppState();
-
-  return (
-    <table css={measurementsTableCss.root}>
-      <MeasurementsTableHeader kind={kind} />
-      <tbody css={measurementsTableCss.tbody}>
-        {measurements[kind].entries.map((element) => (
-          <MeasurementsTableRow key={element.id} item={element} kind={kind} />
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
-function MeasurementsTableHeader(props: {
-  kind: MeasurementsTableRowProps['kind'];
-}) {
   const dispatch = useAppDispatch();
 
-  const {
-    data: { measurements },
-    view: { selectedMeasurements },
-  } = useAppState();
-
-  const isChecked =
-    selectedMeasurements[props.kind]?.length ===
-    measurements[props.kind].entries.length;
-
-  function onSelectCheckbox() {
+  function onSelectLink(select: boolean) {
     dispatch({
       type: 'SELECT_ALL_MEASUREMENTS',
       payload: {
-        kind: props.kind,
-        select: !isChecked,
+        kind,
+        select,
       },
     });
   }
 
+  function onRemove() {
+    dispatch({ type: 'REMOVE_SELECTED_MEASUREMENTS', payload: { kind } });
+  }
+
+  return (
+    <div css={styles.container}>
+      <div css={styles.headerColumn}>
+        <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
+        <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
+        <span css={styles.linkButton} onClick={() => onSelectLink(true)}>
+          Select all
+        </span>
+        <span css={styles.linkButton} onClick={() => onSelectLink(false)}>
+          Unselect all
+        </span>
+
+        <FaTrash style={{ cursor: 'pointer' }} onClick={onRemove} />
+      </div>
+
+      <table css={styles.root}>
+        <MeasurementsTableHeader />
+        <tbody css={styles.tbody}>
+          {measurements[kind].entries.map((element) => (
+            <MeasurementsTableRow key={element.id} item={element} kind={kind} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+const tableHeaderStyles = {
+  thStyleEmpty: css`
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    width: 70px;
+  `,
+  thStyleFilename: css`
+    width: 60%;
+  `,
+  thStyleTechnique: css`
+    width: 150px;
+  `,
+  tdName: css`
+    width: 60%;
+    overflow: hidden;
+  `,
+};
+
+function MeasurementsTableHeader() {
   return (
     <thead>
-      <tr css={measurementsTableCss.header}>
-        <th
-          style={{
-            display: 'flex',
-            gap: 5,
-            alignItems: 'center',
-            width: 70,
-          }}
-        >
-          <MeasurementSelectedVisibilityChange kind={props.kind} openedEyes />
-          <MeasurementSelectedVisibilityChange
-            kind={props.kind}
-            openedEyes={false}
-          />
-          <MeasurementCheckbox
-            checked={isChecked}
-            onSelectCheckbox={onSelectCheckbox}
-            indeterminate={
-              !isChecked && (selectedMeasurements[props.kind] || []).length > 0
-            }
-          />
-        </th>
-        <th style={{ width: '60%' }}>Filename</th>
-        <th style={{ width: 150 }}>Technique</th>
+      <tr css={styles.header}>
+        <th css={tableHeaderStyles.thStyleEmpty} />
+        <th css={tableHeaderStyles.thStyleFilename}>Filename</th>
+        <th css={tableHeaderStyles.thStyleTechnique}>Technique</th>
       </tr>
     </thead>
   );
@@ -176,8 +203,8 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   }
 
   return (
-    <tr css={measurementsTableCss.tr}>
-      <td css={measurementsTableCss.iconsContainer}>
+    <tr css={styles.tr}>
+      <td css={styles.iconsContainer}>
         <MeasurementVisibilityToggle
           id={item.id}
           isVisible={measurements[item.id].visible}
@@ -192,11 +219,7 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
           onSelectCheckbox={onSelectCheckbox}
         />
       </td>
-      <td
-        onClick={onSelectRow}
-        style={{ width: '60%', overflow: 'hidden' }}
-        title={item.id}
-      >
+      <td css={tableHeaderStyles.tdName} onClick={onSelectRow} title={item.id}>
         {item.info.file?.name ?? item.info.title}
       </td>
       <td onClick={onSelectRow}>{item.meta.technique}</td>
