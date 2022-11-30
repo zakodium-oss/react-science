@@ -177,9 +177,20 @@ export const removeSelectedMeasurements: AppStateProducer<
     payload: { kind },
   } = action;
 
+  const selectedMeasurements = draft.view.selectedMeasurements[kind];
+  if (!selectedMeasurements) {
+    return;
+  }
+
+  delete draft.view.selectedMeasurements[kind];
+
   draft.data.measurements[kind].entries = draft.data.measurements[
     kind
   ].entries.filter((measurement) => {
-    return !draft.view.selectedMeasurements[kind]?.includes(measurement.id);
+    return !selectedMeasurements.includes(measurement.id);
   });
+
+  for (const id of selectedMeasurements) {
+    delete draft.view.measurements[id];
+  }
 };

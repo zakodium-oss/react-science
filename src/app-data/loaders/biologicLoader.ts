@@ -147,7 +147,6 @@ function setDefault(
       // populate key, if there is no data there.
       if (!variables[storeAt]) {
         variables[storeAt] = variables[varum];
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete variables[varum];
       } else {
         // if the storeAt is already occupied, swap the two
