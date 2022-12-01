@@ -8,6 +8,7 @@ import {
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index';
+import { ConfirmModal, useOnOff } from '../../../components/index';
 
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
@@ -102,8 +103,12 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
 
   const {
     data: { measurements },
+    view: { selectedMeasurements },
   } = useAppState();
   const dispatch = useAppDispatch();
+  const [isRemoveModalOpen, openRemoveModal, closeRemoveModal] = useOnOff();
+
+  const hasSelectedMeasurements = (selectedMeasurements[kind]?.length ?? 0) > 0;
 
   function onSelectLink(select: boolean) {
     dispatch({
@@ -117,6 +122,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
 
   function onRemove() {
     dispatch({ type: 'REMOVE_SELECTED_MEASUREMENTS', payload: { kind } });
+    closeRemoveModal();
   }
 
   return (
@@ -131,7 +137,23 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
           Unselect all
         </span>
 
-        <FaTrash style={{ cursor: 'pointer' }} onClick={onRemove} />
+        <FaTrash
+          style={
+            hasSelectedMeasurements ? { cursor: 'pointer' } : { opacity: 0.6 }
+          }
+          onClick={hasSelectedMeasurements ? openRemoveModal : undefined}
+        />
+        <ConfirmModal
+          headerColor="red"
+          isOpen={isRemoveModalOpen}
+          onConfirm={onRemove}
+          onRequestClose={closeRemoveModal}
+          saveText="Remove"
+        >
+          <div style={{ fontWeight: 'bold', padding: 10 }}>
+            Remove selected measurements?
+          </div>
+        </ConfirmModal>
       </div>
 
       <table css={styles.root}>
