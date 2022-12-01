@@ -25,22 +25,22 @@ export function getMeasurementOrFail(
   return result;
 }
 
-export function getFirstMeasurement(
+export function getFirstMeasurement<Kind extends MeasurementKind>(
   measurements: Measurements,
-  kind: MeasurementKind,
-) {
+  kind: Kind,
+): { kind: Kind; measurement: Measurements[Kind]['entries'][0] } | null {
   const measurement = measurements[kind].entries[0];
   if (measurement) return { kind, measurement };
 
   return null;
 }
-export function getFirstMeasurementOrFail(
+export function getFirstMeasurementOrFail<Kind extends MeasurementKind>(
   measurements: Measurements,
-  kind: MeasurementKind,
+  kind: Kind,
 ) {
-  const measurement = measurements[kind].entries[0];
-  assertNotNull(measurement);
-  return { kind, measurement };
+  const result = getFirstMeasurement(measurements, kind);
+  assertNotNull(result);
+  return result;
 }
 
 export function getCurrentMeasurement(state: AppState) {

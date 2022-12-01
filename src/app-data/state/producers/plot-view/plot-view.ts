@@ -1,8 +1,7 @@
 import { assert } from '../../../../components/index';
-import { iterateKindMeasurementsAndView } from '../../data/data.helpers';
 import { AppStateProducer } from '../types';
 
-import { getInitialZoom, updateZoom } from './helpers/zoom';
+import { resetZoom } from './helpers/zoom';
 
 export const plotZoom: AppStateProducer<'PLOT_ZOOM'> = (draft, action) => {
   const { kind, zoom } = action.payload;
@@ -16,10 +15,15 @@ export const plotZoomOut: AppStateProducer<'PLOT_ZOOM_OUT'> = (
   action,
 ) => {
   const { kind } = action.payload;
-  const plotView = draft.view.plot[kind];
+  resetZoom(draft, kind);
+};
+
+export const ivPlotSelectVariable: AppStateProducer<
+  'IV_PLOT_SELECT_VARIABLE'
+> = (draft, action) => {
+  const { axis, variable } = action.payload;
+  const plotView = draft.view.plot.iv;
   assert(plotView);
-  plotView.zoom = getInitialZoom();
-  for (const { measurement } of iterateKindMeasurementsAndView(draft, kind)) {
-    updateZoom(draft, kind, measurement);
-  }
+  plotView[`${axis}Variable`] = variable;
+  resetZoom(draft, 'iv');
 };

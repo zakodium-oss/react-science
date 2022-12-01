@@ -3,8 +3,8 @@ import { Draft } from 'immer';
 import { AppState } from '../appState';
 import { AppStateAction } from '../appStateActions';
 
+import { addMeasurements } from './measurements/addMeasurements';
 import {
-  addMeasurements,
   changeMeasurementDisplay,
   changeMeasurementsDisplay,
   selectMeasurement,
@@ -13,8 +13,12 @@ import {
   setMeasurementVisibility,
   selectOrUnselectAllMeasurements,
   removeSelectedMeasurements,
-} from './measurements';
-import { plotZoom, plotZoomOut } from './plot-view/plot-view';
+} from './measurements/measurements';
+import {
+  ivPlotSelectVariable,
+  plotZoom,
+  plotZoomOut,
+} from './plot-view/plot-view';
 import { ActionType, AppStateProducer } from './types';
 
 export const loadFullState: AppStateProducer<'LOAD_FULL_STATE'> = (
@@ -46,6 +50,7 @@ const producers: Record<ActionType, AppStateProducer<any>> = {
   CHANGE_MEASUREMENTS_DISPLAY: changeMeasurementsDisplay,
   LOAD_FULL_STATE: loadFullState,
   REMOVE_SELECTED_MEASUREMENTS: removeSelectedMeasurements,
+  IV_PLOT_SELECT_VARIABLE: ivPlotSelectVariable,
 };
 
 export function appStateProducer(
