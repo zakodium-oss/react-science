@@ -7,6 +7,7 @@ import { useAppDispatch, useAppState } from '../../../../app-data/index';
 import { Toolbar } from '../../../../components/index';
 
 import IvMeasurementsPlot from './IvMeasurementsPlot';
+import IvPlotVariablesSelector from './IvPlotVariablesSelector';
 
 export function IvPlotView() {
   return (
@@ -20,17 +21,17 @@ export function IvPlotView() {
       <VerticalToolbar />
       <div
         css={css`
+          flex: 1;
           display: flex;
           flex-direction: column;
-          height: 100%;
-          width: 100%;
+          min-width: 0;
         `}
       >
         <PlotController>
           <IvMeasurementsPlot />
         </PlotController>
 
-        <div>TODO: add variable selectors</div>
+        <IvPlotVariablesSelector />
       </div>
     </div>
   );

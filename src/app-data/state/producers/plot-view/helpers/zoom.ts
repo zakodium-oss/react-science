@@ -1,5 +1,11 @@
+import { assert } from '../../../../../components/index';
+import {
+  getPreferredVariable,
+  getVariableByLabel,
+} from '../../../../helpers/variables';
 import {
   AppState,
+  iterateKindMeasurementsAndView,
   MeasurementBase,
   MeasurementKind,
   Plot2DZoom,
@@ -12,6 +18,15 @@ export function getInitialZoom(): Plot2DZoom {
   };
 }
 
+export function resetZoom(draft: AppState, kind: MeasurementKind): void {
+  const plotView = draft.view.plot[kind];
+  assert(plotView);
+  plotView.zoom = getInitialZoom();
+  for (const { measurement } of iterateKindMeasurementsAndView(draft, kind)) {
+    updateZoom(draft, kind, measurement);
+  }
+}
+
 export function updateZoom(
   draft: AppState,
   kind: MeasurementKind,
@@ -21,34 +36,28 @@ export function updateZoom(
   if (!plotView) {
     plotView = {
       zoom: getInitialZoom(),
+      xVariable: getPreferredVariable(measurement, 'x').label,
+      yVariable: getPreferredVariable(measurement, 'y').label,
     };
     draft.view.plot[kind] = plotView;
   }
-  // TODO: discuss this:
-  // What about measurements that don't have x and y?
-  // What about measurements that have multiple data?
-  const firstDatum = measurement.data[0];
+
+  const xVariable = plotView.xVariable;
+  const yVariable = plotView.yVariable;
+  assert(xVariable && yVariable);
+
+  const mXVariable = getVariableByLabel(measurement, xVariable);
+  const mYVariable = getVariableByLabel(measurement, yVariable);
+
   if (
-    typeof firstDatum.variables.x?.min === 'number' &&
-    typeof firstDatum.variables.x?.max === 'number' &&
-    typeof firstDatum.variables.y?.min === 'number' &&
-    typeof firstDatum.variables.y?.max === 'number'
+    typeof mXVariable?.min === 'number' &&
+    typeof mXVariable?.max === 'number' &&
+    typeof mYVariable?.min === 'number' &&
+    typeof mYVariable?.max === 'number'
   ) {
-    plotView.zoom.x.min = Math.min(
-      plotView.zoom.x.min,
-      firstDatum.variables.x.min,
-    );
-    plotView.zoom.x.max = Math.max(
-      plotView.zoom.x.max,
-      firstDatum.variables.x.max,
-    );
-    plotView.zoom.y.min = Math.min(
-      plotView.zoom.y.min,
-      firstDatum.variables.y.min,
-    );
-    plotView.zoom.y.max = Math.max(
-      plotView.zoom.y.max,
-      firstDatum.variables.y.max,
-    );
+    plotView.zoom.x.min = Math.min(plotView.zoom.x.min, mXVariable.min);
+    plotView.zoom.x.max = Math.max(plotView.zoom.x.max, mXVariable.max);
+    plotView.zoom.y.min = Math.min(plotView.zoom.y.min, mYVariable.min);
+    plotView.zoom.y.max = Math.max(plotView.zoom.y.max, mYVariable.max);
   }
 }

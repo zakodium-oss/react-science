@@ -1,68 +1,7 @@
-import {
-  assert,
-  assertUnreachable,
-  defaultColorPalette,
-} from '../../../components/index';
-import {
-  getFirstMeasurementOrFail,
-  getMeasurementOrFail,
-  iterateMeasurementEntries,
-  kindLabels,
-  MeasurementKind,
-  mergeMeasurements,
-} from '../../index';
-
-import { updateZoom } from './plot-view/helpers/zoom';
-import { AppStateProducer } from './types';
-
-export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
-  draft,
-  action,
-) => {
-  const newMeasurements = action.payload;
-
-  const counts: Partial<Record<MeasurementKind, number>> = {};
-  for (const [kind, measurements] of Object.entries(draft.data.measurements)) {
-    counts[kind as MeasurementKind] = measurements.entries.length;
-  }
-
-  mergeMeasurements(draft.data.measurements, newMeasurements);
-
-  for (const kind of Object.keys(kindLabels).filter(
-    (k) => k in newMeasurements,
-  ) as MeasurementKind[]) {
-    if (
-      !draft.view.selectedMeasurements[kind] &&
-      draft.data.measurements[kind].entries.length > 0
-    ) {
-      const { measurement } = getFirstMeasurementOrFail(
-        draft.data.measurements,
-        kind,
-      );
-      const id = measurement.id;
-      draft.view.selectedMeasurements[kind] = [id];
-      if (draft.view.selectedKind === undefined) {
-        draft.view.selectedKind = kind;
-      }
-    }
-  }
-
-  for (const { kind, measurement } of iterateMeasurementEntries(
-    newMeasurements,
-  )) {
-    const count = counts[kind] ?? 0;
-    draft.view.measurements[measurement.id] = {
-      color: {
-        kind: 'fixed',
-        color: defaultColorPalette[count % defaultColorPalette.length],
-      },
-      visible: true,
-    };
-    counts[kind] = count + 1;
-
-    updateZoom(draft, kind, measurement);
-  }
-};
+import { assert, assertUnreachable } from '../../../../components/index';
+import { getMeasurementOrFail } from '../../../index';
+import { resetZoom } from '../plot-view/helpers/zoom';
+import { AppStateProducer } from '../types';
 
 export const selectOrUnselectAllMeasurements: AppStateProducer<
   'SELECT_ALL_MEASUREMENTS'
@@ -192,5 +131,13 @@ export const removeSelectedMeasurements: AppStateProducer<
 
   for (const id of selectedMeasurements) {
     delete draft.view.measurements[id];
+  }
+
+  resetZoom(draft, kind);
+
+  if (draft.data.measurements[kind].entries.length > 0) {
+    draft.view.selectedMeasurements[kind] = [
+      draft.data.measurements[kind].entries[0].id,
+    ];
   }
 };

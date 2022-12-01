@@ -10,6 +10,8 @@ export interface AppView {
 
 export interface PlotView {
   zoom: Plot2DZoom;
+  xVariable?: string;
+  yVariable?: string;
 }
 
 export interface Plot2DZoom {

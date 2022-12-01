@@ -46,7 +46,7 @@ export default function IvMeasurementsPlot() {
   });
   const { unselectedOpacity } = appState.settings.plot;
   const ivView = appState.view.plot.iv;
-  assert(ivView);
+  assert(ivView && !!ivView.xVariable && !!ivView.yVariable);
   const { selectedEntries, unselectedEntries } = splitEntries(appState, 'iv');
 
   const series: JSX.Element[] = [];
@@ -55,6 +55,8 @@ export default function IvMeasurementsPlot() {
       <IvSeries
         key={measurement.id}
         measurement={measurement}
+        xVariableLabel={ivView.xVariable}
+        yVariableLabel={ivView.yVariable}
         colorConfig={view.color}
         opacity={view.visible ? unselectedOpacity : 0}
       />,
@@ -65,6 +67,8 @@ export default function IvMeasurementsPlot() {
       <IvSeries
         key={measurement.id}
         measurement={measurement}
+        xVariableLabel={ivView.xVariable}
+        yVariableLabel={ivView.yVariable}
         colorConfig={view.color}
         opacity={view.visible ? undefined : 0}
       />,

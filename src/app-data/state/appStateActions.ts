@@ -42,4 +42,8 @@ export type AppStateAction =
         display: Partial<MeasurementAppView>;
       }
     >
-  | ActionType<'REMOVE_SELECTED_MEASUREMENTS', { kind: MeasurementKind }>;
+  | ActionType<'REMOVE_SELECTED_MEASUREMENTS', { kind: MeasurementKind }>
+  | ActionType<
+      'IV_PLOT_SELECT_VARIABLE',
+      { axis: 'x' | 'y'; variable: string }
+    >;
