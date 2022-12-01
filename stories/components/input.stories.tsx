@@ -1,10 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-import { Input } from '../../src/components/forms/Input';
-import {
-  Field,
-  Fields,
-} from '../../src/components/forms/context/FieldsContext';
+import { Input, Fields, Field } from '../../src/components';
 
 export default {
   title: 'Forms / Input',
