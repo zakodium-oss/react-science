@@ -32,13 +32,13 @@ export interface InputProps
 
 export function Input(props: InputProps) {
   const { variant = 'default', ...otherProps } = props;
-  const fieldsContext = useFieldsContext();
+  const { name, variant: variantContext } = useFieldsContext();
 
   return (
     <InputStyled
-      id={fieldsContext}
-      name={fieldsContext}
-      variant={variant}
+      id={name}
+      name={name}
+      variant={variant || variantContext}
       {...otherProps}
     />
   );

@@ -1,17 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 interface FieldsProps {
   children: ReactNode;
 }
 
+interface FieldContext {
+  name: string;
+  variant: 'default' | 'small';
+}
+
 interface FieldProps extends FieldsProps {
   name: string;
   label: string;
+  variant?: 'default' | 'small';
 }
 
-const context = createContext<string | null>(null);
+const context = createContext<FieldContext | null>(null);
 
 const styles = {
   root: css`
@@ -26,7 +32,7 @@ export function useFieldsContext() {
   const ctx = useContext(context);
 
   if (!ctx) {
-    return undefined;
+    return { name: undefined, variant: undefined };
   }
 
   return ctx;
@@ -38,10 +44,14 @@ export function Fields(props: FieldsProps) {
 }
 
 export function Field(props: FieldProps) {
-  const { label, name, children } = props;
+  const { label, name, children, variant = 'default' } = props;
+
+  const memoized = useMemo(() => {
+    return { name, variant };
+  }, [name, variant]);
 
   return (
-    <context.Provider value={name}>
+    <context.Provider value={memoized}>
       <div css={styles.root}>
         <label htmlFor={name}>{label}: </label>
         {children}
