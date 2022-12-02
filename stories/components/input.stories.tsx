@@ -46,7 +46,7 @@ export function SmallExample() {
       placeholder="Basic example"
       value={state}
       onChange={onChange}
-      inputSize="small"
+      variant="small"
     />
   );
 }
