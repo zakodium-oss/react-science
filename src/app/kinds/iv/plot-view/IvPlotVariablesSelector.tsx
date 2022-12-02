@@ -4,6 +4,7 @@ import {
   useAppState,
 } from '../../../../app-data/index';
 import { assertNotNull } from '../../../../components/index';
+import { MeasurementVariableSelect } from '../../../helpers/index';
 
 export default function IvPlotVariablesSelector() {
   const {
@@ -27,7 +28,7 @@ export default function IvPlotVariablesSelector() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
-      <SelectVariable
+      <MeasurementVariableSelect
         label="Y variable"
         value={ivPlot.yVariable || ''}
         options={options}
@@ -38,7 +39,7 @@ export default function IvPlotVariablesSelector() {
           })
         }
       />
-      <SelectVariable
+      <MeasurementVariableSelect
         label="X variable"
         value={ivPlot.xVariable || ''}
         options={options}
@@ -50,37 +51,5 @@ export default function IvPlotVariablesSelector() {
         }
       />
     </div>
-  );
-}
-
-interface SelectVariableProps {
-  label: string;
-  value: string;
-  options: string[];
-  onSelect: (value: string) => void;
-}
-
-function SelectVariable(props: SelectVariableProps) {
-  const { label, value, options, onSelect } = props;
-  return (
-    <label>
-      {`${label}: `}
-      <select
-        value={value}
-        onChange={(event) => {
-          const value = event.target.value;
-          if (value) {
-            onSelect(value);
-          }
-        }}
-      >
-        <option value="">{`<select a variable>`}</option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </label>
   );
 }
