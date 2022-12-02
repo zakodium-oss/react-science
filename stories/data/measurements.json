@@ -7,7 +7,7 @@
           "id": "ce33d234-f21d-45e3-b6be-ca9a44406c16",
           "meta": {},
           "filename": "ir.jdx",
-          "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/jdx/ir.jdx",
+          "path": "/Users/lpatiny/git/zakodium-oss/react-science/src/data/__tests__/data/jdx/ir.jdx",
           "info": {
             "TITLE": "Mattson Instruments",
             "JCAMPDX": 4.24,
@@ -11903,7 +11903,7 @@
             "NIST IMAGE": "cob3577"
           },
           "filename": "ir2.jdx",
-          "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/jdx/ir2.jdx",
+          "path": "/Users/lpatiny/git/zakodium-oss/react-science/src/data/__tests__/data/jdx/ir2.jdx",
           "info": {
             "TITLE": "ETHYL BENZENE",
             "JCAMPDX": 4.24,
@@ -20263,7 +20263,7 @@
             ]
           },
           "filename": "6x6.wdf",
-          "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/wdf/6x6.wdf",
+          "path": "/Users/lpatiny/git/zakodium-oss/react-science/src/data/__tests__/data/wdf/6x6.wdf",
           "info": {},
           "title": "Simple mapping measurement 1",
           "data": [
@@ -94113,7 +94113,7 @@
           "id": "d234f21d-45e3-46be-8a9a-44406c16aa65",
           "meta": {},
           "filename": "tree-uv.jdx",
-          "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/jdx/tree-uv.jdx",
+          "path": "/Users/lpatiny/git/zakodium-oss/react-science/src/data/__tests__/data/jdx/tree-uv.jdx",
           "info": {
             "TITLE": "patiny_LP1234_F12",
             "JCAMPDX": "4.24    $$ HP-Spectral File I/O 02.00",
@@ -95979,7 +95979,7 @@
           "id": "34f21d45-e3f6-4eca-9a44-406c16aa65c0",
           "meta": {},
           "filename": "tree-uv.jdx",
-          "path": "/Users/lpatiny/git/zakodium-oss/analysis-ui-components/src/data/__tests__/data/jdx/tree-uv.jdx",
+          "path": "/Users/lpatiny/git/zakodium-oss/react-science/src/data/__tests__/data/jdx/tree-uv.jdx",
           "info": {
             "TITLE": "patiny_LP1234_F12",
             "JCAMPDX": "4.24    $$ HP-Spectral File I/O 02.00",

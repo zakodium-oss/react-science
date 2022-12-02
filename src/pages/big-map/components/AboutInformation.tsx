@@ -31,7 +31,7 @@ export function AboutInformation() {
         <p>Version</p>
         <a
           css={aboutInformationCss.link}
-          href="https://github.com/zakodium-oss/analysis-ui-components"
+          href="https://github.com/zakodium-oss/react-science"
         >
           HEAD
         </a>
@@ -39,9 +39,9 @@ export function AboutInformation() {
       <span css={aboutInformationCss.separator} />
       <a
         css={aboutInformationCss.link}
-        href="https://github.com/zakodium-oss/analysis-ui-components"
+        href="https://github.com/zakodium-oss/react-science"
       >
-        GitHub ( https://github.com/zakodium-oss/analysis-ui-components )
+        GitHub ( https://github.com/zakodium-oss/react-science )
       </a>
       <span css={aboutInformationCss.separator} />
       <p>
