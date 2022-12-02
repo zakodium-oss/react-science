@@ -1,93 +1,98 @@
 import {
-  getCurrentMeasurementData,
+  ColorConfig,
   getFirstSelectedMeasurementData,
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index';
-import {
-  assert,
-  assertNotNull,
-  ColorPickerDropdown,
-} from '../../../components/index';
+import { ColorPickerDropdown } from '../../../components/index';
 
 export function MeasurementConfigPanel() {
   const dispatch = useAppDispatch();
   const appState = useAppState();
 
-  const {
-    view: { selectedMeasurements, selectedKind },
-  } = appState;
-  assert(selectedKind);
-
-  if ((selectedMeasurements[selectedKind] || []).length > 1) {
-    const firstMeasurement = getFirstSelectedMeasurementData(appState);
-    const color = firstMeasurement?.display.color;
-    assertNotNull(color);
-
-    if (color.kind !== 'fixed') {
-      throw new Error(`unimplemented color edition for kind ${color.kind}`);
-    }
-
-    return (
-      <StrokeColorModifier
-        color={color.color}
-        onChangeComplete={(hex) => {
-          dispatch({
-            type: 'CHANGE_MEASUREMENTS_DISPLAY',
-            payload: { display: { color: { kind: 'fixed', color: hex } } },
-          });
-        }}
-      />
-    );
-  }
-
-  const measurement = getCurrentMeasurementData(appState);
-  if (!measurement) return null;
-
-  const { color } = measurement.display;
-
-  if (color.kind !== 'fixed') {
-    throw new Error(`unimplemented color edition for kind ${color.kind}`);
+  const firstMeasurement = getFirstSelectedMeasurementData(appState);
+  if (!firstMeasurement) {
+    return null;
   }
 
   return (
-    <StrokeColorModifier
-      color={color.color}
-      onChangeComplete={(hex) => {
-        dispatch({
-          type: 'CHANGE_MEASUREMENT_DISPLAY',
-          payload: {
-            measurement: measurement.kindAndId,
-            display: {
-              color: {
-                kind: 'fixed',
-                color: hex,
-              },
-            },
-          },
-        });
-      }}
-    />
+    <div>
+      <StrokeColorModifier
+        color={firstMeasurement.display.color}
+        onChange={(color) => {
+          dispatch({
+            type: 'CHANGE_MEASUREMENTS_DISPLAY',
+
+            payload: { display: { color } },
+          });
+        }}
+      />
+    </div>
   );
 }
 
 interface StrokeColorModifierProps {
-  color: string;
-  onChangeComplete: (hex: string) => void;
+  color: ColorConfig;
+  onChange: (color: ColorConfig) => void;
 }
 
 function StrokeColorModifier(props: StrokeColorModifierProps) {
-  const { color, onChangeComplete } = props;
+  const { color, onChange } = props;
+
+  if (color.kind === 'fixedGradient') {
+    throw new Error('fixedGradient not supported yet');
+  }
 
   return (
     <div style={{ display: 'flex', padding: 8 }}>
       <div style={{ flex: '1 1 0' }}>Stroke color</div>
       <div style={{ flex: '1 1 0' }}>
-        <ColorPickerDropdown
-          color={{ hex: color }}
-          onChangeComplete={({ hex }) => onChangeComplete(hex)}
-        />
+        {/* <SelectColorKind
+          colorKind="fixed"
+          onChange={(kind) => {
+            if (kind === 'fixed') {
+              onChange({ kind: 'fixed', color: 'black' });
+            } else {
+              onChange({ kind: 'fixedGradient', gradient: 'inferno' });
+            }
+          }}
+        /> */}
+        {color.kind === 'fixed' && (
+          <ColorPickerDropdown
+            color={{ hex: color.color }}
+            onChangeComplete={({ hex }) =>
+              onChange({ kind: 'fixed', color: hex })
+            }
+          />
+        )}
       </div>
     </div>
   );
 }
+
+// interface SelectColorKindProps {
+//   colorKind: ColorConfig['kind'];
+//   onChange: (colorKind: ColorConfig['kind']) => void;
+// }
+
+// const colorKindOptions: { value: ColorConfig['kind']; label: string }[] = [
+//   { value: 'fixed', label: 'Fixed' },
+//   { value: 'fixedGradient', label: 'Fixed gradient' },
+// ];
+// function SelectColorKind(props: SelectColorKindProps) {
+//   const { colorKind, onChange } = props;
+//   return (
+//     <select
+//       value={colorKind}
+//       onChange={(event) => {
+//         onChange(event.target.value as ColorConfig['kind']);
+//       }}
+//     >
+//       {colorKindOptions.map(({ value, label }) => (
+//         <option key={value} value={value}>
+//           {label}
+//         </option>
+//       ))}
+//     </select>
+//   );
+// }
