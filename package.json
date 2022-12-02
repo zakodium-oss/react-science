@@ -1,5 +1,5 @@
 {
-  "name": "analysis-ui-components",
+  "name": "react-science",
   "version": "0.18.0",
   "description": "React components to build analysis UI",
   "exports": {
@@ -124,11 +124,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zakodium-oss/analysis-ui-components.git"
+    "url": "git+https://github.com/zakodium-oss/react-science.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zakodium-oss/analysis-ui-components/issues"
+    "url": "https://github.com/zakodium-oss/react-science/issues"
   },
-  "homepage": "https://github.com/zakodium-oss/analysis-ui-components#readme"
+  "homepage": "https://github.com/zakodium-oss/react-science#readme"
 }
