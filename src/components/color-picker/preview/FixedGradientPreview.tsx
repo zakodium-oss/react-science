@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 
-import { GradientScaleName, scales } from '../gradient-select/GradientSelect';
+import {
+  GradientScaleName,
+  fixedGradientScales,
+} from '../gradient-select/GradientSelect';
 
 interface FixedGradientPreviewProps {
   gradient: GradientScaleName;
@@ -8,7 +11,7 @@ interface FixedGradientPreviewProps {
 
 export default function FixedGradientPreview(props: FixedGradientPreviewProps) {
   const { gradient } = props;
-  const scale = scales[gradient];
+  const scale = fixedGradientScales[gradient];
 
   const gradientCss = useMemo(() => {
     const stops: string[] = [];

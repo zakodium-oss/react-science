@@ -6,7 +6,7 @@ import { FaChevronDown } from 'react-icons/fa';
 
 import FixedGradientPreview from '../preview/FixedGradientPreview';
 
-export const scales = {
+export const fixedGradientScales = {
   turbo: scaleChromatic.interpolateTurbo,
   viridis: scaleChromatic.interpolateViridis,
   inferno: scaleChromatic.interpolateInferno,
@@ -14,9 +14,9 @@ export const scales = {
   plasma: scaleChromatic.interpolatePlasma,
 };
 
-export type GradientScaleName = keyof typeof scales;
+export type GradientScaleName = keyof typeof fixedGradientScales;
 
-const scaleOptions = Object.keys(scales) as GradientScaleName[];
+const scaleOptions = Object.keys(fixedGradientScales) as GradientScaleName[];
 
 const GradientSelectListbox = styled.div`
   position: relative;
