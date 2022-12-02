@@ -78,7 +78,11 @@ export default function IvMeasurementsPlot() {
   return (
     <ResponsiveChart>
       {({ width, height }) => (
-        <Plot width={width} height={height}>
+        <Plot
+          width={width}
+          height={height}
+          margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
+        >
           <Series>{series}</Series>
           <Annotations>
             {crossHair.annotations}
@@ -87,7 +91,7 @@ export default function IvMeasurementsPlot() {
           <Axis
             displayPrimaryGridLines
             position="bottom"
-            label="X"
+            label={ivView.xVariable}
             min={ivView.zoom.x.min}
             max={ivView.zoom.x.max}
           />
@@ -96,6 +100,7 @@ export default function IvMeasurementsPlot() {
             position="left"
             paddingStart="10"
             paddingEnd="10"
+            label={ivView.yVariable}
             min={ivView.zoom.y.min}
             max={ivView.zoom.y.max}
           />
