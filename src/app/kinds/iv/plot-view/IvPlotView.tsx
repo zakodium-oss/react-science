@@ -24,7 +24,6 @@ export function IvPlotView() {
           flex: 1;
           display: flex;
           flex-direction: column;
-          min-width: 0;
         `}
       >
         <PlotController>
