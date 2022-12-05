@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.1](https://github.com/zakodium-oss/react-science/compare/v0.19.0...v0.19.1) (2022-12-05)
+
+
+### Bug Fixes
+
+* make build work for publication ([#435](https://github.com/zakodium-oss/react-science/issues/435)) ([70a81c8](https://github.com/zakodium-oss/react-science/commit/70a81c8fd298fee555d19e770c5d89f615a1daf2))
+
 ## [0.19.0](https://github.com/zakodium-oss/react-science/compare/v0.18.0...v0.19.0) (2022-12-05)
 
 
