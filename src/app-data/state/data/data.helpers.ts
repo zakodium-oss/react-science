@@ -74,7 +74,7 @@ export function getFirstSelectedMeasurementData(state: AppState) {
   if (!selectedKind) return null;
 
   const measurements = selectedMeasurements[selectedKind];
-  if (measurements?.length === 0) return null;
+  if (!measurements?.length) return null;
   assertNotNull(measurements);
 
   const measurementId = measurements[0];
