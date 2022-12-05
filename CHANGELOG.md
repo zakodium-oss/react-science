@@ -1,5 +1,83 @@
 # Changelog
 
+## [0.19.0](https://github.com/zakodium-oss/react-science/compare/v0.18.0...v0.19.0) (2022-12-05)
+
+
+### Features
+
+* accept many measurement in each kind ([#285](https://github.com/zakodium-oss/react-science/issues/285)) ([c39abde](https://github.com/zakodium-oss/react-science/commit/c39abde9d821ecee103a5c7c529f41ac330bf054))
+* add ColorPickerDropdown to the application ([#395](https://github.com/zakodium-oss/react-science/issues/395)) ([c9a29dd](https://github.com/zakodium-oss/react-science/commit/c9a29ddea83cf8180669447130bf934e0c4c4565))
+* add column to toggle measurement visibility ([4195952](https://github.com/zakodium-oss/react-science/commit/419595216b586a3846be406a730cb76377d5f9d6))
+* add context menu dropdown ([#317](https://github.com/zakodium-oss/react-science/issues/317)) ([f71c83c](https://github.com/zakodium-oss/react-science/commit/f71c83cabadebb4b1dd6069a64da6646401a55dc))
+* add crosshair to IV plot ([#418](https://github.com/zakodium-oss/react-science/issues/418)) ([288d867](https://github.com/zakodium-oss/react-science/commit/288d8679ccc954ab961fb8a346e70905f459941c))
+* add dialog to add a AboutUs Modal ([#400](https://github.com/zakodium-oss/react-science/issues/400)) ([352ebab](https://github.com/zakodium-oss/react-science/commit/352ebabf285c5b7dd4f30a73946bfcf2c3489dd9))
+* add FullscreenToolbarButton ([#352](https://github.com/zakodium-oss/react-science/issues/352)) ([225526d](https://github.com/zakodium-oss/react-science/commit/225526d247951f7f7f2a4164923cfcfb4a0f59c3))
+* add GradientSelect component ([4112f5b](https://github.com/zakodium-oss/react-science/commit/4112f5b7b43e04ad7ae7562ab3c061ce52075aa0))
+* add hook to load data from filelist URL ([#367](https://github.com/zakodium-oss/react-science/issues/367)) ([69f6a23](https://github.com/zakodium-oss/react-science/commit/69f6a23f8ab32d1b1bf8c2a594e728de0a3cde02))
+* add info panel to app ([#295](https://github.com/zakodium-oss/react-science/issues/295)) ([110a25a](https://github.com/zakodium-oss/react-science/commit/110a25a6b8423b6f8ef8cf2f6d03d7072950851e))
+* add Mass plot ([#303](https://github.com/zakodium-oss/react-science/issues/303)) ([102fd1a](https://github.com/zakodium-oss/react-science/commit/102fd1ab05ae1ac52bcd53fab28b49623f2c53f8))
+* add measurement color preview ([#399](https://github.com/zakodium-oss/react-science/issues/399)) ([14c5942](https://github.com/zakodium-oss/react-science/commit/14c5942f665331b237e36f41e75e857ef7f5ca63))
+* add responsive chart option ([#256](https://github.com/zakodium-oss/react-science/issues/256)) ([6d7b5a0](https://github.com/zakodium-oss/react-science/commit/6d7b5a09f2039a3edfd3979fd667be7a55b0b932))
+* add settings state ([ad8b0a6](https://github.com/zakodium-oss/react-science/commit/ad8b0a6b6841e7853dc99754259040abe16dc6b9))
+* add spinner while fetching data ([#396](https://github.com/zakodium-oss/react-science/issues/396)) ([37078c5](https://github.com/zakodium-oss/react-science/commit/37078c509afede682232bbfad417b6491ddea452))
+* add the possibility to not select any measurement in measurement panel ([d5d9d73](https://github.com/zakodium-oss/react-science/commit/d5d9d73f20ef60caf3cce8a835a1f4fe4b27ddcf))
+* add zoom out toolbar ([#428](https://github.com/zakodium-oss/react-science/issues/428)) ([f0720f3](https://github.com/zakodium-oss/react-science/commit/f0720f381bf21d134aebcec9c71e9947e5a1a510))
+* allow to change all selected measurements visibility at once ([#419](https://github.com/zakodium-oss/react-science/issues/419)) ([d1a291a](https://github.com/zakodium-oss/react-science/commit/d1a291ab3870dc4d83e17af6bddfabc52a68f2cf))
+* allow to change measurement color from table ([1bd971b](https://github.com/zakodium-oss/react-science/commit/1bd971b7fab953cda4fa8c3ba39a472cf08f75f2))
+* allow to select X and Y variables in IV measurements ([045e888](https://github.com/zakodium-oss/react-science/commit/045e888577098e032ea3a9131fe4c48732afa247))
+* allow users to change multiple measurements color config ([#424](https://github.com/zakodium-oss/react-science/issues/424)) ([0005105](https://github.com/zakodium-oss/react-science/commit/00051058108de2023c974ab35127fa84ec665553))
+* cdf loader for gcms added ([#290](https://github.com/zakodium-oss/react-science/issues/290)) ([79f9147](https://github.com/zakodium-oss/react-science/commit/79f9147ed2db8bae7e4b874e92de997822da8486))
+* create MeasurementVariableSelect component ([2f0320e](https://github.com/zakodium-oss/react-science/commit/2f0320ec7ebabe860d98ccd6d683e72d373210eb))
+* customize measurement stroke color ([#358](https://github.com/zakodium-oss/react-science/issues/358)) ([d3c41f8](https://github.com/zakodium-oss/react-science/commit/d3c41f820f3f6dc4b3134d91ac821eed784de988))
+* display variable labels on IV axes ([f367fcb](https://github.com/zakodium-oss/react-science/commit/f367fcbf25a2b184765f5d01d3dd22cd3a176698))
+* implement DropDownMenu ([#283](https://github.com/zakodium-oss/react-science/issues/283)) ([800a5a1](https://github.com/zakodium-oss/react-science/commit/800a5a172dfec1e4f078aefe813847add6c767f1))
+* improved cdf loader to work with hplc close [#298](https://github.com/zakodium-oss/react-science/issues/298) ([#310](https://github.com/zakodium-oss/react-science/issues/310)) ([0babd2a](https://github.com/zakodium-oss/react-science/commit/0babd2a9e7d387044e74c6c10cc9fec3c6615bd3))
+* load state from .ium file ([#267](https://github.com/zakodium-oss/react-science/issues/267)) ([443572a](https://github.com/zakodium-oss/react-science/commit/443572a18291ef4a84c951d6a2496fe77df8dd7f))
+* opened in Tabs must contain opened item id ([#401](https://github.com/zakodium-oss/react-science/issues/401)) ([4943a48](https://github.com/zakodium-oss/react-science/commit/4943a4810c4507a0586e96f14ae4733a2e69f4f5))
+* put measurements actions in a toolbar and add button to delete measurements ([#426](https://github.com/zakodium-oss/react-science/issues/426)) ([308048e](https://github.com/zakodium-oss/react-science/commit/308048e6741bcc3ba76851e7a6aaab9f8b1c6c0d))
+* save using ctrl+s ([#296](https://github.com/zakodium-oss/react-science/issues/296)) ([e76a9db](https://github.com/zakodium-oss/react-science/commit/e76a9db00c86f0b887deef4c4b1bf11136a91e75))
+* select measurement on drop ([#268](https://github.com/zakodium-oss/react-science/issues/268)) ([d078aeb](https://github.com/zakodium-oss/react-science/commit/d078aeb186703ade0394299684a7535daa351c35))
+* superimpose IV measurements in the plot view ([6158c23](https://github.com/zakodium-oss/react-science/commit/6158c234f4d58973d44448b4007a95a75366f277))
+* update measurements table ([#402](https://github.com/zakodium-oss/react-science/issues/402)) ([5643933](https://github.com/zakodium-oss/react-science/commit/56439331dd940bf572fc2762a901f3e85416aed2))
+* use smaller base size in components and express font sizes in em instead of pixel ([e819cf7](https://github.com/zakodium-oss/react-science/commit/e819cf707ba7ab6e6ea7e9b831431a25ee9424b8))
+
+
+### Bug Fixes
+
+* add confirm dialog to delete measurements ([3203ca5](https://github.com/zakodium-oss/react-science/commit/3203ca550dc6f12d94271c26a3b85c78407a9c48))
+* add measurements ([#344](https://github.com/zakodium-oss/react-science/issues/344)) ([09ed2cc](https://github.com/zakodium-oss/react-science/commit/09ed2cc49c89868cab7a8b25283d0f0fb5ea742d))
+* add missing key to IvSeries ([095b6a9](https://github.com/zakodium-oss/react-science/commit/095b6a932d29a8dd532296d096e2e7d24f2ebf35))
+* add padding to y axis ([#360](https://github.com/zakodium-oss/react-science/issues/360)) ([e419707](https://github.com/zakodium-oss/react-science/commit/e419707314edc19c0d0e67e36809a068a656be3b))
+* add safari fullscreen case ([#356](https://github.com/zakodium-oss/react-science/issues/356)) ([0aef859](https://github.com/zakodium-oss/react-science/commit/0aef859ce0ad9cf7768620ed450485e8aa1bbf50))
+* add table header to measurements panel ([f795010](https://github.com/zakodium-oss/react-science/commit/f795010d729b7ef4c0b1297b0963c713cd2c1758))
+* avoid crash with empty data ([b2b5740](https://github.com/zakodium-oss/react-science/commit/b2b5740681d34c4c993a2aaf6b2379cfdf93149e))
+* avoid DropZone leaking style to children ([a267efa](https://github.com/zakodium-oss/react-science/commit/a267efa2343e3ae16622ccf2455e39661d25c222))
+* change onClickOutside to be called correctly & allow menu to close on click ([#404](https://github.com/zakodium-oss/react-science/issues/404)) ([5a075c3](https://github.com/zakodium-oss/react-science/commit/5a075c321be89beac76e73767bc7f2ab530e658e))
+* compute missing variables min/max while loading measurements ([0304b17](https://github.com/zakodium-oss/react-science/commit/0304b17817cc700eccbe34630f041a150f43d02b))
+* display file name and technique in measurements header ([ad36dda](https://github.com/zakodium-oss/react-science/commit/ad36ddaed049c021d294017c03fc18d93b8ef386))
+* do not propagate font size from DropZone to  children ([0386cb0](https://github.com/zakodium-oss/react-science/commit/0386cb0c6d68e68d7cd9240bb9787fb8de5710a9))
+* do not wrap text in tabs ([4958f2e](https://github.com/zakodium-oss/react-science/commit/4958f2eb875cce21a1e5c25aca23e590246ccf1e))
+* escape key to exit fullscreen ([#334](https://github.com/zakodium-oss/react-science/issues/334)) ([7365d88](https://github.com/zakodium-oss/react-science/commit/7365d88451a80df983ddb7d2a5d23304fb9ad9bf))
+* fix Dropzone layout ([#338](https://github.com/zakodium-oss/react-science/issues/338)) ([f2c23f8](https://github.com/zakodium-oss/react-science/commit/f2c23f8952f036e230e2a02706ade65bd60c1cdc))
+* **gradient-select:** allow to click on the chevron ([#362](https://github.com/zakodium-oss/react-science/issues/362)) ([1febf3c](https://github.com/zakodium-oss/react-science/commit/1febf3cd260c5fbb250927455d9cf1a62db51b14))
+* hide panels when multiple measurements are selected ([9e9f23d](https://github.com/zakodium-oss/react-science/commit/9e9f23d46466caeb975d445e8a4b4e96436d7b3d))
+* improve DropZone layout and style ([7738172](https://github.com/zakodium-oss/react-science/commit/7738172aec969db6054c93eba23f630ac58134fe))
+* let split pane be resized with fixed-sized children ([#306](https://github.com/zakodium-oss/react-science/issues/306)) ([0b9ccdd](https://github.com/zakodium-oss/react-science/commit/0b9ccddf95a779c8c2208f4f32536e0c6f562008))
+* never hide measurement info panel ([024f9ea](https://github.com/zakodium-oss/react-science/commit/024f9ea53d8ccf9c1afd973fb16f59897c2c6dc9))
+* only show spinner when data is loading ([#417](https://github.com/zakodium-oss/react-science/issues/417)) ([7921c1e](https://github.com/zakodium-oss/react-science/commit/7921c1ea7bbca15c26b964b8661eef9008e5cf3b))
+* pick default colors from a palette while loading data ([#422](https://github.com/zakodium-oss/react-science/issues/422)) ([f65a6c3](https://github.com/zakodium-oss/react-science/commit/f65a6c36bebe623addc3e8f3f1a0b0ff1e562669))
+* plot mass with labels ([#309](https://github.com/zakodium-oss/react-science/issues/309)) ([1d45352](https://github.com/zakodium-oss/react-science/commit/1d45352d937471e25a73f7fc9cc5f7f39a8b6e7a))
+* reduce icon size less drastically ([e6235f6](https://github.com/zakodium-oss/react-science/commit/e6235f6d58c25bfa98599b18df696d632e2a78b4))
+
+
+### Documentation
+
+* add bigmap ([#348](https://github.com/zakodium-oss/react-science/issues/348)) ([f969c8f](https://github.com/zakodium-oss/react-science/commit/f969c8f94afd9589567a45864566b5c3b3f02a82))
+* add demo links on readme ([#265](https://github.com/zakodium-oss/react-science/issues/265)) ([6aa3b0e](https://github.com/zakodium-oss/react-science/commit/6aa3b0e9beb11e0b18ce5b45f6c8e50e930d6ce9))
+* add general info ([#271](https://github.com/zakodium-oss/react-science/issues/271)) ([6f36ab0](https://github.com/zakodium-oss/react-science/commit/6f36ab05af11f848d4ed98eb10c99184a713ae97))
+* add link to mass.json ([d2b58cd](https://github.com/zakodium-oss/react-science/commit/d2b58cd65d5dbc421cf925e774d9484fcc64c70d))
+* adding info about loading new data ([b9d33af](https://github.com/zakodium-oss/react-science/commit/b9d33af5eb262a03f75aef1a7cca484a479438bb))
+
 ## [0.18.0](https://github.com/zakodium-oss/react-science/compare/v0.17.3...v0.18.0) (2022-10-20)
 
 
