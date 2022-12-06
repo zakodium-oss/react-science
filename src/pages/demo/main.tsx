@@ -50,14 +50,6 @@ createRoot(document.querySelector('#root') as HTMLDivElement).render(
         <a href="#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Ffull.json">
           All the data we have
         </a>
-        <span>| BIG-MAP:</span>
-        <a href="big-map.html">Empty</a>
-        <a href="big-map.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbiologic.json">
-          Data
-        </a>
-        <a href="big-map.html#?filelist=https%3A%2F%2Fzakodium-oss.github.io%2Fanalysis-dataset%2Fbigmap.json">
-          Data (small)
-        </a>
       </div>
       <App />
     </div>
