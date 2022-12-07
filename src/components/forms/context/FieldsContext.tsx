@@ -8,13 +8,11 @@ interface FieldsProps {
 
 interface FieldContext {
   name: string;
-  variant: 'default' | 'small';
 }
 
 interface FieldProps extends FieldsProps {
   name: string;
   label: string;
-  variant?: 'default' | 'small';
 }
 
 const context = createContext<FieldContext | null>(null);
@@ -44,11 +42,11 @@ export function Fields(props: FieldsProps) {
 }
 
 export function Field(props: FieldProps) {
-  const { label, name, children, variant = 'default' } = props;
+  const { label, name, children } = props;
 
   const memoized = useMemo(() => {
-    return { name, variant };
-  }, [name, variant]);
+    return { name };
+  }, [name]);
 
   return (
     <context.Provider value={memoized}>

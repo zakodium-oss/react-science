@@ -18,6 +18,7 @@ const InputStyled = styled.input<{ variant: 'default' | 'small' }>`
   border-radius: ${(props) => (props.variant === 'default' ? '6px' : '4px')};
   transition: all 0.2s;
   border: 1px solid #d9d9d9;
+  outline: none;
 
   :hover {
     border-color: #4096ff;
@@ -32,14 +33,9 @@ export interface InputProps
 
 export function Input(props: InputProps) {
   const { variant = 'default', ...otherProps } = props;
-  const { name, variant: variantContext } = useFieldsContext();
+  const { name } = useFieldsContext();
 
   return (
-    <InputStyled
-      id={name}
-      name={name}
-      variant={variant || variantContext}
-      {...otherProps}
-    />
+    <InputStyled id={name} name={name} variant={variant} {...otherProps} />
   );
 }

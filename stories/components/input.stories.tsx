@@ -47,23 +47,35 @@ export function VariantExample() {
   );
 }
 
-export function VariantContext() {
+export function VariantWithLabelExample() {
+  const [state, setState] = useState('Hello, World!');
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    setState(event.target.value);
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
-      <div>
-        <Fields>
-          <Field name="inputLabel" label="Label" variant="default">
-            <Input placeholder="default example" />
-          </Field>
-        </Fields>
-      </div>
-      <div>
-        <Fields>
-          <Field name="inputLabel" label="Label" variant="small">
-            <Input placeholder="default but override" variant="default" />
-          </Field>
-        </Fields>
-      </div>
+      <Fields>
+        <Field name="inputLabel" label="Label">
+          <Input
+            placeholder="Label example"
+            value={state}
+            onChange={onChange}
+            variant="default"
+          />
+        </Field>
+      </Fields>
+      <Fields>
+        <Field name="inputLabel" label="Label">
+          <Input
+            placeholder="Label example"
+            value={state}
+            onChange={onChange}
+            variant="small"
+          />
+        </Field>
+      </Fields>
     </div>
   );
 }
