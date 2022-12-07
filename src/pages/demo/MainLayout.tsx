@@ -122,71 +122,48 @@ export default function MainLayout() {
       </Header>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'row',
           flex: 1,
         }}
       >
-        <div>
-          <Toolbar orientation="vertical">
-            <Toolbar.Item title="Glasses" active>
-              <FaGlasses />
-            </Toolbar.Item>
-            <Toolbar.Item title="Open in large mode">
-              <FaTabletAlt />
-            </Toolbar.Item>
-          </Toolbar>
-        </div>
-        <div
-          style={{
-            width: '100%',
-            maxHeight: '100%',
-          }}
-        >
-          <SplitPane
-            initialSize="400px"
-            initialClosed={500}
-            controlledSide="end"
+        <SplitPane initialSize="400px" initialClosed={500} controlledSide="end">
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => {
+              // reset the state of your app so the error doesn't happen again
+            }}
           >
-            <ErrorBoundary
-              FallbackComponent={ErrorFallback}
-              onReset={() => {
-                // reset the state of your app so the error doesn't happen again
-              }}
-            >
-              <div
-                style={{
-                  padding: 5,
-                  width: '100%',
-                  height: '100%',
-                }}
-              >
-                {appState.load.isLoading ? (
-                  <div style={{ width: '100%', height: '100%' }}>
-                    <FullSpinner />
-                  </div>
-                ) : (
-                  <DropZoneContainer onDrop={onDrop}>
-                    {measurementKinds.length > 0 ? <ExplorerPlotView /> : null}
-                  </DropZoneContainer>
-                )}
-              </div>
-            </ErrorBoundary>
             <div
               style={{
+                padding: 5,
                 width: '100%',
                 height: '100%',
-                flex: '1 1 0%',
               }}
             >
-              <Accordion>
-                <MeasurementsPanelAccordion />
-                <MeasurementConfigPanelAccordion />
-                <MeasurementInfoPanelAccordion />
-              </Accordion>
+              {appState.load.isLoading ? (
+                <div style={{ width: '100%', height: '100%' }}>
+                  <FullSpinner />
+                </div>
+              ) : (
+                <DropZoneContainer onDrop={onDrop}>
+                  {measurementKinds.length > 0 ? <ExplorerPlotView /> : null}
+                </DropZoneContainer>
+              )}
             </div>
-          </SplitPane>
-        </div>
+          </ErrorBoundary>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              flex: '1 1 0%',
+            }}
+          >
+            <Accordion>
+              <MeasurementsPanelAccordion />
+              <MeasurementConfigPanelAccordion />
+              <MeasurementInfoPanelAccordion />
+            </Accordion>
+          </div>
+        </SplitPane>
       </div>
     </div>
   );
