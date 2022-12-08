@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.2](https://github.com/zakodium-oss/react-science/compare/v0.19.1...v0.19.2) (2022-12-08)
+
+
+### Bug Fixes
+
+* improve size of elements in IV plot view ([9cfcd9a](https://github.com/zakodium-oss/react-science/commit/9cfcd9a314d35fc79eaad21a278dcee4366a4856))
+
 ## [0.19.1](https://github.com/zakodium-oss/react-science/compare/v0.19.0...v0.19.1) (2022-12-05)
 
 
