@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-import { Input, Fields, Field, Button } from '../../src/components';
+import { Input, Fields, Field } from '../../src/components';
 
 export default {
   title: 'Forms / Input',

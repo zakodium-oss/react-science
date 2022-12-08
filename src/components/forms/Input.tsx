@@ -55,6 +55,11 @@ const TrailingStyled = styled.div<{ variant: 'default' | 'small' }>`
     props.variant === 'default' ? '4px 11px 4px 11px' : '0px 7px 0px 7px'};
 `;
 
+const GroupStyled = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   variant?: 'default' | 'small';
@@ -66,9 +71,7 @@ export function Input(props: InputProps) {
   const { name } = useFieldsContext();
 
   return (
-    <div
-      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-    >
+    <GroupStyled>
       <InputStyled
         id={name}
         name={name}
@@ -79,6 +82,6 @@ export function Input(props: InputProps) {
       {trailingAddon && (
         <TrailingStyled variant={variant}>{trailingAddon}</TrailingStyled>
       )}
-    </div>
+    </GroupStyled>
   );
 }
