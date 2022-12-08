@@ -27,7 +27,9 @@ export default function IvPlotVariablesSelector() {
   const options = Array.from(allOptions);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'row', gap: 5, fontSize: 18 }}
+    >
       <MeasurementVariableSelect
         label="Y variable"
         value={ivPlot.yVariable || ''}
