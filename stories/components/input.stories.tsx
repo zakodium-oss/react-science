@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-import { Input, Fields, Field } from '../../src/components';
+import { Input, Fields, Field, Button } from '../../src/components';
 
 export default {
   title: 'Forms / Input',
@@ -77,5 +77,25 @@ export function VariantWithLabelExample() {
         </Field>
       </Fields>
     </div>
+  );
+}
+
+export function WithTrailingAddonDefaultVariant() {
+  return <Input placeholder="Basic example" trailingAddon={<p>€</p>} />;
+}
+
+export function WithTrailingAddonSmallVariant() {
+  return (
+    <Input
+      placeholder="Basic example"
+      trailingAddon={<p>€</p>}
+      variant="small"
+    />
+  );
+}
+
+export function WithTrailingAddonButton() {
+  return (
+    <Input placeholder="With Button" trailingAddon={<p>Hello, World!</p>} />
   );
 }
