@@ -21,6 +21,7 @@ export function IvPlotView() {
       <VerticalToolbar />
       <div
         css={css`
+          padding: 5px;
           flex: 1;
           display: flex;
           flex-direction: column;

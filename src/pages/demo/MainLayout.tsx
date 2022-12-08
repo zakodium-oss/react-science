@@ -1,12 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import {
-  FaBook,
-  FaCogs,
-  FaGlasses,
-  FaMeteor,
-  FaSave,
-  FaTabletAlt,
-} from 'react-icons/fa';
+import { FaBook, FaCogs, FaMeteor, FaSave } from 'react-icons/fa';
 import { useKbsGlobal } from 'react-kbs';
 
 import {
@@ -134,7 +127,6 @@ export default function MainLayout() {
           >
             <div
               style={{
-                padding: 5,
                 width: '100%',
                 height: '100%',
               }}
