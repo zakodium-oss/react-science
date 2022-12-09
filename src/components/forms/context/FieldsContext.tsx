@@ -13,6 +13,8 @@ interface FieldContext {
 interface FieldProps extends FieldsProps {
   name: string;
   label: string;
+
+  required?: boolean;
 }
 
 const context = createContext<FieldContext | null>(null);
@@ -23,6 +25,9 @@ const styles = {
     flex-direction: row;
     gap: 5px;
     align-items: center;
+  `,
+  required: css`
+    color: red;
   `,
 };
 
@@ -42,7 +47,7 @@ export function Fields(props: FieldsProps) {
 }
 
 export function Field(props: FieldProps) {
-  const { label, name, children } = props;
+  const { label, name, children, required } = props;
 
   const memoized = useMemo(() => {
     return { name };
@@ -51,7 +56,9 @@ export function Field(props: FieldProps) {
   return (
     <context.Provider value={memoized}>
       <div css={styles.root}>
-        <label htmlFor={name}>{label}: </label>
+        <label htmlFor={name}>
+          {label} {required && <span css={styles.required}>*</span>}:{' '}
+        </label>
         {children}
       </div>
     </context.Provider>
