@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
 
 import { Input, Fields, Field } from '../../src/components';
@@ -6,7 +7,19 @@ export default {
   title: 'Forms / Input',
 };
 
-export function BasicExample() {
+const ExampleContainerAddonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const ExampleGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+`;
+
+export function Basic() {
   const [state, setState] = useState('Hello, World!');
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -14,11 +27,19 @@ export function BasicExample() {
   }
 
   return (
-    <Input placeholder="Basic example" value={state} onChange={onChange} />
+    <ExampleGroup>
+      <Input placeholder="Basic example" value={state} onChange={onChange} />
+      <Input
+        placeholder="Basic example"
+        value={state}
+        onChange={onChange}
+        variant="small"
+      />
+    </ExampleGroup>
   );
 }
 
-export function LabelExample() {
+export function Required() {
   const [state, setState] = useState('Hello, World!');
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -27,27 +48,28 @@ export function LabelExample() {
 
   return (
     <Fields>
-      <Field name="inputLabel" label="Label">
-        <Input placeholder="Label example" value={state} onChange={onChange} />
-      </Field>
+      <ExampleGroup>
+        <Field name="inputLabel" label="Label" required>
+          <Input
+            placeholder="Label example"
+            value={state}
+            onChange={onChange}
+          />
+        </Field>
+        <Field name="inputLabel" label="Label" required>
+          <Input
+            placeholder="Label example"
+            value={state}
+            onChange={onChange}
+            variant="small"
+          />
+        </Field>
+      </ExampleGroup>
     </Fields>
   );
 }
 
-export function VariantExample() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
-      <div>
-        <Input placeholder="Small variant" variant="small" />
-      </div>
-      <div>
-        <Input placeholder="Default variant" variant="default" />
-      </div>
-    </div>
-  );
-}
-
-export function VariantWithLabelExample() {
+export function Label() {
   const [state, setState] = useState('Hello, World!');
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -55,18 +77,15 @@ export function VariantWithLabelExample() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
-      <Fields>
+    <Fields>
+      <ExampleGroup>
         <Field name="inputLabel" label="Label">
           <Input
             placeholder="Label example"
             value={state}
             onChange={onChange}
-            variant="default"
           />
         </Field>
-      </Fields>
-      <Fields>
         <Field name="inputLabel" label="Label">
           <Input
             placeholder="Label example"
@@ -75,27 +94,76 @@ export function VariantWithLabelExample() {
             variant="small"
           />
         </Field>
-      </Fields>
-    </div>
+      </ExampleGroup>
+    </Fields>
   );
 }
 
-export function WithTrailingAddonDefaultVariant() {
-  return <Input placeholder="Basic example" trailingAddon={<p>€</p>} />;
-}
-
-export function WithTrailingAddonSmallVariant() {
+export function WithTrailingAddon() {
   return (
-    <Input
-      placeholder="Basic example"
-      trailingAddon={<p>€</p>}
-      variant="small"
-    />
+    <ExampleContainerAddonGroup>
+      <ExampleGroup>
+        <Input placeholder="Basic example" trailingAddon={<p>€</p>} />
+
+        <Input
+          placeholder="Basic example"
+          trailingAddon={<p>€</p>}
+          variant="small"
+        />
+      </ExampleGroup>
+      <ExampleGroup>
+        <Input placeholder="Basic example" trailingInlineAddon={<p>€</p>} />
+
+        <Input
+          placeholder="Basic example"
+          trailingInlineAddon={<p>€</p>}
+          variant="small"
+        />
+      </ExampleGroup>
+    </ExampleContainerAddonGroup>
   );
 }
 
-export function WithTrailingAddonButton() {
+export function WithLeadingAddon() {
   return (
-    <Input placeholder="With Button" trailingAddon={<p>Hello, World!</p>} />
+    <ExampleContainerAddonGroup>
+      <ExampleGroup>
+        <Input placeholder="Basic example" leadingAddon={<p>€</p>} />
+
+        <Input
+          placeholder="Basic example"
+          leadingAddon={<p>€</p>}
+          variant="small"
+        />
+      </ExampleGroup>
+      <ExampleGroup>
+        <Input placeholder="Basic example" leadingInlineAddon={<p>€</p>} />
+
+        <Input
+          placeholder="Basic example"
+          leadingInlineAddon={<p>€</p>}
+          variant="small"
+        />
+      </ExampleGroup>
+    </ExampleContainerAddonGroup>
+  );
+}
+
+export function WithLeadingAndTrailingAddon() {
+  return (
+    <ExampleGroup>
+      <Input
+        placeholder="Basic example"
+        leadingAddon={<p>€</p>}
+        trailingAddon={<p>€</p>}
+      />
+
+      <Input
+        placeholder="Basic example"
+        leadingAddon={<p>€</p>}
+        trailingAddon={<p>€</p>}
+        variant="small"
+      />
+    </ExampleGroup>
   );
 }
