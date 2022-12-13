@@ -12,16 +12,26 @@ interface StyledProps {
   hasInlineLeading: boolean;
 }
 
+const GroupStyled = styled.div`
+  display: flex;
+  align-items: center;
+
+  --custom-border-color: rgb(217, 217, 217);
+  :hover {
+    --custom-border-color: #4096ff;
+  }
+`;
+
 const lineHeight = 4 / 7;
 const InputStyled = styled.input<StyledProps>`
-  border-top: solid 1px rgb(217, 217, 217);
-  border-bottom: solid 1px rgb(217, 217, 217);
+  border-top: solid 1px var(--custom-border-color);
+  border-bottom: solid 1px var(--custom-border-color);
 
   border-left: ${(props) =>
-    props.hasInlineLeading ? 'none' : 'solid 1px rgb(217, 217, 217)'};
+    props.hasInlineLeading ? 'none' : 'solid 1px var(--custom-border-color)'};
 
   border-right: ${(props) =>
-    props.hasInlineTrailing ? 'none' : 'solid 1px rgb(217, 217, 217)'};
+    props.hasInlineTrailing ? 'none' : 'solid 1px var(--custom-border-color)'};
 
   font-size: 14px;
   line-height: ${lineHeight}px;
@@ -30,12 +40,14 @@ const InputStyled = styled.input<StyledProps>`
   width: 100%;
 
   :hover {
-    border-color: #4096ff;
+    // --custom-border-color: #4096ff;
+
+    border-color: var(--custom-border-color);
     border-inline-end-width: 1px;
   }
 
   :focus {
-    border-color: #4096ff;
+    border-color: var(--custom-border-color);
     border-inline-end-width: 1px;
   }
 
@@ -56,36 +68,8 @@ const InputStyled = styled.input<StyledProps>`
       : '0 7px'};
 `;
 
-function getBorderStyle(
-  hasLeading: boolean,
-  hasTrailing: boolean,
-  variant: StyledProps['variant'],
-) {
-  const isSmall = variant === 'small';
-
-  if (hasTrailing && hasLeading) {
-    return '0px';
-  }
-
-  if (isSmall) {
-    if (hasTrailing) {
-      return '4px 0px 0px 4px';
-    } else if (hasLeading) {
-      return '0px 4px 4px 0px';
-    } else {
-      return '4px';
-    }
-  } else if (hasTrailing) {
-    return '7px 0px 0px 7px';
-  } else if (hasLeading) {
-    return '0px 7px 7px 0px';
-  } else {
-    return '7px';
-  }
-}
-
 const TrailingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
-  border: 1px solid rgb(217, 217, 217);
+  border: 1px solid var(--custom-border-color);
   border-left: none;
   display: inline-block;
   font-size: 14px;
@@ -102,7 +86,7 @@ const TrailingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
 `;
 
 const LeadingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
-  border: 1px solid rgb(217, 217, 217);
+  border: 1px solid var(--custom-border-color);
   border-right: none;
   display: inline-block;
   font-size: 14px;
@@ -116,11 +100,6 @@ const LeadingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
 
   padding: ${(props) =>
     props.variant === 'default' ? '4px 11px 4px 11px' : '0px 7px 0px 7px'};
-`;
-
-const GroupStyled = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 interface RenderAddon {
@@ -191,4 +170,32 @@ function renderTrailingAddon(
   return (
     <TrailingAddonStyled variant={variant}>{render()}</TrailingAddonStyled>
   );
+}
+
+function getBorderStyle(
+  hasLeading: boolean,
+  hasTrailing: boolean,
+  variant: StyledProps['variant'],
+) {
+  const isSmall = variant === 'small';
+
+  if (hasTrailing && hasLeading) {
+    return '0px';
+  }
+
+  if (isSmall) {
+    if (hasTrailing) {
+      return '4px 0px 0px 4px';
+    } else if (hasLeading) {
+      return '0px 4px 4px 0px';
+    } else {
+      return '4px';
+    }
+  } else if (hasTrailing) {
+    return '7px 0px 0px 7px';
+  } else if (hasLeading) {
+    return '0px 7px 7px 0px';
+  } else {
+    return '7px';
+  }
 }
