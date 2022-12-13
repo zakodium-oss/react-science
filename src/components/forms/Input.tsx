@@ -40,13 +40,13 @@ const InputStyled = styled.input<StyledProps>`
   width: 100%;
 
   :hover {
-    // --custom-border-color: #4096ff;
-
     border-color: var(--custom-border-color);
     border-inline-end-width: 1px;
   }
 
   :focus {
+    --custom-border-color: #4096ff;
+
     border-color: var(--custom-border-color);
     border-inline-end-width: 1px;
   }
