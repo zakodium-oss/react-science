@@ -17,7 +17,9 @@ const GroupStyled = styled.div`
   align-items: center;
 
   --custom-border-color: rgb(217, 217, 217);
-  :hover {
+
+  :hover,
+  :focus-within {
     --custom-border-color: #4096ff;
   }
 `;
@@ -45,7 +47,7 @@ const InputStyled = styled.input<StyledProps>`
   }
 
   :focus {
-    --custom-border-color: #4096ff;
+    // --custom-border-color: #4096ff;
 
     border-color: var(--custom-border-color);
     border-inline-end-width: 1px;
@@ -103,7 +105,7 @@ const LeadingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
 `;
 
 interface RenderAddon {
-  render: () => ReactNode;
+  addon: ReactNode;
   inline?: boolean;
 }
 
@@ -152,9 +154,9 @@ function renderLeadingAddon(
     return null;
   }
 
-  const { render } = addon;
+  const { addon: render } = addon;
 
-  return <LeadingAddonStyled variant={variant}>{render()}</LeadingAddonStyled>;
+  return <LeadingAddonStyled variant={variant}>{render}</LeadingAddonStyled>;
 }
 
 function renderTrailingAddon(
@@ -165,11 +167,9 @@ function renderTrailingAddon(
     return null;
   }
 
-  const { render } = addon;
+  const { addon: render } = addon;
 
-  return (
-    <TrailingAddonStyled variant={variant}>{render()}</TrailingAddonStyled>
-  );
+  return <TrailingAddonStyled variant={variant}>{render}</TrailingAddonStyled>;
 }
 
 function getBorderStyle(
