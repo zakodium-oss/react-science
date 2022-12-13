@@ -7,11 +7,22 @@ interface StyledProps {
   variant: 'default' | 'small';
   hasTrailing: boolean;
   hasLeading: boolean;
+
+  hasInlineTrailing: boolean;
+  hasInlineLeading: boolean;
 }
 
 const lineHeight = 4 / 7;
 const InputStyled = styled.input<StyledProps>`
-  border: solid 1px rgb(217, 217, 217);
+  border-top: solid 1px rgb(217, 217, 217);
+  border-bottom: solid 1px rgb(217, 217, 217);
+
+  border-left: ${(props) =>
+    props.hasInlineLeading ? 'none' : 'solid 1px rgb(217, 217, 217)'};
+
+  border-right: ${(props) =>
+    props.hasInlineTrailing ? 'none' : 'solid 1px rgb(217, 217, 217)'};
+
   font-size: 14px;
   line-height: ${lineHeight}px;
   margin: 0px -1px 0px 0px;
@@ -29,7 +40,11 @@ const InputStyled = styled.input<StyledProps>`
   }
 
   border-radius: ${(props) =>
-    getBorderStyle(props.hasLeading, props.hasTrailing, props.variant)};
+    getBorderStyle(
+      props.hasLeading || props.hasInlineLeading,
+      props.hasTrailing || props.hasInlineTrailing,
+      props.variant,
+    )};
 
   padding: ${(props) =>
     props.variant === 'default'
@@ -108,13 +123,16 @@ const GroupStyled = styled.div`
   align-items: center;
 `;
 
+interface RenderAddon {
+  render: () => ReactNode;
+  inline?: boolean;
+}
+
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   variant?: 'default' | 'small';
 
-  leadingAddon?: ReactNode;
-  leadingInlineAddon?: ReactNode;
-  trailingAddon?: ReactNode;
-  trailingInlineAddon?: ReactNode;
+  leadingAddon?: RenderAddon;
+  trailingAddon?: RenderAddon;
 }
 
 export function Input(props: InputProps) {
@@ -122,31 +140,55 @@ export function Input(props: InputProps) {
     variant = 'default',
     trailingAddon,
     leadingAddon,
-    leadingInlineAddon,
     ...otherProps
   } = props;
+
   const { name } = useFieldsContext();
 
   return (
     <GroupStyled>
-      {leadingAddon && (
-        <LeadingAddonStyled variant={variant}>
-          {leadingAddon}
-        </LeadingAddonStyled>
-      )}
+      {renderLeadingAddon(variant, leadingAddon)}
+
       <InputStyled
         id={name}
         name={name}
         variant={variant}
         hasTrailing={trailingAddon !== undefined}
+        hasInlineTrailing={trailingAddon?.inline || false}
         hasLeading={leadingAddon !== undefined}
+        hasInlineLeading={leadingAddon?.inline || false}
         {...otherProps}
       />
-      {trailingAddon && (
-        <TrailingAddonStyled variant={variant}>
-          {trailingAddon}
-        </TrailingAddonStyled>
-      )}
+
+      {renderTrailingAddon(variant, trailingAddon)}
     </GroupStyled>
+  );
+}
+
+function renderLeadingAddon(
+  variant: StyledProps['variant'],
+  addon?: RenderAddon,
+) {
+  if (!addon) {
+    return null;
+  }
+
+  const { render } = addon;
+
+  return <LeadingAddonStyled variant={variant}>{render()}</LeadingAddonStyled>;
+}
+
+function renderTrailingAddon(
+  variant: StyledProps['variant'],
+  addon?: RenderAddon,
+) {
+  if (!addon) {
+    return null;
+  }
+
+  const { render } = addon;
+
+  return (
+    <TrailingAddonStyled variant={variant}>{render()}</TrailingAddonStyled>
   );
 }

@@ -103,20 +103,26 @@ export function WithTrailingAddon() {
   return (
     <ExampleContainerAddonGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" trailingAddon={<p>€</p>} />
+        <Input
+          placeholder="Basic example"
+          trailingAddon={{ render: () => <p>A</p> }}
+        />
 
         <Input
           placeholder="Basic example"
-          trailingAddon={<p>€</p>}
+          trailingAddon={{ render: () => <p>A</p> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" trailingInlineAddon={<p>€</p>} />
+        <Input
+          placeholder="Basic example"
+          trailingAddon={{ render: () => <p>A</p>, inline: true }}
+        />
 
         <Input
           placeholder="Basic example"
-          trailingInlineAddon={<p>€</p>}
+          trailingAddon={{ render: () => <p>A</p>, inline: true }}
           variant="small"
         />
       </ExampleGroup>
@@ -128,20 +134,26 @@ export function WithLeadingAddon() {
   return (
     <ExampleContainerAddonGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" leadingAddon={<p>€</p>} />
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ render: () => <p>A</p> }}
+        />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={<p>€</p>}
+          leadingAddon={{ render: () => <p>A</p> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" leadingInlineAddon={<p>€</p>} />
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ render: () => <p>A</p>, inline: true }}
+        />
 
         <Input
           placeholder="Basic example"
-          leadingInlineAddon={<p>€</p>}
+          leadingAddon={{ render: () => <p>A</p>, inline: true }}
           variant="small"
         />
       </ExampleGroup>
@@ -151,17 +163,52 @@ export function WithLeadingAddon() {
 
 export function WithLeadingAndTrailingAddon() {
   return (
+    <ExampleContainerAddonGroup>
+      <ExampleGroup>
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ render: () => <p>A</p> }}
+          trailingAddon={{ render: () => <p>A</p> }}
+        />
+
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ render: () => <p>A</p> }}
+          trailingAddon={{ render: () => <p>A</p> }}
+          variant="small"
+        />
+      </ExampleGroup>
+      <ExampleGroup>
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ render: () => <p>A</p>, inline: true }}
+          trailingAddon={{ render: () => <p>A</p>, inline: true }}
+        />
+
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ render: () => <p>A</p>, inline: true }}
+          trailingAddon={{ render: () => <p>A</p>, inline: true }}
+          variant="small"
+        />
+      </ExampleGroup>
+    </ExampleContainerAddonGroup>
+  );
+}
+
+export function WithInlineAndNormalAddon() {
+  return (
     <ExampleGroup>
       <Input
         placeholder="Basic example"
-        leadingAddon={<p>€</p>}
-        trailingAddon={<p>€</p>}
+        leadingAddon={{ render: () => <p>€</p>, inline: true }}
+        trailingAddon={{ render: () => <p>€</p>, inline: true }}
       />
 
       <Input
         placeholder="Basic example"
-        leadingAddon={<p>€</p>}
-        trailingAddon={<p>€</p>}
+        leadingAddon={{ render: () => <p>€</p>, inline: true }}
+        trailingAddon={{ render: () => <p>€</p>, inline: true }}
         variant="small"
       />
     </ExampleGroup>
