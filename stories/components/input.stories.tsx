@@ -192,22 +192,3 @@ export function WithLeadingAndTrailingAddon() {
     </ExampleContainerAddonGroup>
   );
 }
-
-export function WithInlineAndNormalAddon() {
-  return (
-    <ExampleGroup>
-      <Input
-        placeholder="Basic example"
-        leadingAddon={{ addon: <p>A</p>, inline: true }}
-        trailingAddon={{ addon: <p>A</p>, inline: true }}
-      />
-
-      <Input
-        placeholder="Basic example"
-        leadingAddon={{ addon: <p>A</p>, inline: true }}
-        trailingAddon={{ addon: <p>A</p>, inline: true }}
-        variant="small"
-      />
-    </ExampleGroup>
-  );
-}

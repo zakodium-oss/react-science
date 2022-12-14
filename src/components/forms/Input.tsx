@@ -35,7 +35,7 @@ const InputStyled = styled.input<StyledProps>`
   border-right: ${(props) =>
     props.hasInlineTrailing ? 'none' : 'solid 1px var(--custom-border-color)'};
 
-  font-size: 14px;
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   line-height: ${lineHeight}px;
   margin: 0px -1px 0px 0px;
   outline: none;
@@ -77,7 +77,7 @@ const TrailingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
   font-size: 14px;
   text-align: center;
 
-  line-height: 17px;
+  line-height: ${(props) => (props.variant === 'small' ? '15px' : '17px')};
   width: min-content;
 
   border-radius: ${(props) =>
@@ -94,7 +94,7 @@ const LeadingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
   font-size: 14px;
   text-align: center;
 
-  line-height: 17px;
+  line-height: ${(props) => (props.variant === 'small' ? '15px' : '17px')};
   width: min-content;
 
   border-radius: ${(props) =>
