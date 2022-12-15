@@ -4,13 +4,14 @@ import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 interface FieldContext {
   name: string;
+  variant: 'default' | 'small';
 }
 
 interface FieldProps {
   name: string;
   label: string;
   children: ReactNode;
-
+  variant?: 'default' | 'small';
   required?: boolean;
 }
 
@@ -39,11 +40,11 @@ export function useFieldsContext() {
 }
 
 export function Field(props: FieldProps) {
-  const { label, name, children, required } = props;
+  const { label, name, children, required, variant } = props;
 
   const memoized = useMemo(() => {
-    return { name };
-  }, [name]);
+    return { name, variant: variant || 'default' };
+  }, [name, variant]);
 
   return (
     <context.Provider value={memoized}>

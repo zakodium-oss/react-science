@@ -74,7 +74,7 @@ const TrailingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
   border: 1px solid var(--custom-border-color);
   border-left: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   text-align: center;
 
   line-height: ${(props) => (props.variant === 'small' ? '15px' : '17px')};
@@ -91,7 +91,7 @@ const LeadingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
   border: 1px solid var(--custom-border-color);
   border-right: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   text-align: center;
 
   line-height: ${(props) => (props.variant === 'small' ? '15px' : '17px')};
@@ -124,7 +124,7 @@ export function Input(props: InputProps) {
     ...otherProps
   } = props;
 
-  const { name } = useFieldsContext();
+  const { name, variant: contextVariant } = useFieldsContext();
 
   return (
     <GroupStyled>
@@ -133,7 +133,7 @@ export function Input(props: InputProps) {
       <InputStyled
         id={name}
         name={name}
-        variant={variant}
+        variant={contextVariant || variant}
         hasTrailing={trailingAddon !== undefined}
         hasInlineTrailing={trailingAddon?.inline || false}
         hasLeading={leadingAddon !== undefined}

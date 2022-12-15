@@ -180,3 +180,18 @@ export function WithLeadingAndTrailingAddon() {
     </ExampleContainerAddonGroup>
   );
 }
+
+export function TwoInputWithOneLabel() {
+  return (
+    <ExampleContainerAddonGroup>
+      <Field label="One label" name="oneLabel">
+        <Input placeholder="a" />
+        <Input placeholder="b" />
+      </Field>
+      <Field label="One label" name="oneLabel" variant="small">
+        <Input placeholder="a" />
+        <Input placeholder="b" />
+      </Field>
+    </ExampleContainerAddonGroup>
+  );
+}
