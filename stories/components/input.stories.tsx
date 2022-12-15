@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
 
-import { Input, Fields, Field } from '../../src/components';
+import { Input, Field } from '../../src/components';
 
 export default {
   title: 'Forms / Input',
@@ -47,25 +47,19 @@ export function Required() {
   }
 
   return (
-    <Fields>
-      <ExampleGroup>
-        <Field name="inputLabel" label="Label" required>
-          <Input
-            placeholder="Label example"
-            value={state}
-            onChange={onChange}
-          />
-        </Field>
-        <Field name="inputLabel" label="Label" required>
-          <Input
-            placeholder="Label example"
-            value={state}
-            onChange={onChange}
-            variant="small"
-          />
-        </Field>
-      </ExampleGroup>
-    </Fields>
+    <ExampleGroup>
+      <Field name="inputLabel" label="Label" required>
+        <Input placeholder="Label example" value={state} onChange={onChange} />
+      </Field>
+      <Field name="inputLabel" label="Label" required>
+        <Input
+          placeholder="Label example"
+          value={state}
+          onChange={onChange}
+          variant="small"
+        />
+      </Field>
+    </ExampleGroup>
   );
 }
 
@@ -77,25 +71,19 @@ export function Label() {
   }
 
   return (
-    <Fields>
-      <ExampleGroup>
-        <Field name="inputLabel" label="Label">
-          <Input
-            placeholder="Label example"
-            value={state}
-            onChange={onChange}
-          />
-        </Field>
-        <Field name="inputLabel" label="Label">
-          <Input
-            placeholder="Label example"
-            value={state}
-            onChange={onChange}
-            variant="small"
-          />
-        </Field>
-      </ExampleGroup>
-    </Fields>
+    <ExampleGroup>
+      <Field name="inputLabel" label="Label">
+        <Input placeholder="Label example" value={state} onChange={onChange} />
+      </Field>
+      <Field name="inputLabel" label="Label">
+        <Input
+          placeholder="Label example"
+          value={state}
+          onChange={onChange}
+          variant="small"
+        />
+      </Field>
+    </ExampleGroup>
   );
 }
 

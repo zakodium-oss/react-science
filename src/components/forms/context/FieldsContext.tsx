@@ -2,17 +2,14 @@
 import { css } from '@emotion/react';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
-interface FieldsProps {
-  children: ReactNode;
-}
-
 interface FieldContext {
   name: string;
 }
 
-interface FieldProps extends FieldsProps {
+interface FieldProps {
   name: string;
   label: string;
+  children: ReactNode;
 
   required?: boolean;
 }
@@ -39,11 +36,6 @@ export function useFieldsContext() {
   }
 
   return ctx;
-}
-
-export function Fields(props: FieldsProps) {
-  const { children } = props;
-  return <>{children}</>;
 }
 
 export function Field(props: FieldProps) {
