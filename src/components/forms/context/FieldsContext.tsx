@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 interface FieldContext {
-  name: string;
+  name?: string;
   variant: 'default' | 'small';
 }
 
@@ -29,11 +29,11 @@ const styles = {
   `,
 };
 
-export function useFieldsContext() {
+export function useFieldsContext(): FieldContext {
   const ctx = useContext(context);
 
   if (!ctx) {
-    return { name: undefined, variant: undefined };
+    return { name: undefined, variant: 'default' };
   }
 
   return ctx;

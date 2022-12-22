@@ -117,23 +117,18 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input(props: InputProps) {
-  const {
-    variant = 'default',
-    trailingAddon,
-    leadingAddon,
-    ...otherProps
-  } = props;
+  const { variant, trailingAddon, leadingAddon, ...otherProps } = props;
 
   const { name, variant: contextVariant } = useFieldsContext();
 
   return (
     <GroupStyled>
-      {renderLeadingAddon(variant, leadingAddon)}
+      {renderLeadingAddon(variant || contextVariant, leadingAddon)}
 
       <InputStyled
         id={name}
         name={name}
-        variant={contextVariant || variant}
+        variant={variant || contextVariant}
         hasTrailing={trailingAddon !== undefined}
         hasInlineTrailing={trailingAddon?.inline || false}
         hasLeading={leadingAddon !== undefined}
@@ -141,7 +136,7 @@ export function Input(props: InputProps) {
         {...otherProps}
       />
 
-      {renderTrailingAddon(variant, trailingAddon)}
+      {renderTrailingAddon(variant || contextVariant, trailingAddon)}
     </GroupStyled>
   );
 }
