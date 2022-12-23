@@ -24,7 +24,7 @@ const GroupStyled = styled.div`
   }
 `;
 
-function getSpecialSize(props: any) {
+function getSpecialSize(props: Pick<StyledProps, 'variant'>) {
   return {
     fontSize: props.variant === 'small' ? '1em' : '1.125em',
     lineHeight: props.variant === 'small' ? '15px' : '17px',
