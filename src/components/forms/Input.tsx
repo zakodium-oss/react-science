@@ -24,7 +24,13 @@ const GroupStyled = styled.div`
   }
 `;
 
-const lineHeight = 4 / 7;
+function getSpecialSize(props: any) {
+  return {
+    fontSize: props.variant === 'small' ? '1em' : '1.125em',
+    lineHeight: props.variant === 'small' ? '15px' : '17px',
+  };
+}
+
 const InputStyled = styled.input<StyledProps>`
   border-top: solid 1px var(--custom-border-color);
   border-bottom: solid 1px var(--custom-border-color);
@@ -35,8 +41,8 @@ const InputStyled = styled.input<StyledProps>`
   border-right: ${(props) =>
     props.hasInlineTrailing ? 'none' : 'solid 1px var(--custom-border-color)'};
 
-  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
-  line-height: ${lineHeight}px;
+  font-size: ${(props) => getSpecialSize(props).fontSize};
+  line-height: ${(props) => getSpecialSize(props).lineHeight};
   margin: 0px -1px 0px 0px;
   outline: none;
   width: 100%;
@@ -47,8 +53,6 @@ const InputStyled = styled.input<StyledProps>`
   }
 
   :focus {
-    // --custom-border-color: #4096ff;
-
     border-color: var(--custom-border-color);
     border-inline-end-width: 1px;
   }
@@ -74,10 +78,11 @@ const TrailingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
   border: 1px solid var(--custom-border-color);
   border-left: none;
   display: inline-block;
-  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   text-align: center;
 
-  line-height: ${(props) => (props.variant === 'small' ? '15px' : '17px')};
+  font-size: ${(props) => getSpecialSize(props).fontSize};
+  line-height: ${(props) => getSpecialSize(props).lineHeight};
+
   width: min-content;
 
   border-radius: ${(props) =>
@@ -91,10 +96,10 @@ const LeadingAddonStyled = styled.div<Pick<StyledProps, 'variant'>>`
   border: 1px solid var(--custom-border-color);
   border-right: none;
   display: inline-block;
-  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   text-align: center;
 
-  line-height: ${(props) => (props.variant === 'small' ? '15px' : '17px')};
+  font-size: ${(props) => getSpecialSize(props).fontSize};
+  line-height: ${(props) => getSpecialSize(props).lineHeight};
   width: min-content;
 
   border-radius: ${(props) =>
