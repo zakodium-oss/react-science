@@ -5,11 +5,8 @@ import { useFieldsContext } from './context/FieldsContext';
 
 interface StyledProps {
   variant: 'default' | 'small';
-  hasTrailing: boolean;
   hasLeading: boolean;
-
-  hasInlineTrailing: boolean;
-  hasInlineLeading: boolean;
+  hasTrailing: boolean;
 }
 
 function getSpecialSize(props: Pick<StyledProps, 'variant'>) {
@@ -19,11 +16,7 @@ function getSpecialSize(props: Pick<StyledProps, 'variant'>) {
   };
 }
 
-const LabelStyled = styled.label<{
-  hasLeading: boolean;
-  hasTrailing: boolean;
-  variant: 'small' | 'default';
-}>`
+const LabelStyled = styled.label<StyledProps>`
   padding: ${(props) =>
     props.variant === 'default'
       ? props.hasTrailing
