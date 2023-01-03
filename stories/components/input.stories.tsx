@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
+import { FaMeteor } from 'react-icons/fa';
 
 import { Input, Field } from '../../src/components';
 
@@ -93,24 +94,24 @@ export function WithTrailingAddon() {
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <p>A</p> }}
+          trailingAddon={{ addon: <FaMeteor /> }}
         />
 
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <p>A</p> }}
+          trailingAddon={{ addon: <FaMeteor /> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <p>A</p>, inline: true }}
+          trailingAddon={{ addon: <FaMeteor />, inline: true }}
         />
 
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <p>A</p>, inline: true }}
+          trailingAddon={{ addon: <FaMeteor />, inline: true }}
           variant="small"
         />
       </ExampleGroup>
@@ -122,23 +123,26 @@ export function WithLeadingAddon() {
   return (
     <ExampleContainerAddonGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" leadingAddon={{ addon: <p>A</p> }} />
+        <Input
+          placeholder="Basic example"
+          leadingAddon={{ addon: <FaMeteor /> }}
+        />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p> }}
+          leadingAddon={{ addon: <FaMeteor /> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p>, inline: true }}
+          leadingAddon={{ addon: <FaMeteor />, inline: true }}
         />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p>, inline: true }}
+          leadingAddon={{ addon: <FaMeteor />, inline: true }}
           variant="small"
         />
       </ExampleGroup>
@@ -152,28 +156,28 @@ export function WithLeadingAndTrailingAddon() {
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p> }}
-          trailingAddon={{ addon: <p>A</p> }}
+          leadingAddon={{ addon: <FaMeteor /> }}
+          trailingAddon={{ addon: <FaMeteor /> }}
         />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p> }}
-          trailingAddon={{ addon: <p>A</p> }}
+          leadingAddon={{ addon: <FaMeteor /> }}
+          trailingAddon={{ addon: <FaMeteor /> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p>, inline: true }}
-          trailingAddon={{ addon: <p>A</p>, inline: true }}
+          leadingAddon={{ addon: <FaMeteor />, inline: true }}
+          trailingAddon={{ addon: <FaMeteor />, inline: true }}
         />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <p>A</p>, inline: true }}
-          trailingAddon={{ addon: <p>A</p>, inline: true }}
+          leadingAddon={{ addon: <FaMeteor />, inline: true }}
+          trailingAddon={{ addon: <FaMeteor />, inline: true }}
           variant="small"
         />
       </ExampleGroup>
