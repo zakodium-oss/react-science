@@ -3,6 +3,7 @@ export * from './button/index';
 export * from './color-picker/index';
 export * from './drop-zone/index';
 export * from './dropdown-menu/index';
+export * from './forms/index';
 export * from './fullscreen/index';
 export * from './header/index';
 export * from './hooks/index';
