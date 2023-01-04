@@ -55,16 +55,22 @@ const LabelStyled = styled.label<StyledProps>`
   border-color: var(--custom-border-color);
 `;
 
-const GroupStyled = styled.div`
+const GroupStyled = styled.div<{ hasError: boolean }>`
   display: flex;
   border-radius: 0.375rem;
   margin-top: 0.25rem;
 
-  --custom-border-color: rgb(217, 217, 217);
+  .addon {
+    color: ${({ hasError }) => hasError && '#f95d55'};
+  }
+
+  --custom-border-color: ${({ hasError }) =>
+    hasError ? '#ffa39e' : 'rgb(217, 217, 217)'};
 
   :hover,
   :focus-within {
-    --custom-border-color: #4096ff;
+    --custom-border-color: ${({ hasError }) =>
+      hasError ? '#f95d55' : '#4096ff'};
   }
 `;
 
@@ -128,41 +134,88 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
   leadingAddon?: RenderAddon;
   trailingAddon?: RenderAddon;
+
+  help?: string;
+  error?: string;
+  valid?: boolean | string;
 }
 
 export function Input(props: InputProps) {
-  const { variant, trailingAddon, leadingAddon, ...otherProps } = props;
+  const {
+    variant,
+    trailingAddon,
+    leadingAddon,
+    help,
+    error,
+    valid,
+    ...otherProps
+  } = props;
 
   const { name, variant: contextVariant } = useFieldsContext();
 
   const hasLeading = (leadingAddon && !leadingAddon.inline) || false;
   const hasTrailing = (trailingAddon && !trailingAddon.inline) || false;
+  const hasError = error !== undefined;
 
   return (
-    <GroupStyled>
-      {leadingAddon && !leadingAddon.inline && (
-        <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
-      )}
-      <LabelStyled
-        variant={variant || contextVariant}
-        hasLeading={hasLeading}
-        hasTrailing={hasTrailing}
-      >
-        {leadingAddon?.inline && (
-          <LeadingInlineAddonStyled>
-            {leadingAddon.addon}
-          </LeadingInlineAddonStyled>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <GroupStyled hasError={hasError}>
+        {leadingAddon && !leadingAddon.inline && (
+          <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
         )}
-        <InputStyled id={name} name={name} {...otherProps} />
-        {trailingAddon?.inline && (
-          <TrailingInlineAddonStyled>
-            {trailingAddon.addon}
-          </TrailingInlineAddonStyled>
+
+        <LabelStyled
+          variant={variant || contextVariant}
+          hasLeading={hasLeading}
+          hasTrailing={hasTrailing}
+        >
+          {leadingAddon?.inline && (
+            <LeadingInlineAddonStyled className="addon">
+              {leadingAddon.addon}
+            </LeadingInlineAddonStyled>
+          )}
+          <InputStyled id={name} name={name} {...otherProps} />
+          {trailingAddon?.inline && (
+            <TrailingInlineAddonStyled className="addon">
+              {trailingAddon.addon}
+            </TrailingInlineAddonStyled>
+          )}
+        </LabelStyled>
+
+        {trailingAddon && !trailingAddon.inline && (
+          <TrailingAddonStyled>{trailingAddon.addon}</TrailingAddonStyled>
         )}
-      </LabelStyled>
-      {trailingAddon && !trailingAddon.inline && (
-        <TrailingAddonStyled>{trailingAddon.addon}</TrailingAddonStyled>
-      )}
-    </GroupStyled>
+      </GroupStyled>
+
+      <SubText error={error} help={help} valid={valid} />
+    </div>
+  );
+}
+
+function SubText(props: Pick<InputProps, 'help' | 'error' | 'valid'>) {
+  const { error, help, valid } = props;
+
+  const hasErrorMessage = error !== undefined;
+  const hasValidMessage = typeof valid === 'string' && valid !== undefined;
+  const hasValidBoolean = typeof valid === 'boolean' && valid !== undefined;
+
+  const textToDisplay = hasErrorMessage
+    ? error
+    : hasValidMessage
+    ? valid
+    : help || undefined;
+
+  return (
+    <p
+      style={{
+        color: hasErrorMessage
+          ? 'red'
+          : hasValidMessage || hasValidBoolean
+          ? 'green'
+          : undefined,
+      }}
+    >
+      {textToDisplay}
+    </p>
   );
 }

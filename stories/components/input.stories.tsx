@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-import { FaMeteor } from 'react-icons/fa';
+import { FaMeteor, FaCcVisa } from 'react-icons/fa';
 
 import { Input, Field } from '../../src/components';
 
@@ -189,7 +189,7 @@ export function TwoInputWithOneLabel() {
   return (
     <ExampleContainerAddonGroup>
       <Field label="One label" name="oneLabel">
-        <Input placeholder="a" />
+        <Input placeholder="a" help="Hello, World!" />
         <Input placeholder="b" />
       </Field>
       <Field label="One label" name="oneLabel" variant="small">
@@ -197,5 +197,24 @@ export function TwoInputWithOneLabel() {
         <Input placeholder="b" />
       </Field>
     </ExampleContainerAddonGroup>
+  );
+}
+
+export function WithHelpMessage() {
+  return (
+    <ExampleGroup>
+      <Input
+        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        placeholder="Error with prefix"
+        help="Help message"
+        valid="Valid string"
+      />
+      <Input
+        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        placeholder="Basic example"
+        help="Help message"
+        error="with error"
+      />
+    </ExampleGroup>
   );
 }
