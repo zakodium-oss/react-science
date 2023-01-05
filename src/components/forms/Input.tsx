@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
 
 import { FullSpinner } from '../index';
 
@@ -57,7 +57,28 @@ const LabelStyled = styled.label<StyledProps>`
   border-color: var(--custom-border-color);
 `;
 
-const GroupStyled = styled.div<{ hasError: boolean }>`
+function getStyleColor(hasError: boolean, hasValid: boolean) {
+  if (hasError) {
+    return {
+      default: '#ffa39e',
+      hover: '#f95d55',
+    };
+  }
+
+  if (hasValid) {
+    return {
+      default: '#6adc24',
+      hover: '#62cb21',
+    };
+  }
+
+  return {
+    default: 'rgb(217, 217, 217)',
+    hover: '#4096ff',
+  };
+}
+
+const GroupStyled = styled.div<{ hasError: boolean; hasValid: boolean }>`
   display: flex;
   border-radius: 0.375rem;
   margin-top: 0.25rem;
@@ -66,13 +87,13 @@ const GroupStyled = styled.div<{ hasError: boolean }>`
     color: ${({ hasError }) => hasError && '#f95d55'};
   }
 
-  --custom-border-color: ${({ hasError }) =>
-    hasError ? '#ffa39e' : 'rgb(217, 217, 217)'};
+  --custom-border-color: ${({ hasError, hasValid }) =>
+    getStyleColor(hasError, hasValid).default};
 
   :hover,
   :focus-within {
-    --custom-border-color: ${({ hasError }) =>
-      hasError ? '#f95d55' : '#4096ff'};
+    --custom-border-color: ${({ hasError, hasValid }) =>
+      getStyleColor(hasError, hasValid).hover};
   }
 `;
 
@@ -145,22 +166,20 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
   help?: string;
   error?: string;
-  valid?: boolean | string;
+  valid?: true | string;
 
-  inputClassName?: string;
   loading?: boolean;
 }
 
 export function Input(props: InputProps) {
   const {
-    variant,
+    variant: variantProps,
     trailingAddon,
     leadingAddon,
     help,
     error,
     valid,
     loading,
-    inputClassName,
     ...otherProps
   } = props;
 
@@ -168,19 +187,17 @@ export function Input(props: InputProps) {
 
   const hasLeading = (leadingAddon && !leadingAddon.inline) || false;
   const hasTrailing = (trailingAddon && !trailingAddon.inline) || false;
-  const hasError = error !== undefined;
-
-  const utilityVariant = variant || contextVariant;
+  const variant = variantProps || contextVariant;
 
   return (
     <RootInput>
-      <GroupStyled hasError={hasError}>
+      <GroupStyled hasError={!!error} hasValid={!!valid}>
         {leadingAddon && !leadingAddon.inline && (
           <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
         )}
 
         <LabelStyled
-          variant={utilityVariant}
+          variant={variant}
           hasLeading={hasLeading}
           hasTrailing={hasTrailing}
         >
@@ -189,12 +206,7 @@ export function Input(props: InputProps) {
               {leadingAddon.addon}
             </LeadingInlineAddonStyled>
           )}
-          <InputStyled
-            id={name}
-            name={name}
-            className={inputClassName}
-            {...otherProps}
-          />
+          <InputStyled id={name} name={name} {...otherProps} />
           {trailingAddon?.inline && (
             <TrailingInlineAddonStyled className="addon">
               {trailingAddon.addon}
@@ -203,11 +215,11 @@ export function Input(props: InputProps) {
 
           {loading && (
             <TrailingInlineAddonStyled
-              style={{ height: utilityVariant === 'default' ? 20 : 10 }}
+              style={{ height: variant === 'default' ? 20 : 10 }}
             >
               <FullSpinner
-                height={utilityVariant === 'default' ? 20 : 10}
-                width={utilityVariant === 'default' ? 20 : 10}
+                height={variant === 'default' ? 20 : 10}
+                width={variant === 'default' ? 20 : 10}
               />
             </TrailingInlineAddonStyled>
           )}
@@ -224,29 +236,25 @@ export function Input(props: InputProps) {
 }
 
 function SubText(props: Pick<InputProps, 'help' | 'error' | 'valid'>) {
-  const { error, help, valid } = props;
+  const { error, help, valid: validProps } = props;
 
-  const hasErrorMessage = error !== undefined;
-  const hasValidMessage = typeof valid === 'string' && valid !== undefined;
-  const hasValidBoolean = typeof valid === 'boolean' && valid !== undefined;
+  const valid = typeof validProps === 'string' ? validProps : undefined;
+  const text = error || valid || help;
 
-  const textToDisplay = hasErrorMessage
-    ? error
-    : hasValidMessage
-    ? valid
-    : help || undefined;
+  return <p style={{ color: getColor(error, validProps) }}>{text}</p>;
+}
 
-  return (
-    <p
-      style={{
-        color: hasErrorMessage
-          ? 'red'
-          : hasValidMessage || hasValidBoolean
-          ? 'green'
-          : undefined,
-      }}
-    >
-      {textToDisplay}
-    </p>
-  );
+function getColor(
+  error?: string,
+  valid?: true | string,
+): CSSProperties['color'] {
+  if (error) {
+    return '#f95d55';
+  }
+
+  if (valid && typeof valid !== 'boolean') {
+    return '#62cb21';
+  }
+
+  return 'gray';
 }
