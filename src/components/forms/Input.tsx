@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
+import { FullSpinner } from '../index';
+
 import { useFieldsContext } from './context/FieldsContext';
 
 interface StyledProps {
@@ -124,6 +126,12 @@ const TrailingInlineAddonStyled = styled.div`
   padding-left: 0.5rem;
 `;
 
+const RootInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+`;
+
 interface RenderAddon {
   addon: ReactNode;
   inline?: boolean;
@@ -138,6 +146,9 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   help?: string;
   error?: string;
   valid?: boolean | string;
+
+  inputClassName?: string;
+  loading?: boolean;
 }
 
 export function Input(props: InputProps) {
@@ -148,6 +159,8 @@ export function Input(props: InputProps) {
     help,
     error,
     valid,
+    loading,
+    inputClassName,
     ...otherProps
   } = props;
 
@@ -157,15 +170,17 @@ export function Input(props: InputProps) {
   const hasTrailing = (trailingAddon && !trailingAddon.inline) || false;
   const hasError = error !== undefined;
 
+  const utilityVariant = variant || contextVariant;
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <RootInput>
       <GroupStyled hasError={hasError}>
         {leadingAddon && !leadingAddon.inline && (
           <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
         )}
 
         <LabelStyled
-          variant={variant || contextVariant}
+          variant={utilityVariant}
           hasLeading={hasLeading}
           hasTrailing={hasTrailing}
         >
@@ -174,10 +189,26 @@ export function Input(props: InputProps) {
               {leadingAddon.addon}
             </LeadingInlineAddonStyled>
           )}
-          <InputStyled id={name} name={name} {...otherProps} />
+          <InputStyled
+            id={name}
+            name={name}
+            className={inputClassName}
+            {...otherProps}
+          />
           {trailingAddon?.inline && (
             <TrailingInlineAddonStyled className="addon">
               {trailingAddon.addon}
+            </TrailingInlineAddonStyled>
+          )}
+
+          {loading && (
+            <TrailingInlineAddonStyled
+              style={{ height: utilityVariant === 'default' ? 20 : 10 }}
+            >
+              <FullSpinner
+                height={utilityVariant === 'default' ? 20 : 10}
+                width={utilityVariant === 'default' ? 20 : 10}
+              />
             </TrailingInlineAddonStyled>
           )}
         </LabelStyled>
@@ -188,7 +219,7 @@ export function Input(props: InputProps) {
       </GroupStyled>
 
       <SubText error={error} help={help} valid={valid} />
-    </div>
+    </RootInput>
   );
 }
 

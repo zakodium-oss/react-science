@@ -207,14 +207,55 @@ export function WithHelpMessage() {
         leadingAddon={{ addon: <FaCcVisa />, inline: true }}
         placeholder="Error with prefix"
         help="Help message"
-        valid="Valid string"
       />
       <Input
         leadingAddon={{ addon: <FaCcVisa />, inline: true }}
-        placeholder="Basic example"
+        placeholder="Error with prefix"
         help="Help message"
-        error="with error"
+        variant="small"
       />
+    </ExampleGroup>
+  );
+}
+
+export function WithErrorMessage() {
+  return (
+    <ExampleGroup>
+      <Input
+        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        placeholder="Error with prefix"
+        error="Error message"
+      />
+      <Input
+        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        placeholder="Error with prefix"
+        error="Error message"
+        variant="small"
+      />
+    </ExampleGroup>
+  );
+}
+
+export function WithValidMessage() {
+  return (
+    <ExampleContainerAddonGroup>
+      <Field label="One label" name="oneLabel">
+        <Input placeholder="a" valid help="help message" />
+        <Input placeholder="b" valid="valid message" />
+      </Field>
+      <Field label="One label" name="oneLabel" variant="small">
+        <Input placeholder="a" valid help="help message" />
+        <Input placeholder="b" valid="valid message" />
+      </Field>
+    </ExampleContainerAddonGroup>
+  );
+}
+
+export function WithSpinner() {
+  return (
+    <ExampleGroup>
+      <Input loading />
+      <Input loading variant="small" />
     </ExampleGroup>
   );
 }

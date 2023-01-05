@@ -1,5 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 
 const spin = keyframes`
   100% {
@@ -7,13 +7,18 @@ const spin = keyframes`
   }
 `;
 
-const spinnerStyle = css`
-  height: 40px;
-  width: 40px;
+interface FullSpinnerProps {
+  width?: number;
+  height?: number;
+}
+
+const Spinner = styled.svg<FullSpinnerProps>`
+  height: ${({ height }) => `${height || 40}px`};
+  width: ${({ width }) => `${width || 40}px`};
   animation: ${spin} 0.8s linear infinite;
 `;
 
-export function FullSpinner() {
+export function FullSpinner(props: FullSpinnerProps) {
   // First div is used when using nextjs/dynamic even after component is loaded
   return (
     <div style={{ height: '100%' }}>
@@ -26,8 +31,8 @@ export function FullSpinner() {
           justifyContent: 'center',
         }}
       >
-        <svg
-          css={spinnerStyle}
+        <Spinner
+          {...props}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -45,7 +50,7 @@ export function FullSpinner() {
             fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           />
-        </svg>
+        </Spinner>
       </div>
     </div>
   );
