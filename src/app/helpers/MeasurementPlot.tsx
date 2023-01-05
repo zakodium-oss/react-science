@@ -31,6 +31,7 @@ export function MeasurementPlot(props: MeasurementPlotProps) {
     </PlotController>
   );
 }
+
 function MeasurementComponent(props: MeasurementPlotProps) {
   const {
     measurementDisplay,

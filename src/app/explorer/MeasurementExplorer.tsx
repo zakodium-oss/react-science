@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
@@ -14,12 +13,36 @@ interface ExplorerInfo {
   flipHorizontalAxis: boolean;
 }
 
+const MeasurementExplorerRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MeasurementExplorerContent = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+`;
+
+const MeasurementExplorerSelect = styled.select`
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 1px;
+  margin-left: 2px;
+`;
+
+const MeasurementExplorerAction = styled.div`
+  padding: 1px;
+  display: flex;
+`;
+
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
   const {
     measurement: { data },
     width = '100%',
     height = '100%',
   } = props;
+
   function defaultInfo(dataIndex: number) {
     const varNames = Object.keys(data[dataIndex].variables);
     return {
@@ -28,10 +51,12 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
       yVariableName: varNames.includes('y') ? 'y' : varNames[1],
     };
   }
+
   const [info, setInfo] = useState<ExplorerInfo>({
     flipHorizontalAxis: false,
     ...defaultInfo(0),
   });
+
   /* variables for this measurement are mapped into `id - label (units)`
     `id` necessary bc files may have repeated labels
   */
@@ -55,30 +80,13 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
       return null;
     });
   }
+
   return (
-    <div
-      style={{ width, height }}
-      css={css`
-        display: flex;
-        flex-direction: column;
-      `}
-    >
-      <div
-        css={css`
-          display: flex;
-          justify-content: space-around;
-          margin-bottom: 20px;
-        `}
-      >
+    <MeasurementExplorerRoot style={{ width, height }}>
+      <MeasurementExplorerContent>
         <div>
           <label>dataIndex: </label>
-          <select
-            css={css`
-              cursor: pointer;
-              border: 1px solid black;
-              padding: 1px;
-              margin-left: 2px;
-            `}
+          <MeasurementExplorerSelect
             onChange={({ target }) => {
               const value = Number(target.value);
               if (value !== undefined && !Number.isNaN(value)) {
@@ -95,17 +103,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
                 {i}
               </option>
             ))}
-          </select>
+          </MeasurementExplorerSelect>
         </div>
         <div>
           <label>xVariable: </label>
-          <select
-            css={css`
-              cursor: pointer;
-              border: 1px solid black;
-              padding: 1px;
-              margin-left: 2px;
-            `}
+          <MeasurementExplorerSelect
             onChange={({ target }) => {
               const value = target.value;
               if (value) {
@@ -115,14 +117,11 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             value={info.xVariableName}
           >
             {dropdownVariables('x')}
-          </select>
+          </MeasurementExplorerSelect>
         </div>
         <div>
           <FaExchangeAlt
-            css={css`
-              margin-top: 2px;
-              cursor: pointer;
-            `}
+            style={{ marginTop: 2, cursor: 'pointer' }}
             size="20"
             onClick={() =>
               setInfo(({ xVariableName, yVariableName, ...info }) => ({
@@ -135,13 +134,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
         </div>
         <div>
           <label>yVariable :</label>
-          <select
-            css={css`
-              cursor: pointer;
-              border: 1px solid black;
-              padding: 1px;
-              margin-left: 2px;
-            `}
+          <MeasurementExplorerSelect
             onChange={({ target }) => {
               const value = target.value;
               if (value) {
@@ -151,22 +144,17 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             value={info.yVariableName}
           >
             {dropdownVariables('y')}
-          </select>
+          </MeasurementExplorerSelect>
         </div>
-        <div
-          css={css`
-            padding: 1px;
-            display: flex;
-          `}
-        >
+        <MeasurementExplorerAction>
           Flip horizontal axis:
           <FaArrowsAltH
-            css={css`
-              cursor: pointer;
-              border: 1px solid black;
-              padding: 1px;
-              margin-left: 2px;
-            `}
+            style={{
+              cursor: 'pointer',
+              border: '1px solid black',
+              padding: 1,
+              marginLeft: 2,
+            }}
             size="28"
             onClick={() =>
               setInfo(({ flipHorizontalAxis, ...other }) => ({
@@ -175,9 +163,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               }))
             }
           />
-        </div>
-      </div>
+        </MeasurementExplorerAction>
+      </MeasurementExplorerContent>
       <MeasurementPlot {...props} {...info} />
-    </div>
+    </MeasurementExplorerRoot>
   );
 }

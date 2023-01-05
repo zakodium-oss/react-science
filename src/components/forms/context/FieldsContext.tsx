@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 interface FieldContext {
@@ -17,17 +16,16 @@ interface FieldProps {
 
 const context = createContext<FieldContext | null>(null);
 
-const styles = {
-  root: css`
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
-  `,
-  required: css`
-    color: red;
-  `,
-};
+const FieldContextRoot = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+`;
+
+const FieldContextRequired = styled.span`
+  color: red;
+`;
 
 export function useFieldsContext(): FieldContext {
   const ctx = useContext(context);
@@ -48,12 +46,12 @@ export function Field(props: FieldProps) {
 
   return (
     <context.Provider value={memoized}>
-      <div css={styles.root}>
+      <FieldContextRoot>
         <label htmlFor={name}>
-          {label} {required && <span css={styles.required}>*</span>}:{' '}
+          {label} {required && <FieldContextRequired>*</FieldContextRequired>}:{' '}
         </label>
         {children}
-      </div>
+      </FieldContextRoot>
     </context.Provider>
   );
 }

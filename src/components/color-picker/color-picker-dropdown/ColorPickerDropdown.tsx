@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useRef } from 'react';
 
 import { useModifiedPopper } from '../../hooks/useModifiedPopper';
@@ -15,21 +14,20 @@ type ColorPickerDropdownProps = Pick<
   'color' | 'presetColors' | 'disableAlpha' | 'onChange' | 'onChangeComplete'
 >;
 
-const colorPickerDropdownCss = {
-  root: css`
-    position: relative;
-    width: 100%;
-    border: 1px solid darkgray;
-    border-radius: 0.25rem;
-    height: 30px;
-    padding: 5px;
-  `,
-  preview: css`
-    height: 100%;
-    width: 100%;
-    border-radius: 0.125rem;
-  `,
-};
+const ColorPickerRoot = styled.button`
+  position: relative;
+  width: 100%;
+  border: 1px solid darkgray;
+  border-radius: 0.25rem;
+  height: 30px;
+  padding: 5px;
+`;
+
+const ColorPickerPreview = styled.div`
+  height: 100%;
+  width: 100%;
+  border-radius: 0.125rem;
+`;
 
 export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
   const { color, ...otherProps } = props;
@@ -49,16 +47,11 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
 
   return (
     <>
-      <button
-        type="button"
-        ref={setReferenceElement}
-        css={colorPickerDropdownCss.root}
-        onClick={toggle}
-      >
-        <div css={colorPickerDropdownCss.preview}>
+      <ColorPickerRoot type="button" ref={setReferenceElement} onClick={toggle}>
+        <ColorPickerPreview>
           <FixedColorPreview color={hex} />
-        </div>
-      </button>
+        </ColorPickerPreview>
+      </ColorPickerRoot>
       {isOpened && (
         <Portal>
           <div

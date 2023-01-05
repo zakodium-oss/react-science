@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useLayoutEffect, useRef } from 'react';
 
 interface MeasurementCheckboxProps {
@@ -8,7 +7,7 @@ interface MeasurementCheckboxProps {
   indeterminate?: boolean;
 }
 
-const checkboxCss = css`
+const InputMeasurementCheckBox = styled.input`
   color: #6366f1;
   border-color: #d1d5db;
   border-radius: 0.25rem;
@@ -28,8 +27,7 @@ export function MeasurementCheckbox(props: MeasurementCheckboxProps) {
   }, [indeterminate]);
 
   return (
-    <input
-      css={checkboxCss}
+    <InputMeasurementCheckBox
       type="checkbox"
       checked={checked}
       onChange={onSelectCheckbox}

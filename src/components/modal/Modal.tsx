@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { ReactElement, ReactNode } from 'react';
 
 import ModalCloseButton from './ModalCloseButton';
@@ -17,6 +16,47 @@ export interface ModalProps {
   height?: number;
 }
 
+const DialogRoot = styled.dialog`
+  display: flex;
+  position: fixed;
+  background-color: transparent;
+
+  ::backdrop {
+    background-color: rgba(113, 113, 122, 0.75);
+  }
+`;
+
+const DialogOpened = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  max-height: 90%;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 0, 0 8px 16px rgba(0, 0, 0, 0.3);
+`;
+
+const ModalHeaderStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 10px 20px;
+  border-bottom: 2px solid rgb(247, 247, 247);
+`;
+
+const ModalBodyStyled = styled.div`
+  display: flex;
+  flex: 1 1 0%;
+  overflow-y: auto;
+`;
+
+const ModalFooterStyled = styled.div`
+  border-top: 2px solid rgb(247, 247, 247);
+  padding: 10px 20px 10px 20px;
+`;
+
 export function Modal(props: ModalProps) {
   const {
     isOpen,
@@ -24,11 +64,12 @@ export function Modal(props: ModalProps) {
     hasCloseButton = true,
     requestCloseOnBackdrop = true,
     requestCloseOnEsc = true,
-    maxWidth,
-    width,
-    height,
     children,
+    width,
+    maxWidth,
+    height,
   } = props;
+
   const { ref, onClick } = useDialog({
     isOpen,
     requestCloseOnEsc,
@@ -37,76 +78,31 @@ export function Modal(props: ModalProps) {
   });
 
   return (
-    <dialog
-      ref={ref}
-      style={{
-        display: 'flex',
-        position: 'fixed',
-        backgroundColor: 'transparent',
-      }}
-      css={css`
-        ::backdrop: rgba(113, 113, 122, 0.75);
-      `}
-      onClick={onClick}
-    >
+    <DialogRoot ref={ref} onClick={onClick}>
       {isOpen ? (
-        <div
+        <DialogOpened
           style={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: 'white',
-            maxHeight: '90%',
-            width: width || '100%',
-            maxWidth: maxWidth || undefined,
+            maxWidth,
             height: height || 'max-content',
-            borderWidth: 1,
-            borderColor: 'transparent',
-            borderRadius: '0.5rem',
-            boxShadow: '0 0 0 0,0 8px 16px rgba(0, 0, 0, 0.3)',
+            width: width || '100%',
           }}
         >
           {children}
           {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
-        </div>
+        </DialogOpened>
       ) : null}
-    </dialog>
+    </DialogRoot>
   );
 }
 
 Modal.Header = function ModalHeader(props: { children: ReactNode }) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '10px 20px 10px 20px',
-        borderBottom: '2px solid rgb(247, 247, 247)',
-      }}
-    >
-      {props.children}
-    </div>
-  );
+  return <ModalHeaderStyled>{props.children}</ModalHeaderStyled>;
 };
 
 Modal.Body = function ModalBody(props: { children: ReactNode }) {
-  return (
-    <div style={{ display: 'flex', flex: '1 1 0%', overflowY: 'auto' }}>
-      {props.children}
-    </div>
-  );
+  return <ModalBodyStyled>{props.children}</ModalBodyStyled>;
 };
 
 Modal.Footer = function ModalFooter(props: { children: ReactNode }) {
-  return (
-    <div
-      style={{
-        borderTop: '2px solid rgb(247, 247, 247)',
-        padding: '10px 20px 10px 20px',
-      }}
-    >
-      {props.children}
-    </div>
-  );
+  return <ModalFooterStyled>{props.children}</ModalFooterStyled>;
 };

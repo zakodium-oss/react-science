@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { type ReactNode, useMemo } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
@@ -16,11 +15,20 @@ import {
 
 import type { MeasurementPlotProps } from './MeasurementPlot';
 
-export function BasicComponent(
-  props: MeasurementPlotProps & {
-    children: ReactNode[] | ReactNode;
-  },
-) {
+interface BasicComponentProps extends MeasurementPlotProps {
+  children: ReactNode[] | ReactNode;
+}
+
+const BasicComponentRoot = styled.div`
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+`;
+
+export function BasicComponent(props: BasicComponentProps) {
   const {
     children,
     measurement,
@@ -38,6 +46,7 @@ export function BasicComponent(
     showVerticalGrid = true,
     flipHorizontalAxis = false,
   } = props;
+
   const {
     info: { title },
     data,
@@ -58,36 +67,32 @@ export function BasicComponent(
 
     return { x, y };
   }, [data, dataIndex, xVariableName, yVariableName]);
+
   const direction = new Set(['vertical', 'horizontal']);
+
   const rectZoom = useRectangularZoom({
     disabled: zoom !== 'rectangular',
   });
+
   const axisZoom = useAxisZoom({
     direction: zoom === 'vertical' ? 'vertical' : 'horizontal',
     disabled: !direction.has(zoom),
   });
+
   useAxisWheelZoom({
     direction: wheelZoom === 'vertical' ? 'vertical' : 'horizontal',
     axisId: wheelZoom === 'vertical' ? 'y' : 'x',
     disabled: !direction.has(wheelZoom),
   });
+
   const crossHairAnnot = useCrossHair({
     disabled: !crossHair,
   });
+
   usePan();
 
   return (
-    <div
-      style={{ width, height }}
-      css={css`
-        user-drag: none;
-        -webkit-user-drag: none;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-      `}
-    >
+    <BasicComponentRoot style={{ width, height }}>
       <ResponsiveChart width={width} height={height}>
         {({ width, height }) => (
           <Plot width={width} height={height}>
@@ -116,6 +121,6 @@ export function BasicComponent(
           </Plot>
         )}
       </ResponsiveChart>
-    </div>
+    </BasicComponentRoot>
   );
 }

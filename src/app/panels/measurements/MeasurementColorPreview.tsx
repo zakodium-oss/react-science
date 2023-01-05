@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useRef } from 'react';
 
 import {
@@ -22,7 +21,7 @@ interface MeasurementColorPreviewProps {
   color: ColorConfig;
 }
 
-const colorPreviewCss = css`
+const ColorPreviewButton = styled.button`
   width: 1em;
   height: 1em;
 `;
@@ -46,14 +45,13 @@ export default function MeasurementColorPreview(
 
   return (
     <>
-      <button
+      <ColorPreviewButton
         type="button"
         ref={setReferenceElement}
-        css={colorPreviewCss}
         onClick={toggle}
       >
         <ColorPreview color={color} />
-      </button>
+      </ColorPreviewButton>
       {isOpened && (
         <Portal>
           <div

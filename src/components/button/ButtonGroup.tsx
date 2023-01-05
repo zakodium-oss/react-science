@@ -1,45 +1,31 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 
-const styles = {
-  root: css`
-    display: inline-flex;
-    border-radius: 0.375rem;
-    isolation: isolate;
-  `,
-  firstButton: css`
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-width: 1px;
-    border-top-left-radius: 0.375rem;
-    border-bottom-left-radius: 0.375rem;
-  `,
-  secondButton: css`
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-width: 1px;
-    border-top-right-radius: 0.375rem;
-    border-bottom-right-radius: 0.375rem;
-    margin-left: -1px;
-  `,
-};
+const ButtonGroupRoot = styled.div`
+  display: inline-flex;
+  border-radius: 0.375rem;
+  isolation: isolate;
+`;
+
+const ButtonGroupCustomButton = styled.button<{ second: boolean }>`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-width: 1px;
+  border-top-left-radius: ${({ second }) => !second && '0.375rem'};
+  border-bottom-left-radius: ${({ second }) => !second && '0.375rem'};
+
+  border-top-right-radius: ${({ second }) => second && '0.375rem'};
+  border-bottom-right-radius: ${({ second }) => second && '0.375rem'};
+  margin-left: ${({ second }) => second && '-1px'};
+`;
 
 interface ButtonGroupProps {
   children: [ReactNode, ReactNode];
@@ -47,7 +33,7 @@ interface ButtonGroupProps {
 
 export function ButtonGroup(props: ButtonGroupProps) {
   const { children } = props;
-  return <div css={styles.root}>{children}</div>;
+  return <ButtonGroupRoot>{children}</ButtonGroupRoot>;
 }
 
 interface ButtonGroupButtonProps {
@@ -60,12 +46,12 @@ ButtonGroup.Button = function ButtonGroupButton(props: ButtonGroupButtonProps) {
   const { position, label, onClick } = props;
 
   return (
-    <button
+    <ButtonGroupCustomButton
       type="button"
       onClick={onClick}
-      css={position === 'first' ? styles.firstButton : styles.secondButton}
+      second={position === 'last'}
     >
       {label}
-    </button>
+    </ButtonGroupCustomButton>
   );
 };

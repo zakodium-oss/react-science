@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { FaCompress } from 'react-icons/fa';
 import { PlotController } from 'react-plot';
 
@@ -9,31 +8,31 @@ import { Toolbar } from '../../../../components/index';
 import IvMeasurementsPlot from './IvMeasurementsPlot';
 import IvPlotVariablesSelector from './IvPlotVariablesSelector';
 
+const IvPlotRoot = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+`;
+
+const PlotRoot = styled.div`
+  padding: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
 export function IvPlotView() {
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-      `}
-    >
+    <IvPlotRoot>
       <VerticalToolbar />
-      <div
-        css={css`
-          padding: 5px;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        `}
-      >
+      <PlotRoot>
         <PlotController>
           <IvMeasurementsPlot />
         </PlotController>
 
         <IvPlotVariablesSelector />
-      </div>
-    </div>
+      </PlotRoot>
+    </IvPlotRoot>
   );
 }
 
