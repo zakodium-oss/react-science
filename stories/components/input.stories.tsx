@@ -200,62 +200,72 @@ export function TwoInputWithOneLabel() {
   );
 }
 
-export function WithHelpMessage() {
-  return (
-    <ExampleGroup>
-      <Input
-        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
-        placeholder="Error with prefix"
-        help="Help message"
-      />
-      <Input
-        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
-        placeholder="Error with prefix"
-        help="Help message"
-        variant="small"
-      />
-    </ExampleGroup>
-  );
-}
-
-export function WithErrorMessage() {
-  return (
-    <ExampleGroup>
-      <Input
-        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
-        placeholder="Error with prefix"
-        error="Error message"
-      />
-      <Input
-        leadingAddon={{ addon: <FaCcVisa />, inline: true }}
-        placeholder="Error with prefix"
-        error="Error message"
-        variant="small"
-      />
-    </ExampleGroup>
-  );
-}
-
-export function WithValidMessage() {
-  return (
-    <ExampleContainerAddonGroup>
-      <Field label="One label" name="oneLabel">
-        <Input placeholder="a" valid help="help message" />
-        <Input placeholder="b" valid="valid message" />
-      </Field>
-      <Field label="One label" name="oneLabel" variant="small">
-        <Input placeholder="a" valid help="help message" />
-        <Input placeholder="b" valid="valid message" />
-      </Field>
-    </ExampleContainerAddonGroup>
-  );
-}
-
 export function WithSpinner() {
   return (
     <ExampleGroup>
       <Input loading />
       <Input loading variant="small" />
     </ExampleGroup>
+  );
+}
+
+export function WithSubtext() {
+  return (
+    <ExampleContainerAddonGroup>
+      <Field label="With help message" name="oneLabel">
+        <Input
+          placeholder="a"
+          help="help message"
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+        <Input
+          placeholder="b"
+          help="help message"
+          variant="small"
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+      </Field>
+      <Field label="With valid message" name="oneLabel">
+        <Input
+          placeholder="a"
+          valid="help message"
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+        <Input
+          placeholder="b"
+          valid="help message"
+          variant="small"
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+      </Field>
+      <Field label="With help message and valid boolean" name="oneLabel">
+        <Input
+          placeholder="a"
+          help="help message"
+          valid
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+        <Input
+          placeholder="b"
+          help="help message"
+          variant="small"
+          valid
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+      </Field>
+      <Field label="With error message" name="oneLabel">
+        <Input
+          placeholder="a"
+          error="error message"
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+        <Input
+          placeholder="b"
+          error="error message"
+          variant="small"
+          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+        />
+      </Field>
+    </ExampleContainerAddonGroup>
   );
 }
