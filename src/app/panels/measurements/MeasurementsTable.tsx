@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { FaTrash } from 'react-icons/fa';
 
 import {
@@ -25,78 +24,75 @@ interface MeasurementsTableRowProps {
   kind: MeasurementsTableProps['kind'];
 }
 
-const styles = {
-  root: css`
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    border-collapse: collapse;
-    table-layout: fixed;
-  `,
-  th: css`
-    border-bottom-width: 1px;
-    font-weight: 500;
-    text-align: left;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-left: 2rem;
-  `,
-  tbody: css`
-    background-color: white;
-  `,
-  tr: css`
-    height: 50px;
-    max-height: 50px;
-    overflow: hidden;
-    cursor: pointer;
-    padding-left: 2rem;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    border-bottom-width: 1px;
+const MeasurementsTableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  `,
-  header: css`
-    border-bottom-width: 1px;
-    font-weight: 500;
-    text-align: left;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-left: 2rem;
-  `,
-  iconsContainer: css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
-    height: 50px;
-    flex-direction: row;
-    gap: 0.5rem;
-    cursor: default;
-    width: 70px;
-  `,
-  linkButton: css`
-    cursor: pointer;
-    :hover {
-      text-decoration: underline;
-    }
-  `,
-  container: css`
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  `,
-  headerColumn: css`
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-    padding-left: 5px;
+const MeasurementsTableRoot = styled.table`
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+`;
 
-    border-bottom: 1px solid black;
-  `,
-};
+const MeasurementsTableHeaderStyled = styled.tr`
+  border-bottom-width: 1px;
+  font-weight: 500;
+  text-align: left;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 2rem;
+`;
+
+const MeasurementsTableBody = styled.tbody`
+  background-color: white;
+`;
+
+const MeasurementsLinkButton = styled.span`
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+const MeasurementsHeaderColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  padding-left: 5px;
+
+  border-bottom: 1px solid black;
+`;
+
+const MeasurementsTableRowData = styled.tr`
+  height: 50px;
+  max-height: 50px;
+  overflow: hidden;
+  cursor: pointer;
+  padding-left: 2rem;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom-width: 1px;
+
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+`;
+
+const MeasurementsIconsContainer = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  height: 50px;
+  flex-direction: row;
+  gap: 0.5rem;
+  cursor: default;
+  width: 70px;
+`;
 
 export function MeasurementsTable(props: MeasurementsTableProps) {
   const { kind } = props;
@@ -126,16 +122,16 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   }
 
   return (
-    <div css={styles.container}>
-      <div css={styles.headerColumn}>
+    <MeasurementsTableContainer>
+      <MeasurementsHeaderColumn>
         <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
         <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
-        <span css={styles.linkButton} onClick={() => onSelectLink(true)}>
+        <MeasurementsLinkButton onClick={() => onSelectLink(true)}>
           Select all
-        </span>
-        <span css={styles.linkButton} onClick={() => onSelectLink(false)}>
+        </MeasurementsLinkButton>
+        <MeasurementsLinkButton onClick={() => onSelectLink(false)}>
           Unselect all
-        </span>
+        </MeasurementsLinkButton>
 
         <FaTrash
           style={
@@ -154,47 +150,48 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
             Remove selected measurements?
           </div>
         </ConfirmModal>
-      </div>
+      </MeasurementsHeaderColumn>
 
-      <table css={styles.root}>
+      <MeasurementsTableRoot>
         <MeasurementsTableHeader />
-        <tbody css={styles.tbody}>
+        <MeasurementsTableBody>
           {measurements[kind].entries.map((element) => (
             <MeasurementsTableRow key={element.id} item={element} kind={kind} />
           ))}
-        </tbody>
-      </table>
-    </div>
+        </MeasurementsTableBody>
+      </MeasurementsTableRoot>
+    </MeasurementsTableContainer>
   );
 }
 
-const tableHeaderStyles = {
-  thStyleEmpty: css`
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    width: 70px;
-  `,
-  thStyleFilename: css`
-    width: 60%;
-  `,
-  thStyleTechnique: css`
-    width: 150px;
-  `,
-  tdName: css`
-    width: 60%;
-    overflow: hidden;
-  `,
-};
+const TableHeaderEmpty = styled.th`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  width: 70px;
+`;
+
+const TableHeaderFilename = styled.th`
+  width: 60%;
+`;
+
+const TableHeaderTechnique = styled.th`
+  width: 150px;
+`;
+
+const TableDataHeaderName = styled.td`
+  width: 60%;
+  overflow: hidden;
+`;
 
 function MeasurementsTableHeader() {
   return (
     <thead>
-      <tr css={styles.header}>
-        <th css={tableHeaderStyles.thStyleEmpty} />
-        <th css={tableHeaderStyles.thStyleFilename}>Filename</th>
-        <th css={tableHeaderStyles.thStyleTechnique}>Technique</th>
-      </tr>
+      <MeasurementsTableHeaderStyled>
+        <TableHeaderEmpty />
+        <TableHeaderFilename>Filename</TableHeaderFilename>
+        <TableHeaderTechnique>Technique</TableHeaderTechnique>
+      </MeasurementsTableHeaderStyled>
     </thead>
   );
 }
@@ -225,8 +222,8 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   }
 
   return (
-    <tr css={styles.tr}>
-      <td css={styles.iconsContainer}>
+    <MeasurementsTableRowData>
+      <MeasurementsIconsContainer>
         <MeasurementVisibilityToggle
           id={item.id}
           isVisible={measurements[item.id].visible}
@@ -240,11 +237,11 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
           checked={selectedMeasurements[kind]?.includes(item.id) || false}
           onSelectCheckbox={onSelectCheckbox}
         />
-      </td>
-      <td css={tableHeaderStyles.tdName} onClick={onSelectRow} title={item.id}>
+      </MeasurementsIconsContainer>
+      <TableDataHeaderName onClick={onSelectRow} title={item.id}>
         {item.info.file?.name ?? item.info.title}
-      </td>
+      </TableDataHeaderName>
       <td onClick={onSelectRow}>{item.meta.technique}</td>
-    </tr>
+    </MeasurementsTableRowData>
   );
 }

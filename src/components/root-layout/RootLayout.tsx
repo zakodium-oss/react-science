@@ -8,7 +8,7 @@ import root from 'react-shadow/emotion.esm';
 import { AccordionProvider } from '../accordion/AccordionContext';
 
 import { RootLayoutProvider } from './RootLayoutContext';
-import { customDivPreflight } from './css-reset/customPreflight';
+import { CustomDivPreflight } from './css-reset/customPreflight';
 import { preflight } from './css-reset/preflight';
 import { queryClient } from './queryClient';
 
@@ -37,17 +37,13 @@ export function RootLayout(props: RootLayoutProps) {
   return (
     <root.div style={{ ...style, ...props.style }}>
       <Global styles={preflight} />
-      <div
-        ref={ref}
-        css={customDivPreflight}
-        style={{ width: '100%', height: '100%', position: 'relative' }}
-      >
+      <CustomDivPreflight ref={ref}>
         <RootLayoutProvider innerRef={rootRef}>
           <QueryClientProvider client={queryClient}>
             <AccordionProvider>{props.children}</AccordionProvider>
           </QueryClientProvider>
         </RootLayoutProvider>
-      </div>
+      </CustomDivPreflight>
     </root.div>
   );
 }

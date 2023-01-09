@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { MouseEventHandler, useCallback, useMemo } from 'react';
+import styled from '@emotion/styled';
+import { CSSProperties, MouseEventHandler, useCallback, useMemo } from 'react';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
@@ -15,41 +14,52 @@ export interface DropZoneProps {
   emptyText?: string;
 }
 
-const dropZoneCss = {
-  root: css`
-    position: relative;
-    height: 100%;
-    width: 100%;
-  `,
-  dragActive: css`
-    font-size: 1.5em;
-    font-weight: 600;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0.7;
-    background-color: white;
-    border: 5px dashed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  `,
-  empty: css`
-    font-size: 1.5em;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 1em;
-    border: 5px dashed;
-    cursor: pointer;
-  `,
-};
+const DropzoneRoot = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+`;
+
+interface DropzoneColorProps {
+  borderColor: CSSProperties['borderColor'];
+  color: CSSProperties['color'];
+}
+
+const DropzoneDragActive = styled.div<DropzoneColorProps>`
+  font-size: 1.5em;
+  font-weight: 600;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  background-color: white;
+  border: 5px dashed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-color: ${({ borderColor }) => borderColor};
+  color: ${({ color }) => color};
+`;
+
+const DropzoneEmpty = styled.div<DropzoneColorProps>`
+  font-size: 1.5em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  border: 5px dashed;
+  cursor: pointer;
+
+  border-color: ${({ borderColor }) => borderColor};
+  color: ${({ color }) => color};
+`;
 
 export function DropZone(props: DropZoneProps) {
   return <DropZoneContent {...props} />;
@@ -102,31 +112,19 @@ function DropZoneContent(
   }, [onClick]);
 
   return (
-    <div {...getRootProps(getPropsOptions)} css={dropZoneCss.root}>
+    <DropzoneRoot {...getRootProps(getPropsOptions)}>
       {children}
       {isDragActive ? (
-        <div
-          css={dropZoneCss.dragActive}
-          style={{
-            borderColor,
-            color,
-          }}
-        >
+        <DropzoneDragActive borderColor={borderColor} color={color}>
           <FaCloudUploadAlt size={70} />
           <p>Drop the files here.</p>
-        </div>
+        </DropzoneDragActive>
       ) : !hasChildren ? (
-        <div
-          css={dropZoneCss.empty}
-          style={{
-            borderColor,
-            color,
-          }}
-        >
+        <DropzoneEmpty borderColor={borderColor} color={color}>
           {emptyText}
-        </div>
+        </DropzoneEmpty>
       ) : null}
       <input {...getInputProps()} />
-    </div>
+    </DropzoneRoot>
   );
 }

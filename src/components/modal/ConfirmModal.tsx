@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 import { Button } from '..';
@@ -19,6 +18,46 @@ interface ConfirmModalProps {
   headerColor: string;
   maxWidth?: number;
 }
+
+const ConfirmModalDialog = styled.dialog`
+  display: flex;
+  position: fixed;
+  background-color: transparent;
+
+  ::backdrop {
+    background-color: rgba(113, 113, 122, 0.75);
+  }
+`;
+
+const ConfirmModalOpened = styled.div<{
+  headerColor: string;
+}>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  max-height: 90%;
+  width: 100%;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 0, 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-top: 10px solid ${({ headerColor }) => headerColor};
+`;
+
+const ConfirmModalChildrenRoot = styled.div<{ headerColor: string }>`
+  color: ${({ headerColor }) => headerColor};
+  display: flex;
+  flex: 1 1 0%;
+`;
+
+const ConfirmModalFooter = styled.div`
+  border-top: 2px solid rgb(247, 247, 247);
+  padding: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+`;
 
 export function ConfirmModal(props: ConfirmModalProps) {
   const {
@@ -43,48 +82,14 @@ export function ConfirmModal(props: ConfirmModalProps) {
   });
 
   return (
-    <dialog
-      ref={ref}
-      style={{
-        display: 'flex',
-        position: 'fixed',
-        backgroundColor: 'transparent',
-      }}
-      css={css`
-        ::backdrop: rgba(113, 113, 122, 0.75);
-      `}
-      onClick={onClick}
-    >
+    <ConfirmModalDialog ref={ref} onClick={onClick}>
       {isOpen ? (
-        <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: 'white',
-            maxHeight: '90%',
-            width: '100%',
-            maxWidth: maxWidth || undefined,
-            borderWidth: 1,
-            borderColor: 'transparent',
-            borderRadius: '0.5rem',
-            boxShadow: '0 0 0 0,0 8px 16px rgba(0, 0, 0, 0.3)',
-            borderTop: `10px solid ${headerColor}`,
-          }}
-        >
-          <div style={{ color: headerColor, display: 'flex', flex: '1 1 0%' }}>
+        <ConfirmModalOpened headerColor={headerColor} style={{ maxWidth }}>
+          <ConfirmModalChildrenRoot headerColor={headerColor}>
             {children}
-          </div>
+          </ConfirmModalChildrenRoot>
 
-          <div
-            style={{
-              borderTop: '2px solid rgb(247, 247, 247)',
-              padding: '10px 20px 10px 20px',
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              gap: 10,
-            }}
-          >
+          <ConfirmModalFooter>
             <Button
               onClick={onConfirm}
               backgroundColor={{
@@ -105,9 +110,9 @@ export function ConfirmModal(props: ConfirmModalProps) {
             >
               {cancelText}
             </Button>
-          </div>
-        </div>
+          </ConfirmModalFooter>
+        </ConfirmModalOpened>
       ) : null}
-    </dialog>
+    </ConfirmModalDialog>
   );
 }
