@@ -7,7 +7,7 @@ const ButtonGroupRoot = styled.div`
   isolation: isolate;
 `;
 
-const ButtonGroupCustomButton = styled.button<{ second: boolean }>`
+const ButtonGroupCustomButton = styled.button<{ isLast: boolean }>`
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -19,12 +19,12 @@ const ButtonGroupCustomButton = styled.button<{ second: boolean }>`
   padding-top: 5px;
   padding-bottom: 5px;
   border-width: 1px;
-  border-top-left-radius: ${({ second }) => !second && '0.375rem'};
-  border-bottom-left-radius: ${({ second }) => !second && '0.375rem'};
+  border-top-left-radius: ${({ isLast }) => !isLast && '0.375rem'};
+  border-bottom-left-radius: ${({ isLast }) => !isLast && '0.375rem'};
 
-  border-top-right-radius: ${({ second }) => second && '0.375rem'};
-  border-bottom-right-radius: ${({ second }) => second && '0.375rem'};
-  margin-left: ${({ second }) => second && '-1px'};
+  border-top-right-radius: ${({ isLast }) => isLast && '0.375rem'};
+  border-bottom-right-radius: ${({ isLast }) => isLast && '0.375rem'};
+  margin-left: ${({ isLast }) => isLast && '-1px'};
 `;
 
 interface ButtonGroupProps {
@@ -49,7 +49,7 @@ ButtonGroup.Button = function ButtonGroupButton(props: ButtonGroupButtonProps) {
     <ButtonGroupCustomButton
       type="button"
       onClick={onClick}
-      second={position === 'last'}
+      isLast={position === 'last'}
     >
       {label}
     </ButtonGroupCustomButton>
