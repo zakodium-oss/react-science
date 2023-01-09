@@ -18,9 +18,32 @@ const context = createContext<FieldContext | null>(null);
 
 const FieldContextRoot = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
   gap: 5px;
+`;
+
+const Label = styled.label`
+  position: relative;
+  display: inline-flex;
   align-items: center;
+  max-width: 100%;
+  height: 32px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: end;
+`;
+
+const LabelContainer = styled.div`
+  flex-grow: 0;
+  display: inline-block;
+  overflow: hidden;
+  text-align: end;
+  vertical-align: middle;
+  white-space: nowrap;
 `;
 
 const FieldContextRequired = styled.span`
@@ -47,9 +70,13 @@ export function Field(props: FieldProps) {
   return (
     <context.Provider value={memoized}>
       <FieldContextRoot>
-        <label htmlFor={name}>
-          {label} {required && <FieldContextRequired>*</FieldContextRequired>}:{' '}
-        </label>
+        <LabelContainer>
+          <Label htmlFor={name}>
+            {label} {required && <FieldContextRequired>*</FieldContextRequired>}
+            :{' '}
+          </Label>
+        </LabelContainer>
+
         {children}
       </FieldContextRoot>
     </context.Provider>

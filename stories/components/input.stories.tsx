@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-import { FaMeteor, FaCcVisa } from 'react-icons/fa';
+import { FaMeteor, FaCcVisa, FaArrowDown } from 'react-icons/fa';
 
 import { Input, Field } from '../../src/components';
 
@@ -267,5 +267,42 @@ export function WithSubtext() {
         />
       </Field>
     </ExampleContainerAddonGroup>
+  );
+}
+
+// CF: https://user-images.githubusercontent.com/4118690/211288659-ee4c5d8d-1d36-47cf-9419-bd2fb2c37866.png
+export function ScreenFromAnt() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Field label="Username" name="username">
+        <Input error="Username is required" placeholder="Please input" />
+      </Field>
+
+      <Field label="Address" name="address">
+        <Input
+          error="Streep is required"
+          leadingAddon={{
+            addon: (
+              <span
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 5,
+                  alignItems: 'center',
+                }}
+              >
+                Zhejiang <FaArrowDown />
+              </span>
+            ),
+          }}
+          placeholder="Input street"
+        />
+      </Field>
+
+      <Field label="BirthDate" name="birth">
+        <Input error="'year' is required" placeholder="Input birth year" />
+        <Input error="'month' is required" placeholder="Input birth month" />
+      </Field>
+    </div>
   );
 }
