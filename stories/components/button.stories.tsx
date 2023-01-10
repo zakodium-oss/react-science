@@ -11,8 +11,12 @@ export function Basic() {
 export function ButtonGroupBasic() {
   return (
     <ButtonGroup>
-      <ButtonGroup.Button position="first" label="A" onClick={() => {}} />
-      <ButtonGroup.Button position="last" label="B" onClick={() => {}} />
+      <ButtonGroup.Button position="first" label="A" onClick={noop} />
+      <ButtonGroup.Button position="last" label="B" onClick={noop} />
     </ButtonGroup>
   );
+}
+
+function noop() {
+  // Do nothing
 }

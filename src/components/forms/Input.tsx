@@ -1,33 +1,30 @@
 import styled from '@emotion/styled';
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
+
+import { FullSpinner } from '../index';
 
 import { useFieldsContext } from './context/FieldsContext';
 
+type InputVariant = 'default' | 'small';
+
 interface StyledProps {
-  variant: 'default' | 'small';
+  variant: InputVariant;
   hasLeading: boolean;
   hasTrailing: boolean;
-}
-
-function getSpecialSize(props: Pick<StyledProps, 'variant'>) {
-  return {
-    fontSize: props.variant === 'small' ? '1em' : '1.125em',
-    lineHeight: props.variant === 'small' ? '15px' : '17px',
-  };
 }
 
 const LabelStyled = styled.label<StyledProps>`
   padding: ${(props) =>
     props.variant === 'default'
       ? props.hasTrailing
-        ? '4px 11px 4px 11px'
-        : '4px 11px'
+        ? '2px 9px 4px 9px'
+        : '2px 9px'
       : props.hasTrailing
-      ? '0px 7px 0px 7px'
-      : '0 7px'};
+      ? '1px 7px 1px 7px'
+      : '1px 7px'};
 
-  font-size: ${(props) => getSpecialSize(props).fontSize};
-  line-height: ${(props) => getSpecialSize(props).lineHeight};
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
+  line-height: '17px';
 
   background-color: white;
   border-width: 1px;
@@ -55,16 +52,43 @@ const LabelStyled = styled.label<StyledProps>`
   border-color: var(--custom-border-color);
 `;
 
-const GroupStyled = styled.div`
+function getStyleColor(hasError: boolean, hasValid: boolean) {
+  if (hasError) {
+    return {
+      default: '#ffa39e',
+      hover: '#f95d55',
+    };
+  }
+
+  if (hasValid) {
+    return {
+      default: '#6adc24',
+      hover: '#62cb21',
+    };
+  }
+
+  return {
+    default: 'rgb(217, 217, 217)',
+    hover: '#4096ff',
+  };
+}
+
+const GroupStyled = styled.div<{ hasError: boolean; hasValid: boolean }>`
   display: flex;
   border-radius: 0.375rem;
   margin-top: 0.25rem;
 
-  --custom-border-color: rgb(217, 217, 217);
+  .addon {
+    color: ${({ hasError }) => hasError && '#f95d55'};
+  }
+
+  --custom-border-color: ${({ hasError, hasValid }) =>
+    getStyleColor(hasError, hasValid).default};
 
   :hover,
   :focus-within {
-    --custom-border-color: #4096ff;
+    --custom-border-color: ${({ hasError, hasValid }) =>
+      getStyleColor(hasError, hasValid).hover};
   }
 `;
 
@@ -118,6 +142,12 @@ const TrailingInlineAddonStyled = styled.div`
   padding-left: 0.5rem;
 `;
 
+const RootInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+`;
+
 interface RenderAddon {
   addon: ReactNode;
   inline?: boolean;
@@ -128,41 +158,98 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
   leadingAddon?: RenderAddon;
   trailingAddon?: RenderAddon;
+
+  help?: string;
+  error?: string;
+  valid?: true | string;
+
+  loading?: boolean;
 }
 
 export function Input(props: InputProps) {
-  const { variant, trailingAddon, leadingAddon, ...otherProps } = props;
+  const {
+    variant: variantProps,
+    trailingAddon,
+    leadingAddon,
+    help,
+    error,
+    valid,
+    loading,
+    ...otherProps
+  } = props;
 
   const { name, variant: contextVariant } = useFieldsContext();
 
   const hasLeading = (leadingAddon && !leadingAddon.inline) || false;
   const hasTrailing = (trailingAddon && !trailingAddon.inline) || false;
+  const variant = variantProps || contextVariant;
 
   return (
-    <GroupStyled>
-      {leadingAddon && !leadingAddon.inline && (
-        <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
-      )}
-      <LabelStyled
-        variant={variant || contextVariant}
-        hasLeading={hasLeading}
-        hasTrailing={hasTrailing}
-      >
-        {leadingAddon?.inline && (
-          <LeadingInlineAddonStyled>
-            {leadingAddon.addon}
-          </LeadingInlineAddonStyled>
+    <RootInput>
+      <GroupStyled hasError={!!error} hasValid={!!valid}>
+        {leadingAddon && !leadingAddon.inline && (
+          <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
         )}
-        <InputStyled id={name} name={name} {...otherProps} />
-        {trailingAddon?.inline && (
-          <TrailingInlineAddonStyled>
-            {trailingAddon.addon}
-          </TrailingInlineAddonStyled>
+
+        <LabelStyled
+          variant={variant}
+          hasLeading={hasLeading}
+          hasTrailing={hasTrailing}
+        >
+          {leadingAddon?.inline && (
+            <LeadingInlineAddonStyled className="addon">
+              {leadingAddon.addon}
+            </LeadingInlineAddonStyled>
+          )}
+          <InputStyled id={name} name={name} {...otherProps} />
+          {trailingAddon?.inline && (
+            <TrailingInlineAddonStyled className="addon">
+              {trailingAddon.addon}
+            </TrailingInlineAddonStyled>
+          )}
+
+          {loading && (
+            <TrailingInlineAddonStyled
+              style={{ height: variant === 'default' ? 20 : 10 }}
+            >
+              <FullSpinner
+                height={variant === 'default' ? 20 : 10}
+                width={variant === 'default' ? 20 : 10}
+              />
+            </TrailingInlineAddonStyled>
+          )}
+        </LabelStyled>
+
+        {trailingAddon && !trailingAddon.inline && (
+          <TrailingAddonStyled>{trailingAddon.addon}</TrailingAddonStyled>
         )}
-      </LabelStyled>
-      {trailingAddon && !trailingAddon.inline && (
-        <TrailingAddonStyled>{trailingAddon.addon}</TrailingAddonStyled>
-      )}
-    </GroupStyled>
+      </GroupStyled>
+
+      <SubText error={error} help={help} valid={valid} />
+    </RootInput>
   );
+}
+
+function SubText(props: Pick<InputProps, 'help' | 'error' | 'valid'>) {
+  const { error, help, valid: validProps } = props;
+
+  const valid = typeof validProps === 'string' ? validProps : undefined;
+  const text = error || valid || help;
+
+  return <p style={{ color: getColor(error, validProps) }}>{text}</p>;
+}
+
+function getColor(
+  error?: string,
+  valid?: true | string,
+): CSSProperties['color'] {
+  if (error) {
+    return '#f95d55';
+  }
+
+  if (valid && typeof valid !== 'boolean') {
+    return '#62cb21';
+  }
+
+  return 'gray';
 }
