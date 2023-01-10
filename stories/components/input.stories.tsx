@@ -1,12 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-import {
-  FaMeteor,
-  FaUser,
-  FaArrowDown,
-  FaBolt,
-  FaShieldAlt,
-} from 'react-icons/fa';
+import { FaMeteor, FaUser, FaBolt, FaShieldAlt } from 'react-icons/fa';
 
 import { Input, Field } from '../../src/components';
 
