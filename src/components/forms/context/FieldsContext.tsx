@@ -26,13 +26,13 @@ const FieldContextRoot = styled.div`
   gap: 5px;
 `;
 
-const Label = styled.label`
+const Label = styled.label<{ variant: FieldProps['variant'] }>`
   position: relative;
   display: inline-flex;
   align-items: center;
   max-width: 100%;
-  height: 32px;
-  font-size: 14px;
+  height: ${(props) => (props.variant === 'small' ? '20px' : '32px')};
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '14px')};
   white-space: nowrap;
   text-align: end;
 `;
@@ -71,7 +71,7 @@ export function Field(props: FieldProps) {
     <context.Provider value={memoized}>
       <FieldContextRoot>
         <LabelContainer>
-          <Label htmlFor={name}>
+          <Label htmlFor={name} variant={memoized.variant}>
             {label} {required && <FieldContextRequired>*</FieldContextRequired>}
             :{' '}
           </Label>

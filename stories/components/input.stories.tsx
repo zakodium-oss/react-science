@@ -52,13 +52,8 @@ export function Required() {
       <Field name="inputLabel" label="Label" required>
         <Input placeholder="Label example" value={state} onChange={onChange} />
       </Field>
-      <Field name="inputLabel" label="Label" required>
-        <Input
-          placeholder="Label example"
-          value={state}
-          onChange={onChange}
-          variant="small"
-        />
+      <Field name="inputLabel" label="Label" required variant="small">
+        <Input placeholder="Label example" value={state} onChange={onChange} />
       </Field>
     </ExampleGroup>
   );
@@ -76,13 +71,8 @@ export function Label() {
       <Field name="inputLabel" label="Label">
         <Input placeholder="Label example" value={state} onChange={onChange} />
       </Field>
-      <Field name="inputLabel" label="Label">
-        <Input
-          placeholder="Label example"
-          value={state}
-          onChange={onChange}
-          variant="small"
-        />
+      <Field name="inputLabel" label="Label" variant="small">
+        <Input placeholder="Label example" value={state} onChange={onChange} />
       </Field>
     </ExampleGroup>
   );
