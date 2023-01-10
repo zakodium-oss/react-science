@@ -27,6 +27,10 @@ const defaultOptions: MenuOptions<string> = [
   { label: 'Default workspace', type: 'option' },
 ];
 
+function noop() {
+  // do nothing
+}
+
 const ButtonStyled = styled.div`
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   color: white;
@@ -55,7 +59,7 @@ export function Dropdown() {
   }, []);
 
   return (
-    <DropdownMenu trigger="click" onSelect={() => {}} options={options}>
+    <DropdownMenu trigger="click" onSelect={noop} options={options}>
       <ButtonStyled>Default workspace</ButtonStyled>
     </DropdownMenu>
   );
@@ -82,7 +86,7 @@ export function ContextDropdown() {
   }, []);
 
   return (
-    <DropdownMenu trigger="contextMenu" onSelect={() => {}} options={options}>
+    <DropdownMenu trigger="contextMenu" onSelect={noop} options={options}>
       <DivContextDropdown tabIndex={1}>
         <p>Hello, World!</p>
       </DivContextDropdown>
@@ -100,7 +104,7 @@ export function WithIcon() {
 
   return (
     <Menu>
-      <MenuItems itemsStatic options={options} onSelect={() => {}} />
+      <MenuItems itemsStatic options={options} onSelect={noop} />
     </Menu>
   );
 }
@@ -112,7 +116,7 @@ export function WithoutIcon() {
 
   return (
     <Menu>
-      <MenuItems itemsStatic options={options} onSelect={() => {}} />
+      <MenuItems itemsStatic options={options} onSelect={noop} />
     </Menu>
   );
 }
@@ -127,7 +131,7 @@ export function WithDisabled() {
 
   return (
     <Menu>
-      <MenuItems itemsStatic options={options} onSelect={() => {}} />
+      <MenuItems itemsStatic options={options} onSelect={noop} />
     </Menu>
   );
 }
@@ -143,7 +147,7 @@ export function WithDivider() {
 
   return (
     <Menu>
-      <MenuItems itemsStatic options={options} onSelect={() => {}} />
+      <MenuItems itemsStatic options={options} onSelect={noop} />
     </Menu>
   );
 }
@@ -179,7 +183,7 @@ export function Complex() {
 
   return (
     <Menu>
-      <MenuItems itemsStatic options={options} onSelect={() => {}} />
+      <MenuItems itemsStatic options={options} onSelect={noop} />
     </Menu>
   );
 }
