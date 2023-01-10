@@ -18,9 +18,8 @@ const context = createContext<FieldContext | null>(null);
 
 const FieldContextRoot = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
   min-width: 0;
-
   margin: 0;
   padding: 0;
   gap: 5px;
@@ -29,10 +28,9 @@ const FieldContextRoot = styled.div`
 const Label = styled.label<{ variant: FieldProps['variant'] }>`
   position: relative;
   display: inline-flex;
-  align-items: center;
   max-width: 100%;
-  height: ${(props) => (props.variant === 'small' ? '20px' : '32px')};
-  font-size: ${(props) => (props.variant === 'small' ? '1em' : '14px')};
+  line-height: ${(props) => (props.variant === 'small' ? '28px' : '32px')};
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   white-space: nowrap;
   text-align: end;
 `;

@@ -5,31 +5,26 @@ import { FullSpinner } from '../index';
 
 import { useFieldsContext } from './context/FieldsContext';
 
+type InputVariant = 'default' | 'small';
+
 interface StyledProps {
-  variant: 'default' | 'small';
+  variant: InputVariant;
   hasLeading: boolean;
   hasTrailing: boolean;
-}
-
-function getSpecialSize(props: Pick<StyledProps, 'variant'>) {
-  return {
-    fontSize: props.variant === 'small' ? '1em' : '1.125em',
-    lineHeight: props.variant === 'small' ? '15px' : '17px',
-  };
 }
 
 const LabelStyled = styled.label<StyledProps>`
   padding: ${(props) =>
     props.variant === 'default'
       ? props.hasTrailing
-        ? '4px 11px 4px 11px'
-        : '4px 11px'
+        ? '2px 9px 4px 9px'
+        : '2px 9px'
       : props.hasTrailing
-      ? '0px 7px 0px 7px'
-      : '0 7px'};
+      ? '1px 7px 1px 7px'
+      : '1px 7px'};
 
-  font-size: ${(props) => getSpecialSize(props).fontSize};
-  line-height: ${(props) => getSpecialSize(props).lineHeight};
+  font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
+  line-height: '17px';
 
   background-color: white;
   border-width: 1px;

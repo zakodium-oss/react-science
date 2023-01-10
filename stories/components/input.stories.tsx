@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-import { FaMeteor, FaCcVisa, FaArrowDown } from 'react-icons/fa';
+import {
+  FaMeteor,
+  FaUser,
+  FaArrowDown,
+  FaBolt,
+  FaShieldAlt,
+} from 'react-icons/fa';
 
 import { Input, Field } from '../../src/components';
 
@@ -84,24 +90,24 @@ export function WithTrailingAddon() {
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <FaMeteor /> }}
+          trailingAddon={{ addon: <FaBolt /> }}
         />
 
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <FaMeteor /> }}
+          trailingAddon={{ addon: <FaBolt /> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <FaMeteor />, inline: true }}
+          trailingAddon={{ addon: <FaBolt />, inline: true }}
         />
 
         <Input
           placeholder="Basic example"
-          trailingAddon={{ addon: <FaMeteor />, inline: true }}
+          trailingAddon={{ addon: <FaBolt />, inline: true }}
           variant="small"
         />
       </ExampleGroup>
@@ -115,24 +121,24 @@ export function WithLeadingAddon() {
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <FaMeteor /> }}
+          leadingAddon={{ addon: <FaShieldAlt /> }}
         />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <FaMeteor /> }}
+          leadingAddon={{ addon: <FaShieldAlt /> }}
           variant="small"
         />
       </ExampleGroup>
       <ExampleGroup>
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <FaMeteor />, inline: true }}
+          leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
         />
 
         <Input
           placeholder="Basic example"
-          leadingAddon={{ addon: <FaMeteor />, inline: true }}
+          leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
           variant="small"
         />
       </ExampleGroup>
@@ -206,26 +212,26 @@ export function WithSubtext() {
         <Input
           placeholder="a"
           help="help message"
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
         <Input
           placeholder="b"
           help="help message"
           variant="small"
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
       </Field>
       <Field label="With valid message" name="oneLabel">
         <Input
           placeholder="a"
           valid="help message"
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
         <Input
           placeholder="b"
           valid="help message"
           variant="small"
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
       </Field>
       <Field label="With help message and valid boolean" name="oneLabel">
@@ -233,27 +239,27 @@ export function WithSubtext() {
           placeholder="a"
           help="help message"
           valid
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
         <Input
           placeholder="b"
           help="help message"
           variant="small"
           valid
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
       </Field>
       <Field label="With error message" name="oneLabel">
         <Input
           placeholder="a"
           error="error message"
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
         <Input
           placeholder="b"
           error="error message"
           variant="small"
-          leadingAddon={{ addon: <FaCcVisa />, inline: true }}
+          leadingAddon={{ addon: <FaUser />, inline: true }}
         />
       </Field>
     </ExampleContainerAddonGroup>
