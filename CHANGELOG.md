@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.20.0](https://github.com/zakodium-oss/react-science/compare/v0.19.2...v0.20.0) (2023-01-18)
+
+
+### Features
+
+* add input component ([#429](https://github.com/zakodium-oss/react-science/issues/429)) ([438bb50](https://github.com/zakodium-oss/react-science/commit/438bb501bd9cb391bbb026d65bdd4a102cffd44e))
+* add validation props to input ([#441](https://github.com/zakodium-oss/react-science/issues/441)) ([086f0b8](https://github.com/zakodium-oss/react-science/commit/086f0b8621c250dd7b23e996924e474693586fec))
+
+
+### Bug Fixes
+
+* use Portal for context menu ([#444](https://github.com/zakodium-oss/react-science/issues/444)) ([c3f8c12](https://github.com/zakodium-oss/react-science/commit/c3f8c127b7aacac1a6f8462659a7751c7275d72f))
+
 ## [0.19.2](https://github.com/zakodium-oss/react-science/compare/v0.19.1...v0.19.2) (2022-12-08)
 
 
