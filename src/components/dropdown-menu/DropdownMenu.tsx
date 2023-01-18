@@ -72,24 +72,26 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
   return (
     <HandleMenuContextDiv onContextMenu={handleContextMenu}>
       {isPopperElementOpen && (
-        <div ref={ref}>
-          <div
-            ref={setPopperElement}
-            style={styles.popper}
-            {...attributes.popper}
-          >
-            <Menu>
-              <MenuItems
-                itemsStatic
-                onSelect={(selected) => {
-                  closePopperElement();
-                  onSelect(selected);
-                }}
-                {...otherProps}
-              />
-            </Menu>
+        <Portal>
+          <div ref={ref}>
+            <div
+              ref={setPopperElement}
+              style={styles.popper}
+              {...attributes.popper}
+            >
+              <Menu>
+                <MenuItems
+                  itemsStatic
+                  onSelect={(selected) => {
+                    closePopperElement();
+                    onSelect(selected);
+                  }}
+                  {...otherProps}
+                />
+              </Menu>
+            </div>
           </div>
-        </div>
+        </Portal>
       )}
 
       {children}
