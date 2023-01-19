@@ -126,8 +126,8 @@ function Item<T>(props: ItemProps<T>) {
     <Menu.Item disabled={option.disabled}>
       {({ active }) => (
         <ItemDiv
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={(event) => {
+            event.stopPropagation();
             onSelect(option);
           }}
           active={active}
