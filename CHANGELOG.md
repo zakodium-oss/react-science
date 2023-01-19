@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.1](https://github.com/zakodium-oss/react-science/compare/v0.20.0...v0.20.1) (2023-01-19)
+
+
+### Bug Fixes
+
+* stop click event propagation on MenuItem ([#446](https://github.com/zakodium-oss/react-science/issues/446)) ([fde9b13](https://github.com/zakodium-oss/react-science/commit/fde9b13d496d957b598d8bf9fc8955f05bff61df))
+
 ## [0.20.0](https://github.com/zakodium-oss/react-science/compare/v0.19.2...v0.20.0) (2023-01-18)
 
 
