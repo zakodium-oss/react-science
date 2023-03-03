@@ -215,11 +215,11 @@ function SplitSide(props: SplitSideProps) {
 }
 
 function parseSize(initialSize: string): [number, SplitPaneType] {
-  const [, value, type] = /(?<value>^\d+)(?<type>.+)$/.exec(
-    initialSize,
-  ) as unknown as [string, string, SplitPaneType];
+  const value = Number.parseFloat(initialSize);
+  // remove numbers and dots from the string
+  const type = initialSize.replace(/[\d .]/g, '') as SplitPaneType;
 
-  return [Number(value), type];
+  return [value, type];
 }
 
 const flexBase = 100;
