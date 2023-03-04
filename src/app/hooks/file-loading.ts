@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { FileCollection, fileCollectionFromWebservice } from 'filelist-utils';
+import { FileCollection, fileCollectionFromWebSource } from 'filelist-utils';
 import { useCallback } from 'react';
 
 import { AppDispatch, useAppDispatch } from '../../app-data/index';
@@ -20,7 +20,13 @@ export function useLoadFileCollectionFromHash(onLoad: LoadFn) {
       if (!filelistUrl) {
         return null;
       }
-      const fileCollection = await fileCollectionFromWebservice(filelistUrl);
+      const request = await fetch(filelistUrl);
+      const data = await request.json();
+      let baseURL = filelistUrl.replace(/\/[^/]*$/, '/');
+      const fileCollection = await fileCollectionFromWebSource({
+        entries: data,
+        baseURL,
+      });
       void onLoad(fileCollection, appDispatch);
       return true;
     },
