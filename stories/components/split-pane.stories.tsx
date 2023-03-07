@@ -47,6 +47,8 @@ export function Control(props: Omit<SplitPaneProps, 'children'>) {
 Control.args = {
   initialSize: '50%',
   initialClosed: false,
+  size: '30%',
+  closed: false,
 };
 
 Control.argTypes = {

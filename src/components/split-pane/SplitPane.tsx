@@ -10,6 +10,7 @@ import {
   useState,
   RefObject,
   useReducer,
+  useEffect,
 } from 'react';
 import useResizeObserver from 'use-resize-observer';
 
@@ -41,6 +42,7 @@ export interface SplitPaneProps {
    * @default '50%'
    */
   initialSize?: SplitPaneSize;
+  size?: SplitPaneSize;
   /**
    * Defines whether the pane is initially closed.
    * A value of `true` means the pane is always initially closed.
@@ -53,6 +55,7 @@ export interface SplitPaneProps {
    * @default false
    */
   initialClosed?: boolean | number;
+  closed?: boolean | number;
   /**
    * Called whenever the user finishes resizing the pane.
    */
@@ -80,23 +83,45 @@ export function SplitPane(props: SplitPaneProps) {
     controlledSide = 'start',
     initialSize = '50%',
     initialClosed = false,
+    size,
+    closed,
     onResize,
     onToggle,
     children,
   } = props;
 
-  const minimumSize = typeof initialClosed === 'number' ? initialClosed : null;
+  const close = closed !== undefined ? closed : initialClosed;
+
+  const minimumSize = typeof close === 'number' ? close : null;
 
   // Whether the pane is explicitly closed. If the value is `false`, the pane
   // may still be currently closed because it is smaller than the minimum size.
   const [isPaneClosed, closePane, openPane] = useOnOff(
-    typeof initialClosed === 'boolean' ? initialClosed : false,
+    typeof close === 'boolean' ? close : false,
   );
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
 
-  const [[size, sizeType], setSize] = useState(() => parseSize(initialSize));
+  const [[splitSize, sizeType], setSize] = useState(() =>
+    parseSize(size || initialSize),
+  );
+
+  useEffect(() => {
+    if (size) {
+      setSize(parseSize(size));
+    }
+  }, [size]);
+
+  useEffect(() => {
+    if (typeof closed === 'boolean') {
+      if (closed) {
+        closePane();
+      } else {
+        openPane();
+      }
+    }
+  }, [closePane, closed, openPane]);
 
   const splitterRef = useRef<HTMLDivElement>(null);
   const { onMouseDown } = useSplitPaneSize({
@@ -148,7 +173,7 @@ export function SplitPane(props: SplitPaneProps) {
       isFinalClosed,
       controlledSide === side,
       direction,
-      size,
+      splitSize,
       sizeType,
     );
   }
@@ -214,10 +239,10 @@ function SplitSide(props: SplitSideProps) {
   return <div style={style}>{children}</div>;
 }
 
-function parseSize(initialSize: string): [number, SplitPaneType] {
-  const value = Number.parseFloat(initialSize);
+function parseSize(size: string): [number, SplitPaneType] {
+  const value = Number.parseFloat(size);
   // remove numbers and dots from the string
-  const type = initialSize.replace(/[\d .]/g, '') as SplitPaneType;
+  const type = size.replace(/[\d .]/g, '') as SplitPaneType;
 
   return [value, type];
 }
