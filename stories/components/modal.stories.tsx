@@ -293,7 +293,7 @@ function DemoPage(props: { openModal: () => void }) {
             height: '300px',
           }}
         >
-          <SplitPane initialSize="35%">
+          <SplitPane size="35%">
             <div style={{ padding: 5 }}>
               <Button
                 onClick={props.openModal}

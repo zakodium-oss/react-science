@@ -38,10 +38,9 @@ export interface SplitPaneProps {
    */
   controlledSide?: SplitPaneSide;
   /**
-   * Initial size of the controlled side. Unit can be either '%' or 'px'.
+   * size of the controlled side. Unit can be either '%' or 'px'.
    * @default '50%'
    */
-  initialSize?: SplitPaneSize;
   size?: SplitPaneSize;
   /**
    * Defines whether the pane is initially closed.
@@ -54,7 +53,6 @@ export interface SplitPaneProps {
    * no longer open or close automatically.
    * @default false
    */
-  initialClosed?: boolean | number;
   closed?: boolean | number;
   /**
    * Called whenever the user finishes resizing the pane.
@@ -81,36 +79,28 @@ export function SplitPane(props: SplitPaneProps) {
   const {
     direction = 'horizontal',
     controlledSide = 'start',
-    initialSize = '50%',
-    initialClosed = false,
-    size,
-    closed,
+    size = '50%',
+    closed = false,
     onResize,
     onToggle,
     children,
   } = props;
 
-  const close = closed !== undefined ? closed : initialClosed;
-
-  const minimumSize = typeof close === 'number' ? close : null;
+  const minimumSize = typeof closed === 'number' ? closed : null;
 
   // Whether the pane is explicitly closed. If the value is `false`, the pane
   // may still be currently closed because it is smaller than the minimum size.
   const [isPaneClosed, closePane, openPane] = useOnOff(
-    typeof close === 'boolean' ? close : false,
+    typeof closed === 'boolean' ? closed : false,
   );
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
 
-  const [[splitSize, sizeType], setSize] = useState(() =>
-    parseSize(size || initialSize),
-  );
+  const [[splitSize, sizeType], setSize] = useState(() => parseSize(size));
 
   useEffect(() => {
-    if (size) {
-      setSize(parseSize(size));
-    }
+    setSize(parseSize(size));
   }, [size]);
 
   useEffect(() => {

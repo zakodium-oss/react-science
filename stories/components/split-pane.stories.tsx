@@ -45,9 +45,7 @@ export function Control(props: Omit<SplitPaneProps, 'children'>) {
 }
 
 Control.args = {
-  initialSize: '50%',
-  initialClosed: false,
-  size: '30%',
+  size: '50%',
   closed: false,
 };
 
@@ -59,7 +57,7 @@ Control.argTypes = {
 export function Vertical() {
   return (
     <div style={{ backgroundColor: 'rgba(165, 180, 252)', height: 400 }}>
-      <SplitPane direction="vertical" initialSize="200px">
+      <SplitPane direction="vertical" size="200px">
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -70,7 +68,7 @@ export function Vertical() {
 export function Horizontal() {
   return (
     <div style={{ backgroundColor: 'rgba(147, 197, 253)', height: 200 }}>
-      <SplitPane direction="horizontal" initialSize="30%">
+      <SplitPane direction="horizontal" size="30%">
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -135,7 +133,7 @@ export function WithEvilChild() {
         height: 300,
       }}
     >
-      <SplitPane direction="horizontal" initialSize="300px">
+      <SplitPane direction="horizontal" size="300px">
         <div>I am a good child. 😊</div>
         <div
           style={{
@@ -153,8 +151,8 @@ export function WithEvilChild() {
 }
 
 export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
-  const { controlledSide, initialClosed } = props;
-  const nbPx = String(initialClosed);
+  const { controlledSide, closed } = props;
+  const nbPx = String(closed);
   return (
     <div
       style={{
@@ -177,8 +175,8 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
 }
 
 WithMinimalSize.args = {
-  initialSize: '500px',
-  initialClosed: 600,
+  size: '500px',
+  closed: 600,
 };
 
 WithMinimalSize.argTypes = {
