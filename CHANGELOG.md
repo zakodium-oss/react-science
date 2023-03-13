@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.21.0](https://github.com/zakodium-oss/react-science/compare/v0.20.1...v0.21.0) (2023-03-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* renamed `initialSize` and `initialClosed` props to `size` and `closed`
+
+### Features
+
+* make SplitPane semi-controlled ([#457](https://github.com/zakodium-oss/react-science/issues/457)) ([7374555](https://github.com/zakodium-oss/react-science/commit/7374555e3cab0a56f0461970c00e8dfa414a76d2))
+
+
+### Bug Fixes
+
+* parse decimal size ([#453](https://github.com/zakodium-oss/react-science/issues/453)) ([cb0da96](https://github.com/zakodium-oss/react-science/commit/cb0da96c6aa5cb29113dadac1dc07725a90d6927))
+
 ## [0.20.1](https://github.com/zakodium-oss/react-science/compare/v0.20.0...v0.20.1) (2023-01-19)
 
 
