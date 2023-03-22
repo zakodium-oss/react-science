@@ -17,7 +17,6 @@ export interface ModalProps {
 }
 
 const DialogRoot = styled.dialog`
-  display: flex;
   position: fixed;
   background-color: transparent;
 
