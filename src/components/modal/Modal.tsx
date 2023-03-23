@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import type { ReactElement, ReactNode } from 'react';
 
+import { Portal } from '../root-layout/Portal';
+
 import ModalCloseButton from './ModalCloseButton';
 import { useDialog } from './useDialog';
 
@@ -25,7 +27,7 @@ const DialogRoot = styled.dialog`
   }
 `;
 
-const DialogOpened = styled.div`
+const DialogContents = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -76,10 +78,14 @@ export function Modal(props: ModalProps) {
     onRequestClose,
   });
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <DialogRoot ref={ref} onClick={onClick}>
-      {isOpen ? (
-        <DialogOpened
+    <Portal>
+      <DialogRoot ref={ref} onClick={onClick}>
+        <DialogContents
           style={{
             maxWidth,
             height: height || 'max-content',
@@ -88,9 +94,9 @@ export function Modal(props: ModalProps) {
         >
           {children}
           {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
-        </DialogOpened>
-      ) : null}
-    </DialogRoot>
+        </DialogContents>
+      </DialogRoot>
+    </Portal>
   );
 }
 
