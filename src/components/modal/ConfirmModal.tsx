@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 import { Button } from '..';
+import { Portal } from '../root-layout/Portal';
 
 import { useDialog } from './useDialog';
 
@@ -20,7 +21,6 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModalDialog = styled.dialog`
-  display: flex;
   position: fixed;
   background-color: transparent;
 
@@ -29,7 +29,7 @@ const ConfirmModalDialog = styled.dialog`
   }
 `;
 
-const ConfirmModalOpened = styled.div<{
+const ConfirmModalContents = styled.div<{
   headerColor: string;
 }>`
   position: relative;
@@ -81,10 +81,14 @@ export function ConfirmModal(props: ConfirmModalProps) {
     onRequestClose,
   });
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <ConfirmModalDialog ref={ref} onClick={onClick}>
-      {isOpen ? (
-        <ConfirmModalOpened headerColor={headerColor} style={{ maxWidth }}>
+    <Portal>
+      <ConfirmModalDialog ref={ref} onClick={onClick}>
+        <ConfirmModalContents headerColor={headerColor} style={{ maxWidth }}>
           <ConfirmModalChildrenRoot headerColor={headerColor}>
             {children}
           </ConfirmModalChildrenRoot>
@@ -111,8 +115,8 @@ export function ConfirmModal(props: ConfirmModalProps) {
               {cancelText}
             </Button>
           </ConfirmModalFooter>
-        </ConfirmModalOpened>
-      ) : null}
-    </ConfirmModalDialog>
+        </ConfirmModalContents>
+      </ConfirmModalDialog>
+    </Portal>
   );
 }
