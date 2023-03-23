@@ -7,7 +7,8 @@ import {
 export default {
   title: 'Components / Fullscreen',
 };
-export function basic() {
+
+export function Basic() {
   return (
     <div>
       <FullScreenProvider>
@@ -45,6 +46,7 @@ export function basic() {
     </div>
   );
 }
+
 function Content({ i }: { i: string }) {
   const { toggle } = useFullscreen();
   return (

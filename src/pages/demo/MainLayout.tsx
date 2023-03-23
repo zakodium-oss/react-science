@@ -3,11 +3,6 @@ import { FaBook, FaCogs, FaMeteor, FaSave } from 'react-icons/fa';
 import { useKbsGlobal } from 'react-kbs';
 
 import {
-  download,
-  getExistingMeasurementKinds,
-  useAppState,
-} from '../../app-data/index';
-import {
   MeasurementsPanelAccordion,
   ExplorerPlotView,
   useLoadFileCollectionFromHash,
@@ -16,6 +11,11 @@ import {
   MeasurementConfigPanelAccordion,
   AboutDialogToolbarButton,
 } from '../../app/index';
+import {
+  download,
+  getExistingMeasurementKinds,
+  useAppState,
+} from '../../app-data/index';
 import {
   Accordion,
   DropZoneContainer,
