@@ -42,10 +42,7 @@ function computeMinMax(measurement: MeasurementBase) {
         // TODO: should we accept empty data?
         return;
       }
-      if (
-        typeof variable.min === 'undefined' ||
-        typeof variable.max === 'undefined'
-      ) {
+      if (variable.min === undefined || variable.max === undefined) {
         const { min, max } = xMinMaxValues(variable.data);
         variable.min = min;
         variable.max = max;

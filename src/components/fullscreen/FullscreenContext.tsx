@@ -29,7 +29,9 @@ interface ContextType extends FullscreenState {
 }
 const fullscreenContextInit = {
   isFullScreen: false,
-  toggle: () => {},
+  toggle: () => {
+    // empty
+  },
 };
 const FullscreenContext = createContext<ContextType>(fullscreenContextInit);
 

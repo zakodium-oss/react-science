@@ -1,8 +1,8 @@
-import type { IrMeasurement } from '../../../src/app-data/index';
 import {
   MeasurementExplorer,
   MeasurementExplorerProps,
 } from '../../../src/app/index';
+import type { IrMeasurement } from '../../../src/app-data/index';
 import measurement from '../../data/irMeasurement.json';
 
 let irMeasurement = measurement as IrMeasurement;

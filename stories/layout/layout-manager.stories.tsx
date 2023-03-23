@@ -90,6 +90,6 @@ function PinkBackground() {
   );
 }
 
-export function fromLayoutObject() {
+export function FromLayoutObject() {
   return <LayoutManager layout={layout} components={components} />;
 }
