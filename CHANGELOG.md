@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.21.1](https://github.com/zakodium-oss/react-science/compare/v0.21.0...v0.21.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* modal should not take space in the layout if no nodes inside it ([#462](https://github.com/zakodium-oss/react-science/issues/462)) ([7cf740a](https://github.com/zakodium-oss/react-science/commit/7cf740a2664fad892fbc73a57f800d059d6e919d))
+* render Modal in a portal and avoid rendering it when closed ([#465](https://github.com/zakodium-oss/react-science/issues/465)) ([7b273ed](https://github.com/zakodium-oss/react-science/commit/7b273ede3cf7513b215c3a150b115dcccb3be62f))
+
 ## [0.21.0](https://github.com/zakodium-oss/react-science/compare/v0.20.1...v0.21.0) (2023-03-13)
 
 
