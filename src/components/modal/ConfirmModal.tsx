@@ -21,7 +21,6 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModalDialog = styled.dialog`
-  position: fixed;
   background-color: transparent;
 
   ::backdrop {
@@ -36,7 +35,6 @@ const ConfirmModalContents = styled.div<{
   display: flex;
   flex-direction: column;
   background-color: white;
-  max-height: 90%;
   width: 100%;
   border-width: 1px;
   border-color: transparent;

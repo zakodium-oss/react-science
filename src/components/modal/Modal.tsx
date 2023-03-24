@@ -19,7 +19,6 @@ export interface ModalProps {
 }
 
 const DialogRoot = styled.dialog`
-  position: fixed;
   background-color: transparent;
 
   ::backdrop {
@@ -32,7 +31,6 @@ const DialogContents = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  max-height: 90%;
   border-width: 1px;
   border-color: transparent;
   border-radius: 0.5rem;
