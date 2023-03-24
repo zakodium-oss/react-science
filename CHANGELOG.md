@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.2](https://github.com/zakodium-oss/react-science/compare/v0.21.1...v0.21.2) (2023-03-24)
+
+
+### Bug Fixes
+
+* correct modal rendering on Webkit ([#466](https://github.com/zakodium-oss/react-science/issues/466)) ([46ed4de](https://github.com/zakodium-oss/react-science/commit/46ed4de3af94210c0331b81081773d9b04dae5cf))
+
 ## [0.21.1](https://github.com/zakodium-oss/react-science/compare/v0.21.0...v0.21.1) (2023-03-23)
 
 
