@@ -4,6 +4,7 @@ import {
   ColorPicker,
   GradientScaleName,
   GradientSelect,
+  NewGradiantSelect,
 } from '../../src/components/index';
 
 export default {
@@ -40,8 +41,17 @@ ColorPickerStory.storyName = 'Color Picker';
 export function GradientSelectStory() {
   const [scale, setScale] = useState<GradientScaleName>('inferno');
   return (
-    <div style={{ marginTop: 30, marginInline: 60 }}>
+    <div
+      style={{
+        marginTop: 30,
+        marginInline: 60,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 300,
+      }}
+    >
       <GradientSelect value={scale} onChange={setScale} />
+      <NewGradiantSelect value={scale} onChange={setScale} />
     </div>
   );
 }
