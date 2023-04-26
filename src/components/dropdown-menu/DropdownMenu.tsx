@@ -20,8 +20,6 @@ interface DropdownMenuBaseProps<T> {
   onSelect: (selected: MenuOption<T>) => void;
 }
 
-type ElementTags = keyof JSX.IntrinsicElements;
-
 type ElementProps<T = unknown> = T extends ElementType
   ? ComponentProps<T>
   : never;
@@ -38,7 +36,7 @@ interface DropdownMenuContextProps<T> extends DropdownMenuBaseProps<T> {
   trigger: 'contextMenu';
   children: ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  as?: ElementTags | React.ComponentType<any>;
+  as?: ElementType | React.ComponentType<any>;
 }
 
 export type DropdownMenuProps<T> =
@@ -46,7 +44,8 @@ export type DropdownMenuProps<T> =
   | DropdownMenuClickProps<T>;
 
 export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
-  props: DropdownMenuProps<T> & { wrapperProps?: ElementProps<E> },
+  props: DropdownMenuProps<T> &
+    Omit<ElementProps<E>, keyof DropdownMenuProps<T>>,
 ) {
   const { trigger, ...otherProps } = props;
 
@@ -59,15 +58,15 @@ export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
 }
 
 function DropdownContextMenu<T, E extends ElementType = 'div'>(
-  props: Omit<DropdownMenuContextProps<T>, 'trigger'> & {
-    wrapperProps?: ElementProps<E>;
-  },
+  props: Omit<DropdownMenuContextProps<T>, 'trigger'> &
+    Omit<ElementProps<E>, keyof DropdownMenuProps<T>>,
 ) {
   const {
     children,
     onSelect,
     as: Wrapper = 'div',
-    wrapperProps,
+    placement = 'right-start',
+    options,
     ...otherProps
   } = props;
 
@@ -78,15 +77,16 @@ function DropdownContextMenu<T, E extends ElementType = 'div'>(
     setPopperElement,
     styles,
     attributes,
-  } = useContextMenuPlacement(otherProps.placement || 'right-start');
+  } = useContextMenuPlacement(placement);
 
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, closePopperElement);
 
-  const { style = {}, ...otherWrapperProps } = wrapperProps as ElementProps<E>;
+  const { style = {}, ...otherWrapperProps } = otherProps as ElementProps<E>;
+
   return (
     <Wrapper
-      style={{ ...(props?.as === 'div' && { display: 'contents' }), ...style }}
+      style={{ ...(!props?.as && { display: 'contents' }), ...style }}
       {...otherWrapperProps}
       onContextMenu={handleContextMenu}
     >
@@ -106,7 +106,7 @@ function DropdownContextMenu<T, E extends ElementType = 'div'>(
                       closePopperElement();
                       onSelect(selected);
                     }}
-                    {...otherProps}
+                    options={options}
                   />
                 </Menu>
               </div>
