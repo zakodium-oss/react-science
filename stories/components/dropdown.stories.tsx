@@ -341,9 +341,9 @@ export function TableWithContextMenu() {
             key={id}
             trigger="contextMenu"
             as="tr"
-            wrapperProps={{ style: { height: '10px' } }}
             onSelect={noop}
             options={options}
+            style={{ height: '50px' }}
           >
             <td>{id}</td>
             <td>{name}</td>
