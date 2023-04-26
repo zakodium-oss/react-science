@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useRef, ElementType, ComponentProps } from 'react';
 
 import { useModifiedPopper } from '../hooks/useModifiedPopper';
 import { useOnClickOutside } from '../hooks/useOnClickOutside';
@@ -22,8 +22,8 @@ interface DropdownMenuBaseProps<T> {
 
 type ElementTags = keyof JSX.IntrinsicElements;
 
-type ElementProps<Tag> = Tag extends ElementTags
-  ? JSX.IntrinsicElements[Tag]
+type ElementProps<T = unknown> = T extends ElementType
+  ? ComponentProps<T>
   : never;
 
 interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
@@ -45,7 +45,7 @@ export type DropdownMenuProps<T> =
   | DropdownMenuContextProps<T>
   | DropdownMenuClickProps<T>;
 
-export function DropdownMenu<T = unknown, E extends ElementTags = 'div'>(
+export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
   props: DropdownMenuProps<T> & { wrapperProps?: ElementProps<E> },
 ) {
   const { trigger, ...otherProps } = props;
@@ -58,7 +58,7 @@ export function DropdownMenu<T = unknown, E extends ElementTags = 'div'>(
   );
 }
 
-function DropdownContextMenu<T, E extends ElementTags = 'div'>(
+function DropdownContextMenu<T, E extends ElementType = 'div'>(
   props: Omit<DropdownMenuContextProps<T>, 'trigger'> & {
     wrapperProps?: ElementProps<E>;
   },
@@ -83,7 +83,7 @@ function DropdownContextMenu<T, E extends ElementTags = 'div'>(
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, closePopperElement);
 
-  const { style = {}, ...otherWrapperProps } = wrapperProps || { style: {} };
+  const { style = {}, ...otherWrapperProps } = wrapperProps as ElementProps<E>;
   return (
     <Wrapper
       style={{ ...(props?.as === 'div' && { display: 'contents' }), ...style }}
