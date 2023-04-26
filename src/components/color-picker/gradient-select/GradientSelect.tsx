@@ -4,7 +4,9 @@ import * as RadixSelect from '@radix-ui/react-select';
 import * as scaleChromatic from 'd3-scale-chromatic';
 import { Fragment } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import './grandiant-select.css';
 
+import { Portal } from '../../root-layout/Portal';
 import FixedGradientPreview from '../preview/FixedGradientPreview';
 
 export const fixedGradientScales = {
@@ -41,6 +43,8 @@ const GradientSelectChevron = styled(FaChevronDown)`
 
 const GradientSelectOptions = styled.ul`
   position: absolute;
+  max-height: 13rem;
+  overflow: scroll;
   width: 100%;
   margin-top: 5px;
   border: 1px solid darkgray;
@@ -54,6 +58,7 @@ const GradientSelectOption = styled.li<{ active: boolean }>`
   flex-direction: column;
   padding-top: 5px;
   cursor: pointer;
+  background-color: red;
   ${(props) => !props.active && 'opacity: 0.8;'}
   ${(props) => props.active && 'font-weight: bold;'}
 `;
@@ -91,11 +96,81 @@ export function GradientSelect(props: GradientSelectProps) {
   );
 }
 
+const Styled = {
+  RadixTrigger: styled(RadixSelect.Trigger)`
+    position: relative;
+    width: 100%;
+    height: 30px;
+    padding: 3px;
+    border: 1px solid darkgray;
+    border-radius: 0.25rem;
+  `,
+  RadixContent: styled(RadixSelect.Content)`
+    width: var(--radix-select-trigger-width);
+    max-height: 13rem;
+  `,
+  RadixViewport: styled(RadixSelect.Viewport)`
+    max-height: 13rem;
+    overflow: scroll;
+    margin-top: 5px;
+    border: 1px solid darkgray;
+    border-radius: 0.25rem;
+    padding-inline: 3px;
+    padding-bottom: 5px;
+
+    border: 1px solid darkgray;
+    border-radius: 0.25rem;
+  `,
+  RadixItemText: styled(RadixSelect.ItemText)`
+    background-color: red;
+  `,
+};
+
 export function NewGradiantSelect(props: GradientSelectProps) {
   const { onChange, value } = props;
 
   return (
-    <GradientSelectListbox>
+    <RadixSelect.Root open>
+      <Styled.RadixTrigger>
+        <RadixSelect.Value>
+          <FixedGradientPreview gradient={value} />
+        </RadixSelect.Value>
+        <RadixSelect.Icon>
+          <GradientSelectChevron />
+        </RadixSelect.Icon>
+      </Styled.RadixTrigger>
+      <Portal>
+        <Styled.RadixContent position="popper" sideOffset={5}>
+          <Styled.RadixViewport>
+            {scaleOptions.map((option) => {
+              return (
+                <RadixSelect.Item value={option} key={option}>
+                  <Styled.RadixItemText
+                    asChild
+                    style={{ backgroundColor: 'yellow' }}
+                  >
+                    <li className="toto">
+                      {option}
+                      <div style={{ height: 15 }}>
+                        <FixedGradientPreview gradient={option} />
+                      </div>
+                    </li>
+                  </Styled.RadixItemText>
+                </RadixSelect.Item>
+              );
+            })}
+          </Styled.RadixViewport>
+        </Styled.RadixContent>
+      </Portal>
+    </RadixSelect.Root>
+  );
+}
+
+/*
+<GradientSelectListbox>
+      <GradientSelectOption active>
+        <p>AAA</p>
+      </GradientSelectOption>
       <RadixSelect.Root open>
         <RadixSelect.Trigger asChild>
           <GradientSelectButton>
@@ -114,34 +189,39 @@ export function NewGradiantSelect(props: GradientSelectProps) {
             sideOffset={5}
             style={{
               width: 'var(--radix-select-trigger-width)',
+              maxHeight: '13rem',
             }}
           >
-            <RadixSelect.Viewport>
-              <div
+            <RadixSelect.Viewport asChild>
+              <ul
                 style={{
-                  maxHeight: 52,
+                  maxHeight: '13rem',
                   overflow: 'scroll',
+                  marginTop: 5,
+                  border: '1px solid darkgray',
+                  borderRadius: '0.25rem',
+                  paddingInline: 3,
+                  paddingBottom: 5,
                 }}
               >
                 {scaleOptions.map((option) => {
                   return (
                     <RadixSelect.Item value={option} key={option} asChild>
                       <RadixSelect.ItemText asChild>
-                        <GradientSelectOption active>
+                        <li className="test">
                           {option}
                           <div style={{ height: 15 }}>
                             <FixedGradientPreview gradient={option} />
                           </div>
-                        </GradientSelectOption>
+                        </li>
                       </RadixSelect.ItemText>
                     </RadixSelect.Item>
                   );
                 })}
-              </div>
+              </ul>
             </RadixSelect.Viewport>
           </RadixSelect.Content>
         </RadixSelect.Portal>
       </RadixSelect.Root>
     </GradientSelectListbox>
-  );
-}
+*/
