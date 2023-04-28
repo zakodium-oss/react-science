@@ -8,7 +8,7 @@ import { getIrMeasurement } from './getIrMeasurement';
 
 test('irAutoPeakPickingEnhancer', async () => {
   const measurement = await getIrMeasurement();
-  const nextState = await produce(measurement, async (draft) => {
+  const nextState = produce(measurement, (draft) => {
     irMeasurementEnhancer(draft);
     irAutoPeakPickingEnhancer(draft, { xVariable: 'x', yVariable: 'a' });
   });
