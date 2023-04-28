@@ -32,20 +32,20 @@ interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
   trigger: 'click';
 }
 
-interface DropdownMenuContextProps<T> extends DropdownMenuBaseProps<T> {
+interface DropdownMenuContextProps<T, E> extends DropdownMenuBaseProps<T> {
   trigger: 'contextMenu';
   children: ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  as?: ElementType | React.ComponentType<any>;
+  as?: E | React.ComponentType<any>;
 }
 
-export type DropdownMenuProps<T> =
-  | DropdownMenuContextProps<T>
+export type DropdownMenuProps<T, E> =
+  | DropdownMenuContextProps<T, E>
   | DropdownMenuClickProps<T>;
 
 export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
-  props: DropdownMenuProps<T> &
-    Omit<ElementProps<E>, keyof DropdownMenuProps<T>>,
+  props: DropdownMenuProps<T, E> &
+    Omit<ElementProps<E>, keyof DropdownMenuProps<T, E>>,
 ) {
   const { trigger, ...otherProps } = props;
 
@@ -58,8 +58,8 @@ export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
 }
 
 function DropdownContextMenu<T, E extends ElementType = 'div'>(
-  props: Omit<DropdownMenuContextProps<T>, 'trigger'> &
-    Omit<ElementProps<E>, keyof DropdownMenuProps<T>>,
+  props: Omit<DropdownMenuContextProps<T, E>, 'trigger'> &
+    Omit<ElementProps<E>, keyof DropdownMenuProps<T, E>>,
 ) {
   const {
     children,
@@ -120,8 +120,8 @@ function DropdownContextMenu<T, E extends ElementType = 'div'>(
   );
 }
 
-function DropdownClickMenu<T>(
-  props: Omit<DropdownMenuProps<T>, 'trigger'> & { children: ReactNode },
+function DropdownClickMenu<T, E>(
+  props: Omit<DropdownMenuProps<T, E>, 'trigger'> & { children: ReactNode },
 ) {
   const { placement = 'bottom-start', onSelect, ...otherProps } = props;
 
