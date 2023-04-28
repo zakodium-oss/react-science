@@ -69,7 +69,7 @@ export function Modal(props: ModalProps) {
     height,
   } = props;
 
-  const { ref, onClick } = useDialog({
+  const dialogProps = useDialog({
     isOpen,
     requestCloseOnEsc,
     requestCloseOnBackdrop,
@@ -82,7 +82,7 @@ export function Modal(props: ModalProps) {
 
   return (
     <Portal>
-      <DialogRoot ref={ref} onClick={onClick}>
+      <DialogRoot {...dialogProps}>
         <DialogContents
           style={{
             maxWidth,
