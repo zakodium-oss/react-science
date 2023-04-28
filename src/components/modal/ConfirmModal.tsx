@@ -72,7 +72,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
     children,
   } = props;
 
-  const { ref, onClick } = useDialog({
+  const dialogProps = useDialog({
     isOpen,
     requestCloseOnEsc,
     requestCloseOnBackdrop,
@@ -85,7 +85,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
 
   return (
     <Portal>
-      <ConfirmModalDialog ref={ref} onClick={onClick}>
+      <ConfirmModalDialog {...dialogProps}>
         <ConfirmModalContents headerColor={headerColor} style={{ maxWidth }}>
           <ConfirmModalChildrenRoot headerColor={headerColor}>
             {children}

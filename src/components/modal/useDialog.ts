@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import {
+  MouseEventHandler,
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
+import { useKbsDisableGlobal } from 'react-kbs';
 
 export function useDialog({
   isOpen,
@@ -11,32 +18,30 @@ export function useDialog({
   requestCloseOnBackdrop: boolean;
   onRequestClose?: () => void;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
+  useKbsDisableGlobal(isOpen);
+
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    function onEsc(event: Event) {
-      event.preventDefault();
-      if (requestCloseOnEsc && onRequestClose) {
-        onRequestClose();
-      }
-    }
-    const dialog = ref.current;
-    if (dialog) {
-      dialog.addEventListener('cancel', onEsc);
-      return () => dialog.removeEventListener('cancel', onEsc);
-    }
-  }, [onRequestClose, requestCloseOnEsc]);
-
-  useEffect(() => {
-    const dialog = ref.current;
+    const dialog = dialogRef.current;
     if (dialog && isOpen) {
       dialog.showModal();
       return () => dialog.close();
     }
   }, [isOpen]);
 
-  const onClick = useCallback(
-    (event: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
+  const onCancel = useCallback<ReactEventHandler<HTMLDialogElement>>(
+    (event) => {
+      event.preventDefault();
+      if (requestCloseOnEsc && onRequestClose) {
+        onRequestClose();
+      }
+    },
+    [onRequestClose, requestCloseOnEsc],
+  );
+
+  const onClick = useCallback<MouseEventHandler<HTMLDialogElement>>(
+    (event) => {
       // Since the dialog has no size of itself, this condition is only
       // `true` when we click on the backdrop.
       if (event.target === event.currentTarget && requestCloseOnBackdrop) {
@@ -46,5 +51,5 @@ export function useDialog({
     [requestCloseOnBackdrop, onRequestClose],
   );
 
-  return { ref, onClick };
+  return { ref: dialogRef, onClick, onCancel };
 }
