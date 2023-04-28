@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.22.0](https://github.com/zakodium-oss/react-science/compare/v0.21.2...v0.22.0) (2023-04-28)
+
+
+### Features
+
+* adapt the DropdownMenu to accept 'as' prop to specify an element to be a wrapper ([#476](https://github.com/zakodium-oss/react-science/issues/476)) ([824fd23](https://github.com/zakodium-oss/react-science/commit/824fd239cf4e15f3f4f9925875177d1f14908bc2))
+
+
+### Bug Fixes
+
+* correctly set dialog's cancel event handler ([05bdfc5](https://github.com/zakodium-oss/react-science/commit/05bdfc5fb2dc4ca7218a3ba576f0fa41ab0c6d49))
+
 ## [0.21.2](https://github.com/zakodium-oss/react-science/compare/v0.21.1...v0.21.2) (2023-03-24)
 
 
