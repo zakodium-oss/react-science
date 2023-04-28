@@ -42,6 +42,7 @@ export function useDialog({
 
   const onClick = useCallback<MouseEventHandler<HTMLDialogElement>>(
     (event) => {
+      event.stopPropagation();
       // Since the dialog has no size of itself, this condition is only
       // `true` when we click on the backdrop.
       if (event.target === event.currentTarget && requestCloseOnBackdrop) {
