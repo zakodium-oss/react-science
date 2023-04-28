@@ -268,3 +268,92 @@ function ColumnWithDropdownMenu({
     </td>
   );
 }
+
+const TableWithContext = styled.table`
+  border: 0.55px solid gray;
+  th,
+  td {
+    border: 0.55px solid gray;
+    padding: 0.4em;
+  }
+`;
+
+export function TableWithContextMenu() {
+  const headerOptions = useMemo<MenuOptions<string>>(() => {
+    return [
+      { label: 'Copy', type: 'option', icon: <FaAddressBook /> },
+      {
+        label: 'Past',
+        type: 'option',
+        disabled: true,
+        icon: <FaAccessibleIcon />,
+      },
+    ];
+  }, []);
+  const options = useMemo<MenuOptions<string>>(() => {
+    return [
+      { label: 'Back', type: 'option', icon: <FaAddressBook /> },
+      {
+        label: 'Forward',
+        type: 'option',
+        disabled: true,
+        icon: <FaAccessibleIcon />,
+      },
+      { label: 'Refresh', type: 'option', icon: <Fa500Px /> },
+      { type: 'divider' },
+      { label: 'Save as', type: 'option', icon: <FaAccusoft /> },
+      { label: 'Print', type: 'option', icon: <FaAcquisitionsIncorporated /> },
+      { label: 'Cast media to device', type: 'option', icon: <FaAd /> },
+      { type: 'divider' },
+      {
+        label: 'Send page to your devices',
+        type: 'option',
+        icon: <FaAddressCard />,
+      },
+      {
+        label: 'Create QR Code for this page',
+        type: 'option',
+        icon: <FaAdjust />,
+      },
+    ];
+  }, []);
+
+  return (
+    <TableWithContext>
+      <thead>
+        <DropdownMenu
+          as="tr"
+          trigger="contextMenu"
+          onSelect={noop}
+          options={headerOptions}
+        >
+          <th>id</th>
+          <th>name</th>
+          <th>rn</th>
+          <th>mw</th>
+          <th>em</th>
+          <th>isExpensive</th>
+        </DropdownMenu>
+      </thead>
+      <tbody>
+        {data.slice(0, 2).map(({ id, name, rn, mw, em, isExpensive }) => (
+          <DropdownMenu
+            key={id}
+            trigger="contextMenu"
+            as="tr"
+            onSelect={noop}
+            options={options}
+            style={{ height: '50px' }}
+          >
+            <td>{id}</td>
+            <td>{name}</td>
+            <td>{rn}</td>
+            <td>{mw}</td>
+            <td>{em}</td>
+            <td>{isExpensive}</td>
+          </DropdownMenu>
+        ))}
+      </tbody>
+    </TableWithContext>
+  );
+}

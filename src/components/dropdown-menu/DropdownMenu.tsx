@@ -1,7 +1,6 @@
-import styled from '@emotion/styled';
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useRef, ElementType, ComponentProps } from 'react';
 
 import { useModifiedPopper } from '../hooks/useModifiedPopper';
 import { useOnClickOutside } from '../hooks/useOnClickOutside';
@@ -21,6 +20,10 @@ interface DropdownMenuBaseProps<T> {
   onSelect: (selected: MenuOption<T>) => void;
 }
 
+type ElementProps<E = unknown> = E extends ElementType
+  ? ComponentProps<E>
+  : never;
+
 interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
   /**
    * Node to be inside the Button
@@ -29,33 +32,42 @@ interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
   trigger: 'click';
 }
 
-interface DropdownMenuContextProps<T> extends DropdownMenuBaseProps<T> {
+interface DropdownMenuContextProps<T, E> extends DropdownMenuBaseProps<T> {
   trigger: 'contextMenu';
   children: ReactNode;
+  as?: E;
 }
 
-export type DropdownMenuProps<T> =
-  | DropdownMenuContextProps<T>
+export type DropdownMenuProps<T, E> =
+  | DropdownMenuContextProps<T, E>
   | DropdownMenuClickProps<T>;
 
-export function DropdownMenu<T>(props: DropdownMenuProps<T>) {
+export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
+  props: DropdownMenuProps<T, E> &
+    Omit<ElementProps<E>, keyof DropdownMenuProps<T, E>>,
+) {
   const { trigger, ...otherProps } = props;
 
   if (trigger === 'contextMenu') {
-    return <DropdownContextMenu {...otherProps} />;
+    return <DropdownContextMenu<T, E> {...props} />;
   }
-
   return (
     <DropdownClickMenu {...otherProps}>{props.children}</DropdownClickMenu>
   );
 }
 
-const HandleMenuContextDiv = styled.div`
-  display: contents;
-`;
-
-function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
-  const { children, onSelect, ...otherProps } = props;
+function DropdownContextMenu<T, E extends ElementType = 'div'>(
+  props: Omit<DropdownMenuContextProps<T, E>, 'trigger'> &
+    Omit<ElementProps<E>, keyof DropdownMenuProps<T, E>>,
+) {
+  const {
+    children,
+    onSelect,
+    as: Wrapper = 'div',
+    placement = 'right-start',
+    options,
+    ...otherProps
+  } = props;
 
   const {
     isPopperElementOpen,
@@ -64,43 +76,51 @@ function DropdownContextMenu<T>(props: Omit<DropdownMenuProps<T>, 'trigger'>) {
     setPopperElement,
     styles,
     attributes,
-  } = useContextMenuPlacement(otherProps.placement || 'right-start');
+  } = useContextMenuPlacement(placement);
 
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, closePopperElement);
 
-  return (
-    <HandleMenuContextDiv onContextMenu={handleContextMenu}>
-      {isPopperElementOpen && (
-        <Portal>
-          <div ref={ref}>
-            <div
-              ref={setPopperElement}
-              style={styles.popper}
-              {...attributes.popper}
-            >
-              <Menu>
-                <MenuItems
-                  itemsStatic
-                  onSelect={(selected) => {
-                    closePopperElement();
-                    onSelect(selected);
-                  }}
-                  {...otherProps}
-                />
-              </Menu>
-            </div>
-          </div>
-        </Portal>
-      )}
+  const { style = {}, ...otherWrapperProps } = otherProps as ElementProps<E>;
 
-      {children}
-    </HandleMenuContextDiv>
+  return (
+    <Wrapper
+      style={{ ...(!props?.as && { display: 'contents' }), ...style }}
+      {...otherWrapperProps}
+      onContextMenu={handleContextMenu}
+    >
+      <>
+        {isPopperElementOpen && (
+          <Portal>
+            <div ref={ref}>
+              <div
+                ref={setPopperElement}
+                style={styles.popper}
+                {...attributes.popper}
+              >
+                <Menu>
+                  <MenuItems
+                    itemsStatic
+                    onSelect={(selected) => {
+                      closePopperElement();
+                      onSelect(selected);
+                    }}
+                    options={options}
+                  />
+                </Menu>
+              </div>
+            </div>
+          </Portal>
+        )}
+
+        {children}
+      </>
+    </Wrapper>
   );
 }
 
-function DropdownClickMenu<T>(
-  props: Omit<DropdownMenuProps<T>, 'trigger'> & { children: ReactNode },
+function DropdownClickMenu<T, E>(
+  props: Omit<DropdownMenuProps<T, E>, 'trigger'> & { children: ReactNode },
 ) {
   const { placement = 'bottom-start', onSelect, ...otherProps } = props;
 
