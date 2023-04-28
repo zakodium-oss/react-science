@@ -20,8 +20,8 @@ interface DropdownMenuBaseProps<T> {
   onSelect: (selected: MenuOption<T>) => void;
 }
 
-type ElementProps<T = unknown> = T extends ElementType
-  ? ComponentProps<T>
+type ElementProps<E = unknown> = E extends ElementType
+  ? ComponentProps<E>
   : never;
 
 interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
