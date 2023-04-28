@@ -35,8 +35,7 @@ interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
 interface DropdownMenuContextProps<T, E> extends DropdownMenuBaseProps<T> {
   trigger: 'contextMenu';
   children: ReactNode;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  as?: E | React.ComponentType<any>;
+  as?: E;
 }
 
 export type DropdownMenuProps<T, E> =
