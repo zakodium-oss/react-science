@@ -11,7 +11,9 @@ export function MeasurementInfoPanel() {
   const measurement = getCurrentMeasurementData(appState);
   const [search, setSearch] = useState('');
   if (!measurement) return null;
-  const { meta, info } = measurement.data;
+
+  // TODO: solution for multiple measurements
+  const { meta, info } = measurement.data[0];
 
   function viewData(data: Record<string, any>) {
     return Object.keys(data).map((key) => {

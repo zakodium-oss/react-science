@@ -26,4 +26,11 @@ Control.args = {
   showHorizontalGrid: true,
   showVerticalGrid: true,
   flipHorizontalAxis: false,
+  measurementDisplay: {
+    color: {
+      kind: 'fixed',
+      color: 'red',
+    },
+    visible: true,
+  },
 };
