@@ -59,10 +59,10 @@ function MassComponent(props: MeasurementPlotProps) {
     const measurementsArray = Array.isArray(measurements)
       ? measurements
       : [measurements];
-    return measurementsArray.map(({ data }) => {
+    return measurementsArray.map(({ data, id }) => {
       const { variables } = data[0];
       const { x, y } = variables;
-      return { x, y };
+      return { x, y, id };
     });
   }, [measurements]);
 
@@ -70,20 +70,20 @@ function MassComponent(props: MeasurementPlotProps) {
   const { profiles, peaks } = useMemo(() => {
     const profiles = [];
     const peaks = [];
-    for (const { x, y } of dataXY) {
+    for (const { x, y, id } of dataXY) {
       const spectrum = new Spectrum({
         x: x.data,
         y: y.data,
       });
       const isContinuous = spectrum.isContinuous();
-      const profile =
+      const data =
         isContinuous &&
         xyToXYObject({
           x: x.data,
           y: y.data,
         });
-      profiles.push(profile);
-      peaks.push(...spectrum.getPeaks(profile));
+      profiles.push({ data, id });
+      peaks.push(...spectrum.getPeaks(data));
     }
     return {
       profiles,
@@ -104,14 +104,9 @@ function MassComponent(props: MeasurementPlotProps) {
   return (
     <BasicComponent {...props}>
       {profiles.map(
-        (profile, i) =>
-          profile && (
-            <LineSeries
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              data={profile}
-              lineStyle={{ stroke: 'green' }}
-            />
+        ({ data, id }) =>
+          data && (
+            <LineSeries key={id} data={data} lineStyle={{ stroke: 'green' }} />
           ),
       )}
       <BarSeries data={peaks} lineStyle={{ stroke: 'red' }} />

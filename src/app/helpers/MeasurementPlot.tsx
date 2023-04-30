@@ -6,7 +6,7 @@ import type { MeasurementBase, MeasurementAppView } from '../../app-data/index';
 
 import { BasicComponent } from './index';
 
-type Measurement = Pick<MeasurementBase, 'meta' | 'info' | 'data'>;
+type Measurement = Pick<MeasurementBase, 'meta' | 'info' | 'data' | 'id'>;
 export interface MeasurementPlotProps {
   measurement: Measurement[] | Measurement;
   measurementDisplay: MeasurementAppView[] | MeasurementAppView;
@@ -42,11 +42,10 @@ function MeasurementComponent(props: MeasurementPlotProps) {
   } = props;
 
   const dataXY = useMemo(() => {
-    const dataXY = [];
     const measurementsArray = Array.isArray(measurement)
       ? measurement
       : [measurement];
-    for (const { data } of measurementsArray) {
+    return measurementsArray.map(({ data, id }) => {
       const { variables } = data[dataIndex];
       const { [xVariableName]: x, [yVariableName]: y } = variables;
       if (x === undefined || y === undefined) {
@@ -58,14 +57,13 @@ function MeasurementComponent(props: MeasurementPlotProps) {
           ).join(', ')} are available`,
         );
       }
-      dataXY.push({ x, y });
-    }
-    return dataXY;
+      return { x, y, id };
+    });
   }, [dataIndex, measurement, xVariableName, yVariableName]);
 
   return (
     <BasicComponent {...props}>
-      {dataXY.map(({ x, y }, i) => {
+      {dataXY.map(({ x, y, id }, i) => {
         const { color } = Array.isArray(measurementDisplay)
           ? measurementDisplay[i]
           : measurementDisplay;
@@ -75,8 +73,7 @@ function MeasurementComponent(props: MeasurementPlotProps) {
 
         return (
           <LineSeries
-            // eslint-disable-next-line react/no-array-index-key
-            key={i}
+            key={id}
             lineStyle={{
               stroke: color.color,
             }}
