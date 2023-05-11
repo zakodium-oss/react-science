@@ -2,9 +2,11 @@ import { FaMeteor } from 'react-icons/fa';
 
 import { AboutDialogToolbarButton } from '../../src/app/index';
 import { Toolbar } from '../../src/components/index';
+import { RootLayoutDecorator } from '../utils';
 
 export default {
   title: 'Components / AboutDialogToolbarButton',
+  decorators: [RootLayoutDecorator],
 };
 
 export function DisplayAboutDialog() {

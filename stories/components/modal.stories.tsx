@@ -23,9 +23,12 @@ import {
   TabItem,
   useOnOff,
 } from '../../src/components/index';
+import { AccordionDecorator, RootLayoutDecorator } from '../utils';
 
 export default {
   title: 'Components / Modal',
+  component: Modal,
+  decorators: [AccordionDecorator, RootLayoutDecorator],
 };
 
 const actions = {

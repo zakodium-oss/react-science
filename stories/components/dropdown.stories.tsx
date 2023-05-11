@@ -23,9 +23,11 @@ import {
   ValueRenderers,
 } from '../../src/components/index';
 import data from '../data/table.json';
+import { RootLayoutDecorator } from '../utils';
 
 export default {
   title: 'Components / DropdownMenu',
+  decorators: [RootLayoutDecorator],
 };
 
 const defaultOptions: MenuOptions<string> = [
