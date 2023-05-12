@@ -26,8 +26,9 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run build-ts && npm run fix-react-shadow",
-    "build-all": "npm run build-app && npm run build-storybook && mv build dist/stories",
+    "build-all": "npm run build-app && npm run build-storybook && mv storybook-static dist/stories",
     "build-app": "cross-env NO_MINIFY=true vite build",
+    "build-storybook": "storybook build",
     "build-ts": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
@@ -44,10 +45,9 @@
     "prettier": "prettier --check .",
     "prettier-write": "prettier --write .",
     "serve": "vite preview",
-    "test": "npm run playwright && npm run test-only && npm run eslint && npm run prettier && npm run check-types",
-    "test-only": "vitest run --coverage ",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test": "npm run playwright && npm run test-only && npm run eslint && npm run prettier && npm run check-types",
+    "test-only": "vitest run --coverage "
   },
   "volta": {
     "node": "18.16.0"
