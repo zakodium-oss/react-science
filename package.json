@@ -101,8 +101,6 @@
     "@playwright/experimental-ct-react": "^1.33.0",
     "@playwright/test": "^1.33.0",
     "@storybook/addon-essentials": "^7.0.10",
-    "@storybook/addon-interactions": "^7.0.10",
-    "@storybook/addon-links": "^7.0.10",
     "@storybook/blocks": "^7.0.10",
     "@storybook/react": "^7.0.10",
     "@storybook/react-vite": "^7.0.10",
