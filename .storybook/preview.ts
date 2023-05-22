@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 import { RootLayoutDecorator } from '../stories/utils';
 
-import '../src/styles/storybook-globals.css'
+import '../src/styles/storybook-globals.css';
 
 const preview: Preview = {
   decorators: [RootLayoutDecorator],
