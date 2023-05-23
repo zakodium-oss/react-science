@@ -30,6 +30,36 @@ export function Horizontal() {
   );
 }
 
+function FullHeightContent({ children }: { children: ReactNode}) {
+  return (
+    <div style={{backgroundColor: 'rgb(251, 207, 232)', height: '100%'}}>{children}</div>
+  )
+}
+
+export function AllowHorizontalChildToTakeFullHeight() {
+  const items: Array<TabItem> = [
+    { id: '1h', title: '1H', content: <FullHeightContent>Hello, World! [a]</FullHeightContent> },
+    { id: '13c', title: '13C', content: <FullHeightContent>Hello, World! [b]</FullHeightContent> },
+    { id: '1h,1h', title: '1H,1H', content: <FullHeightContent>Hello, World! [c]</FullHeightContent> },
+    { id: '1h,13c', title: '1H,13C', content: <FullHeightContent>Hello, World! [d]</FullHeightContent> },
+  ];
+
+  const [state, setState] = useState(items[1].id);
+
+  function handleClick(id: string) {
+    setState(id);
+  }
+
+  return (
+    <Tabs
+      orientation="horizontal"
+      items={items}
+      opened={state}
+      onClick={handleClick}
+    />
+  );
+}
+
 export function ManyTabs({
   orientation,
 }: {
