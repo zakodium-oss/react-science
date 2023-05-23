@@ -152,7 +152,7 @@ function TabsHorizontal<T extends string = string>(
   const item = useTabsContext();
   return (
     <div
-      style={{ display: 'flex', flexDirection: 'column', overflowX: 'hidden', flex: '1 1 0%', height: '100%' }}
+      style={{ display: 'flex', flexDirection: 'column', overflowX: 'hidden', height: '100%' }}
     >
       <div
         style={{
