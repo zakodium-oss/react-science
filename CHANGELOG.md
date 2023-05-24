@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.22.1](https://github.com/zakodium-oss/react-science/compare/v0.22.0...v0.22.1) (2023-05-24)
+
+
+### Bug Fixes
+
+* stop propagation on dialog backdrop click ([#480](https://github.com/zakodium-oss/react-science/issues/480)) ([46f04c5](https://github.com/zakodium-oss/react-science/commit/46f04c5330abbae650506d1a88e006a44d5d1179))
+* **tabs:** ensure consistant behavior between horizontal and vertical ([#486](https://github.com/zakodium-oss/react-science/issues/486)) ([9bb61e0](https://github.com/zakodium-oss/react-science/commit/9bb61e01f06ad88229f7489d8d83d7def9a99116))
+
 ## [0.22.0](https://github.com/zakodium-oss/react-science/compare/v0.21.2...v0.22.0) (2023-04-28)
 
 
