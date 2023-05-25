@@ -5,22 +5,18 @@ import react from '@vitejs/plugin-react';
 import { splitVendorChunkPlugin } from 'vite';
 import { defineConfig } from 'vitest/config';
 
-const isInLadle = process.env.VITE_PUBLIC_LADLE_THEME;
-
 const plugins = [react(), splitVendorChunkPlugin()];
 
 const pages = fs.readdirSync(path.join(__dirname, 'pages'));
 
-const rollupOptions = !isInLadle
-  ? {
-      input: {
-        index: path.join(__dirname, 'index.html'),
-        ...Object.fromEntries(
-          pages.map((page) => [page, path.join(__dirname, 'pages', page)]),
-        ),
-      },
-    }
-  : undefined;
+const rollupOptions = {
+  input: {
+    index: path.join(__dirname, 'index.html'),
+    ...Object.fromEntries(
+      pages.map((page) => [page, path.join(__dirname, 'pages', page)]),
+    ),
+  },
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
