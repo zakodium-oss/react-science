@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.2](https://github.com/zakodium-oss/react-science/compare/v0.22.1...v0.22.2) (2023-05-26)
+
+
+### Bug Fixes
+
+* avoid double clicking issue ([#488](https://github.com/zakodium-oss/react-science/issues/488)) ([a98a468](https://github.com/zakodium-oss/react-science/commit/a98a468ae5200898605b413486ab7d9195ca012e))
+
 ## [0.22.1](https://github.com/zakodium-oss/react-science/compare/v0.22.0...v0.22.1) (2023-05-24)
 
 
