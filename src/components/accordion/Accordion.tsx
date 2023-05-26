@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import type { ReactElement, ReactNode, ReactFragment } from 'react';
-
-import { useDoubleClick } from '../hooks/index';
+import type {
+  ReactElement,
+  ReactNode,
+  ReactFragment,
+  MouseEvent as ReactMouseEvent,
+} from 'react';
+import { useCallback } from 'react';
 
 import { useAccordionContext } from './AccordionContext';
 
@@ -61,10 +65,16 @@ export function Accordion(props: AccordionProps) {
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const { item, utils } = useAccordionContext(props.title, props.defaultOpened);
 
-  const onClickHandle = useDoubleClick({
-    onClick: utils.toggle,
-    onDoubleClick: utils.clear,
-  });
+  const onClickHandle = useCallback(
+    (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (event.shiftKey) {
+        utils.clear();
+      } else {
+        utils.toggle();
+      }
+    },
+    [utils],
+  );
 
   let displayable = false;
 
@@ -87,7 +97,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
           display: 'flex',
           alignItems: 'center',
           width: '100%',
-          userSelect: 'text',
+          userSelect: 'none',
         }}
         css={styles.header}
       >
