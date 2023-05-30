@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
 import { ReactNode } from 'react';
-import { RxCheck, RxCross2, RxMinus } from 'react-icons/all';
+import { RxCheck, RxMinus } from 'react-icons/rx/index';
 
 interface CheckboxProps {
   checked?: boolean | 'indeterminate';
@@ -58,9 +58,7 @@ export function Checkbox(props: CheckboxProps) {
             <RxCheck />
           ) : checked === 'indeterminate' ? (
             <RxMinus />
-          ) : (
-            <RxCross2 />
-          )}
+          ) : null}
         </RadixCheckbox.Indicator>
       </RadixCheckbox.Root>
       <span
