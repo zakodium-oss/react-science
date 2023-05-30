@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
+import { ReactNode } from 'react';
 import { RxCheck, RxCross2, RxMinus } from 'react-icons/all';
 
 interface CheckboxProps {
   checked?: boolean | 'indeterminate';
   disabled?: boolean;
-  label?: string;
+  label?: ReactNode;
   onChange?: (checked: boolean | 'indeterminate') => void;
 }
 
