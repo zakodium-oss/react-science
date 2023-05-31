@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { Checkbox } from '../../src/components/index';
+import { CheckedState, Checkbox } from '../../src/components/index';
 
 export default {
   title: 'Components / Checkbox',
@@ -27,9 +27,9 @@ export function Disabled() {
 }
 
 export function ControlledAndIndeterminate() {
-  const [orange, setOrange] = useState<boolean | 'indeterminate'>(false);
-  const [apple, setApple] = useState<boolean | 'indeterminate'>(false);
-  const [banana, setBanana] = useState<boolean | 'indeterminate'>(false);
+  const [orange, setOrange] = useState<CheckedState>(false);
+  const [apple, setApple] = useState<CheckedState>(false);
+  const [banana, setBanana] = useState<CheckedState>(false);
 
   const allChecked = useMemo(() => {
     if (orange && apple && banana) return true;
@@ -37,7 +37,7 @@ export function ControlledAndIndeterminate() {
     return 'indeterminate';
   }, [apple, banana, orange]);
 
-  const setAllChecked = useCallback((checked: boolean | 'indeterminate') => {
+  const setAllChecked = useCallback((checked: CheckedState) => {
     setOrange(checked);
     setApple(checked);
     setBanana(checked);
@@ -69,9 +69,9 @@ export function ControlledAndIndeterminate() {
 }
 
 export function ControlledIndeterminateAndDisabled() {
-  const [orange, setOrange] = useState<boolean | 'indeterminate'>(false);
-  const [apple, setApple] = useState<boolean | 'indeterminate'>(false);
-  const [banana, setBanana] = useState<boolean | 'indeterminate'>(false);
+  const [orange, setOrange] = useState<CheckedState>(false);
+  const [apple, setApple] = useState<CheckedState>(false);
+  const [banana, setBanana] = useState<CheckedState>(false);
 
   const allChecked = useMemo(() => {
     if (orange && apple && banana) return true;
@@ -79,7 +79,7 @@ export function ControlledIndeterminateAndDisabled() {
     return 'indeterminate';
   }, [apple, banana, orange]);
 
-  const setAllChecked = useCallback((checked: boolean | 'indeterminate') => {
+  const setAllChecked = useCallback((checked: CheckedState) => {
     setOrange(checked);
     setApple(checked);
     setBanana(checked);
