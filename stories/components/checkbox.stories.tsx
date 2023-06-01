@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { setupChaiConfig } from 'vitest';
 
 import { CheckedState, Checkbox, Input } from '../../src/components/index';
 
