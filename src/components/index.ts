@@ -1,6 +1,5 @@
 export * from './accordion/index';
 export * from './button/index';
-export * from './checkbox/index';
 export * from './color-picker/index';
 export * from './drop-zone/index';
 export * from './dropdown-menu/index';

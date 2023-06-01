@@ -1,9 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
+import { setupChaiConfig } from 'vitest';
 
-import { CheckedState, Checkbox } from '../../src/components/index';
+import { CheckedState, Checkbox, Input } from '../../src/components/index';
 
 export default {
-  title: 'Components / Checkbox',
+  title: 'Forms / Checkbox',
 };
 
 export function Simple() {
@@ -111,6 +112,16 @@ export function ControlledIndeterminateAndDisabled() {
         <Checkbox checked={apple} onChange={setApple} label="Apple" />
         <Checkbox checked={banana} onChange={setBanana} label="Banana" />
       </div>
+    </div>
+  );
+}
+
+export function SimpleWithInput() {
+  const [checked, setChecked] = useState<CheckedState>(false);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Checkbox checked={checked} onChange={setChecked} label="Hello, world!" />
+      <Input />
     </div>
   );
 }

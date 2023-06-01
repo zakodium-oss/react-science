@@ -28,6 +28,8 @@ export function Checkbox(props: CheckboxProps) {
     <label
       style={{
         display: 'flex',
+        alignItems: 'center',
+        fontSize: '1.125em',
       }}
     >
       <RadixCheckbox.Root
