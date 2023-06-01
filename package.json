@@ -66,6 +66,7 @@
     "@headlessui/react": "^1.7.14",
     "@lukeed/uuid": "^2.0.1",
     "@popperjs/core": "^2.11.7",
+    "@radix-ui/react-checkbox": "^1.0.4",
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-table": "^8.8.5",
     "biologic-converter": "^0.6.0",
