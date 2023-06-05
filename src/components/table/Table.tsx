@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import {
   Children,
   createContext,
+  CSSProperties,
   isValidElement,
   ReactElement,
   ReactNode,
@@ -60,15 +61,16 @@ function splitChildren(children: ReactNode) {
 export interface TableProps {
   children?: ReactNode;
   border?: boolean;
+  style?: CSSProperties;
 }
 
 export function Table(props: TableProps) {
-  const { border = true, children } = props;
+  const { border = true, style = {}, children } = props;
   const { Header, Rows } = splitChildren(children);
   const tableContextValue = useMemo(() => ({ border }), [border]);
   return (
     <TableContext.Provider value={tableContextValue}>
-      <table>
+      <table style={style}>
         {Header}
         <tbody>{Rows}</tbody>
       </table>
@@ -114,15 +116,21 @@ function useRowChildren(children: ReactNode) {
   return { cells };
 }
 
-function Row({ children, border = false }: TableProps) {
+function Row({ children, style = {}, border = false }: TableProps) {
   const { cells } = useRowChildren(children);
-  return <tr style={{ border: border ? '1px solid black' : '' }}>{cells}</tr>;
+  return (
+    <tr style={{ border: border ? '1px solid black' : '', ...style }}>
+      {cells}
+    </tr>
+  );
 }
 Table.Row = Row;
-Table.Header = ({ children, border = false }: TableProps) => {
+Table.Header = ({ children, style, border = false }: TableProps) => {
   return (
     <thead>
-      <Table.Row border={border}>{children}</Table.Row>
+      <Table.Row border={border} style={style}>
+        {children}
+      </Table.Row>
     </thead>
   );
 };
