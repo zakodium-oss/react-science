@@ -1,9 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
+import type * as Polymorphic from '@radix-ui/react-polymorphic';
 import * as RadixSelect from '@radix-ui/react-select';
 import { SelectGroup } from '@radix-ui/react-select';
-import { ReactNode } from 'react';
+import { forwardRef, Fragment, ReactNode } from 'react';
 import { FaCheck, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+
+import { Portal } from '../root-layout/Portal';
 
 interface Category {
   label: ReactNode;
@@ -119,55 +122,56 @@ export function Select(props: SelectProps) {
             <FaChevronDown />
           </RadixSelect.Icon>
         </SelectTrigger>
-
-        <SelectContent position="popper">
-          <RadixSelect.ScrollUpButton>
-            <FaChevronUp />
-          </RadixSelect.ScrollUpButton>
-          <SelectViewport>
-            {options.map((group, groupIndex) => (
-              <>
-                {group.map((optionOrCategory, optionOrCategoryIndex) =>
-                  'options' in optionOrCategory ? (
-                    <SelectGroup key={optionOrCategoryIndex}>
-                      <SelectLabel>{optionOrCategory.label}</SelectLabel>
-                      {optionOrCategory.options.map((option) => (
-                        <SelectItem
-                          key={option.value}
-                          value={option.value}
-                          disabled={option.disabled}
-                        >
-                          <RadixSelect.ItemText>
-                            {option.label}
-                          </RadixSelect.ItemText>
-                          <SelectItemIndicator>
-                            <FaCheck />
-                          </SelectItemIndicator>
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  ) : (
-                    <SelectItem
-                      key={optionOrCategory.value}
-                      value={optionOrCategory.value}
-                      disabled={optionOrCategory.disabled}
-                    >
-                      <RadixSelect.ItemText>
-                        {optionOrCategory.label}
-                      </RadixSelect.ItemText>
-                      <SelectItemIndicator>
-                        <FaCheck />
-                      </SelectItemIndicator>
-                    </SelectItem>
-                  ),
-                )}
-                {groupIndex < options.length - 1 && <SelectSeparator />}
-              </>
-            ))}
-          </SelectViewport>
-          <RadixSelect.ScrollDownButton />
-          <RadixSelect.Arrow />
-        </SelectContent>
+        <Portal>
+          <SelectContent position="popper">
+            <RadixSelect.ScrollUpButton>
+              <FaChevronUp />
+            </RadixSelect.ScrollUpButton>
+            <SelectViewport>
+              {options.map((group, groupIndex) => (
+                <Fragment key={groupIndex}>
+                  {group.map((optionOrCategory, optionOrCategoryIndex) =>
+                    'options' in optionOrCategory ? (
+                      <SelectGroup key={optionOrCategoryIndex}>
+                        <SelectLabel>{optionOrCategory.label}</SelectLabel>
+                        {optionOrCategory.options.map((option) => (
+                          <SelectItem
+                            key={option.value}
+                            value={option.value}
+                            disabled={option.disabled}
+                          >
+                            <RadixSelect.ItemText>
+                              {option.label}
+                            </RadixSelect.ItemText>
+                            <SelectItemIndicator>
+                              <FaCheck />
+                            </SelectItemIndicator>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    ) : (
+                      <SelectItem
+                        key={optionOrCategory.value}
+                        value={optionOrCategory.value}
+                        disabled={optionOrCategory.disabled}
+                      >
+                        <RadixSelect.ItemText>
+                          {optionOrCategory.label}
+                        </RadixSelect.ItemText>
+                        <SelectItemIndicator>
+                          <FaCheck />
+                        </SelectItemIndicator>
+                      </SelectItem>
+                    ),
+                  )}
+                  {groupIndex < options.length - 1 && <SelectSeparator />}
+                </Fragment>
+              ))}
+            </SelectViewport>
+            <RadixSelect.ScrollDownButton />
+            <RadixSelect.Arrow />
+          </SelectContent>
+        </Portal>
       </RadixSelect.Root>
     </SelectRoot>
   );
