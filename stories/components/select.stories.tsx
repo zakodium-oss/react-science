@@ -259,3 +259,22 @@ export function FixedValueUndefinedHandle() {
     </div>
   );
 }
+
+export function UndefinedValueUndefinedHandle() {
+  const value = undefined;
+  return (
+    <div style={{ width: '100%', padding: '10px' }}>
+      <Select
+        value={value}
+        options={[
+          [
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+          ],
+        ]}
+      />
+      <p>Value outside component is {value}.</p>
+    </div>
+  );
+}
