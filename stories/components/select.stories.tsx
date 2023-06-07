@@ -149,3 +149,19 @@ export function Disabled() {
     </div>
   );
 }
+export function WithCustomStyle() {
+  return (
+    <div style={{ width: '100%', padding: '10px' }}>
+      <Select
+        options={[
+          [
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+          ],
+        ]}
+        style={{ width: '500px' }}
+      />
+    </div>
+  );
+}

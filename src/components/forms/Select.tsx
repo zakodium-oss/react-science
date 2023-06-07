@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import * as RadixSelect from '@radix-ui/react-select';
 import { SelectGroup } from '@radix-ui/react-select';
-import { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode, CSSProperties } from 'react';
 import { FaCheck, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 import { Portal } from '../root-layout/Portal';
@@ -23,6 +23,7 @@ export interface SelectProps {
   onSelect?: (value: string) => void;
   options: (Option[] | Category[])[];
   disabled?: boolean;
+  style?: CSSProperties;
 }
 
 const SelectRoot = styled.div`
@@ -58,7 +59,7 @@ const SelectContent = styled(RadixSelect.Content)`
 `;
 
 const SelectViewport = styled(RadixSelect.Viewport)`
-  width: 120px;
+  width: var(--radix-select-trigger-width);
   border-radius: 4px;
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -106,16 +107,23 @@ const SelectSeparator = styled(RadixSelect.Separator)`
 `;
 
 export function Select(props: SelectProps) {
-  const { placeholder, value, onSelect, options, disabled = false } = props;
+  const {
+    placeholder,
+    value,
+    onSelect,
+    options,
+    disabled = false,
+    style,
+  } = props;
 
   return (
-    <SelectRoot>
+    <SelectRoot style={{ ...style }}>
       <RadixSelect.Root
         value={value}
         onValueChange={onSelect}
         disabled={disabled}
       >
-        <SelectTrigger aria-expanded>
+        <SelectTrigger>
           <RadixSelect.Value placeholder={placeholder} />
           <RadixSelect.Icon asChild>
             <FaChevronDown />
