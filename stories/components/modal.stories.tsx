@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import {
   FaMeteor,
@@ -274,6 +275,93 @@ WithComplexContents.args = {
 };
 
 WithComplexContents.argTypes = actions;
+
+export function PassDownStyle(props: {
+  onSave: () => void;
+  onRequestClose: () => void;
+}) {
+  const [isOpen, open, close] = useOnOff();
+
+  const { onSave, onRequestClose, ...otherProps } = props;
+
+  const BlueFooter = styled(Modal.Footer)`
+    background-color: blue;
+  `;
+
+  return (
+    <>
+      <DemoPage openModal={open} />
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => {
+          onRequestClose();
+          close();
+        }}
+        {...otherProps}
+      >
+        <Modal.Header style={{ backgroundColor: 'red' }}>
+          Hello, World!
+        </Modal.Header>
+        <Modal.Body>
+          <div
+            style={{
+              display: 'flex',
+              flex: '1 1 0%',
+              flexDirection: 'row',
+            }}
+          >
+            <Toolbar orientation="vertical">
+              <Toolbar.Item title="react">
+                <FaReact />
+              </Toolbar.Item>
+              <Toolbar.Item title="npm">
+                <FaNpm />
+              </Toolbar.Item>
+              <Toolbar.Item title="nodejs">
+                <FaNodeJs />
+              </Toolbar.Item>
+            </Toolbar>
+            <p style={{ paddingLeft: 10 }}>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
+              accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
+              assumenda esse animi id atque natus ipsa sunt iure illo,
+              exercitationem voluptates non.
+            </p>
+          </div>
+        </Modal.Body>
+        <BlueFooter>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+            }}
+          >
+            <Button
+              onClick={onSave}
+              backgroundColor={{
+                basic: 'hsla(243deg, 75%, 58%, 1)',
+                hover: 'hsla(245deg, 58%, 50%, 1)',
+              }}
+              color={{ basic: 'white' }}
+            >
+              Save
+            </Button>
+          </div>
+        </BlueFooter>
+      </Modal>
+    </>
+  );
+}
+
+PassDownStyle.args = {
+  hasCloseButton: true,
+  height: 400,
+  maxWidth: 600,
+  requestCloseOnBackdrop: true,
+  requestCloseOnEsc: true,
+};
+
+PassDownStyle.argTypes = actions;
 
 function DemoPage(props: { openModal: () => void }) {
   return (

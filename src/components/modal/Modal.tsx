@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import type { ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 import { Portal } from '../root-layout/Portal';
 
@@ -98,14 +98,50 @@ export function Modal(props: ModalProps) {
   );
 }
 
-Modal.Header = function ModalHeader(props: { children: ReactNode }) {
-  return <ModalHeaderStyled>{props.children}</ModalHeaderStyled>;
+Modal.Header = function ModalHeader({
+  children,
+  style,
+  className,
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+  className?: string;
+}) {
+  return (
+    <ModalHeaderStyled style={style} className={className}>
+      {children}
+    </ModalHeaderStyled>
+  );
 };
 
-Modal.Body = function ModalBody(props: { children: ReactNode }) {
-  return <ModalBodyStyled>{props.children}</ModalBodyStyled>;
+Modal.Body = function ModalBody({
+  children,
+  style,
+  className,
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+  className?: string;
+}) {
+  return (
+    <ModalBodyStyled style={style} className={className}>
+      {children}
+    </ModalBodyStyled>
+  );
 };
 
-Modal.Footer = function ModalFooter(props: { children: ReactNode }) {
-  return <ModalFooterStyled>{props.children}</ModalFooterStyled>;
+Modal.Footer = function ModalFooter({
+  children,
+  style,
+  className,
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+  className?: string;
+}) {
+  return (
+    <ModalFooterStyled style={style} className={className}>
+      {children}
+    </ModalFooterStyled>
+  );
 };
