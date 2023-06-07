@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
-import type * as Polymorphic from '@radix-ui/react-polymorphic';
 import * as RadixSelect from '@radix-ui/react-select';
 import { SelectGroup } from '@radix-ui/react-select';
-import { forwardRef, Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 import { FaCheck, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 import { Portal } from '../root-layout/Portal';
