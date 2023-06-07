@@ -19,7 +19,7 @@ interface Option {
 
 export interface SelectProps {
   placeholder?: string;
-  value?: string;
+  value: string | undefined;
   onSelect?: (value: string) => void;
   options: (Option[] | Category[])[];
   disabled?: boolean;

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Select } from '../../src/components/forms/Select';
 
 export default {
@@ -5,9 +7,12 @@ export default {
 };
 
 export function OnlyOptions() {
+  const [value, setValue] = useState<string | undefined>(undefined);
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         options={[
           [
             { label: 'Apple', value: 'apple' },
@@ -16,14 +21,18 @@ export function OnlyOptions() {
           ],
         ]}
       />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
 
 export function OnlyCategories() {
+  const [value, setValue] = useState<string>('apple');
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         options={[
           [
             {
@@ -45,14 +54,19 @@ export function OnlyCategories() {
           ],
         ]}
       />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
 
 export function OptionsWithCategories() {
+  const [value, setValue] = useState<string>('apple');
+
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         options={[
           [
             {
@@ -84,14 +98,19 @@ export function OptionsWithCategories() {
           ],
         ]}
       />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
 
 export function DisabledOptions() {
+  const [value, setValue] = useState<string>('apple');
+
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         options={[
           [
             { label: 'Apple', value: 'apple' },
@@ -100,14 +119,19 @@ export function DisabledOptions() {
           ],
         ]}
       />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
 
 export function DisabledInCategories() {
+  const [value, setValue] = useState<string>('apple');
+
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         options={[
           [
             {
@@ -129,14 +153,19 @@ export function DisabledInCategories() {
           ],
         ]}
       />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
 
 export function Disabled() {
+  const [value, setValue] = useState<string>('apple');
+
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         disabled
         options={[
           [
@@ -146,13 +175,18 @@ export function Disabled() {
           ],
         ]}
       />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
 export function WithCustomStyle() {
+  const [value, setValue] = useState<string>('apple');
+
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
+        value={value}
+        onSelect={setValue}
         options={[
           [
             { label: 'Apple', value: 'apple' },
@@ -162,6 +196,66 @@ export function WithCustomStyle() {
         ]}
         style={{ width: '500px' }}
       />
+      <p>Value outside component is {value}.</p>
+    </div>
+  );
+}
+
+export function FixedValueNoopHandle() {
+  const value = 'apple';
+  return (
+    <div style={{ width: '100%', padding: '10px' }}>
+      <Select
+        value={value}
+        onSelect={() => {}}
+        options={[
+          [
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+          ],
+        ]}
+      />
+      <p>Value outside component is {value}.</p>
+    </div>
+  );
+}
+
+export function UndefinedValueNoopHandle() {
+  const value = undefined;
+  return (
+    <div style={{ width: '100%', padding: '10px' }}>
+      <Select
+        value={value}
+        onSelect={() => {}}
+        options={[
+          [
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+          ],
+        ]}
+      />
+      <p>Value outside component is {value}.</p>
+    </div>
+  );
+}
+
+export function FixedValueUndefinedHandle() {
+  const value = 'apple';
+  return (
+    <div style={{ width: '100%', padding: '10px' }}>
+      <Select
+        value={value}
+        options={[
+          [
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+          ],
+        ]}
+      />
+      <p>Value outside component is {value}.</p>
     </div>
   );
 }
