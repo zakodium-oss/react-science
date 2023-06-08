@@ -116,10 +116,12 @@ export function Select(props: SelectProps) {
     style,
   } = props;
 
+  const realValue = value ?? '';
+
   return (
     <SelectRoot style={{ ...style }}>
       <RadixSelect.Root
-        value={value}
+        value={realValue}
         onValueChange={onSelect}
         disabled={disabled}
       >

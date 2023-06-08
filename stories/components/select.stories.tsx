@@ -278,3 +278,26 @@ export function UndefinedValueUndefinedHandle() {
     </div>
   );
 }
+
+export function ResetButton() {
+  const [value, setValue] = useState<string | undefined>(undefined);
+  return (
+    <div style={{ width: '100%', padding: '10px' }}>
+      <Select
+        value={value}
+        onSelect={setValue}
+        options={[
+          [
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+          ],
+        ]}
+      />
+      <p>Value outside component is {value}.</p>
+      <button type="button" onClick={() => setValue(undefined)}>
+        Reset
+      </button>
+    </div>
+  );
+}
