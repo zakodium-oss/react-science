@@ -28,7 +28,7 @@ export function OnlyOptions() {
 }
 
 export function OnlyCategories() {
-  const [value, setValue] = useState<string>('apple');
+  const [value, setValue] = useState<string | undefined>('apple');
   return (
     <div style={{ width: '100%', padding: '10px' }}>
       <Select
@@ -61,7 +61,7 @@ export function OnlyCategories() {
 }
 
 export function OptionsWithCategories() {
-  const [value, setValue] = useState<string>('apple');
+  const [value, setValue] = useState<string | undefined>('apple');
 
   return (
     <div style={{ width: '100%', padding: '10px' }}>
@@ -105,7 +105,7 @@ export function OptionsWithCategories() {
 }
 
 export function DisabledOptions() {
-  const [value, setValue] = useState<string>('apple');
+  const [value, setValue] = useState<string | undefined>('apple');
 
   return (
     <div style={{ width: '100%', padding: '10px' }}>
@@ -126,7 +126,7 @@ export function DisabledOptions() {
 }
 
 export function DisabledInCategories() {
-  const [value, setValue] = useState<string>('apple');
+  const [value, setValue] = useState<string | undefined>('apple');
 
   return (
     <div style={{ width: '100%', padding: '10px' }}>
@@ -160,7 +160,7 @@ export function DisabledInCategories() {
 }
 
 export function Disabled() {
-  const [value, setValue] = useState<string>('apple');
+  const [value, setValue] = useState<string | undefined>('apple');
 
   return (
     <div style={{ width: '100%', padding: '10px' }}>
@@ -181,7 +181,7 @@ export function Disabled() {
   );
 }
 export function WithCustomStyle() {
-  const [value, setValue] = useState<string>('apple');
+  const [value, setValue] = useState<string | undefined>('apple');
 
   return (
     <div style={{ width: '100%', padding: '10px' }}>
