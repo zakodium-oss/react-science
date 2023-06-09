@@ -20,7 +20,7 @@ interface Option {
 export interface SelectProps {
   placeholder?: string;
   value: string | undefined;
-  onSelect?: (value: string) => void;
+  onSelect?: (value: string | undefined) => void;
   options: (Option[] | Category[])[];
   disabled?: boolean;
   style?: CSSProperties;
@@ -116,17 +116,27 @@ export function Select(props: SelectProps) {
     style,
   } = props;
 
-  const realValue = value ?? '';
+  const selectedLabel = options
+    .flatMap((group) =>
+      group.flatMap((optionOrCategory) =>
+        'options' in optionOrCategory
+          ? optionOrCategory.options
+          : [optionOrCategory],
+      ),
+    )
+    .find((option) => option.value === value)?.label;
 
   return (
     <SelectRoot style={{ ...style }}>
       <RadixSelect.Root
-        value={realValue}
+        value={value}
         onValueChange={onSelect}
         disabled={disabled}
       >
         <SelectTrigger>
-          <RadixSelect.Value placeholder={placeholder} />
+          <RadixSelect.Value>
+            <span>{selectedLabel || placeholder}&nbsp;</span>
+          </RadixSelect.Value>
           <RadixSelect.Icon asChild>
             <FaChevronDown />
           </RadixSelect.Icon>

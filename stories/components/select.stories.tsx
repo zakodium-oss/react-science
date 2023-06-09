@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Button } from '../../src/components';
 import { Select } from '../../src/components/forms/Select';
 
 export default {
@@ -295,9 +296,7 @@ export function ResetButton() {
         ]}
       />
       <p>Value outside component is {value}.</p>
-      <button type="button" onClick={() => setValue(undefined)}>
-        Reset
-      </button>
+      <Button onClick={() => setValue(undefined)}>Reset</Button>
     </div>
   );
 }
