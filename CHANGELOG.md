@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.23.0](https://github.com/zakodium-oss/react-science/compare/v0.22.2...v0.23.0) (2023-06-07)
+
+
+### Features
+
+* add select component ([#495](https://github.com/zakodium-oss/react-science/issues/495)) ([80b2786](https://github.com/zakodium-oss/react-science/commit/80b278646b0dae590d79d7f8b7adf6cf09a85f36))
+* allow to style tables ([#494](https://github.com/zakodium-oss/react-science/issues/494)) ([44af685](https://github.com/zakodium-oss/react-science/commit/44af685534e34afb2502b96eb27da2d296b0dfa9))
+* checkbox component ([#490](https://github.com/zakodium-oss/react-science/issues/490)) ([d1f820f](https://github.com/zakodium-oss/react-science/commit/d1f820fa8268d4900c63efea2b4c08a1fb9365cb))
+
 ## [0.22.2](https://github.com/zakodium-oss/react-science/compare/v0.22.1...v0.22.2) (2023-05-26)
 
 
