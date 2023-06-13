@@ -7,6 +7,9 @@ export default {
 export function Basic() {
   return <Button>Hello, World!</Button>;
 }
+export function Disabled() {
+  return <Button disabled>Hello, World!</Button>;
+}
 
 export function ButtonGroupBasic() {
   return (
