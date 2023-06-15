@@ -200,7 +200,7 @@ export function WithMinimalSizeAndEvilChild() {
 
   return (
     <div style={{ height: '100%' }}>
-      <SplitPane direction="horizontal" size="20%" controlledSide="start">
+      <SplitPane direction="horizontal" size="20%" controlledSide="end">
         <div style={{ width: '100%', minWidth: 0 }}>
           <Tabs items={tabItems} onClick={setOpen} opened={opened} />
         </div>
