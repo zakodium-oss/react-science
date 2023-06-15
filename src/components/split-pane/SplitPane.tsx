@@ -250,7 +250,6 @@ function getItemStyle(
   size: number,
   type: SplitPaneType,
 ) {
-  console.log(isClosed, isControlledSide, direction, size, type);
   const isHorizontal = direction === 'horizontal';
   if (isClosed) {
     return isControlledSide
