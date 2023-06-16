@@ -275,8 +275,7 @@ function getItemStyle(
       : {
           flex: '1 1 0%',
           display: 'flex',
-          minWidth: isHorizontal ? 0 : undefined,
-          minHeight: isHorizontal ? undefined : 0,
+          [isHorizontal ? 'minWidth' : 'minHeight']: 0,
         };
   }
 }
