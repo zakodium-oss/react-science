@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   Accordion,
@@ -6,6 +6,7 @@ import {
   SplitPane,
   SplitPaneProps,
   SplitPaneSize,
+  Tabs,
 } from '../../src/components/index';
 
 export default {
@@ -183,3 +184,36 @@ WithMinimalSize.argTypes = {
   direction: directionArgType,
   controlledSide: sideArgType,
 };
+
+export function WithMinimalSizeAndEvilChild() {
+  const tabItems = useMemo(
+    () =>
+      new Array(20).fill(0).map((_, i) => ({
+        id: `tab-${i}`,
+        title: `Tab ${i}`,
+        content: `Tab ${i} content`,
+      })),
+    [],
+  );
+
+  const [opened, setOpen] = useState<string>();
+
+  return (
+    <div style={{ height: '100%' }}>
+      <SplitPane direction="horizontal" size="20%" controlledSide="end">
+        <div style={{ width: '100%', minWidth: 0 }}>
+          <Tabs items={tabItems} onClick={setOpen} opened={opened} />
+        </div>
+        <div
+          style={{
+            backgroundColor: 'rgba(147, 197, 253)',
+            width: '100%',
+            minWidth: '300px',
+          }}
+        >
+          I am an evil child. My size will stay at 300px 😈
+        </div>
+      </SplitPane>
+    </div>
+  );
+}

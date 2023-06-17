@@ -257,8 +257,15 @@ function getItemStyle(
       : { flex: '1 1 0%', display: 'flex' };
   } else if (type === '%') {
     return isControlledSide
-      ? { flex: '100 0 0%', display: 'flex' }
-      : { flex: `${percentToFlex(size)} 0 0%`, display: 'flex' };
+      ? {
+          flex: '100 0 0%',
+          display: 'flex',
+        }
+      : {
+          flex: `${percentToFlex(size)} 0 0%`,
+          display: 'flex',
+          [isHorizontal ? 'minWidth' : 'minHeight']: 0,
+        };
   } else {
     return isControlledSide
       ? {
@@ -268,8 +275,7 @@ function getItemStyle(
       : {
           flex: '1 1 0%',
           display: 'flex',
-          minWidth: isHorizontal ? 0 : undefined,
-          minHeight: isHorizontal ? undefined : 0,
+          [isHorizontal ? 'minWidth' : 'minHeight']: 0,
         };
   }
 }
