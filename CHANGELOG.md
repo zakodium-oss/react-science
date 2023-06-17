@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.24.0](https://github.com/zakodium-oss/react-science/compare/v0.23.0...v0.24.0) (2023-06-17)
+
+
+### Features
+
+* disableable buttons ([#504](https://github.com/zakodium-oss/react-science/issues/504)) ([e4ddf56](https://github.com/zakodium-oss/react-science/commit/e4ddf560e81f8394611f85ba9e93f2f1e7c9f9aa))
+
+
+### Bug Fixes
+
+* enforce Select component to be controlled ([#501](https://github.com/zakodium-oss/react-science/issues/501)) ([b8d2150](https://github.com/zakodium-oss/react-science/commit/b8d215018c53989a74990ab95a5b441b83495213))
+* set min width on percentage uncontrolled side ([#505](https://github.com/zakodium-oss/react-science/issues/505)) ([d303cb8](https://github.com/zakodium-oss/react-science/commit/d303cb89c92914e938af6ca8d7f38af110cc129b))
+
 ## [0.23.0](https://github.com/zakodium-oss/react-science/compare/v0.22.2...v0.23.0) (2023-06-07)
 
 
