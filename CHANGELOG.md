@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.24.1](https://github.com/zakodium-oss/react-science/compare/v0.24.0...v0.24.1) (2023-06-20)
+
+
+### Bug Fixes
+
+* correctly export select component ([cba5aac](https://github.com/zakodium-oss/react-science/commit/cba5aacbb3a306017124f638267eec19fcd4263a))
+* export MenuOption and MenuOptions types ([#507](https://github.com/zakodium-oss/react-science/issues/507)) ([05855ed](https://github.com/zakodium-oss/react-science/commit/05855ed831d80960821d2ad27c598abdc36d32a0))
+
 ## [0.24.0](https://github.com/zakodium-oss/react-science/compare/v0.23.0...v0.24.0) (2023-06-17)
 
 
