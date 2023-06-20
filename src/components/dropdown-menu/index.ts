@@ -1,2 +1,2 @@
 export * from './DropdownMenu';
-export * from './MenuItems';
+export { MenuOptions, MenuOption, MenuDivider } from './MenuItems';
