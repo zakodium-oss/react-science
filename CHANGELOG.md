@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.2](https://github.com/zakodium-oss/react-science/compare/v0.24.1...v0.24.2) (2023-06-22)
+
+
+### Bug Fixes
+
+* modal generate a new portal context ([#510](https://github.com/zakodium-oss/react-science/issues/510)) ([01edd09](https://github.com/zakodium-oss/react-science/commit/01edd090528d534a1c1f4c9fb7148d9ee078bfdf))
+
 ## [0.24.1](https://github.com/zakodium-oss/react-science/compare/v0.24.0...v0.24.1) (2023-06-20)
 
 
