@@ -1,18 +1,20 @@
 import {
   MouseEventHandler,
   ReactEventHandler,
+  RefObject,
   useCallback,
   useEffect,
-  useRef,
 } from 'react';
 import { useKbsDisableGlobal } from 'react-kbs';
 
 export function useDialog({
+  dialogRef,
   isOpen,
   requestCloseOnEsc,
   requestCloseOnBackdrop,
   onRequestClose,
 }: {
+  dialogRef: RefObject<HTMLDialogElement>;
   isOpen: boolean;
   requestCloseOnEsc: boolean;
   requestCloseOnBackdrop: boolean;
@@ -20,15 +22,13 @@ export function useDialog({
 }) {
   useKbsDisableGlobal(isOpen);
 
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && isOpen) {
       dialog.showModal();
       return () => dialog.close();
     }
-  }, [isOpen]);
+  }, [dialogRef, isOpen]);
 
   const onCancel = useCallback<ReactEventHandler<HTMLDialogElement>>(
     (event) => {
@@ -52,5 +52,5 @@ export function useDialog({
     [requestCloseOnBackdrop, onRequestClose],
   );
 
-  return { ref: dialogRef, onClick, onCancel };
+  return { onClick, onCancel };
 }

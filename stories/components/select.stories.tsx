@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button } from '../../src/components';
+import { Button, Modal, useOnOff } from '../../src/components';
 import { Select } from '../../src/components/forms/Select';
 
 export default {
@@ -298,5 +298,46 @@ export function ResetButton() {
       <p>Value outside component is {value}.</p>
       <Button onClick={() => setValue(undefined)}>Reset</Button>
     </div>
+  );
+}
+
+export function InModal() {
+  const [isOpen, open, close] = useOnOff();
+  const [value, setValue] = useState<string | undefined>(undefined);
+  return (
+    <>
+      <Button
+        onClick={open}
+        backgroundColor={{
+          basic: 'hsla(243deg, 75%, 58%, 1)',
+          hover: 'hsla(245deg, 58%, 50%, 1)',
+        }}
+        color={{ basic: 'white' }}
+      >
+        Open
+      </Button>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => {
+          close();
+        }}
+      >
+        <Modal.Header>Select a fruit</Modal.Header>
+        <Modal.Body>
+          <p>Hello, world!</p>
+          <Select
+            value={value}
+            onSelect={setValue}
+            options={[
+              [
+                { label: 'Apple', value: 'apple' },
+                { label: 'Banana', value: 'banana' },
+                { label: 'Orange', value: 'orange' },
+              ],
+            ]}
+          />
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }

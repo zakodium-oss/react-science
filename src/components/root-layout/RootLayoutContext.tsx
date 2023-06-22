@@ -1,13 +1,14 @@
 import { createContext, ReactNode, useContext } from 'react';
 
-const rootLayoutContext = createContext<HTMLElement | null>(null);
+const defaultPortalContext =
+  typeof document === 'undefined' ? null : document.body;
+
+const rootLayoutContext = createContext<HTMLElement | null>(
+  defaultPortalContext,
+);
 
 export function useRootLayoutContext() {
   const context = useContext(rootLayoutContext);
-  if (!context) {
-    throw new Error('RootLayoutContext was not found');
-  }
-
   return context;
 }
 

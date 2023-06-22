@@ -9,5 +9,8 @@ interface PortalProps {
 
 export function Portal(props: PortalProps) {
   const element = useRootLayoutContext();
+  if (element === null) {
+    return null;
+  }
   return createPortal(props.children, element);
 }
