@@ -116,8 +116,16 @@ export function Modal(props: ModalProps) {
   );
 }
 
-Modal.Header = function ModalHeader(props: { children: ReactNode }) {
-  return <ModalHeaderStyled>{props.children}</ModalHeaderStyled>;
+Modal.Header = function ModalHeader(props: {
+  children: ReactNode;
+  position?: 'center' | 'start' | 'end';
+}) {
+  const { children, position = 'start' } = props;
+  return (
+    <ModalHeaderStyled style={{ justifyContent: position }}>
+      {children}
+    </ModalHeaderStyled>
+  );
 };
 
 Modal.Body = function ModalBody(props: { children: ReactNode }) {
