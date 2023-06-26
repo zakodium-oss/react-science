@@ -31,17 +31,24 @@ export default {
 const actions = {
   onSave: { action: 'saved' },
   onCancel: { action: 'canceled' },
+  position: {
+    control: { type: 'select' },
+    options: ['center', 'start', 'end'],
+  },
 };
 
-export function Control(props: { onSave: () => void }) {
+export function Control(props: {
+  onSave: () => void;
+  position: 'center' | 'start' | 'end';
+}) {
   const [isOpen, open, close] = useOnOff();
 
-  const { onSave, ...otherProps } = props;
+  const { onSave, position, ...otherProps } = props;
   return (
     <>
       <DemoPage openModal={open} />
       <Modal isOpen={isOpen} onRequestClose={close} {...otherProps}>
-        <Modal.Header>Hello, World!</Modal.Header>
+        <Modal.Header position={position}>Hello, World!</Modal.Header>
         <Modal.Body>
           <div
             style={{
@@ -99,6 +106,7 @@ Control.args = {
   maxWidth: 600,
   requestCloseOnBackdrop: true,
   requestCloseOnEsc: true,
+  position: 'start',
 };
 
 Control.argTypes = actions;
