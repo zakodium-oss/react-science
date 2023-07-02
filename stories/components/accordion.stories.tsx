@@ -6,27 +6,35 @@ import {
   Toolbar,
   useToggleAccordion,
 } from '../../src/components/index';
+import { AccordionDecorator } from '../utils';
 
 export default {
   title: 'Components / Accordion',
+  decorators: [AccordionDecorator],
 };
 
 export function Fixed() {
   return (
-    <Accordion>
-      <Accordion.Item title="First Item" defaultOpened>
-        This is the first content
-      </Accordion.Item>
-      <Accordion.Item title="Second Item">
-        This is the content of the second item
-      </Accordion.Item>
-      <Accordion.Item title="With Toolbar">
-        <Toolbar orientation="horizontal">
-          <Toolbar.Item title="Test A">A</Toolbar.Item>
-          <Toolbar.Item title="Test B">B</Toolbar.Item>
-        </Toolbar>
-      </Accordion.Item>
-    </Accordion>
+    <div
+      style={{
+        height: 300,
+      }}
+    >
+      <Accordion>
+        <Accordion.Item title="First Item" defaultOpened>
+          This is the first content
+        </Accordion.Item>
+        <Accordion.Item title="Second Item">
+          This is the content of the second item
+        </Accordion.Item>
+        <Accordion.Item title="With Toolbar">
+          <Toolbar orientation="horizontal">
+            <Toolbar.Item title="Test A">A</Toolbar.Item>
+            <Toolbar.Item title="Test B">B</Toolbar.Item>
+          </Toolbar>
+        </Accordion.Item>
+      </Accordion>
+    </div>
   );
 }
 

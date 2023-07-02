@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
+import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 
 import { Button } from '..';
 import { Portal } from '../root-layout/Portal';
+import { RootLayoutProvider } from '../root-layout/RootLayoutContext';
 
 import { useDialog } from './useDialog';
 
@@ -57,6 +59,8 @@ const ConfirmModalFooter = styled.div`
   gap: 10px;
 `;
 
+type MaybeHTMLDialogElement = HTMLDialogElement | null;
+
 export function ConfirmModal(props: ConfirmModalProps) {
   const {
     isOpen,
@@ -72,12 +76,24 @@ export function ConfirmModal(props: ConfirmModalProps) {
     children,
   } = props;
 
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogProps = useDialog({
+    dialogRef,
     isOpen,
     requestCloseOnEsc,
     requestCloseOnBackdrop,
     onRequestClose,
   });
+  const [portalDomNode, setPortalDomNode] =
+    useState<MaybeHTMLDialogElement>(null);
+  const dialogCallbackRef = useCallback((node: MaybeHTMLDialogElement) => {
+    setPortalDomNode(node);
+  }, []);
+
+  useImperativeHandle<MaybeHTMLDialogElement, MaybeHTMLDialogElement>(
+    dialogCallbackRef,
+    () => dialogRef.current,
+  );
 
   if (!isOpen) {
     return null;
@@ -85,35 +101,37 @@ export function ConfirmModal(props: ConfirmModalProps) {
 
   return (
     <Portal>
-      <ConfirmModalDialog {...dialogProps}>
-        <ConfirmModalContents headerColor={headerColor} style={{ maxWidth }}>
-          <ConfirmModalChildrenRoot headerColor={headerColor}>
-            {children}
-          </ConfirmModalChildrenRoot>
+      <ConfirmModalDialog {...dialogProps} ref={dialogRef}>
+        <RootLayoutProvider innerRef={portalDomNode}>
+          <ConfirmModalContents headerColor={headerColor} style={{ maxWidth }}>
+            <ConfirmModalChildrenRoot headerColor={headerColor}>
+              {children}
+            </ConfirmModalChildrenRoot>
 
-          <ConfirmModalFooter>
-            <Button
-              onClick={onConfirm}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
-              {saveText}
-            </Button>
-            <Button
-              onClick={onCancel}
-              backgroundColor={{
-                basic: 'hsla(0deg, 72%, 50%, 1)',
-                hover: 'hsla(0deg, 73%, 42%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
-              {cancelText}
-            </Button>
-          </ConfirmModalFooter>
-        </ConfirmModalContents>
+            <ConfirmModalFooter>
+              <Button
+                onClick={onConfirm}
+                backgroundColor={{
+                  basic: 'hsla(243deg, 75%, 58%, 1)',
+                  hover: 'hsla(245deg, 58%, 50%, 1)',
+                }}
+                color={{ basic: 'white' }}
+              >
+                {saveText}
+              </Button>
+              <Button
+                onClick={onCancel}
+                backgroundColor={{
+                  basic: 'hsla(0deg, 72%, 50%, 1)',
+                  hover: 'hsla(0deg, 73%, 42%, 1)',
+                }}
+                color={{ basic: 'white' }}
+              >
+                {cancelText}
+              </Button>
+            </ConfirmModalFooter>
+          </ConfirmModalContents>
+        </RootLayoutProvider>
       </ConfirmModalDialog>
     </Portal>
   );

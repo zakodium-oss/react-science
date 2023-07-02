@@ -13,6 +13,7 @@ interface ButtonProps {
   color?: Colorhover;
   onClick?: () => void;
   style?: CSSProperties;
+  disabled?: boolean;
 }
 
 export function Button(props: ButtonProps) {
@@ -25,6 +26,7 @@ export function Button(props: ButtonProps) {
     style,
     onClick,
     children,
+    disabled = false,
   } = props;
 
   return (
@@ -46,12 +48,17 @@ export function Button(props: ButtonProps) {
         minWidth: 30,
         justifyContent: 'center',
         backgroundColor: backgroundColor.basic,
-        ':hover': {
+        ':hover:enabled': {
           color: color.hover,
           backgroundColor: backgroundColor.hover,
         },
+        ':disabled': {
+          opacity: 0.5,
+          cursor: 'not-allowed',
+        },
       })}
       type="button"
+      disabled={disabled}
     >
       {children}
     </button>

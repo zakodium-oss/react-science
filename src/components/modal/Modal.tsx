@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import type { ReactElement, ReactNode } from 'react';
+import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 
 import { Portal } from '../root-layout/Portal';
+import { RootLayoutProvider } from '../root-layout/RootLayoutContext';
 
 import ModalCloseButton from './ModalCloseButton';
 import { useDialog } from './useDialog';
@@ -56,6 +58,8 @@ const ModalFooterStyled = styled.div`
   padding: 10px 20px 10px 20px;
 `;
 
+type MaybeHTMLDialogElement = HTMLDialogElement | null;
+
 export function Modal(props: ModalProps) {
   const {
     isOpen,
@@ -69,12 +73,24 @@ export function Modal(props: ModalProps) {
     height,
   } = props;
 
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogProps = useDialog({
+    dialogRef,
     isOpen,
     requestCloseOnEsc,
     requestCloseOnBackdrop,
     onRequestClose,
   });
+  const [portalDomNode, setPortalDomNode] =
+    useState<MaybeHTMLDialogElement>(null);
+  const dialogCallbackRef = useCallback((node: MaybeHTMLDialogElement) => {
+    setPortalDomNode(node);
+  }, []);
+
+  useImperativeHandle<MaybeHTMLDialogElement, MaybeHTMLDialogElement>(
+    dialogCallbackRef,
+    () => dialogRef.current,
+  );
 
   if (!isOpen) {
     return null;
@@ -82,17 +98,19 @@ export function Modal(props: ModalProps) {
 
   return (
     <Portal>
-      <DialogRoot {...dialogProps}>
-        <DialogContents
-          style={{
-            maxWidth,
-            height: height || 'max-content',
-            width: width || '100%',
-          }}
-        >
-          {children}
-          {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
-        </DialogContents>
+      <DialogRoot {...dialogProps} ref={dialogRef}>
+        <RootLayoutProvider innerRef={portalDomNode}>
+          <DialogContents
+            style={{
+              maxWidth,
+              height: height || 'max-content',
+              width: width || '100%',
+            }}
+          >
+            {children}
+            {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
+          </DialogContents>
+        </RootLayoutProvider>
       </DialogRoot>
     </Portal>
   );

@@ -1,5 +1,57 @@
 # Changelog
 
+## [0.24.2](https://github.com/zakodium-oss/react-science/compare/v0.24.1...v0.24.2) (2023-06-22)
+
+
+### Bug Fixes
+
+* modal generate a new portal context ([#510](https://github.com/zakodium-oss/react-science/issues/510)) ([01edd09](https://github.com/zakodium-oss/react-science/commit/01edd090528d534a1c1f4c9fb7148d9ee078bfdf))
+
+## [0.24.1](https://github.com/zakodium-oss/react-science/compare/v0.24.0...v0.24.1) (2023-06-20)
+
+
+### Bug Fixes
+
+* correctly export select component ([cba5aac](https://github.com/zakodium-oss/react-science/commit/cba5aacbb3a306017124f638267eec19fcd4263a))
+* export MenuOption and MenuOptions types ([#507](https://github.com/zakodium-oss/react-science/issues/507)) ([05855ed](https://github.com/zakodium-oss/react-science/commit/05855ed831d80960821d2ad27c598abdc36d32a0))
+
+## [0.24.0](https://github.com/zakodium-oss/react-science/compare/v0.23.0...v0.24.0) (2023-06-17)
+
+
+### Features
+
+* disableable buttons ([#504](https://github.com/zakodium-oss/react-science/issues/504)) ([e4ddf56](https://github.com/zakodium-oss/react-science/commit/e4ddf560e81f8394611f85ba9e93f2f1e7c9f9aa))
+
+
+### Bug Fixes
+
+* enforce Select component to be controlled ([#501](https://github.com/zakodium-oss/react-science/issues/501)) ([b8d2150](https://github.com/zakodium-oss/react-science/commit/b8d215018c53989a74990ab95a5b441b83495213))
+* set min width on percentage uncontrolled side ([#505](https://github.com/zakodium-oss/react-science/issues/505)) ([d303cb8](https://github.com/zakodium-oss/react-science/commit/d303cb89c92914e938af6ca8d7f38af110cc129b))
+
+## [0.23.0](https://github.com/zakodium-oss/react-science/compare/v0.22.2...v0.23.0) (2023-06-07)
+
+
+### Features
+
+* add select component ([#495](https://github.com/zakodium-oss/react-science/issues/495)) ([80b2786](https://github.com/zakodium-oss/react-science/commit/80b278646b0dae590d79d7f8b7adf6cf09a85f36))
+* allow to style tables ([#494](https://github.com/zakodium-oss/react-science/issues/494)) ([44af685](https://github.com/zakodium-oss/react-science/commit/44af685534e34afb2502b96eb27da2d296b0dfa9))
+* checkbox component ([#490](https://github.com/zakodium-oss/react-science/issues/490)) ([d1f820f](https://github.com/zakodium-oss/react-science/commit/d1f820fa8268d4900c63efea2b4c08a1fb9365cb))
+
+## [0.22.2](https://github.com/zakodium-oss/react-science/compare/v0.22.1...v0.22.2) (2023-05-26)
+
+
+### Bug Fixes
+
+* avoid double clicking issue ([#488](https://github.com/zakodium-oss/react-science/issues/488)) ([a98a468](https://github.com/zakodium-oss/react-science/commit/a98a468ae5200898605b413486ab7d9195ca012e))
+
+## [0.22.1](https://github.com/zakodium-oss/react-science/compare/v0.22.0...v0.22.1) (2023-05-24)
+
+
+### Bug Fixes
+
+* stop propagation on dialog backdrop click ([#480](https://github.com/zakodium-oss/react-science/issues/480)) ([46f04c5](https://github.com/zakodium-oss/react-science/commit/46f04c5330abbae650506d1a88e006a44d5d1179))
+* **tabs:** ensure consistant behavior between horizontal and vertical ([#486](https://github.com/zakodium-oss/react-science/issues/486)) ([9bb61e0](https://github.com/zakodium-oss/react-science/commit/9bb61e01f06ad88229f7489d8d83d7def9a99116))
+
 ## [0.22.0](https://github.com/zakodium-oss/react-science/compare/v0.21.2...v0.22.0) (2023-04-28)
 
 

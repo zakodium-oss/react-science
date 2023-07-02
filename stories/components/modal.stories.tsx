@@ -23,9 +23,12 @@ import {
   TabItem,
   useOnOff,
 } from '../../src/components/index';
+import { AccordionDecorator } from '../utils';
 
 export default {
   title: 'Components / Modal',
+  component: Modal,
+  decorators: [AccordionDecorator],
 };
 
 const actions = {
@@ -33,14 +36,24 @@ const actions = {
   onCancel: { action: 'canceled' },
 };
 
-export function Control(props: { onSave: () => void }) {
+export function Control(props: {
+  onSave: () => void;
+  onRequestClose: () => void;
+}) {
   const [isOpen, open, close] = useOnOff();
 
-  const { onSave, ...otherProps } = props;
+  const { onSave, onRequestClose, ...otherProps } = props;
   return (
     <>
       <DemoPage openModal={open} />
-      <Modal isOpen={isOpen} onRequestClose={close} {...otherProps}>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => {
+          onRequestClose();
+          close();
+        }}
+        {...otherProps}
+      >
         <Modal.Header>Hello, World!</Modal.Header>
         <Modal.Body>
           <div
@@ -106,10 +119,12 @@ Control.argTypes = actions;
 export function ConfirmModalControl({
   onSave,
   onCancel,
+  onRequestClose,
   ...otherProps
 }: {
   onSave: () => void;
   onCancel: () => void;
+  onRequestClose: () => void;
   headerColor: string;
 }) {
   const [isOpen, open, close] = useOnOff();
@@ -127,7 +142,10 @@ export function ConfirmModalControl({
           close();
         }}
         isOpen={isOpen}
-        onRequestClose={close}
+        onRequestClose={() => {
+          onRequestClose();
+          close();
+        }}
         {...otherProps}
       >
         <div
@@ -194,9 +212,11 @@ const tabs: Array<TabItem> = [
 
 export function WithComplexContents({
   onSave,
+  onRequestClose,
   ...otherProps
 }: {
   onSave: () => void;
+  onRequestClose: () => void;
 }) {
   const [isOpen, open, close] = useOnOff();
   const [state, setState] = useState(tabs[0].id);
@@ -204,7 +224,14 @@ export function WithComplexContents({
   return (
     <>
       <DemoPage openModal={open} />
-      <Modal isOpen={isOpen} onRequestClose={close} {...otherProps}>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => {
+          onRequestClose();
+          close();
+        }}
+        {...otherProps}
+      >
         <Modal.Header>General Settings</Modal.Header>
         <Modal.Body>
           <Tabs

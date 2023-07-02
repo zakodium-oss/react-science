@@ -1,6 +1,6 @@
 # react-science
 
-React components to build analysis UI.
+React components to build scientific applications UI.
 
 <h3 align="center">
 

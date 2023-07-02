@@ -19,6 +19,8 @@ export function useOnClickOutside<T extends Node = Node>(
       handler(event);
     };
 
+    if (shadowElement === null) return;
+
     shadowElement.addEventListener('mousedown', listener);
     shadowElement.addEventListener('touchstart', listener);
 
