@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CSSProperties, InputHTMLAttributes } from 'react';
+import { CSSProperties, TextareaHTMLAttributes } from 'react';
 
 import { FullSpinner } from '../index';
 
@@ -8,21 +8,23 @@ import {
   RenderAddon,
   RootInput,
   GroupStyled,
-  LeadingAddonStyled,
   LabelStyled,
+  LeadingAddonStyled,
   LeadingInlineAddonStyled,
   TrailingInlineAddonStyled,
   TrailingAddonStyled,
 } from './styles';
 
-const InputStyled = styled.input`
+const TextAreaStyled = styled.textarea`
   padding: 0;
   flex: 1 1 0%;
   border: none;
   position: relative;
   outline: none;
 `;
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   variant?: 'default' | 'small';
 
   leadingAddon?: RenderAddon;
@@ -35,7 +37,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   loading?: boolean;
 }
 
-export function Input(props: InputProps) {
+export function TextArea(props: TextAreaProps) {
   const {
     variant: variantProps,
     trailingAddon,
@@ -70,7 +72,7 @@ export function Input(props: InputProps) {
               {leadingAddon.addon}
             </LeadingInlineAddonStyled>
           )}
-          <InputStyled id={name} name={name} {...otherProps} />
+          <TextAreaStyled id={name} name={name} {...otherProps} />
           {trailingAddon?.inline && (
             <TrailingInlineAddonStyled className="addon">
               {trailingAddon.addon}
@@ -99,7 +101,7 @@ export function Input(props: InputProps) {
   );
 }
 
-function SubText(props: Pick<InputProps, 'help' | 'error' | 'valid'>) {
+function SubText(props: Pick<TextAreaProps, 'help' | 'error' | 'valid'>) {
   const { error, help, valid: validProps } = props;
 
   const valid = typeof validProps === 'string' ? validProps : undefined;

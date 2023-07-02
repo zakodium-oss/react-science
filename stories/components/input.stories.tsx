@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
 import { FaMeteor, FaUser, FaBolt, FaShieldAlt } from 'react-icons/fa';
 
-import { Input, Field } from '../../src/components';
+import { Input, Field, TextArea } from '../../src/components';
 
 export default {
   title: 'Forms / Input',
@@ -111,32 +111,34 @@ export function WithTrailingAddon() {
 
 export function WithLeadingAddon() {
   return (
-    <ExampleContainerAddonGroup>
-      <ExampleGroup>
-        <Input
-          placeholder="Basic example"
-          leadingAddon={{ addon: <FaShieldAlt /> }}
-        />
+    // <ExampleContainerAddonGroup>
+    //   <ExampleGroup>
+    <TextArea
+      placeholder="Basic example"
+      value={'kakakakak'}
+      leadingAddon={{ addon: <FaShieldAlt /> }}
+      trailingAddon={{ addon: <FaShieldAlt /> }}
+    />
 
-        <Input
-          placeholder="Basic example"
-          leadingAddon={{ addon: <FaShieldAlt /> }}
-          variant="small"
-        />
-      </ExampleGroup>
-      <ExampleGroup>
-        <Input
-          placeholder="Basic example"
-          leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
-        />
+    //     <Input
+    //       placeholder="Basic example"
+    //       leadingAddon={{ addon: <FaShieldAlt /> }}
+    //       variant="small"
+    //     />
+    //   </ExampleGroup>
+    //   <ExampleGroup>
+    //     <Input
+    //       placeholder="Basic example"
+    //       leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
+    //     />
 
-        <Input
-          placeholder="Basic example"
-          leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
-          variant="small"
-        />
-      </ExampleGroup>
-    </ExampleContainerAddonGroup>
+    //     <Input
+    //       placeholder="Basic example"
+    //       leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
+    //       variant="small"
+    //     />
+    //   </ExampleGroup>
+    // </ExampleContainerAddonGroup>
   );
 }
 
