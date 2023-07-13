@@ -175,6 +175,7 @@ export function SplitPane(props: SplitPaneProps) {
         display: 'flex',
         height: '100%',
         width: '100%',
+        [direction === 'horizontal' ? 'minWidth' : 'minHeight']: 0,
         flexDirection: direction === 'horizontal' ? 'row' : 'column',
       }}
     >
