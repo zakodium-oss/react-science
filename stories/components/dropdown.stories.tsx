@@ -11,6 +11,7 @@ import {
   FaAd,
   FaAddressCard,
   FaAdjust,
+  FaFilter,
 } from 'react-icons/fa';
 
 import {
@@ -20,6 +21,7 @@ import {
 import {
   DropdownMenu,
   Table,
+  Toolbar,
   ValueRenderers,
 } from '../../src/components/index';
 import data from '../data/table.json';
@@ -355,5 +357,22 @@ export function TableWithContextMenu() {
         ))}
       </tbody>
     </TableWithContext>
+  );
+}
+
+export function DropdownMenuCustomAsTag() {
+  return (
+    <Toolbar orientation="horizontal">
+      <DropdownMenu
+        trigger="click"
+        options={defaultOptions}
+        onSelect={() => {}}
+        as="div"
+      >
+        <Toolbar.Item title="Filters">
+          <FaFilter />
+        </Toolbar.Item>
+      </DropdownMenu>
+    </Toolbar>
   );
 }

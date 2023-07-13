@@ -1,6 +1,13 @@
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
-import { ReactNode, useRef, ElementType, ComponentProps } from 'react';
+import React, {
+  ReactNode,
+  useRef,
+  ElementType,
+  ComponentProps,
+  JSXElementConstructor,
+  JSX,
+} from 'react';
 
 import { useModifiedPopper } from '../hooks/useModifiedPopper';
 import { useOnClickOutside } from '../hooks/useOnClickOutside';
@@ -24,12 +31,13 @@ type ElementProps<E = unknown> = E extends ElementType
   ? ComponentProps<E>
   : never;
 
-interface DropdownMenuClickProps<T> extends DropdownMenuBaseProps<T> {
+interface DropdownMenuClickProps<T, E> extends DropdownMenuBaseProps<T> {
   /**
    * Node to be inside the Button
    */
   children: ReactNode;
   trigger: 'click';
+  as?: E;
 }
 
 interface DropdownMenuContextProps<T, E> extends DropdownMenuBaseProps<T> {
@@ -40,7 +48,7 @@ interface DropdownMenuContextProps<T, E> extends DropdownMenuBaseProps<T> {
 
 export type DropdownMenuProps<T, E> =
   | DropdownMenuContextProps<T, E>
-  | DropdownMenuClickProps<T>;
+  | DropdownMenuClickProps<T, E>;
 
 export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
   props: DropdownMenuProps<T, E> &
@@ -52,7 +60,9 @@ export function DropdownMenu<T = unknown, E extends ElementType = 'div'>(
     return <DropdownContextMenu<T, E> {...props} />;
   }
   return (
-    <DropdownClickMenu {...otherProps}>{props.children}</DropdownClickMenu>
+    <DropdownClickMenu<T, E> {...otherProps}>
+      {props.children}
+    </DropdownClickMenu>
   );
 }
 
@@ -119,10 +129,17 @@ function DropdownContextMenu<T, E extends ElementType = 'div'>(
   );
 }
 
-function DropdownClickMenu<T, E>(
-  props: Omit<DropdownMenuProps<T, E>, 'trigger'> & { children: ReactNode },
+function DropdownClickMenu<T, E extends ElementType = 'div'>(
+  props: Omit<DropdownMenuProps<T, E>, 'trigger'> & {
+    children: ReactNode;
+  },
 ) {
-  const { placement = 'bottom-start', onSelect, ...otherProps } = props;
+  const {
+    placement = 'bottom-start',
+    onSelect,
+    as = 'button',
+    ...otherProps
+  } = props;
 
   const [isOpened, , closeItems, toggle] = useOnOff(false);
 
@@ -134,7 +151,11 @@ function DropdownClickMenu<T, E>(
 
   return (
     <Menu>
-      <Menu.Button ref={setReferenceElement} onClick={toggle}>
+      <Menu.Button
+        ref={setReferenceElement}
+        onClick={toggle}
+        as={as as keyof JSX.IntrinsicElements | JSXElementConstructor<any>}
+      >
         {props.children}
       </Menu.Button>
       {isOpened && (
