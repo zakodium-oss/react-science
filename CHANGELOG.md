@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.24.3](https://github.com/zakodium-oss/react-science/compare/v0.24.2...v0.24.3) (2023-07-13)
+
+
+### Bug Fixes
+
+* set min-width or min-height on split-pane ([#517](https://github.com/zakodium-oss/react-science/issues/517)) ([481aa05](https://github.com/zakodium-oss/react-science/commit/481aa0533f3173dace9207499e69010b824bad46))
+
+
+### Documentation
+
+* improve package description ([#513](https://github.com/zakodium-oss/react-science/issues/513)) ([5d9e56a](https://github.com/zakodium-oss/react-science/commit/5d9e56a27be383d7f6a906a7fd7fd117eadaa8e5))
+
 ## [0.24.2](https://github.com/zakodium-oss/react-science/compare/v0.24.1...v0.24.2) (2023-06-22)
 
 
