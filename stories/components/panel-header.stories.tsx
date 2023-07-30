@@ -8,6 +8,11 @@ import {
   useOnOff,
 } from '../../src/components';
 
+export default {
+  title: 'Components / PanelHeader',
+  component: PanelHeader,
+};
+
 export function Basic() {
   return (
     <div
