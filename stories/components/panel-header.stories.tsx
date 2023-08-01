@@ -22,20 +22,20 @@ export function Basic() {
     >
       <PanelHeader count={3} onClickSettings={() => {}}>
         <Button
-          color={{ basic: 'black', hover: 'red' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          color={{ basic: 'red', hover: 'red' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaRegTrashAlt />
         </Button>
         <Button
           color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
         </Button>
         <Button
           color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
         </Button>
@@ -53,20 +53,20 @@ export function WithModal() {
     >
       <PanelHeader count={5} onClickSettings={open}>
         <Button
-          color={{ basic: 'black', hover: 'red' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          color={{ basic: 'red', hover: 'red' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaRegTrashAlt />
         </Button>
         <Button
           color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
         </Button>
         <Button
           color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
         </Button>
@@ -115,7 +115,7 @@ export function WithAccordion() {
         <Accordion.Item title="First Item" defaultOpened>
           <PanelHeader count={20} onClickSettings={() => {}}>
             <Button
-              color={{ basic: 'black', hover: 'red' }}
+              color={{ basic: 'red', hover: 'red' }}
               backgroundColor={{ basic: 'white', hover: 'white' }}
             >
               <FaRegTrashAlt />

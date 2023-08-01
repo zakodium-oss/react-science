@@ -16,12 +16,15 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     flex: 1,
+    '& > button': {
+      padding: '0 5px',
+      minWidth: 'auto',
+    },
   }),
   counterLabel: css({
     margin: 0,
     textAlign: 'right',
     lineHeight: '22px',
-    padding: '0 10px',
     whiteSpace: 'nowrap',
   }),
 };
@@ -45,7 +48,7 @@ export function PanelHeader({
         <Button
           onClick={onClickSettings}
           color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: 'white' }}
+          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
         >
           <FaCog />
         </Button>
