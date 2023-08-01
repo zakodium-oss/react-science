@@ -20,7 +20,7 @@ export function Basic() {
         height: 300,
       }}
     >
-      <PanelHeader count={3} onClickSettings={() => {}}>
+      <PanelHeader total={3} onClickSettings={() => {}}>
         <Button
           color={{ basic: 'red', hover: 'red' }}
           backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
@@ -51,7 +51,7 @@ export function WithModal() {
         height: 300,
       }}
     >
-      <PanelHeader count={5} onClickSettings={open}>
+      <PanelHeader total={5} current={3} onClickSettings={open}>
         <Button
           color={{ basic: 'red', hover: 'red' }}
           backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
@@ -113,7 +113,7 @@ export function WithAccordion() {
     >
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
-          <PanelHeader count={20} onClickSettings={() => {}}>
+          <PanelHeader total={20} onClickSettings={() => {}}>
             <Button
               color={{ basic: 'red', hover: 'red' }}
               backgroundColor={{ basic: 'white', hover: 'white' }}
@@ -136,7 +136,7 @@ export function WithAccordion() {
           This is the first content
         </Accordion.Item>
         <Accordion.Item title="Second Item">
-          <PanelHeader count={3} onClickSettings={() => {}}>
+          <PanelHeader current={2} total={3} onClickSettings={() => {}}>
             <Button
               color={{ basic: 'black', hover: 'black' }}
               backgroundColor={{ basic: 'white', hover: 'white' }}
