@@ -20,6 +20,12 @@ const styles = {
     display: 'flex',
     flexDirection: 'row-reverse',
     fontSize: 16,
+    padding: 3,
+    '& > button': {
+      padding: 0,
+      paddingLeft: 9,
+      minWidth: 'auto',
+    },
   }),
 };
 

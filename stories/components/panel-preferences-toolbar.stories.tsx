@@ -38,7 +38,9 @@ export function WithAccordion() {
         <Accordion.Item title="First Item" defaultOpened>
           {isOpen ? (
             <PanelPreferencesToolbar onSave={close} onClose={close}>
-              This is preferences content
+              <div style={{ backgroundColor: 'rgb(241, 241, 241)' }}>
+                This is preferences content
+              </div>
             </PanelPreferencesToolbar>
           ) : (
             <div>
