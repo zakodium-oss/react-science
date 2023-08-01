@@ -11,6 +11,7 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    borderBottom: '0.55px solid rgb(240, 240, 240)',
   }),
   leftContainer: css({
     display: 'flex',
