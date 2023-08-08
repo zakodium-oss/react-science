@@ -1,12 +1,12 @@
 import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
-import { assertNotNull } from '../../components/index';
 
 import { MeasurementExplorer } from './MeasurementExplorer';
 
 export default function MeasurementExplorerWithState() {
   const appState = useAppState();
   const data = getCurrentMeasurementData(appState);
-  assertNotNull(data);
+
+  if (!data) return <div>No selected measurement</div>;
   return (
     <MeasurementExplorer
       measurement={data.data}
