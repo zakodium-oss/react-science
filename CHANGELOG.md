@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.0](https://github.com/zakodium-oss/react-science/compare/v0.24.3...v0.25.0) (2023-08-08)
+
+
+### Features
+
+* update dependencies ([#528](https://github.com/zakodium-oss/react-science/issues/528)) ([d40d20a](https://github.com/zakodium-oss/react-science/commit/d40d20a8f54a0515ac8c144bf266b4074ca1d4e3))
+
+
+### Bug Fixes
+
+* only render modal children after calling showModal ([#530](https://github.com/zakodium-oss/react-science/issues/530)) ([0a4d3c4](https://github.com/zakodium-oss/react-science/commit/0a4d3c4e22eecacbbedb2b8164db139bb3dcf095))
+
 ## [0.24.3](https://github.com/zakodium-oss/react-science/compare/v0.24.2...v0.24.3) (2023-07-13)
 
 
