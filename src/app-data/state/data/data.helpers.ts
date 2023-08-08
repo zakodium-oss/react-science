@@ -119,8 +119,8 @@ export function getMeasurementKindAndIds(
   measurementId: MeasurementBase[],
 ) {
   let found = false;
-  for (let kind of measurementKinds) {
-    for (let { id } of measurementId) {
+  for (const kind of measurementKinds) {
+    for (const { id } of measurementId) {
       const measurement = getMeasurement(data.measurements, kind, id);
       if (measurement) found = true;
       if (found && !measurement) {
