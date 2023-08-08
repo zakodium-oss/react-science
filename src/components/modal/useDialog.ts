@@ -4,8 +4,27 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useMemo,
 } from 'react';
 import { useKbsDisableGlobal } from 'react-kbs';
+
+import { useOnOff } from '../index';
+
+interface UseDialogOptions {
+  dialogRef: RefObject<HTMLDialogElement>;
+  isOpen: boolean;
+  requestCloseOnEsc: boolean;
+  requestCloseOnBackdrop: boolean;
+  onRequestClose?: () => void;
+}
+
+interface UseDialogReturn {
+  dialogProps: {
+    onClick: MouseEventHandler<HTMLDialogElement>;
+    onCancel: ReactEventHandler<HTMLDialogElement>;
+  };
+  isModalShown: boolean;
+}
 
 export function useDialog({
   dialogRef,
@@ -13,22 +32,21 @@ export function useDialog({
   requestCloseOnEsc,
   requestCloseOnBackdrop,
   onRequestClose,
-}: {
-  dialogRef: RefObject<HTMLDialogElement>;
-  isOpen: boolean;
-  requestCloseOnEsc: boolean;
-  requestCloseOnBackdrop: boolean;
-  onRequestClose?: () => void;
-}) {
+}: UseDialogOptions): UseDialogReturn {
   useKbsDisableGlobal(isOpen);
+  const [isModalShown, showModal, hideModal] = useOnOff(false);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && isOpen) {
+      showModal();
       dialog.showModal();
-      return () => dialog.close();
+      return () => {
+        hideModal();
+        dialog.close();
+      };
     }
-  }, [dialogRef, isOpen]);
+  }, [dialogRef, isOpen, showModal, hideModal]);
 
   const onCancel = useCallback<ReactEventHandler<HTMLDialogElement>>(
     (event) => {
@@ -65,5 +83,13 @@ export function useDialog({
     [dialogRef, requestCloseOnBackdrop, onRequestClose],
   );
 
-  return { onClick, onCancel };
+  const dialogProps = useMemo<UseDialogReturn['dialogProps']>(
+    () => ({ onClick, onCancel }),
+    [onClick, onCancel],
+  );
+
+  return {
+    dialogProps,
+    isModalShown,
+  };
 }

@@ -76,7 +76,7 @@ export function Modal(props: ModalProps) {
   } = props;
 
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const dialogProps = useDialog({
+  const { dialogProps, isModalShown } = useDialog({
     dialogRef,
     isOpen,
     requestCloseOnEsc,
@@ -101,18 +101,20 @@ export function Modal(props: ModalProps) {
   return (
     <Portal>
       <DialogRoot {...dialogProps} ref={dialogRef}>
-        <RootLayoutProvider innerRef={portalDomNode}>
-          <DialogContents
-            style={{
-              maxWidth,
-              height: height || 'max-content',
-              width: width || '100%',
-            }}
-          >
-            {children}
-            {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
-          </DialogContents>
-        </RootLayoutProvider>
+        {isModalShown && (
+          <RootLayoutProvider innerRef={portalDomNode}>
+            <DialogContents
+              style={{
+                maxWidth,
+                height: height || 'max-content',
+                width: width || '100%',
+              }}
+            >
+              {children}
+              {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
+            </DialogContents>
+          </RootLayoutProvider>
+        )}
       </DialogRoot>
     </Portal>
   );
