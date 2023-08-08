@@ -43,7 +43,7 @@ function useTableContext() {
 function splitChildren(children: ReactNode) {
   const Rows: ReactElement[] = [];
   let Header: ReactElement | null = null;
-  for (let child of Children.toArray(children)) {
+  for (const child of Children.toArray(children)) {
     if (typeof child !== 'object' || !isValidElement(child)) {
       // eslint-disable-next-line no-console
       console.error('Invalid Table child:', child);
@@ -81,7 +81,7 @@ export function Table(props: TableProps) {
 function useRowChildren(children: ReactNode) {
   const cells: ReactElement[] = [];
   const { border } = useTableContext();
-  for (let child of Children.toArray(children)) {
+  for (const child of Children.toArray(children)) {
     if (
       typeof child === 'object' &&
       isValidElement(child) &&

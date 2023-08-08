@@ -3,7 +3,7 @@ import { CSSProperties, MouseEvent, useCallback } from 'react';
 import { Swatch } from '../common';
 
 interface SketchPresetColorsProps {
-  colors: (string | { color: string; title: string })[];
+  colors: Array<string | { color: string; title: string }>;
   onClick: (data: { hex: any; source: string }, event: any) => void;
   onSwatchHover: any;
 }

@@ -60,7 +60,7 @@ function normalizeSpectra(blocks: Wdf['blocks']) {
 
   for (let i = 0; i < yVariables.length; i++) {
     const yVariable = yVariables[i];
-    let origin = origins[i] || {};
+    const origin = origins[i] || {};
 
     results.push({
       variables: { x: getXVariable(blocks), y: yVariable },
@@ -111,12 +111,12 @@ function getYVariables(blocks: Wdf['blocks']) {
   return yVariables;
 }
 
-type Origin = {
+interface Origin {
   xPositionUnits: string;
   yPositionUnits: string;
   xPosition: number | bigint;
   yPosition: number | bigint;
-};
+}
 function getOrigins(blocks: Wdf['blocks']) {
   const originBlock = blocks.find(
     (block) => block.blockType === 'WDF_BLOCKID_ORIGIN',

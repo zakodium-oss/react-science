@@ -7,7 +7,7 @@ export default {
 };
 
 export function Horizontal() {
-  const items: Array<TabItem> = [
+  const items: TabItem[] = [
     { id: '1h', title: '1H', content: 'Hello, World! [a]' },
     { id: '13c', title: '13C', content: 'Hello, World! [b]' },
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
@@ -39,7 +39,7 @@ function FullHeightContent({ children }: { children: ReactNode }) {
 }
 
 export function AllowHorizontalChildToTakeFullHeight() {
-  const items: Array<TabItem> = [
+  const items: TabItem[] = [
     {
       id: '1h',
       title: '1H',
@@ -83,7 +83,7 @@ export function ManyTabs({
 }: {
   orientation: 'horizontal' | 'vertical';
 }) {
-  const items: Array<TabItem> = [
+  const items: TabItem[] = [
     { id: 'a', title: '1H', content: 'Hello, World! [a]' },
     { id: 'b', title: '13C', content: 'Hello, World! [b]' },
     { id: 'c', title: '1H,1H', content: 'Hello, World! [c]' },
@@ -121,7 +121,7 @@ ManyTabs.args = {
   orientation: 'horizontal',
 };
 export function Vertical() {
-  const items: Array<TabItem> = [
+  const items: TabItem[] = [
     { id: 'controllers', title: 'Controllers', content: 'Hello, World!' },
     {
       id: 'formatting',

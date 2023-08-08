@@ -36,7 +36,7 @@ export function IrPeaksPanel(props: IrPeaksPanelProps) {
   const { peaks, preferences = {} } = props;
   const { columns = [] } = preferences;
 
-  const defaultColumns: ColumnDef<IrPeak, number>[] = columns.map(
+  const defaultColumns: Array<ColumnDef<IrPeak, number>> = columns.map(
     ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
       header: label,
       accessorKey,

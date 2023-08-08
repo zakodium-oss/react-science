@@ -41,7 +41,9 @@ const ConfirmModalContents = styled.div<{
   border-width: 1px;
   border-color: transparent;
   border-radius: 0.5rem;
-  box-shadow: 0 0 0 0, 0 0px 16px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 0 0,
+    0 0px 16px rgba(0, 0, 0, 0.3);
   border-top: 10px solid ${({ headerColor }) => headerColor};
 `;
 
