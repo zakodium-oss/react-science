@@ -28,8 +28,7 @@ export async function cdfLoader(
           kind = 'gclcms';
         } else if (
           reader.dataVariableExists('ordinate_values') &&
-          reader.getAttribute('detector_name') &&
-          reader.getAttribute('detector_name').match(/dad|tic/i)
+          reader.getAttribute('detector_name')?.match(/dad|tic/i)
         ) {
           kind = 'gclc';
         } else {
@@ -102,7 +101,7 @@ function chromatogramWithMassSpectra(
     allIntensities.push(intensities);
     allMasses.push(masses);
   }
-  let data: MeasurementBase['data'] = [];
+  const data: MeasurementBase['data'] = [];
   for (let i = 0; i < times.length; i++) {
     data.push({
       info: {
@@ -130,7 +129,7 @@ function chromatogramWithMassSpectra(
 
 function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
-  let data: MeasurementBase['data'] = [];
+  const data: MeasurementBase['data'] = [];
   const intensities: number[] = reader.getDataVariable('ordinate_values');
   const numberPoints = intensities.length;
   const detector: string = reader.getAttribute('detector_name');
@@ -163,7 +162,7 @@ function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
     samplingInterval = (runtimeLength - delayTime) / numberPoints;
   }
 
-  let times: number[] = [];
+  const times: number[] = [];
   let time = delayTime;
   for (let i = 0; i < numberPoints; i++) {
     times.push(time);

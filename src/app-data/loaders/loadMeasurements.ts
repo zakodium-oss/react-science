@@ -20,7 +20,7 @@ export async function loadMeasurements(
   options: LoadOptions = {},
 ) {
   const measurements: Partial<Measurements> = {};
-  let logs: ParserLog[] = [];
+  const logs: ParserLog[] = [];
   const { loaders = [], enhancers = {}, logger = true } = options;
   for (const loader of loaders) {
     const loaderData = await loader(fileCollection, logger ? logs : undefined);

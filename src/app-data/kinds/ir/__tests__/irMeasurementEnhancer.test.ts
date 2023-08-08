@@ -12,7 +12,7 @@ test('irMeasurementEnhancer', async () => {
   });
   expect(nextState.data).toHaveLength(1);
   // we check that the new variables have been added
-  for (let datum of nextState.data) {
+  for (const datum of nextState.data) {
     const keys = Object.keys(datum.variables);
     expect(keys).toHaveLength(4);
     expect(datum.variables.x.data).toHaveLength(934);

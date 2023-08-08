@@ -92,7 +92,7 @@ function normalizeSpectra(spectra: any) {
         data: spectrum.data.y || spectrum.data.Y,
       };
     } else {
-      for (let key in variables) {
+      for (const key in variables) {
         const variable = variables[key];
         if (variable.label) continue;
         variable.label = variable.name || variable.symbol || key;

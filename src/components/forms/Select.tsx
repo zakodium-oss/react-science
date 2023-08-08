@@ -21,7 +21,7 @@ export interface SelectProps {
   placeholder?: string;
   value: string | undefined;
   onSelect?: (value: string | undefined) => void;
-  options: (Option[] | Category[])[];
+  options: Array<Option[] | Category[]>;
   disabled?: boolean;
   style?: CSSProperties;
 }

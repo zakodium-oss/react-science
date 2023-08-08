@@ -176,7 +176,7 @@ ConfirmModalControl.args = {
 
 ConfirmModalControl.argTypes = actions;
 
-const tabs: Array<TabItem> = [
+const tabs: TabItem[] = [
   {
     id: 'controllers',
     title: 'Controllers',

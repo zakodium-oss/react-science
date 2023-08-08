@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore This import fails when compiling to CJS.
 import { Listbox } from '@headlessui/react';
 import * as scaleChromatic from 'd3-scale-chromatic';
 import { Fragment } from 'react';
