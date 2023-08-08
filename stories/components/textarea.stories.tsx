@@ -9,8 +9,8 @@ export default {
 
 const ExampleGroup = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  gap: 5px;
 `;
 
 export function Control(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
@@ -21,15 +21,15 @@ export function Control(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
   }
 
   return (
-    <ExampleGroup style={{ width: '80px' }}>
+    <ExampleGroup>
       <TextArea {...prop} value={state} onChange={onChange} />
+      <TextArea {...prop} value={state} onChange={onChange} variant="small" />
     </ExampleGroup>
   );
 }
 Control.args = {
   placeholder: 'Control example',
   variant: 'default',
-  loading: false,
   help: '',
   error: '',
   valid: false,
@@ -72,7 +72,6 @@ export function WithLabel(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
 WithLabel.args = {
   placeholder: 'Placeholder',
   variant: 'default',
-  loading: false,
   help: '',
   error: '',
   valid: false,
