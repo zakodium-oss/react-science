@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import {
   Children,
   createContext,
-  CSSProperties,
   isValidElement,
   ReactElement,
   ReactNode,
@@ -58,19 +57,18 @@ function splitChildren(children: ReactNode) {
   }
   return { Rows, Header };
 }
-export interface TableProps {
+export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
   border?: boolean;
-  style?: CSSProperties;
 }
 
 export function Table(props: TableProps) {
-  const { border = true, style = {}, children } = props;
+  const { border = true, children, ...tableProps } = props;
   const { Header, Rows } = splitChildren(children);
   const tableContextValue = useMemo(() => ({ border }), [border]);
   return (
     <TableContext.Provider value={tableContextValue}>
-      <table style={style}>
+      <table {...tableProps}>
         {Header}
         <tbody>{Rows}</tbody>
       </table>
