@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-import { FaUser, FaShieldAlt } from 'react-icons/fa';
 
 import { Field, TextArea, TextAreaProps } from '../../src/components';
 
@@ -14,14 +13,7 @@ const ExampleGroup = styled.div`
   gap: 10px;
 `;
 
-export function Control(
-  prop: Omit<TextAreaProps, 'value' | 'onChange'> & {
-    leadingAddon: boolean;
-    inlineLeadingAddon: boolean;
-    trailingAddon: boolean;
-    inlineTrailingAddon: boolean;
-  },
-) {
+export function Control(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
   const [state, setState] = useState('');
 
   function onChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -36,7 +28,6 @@ export function Control(
 }
 Control.args = {
   placeholder: 'Control example',
-  maxLength: 10,
   variant: 'default',
   loading: false,
   help: '',
@@ -96,15 +87,3 @@ WithLabel.argTypes = {
     control: { type: 'radio' },
   },
 };
-
-export function WithLeadingAddon() {
-  return (
-    <ExampleGroup style={{ width: '80px' }}>
-      <TextArea
-        placeholder="Placeholder"
-        leadingAddon={{ addon: <FaShieldAlt />, inline: true }}
-        trailingAddon={{ addon: <FaUser /> }}
-      />
-    </ExampleGroup>
-  );
-}

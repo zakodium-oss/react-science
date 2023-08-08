@@ -1,19 +1,16 @@
 import styled from '@emotion/styled';
-import { CSSProperties, InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 
 import { FullSpinner } from '../index';
 
 import { useFieldsContext } from './context/FieldsContext';
 import {
-  RenderAddon,
-  RootInput,
+  InputContainer,
   GroupStyled,
-  LeadingAddonStyled,
   LabelStyled,
-  LeadingInlineAddonStyled,
-  TrailingInlineAddonStyled,
-  TrailingAddonStyled,
+  InputVariant,
 } from './styles';
+import { SubText, SubTextProps } from './utils';
 
 const InputStyled = styled.input`
   padding: 0;
@@ -22,16 +19,63 @@ const InputStyled = styled.input`
   position: relative;
   outline: none;
 `;
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  variant?: 'default' | 'small';
 
+const LeadingAddonStyled = styled.div`
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-right-width: 0px;
+  border-width: 1px;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  align-items: center;
+  display: inline-flex;
+
+  border-right: none;
+
+  border-color: var(--custom-border-color);
+`;
+
+const TrailingAddonStyled = styled.div`
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-left-width: 0px;
+  border-width: 1px;
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  align-items: center;
+  display: inline-flex;
+
+  border-left: none;
+
+  border-color: var(--custom-border-color);
+`;
+
+const LeadingInlineAddonStyled = styled.div`
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+`;
+
+const TrailingInlineAddonStyled = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+`;
+
+interface RenderAddon {
+  addon: ReactNode;
+  inline?: boolean;
+}
+
+export interface InputProps
+  extends InputHTMLAttributes<HTMLInputElement>,
+    SubTextProps {
+  variant?: InputVariant;
   leadingAddon?: RenderAddon;
   trailingAddon?: RenderAddon;
-
   help?: string;
   error?: string;
   valid?: true | string;
-
   loading?: boolean;
 }
 
@@ -54,7 +98,7 @@ export function Input(props: InputProps) {
   const variant = variantProps || contextVariant;
 
   return (
-    <RootInput>
+    <InputContainer>
       <GroupStyled hasError={!!error} hasValid={!!valid}>
         {leadingAddon && !leadingAddon.inline && (
           <LeadingAddonStyled>{leadingAddon.addon}</LeadingAddonStyled>
@@ -95,30 +139,6 @@ export function Input(props: InputProps) {
       </GroupStyled>
 
       <SubText error={error} help={help} valid={valid} />
-    </RootInput>
+    </InputContainer>
   );
-}
-
-function SubText(props: Pick<InputProps, 'help' | 'error' | 'valid'>) {
-  const { error, help, valid: validProps } = props;
-
-  const valid = typeof validProps === 'string' ? validProps : undefined;
-  const text = error || valid || help;
-
-  return <p style={{ color: getColor(error, validProps) }}>{text}</p>;
-}
-
-function getColor(
-  error?: string,
-  valid?: true | string,
-): CSSProperties['color'] {
-  if (error) {
-    return '#f95d55';
-  }
-
-  if (valid && typeof valid !== 'boolean') {
-    return '#62cb21';
-  }
-
-  return 'gray';
 }

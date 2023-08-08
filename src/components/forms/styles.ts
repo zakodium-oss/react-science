@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
-import { ReactNode } from 'react';
 
-type InputVariant = 'default' | 'small';
+export type InputVariant = 'default' | 'small';
 
 interface StyledProps {
   variant: InputVariant;
-  hasLeading: boolean;
-  hasTrailing: boolean;
+  hasLeading?: boolean;
+  hasTrailing?: boolean;
 }
 
 export const LabelStyled = styled.label<StyledProps>`
@@ -88,55 +87,8 @@ export const GroupStyled = styled.div<{ hasError: boolean; hasValid: boolean }>`
   }
 `;
 
-export const LeadingAddonStyled = styled.div`
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  border-right-width: 0px;
-  border-width: 1px;
-  border-top-left-radius: 0.375rem;
-  border-bottom-left-radius: 0.375rem;
-  align-items: center;
-  display: inline-flex;
-
-  border-right: none;
-
-  border-color: var(--custom-border-color);
-`;
-
-export const TrailingAddonStyled = styled.div`
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  border-left-width: 0px;
-  border-width: 1px;
-  border-top-right-radius: 0.375rem;
-  border-bottom-right-radius: 0.375rem;
-  align-items: center;
-  display: inline-flex;
-
-  border-left: none;
-
-  border-color: var(--custom-border-color);
-`;
-
-export const LeadingInlineAddonStyled = styled.div`
-  display: flex;
-  align-items: center;
-  padding-right: 0.5rem;
-`;
-
-export const TrailingInlineAddonStyled = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 0.5rem;
-`;
-
-export const RootInput = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
 `;
-
-export interface RenderAddon {
-  addon: ReactNode;
-  inline?: boolean;
-}

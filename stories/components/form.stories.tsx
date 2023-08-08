@@ -78,7 +78,7 @@ export function Control() {
       </Field>
 
       <Field label="Introduction" name="introduction">
-        <TextArea maxLength={50} />
+        <TextArea />
       </Field>
 
       <Button>Submit</Button>
