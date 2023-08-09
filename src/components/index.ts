@@ -7,6 +7,7 @@ export * from './forms/index';
 export * from './fullscreen/index';
 export * from './header/index';
 export * from './hooks/index';
+export * from './info-panel/index';
 export * from './layout-manager/index';
 export * from './modal/index';
 export * from './root-layout/index';

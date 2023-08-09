@@ -4,9 +4,9 @@ import { MeasurementBase } from '../state/index';
 export type Enhancer<T extends MeasurementBase> = (data: T) => void;
 
 export type Enhancers = {
-  [mKind in keyof Measurements]: Enhancer<
-    Measurements[mKind]['entries'][number]
-  >[];
+  [mKind in keyof Measurements]: Array<
+    Enhancer<Measurements[mKind]['entries'][number]>
+  >;
 };
 
 export function enhance(

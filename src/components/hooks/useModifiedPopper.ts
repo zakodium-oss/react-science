@@ -48,7 +48,7 @@ export function useModifiedPopper<
   const [referenceElement, setReferenceElement] = useState<R | null>(null);
   const [popperElement, setPopperElement] = useState<P | null>(null);
 
-  const modifiers: Modifier<'sameWidth' | 'offset'>[] = [];
+  const modifiers: Array<Modifier<'sameWidth' | 'offset'>> = [];
 
   if (sameWidth) {
     modifiers.push(sameWidthModifier);

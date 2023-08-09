@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore This import fails when compiling to CJS.
 import { Menu } from '@headlessui/react';
 import type { ReactNode } from 'react';
 
@@ -57,7 +59,9 @@ const ItemsDiv = styled.div<{
   align-items: center;
   border-radius: 6px;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 5px 12px;
+  box-shadow:
+    rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 5px 12px;
   padding-top: 5px;
   padding-bottom: 5px;
   --cell-padding: 16px;

@@ -19,7 +19,7 @@ type ActionType<Action, Payload = void> = Payload extends void
   : { type: Action; payload: Payload };
 
 export interface AccordionState {
-  items: Array<AccordionItemState>;
+  items: AccordionItemState[];
 }
 
 type AccordionActions =
@@ -131,7 +131,7 @@ export function useAccordionContext(title: string, defaultOpened?: boolean) {
     return () => utils.remove(title);
   }, [defaultOpened, title, utils]);
 
-  let item = getItem(title, state.items);
+  const item = getItem(title, state.items);
 
   return useMemo(
     () => ({
@@ -189,7 +189,7 @@ export function AccordionProvider(props: { children: ReactNode }) {
   );
 }
 
-function getItem(title: string, items: Array<AccordionItemState>) {
+function getItem(title: string, items: AccordionItemState[]) {
   const item = items.find((element) => element.title === title);
   return item;
 }

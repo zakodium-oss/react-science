@@ -66,7 +66,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const { item, utils } = useAccordionContext(props.title, props.defaultOpened);
 
   const onClickHandle = useCallback(
-    (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+    (event: ReactMouseEvent<HTMLButtonElement>) => {
       if (event.shiftKey) {
         utils.clear();
       } else {

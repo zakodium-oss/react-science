@@ -18,9 +18,7 @@ const layoutComponents: ComponentsMap = {
   DropZone,
 };
 
-interface ComponentsMap {
-  [componentName: string]: ComponentType<any>;
-}
+type ComponentsMap = Record<string, ComponentType<any>>;
 
 interface LayoutManagerProps {
   layout: Layout;
@@ -33,7 +31,7 @@ export interface Layout {
 }
 interface LayoutComponent {
   id: string;
-  component: keyof typeof layoutComponents | FunctionComponent | string;
+  component: keyof typeof layoutComponents | FunctionComponent;
   children?: LayoutComponent[];
 }
 

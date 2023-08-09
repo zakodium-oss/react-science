@@ -36,20 +36,20 @@ export function irAutoPeakPickingEnhancer(
 
   const datum = measurement.data[0];
 
-  let x = datum.variables[xVariable]?.data;
-  let y = datum.variables[yVariable]?.data;
+  const x = datum.variables[xVariable]?.data;
+  const y = datum.variables[yVariable]?.data;
   if (!x || !y) return [];
 
-  let { from, to } = options;
+  const { from, to } = options;
 
   let peaks: Array<{ x: number; y: number; width: number; index: number }> =
     gsd({ x, y }, options);
 
   if (from !== undefined) {
-    peaks = peaks.filter((peak) => peak.x >= (from as number));
+    peaks = peaks.filter((peak) => peak.x >= from);
   }
   if (to !== undefined) {
-    peaks = peaks.filter((peak) => peak.x <= (to as number));
+    peaks = peaks.filter((peak) => peak.x <= to);
   }
   if (minPeakWidth) {
     peaks = peaks.filter((peak) => peak.width >= minPeakWidth);
@@ -82,7 +82,7 @@ function getPeakKind(
   minTransmittance: number,
   maxTransmittance: number,
 ): IrPeakKind {
-  let position =
+  const position =
     (maxTransmittance - transmittance) / (maxTransmittance - minTransmittance);
   if (position < 0.33) {
     return 'w';

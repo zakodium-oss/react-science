@@ -9,7 +9,7 @@ import type { MeasurementBase } from '../../index';
 export function irMeasurementEnhancer(measurement: MeasurementBase) {
   for (const datum of measurement.data) {
     const variables = datum.variables;
-    let yVariable = variables.y;
+    const yVariable = variables.y;
     let absorbance = true;
     if (yVariable.label.toLowerCase().includes('trans')) {
       absorbance = false;

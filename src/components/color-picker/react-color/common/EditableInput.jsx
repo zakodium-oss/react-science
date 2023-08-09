@@ -6,7 +6,7 @@ const UP_KEY_CODE = 38;
 const DOWN_KEY_CODE = 40;
 const VALID_KEY_CODES = new Set([UP_KEY_CODE, DOWN_KEY_CODE]);
 const isValidKeyCode = (keyCode) => VALID_KEY_CODES.has(keyCode);
-const getNumberValue = (value) => Number(String(value).replace(/%/g, ''));
+const getNumberValue = (value) => Number(String(value).replaceAll('%', ''));
 
 let idCounter = 1;
 

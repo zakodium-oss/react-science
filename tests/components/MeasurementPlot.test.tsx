@@ -7,7 +7,7 @@ import type {
 } from '../../src/app-data/index';
 import measurement from '../../stories/data/irMeasurement.json';
 
-let irMeasurement = measurement as IrMeasurement;
+const irMeasurement = measurement as IrMeasurement;
 const measurementDisplay: MeasurementAppView = {
   color: {
     kind: 'fixed',

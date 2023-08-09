@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore This import fails when compiling to CJS.
 import { Menu } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
 import { ReactNode, useRef, ElementType, ComponentProps } from 'react';

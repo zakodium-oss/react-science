@@ -15,7 +15,7 @@ export function useContextMenuPlacement(placement: Placement) {
   );
 
   const handleContextMenu = useCallback(
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    (event: React.MouseEvent<HTMLDivElement>) => {
       const { clientX, clientY, pageX, pageY } = event;
       event.preventDefault();
 
