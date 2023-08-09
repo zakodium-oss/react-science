@@ -100,8 +100,8 @@
   "devDependencies": {
     "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.21.3",
-    "@playwright/experimental-ct-react": "^1.33.0",
-    "@playwright/test": "^1.33.0",
+    "@playwright/experimental-ct-react": "^1.36.2",
+    "@playwright/test": "^1.36.2",
     "@storybook/addon-essentials": "^7.0.10",
     "@storybook/blocks": "^7.0.10",
     "@storybook/react": "^7.0.10",
