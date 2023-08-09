@@ -10,6 +10,7 @@ import {
   FaNpm,
   FaNodeJs,
 } from 'react-icons/fa';
+import { StructureEditor } from 'react-ocl/full';
 
 import {
   Accordion,
@@ -176,7 +177,7 @@ ConfirmModalControl.args = {
 
 ConfirmModalControl.argTypes = actions;
 
-const tabs: Array<TabItem> = [
+const tabs: TabItem[] = [
   {
     id: 'controllers',
     title: 'Controllers',
@@ -274,6 +275,23 @@ WithComplexContents.args = {
 };
 
 WithComplexContents.argTypes = actions;
+
+export function DynamicallySizedChildren() {
+  const [isOpen, open, close] = useOnOff(false);
+  return (
+    <div style={{ margin: '2em' }}>
+      <Button onClick={open}>Open editor modal</Button>
+      <Modal width={700} height={500} isOpen={isOpen} onRequestClose={close}>
+        <Modal.Header>Test OCL editor in modal</Modal.Header>
+        <Modal.Body>
+          <StructureEditor width={600} height={400} svgMenu />
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+}
+
+DynamicallySizedChildren.storyName = 'With dynamically sized children';
 
 function DemoPage(props: { openModal: () => void }) {
   return (

@@ -233,7 +233,7 @@ function SplitSide(props: SplitSideProps) {
 function parseSize(size: string): [number, SplitPaneType] {
   const value = Number.parseFloat(size);
   // remove numbers and dots from the string
-  const type = size.replace(/[\d .]/g, '') as SplitPaneType;
+  const type = size.replaceAll(/[\d .]/g, '') as SplitPaneType;
 
   return [value, type];
 }

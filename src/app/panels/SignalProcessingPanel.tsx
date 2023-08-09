@@ -151,7 +151,7 @@ function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   return { name };
 }
 function normalCase(str: string) {
-  const result = str.replace(/(?<upper>[A-Z])/g, ' $<upper>').trim();
+  const result = str.replaceAll(/(?<upper>[A-Z])/g, ' $<upper>').trim();
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
 function optionInput(

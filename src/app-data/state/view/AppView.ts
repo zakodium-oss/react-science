@@ -3,7 +3,7 @@ import type { MeasurementKind } from '../index';
 
 export interface AppView {
   selectedKind?: MeasurementKind;
-  selectedMeasurements: Partial<Record<MeasurementKind, Array<string>>>;
+  selectedMeasurements: Partial<Record<MeasurementKind, string[]>>;
   measurements: Record<string, MeasurementAppView>;
   plot: Partial<Record<MeasurementKind, PlotView>>;
 }

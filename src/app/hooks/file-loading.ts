@@ -22,7 +22,7 @@ export function useLoadFileCollectionFromHash(onLoad: LoadFn) {
       }
       const request = await fetch(filelistUrl);
       const data = await request.json();
-      let baseURL = filelistUrl.replace(/\/[^/]*$/, '/');
+      const baseURL = filelistUrl.replace(/\/[^/]*$/, '/');
       const fileCollection = await fileCollectionFromWebSource({
         entries: data,
         baseURL,

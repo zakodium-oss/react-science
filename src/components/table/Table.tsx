@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import {
   Children,
   createContext,
-  CSSProperties,
   isValidElement,
   ReactElement,
   ReactNode,
@@ -43,7 +42,7 @@ function useTableContext() {
 function splitChildren(children: ReactNode) {
   const Rows: ReactElement[] = [];
   let Header: ReactElement | null = null;
-  for (let child of Children.toArray(children)) {
+  for (const child of Children.toArray(children)) {
     if (typeof child !== 'object' || !isValidElement(child)) {
       // eslint-disable-next-line no-console
       console.error('Invalid Table child:', child);
@@ -58,19 +57,18 @@ function splitChildren(children: ReactNode) {
   }
   return { Rows, Header };
 }
-export interface TableProps {
+export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
   border?: boolean;
-  style?: CSSProperties;
 }
 
 export function Table(props: TableProps) {
-  const { border = true, style = {}, children } = props;
+  const { border = true, children, ...tableProps } = props;
   const { Header, Rows } = splitChildren(children);
   const tableContextValue = useMemo(() => ({ border }), [border]);
   return (
     <TableContext.Provider value={tableContextValue}>
-      <table style={style}>
+      <table {...tableProps}>
         {Header}
         <tbody>{Rows}</tbody>
       </table>
@@ -81,7 +79,7 @@ export function Table(props: TableProps) {
 function useRowChildren(children: ReactNode) {
   const cells: ReactElement[] = [];
   const { border } = useTableContext();
-  for (let child of Children.toArray(children)) {
+  for (const child of Children.toArray(children)) {
     if (
       typeof child === 'object' &&
       isValidElement(child) &&

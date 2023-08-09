@@ -9,7 +9,7 @@ import ModalCloseButton from './ModalCloseButton';
 import { useDialog } from './useDialog';
 
 export interface ModalProps {
-  children: ReactElement | Array<ReactElement>;
+  children: ReactElement | ReactElement[];
   isOpen: boolean;
   requestCloseOnEsc?: boolean;
   hasCloseButton?: boolean;
@@ -36,7 +36,9 @@ const DialogContents = styled.div`
   border-width: 1px;
   border-color: transparent;
   border-radius: 0.5rem;
-  box-shadow: 0 0 0 0, 0 0px 16px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 0 0,
+    0 0px 16px rgba(0, 0, 0, 0.3);
 `;
 
 const ModalHeaderStyled = styled.div`
@@ -74,7 +76,7 @@ export function Modal(props: ModalProps) {
   } = props;
 
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const dialogProps = useDialog({
+  const { dialogProps, isModalShown } = useDialog({
     dialogRef,
     isOpen,
     requestCloseOnEsc,
@@ -99,18 +101,20 @@ export function Modal(props: ModalProps) {
   return (
     <Portal>
       <DialogRoot {...dialogProps} ref={dialogRef}>
-        <RootLayoutProvider innerRef={portalDomNode}>
-          <DialogContents
-            style={{
-              maxWidth,
-              height: height || 'max-content',
-              width: width || '100%',
-            }}
-          >
-            {children}
-            {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
-          </DialogContents>
-        </RootLayoutProvider>
+        {isModalShown && (
+          <RootLayoutProvider innerRef={portalDomNode}>
+            <DialogContents
+              style={{
+                maxWidth,
+                height: height || 'max-content',
+                width: width || '100%',
+              }}
+            >
+              {children}
+              {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
+            </DialogContents>
+          </RootLayoutProvider>
+        )}
       </DialogRoot>
     </Portal>
   );

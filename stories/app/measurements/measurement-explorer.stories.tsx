@@ -5,7 +5,7 @@ import {
 import type { IrMeasurement } from '../../../src/app-data/index';
 import measurement from '../../data/irMeasurement.json';
 
-let irMeasurement = measurement as IrMeasurement;
+const irMeasurement = measurement as IrMeasurement;
 
 export default {
   title: 'Measurements / Measurement explorer',

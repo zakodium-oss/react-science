@@ -108,7 +108,7 @@ export interface MeasurementKindAndIds {
   ids: string[];
 }
 export function getMeasurementKindAndId(data: AppData, measurementId: string) {
-  for (let kind of measurementKinds) {
+  for (const kind of measurementKinds) {
     const measurement = getMeasurement(data.measurements, kind, measurementId);
     if (measurement) return { kind, id: measurementId };
   }
@@ -157,16 +157,16 @@ export function* iterateMeasurementEntries(
   for (const [measurementKind, measurementData] of Object.entries(
     measurements,
   )) {
-    for (let measurement of measurementData.entries) {
+    for (const measurement of measurementData.entries) {
       yield { kind: measurementKind as MeasurementKind, measurement };
     }
   }
 }
 
-export type MeasurementAndView<Kind extends MeasurementKind> = {
+export interface MeasurementAndView<Kind extends MeasurementKind> {
   measurement: Measurements[Kind]['entries'][number];
   view: AppView['measurements'][string];
-};
+}
 
 export function* iterateKindMeasurementsAndView<Kind extends MeasurementKind>(
   state: AppState,
@@ -174,7 +174,7 @@ export function* iterateKindMeasurementsAndView<Kind extends MeasurementKind>(
 ): IterableIterator<MeasurementAndView<Kind>> {
   const measurements = state.data.measurements[kind];
   const view = state.view.measurements;
-  for (let measurement of measurements.entries) {
+  for (const measurement of measurements.entries) {
     yield { measurement, view: view[measurement.id] };
   }
 }
