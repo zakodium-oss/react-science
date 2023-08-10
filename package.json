@@ -103,6 +103,7 @@
     "@playwright/experimental-ct-react": "^1.36.2",
     "@playwright/test": "^1.36.2",
     "@storybook/addon-essentials": "7.2.1",
+    "@storybook/addon-storysource": "7.2.1",
     "@storybook/blocks": "7.2.1",
     "@storybook/react": "7.2.1",
     "@storybook/react-vite": "7.2.1",
