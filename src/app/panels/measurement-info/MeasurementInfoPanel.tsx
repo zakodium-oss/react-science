@@ -8,7 +8,9 @@ export function MeasurementInfoPanel() {
   const appState = useAppState();
   const measurement = getCurrentMeasurementData(appState);
   if (!measurement) return null;
-  const { meta, info } = measurement.data;
+
+  // TODO: solution for multiple measurements
+  const { meta, info } = measurement.data[0];
 
   const data: InfoPanelData[] = [
     {

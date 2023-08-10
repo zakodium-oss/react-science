@@ -47,10 +47,12 @@ export function BasicComponent(props: BasicComponentProps) {
     flipHorizontalAxis = false,
   } = props;
 
-  const {
-    info: { title },
-    data,
-  } = measurement;
+  const [
+    {
+      info: { title },
+      data,
+    },
+  ] = Array.isArray(measurement) ? measurement : [measurement];
 
   const { x, y } = useMemo(() => {
     const { variables } = data[dataIndex];

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
 
 import { MeasurementPlot, MeasurementPlotProps } from '../helpers/index';
@@ -37,18 +37,40 @@ const MeasurementExplorerAction = styled.div`
 `;
 
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
-  const {
-    measurement: { data },
-    width = '100%',
-    height = '100%',
-  } = props;
+  const { measurement, width = '100%', height = '100%' } = props;
+  const measurementsArray = useMemo(
+    () => (Array.isArray(measurement) ? measurement : [measurement]),
+    [measurement],
+  );
+  const varNames = useMemo(() => {
+    const varNames: string[][] = [];
+    for (const [i, { data }] of measurementsArray.entries()) {
+      for (const { variables } of data) {
+        const names: string[] = [];
+        for (const varName in variables) {
+          if (i === 0) {
+            names.push(varName);
+          } else if (!varNames.flat().includes(varName)) {
+            throw new Error(
+              `Measurements selected does not have the same variables `,
+            );
+          }
+        }
+        varNames.push(names);
+      }
+    }
+    return varNames;
+  }, [measurementsArray]);
 
   function defaultInfo(dataIndex: number) {
-    const varNames = Object.keys(data[dataIndex].variables);
     return {
       dataIndex,
-      xVariableName: varNames.includes('x') ? 'x' : varNames[0],
-      yVariableName: varNames.includes('y') ? 'y' : varNames[1],
+      xVariableName: varNames[dataIndex].includes('x')
+        ? 'x'
+        : varNames[dataIndex][0],
+      yVariableName: varNames[dataIndex].includes('y')
+        ? 'y'
+        : varNames[dataIndex][1],
     };
   }
 
@@ -67,9 +89,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
       const formatVarKey = `${varKey} - `;
       return formatVarKey + label + formatUnit;
     }
-    const { variables } = data[info.dataIndex];
+    const { variables } = measurementsArray[0].data[info.dataIndex];
     const oppositeAxis = axis === 'x' ? 'yVariableName' : 'xVariableName';
-    return Object.keys(variables).map((d) => {
+    return varNames[info.dataIndex].map((d) => {
       if (d !== info[oppositeAxis]) {
         return (
           <option key={d} value={d}>
@@ -97,7 +119,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
               }
             }}
           >
-            {data.map((d, i) => (
+            {measurementsArray[0].data.map((d, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <option key={i} value={i}>
                 {i}

@@ -6,10 +6,10 @@ import type { MeasurementBase, MeasurementAppView } from '../../app-data/index';
 
 import { BasicComponent } from './index';
 
-type Measurement = Pick<MeasurementBase, 'meta' | 'info' | 'data'>;
+type Measurement = Pick<MeasurementBase, 'meta' | 'info' | 'data' | 'id'>;
 export interface MeasurementPlotProps {
-  measurement: Measurement;
-  measurementDisplay: MeasurementAppView;
+  measurement: Measurement[] | Measurement;
+  measurementDisplay: MeasurementAppView[] | MeasurementAppView;
   dataIndex?: number;
   xVariableName?: string;
   yVariableName?: string;
@@ -35,44 +35,55 @@ export function MeasurementPlot(props: MeasurementPlotProps) {
 function MeasurementComponent(props: MeasurementPlotProps) {
   const {
     measurementDisplay,
-    measurement: { data },
+    measurement,
     dataIndex = 0,
     xVariableName = 'x',
     yVariableName = 'y',
   } = props;
 
-  const { x, y } = useMemo(() => {
-    const { variables } = data[dataIndex];
-    const { [xVariableName]: x, [yVariableName]: y } = variables;
-    if (x === undefined || y === undefined) {
-      throw new Error(
-        `Variable "${
-          x === undefined ? xVariableName : yVariableName
-        }" is not available in data. Only ${Object.keys(
-          data[dataIndex].variables,
-        ).join(', ')} are available`,
-      );
-    }
-
-    return { x, y };
-  }, [data, dataIndex, xVariableName, yVariableName]);
-
-  const { color } = measurementDisplay;
-  if (color.kind !== 'fixed') {
-    throw new Error(`unimplemented stroke for kind ${color.kind}`);
-  }
+  const dataXY = useMemo(() => {
+    const measurementsArray = Array.isArray(measurement)
+      ? measurement
+      : [measurement];
+    return measurementsArray.map(({ data, id }) => {
+      const { variables } = data[dataIndex];
+      const { [xVariableName]: x, [yVariableName]: y } = variables;
+      if (x === undefined || y === undefined) {
+        throw new Error(
+          `Variable "${
+            x === undefined ? xVariableName : yVariableName
+          }" is not available in data. Only ${Object.keys(
+            data[dataIndex].variables,
+          ).join(', ')} are available`,
+        );
+      }
+      return { x, y, id };
+    });
+  }, [dataIndex, measurement, xVariableName, yVariableName]);
 
   return (
     <BasicComponent {...props}>
-      <LineSeries
-        lineStyle={{
-          stroke: color.color,
-        }}
-        data={xyToXYObject({
-          x: x.data,
-          y: y.data,
-        })}
-      />
+      {dataXY.map(({ x, y, id }, i) => {
+        const { color } = Array.isArray(measurementDisplay)
+          ? measurementDisplay[i]
+          : measurementDisplay;
+        if (color.kind !== 'fixed') {
+          throw new Error(`unimplemented stroke for kind ${color.kind}`);
+        }
+
+        return (
+          <LineSeries
+            key={id}
+            lineStyle={{
+              stroke: color.color,
+            }}
+            data={xyToXYObject({
+              x: x.data,
+              y: y.data,
+            })}
+          />
+        );
+      })}
     </BasicComponent>
   );
 }

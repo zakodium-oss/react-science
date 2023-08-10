@@ -1,7 +1,12 @@
 import { assertNotNull } from '../../../components/index';
 import type { AppState, AppView } from '../index';
 
-import type { AppData, MeasurementKind, Measurements } from './AppData';
+import type {
+  AppData,
+  MeasurementBase,
+  MeasurementKind,
+  Measurements,
+} from './AppData';
 import { measurementKinds } from './kinds';
 
 export function getMeasurement(
@@ -46,20 +51,27 @@ export function getFirstMeasurementOrFail<Kind extends MeasurementKind>(
 export function getCurrentMeasurement(state: AppState) {
   const selectedMeasurement = getSelectedMeasurement(state.view);
   if (!selectedMeasurement) return null;
-
-  return getMeasurement(
-    state.data.measurements,
-    selectedMeasurement.kind,
-    selectedMeasurement.id,
-  );
+  const measurements: MeasurementBase[] = [];
+  for (const id of selectedMeasurement.ids) {
+    const measurement = getMeasurement(
+      state.data.measurements,
+      selectedMeasurement.kind,
+      id,
+    );
+    if (!measurement) return null;
+    measurements.push(measurement);
+  }
+  return measurements;
 }
 
 export function getCurrentMeasurementData(state: AppState) {
   const selectedMeasurement = getCurrentMeasurement(state);
   if (!selectedMeasurement) return null;
-  const kindAndId = getMeasurementKindAndId(state.data, selectedMeasurement.id);
-  const display = state.view.measurements[selectedMeasurement.id];
-  return { data: selectedMeasurement, display, kindAndId };
+  const kindAndIds = getMeasurementKindAndIds(state.data, selectedMeasurement);
+  const display = selectedMeasurement.map(
+    ({ id }) => state.view.measurements[id],
+  );
+  return { data: selectedMeasurement, display, kindAndIds };
 }
 
 export function getFirstSelectedMeasurementData(state: AppState) {
@@ -91,7 +103,10 @@ export interface MeasurementKindAndId {
   kind: MeasurementKind;
   id: string;
 }
-
+export interface MeasurementKindAndIds {
+  kind: MeasurementKind;
+  ids: string[];
+}
 export function getMeasurementKindAndId(data: AppData, measurementId: string) {
   for (const kind of measurementKinds) {
     const measurement = getMeasurement(data.measurements, kind, measurementId);
@@ -99,17 +114,35 @@ export function getMeasurementKindAndId(data: AppData, measurementId: string) {
   }
   throw new Error(`Measurement kind for ${measurementId} not found`);
 }
-
+export function getMeasurementKindAndIds(
+  data: AppData,
+  measurementId: MeasurementBase[],
+) {
+  let found = false;
+  for (const kind of measurementKinds) {
+    for (const { id } of measurementId) {
+      const measurement = getMeasurement(data.measurements, kind, id);
+      if (measurement) found = true;
+      if (found && !measurement) {
+        throw new Error(
+          `Measurement kind for ${measurementId.join(', ')} not found`,
+        );
+      }
+    }
+    if (found) return { kind, ids: measurementId };
+  }
+  throw new Error(`Measurement kind for ${measurementId.join(', ')} not found`);
+}
 export function getSelectedMeasurement(
   view: AppView,
-): MeasurementKindAndId | null {
+): MeasurementKindAndIds | null {
   const { selectedKind, selectedMeasurements } = view;
   if (!selectedKind) return null;
   const kind = selectedKind;
   const currentMeasurements = selectedMeasurements[kind];
-  if (!currentMeasurements || currentMeasurements.length !== 1) return null;
-  const id = currentMeasurements[0];
-  return { kind, id };
+  if (!currentMeasurements || currentMeasurements.length === 0) return null;
+  const ids = currentMeasurements;
+  return { kind, ids };
 }
 
 export function getSelectedMeasurementOrFail(view: AppView) {
