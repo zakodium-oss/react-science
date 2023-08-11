@@ -1,22 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import * as RadioGroup from '@radix-ui/react-radio-group';
+import * as RadioGroupRadix from '@radix-ui/react-radio-group';
 import { ReactNode } from 'react';
 
-import { ButtonRadioItem } from './ButtonRadioItem';
-import { ClassicRadioItem } from './ClassicRadioItem';
+import { InputVariant } from '../styles';
+
+import { RadioOptionButton } from './RadioOptionButton';
+import { RadioOptionClassic } from './RadioOptionClassic';
 
 export interface ValueLabel {
   value: string;
   label: ReactNode;
   disabled?: boolean;
 }
-export interface RadioProps {
+export interface RadioGroupProps {
   selected?: ValueLabel;
   type?: 'classic' | 'button';
   options?: ValueLabel[];
   onSelect?: (option: ValueLabel) => void;
   name?: string;
+  disabled?: boolean;
+  variant?: InputVariant;
 }
 const rootStyles = {
   basic: css({
@@ -26,7 +30,10 @@ const rootStyles = {
   }),
   button: css({
     ' & > * ': {
-      borderWidth: '1px 0.5px 1px 0.5px',
+      borderWidth: 1,
+      borderLeftWidth: 0.5,
+      borderRightWidth: 0.5,
+      borderRadius: 0,
     },
     ' & > *:first-of-type': {
       borderLeftWidth: 1,
@@ -46,28 +53,45 @@ const rootStyles = {
     },
   }),
 };
-export function Radio(props: RadioProps) {
-  const { selected, type = 'classic', options, onSelect, name } = props;
+export function RadioGroup(props: RadioGroupProps) {
+  const {
+    selected,
+    type = 'classic',
+    disabled = false,
+    options,
+    onSelect,
+    name = '',
+    variant = 'default',
+  } = props;
   return (
-    <RadioGroup.Root
+    <RadioGroupRadix.Root
       css={[rootStyles.basic, type === 'classic' ? null : rootStyles.button]}
       style={{
-        gap: type === 'classic' ? 10 : 0,
+        gap: type === 'classic' ? (variant === 'default' ? 10 : 5) : 0,
       }}
       value={selected?.value}
       name={name}
+      disabled={disabled}
     >
       {options?.map((option) =>
         type === 'classic' ? (
-          <ClassicRadioItem
+          <RadioOptionClassic
             key={option.value}
             {...option}
             onSelect={onSelect}
+            variant={variant}
+            name={name}
           />
         ) : (
-          <ButtonRadioItem key={option.value} {...option} onSelect={onSelect} />
+          <RadioOptionButton
+            key={option.value}
+            {...option}
+            onSelect={onSelect}
+            variant={variant}
+            name={name}
+          />
         ),
       )}
-    </RadioGroup.Root>
+    </RadioGroupRadix.Root>
   );
 }

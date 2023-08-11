@@ -6,7 +6,7 @@ import {
   Checkbox,
   Field,
   Input,
-  Radio,
+  RadioGroup,
   Select,
   TextArea,
   ValueLabel,
@@ -79,8 +79,8 @@ export function Control() {
           }
         />
       </Field>
-      <Field label="Radio" name="Radio">
-        <Radio
+      <Field label="Radio" name="radio">
+        <RadioGroup
           options={[
             { label: 'Option 1', value: 'option1' },
             { label: 'Option 2', value: 'option2' },
@@ -88,6 +88,7 @@ export function Control() {
           ]}
           selected={radio}
           onSelect={setRadio}
+          name="radio"
         />
       </Field>
       <Field label="Introduction" name="introduction">

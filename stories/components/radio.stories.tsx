@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { Radio, ValueLabel } from '../../src/components';
+import { RadioGroup, ValueLabel } from '../../src/components';
 
 export default {
   title: 'Forms / Radio',
@@ -23,12 +23,33 @@ export function Basic() {
   const [option, setOption] = useState(options[1]);
   return (
     <ExampleGroup>
-      <Radio options={options} selected={option} onSelect={setOption} />
-      <Radio
+      <RadioGroup
+        options={options}
+        selected={option}
+        onSelect={setOption}
+        variant="small"
+        name="small_classic"
+      />
+      <RadioGroup
+        options={options}
+        selected={option}
+        onSelect={setOption}
+        name="classic"
+      />
+      <RadioGroup
+        options={options}
+        selected={option}
+        onSelect={setOption}
+        variant="small"
+        type="button"
+        name="small_button"
+      />
+      <RadioGroup
         options={options}
         selected={option}
         onSelect={setOption}
         type="button"
+        name="button"
       />
     </ExampleGroup>
   );

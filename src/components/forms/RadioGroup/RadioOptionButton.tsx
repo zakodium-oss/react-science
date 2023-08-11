@@ -2,9 +2,9 @@
 import { css } from '@emotion/react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
-import { enabledColor } from '../styles';
+import { enabledColor, InputVariant } from '../styles';
 
-import { ValueLabel, RadioProps } from './Radio';
+import { ValueLabel, RadioGroupProps } from './RadioGroup';
 
 const buttonStyles = {
   container: (disabled: boolean) =>
@@ -13,9 +13,9 @@ const buttonStyles = {
       borderColor: disabled ? 'black' : 'rgba(0, 0, 0, 0.25)',
       opacity: disabled ? 0.25 : 1,
     }),
-  item: (disabled: boolean) =>
+  item: (disabled: boolean, variant?: InputVariant) =>
     css({
-      padding: '15px 10px',
+      padding: variant === 'default' ? '12px 10px' : '8px 8px',
       width: '100%',
       height: '100%',
       cursor: 'pointer',
@@ -32,6 +32,7 @@ const buttonStyles = {
     left: -1,
     right: -1,
     bottom: -1,
+    zIndex: 10,
     border: '1px solid',
     borderColor: enabledColor,
 
@@ -42,27 +43,32 @@ const buttonStyles = {
 
   label: css({
     cursor: 'pointer',
-    fontSize: '1.125em',
     lineHeight: 1,
   }),
 };
 
-export function ButtonRadioItem(
-  prop: ValueLabel & Pick<RadioProps, 'onSelect'>,
+export function RadioOptionButton(
+  prop: ValueLabel & Pick<RadioGroupProps, 'onSelect' | 'variant' | 'name'>,
 ) {
-  const { value, label, disabled = false, onSelect } = prop;
+  const { value, label, disabled = false, onSelect, variant, name } = prop;
   return (
     <div css={buttonStyles.container(disabled)}>
       <RadioGroup.Item
-        css={buttonStyles.item(disabled)}
+        css={buttonStyles.item(disabled, variant)}
         value={value}
-        id={value}
+        id={`${value}${name}`}
         onClick={() => {
           if (!disabled) onSelect?.(prop);
         }}
       >
         <RadioGroup.Indicator css={buttonStyles.indicator} />
-        <label css={buttonStyles.label} htmlFor={value}>
+        <label
+          css={buttonStyles.label}
+          htmlFor={`${value}${name}`}
+          style={{
+            fontSize: variant === 'small' ? '1em' : '1.125em',
+          }}
+        >
           {label}
         </label>
       </RadioGroup.Item>
