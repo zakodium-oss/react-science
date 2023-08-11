@@ -6,8 +6,10 @@ import {
   Checkbox,
   Field,
   Input,
+  Radio,
   Select,
   TextArea,
+  ValueLabel,
 } from '../../src/components';
 
 export default {
@@ -23,6 +25,7 @@ const ExampleGroup = styled.div`
 export function Control() {
   const [status, setStatus] = useState<string | undefined>('single');
   const [question, setQuestion] = useState<number[]>([]);
+  const [radio, setRadio] = useState<ValueLabel | undefined>(undefined);
   return (
     <ExampleGroup style={{ display: 'inline-block' }}>
       <Field label="Name" name="name" required>
@@ -76,7 +79,17 @@ export function Control() {
           }
         />
       </Field>
-
+      <Field label="Radio" name="Radio">
+        <Radio
+          options={[
+            { label: 'Option 1', value: 'option1' },
+            { label: 'Option 2', value: 'option2' },
+            { label: 'Option 3', value: 'option3' },
+          ]}
+          selected={radio}
+          onSelect={setRadio}
+        />
+      </Field>
       <Field label="Introduction" name="introduction">
         <TextArea />
       </Field>
