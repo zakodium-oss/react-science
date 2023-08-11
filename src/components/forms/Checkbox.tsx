@@ -4,6 +4,8 @@ import * as RadixCheckbox from '@radix-ui/react-checkbox';
 import { ReactNode } from 'react';
 import { RxCheck, RxMinus } from 'react-icons/rx/index';
 
+import { disabledColor, enabledColor } from './styles';
+
 export type CheckedState = boolean | 'indeterminate';
 
 interface CheckboxProps {
@@ -12,9 +14,6 @@ interface CheckboxProps {
   label?: ReactNode;
   onChange?: (checked: CheckedState) => void;
 }
-
-const enabledColor = '#1677ff';
-const disabledColor = '#b8b8b8';
 
 export function Checkbox(props: CheckboxProps) {
   const {
