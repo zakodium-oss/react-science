@@ -57,8 +57,8 @@ export function RadioGroup(props: RadioGroupProps) {
   const {
     selected,
     type = 'classic',
-    disabled = false,
-    options,
+    disabled: groupDisabled = false,
+    options = [],
     onSelect,
     name = '',
     variant = 'default',
@@ -71,27 +71,24 @@ export function RadioGroup(props: RadioGroupProps) {
       }}
       value={selected?.value}
       name={name}
-      disabled={disabled}
+      disabled={groupDisabled}
     >
-      {options?.map((option) =>
-        type === 'classic' ? (
-          <RadioOptionClassic
-            key={option.value}
-            {...option}
-            onSelect={onSelect}
-            variant={variant}
-            name={name}
-          />
+      {options?.map(({ value, label, disabled }) => {
+        const childProps = {
+          key: value,
+          value,
+          label,
+          disabled: groupDisabled || disabled,
+          onSelect,
+          variant,
+          name,
+        };
+        return type === 'classic' ? (
+          <RadioOptionClassic {...childProps} />
         ) : (
-          <RadioOptionButton
-            key={option.value}
-            {...option}
-            onSelect={onSelect}
-            variant={variant}
-            name={name}
-          />
-        ),
-      )}
+          <RadioOptionButton {...childProps} />
+        );
+      })}
     </RadioGroupRadix.Root>
   );
 }

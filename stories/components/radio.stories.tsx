@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { RadioGroup, ValueLabel } from '../../src/components';
+import { RadioGroup, ValueLabel, RadioGroupProps } from '../../src/components';
 
 export default {
   title: 'Forms / Radio',
@@ -54,3 +54,34 @@ export function Basic() {
     </ExampleGroup>
   );
 }
+export function Control(
+  props: Omit<RadioGroupProps, 'options' | 'selected' | 'onSelect' | 'name'>,
+) {
+  const [option, setOption] = useState(options[1]);
+  return (
+    <ExampleGroup>
+      <RadioGroup
+        options={options}
+        selected={option}
+        onSelect={setOption}
+        {...props}
+      />
+    </ExampleGroup>
+  );
+}
+Control.args = {
+  variant: 'default',
+  type: 'classic',
+  disabled: true,
+};
+
+Control.argTypes = {
+  variant: {
+    options: ['default', 'small'],
+    control: { type: 'radio' },
+  },
+  type: {
+    options: ['classic', 'button'],
+    control: { type: 'radio' },
+  },
+};

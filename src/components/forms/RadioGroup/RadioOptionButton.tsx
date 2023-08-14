@@ -10,8 +10,10 @@ const buttonStyles = {
   container: (disabled: boolean) =>
     css({
       position: 'relative',
-      borderColor: disabled ? 'black' : 'rgba(0, 0, 0, 0.25)',
-      opacity: disabled ? 0.25 : 1,
+      borderColor: 'rgba(0, 0, 0, 0.25)',
+      '& > * ': {
+        opacity: disabled ? 0.25 : 1,
+      },
     }),
   item: (disabled: boolean, variant?: InputVariant) =>
     css({
@@ -21,7 +23,7 @@ const buttonStyles = {
       cursor: 'pointer',
       ':hover': {
         '& > label': {
-          color: disabled ? 'black' : enabledColor,
+          color: disabled ? '' : enabledColor,
         },
       },
     }),
