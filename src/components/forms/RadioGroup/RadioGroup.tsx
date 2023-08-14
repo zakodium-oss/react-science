@@ -30,9 +30,9 @@ const rootStyles = {
   }),
   button: css({
     ' & > * ': {
-      borderWidth: 1,
-      borderLeftWidth: 0.5,
-      borderRightWidth: 0.5,
+      borderWidth: 0.5,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
       borderRadius: 0,
     },
     ' & > *:first-of-type': {
