@@ -7,16 +7,14 @@ import { enabledColor, InputVariant } from '../styles';
 import { ValueLabel, RadioGroupProps } from './RadioGroup';
 
 const buttonStyles = {
-  container: (disabled: boolean) =>
-    css({
-      position: 'relative',
-      borderColor: 'rgba(0, 0, 0, 0.25)',
-      '& > * ': {
-        opacity: disabled ? 0.25 : 1,
-      },
-    }),
+  container: css({
+    border: '1px solid rgba(0, 0, 0, 0.25)',
+    borderRightWidth: 0,
+    position: 'relative',
+  }),
   item: (disabled: boolean, variant?: InputVariant) =>
     css({
+      opacity: disabled ? 0.25 : 1,
       padding: variant === 'default' ? '12px 10px' : '8px 8px',
       width: '100%',
       height: '100%',
@@ -54,7 +52,7 @@ export function RadioOptionButton(
 ) {
   const { value, label, disabled = false, onSelect, variant, name } = prop;
   return (
-    <div css={buttonStyles.container(disabled)}>
+    <div css={buttonStyles.container}>
       <RadioGroup.Item
         css={buttonStyles.item(disabled, variant)}
         value={value}

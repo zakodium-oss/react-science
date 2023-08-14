@@ -29,26 +29,11 @@ const rootStyles = {
     width: 'fit-content',
   }),
   button: css({
-    ' & > * ': {
-      borderWidth: 0.5,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderRadius: 0,
-    },
-    ' & > *:first-of-type': {
-      borderLeftWidth: 1,
+    ' & > *:first-of-type, & > *:first-of-type span': {
       borderRadius: '8px 0 0 8px',
     },
-    ' & > *:last-of-type': {
+    ' & > *:last-of-type, & > *:last-of-type span': {
       borderRightWidth: 1,
-      borderRadius: '0 8px 8px 0',
-    },
-
-    ' & > *:first-of-type span': {
-      borderRadius: '8px 0 0 8px',
-    },
-
-    ' & > *:last-of-type span': {
       borderRadius: '0 8px 8px 0',
     },
   }),
