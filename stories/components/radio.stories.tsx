@@ -73,7 +73,7 @@ export function Control(
 Control.args = {
   variant: 'default',
   type: 'classic',
-  disabled: true,
+  disabled: false,
 };
 
 Control.argTypes = {
