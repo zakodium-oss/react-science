@@ -44,7 +44,7 @@ const buttonStyles = {
   label: (variant?: InputVariant) =>
     css({
       cursor: 'pointer',
-      fontSize: '14px',
+      fontSize: variant === 'small' ? '1em' : '1.125em',
       lineHeight: variant === 'default' ? '30px' : '22px',
     }),
 };
