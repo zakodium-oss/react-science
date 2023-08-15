@@ -9,7 +9,7 @@ import {
   RadioGroup,
   Select,
   TextArea,
-  ValueLabel,
+  RadioOption,
 } from '../../src/components';
 
 export default {
@@ -25,7 +25,7 @@ const ExampleGroup = styled.div`
 export function Control() {
   const [status, setStatus] = useState<string | undefined>('single');
   const [question, setQuestion] = useState<number[]>([]);
-  const [radio, setRadio] = useState<ValueLabel | undefined>(undefined);
+  const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
     <ExampleGroup style={{ display: 'inline-block' }}>
       <Field label="Name" name="name" required>

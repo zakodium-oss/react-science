@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { RadioGroup, ValueLabel, RadioGroupProps } from '../../src/components';
+import { RadioGroup, RadioOption, RadioGroupProps } from '../../src/components';
 
 export default {
   title: 'Forms / Radio',
 };
 
-const options: ValueLabel[] = [
+const options: RadioOption[] = [
   { label: 'Option 1', value: 'option1' },
   { label: 'Option 2', value: 'option2', disabled: true },
   { label: 'Option 3', value: 'option3' },
@@ -28,6 +28,12 @@ export function Basic() {
         options={options}
         selected={option}
         onSelect={setOption}
+        name="classic"
+      />
+      <RadioGroup
+        options={options}
+        selected={option}
+        onSelect={setOption}
         variant="small"
         name="small_classic"
       />
@@ -35,7 +41,8 @@ export function Basic() {
         options={options}
         selected={option}
         onSelect={setOption}
-        name="classic"
+        type="button"
+        name="button"
       />
       <RadioGroup
         options={options}
@@ -44,13 +51,6 @@ export function Basic() {
         variant="small"
         type="button"
         name="small_button"
-      />
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        type="button"
-        name="button"
       />
     </ExampleGroup>
   );

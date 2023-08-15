@@ -4,7 +4,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 
 import { enabledColor, InputVariant } from '../styles';
 
-import { ValueLabel, RadioGroupProps } from './RadioGroup';
+import { RadioOption, RadioGroupProps } from './RadioGroup';
 
 const buttonStyles = {
   container: css({
@@ -15,7 +15,7 @@ const buttonStyles = {
   item: (disabled: boolean, variant?: InputVariant) =>
     css({
       opacity: disabled ? 0.25 : 1,
-      padding: variant === 'default' ? '12px 10px' : '8px 8px',
+      padding: variant === 'default' ? '0px 15px' : '0px 7px',
       width: '100%',
       height: '100%',
       cursor: 'pointer',
@@ -41,14 +41,16 @@ const buttonStyles = {
     },
   }),
 
-  label: css({
-    cursor: 'pointer',
-    lineHeight: 1,
-  }),
+  label: (variant?: InputVariant) =>
+    css({
+      cursor: 'pointer',
+      fontSize: '14px',
+      lineHeight: variant === 'default' ? '30px' : '22px',
+    }),
 };
 
-export function RadioOptionButton(
-  prop: ValueLabel & Pick<RadioGroupProps, 'onSelect' | 'variant' | 'name'>,
+export function ButtonRadioItem(
+  prop: RadioOption & Pick<RadioGroupProps, 'onSelect' | 'variant' | 'name'>,
 ) {
   const { value, label, disabled = false, onSelect, variant, name } = prop;
   return (
@@ -63,11 +65,9 @@ export function RadioOptionButton(
       >
         <RadioGroup.Indicator css={buttonStyles.indicator} />
         <label
-          css={buttonStyles.label}
+          css={buttonStyles.label(variant)}
           htmlFor={`${value}${name}`}
-          style={{
-            fontSize: variant === 'small' ? '1em' : '1.125em',
-          }}
+          style={{}}
         >
           {label}
         </label>

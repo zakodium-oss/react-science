@@ -4,7 +4,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 
 import { disabledColor, enabledColor, InputVariant } from '../styles';
 
-import { ValueLabel, RadioGroupProps } from './RadioGroup';
+import { RadioOption, RadioGroupProps } from './RadioGroup';
 
 const classicStyles = {
   container: (disabled: boolean) =>
@@ -62,8 +62,8 @@ const classicStyles = {
     }),
 };
 
-export function RadioOptionClassic(
-  props: ValueLabel & Pick<RadioGroupProps, 'onSelect' | 'variant' | 'name'>,
+export function ClassicRadioItem(
+  props: RadioOption & Pick<RadioGroupProps, 'onSelect' | 'variant' | 'name'>,
 ) {
   const { value, label, disabled = false, onSelect, variant, name } = props;
   return (

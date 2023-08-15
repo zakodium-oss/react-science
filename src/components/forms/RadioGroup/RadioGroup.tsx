@@ -5,19 +5,19 @@ import { ReactNode } from 'react';
 
 import { InputVariant } from '../styles';
 
-import { RadioOptionButton } from './RadioOptionButton';
-import { RadioOptionClassic } from './RadioOptionClassic';
+import { ButtonRadioItem } from './ButtonRadioItem';
+import { ClassicRadioItem } from './ClassicRadioItem';
 
-export interface ValueLabel {
+export interface RadioOption {
   value: string;
   label: ReactNode;
   disabled?: boolean;
 }
 export interface RadioGroupProps {
-  selected?: ValueLabel;
+  selected?: RadioOption;
   type?: 'classic' | 'button';
-  options?: ValueLabel[];
-  onSelect?: (option: ValueLabel) => void;
+  options?: RadioOption[];
+  onSelect?: (option: RadioOption) => void;
   name?: string;
   disabled?: boolean;
   variant?: InputVariant;
@@ -28,15 +28,16 @@ const rootStyles = {
     flexDirection: 'row',
     width: 'fit-content',
   }),
-  button: css({
-    ' & > *:first-of-type, & > *:first-of-type span': {
-      borderRadius: '8px 0 0 8px',
-    },
-    ' & > *:last-of-type, & > *:last-of-type span': {
-      borderRightWidth: 1,
-      borderRadius: '0 8px 8px 0',
-    },
-  }),
+  button: (variant: InputVariant) =>
+    css({
+      ' & > *:first-of-type, & > *:first-of-type span': {
+        borderRadius: variant === 'default' ? '6px 0 0 6px' : '4px 0 0 4px',
+      },
+      ' & > *:last-of-type, & > *:last-of-type span': {
+        borderRightWidth: 1,
+        borderRadius: variant === 'default' ? '0 6px 6px 0' : '0 4px 4px 0',
+      },
+    }),
 };
 export function RadioGroup(props: RadioGroupProps) {
   const {
@@ -50,7 +51,10 @@ export function RadioGroup(props: RadioGroupProps) {
   } = props;
   return (
     <RadioGroupRadix.Root
-      css={[rootStyles.basic, type === 'classic' ? null : rootStyles.button]}
+      css={[
+        rootStyles.basic,
+        type === 'classic' ? null : rootStyles.button(variant),
+      ]}
       style={{
         gap: type === 'classic' ? (variant === 'default' ? 10 : 5) : 0,
       }}
@@ -69,9 +73,9 @@ export function RadioGroup(props: RadioGroupProps) {
           name,
         };
         return type === 'classic' ? (
-          <RadioOptionClassic {...childProps} />
+          <ClassicRadioItem {...childProps} />
         ) : (
-          <RadioOptionButton {...childProps} />
+          <ButtonRadioItem {...childProps} />
         );
       })}
     </RadioGroupRadix.Root>
