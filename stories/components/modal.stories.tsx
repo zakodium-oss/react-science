@@ -149,20 +149,9 @@ export function ConfirmModalControl({
         }}
         {...otherProps}
       >
-        <div
-          style={{
-            display: 'flex',
-            flex: '1 1 0%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 'bold',
-            margin: 10,
-          }}
-        >
-          Are you sure you want to deactivate your account? All of your data
-          will be permanently removed from our servers forever. This action
-          cannot be undone.
-        </div>
+        Are you sure you want to deactivate your account? All of your data will
+        be permanently removed from our servers forever. This action cannot be
+        undone.
       </ConfirmModal>
     </>
   );

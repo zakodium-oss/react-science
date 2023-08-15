@@ -38,8 +38,6 @@ const ConfirmModalContents = styled.div<{
   flex-direction: column;
   background-color: white;
   width: 100%;
-  border-width: 1px;
-  border-color: transparent;
   border-radius: 0.5rem;
   box-shadow:
     0 0 0 0,
@@ -51,6 +49,9 @@ const ConfirmModalChildrenRoot = styled.div<{ headerColor: string }>`
   color: ${({ headerColor }) => headerColor};
   display: flex;
   flex: 1 1 0%;
+  font-weight: bold;
+  padding: 20px;
+  font-size: 14px;
 `;
 
 const ConfirmModalFooter = styled.div`
