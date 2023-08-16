@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore
 import { Disclosure } from '@headlessui/react';
 import { CSSProperties, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
