@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.26.0](https://github.com/zakodium-oss/react-science/compare/v0.25.0...v0.26.0) (2023-08-15)
+
+
+### Features
+
+* allow many measurements ([#483](https://github.com/zakodium-oss/react-science/issues/483)) ([f3b2f40](https://github.com/zakodium-oss/react-science/commit/f3b2f40369116de7ba074b5ee427645383104b8b))
+* implement info-panel component ([da259ba](https://github.com/zakodium-oss/react-science/commit/da259bab60a3e22e00479726ef411bf8f9fae16b))
+* implement panel-preferences-toolbar ([8fd57c1](https://github.com/zakodium-oss/react-science/commit/8fd57c111af788f587677a2b4c6b5a7770486133))
+* implement Panelheader ([#523](https://github.com/zakodium-oss/react-science/issues/523)) ([394d4ff](https://github.com/zakodium-oss/react-science/commit/394d4fff4ed4a199e0ae0df2b94326db28367781))
+* implement RadioGroup component ([#536](https://github.com/zakodium-oss/react-science/issues/536)) ([2aff78e](https://github.com/zakodium-oss/react-science/commit/2aff78ec4419fedb577e5e3ce574d075f092abbb))
+* implement textarea component ([#516](https://github.com/zakodium-oss/react-science/issues/516)) ([871df9d](https://github.com/zakodium-oss/react-science/commit/871df9d7ee8cdca7d2fec398af4b1bb60056f84a))
+* improve table component  to allow html table props ([e28bd5f](https://github.com/zakodium-oss/react-science/commit/e28bd5fa53fb2407ec0c7df35f9baee98699f116))
+
+
+### Bug Fixes
+
+* improve confirm-modal style ([#537](https://github.com/zakodium-oss/react-science/issues/537)) ([1cd416b](https://github.com/zakodium-oss/react-science/commit/1cd416b273fc6f9e38356b30a0602a3348f61b6c))
+
 ## [0.25.0](https://github.com/zakodium-oss/react-science/compare/v0.24.3...v0.25.0) (2023-08-08)
 
 
