@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1](https://github.com/zakodium-oss/react-science/compare/v0.26.0...v0.26.1) (2023-08-16)
+
+
+### Bug Fixes
+
+* avoid ts error on build ([#538](https://github.com/zakodium-oss/react-science/issues/538)) ([b4b2222](https://github.com/zakodium-oss/react-science/commit/b4b22221f2e95e8be6ad6868329474944400f06f))
+
 ## [0.26.0](https://github.com/zakodium-oss/react-science/compare/v0.25.0...v0.26.0) (2023-08-15)
 
 
