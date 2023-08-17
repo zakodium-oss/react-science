@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.26.2](https://github.com/zakodium-oss/react-science/compare/v0.26.1...v0.26.2) (2023-08-17)
+
+
+### Bug Fixes
+
+* InfoPanel key warning ([#544](https://github.com/zakodium-oss/react-science/issues/544)) ([45f4d21](https://github.com/zakodium-oss/react-science/commit/45f4d21cce50760164f44829d76bf874ff6bc7f4))
+* remove Modal outline on focus ([#545](https://github.com/zakodium-oss/react-science/issues/545)) ([e8c1282](https://github.com/zakodium-oss/react-science/commit/e8c1282333f1941691ac395a1482e089feb6846b))
+* resolve react-radio-group dependency issues ([#542](https://github.com/zakodium-oss/react-science/issues/542)) ([7dab585](https://github.com/zakodium-oss/react-science/commit/7dab585026946ef4d953b6fcda09e8c5394df494))
+
 ## [0.26.1](https://github.com/zakodium-oss/react-science/compare/v0.26.0...v0.26.1) (2023-08-16)
 
 
