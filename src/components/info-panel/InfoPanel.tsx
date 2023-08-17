@@ -87,7 +87,7 @@ export function InfoPanel(props: InfoPanelProps) {
       {data.map(({ description, data }) => {
         const content = viewData(data);
         return content.length > 0 ? (
-          <Disclosure defaultOpen>
+          <Disclosure defaultOpen key={description}>
             {({ open }) => (
               <>
                 <Disclosure.Button css={style.button}>
