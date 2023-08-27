@@ -135,6 +135,20 @@ export function InfoPanel(props: InfoPanelProps) {
           if (target.value !== undefined) setSearch(target.value);
         }}
         style={inputStyle}
+        leadingAddon={{ addon: <FaSearch />, inline: true }}
+        trailingAddon={
+          search
+            ? {
+                addon: (
+                  <FaTimesCircle
+                    onClick={() => setSearch('')}
+                    style={{ cursor: 'pointer' }}
+                  />
+                ),
+                inline: true,
+              }
+            : undefined
+        }
       />
 
       {isArray(dataArray)
