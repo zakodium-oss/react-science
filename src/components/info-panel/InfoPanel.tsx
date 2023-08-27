@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-// @ts-ignore
 import { Disclosure } from '@headlessui/react';
-import { CSSProperties, useState } from 'react';
-import { FaChevronRight } from 'react-icons/fa';
+import { isArray } from 'lodash';
+import { CSSProperties, useCallback, useState } from 'react';
+import { FaChevronRight, FaSearch, FaTimesCircle } from 'react-icons/fa';
 
 import { Input, ValueRenderers } from '../index';
 import { Table } from '../table/Table';
@@ -16,7 +15,7 @@ export interface InfoPanelData {
 
 interface InfoPanelProps {
   title?: string;
-  data?: InfoPanelData[];
+  data?: InfoPanelData[] | InfoPanelData;
   titleStyle?: CSSProperties;
   inputStyle?: CSSProperties;
   tableStyle?: CSSProperties;
@@ -47,46 +46,42 @@ const style = {
 export function InfoPanel(props: InfoPanelProps) {
   const [search, setSearch] = useState('');
   const {
-    title = 'Information',
-    data = [],
+    title = '',
+    data: dataArray = [],
     titleStyle,
     inputStyle,
     tableStyle,
   } = props;
-  function viewData(data: Record<string, string | number | object>) {
-    return Object.keys(data)
-      .map((key) => {
-        const value = data[key];
-        if (
-          !key.toLowerCase().includes(search.toLowerCase()) &&
-          !valueSearch(value, search)
-        ) {
-          return null;
-        }
+  const viewData = useCallback(
+    (data: Record<string, string | number | object>) =>
+      Object.keys(data)
+        .map((key) => {
+          const value = data[key];
+          if (
+            !key.toLowerCase().includes(search.toLowerCase()) &&
+            !valueSearch(value, search)
+          ) {
+            return null;
+          }
+          return (
+            <Table.Row key={key}>
+              <ValueRenderers.Text value={key} />
+              {valueCell(value)}
+            </Table.Row>
+          );
+        })
+        .filter((row) => row !== null),
+    [search],
+  );
+  const content = useCallback(
+    (rowData: InfoPanelData, disclosure = true) => {
+      const { description, data } = rowData;
+      const rows = viewData(data);
+      if (rows.length === 0) {
+        return null;
+      }
+      if (disclosure) {
         return (
-          <Table.Row key={key}>
-            <ValueRenderers.Text value={key} />
-            {valueCell(value)}
-          </Table.Row>
-        );
-      })
-      .filter((row) => row !== null);
-  }
-  return (
-    <div css={style.container}>
-      <div style={titleStyle}>{title}</div>
-      <Input
-        placeholder="search for a parameter ..."
-        value={search}
-        onChange={({ target }) => {
-          if (target.value !== undefined) setSearch(target.value);
-        }}
-        style={inputStyle}
-      />
-
-      {data.map(({ description, data }) => {
-        const content = viewData(data);
-        return content.length > 0 ? (
           <Disclosure defaultOpen key={description}>
             {({ open }) => (
               <>
@@ -100,14 +95,51 @@ export function InfoPanel(props: InfoPanelProps) {
                       <ValueRenderers.Title value="Parameter" />
                       <ValueRenderers.Title value="Value" />
                     </Table.Header>
-                    {content}
+                    {rows}
                   </Table>
                 </Disclosure.Panel>
               </>
             )}
           </Disclosure>
-        ) : null;
-      })}
+        );
+      }
+      return (
+        <div>
+          <div
+            style={{
+              padding: 2,
+            }}
+          >
+            {description}
+          </div>
+          <Table css={style.table} style={{ ...tableStyle, marginTop: 4 }}>
+            <Table.Header>
+              <ValueRenderers.Title value="Parameter" />
+              <ValueRenderers.Title value="Value" />
+            </Table.Header>
+            {rows}
+          </Table>
+        </div>
+      );
+    },
+    [tableStyle, viewData],
+  );
+
+  return (
+    <div css={style.container}>
+      <div style={titleStyle}>{title}</div>
+      <Input
+        placeholder="Search for a parameter ..."
+        value={search}
+        onChange={({ target }) => {
+          if (target.value !== undefined) setSearch(target.value);
+        }}
+        style={inputStyle}
+      />
+
+      {isArray(dataArray)
+        ? dataArray.map((data) => content(data))
+        : content(dataArray, false)}
     </div>
   );
 }

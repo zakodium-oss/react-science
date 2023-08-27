@@ -24,7 +24,14 @@ const data: InfoPanelData[] = [
 export function Basic() {
   return (
     <div style={{ width: 500 }}>
-      <InfoPanel data={data} />
+      <InfoPanel data={data} title="Information" />
+    </div>
+  );
+}
+export function Simple() {
+  return (
+    <div style={{ width: 500 }}>
+      <InfoPanel data={data[1]} />
     </div>
   );
 }
