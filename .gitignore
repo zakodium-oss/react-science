@@ -110,3 +110,4 @@ build
 dist
 .DS_Store
 playwright-report
+storybook-static
