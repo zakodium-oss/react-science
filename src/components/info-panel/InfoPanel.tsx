@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Disclosure } from '@headlessui/react';
 import { isArray } from 'lodash';
 import { CSSProperties, useCallback, useState } from 'react';
-import { FaChevronRight, FaSearch, FaTimesCircle } from 'react-icons/fa';
+import { FaChevronRight, FaSearch } from 'react-icons/fa';
 
 import { Input, ValueRenderers } from '../index';
 import { Table } from '../table/Table';
@@ -136,19 +136,7 @@ export function InfoPanel(props: InfoPanelProps) {
         }}
         style={inputStyle}
         leadingAddon={{ addon: <FaSearch />, inline: true }}
-        trailingAddon={
-          search
-            ? {
-                addon: (
-                  <FaTimesCircle
-                    onClick={() => setSearch('')}
-                    style={{ cursor: 'pointer' }}
-                  />
-                ),
-                inline: true,
-              }
-            : undefined
-        }
+        clearable
       />
 
       {isArray(dataArray)

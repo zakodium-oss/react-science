@@ -36,6 +36,19 @@ export function Basic() {
         onChange={onChange}
         variant="small"
       />
+      <Input
+        placeholder="Clearable example"
+        value={state}
+        onChange={onChange}
+        clearable
+      />
+      <Input
+        placeholder="Clearable example"
+        value={state}
+        onChange={onChange}
+        variant="small"
+        clearable
+      />
     </ExampleGroup>
   );
 }
@@ -92,6 +105,12 @@ export function WithTrailingAddon() {
           trailingAddon={{ addon: <FaBolt /> }}
           variant="small"
         />
+
+        <Input
+          placeholder="Clearable example"
+          trailingAddon={{ addon: <FaBolt /> }}
+          clearable
+        />
       </ExampleGroup>
       <ExampleGroup>
         <Input
@@ -103,6 +122,12 @@ export function WithTrailingAddon() {
           placeholder="Basic example"
           trailingAddon={{ addon: <FaBolt />, inline: true }}
           variant="small"
+        />
+
+        <Input
+          placeholder="Clearable example"
+          trailingAddon={{ addon: <FaBolt />, inline: true }}
+          clearable
         />
       </ExampleGroup>
     </ExampleContainerAddonGroup>
@@ -156,6 +181,13 @@ export function WithLeadingAndTrailingAddon() {
           trailingAddon={{ addon: <FaMeteor /> }}
           variant="small"
         />
+
+        <Input
+          placeholder="Clearable example"
+          leadingAddon={{ addon: <FaMeteor /> }}
+          trailingAddon={{ addon: <FaMeteor /> }}
+          clearable
+        />
       </ExampleGroup>
       <ExampleGroup>
         <Input
@@ -163,12 +195,18 @@ export function WithLeadingAndTrailingAddon() {
           leadingAddon={{ addon: <FaMeteor />, inline: true }}
           trailingAddon={{ addon: <FaMeteor />, inline: true }}
         />
-
         <Input
           placeholder="Basic example"
           leadingAddon={{ addon: <FaMeteor />, inline: true }}
           trailingAddon={{ addon: <FaMeteor />, inline: true }}
           variant="small"
+        />
+
+        <Input
+          placeholder="Clearable example"
+          leadingAddon={{ addon: <FaMeteor />, inline: true }}
+          trailingAddon={{ addon: <FaMeteor />, inline: true }}
+          clearable
         />
       </ExampleGroup>
     </ExampleContainerAddonGroup>

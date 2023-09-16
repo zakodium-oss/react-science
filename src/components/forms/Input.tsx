@@ -1,5 +1,13 @@
 import styled from '@emotion/styled';
-import { InputHTMLAttributes, ReactNode } from 'react';
+import {
+  ChangeEvent,
+  InputHTMLAttributes,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { FaTimesCircle } from 'react-icons/fa';
 
 import { FullSpinner } from '../index';
 
@@ -70,6 +78,7 @@ interface RenderAddon {
 export interface InputProps
   extends InputHTMLAttributes<HTMLInputElement>,
     SubTextProps {
+  clearable?: boolean;
   variant?: InputVariant;
   leadingAddon?: RenderAddon;
   trailingAddon?: RenderAddon;
@@ -88,14 +97,31 @@ export function Input(props: InputProps) {
     error,
     valid,
     loading,
+    clearable = false,
+    onChange,
     ...otherProps
   } = props;
+  const ref = useRef<HTMLInputElement>(null);
 
   const { name, variant: contextVariant } = useFieldsContext();
 
   const hasLeading = (leadingAddon && !leadingAddon.inline) || false;
   const hasTrailing = (trailingAddon && !trailingAddon.inline) || false;
   const variant = variantProps || contextVariant;
+  const clearInput = () => {
+    if (ref.current) {
+      setValue('');
+      ref.current.value = '';
+      const event = {
+        target: ref.current,
+      } as ChangeEvent<HTMLInputElement>;
+      onChange?.(event);
+    }
+  };
+  const [value, setValue] = useState(otherProps.value);
+  useEffect(() => {
+    setValue(otherProps.value);
+  }, [otherProps.value]);
 
   return (
     <InputContainer>
@@ -114,7 +140,25 @@ export function Input(props: InputProps) {
               {leadingAddon.addon}
             </LeadingInlineAddonStyled>
           )}
-          <InputStyled id={name} name={name} {...otherProps} />
+          <InputStyled
+            ref={ref}
+            id={name}
+            name={name}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange?.(e);
+            }}
+            {...otherProps}
+          />
+          {clearable && value && (
+            <TrailingInlineAddonStyled>
+              <FaTimesCircle
+                style={{ cursor: 'pointer', opacity: 0.8 }}
+                onClick={clearInput}
+                size={variant === 'default' ? 14 : 12}
+              />
+            </TrailingInlineAddonStyled>
+          )}
           {trailingAddon?.inline && (
             <TrailingInlineAddonStyled className="addon">
               {trailingAddon.addon}
