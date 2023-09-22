@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
 import { FaMeteor, FaUser, FaBolt, FaShieldAlt } from 'react-icons/fa';
 
-import { Input, Field } from '../../src/components';
+import { Input, Field, InputProps } from '../../src/components';
 
 export default {
   title: 'Forms / Input',
@@ -19,6 +19,73 @@ const ExampleGroup = styled.div`
   flex-direction: row;
   gap: 5px;
 `;
+
+export function Control(
+  props: Omit<
+    InputProps,
+    'onChange' | 'value' | 'trailingAddon' | 'leadingAddon'
+  > & {
+    trailing?: boolean | 'inline';
+    leading?: boolean | 'inline';
+    controlled?: boolean;
+  },
+) {
+  const [state, setState] = useState('Hello, World!');
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    setState(event.target.value);
+  }
+  const { trailing, leading, controlled, ...otherProps } = props;
+  return (
+    <ExampleGroup>
+      <Input
+        value={controlled ? state : undefined}
+        onChange={controlled ? onChange : undefined}
+        leadingAddon={
+          leading
+            ? { addon: <FaBolt />, inline: leading === 'inline' }
+            : undefined
+        }
+        trailingAddon={
+          trailing
+            ? { addon: <FaMeteor />, inline: trailing === 'inline' }
+            : undefined
+        }
+        {...otherProps}
+      />
+    </ExampleGroup>
+  );
+}
+Control.args = {
+  placeholder: 'Control example',
+  variant: 'default',
+  help: '',
+  error: '',
+  valid: false,
+  clearable: false,
+  leading: false,
+  trailing: false,
+  controlled: true,
+};
+
+Control.argTypes = {
+  variant: {
+    options: ['default', 'small'],
+    control: { type: 'radio' },
+  },
+  valid: {
+    options: [false, true, 'valid message'],
+    control: { type: 'radio' },
+  },
+  leading: {
+    options: [false, true, 'inline'],
+    control: { type: 'radio' },
+  },
+  trailing: {
+    options: [false, true, 'inline'],
+    control: { type: 'radio' },
+  },
+};
 
 export function Basic() {
   const [state, setState] = useState('Hello, World!');
