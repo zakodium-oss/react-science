@@ -22,10 +22,11 @@
   "files": [
     "lib",
     "lib-esm",
-    "src"
+    "src",
+    "styles/preflight.css"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build-ts && npm run fix-react-shadow",
+    "build": "npm run clean && npm run build-ts",
     "build-all": "npm run build-app && npm run build-storybook && mv storybook-static dist/stories",
     "build-app": "cross-env NO_MINIFY=true vite build",
     "build-storybook": "storybook build",
@@ -37,7 +38,6 @@
     "dev-app": "vite --open /pages/demo.html",
     "eslint": "eslint .",
     "eslint-fix": "npm run eslint -- --fix",
-    "fix-react-shadow": "node scripts/fix-react-shadow.mjs",
     "playwright": "npm run playwright-ct -- --project chromium && npm run playwright-e2e -- --project chromium",
     "playwright-ct": "playwright test -c playwright-ct.config.ts",
     "playwright-e2e": "playwright test -c playwright-e2e.config.ts",
