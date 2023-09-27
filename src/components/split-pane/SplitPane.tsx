@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import {
-  MouseEvent as ReactMouseEvent,
+  PointerEvent as ReactPointerEvent,
   createContext,
   CSSProperties,
   ReactNode,
@@ -114,7 +114,7 @@ export function SplitPane(props: SplitPaneProps) {
   }, [closePane, closed, openPane]);
 
   const splitterRef = useRef<HTMLDivElement>(null);
-  const { onMouseDown } = useSplitPaneSize({
+  const { onPointerDown } = useSplitPaneSize({
     controlledSide,
     direction,
     splitterRef,
@@ -183,7 +183,7 @@ export function SplitPane(props: SplitPaneProps) {
 
       <Splitter
         onDoubleClick={handleToggle}
-        onMouseDown={isFinalClosed ? undefined : onMouseDown}
+        onPointerDown={isFinalClosed ? undefined : onPointerDown}
         isFinalClosed={isFinalClosed}
         direction={direction}
         splitterRef={splitterRef}
@@ -196,19 +196,24 @@ export function SplitPane(props: SplitPaneProps) {
 
 interface SplitterProps {
   onDoubleClick: () => void;
-  onMouseDown?: (event: ReactMouseEvent) => void;
+  onPointerDown?: (event: ReactPointerEvent) => void;
   direction: SplitPaneDirection;
   isFinalClosed: boolean;
   splitterRef: RefObject<HTMLDivElement>;
 }
 
 function Splitter(props: SplitterProps) {
-  const { onDoubleClick, onMouseDown, direction, isFinalClosed, splitterRef } =
-    props;
+  const {
+    onDoubleClick,
+    onPointerDown,
+    direction,
+    isFinalClosed,
+    splitterRef,
+  } = props;
   return (
     <div
       onDoubleClick={onDoubleClick}
-      onMouseDown={onMouseDown}
+      onPointerDown={onPointerDown}
       css={getSeparatorStyle(direction, !isFinalClosed)}
       ref={splitterRef}
     >
@@ -298,6 +303,7 @@ function getSeparatorStyle(direction: SplitPaneDirection, enabled: boolean) {
       alignItems: 'center',
       userSelect: 'none',
       minWidth: 11,
+      touchAction: 'none',
       ':hover': {
         backgroundColor: 'rgb(223, 223, 223)',
       },
