@@ -17,7 +17,8 @@
       "types": "./lib-esm/components/index.d.ts",
       "require": "./lib/components/index.js",
       "default": "./lib-esm/components/index.js"
-    }
+    },
+    "./styles/*.css": "./styles/*.css"
   },
   "files": [
     "lib",
