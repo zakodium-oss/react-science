@@ -19,6 +19,14 @@ React components to build scientific applications UI.
 > npm i react-science
 ```
 
+### Global css
+
+If you use tailwindcss and already you added `@tailwind base;` to your tailwind stylesheet, you can skip this step.
+
+Otherwise, import the global styles in your application:
+
+`import 'react-science/styles/preflight.css';`
+
 ## Introduction
 
 Science has specific requirements to display and process data. This is especially true in chemistry where a large number of techniques are used to extract important information (or characterize) samples.

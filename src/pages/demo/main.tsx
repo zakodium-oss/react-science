@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 
 import './main.css';
+import '../../../styles/preflight.css';
 
 createRoot(document.querySelector('#root') as HTMLDivElement).render(
   <StrictMode>
