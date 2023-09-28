@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.27.0](https://github.com/zakodium-oss/react-science/compare/v0.26.2...v0.27.0) (2023-09-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* the shadow dom has been removed from the root layout and global styles no longer apply to it. Recommended global styles (same as the TailwindCSS preflight styles) are published by the library so that users can use them in their applications.
+
+### Features
+
+* remove shadow dom and global styles ([#555](https://github.com/zakodium-oss/react-science/issues/555)) ([f87c170](https://github.com/zakodium-oss/react-science/commit/f87c170a0701c8d661a81fa734ba96d21dd39531))
+
 ## [0.26.2](https://github.com/zakodium-oss/react-science/compare/v0.26.1...v0.26.2) (2023-08-17)
 
 
