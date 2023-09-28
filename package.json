@@ -92,7 +92,6 @@
     "react-kbs": "^2.1.1",
     "react-plot": "^1.4.2",
     "react-popper": "^2.3.0",
-    "react-shadow": "^20.4.0",
     "spc-parser": "^0.7.2",
     "tinycolor2": "^1.6.0",
     "use-resize-observer": "^9.1.0",
