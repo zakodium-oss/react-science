@@ -62,6 +62,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
+    "@blueprintjs/core": "^5.3.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.16",

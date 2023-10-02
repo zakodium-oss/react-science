@@ -3,6 +3,7 @@ import { RootLayoutDecorator } from '../stories/utils';
 
 import '../styles/storybook-globals.css';
 import '../styles/preflight.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
 
 const preview: Preview = {
   decorators: [RootLayoutDecorator],
