@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { FaCompress } from 'react-icons/fa';
 import { PlotController } from 'react-plot';
 
-import { useAppDispatch, useAppState } from '../../../../app-data/index';
-import { Toolbar } from '../../../../components/index';
+import { useAppDispatch, useAppState } from '../../../../app-data';
+import { Toolbar } from '../../../../components';
 
 import IvMeasurementsPlot from './IvMeasurementsPlot';
 import IvPlotVariablesSelector from './IvPlotVariablesSelector';
@@ -49,10 +48,8 @@ function VerticalToolbar() {
   }
 
   return (
-    <Toolbar orientation="vertical">
-      <Toolbar.Item onClick={onZoomOut} title="Zoom out">
-        <FaCompress />
-      </Toolbar.Item>
+    <Toolbar minimal vertical>
+      <Toolbar.Item onClick={onZoomOut} title="Zoom out" icon="zoom-out" />
     </Toolbar>
   );
 }

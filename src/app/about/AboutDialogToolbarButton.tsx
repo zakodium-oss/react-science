@@ -1,11 +1,12 @@
+import { ButtonProps } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 
-import { Modal, Toolbar, useOnOff } from '../../components/index';
+import { Modal, Toolbar, useOnOff } from '../../components';
 
 interface AboutDialogToolbarButtonProps {
   name: string;
-  icon: ReactNode;
+  icon: ButtonProps['icon'];
   body: ReactNode;
 }
 
@@ -20,13 +21,7 @@ export function AboutDialogToolbarButton(props: AboutDialogToolbarButtonProps) {
 
   return (
     <>
-      <Toolbar.Item
-        titleOrientation="horizontal"
-        title={`About ${name}`}
-        onClick={openDialog}
-      >
-        {icon}
-      </Toolbar.Item>
+      <Toolbar.Item title={`About ${name}`} onClick={openDialog} icon={icon} />
       <Modal isOpen={isOpenDialog} onRequestClose={closeDialog}>
         <Modal.Header>{name}</Modal.Header>
         <Modal.Body>

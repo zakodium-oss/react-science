@@ -1,60 +1,174 @@
-import { SvgBioDna } from 'cheminfo-font';
-import { ReactNode, useState } from 'react';
+import { ButtonProps } from '@blueprintjs/core';
+import { Meta } from '@storybook/react';
+import { useState } from 'react';
+import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
+import {
+  FaClipboard,
+  FaCreditCard,
+  FaPaperclip,
+  FaRegCopy,
+} from 'react-icons/fa6';
+import {
+  HiClipboard,
+  HiCreditCard,
+  HiMiniInbox,
+  HiOutlinePaperClip,
+} from 'react-icons/hi2';
 
-import { Toolbar, ToolbarItemProps } from '../../src/components/index';
+import { Toolbar, ToolbarItemProps, ToolbarProps } from '../../src/components';
 
 export default {
   title: 'Components / Toolbar',
-};
+  component: Toolbar,
+  args: {
+    minimal: true,
+    vertical: false,
+    intent: 'primary',
+    disabled: false,
+  },
+  argTypes: {
+    onClick: { action: 'handle' },
+  },
+} as Meta<ToolbarProps>;
 
-const items: Array<{ children: ReactNode; title: string; id: string }> = [
-  { id: 'copy', children: 'c', title: 'Copy' },
-  { id: 'paste', children: 'v', title: 'Paste' },
-  { id: 'undo', children: 'b', title: 'Undo' },
+type ToolbarItems = Array<{
+  icon: ButtonProps['icon'];
+  title: string;
+  id: string;
+}>;
+
+const itemsBlueprintIcons: ToolbarItems = [
+  { id: 'copy', icon: 'phone', title: 'Phone' },
+  { id: 'paste', icon: 'add-column-left', title: 'Add left' },
+  { id: 'undo', icon: 'add-column-right', title: 'Right' },
   {
     id: 'redo',
-    children: 'r',
+    icon: 'redo',
     title: 'Redo',
   },
-  { id: 'test1', children: 't', title: 'Test 1' },
-  { id: 'test2', children: 't', title: 'Test 2' },
-  { id: 'test3', children: 't', title: 'Test 3' },
-  { id: 'test4', children: 't', title: 'Test 4' },
-  { id: 'test5', children: 't', title: 'Test 5' },
+  { id: 'test1', icon: 'undo', title: 'Undo' },
+  { id: 'test2', icon: 'lab-test', title: 'Test 1' },
+  { id: 'test3', icon: 'lab-test', title: 'Test 2' },
+  { id: 'test4', icon: 'lab-test', title: 'Test 3' },
+  { id: 'test5', icon: 'lab-test', title: 'Test 4' },
 ];
 
-export function VerticalToolbar(props: { height: number }) {
-  const [state, setState] = useState(items[1]);
+const itemsMixedIcons: ToolbarItems = [
+  { id: 'copy', icon: <FaRegCopy />, title: 'Fontawesome 6 copy icon' },
 
-  function handleChange({ id, children, title }: ToolbarItemProps) {
-    setState({ id: id as string, children, title });
+  {
+    id: 'paperclip-blueprint',
+    icon: 'paperclip',
+    title: 'BlueprintJS paperclip icon',
+  },
+  {
+    id: 'paperclip-fa',
+    icon: <FaPaperclip />,
+    title: 'Fontawesome paperclip icon',
+  },
+  {
+    id: 'paperclip-hi-2',
+    icon: <HiOutlinePaperClip />,
+    title: 'Heroicons 2 paperclip icon',
+  },
+  {
+    id: 'paperclip-bi',
+    icon: <BiPaperclip />,
+    title: 'Box icons paperclip icon',
+  },
+  {
+    id: 'clipboard-blueprint',
+    icon: 'clipboard',
+    title: 'BlueprintJS paperclip icon',
+  },
+  {
+    id: 'clipboard-fontawesome',
+    icon: <FaClipboard />,
+    title: 'Fontawesome clipboard icon',
+  },
+
+  {
+    id: 'clipboard-hi-2',
+    icon: <HiClipboard />,
+    title: 'Heroicons 2 clipboard icon',
+  },
+  {
+    id: 'clipboard-bi',
+    icon: <BiClipboard />,
+    title: 'Box icons clipboard icon',
+  },
+  {
+    id: 'credit-card-blueprint',
+    icon: 'credit-card',
+    title: 'BlueprintJS credit-card icon',
+  },
+  {
+    id: 'credit-card-fa',
+    icon: <FaCreditCard />,
+    title: 'Fontawesome credit card icon',
+  },
+  {
+    id: 'credit-card-hi2',
+    icon: <HiCreditCard />,
+    title: 'Heroicons credit card icon',
+  },
+  {
+    id: 'credit-card-bi',
+    icon: <BiCreditCard />,
+    title: 'Box icons credit card icon',
+  },
+];
+
+export function Control(props: ToolbarProps & { onClick: () => void }) {
+  const { onClick, ...toolbarProps } = props;
+  const [active, setActive] = useState<string | null>(null);
+  return (
+    <Toolbar {...toolbarProps}>
+      {itemsMixedIcons.map((item) => (
+        <Toolbar.Item
+          key={item.id}
+          id={item.id}
+          title={item.title}
+          onClick={() => {
+            setActive(item.id);
+            onClick();
+          }}
+          icon={item.icon}
+          active={active === item.id}
+        />
+      ))}
+    </Toolbar>
+  );
+}
+
+export function VerticalToolbar() {
+  const [state, setState] = useState(itemsBlueprintIcons[1]);
+  function handleChange({ id, icon, title }: ToolbarItemProps) {
+    setState({ id: id as string, icon, title });
   }
 
   return (
     <div
       style={{
         display: 'flex',
-        height: props.height,
+        height: 200,
       }}
     >
       <div style={{ padding: 5 }}>
         <p>Something on the left</p>
       </div>
-      <Toolbar orientation="vertical">
-        {items.map((item) => (
+      <Toolbar vertical minimal>
+        {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
             id={item.id}
             title={item.title}
             active={state.title === item.title}
             onClick={handleChange}
-          >
-            {item.children}
-          </Toolbar.Item>
+            icon={item.icon}
+          />
         ))}
-        <Toolbar.Item title="Test">
-          <SvgBioDna style={{ width: 16, height: 16, display: 'block' }} />
-        </Toolbar.Item>
+        <Toolbar.Item title="Inbox" icon={<HiMiniInbox />} />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
@@ -64,30 +178,25 @@ export function VerticalToolbar(props: { height: number }) {
   );
 }
 
-VerticalToolbar.args = {
-  height: 200,
-};
-
 export function HorizontalToolbar() {
-  const [state, setState] = useState(items[1]);
+  const [state, setState] = useState(itemsBlueprintIcons[1]);
 
-  function handleChange({ id, children, title }: ToolbarItemProps) {
-    setState({ id: id as string, children, title });
+  function handleChange({ id, icon, title }: ToolbarItemProps) {
+    setState({ id: id as string, icon, title });
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Toolbar orientation="horizontal">
-        {items.map((item) => (
+      <Toolbar>
+        {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
             id={item.id}
             title={item.title}
             active={state.id === item.id}
             onClick={handleChange}
-          >
-            {item.children}
-          </Toolbar.Item>
+            icon={item.icon}
+          />
         ))}
       </Toolbar>
       <div style={{ padding: 5 }}>

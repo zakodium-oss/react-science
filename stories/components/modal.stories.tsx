@@ -1,29 +1,29 @@
 import { useState } from 'react';
 import {
-  FaMeteor,
+  FaArrowsAlt,
   FaBook,
   FaCogs,
-  FaTabletAlt,
   FaGlasses,
-  FaArrowsAlt,
-  FaReact,
-  FaNpm,
+  FaMeteor,
   FaNodeJs,
+  FaNpm,
+  FaReact,
+  FaTabletAlt,
 } from 'react-icons/fa';
 import { StructureEditor } from 'react-ocl/full';
 
 import {
   Accordion,
+  Button,
+  ConfirmModal,
   Header,
   Modal,
   SplitPane,
-  Toolbar,
-  ConfirmModal,
-  Button,
-  Tabs,
   TabItem,
+  Tabs,
+  Toolbar,
   useOnOff,
-} from '../../src/components/index';
+} from '../../src/components';
 import { AccordionDecorator } from '../utils';
 
 export default {
@@ -64,16 +64,10 @@ export function Control(props: {
               flexDirection: 'row',
             }}
           >
-            <Toolbar orientation="vertical">
-              <Toolbar.Item title="react">
-                <FaReact />
-              </Toolbar.Item>
-              <Toolbar.Item title="npm">
-                <FaNpm />
-              </Toolbar.Item>
-              <Toolbar.Item title="nodejs">
-                <FaNodeJs />
-              </Toolbar.Item>
+            <Toolbar vertical minimal>
+              <Toolbar.Item title="react" icon={<FaReact />} />
+              <Toolbar.Item title="npm" icon={<FaNpm />} />
+              <Toolbar.Item title="nodejs" icon={<FaNodeJs />} />
             </Toolbar>
             <p style={{ paddingLeft: 10 }}>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
@@ -287,21 +281,13 @@ function DemoPage(props: { openModal: () => void }) {
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item titleOrientation="horizontal" title="Logo">
-              <FaMeteor />
-            </Toolbar.Item>
+          <Toolbar minimal>
+            <Toolbar.Item title="Logo" icon={<FaMeteor />} />
           </Toolbar>
-          <Toolbar orientation="horizontal">
-            <Toolbar.Item title="User manual">
-              <FaBook />
-            </Toolbar.Item>
-            <Toolbar.Item title="General settings">
-              <FaCogs />
-            </Toolbar.Item>
-            <Toolbar.Item title="Full screen">
-              <FaTabletAlt />
-            </Toolbar.Item>
+          <Toolbar minimal>
+            <Toolbar.Item title="User manual" icon={<FaBook />} />
+            <Toolbar.Item title="General settings" icon={<FaCogs />} />
+            <Toolbar.Item title="Full screen" icon={<FaTabletAlt />} />
           </Toolbar>
         </Header>
       </div>
@@ -312,13 +298,9 @@ function DemoPage(props: { openModal: () => void }) {
         }}
       >
         <div>
-          <Toolbar orientation="vertical">
-            <Toolbar.Item title="Glasses" active>
-              <FaGlasses />
-            </Toolbar.Item>
-            <Toolbar.Item title="Open in large mode">
-              <FaArrowsAlt />
-            </Toolbar.Item>
+          <Toolbar vertical minimal>
+            <Toolbar.Item title="Glasses" active icon={<FaGlasses />} />
+            <Toolbar.Item title="Open in large mode" icon={<FaArrowsAlt />} />
           </Toolbar>
         </div>
         <div
