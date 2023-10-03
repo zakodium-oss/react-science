@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   ButtonProps,
+  Classes,
   Intent,
   Tooltip,
 } from '@blueprintjs/core';
@@ -80,7 +81,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
           <Button
             disabled={disabled}
             className={css`
-              .bp5-icon {
+              .${Classes.ICON} {
                 color: #1c2127;
               }
             `}
