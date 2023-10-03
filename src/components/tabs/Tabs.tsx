@@ -165,6 +165,7 @@ function TabsHorizontal<T extends string = string>(
           flexDirection: 'row',
           borderBottom: '1px solid hsl(0deg, 0%, 80%)',
           overflowX: 'auto',
+          overflowY: 'hidden',
         }}
         css={styles.scroll}
       >
