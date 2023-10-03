@@ -21,9 +21,9 @@ export default {
   title: 'Components / Toolbar',
   component: Toolbar,
   args: {
-    minimal: true,
+    minimal: false,
     vertical: false,
-    intent: 'primary',
+    intent: 'none',
     disabled: false,
   },
   argTypes: {
@@ -187,7 +187,7 @@ export function HorizontalToolbar() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Toolbar>
+      <Toolbar minimal>
         {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
