@@ -82,7 +82,7 @@ export default function MainLayout() {
       }}
     >
       <Header>
-        <Toolbar minimal>
+        <Toolbar>
           <AboutDialogToolbarButton
             icon={<FaMeteor />}
             name="Logo"
@@ -101,7 +101,7 @@ export default function MainLayout() {
             onClick={() => saveHandler()}
           />
         </Toolbar>
-        <Toolbar minimal>
+        <Toolbar>
           <Toolbar.Item title="User manual" icon={<FaBook />} />
           <Toolbar.Item title="General settings" icon="cog" />
           <FullscreenToolbarButton />

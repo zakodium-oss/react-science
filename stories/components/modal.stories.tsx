@@ -64,7 +64,7 @@ export function Control(props: {
               flexDirection: 'row',
             }}
           >
-            <Toolbar vertical minimal>
+            <Toolbar vertical>
               <Toolbar.Item title="react" icon={<FaReact />} />
               <Toolbar.Item title="npm" icon={<FaNpm />} />
               <Toolbar.Item title="nodejs" icon={<FaNodeJs />} />
@@ -281,10 +281,10 @@ function DemoPage(props: { openModal: () => void }) {
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
-          <Toolbar minimal>
+          <Toolbar>
             <Toolbar.Item title="Logo" icon={<FaMeteor />} />
           </Toolbar>
-          <Toolbar minimal>
+          <Toolbar>
             <Toolbar.Item title="User manual" icon={<FaBook />} />
             <Toolbar.Item title="General settings" icon={<FaCogs />} />
             <Toolbar.Item title="Full screen" icon={<FaTabletAlt />} />
@@ -298,7 +298,7 @@ function DemoPage(props: { openModal: () => void }) {
         }}
       >
         <div>
-          <Toolbar vertical minimal>
+          <Toolbar vertical>
             <Toolbar.Item title="Glasses" active icon={<FaGlasses />} />
             <Toolbar.Item title="Open in large mode" icon={<FaArrowsAlt />} />
           </Toolbar>

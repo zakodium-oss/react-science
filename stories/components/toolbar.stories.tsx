@@ -11,7 +11,6 @@ export default {
   title: 'Components / Toolbar',
   component: Toolbar,
   args: {
-    minimal: false,
     vertical: false,
     intent: 'none',
     disabled: false,
@@ -145,7 +144,7 @@ export function VerticalToolbar() {
       <div style={{ padding: 5 }}>
         <p>Something on the left</p>
       </div>
-      <Toolbar vertical minimal>
+      <Toolbar vertical>
         {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
@@ -175,7 +174,7 @@ export function HorizontalToolbar() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Toolbar minimal>
+      <Toolbar>
         {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}

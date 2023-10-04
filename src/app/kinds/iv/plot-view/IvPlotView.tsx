@@ -48,7 +48,7 @@ function VerticalToolbar() {
   }
 
   return (
-    <Toolbar minimal vertical>
+    <Toolbar vertical>
       <Toolbar.Item onClick={onZoomOut} title="Zoom out" icon="zoom-out" />
     </Toolbar>
   );

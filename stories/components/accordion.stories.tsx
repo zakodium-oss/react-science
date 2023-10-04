@@ -28,7 +28,7 @@ export function Fixed() {
           This is the content of the second item
         </Accordion.Item>
         <Accordion.Item title="With Toolbar">
-          <Toolbar minimal>
+          <Toolbar>
             <Toolbar.Item title="Test A" icon="lab-test" />
             <Toolbar.Item title="Test B" icon="airplane" />
           </Toolbar>

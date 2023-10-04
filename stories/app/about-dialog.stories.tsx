@@ -7,7 +7,7 @@ export default {
 
 export function DisplayAboutDialog() {
   return (
-    <Toolbar minimal>
+    <Toolbar>
       <AboutDialogToolbarButton
         icon="airplane"
         name="tooltip"

@@ -19,7 +19,6 @@ import {
 
 export interface ToolbarProps {
   vertical?: boolean;
-  minimal?: boolean;
   large?: boolean;
   intent?: Intent;
   disabled?: boolean;
@@ -43,7 +42,7 @@ export interface ToolbarItemProps {
 const border = '1px solid rgb(247, 247, 247)';
 
 export function Toolbar(props: ToolbarProps) {
-  const { children, disabled, intent, large, vertical, minimal } = props;
+  const { children, disabled, intent, large, vertical } = props;
 
   const contextValue = useMemo(
     () => ({ intent, large, vertical, disabled }),
@@ -52,7 +51,6 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
-        minimal={minimal}
         vertical={vertical}
         large={large}
         style={{ flexWrap: 'wrap', borderRight: vertical ? border : undefined }}
@@ -79,6 +77,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       placement={vertical ? 'right' : 'bottom'}
     >
       <Button
+        minimal
         disabled={disabled}
         css={css`
           .${Classes.ICON} {
