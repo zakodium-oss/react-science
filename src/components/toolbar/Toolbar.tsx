@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import {
   Button,
   ButtonGroup,
@@ -7,7 +8,7 @@ import {
   Intent,
   Tooltip,
 } from '@blueprintjs/core';
-import { ClassNames } from '@emotion/react';
+import { css } from '@emotion/react';
 import { ReactElement, ReactNode, useMemo } from 'react';
 
 import {
@@ -67,40 +68,36 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
 
   const { intent, large, vertical, disabled } = useToolbarContext();
   return (
-    <ClassNames>
-      {({ css }) => (
-        <Tooltip
-          className={css`
-            flex-grow: 0 !important;
-          `}
-          compact={!large}
-          intent={intent}
-          content={title}
-          position="bottom"
-          placement={vertical ? 'right' : 'bottom'}
-        >
-          <Button
-            disabled={disabled}
-            className={css`
-              .${Classes.ICON} {
-                color: ${Colors.DARK_GRAY1};
-              }
-            `}
-            intent={intent}
-            style={{ position: 'relative', fontSize: '1.25em' }}
-            type="button"
-            active={active}
-            icon={icon}
-            onClick={() => {
-              if (onClick) {
-                onClick(props);
-              }
-            }}
-            {...other}
-          />
-        </Tooltip>
-      )}
-    </ClassNames>
+    <Tooltip
+      css={css`
+        flex-grow: 0 !important;
+      `}
+      compact={!large}
+      intent={intent}
+      content={title}
+      position="bottom"
+      placement={vertical ? 'right' : 'bottom'}
+    >
+      <Button
+        disabled={disabled}
+        css={css`
+          .${Classes.ICON} {
+            color: ${Colors.DARK_GRAY1};
+          }
+        `}
+        intent={intent}
+        style={{ position: 'relative', fontSize: '1.25em' }}
+        type="button"
+        active={active}
+        icon={icon}
+        onClick={() => {
+          if (onClick) {
+            onClick(props);
+          }
+        }}
+        {...other}
+      />
+    </Tooltip>
   );
 };
 

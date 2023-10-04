@@ -2,18 +2,8 @@ import { ButtonProps } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
 import { useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
-import {
-  FaClipboard,
-  FaCreditCard,
-  FaPaperclip,
-  FaRegCopy,
-} from 'react-icons/fa6';
-import {
-  HiClipboard,
-  HiCreditCard,
-  HiMiniInbox,
-  HiOutlinePaperClip,
-} from 'react-icons/hi2';
+import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
+import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import { Toolbar, ToolbarItemProps, ToolbarProps } from '../../src/components';
 
@@ -47,15 +37,13 @@ const itemsBlueprintIcons: ToolbarItems = [
     title: 'Redo',
   },
   { id: 'test1', icon: 'undo', title: 'Undo' },
-  { id: 'test2', icon: 'lab-test', title: 'Test 1' },
-  { id: 'test3', icon: 'lab-test', title: 'Test 2' },
-  { id: 'test4', icon: 'lab-test', title: 'Test 3' },
-  { id: 'test5', icon: 'lab-test', title: 'Test 4' },
+  { id: 'test2', icon: 'paperclip', title: 'Attachment' },
+  { id: 'test3', icon: 'help', title: 'Help' },
+  { id: 'test4', icon: 'lab-test', title: 'Lab' },
+  { id: 'test5', icon: 'trash', title: 'Trash' },
 ];
 
 const itemsMixedIcons: ToolbarItems = [
-  { id: 'copy', icon: <FaRegCopy />, title: 'Fontawesome 6 copy icon' },
-
   {
     id: 'paperclip-blueprint',
     icon: 'paperclip',
@@ -168,7 +156,7 @@ export function VerticalToolbar() {
             icon={item.icon}
           />
         ))}
-        <Toolbar.Item title="Inbox" icon={<HiMiniInbox />} />
+        <Toolbar.Item title="Inbox" icon="inbox" />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
