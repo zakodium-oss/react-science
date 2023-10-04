@@ -1,7 +1,5 @@
-import { FaMeteor } from 'react-icons/fa';
-
-import { AboutDialogToolbarButton } from '../../src/app/index';
-import { Toolbar } from '../../src/components/index';
+import { AboutDialogToolbarButton } from '../../src/app';
+import { Toolbar } from '../../src/components';
 
 export default {
   title: 'Components / AboutDialogToolbarButton',
@@ -9,9 +7,9 @@ export default {
 
 export function DisplayAboutDialog() {
   return (
-    <Toolbar orientation="horizontal">
+    <Toolbar>
       <AboutDialogToolbarButton
-        icon={<FaMeteor />}
+        icon="airplane"
         name="tooltip"
         body={
           <p>

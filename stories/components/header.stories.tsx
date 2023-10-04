@@ -1,4 +1,4 @@
-import { Header, Toolbar } from '../../src/components/index';
+import { Header, Toolbar } from '../../src/components';
 
 export default {
   title: 'Components / Header',
@@ -7,15 +7,13 @@ export default {
 export function Basic() {
   return (
     <Header>
-      <Toolbar orientation="horizontal">
-        <Toolbar.Item titleOrientation="horizontal" title="Logo">
-          Logo
-        </Toolbar.Item>
+      <Toolbar>
+        <Toolbar.Item title="Logo" icon="airplane" />
       </Toolbar>
-      <Toolbar orientation="horizontal">
-        <Toolbar.Item title="User manual">A</Toolbar.Item>
-        <Toolbar.Item title="General settings">B</Toolbar.Item>
-        <Toolbar.Item title="Full screen">C</Toolbar.Item>
+      <Toolbar>
+        <Toolbar.Item title="User manual" icon="manual" />
+        <Toolbar.Item title="General settings" icon="cog" />
+        <Toolbar.Item title="Full screen" icon="fullscreen" />
       </Toolbar>
     </Header>
   );

@@ -1,24 +1,37 @@
 /** @jsxImportSource @emotion/react */
-import { css, CSSObject } from '@emotion/react';
+import {
+  Button,
+  ButtonGroup,
+  ButtonProps,
+  Classes,
+  Colors,
+  Intent,
+  Tooltip,
+} from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import {
   ReactElement,
-  ReactFragment,
   ReactNode,
   useLayoutEffect,
+  useMemo,
   useRef,
 } from 'react';
 
-import { ToolbarProvider, useToolbarContext } from './ToolbarContext';
-
-export type ToolbarOrientation = 'vertical' | 'horizontal';
-export type ToolbarItemOrientation = 'vertical' | 'horizontal' | 'auto';
+import {
+  ToolbarContext,
+  toolbarContext,
+  useToolbarContext,
+} from './toolbarContext';
 
 export interface ToolbarProps {
-  orientation: ToolbarOrientation;
+  vertical?: boolean;
+  large?: boolean;
+  intent?: Intent;
+  disabled?: boolean;
   children?:
     | Array<ReactElement<ToolbarItemProps>>
     | ReactElement<ToolbarItemProps>
-    | ReactFragment
+    | Iterable<ReactNode>
     | boolean
     | null;
 }
@@ -26,93 +39,30 @@ export interface ToolbarProps {
 export interface ToolbarItemProps {
   id?: string;
   title: string;
-  children: ReactNode;
-
+  icon: ButtonProps['icon'];
   active?: boolean;
-  titleOrientation?: ToolbarItemOrientation;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
 
-const styles = {
-  toolbar: (orientation: ToolbarOrientation) => {
-    return css([
-      { display: 'flex', flexWrap: 'wrap' },
-      orientation === 'vertical'
-        ? {
-            flexDirection: 'column',
-            minHeight: '100%',
-            borderRight: border,
-          }
-        : {
-            flexDirection: 'row',
-            minWidth: '100%',
-          },
-    ]);
-  },
-  item: (active: boolean) => {
-    return css([
-      active && { backgroundColor: 'rgb(247, 247, 247)', borderRadius: 5 },
-      {
-        width: 30,
-        height: 30,
-        outline: 'none',
-        alignItems: 'center',
-        justifyContent: 'center',
-        display: 'flex',
-        '&:hover + .content': { display: 'flex' },
-      },
-    ]);
-  },
-  tooltip: (
-    orientation: ToolbarOrientation,
-    itemOrientation: ToolbarItemOrientation,
-  ) => {
-    const common: CSSObject = {
-      display: 'none',
-      position: 'absolute',
-      backgroundColor: 'gray',
-      borderRadius: '2px',
-      color: 'white',
-      bottom: '0px',
-      right: '0px',
-      width: 'fit-content',
-      height: '50%',
-      fontSize: '0.875em',
-      whiteSpace: 'nowrap',
-      paddingLeft: '3px',
-      paddingRight: '3px',
-      zIndex: 50,
-    };
-
-    if (itemOrientation === 'auto') {
-      return css([
-        common,
-        orientation === 'vertical' && { margin: 'auto', marginLeft: 5 },
-        orientation === 'horizontal'
-          ? { top: '100%' }
-          : { top: '0px', left: '100%' },
-      ]);
-    } else {
-      return css([
-        common,
-        itemOrientation === 'horizontal' && { margin: 'auto', marginLeft: 5 },
-        itemOrientation === 'vertical'
-          ? { top: '100%' }
-          : { top: '0px', left: '100%' },
-      ]);
-    }
-  },
-};
-
 export function Toolbar(props: ToolbarProps) {
-  const { children, orientation } = props;
+  const { children, disabled, intent, large, vertical } = props;
+
+  const contextValue = useMemo(
+    () => ({ intent, large, vertical, disabled }),
+    [intent, large, vertical, disabled],
+  );
 
   const ref = useRef<HTMLDivElement>(null);
+
+  // Work around wrong width on vertical flex when wrapping
+  // In Chrome: recently fixed (https://bugs.chromium.org/p/chromium/issues/detail?id=507397)
+  // In Firefox: work-around needed (https://bugzilla.mozilla.org/show_bug.cgi?id=995020)
+  // In Safari: work-around needed
   useLayoutEffect(() => {
-    if (orientation === 'horizontal') {
+    if (!vertical) {
       return;
     }
 
@@ -136,57 +86,66 @@ export function Toolbar(props: ToolbarProps) {
       observer.observe(element);
       return () => observer.unobserve(element);
     }
-  }, [orientation]);
-
+  }, [vertical]);
   return (
-    <div css={styles.toolbar(orientation)} ref={ref}>
-      <ToolbarProvider orientation={orientation}>{children}</ToolbarProvider>
-    </div>
+    <ToolbarProvider value={contextValue}>
+      <ButtonGroup
+        ref={ref}
+        vertical={vertical}
+        large={large}
+        style={{ flexWrap: 'wrap', borderRight: vertical ? border : undefined }}
+      >
+        {children}
+      </ButtonGroup>
+    </ToolbarProvider>
   );
 }
 
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
-  const orientation = useToolbarContext();
-  const {
-    active = false,
-    children,
-    onClick,
-    title,
-    titleOrientation = 'auto',
-    id,
-    ...other
-  } = props;
+  const { active = false, icon, onClick, title, id, ...other } = props;
 
+  const { intent, large, vertical, disabled } = useToolbarContext();
   return (
-    <div
-      style={{ position: 'relative', padding: 4, fontSize: '1.25em' }}
-      {...other}
+    <Tooltip
+      css={css`
+        flex-grow: 0 !important;
+      `}
+      compact={!large}
+      intent={intent}
+      content={title}
+      placement={vertical ? 'right' : 'bottom'}
     >
-      <button
+      <Button
+        minimal
+        disabled={disabled}
+        css={css`
+          .${Classes.ICON} {
+            color: ${Colors.DARK_GRAY3};
+          }
+        `}
+        intent={intent}
+        style={{ position: 'relative', fontSize: '1.25em' }}
         type="button"
-        css={styles.item(active)}
+        active={active}
+        icon={icon}
         onClick={() => {
           if (onClick) {
             onClick(props);
           }
         }}
-      >
-        {children}
-      </button>
-      <div
-        className="content"
-        css={styles.tooltip(orientation, titleOrientation)}
-      >
-        <span
-          style={{
-            display: 'flex',
-            margin: 'auto',
-            justifyContent: 'center',
-          }}
-        >
-          {title}
-        </span>
-      </div>
-    </div>
+        {...other}
+      />
+    </Tooltip>
   );
 };
+
+function ToolbarProvider(props: {
+  value: ToolbarContext;
+  children: ReactNode;
+}) {
+  return (
+    <toolbarContext.Provider value={props.value}>
+      {props.children}
+    </toolbarContext.Provider>
+  );
+}

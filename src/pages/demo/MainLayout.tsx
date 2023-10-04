@@ -1,21 +1,21 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { FaBook, FaCogs, FaMeteor, FaSave } from 'react-icons/fa';
+import { FaBook, FaMeteor } from 'react-icons/fa';
 import { useKbsGlobal } from 'react-kbs';
 
 import {
-  MeasurementsPanelAccordion,
-  ExplorerPlotView,
-  useLoadFileCollectionFromHash,
-  useDropFiles,
-  MeasurementInfoPanelAccordion,
-  MeasurementConfigPanelAccordion,
   AboutDialogToolbarButton,
-} from '../../app/index';
+  ExplorerPlotView,
+  MeasurementConfigPanelAccordion,
+  MeasurementInfoPanelAccordion,
+  MeasurementsPanelAccordion,
+  useDropFiles,
+  useLoadFileCollectionFromHash,
+} from '../../app';
 import {
   download,
   getExistingMeasurementKinds,
   useAppState,
-} from '../../app-data/index';
+} from '../../app-data';
 import {
   Accordion,
   DropZoneContainer,
@@ -24,7 +24,7 @@ import {
   Header,
   SplitPane,
   Toolbar,
-} from '../../components/index';
+} from '../../components';
 
 import { loadFiles } from './helpers/loadFiles';
 
@@ -82,7 +82,7 @@ export default function MainLayout() {
       }}
     >
       <Header>
-        <Toolbar orientation="horizontal">
+        <Toolbar>
           <AboutDialogToolbarButton
             icon={<FaMeteor />}
             name="Logo"
@@ -96,20 +96,14 @@ export default function MainLayout() {
             }
           />
           <Toolbar.Item
-            titleOrientation="horizontal"
             title="Save as ium"
+            icon="floppy-disk"
             onClick={() => saveHandler()}
-          >
-            <FaSave />
-          </Toolbar.Item>
+          />
         </Toolbar>
-        <Toolbar orientation="horizontal">
-          <Toolbar.Item title="User manual">
-            <FaBook />
-          </Toolbar.Item>
-          <Toolbar.Item title="General settings">
-            <FaCogs />
-          </Toolbar.Item>
+        <Toolbar>
+          <Toolbar.Item title="User manual" icon={<FaBook />} />
+          <Toolbar.Item title="General settings" icon="cog" />
           <FullscreenToolbarButton />
         </Toolbar>
       </Header>

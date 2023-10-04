@@ -1,14 +1,10 @@
-import { FaExpand } from 'react-icons/fa';
-
-import { Toolbar } from '../toolbar/Toolbar';
+import { Toolbar } from '../toolbar';
 
 import { useFullscreen } from './FullscreenContext';
 
 export function FullscreenToolbarButton() {
   const { toggle } = useFullscreen();
   return (
-    <Toolbar.Item title="Full screen" onClick={toggle}>
-      <FaExpand />
-    </Toolbar.Item>
+    <Toolbar.Item icon="fullscreen" title="Full screen" onClick={toggle} />
   );
 }
