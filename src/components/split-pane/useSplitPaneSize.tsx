@@ -26,9 +26,9 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
     onResize,
   } = options;
 
-  function mouseDownCallback() {
+  function downCallback() {
     let lastSize: [number, SplitPaneType] | null = null;
-    function onMouseMove(event: MouseEvent) {
+    function moveCallback(event: PointerEvent) {
       if (!splitterRef.current) return;
       const { clientX, clientY } = event;
       const parentDiv = splitterRef.current.parentElement as HTMLDivElement;
@@ -69,20 +69,20 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
       }
     }
 
-    function mouseUpCallback() {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', mouseUpCallback);
+    function upCallback() {
+      window.removeEventListener('pointermove', moveCallback);
+      window.removeEventListener('pointerup', upCallback);
       if (lastSize && onResize) {
         onResize(`${lastSize[0]}${lastSize[1]}`);
       }
     }
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', mouseUpCallback);
+    window.addEventListener('pointermove', moveCallback);
+    window.addEventListener('pointerup', upCallback);
   }
 
   return {
-    onMouseDown: mouseDownCallback,
+    onPointerDown: downCallback,
   };
 }
 
