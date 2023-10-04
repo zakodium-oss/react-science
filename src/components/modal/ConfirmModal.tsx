@@ -24,7 +24,9 @@ interface ConfirmModalProps {
 
 const ConfirmModalDialog = styled.dialog`
   background-color: transparent;
-
+  :focus {
+    outline: none;
+  }
   ::backdrop {
     background-color: rgba(113, 113, 122, 0.75);
   }
