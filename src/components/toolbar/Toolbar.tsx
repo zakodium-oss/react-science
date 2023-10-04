@@ -9,7 +9,13 @@ import {
   Tooltip,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { ReactElement, ReactNode, useMemo } from 'react';
+import {
+  ReactElement,
+  ReactNode,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
 import {
   ToolbarContext,
@@ -48,9 +54,43 @@ export function Toolbar(props: ToolbarProps) {
     () => ({ intent, large, vertical, disabled }),
     [intent, large, vertical, disabled],
   );
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Work around wrong width on vertical flex when wrapping
+  // In Chrome: recently fixed (https://bugs.chromium.org/p/chromium/issues/detail?id=507397)
+  // In Firefox: work-around needed (https://bugzilla.mozilla.org/show_bug.cgi?id=995020)
+  // In Safari: work-around needed
+  useLayoutEffect(() => {
+    if (!vertical) {
+      return;
+    }
+
+    function update() {
+      const lastElement = ref.current?.lastElementChild;
+      if (!lastElement) {
+        return;
+      }
+      ref.current.style.width = 'initial';
+      const divRect = ref.current.getBoundingClientRect();
+      const lastElemRect = lastElement.getBoundingClientRect();
+      const width = `${lastElemRect.right - divRect.left}px`;
+      if (ref.current.style.width !== width) {
+        ref.current.style.width = width;
+      }
+    }
+
+    const element = ref.current;
+    if (element) {
+      const observer = new ResizeObserver(update);
+      observer.observe(element);
+      return () => observer.unobserve(element);
+    }
+  }, [vertical]);
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
+        ref={ref}
         vertical={vertical}
         large={large}
         style={{ flexWrap: 'wrap', borderRight: vertical ? border : undefined }}
@@ -73,7 +113,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       compact={!large}
       intent={intent}
       content={title}
-      position="bottom"
       placement={vertical ? 'right' : 'bottom'}
     >
       <Button
