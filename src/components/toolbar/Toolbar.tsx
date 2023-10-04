@@ -120,7 +120,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         disabled={disabled}
         css={css`
           .${Classes.ICON} {
-            color: ${Colors.DARK_GRAY1};
+            color: ${Colors.DARK_GRAY3};
           }
         `}
         intent={intent}
