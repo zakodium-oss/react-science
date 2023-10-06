@@ -54,23 +54,37 @@ export function InfoPanel(props: InfoPanelProps) {
     tableStyle,
   } = props;
   function viewData(data: Record<string, string | number | object>) {
-    return Object.keys(data)
-      .map((key) => {
-        const value = data[key];
-        if (
-          !key.toLowerCase().includes(search.toLowerCase()) &&
-          !valueSearch(value, search)
-        ) {
-          return null;
-        }
-        return (
-          <Table.Row key={key}>
-            <ValueRenderers.Text value={key} />
-            {valueCell(value)}
-          </Table.Row>
-        );
-      })
-      .filter((row) => row !== null);
+    const exactMatch: Array<[string, string | number | object]> = [];
+    const startsWith: Array<[string, string | number | object]> = [];
+    const includes: Array<[string, string | number | object]> = [];
+    const valueContains: Array<[string, string | number | object]> = [];
+
+    for (const [key, value] of Object.entries(data)) {
+      if (key === search) {
+        exactMatch.push([key, value]);
+        continue;
+      }
+      if (key.startsWith(search)) {
+        startsWith.push([key, value]);
+        continue;
+      }
+      if (key.includes(search)) {
+        includes.push([key, value]);
+        continue;
+      }
+      if (valueSearch(value, search)) {
+        valueContains.push([key, value]);
+        continue;
+      }
+    }
+    return [...exactMatch, ...startsWith, ...includes, ...valueContains].map(
+      ([key, value]) => (
+        <Table.Row key={key}>
+          <ValueRenderers.Text value={key} />
+          {valueCell(value)}
+        </Table.Row>
+      ),
+    );
   }
   return (
     <div css={style.container}>
@@ -139,11 +153,11 @@ function valueCell(value: number | string | object) {
 function valueSearch(value: number | string | object, search: string): boolean {
   switch (typeof value) {
     case 'number':
-      return String(value).includes(search.toLowerCase());
+      return String(value).includes(search);
     case 'object':
-      return JSON.stringify(value).toLowerCase().includes(search.toLowerCase());
+      return JSON.stringify(value).includes(search);
     case 'string':
-      return value.toLowerCase().includes(search.toLowerCase());
+      return value.includes(search);
     default:
       return false;
   }

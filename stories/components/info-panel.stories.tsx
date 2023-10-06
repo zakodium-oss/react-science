@@ -8,8 +8,11 @@ const data: InfoPanelData[] = [
   {
     description: 'Custom information',
     data: {
+      prop5: 'field5',
+      __field4__: 'value4',
       field1: 'value1',
       field2: 'value2',
+      fie: 'value3',
     },
   },
   {
