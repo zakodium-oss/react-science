@@ -7,6 +7,8 @@ interface NumberProps extends ValueRenderersProps {
 
 export function Number({ value, fixed, ...other }: NumberProps) {
   return (
-    <div {...other}>{value ? (fixed ? value.toFixed(fixed) : value) : ''}</div>
+    <div {...other}>
+      {value !== undefined ? (fixed ? value.toFixed(fixed) : value) : ''}
+    </div>
   );
 }

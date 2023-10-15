@@ -11,7 +11,7 @@ import { Table } from '../table/Table';
 
 export interface InfoPanelData {
   description: string;
-  data: Record<string, string | number | object | any>;
+  data: Record<string, string | number | object | boolean | any>;
 }
 
 interface InfoPanelProps {
@@ -130,8 +130,10 @@ export function InfoPanel(props: InfoPanelProps) {
  * @param value - ValueRenderers value.
  * @returns - ValueRenderers component.
  */
-function valueCell(value: number | string | object) {
+function valueCell(value: number | string | object | boolean) {
   switch (typeof value) {
+    case 'boolean':
+      return <ValueRenderers.Boolean value={value} />;
     case 'number':
       return <ValueRenderers.Number value={value} />;
     case 'object':
@@ -150,15 +152,20 @@ function valueCell(value: number | string | object) {
  * @param search - Value to search for.
  * @returns - If search exist in value
  */
-function valueSearch(value: number | string | object, search: string): boolean {
+function valueSearch(
+  value: number | string | object | boolean,
+  search: string,
+): boolean {
   switch (typeof value) {
     case 'number':
+      return String(value).includes(search);
+    case 'boolean':
       return String(value).includes(search);
     case 'object':
       return JSON.stringify(value).includes(search);
     case 'string':
       return value.includes(search);
     default:
-      return false;
+      return true;
   }
 }
