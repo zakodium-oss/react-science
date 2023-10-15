@@ -20,6 +20,8 @@ const data: InfoPanelData[] = [
     data: {
       frequency: '400 MHz',
       solvent: 'CDCl3',
+      isFi: false,
+      temperature: 0,
     },
   },
 ];
