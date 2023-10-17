@@ -1,5 +1,4 @@
 import type { FileCollection } from 'filelist-utils';
-// @ts-expect-error netcdfjs has no types at the moment.
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../components/index';
@@ -17,9 +16,7 @@ export async function cdfLoader(
   for (const file of fileCollection) {
     if (/\.cdf$/i.test(file.name)) {
       try {
-        const reader = new NetCDFReader(await file.arrayBuffer(), {
-          meta: true,
-        });
+        const reader = new NetCDFReader(await file.arrayBuffer());
 
         if (
           reader.dataVariableExists('mass_values') &&
@@ -28,7 +25,9 @@ export async function cdfLoader(
           kind = 'gclcms';
         } else if (
           reader.dataVariableExists('ordinate_values') &&
-          reader.getAttribute('detector_name')?.match(/dad|tic/i)
+          (reader.getAttribute('detector_name') as string | null)?.match(
+            /dad|tic/i,
+          )
         ) {
           kind = 'gclc';
         } else {
@@ -46,8 +45,9 @@ export async function cdfLoader(
         const newMeasurement = {
           ...getMeasurementInfoFromFile(
             file,
-            reader.getAttribute('experiment_title'),
+            reader.getAttribute('experiment_title') as string,
           ),
+          // @ts-expect-error meta is not defined in reader.
           meta: reader.header.meta,
           data:
             kind === 'gclcms'
@@ -82,9 +82,11 @@ function chromatogramWithMassSpectra(
   reader: NetCDFReader,
 ): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
-  const pointCount = reader.getDataVariable('point_count');
-  const massValues = reader.getDataVariable('mass_values');
-  const intensityValues = reader.getDataVariable('intensity_values');
+  const pointCount = reader.getDataVariable('point_count') as number[];
+  const massValues = reader.getDataVariable('mass_values') as number[];
+  const intensityValues = reader.getDataVariable(
+    'intensity_values',
+  ) as number[];
   const times = reader.getDataVariable('scan_acquisition_time');
   const tics = reader.getDataVariable('total_intensity');
 
@@ -130,9 +132,9 @@ function chromatogramWithMassSpectra(
 function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
   // Taken from: https://github.com/cheminfo/netcdf-gcms
   const data: MeasurementBase['data'] = [];
-  const intensities: number[] = reader.getDataVariable('ordinate_values');
+  const intensities = reader.getDataVariable('ordinate_values') as number[];
   const numberPoints = intensities.length;
-  const detector: string = reader.getAttribute('detector_name');
+  const detector = reader.getAttribute('detector_name') as string;
   let channel: string;
   if (/dad/i.test(detector)) {
     const uvNumber = detector.match(/.*Sig=(?<uvNumber>\d+).*/)?.groups
@@ -143,13 +145,15 @@ function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
   } else {
     channel = 'unknown';
   }
-  const delayTime: number = reader.getDataVariable('actual_delay_time')[0];
+  const delayTime = reader.getDataVariable('actual_delay_time')[0] as number;
   const runtimeLength: number = reader.getDataVariable(
     'actual_run_time_length',
-  )[0];
+  )[0] as number;
   let samplingInterval;
   if (reader.dataVariableExists('actual_sampling_interval')) {
-    samplingInterval = reader.getDataVariable('actual_sampling_interval')[0];
+    samplingInterval = reader.getDataVariable(
+      'actual_sampling_interval',
+    )[0] as number;
 
     if (
       Math.abs(delayTime + samplingInterval * numberPoints - runtimeLength) > 3
@@ -190,10 +194,12 @@ function chromatogram(reader: NetCDFReader): MeasurementBase['data'] {
 
 function addMeta(
   reader: NetCDFReader,
-  globalAttributes: NetCDFReader.globalAttributes,
+  globalAttributes: NetCDFReader['globalAttributes'],
 ) {
+  // @ts-expect-error meta is not defined in reader.
   reader.header.meta = {};
   for (const item of globalAttributes) {
+    // @ts-expect-error meta is not defined in reader.
     reader.header.meta[item.name] = item.value;
   }
 }
