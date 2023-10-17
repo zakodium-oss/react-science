@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.28.0](https://github.com/zakodium-oss/react-science/compare/v0.27.0...v0.28.0) (2023-10-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* the api of the `Toolbar` component has changed. To migrate, remove `orientation='horizontal'` or replace `orientation='vertical'` with `vertical={true}`.  The api of the `Toolbar.Item` has changed. To migrate, set the icon in the `icon` prop instead of passing it in children. It is recommended to use blueprint icons by passing one of the available string constants to `icon`.
+
+### Features
+
+* sort info-panel search results ([#564](https://github.com/zakodium-oss/react-science/issues/564)) ([cb14d47](https://github.com/zakodium-oss/react-science/commit/cb14d4778412e0cc86216b4e29855f127d985ba7))
+
+
+### Bug Fixes
+
+* confirm modal outline ([6e3ba05](https://github.com/zakodium-oss/react-science/commit/6e3ba05c256ebb755885f5ecfb913ee8b0df421b))
+* display boolean and zero values correctly in value renderers ([#566](https://github.com/zakodium-oss/react-science/issues/566)) ([10c65fe](https://github.com/zakodium-oss/react-science/commit/10c65fe0591aa4913ab525df5f07a731f5ef10b6))
+* replace mouse event with pointer event to support touch devices ([#557](https://github.com/zakodium-oss/react-science/issues/557)) ([db36620](https://github.com/zakodium-oss/react-science/commit/db366208ec8a85fe7060a0acd0011eb637113431))
+
+
+### Code Refactoring
+
+* migrate Toolbar to blueprintjs components ([#559](https://github.com/zakodium-oss/react-science/issues/559)) ([d258b69](https://github.com/zakodium-oss/react-science/commit/d258b6938dc748f00a944e59b5123988cddb88f4))
+
 ## [0.27.0](https://github.com/zakodium-oss/react-science/compare/v0.26.2...v0.27.0) (2023-09-28)
 
 
