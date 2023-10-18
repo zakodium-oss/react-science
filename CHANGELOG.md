@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.1](https://github.com/zakodium-oss/react-science/compare/v0.28.0...v0.28.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* remove commonjs build and fix esm build ([#568](https://github.com/zakodium-oss/react-science/issues/568)) ([c353399](https://github.com/zakodium-oss/react-science/commit/c35339965dc3c4391f06ef81ffdc9c104e0594f8))
+
 ## [0.28.0](https://github.com/zakodium-oss/react-science/compare/v0.27.0...v0.28.0) (2023-10-17)
 
 
