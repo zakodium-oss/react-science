@@ -27,18 +27,10 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
   const { onClose, onSave } = props;
   return (
     <div css={styles.toolbar}>
-      <Button
-        onClick={onClose}
-        color={{ basic: '#ca0000', hover: '#ca0000' }}
-        backgroundColor={{ basic: 'white', hover: 'white' }}
-      >
+      <Button onClick={onClose} intent="danger">
         <FaTimes />
       </Button>
-      <Button
-        onClick={onSave}
-        color={{ basic: 'green', hover: 'green' }}
-        backgroundColor={{ basic: 'white', hover: 'white' }}
-      >
+      <Button onClick={onSave} intent="success">
         <FaCheck />
       </Button>
     </div>

@@ -84,16 +84,7 @@ export function Control(props: {
               flexDirection: 'row-reverse',
             }}
           >
-            <Button
-              onClick={onSave}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
-              Save
-            </Button>
+            <Button onClick={onSave}>Save</Button>
           </div>
         </Modal.Footer>
       </Modal>
@@ -233,16 +224,7 @@ export function WithComplexContents({
               flex: '1 1 0%',
             }}
           >
-            <Button
-              onClick={onSave}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
-              Save
-            </Button>
+            <Button onClick={onSave}>Save</Button>
           </div>
         </Modal.Footer>
       </Modal>
@@ -311,16 +293,7 @@ function DemoPage(props: { openModal: () => void }) {
         >
           <SplitPane size="35%">
             <div style={{ padding: 5 }}>
-              <Button
-                onClick={props.openModal}
-                backgroundColor={{
-                  basic: 'hsla(243deg, 75%, 58%, 1)',
-                  hover: 'hsla(245deg, 58%, 50%, 1)',
-                }}
-                color={{ basic: 'white' }}
-              >
-                Open
-              </Button>
+              <Button onClick={props.openModal}>Open</Button>
             </div>
             <div
               style={{

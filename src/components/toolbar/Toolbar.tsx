@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import {
-  Button,
   ButtonGroup,
   ButtonProps,
   Classes,
@@ -16,6 +15,8 @@ import {
   useMemo,
   useRef,
 } from 'react';
+
+import { Button } from '../index';
 
 import {
   ToolbarContext,

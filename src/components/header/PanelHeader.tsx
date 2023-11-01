@@ -62,11 +62,7 @@ export function PanelHeader({
       <div css={styles.leftContainer}>{children}</div>
       <p ref={labelRef} css={styles.counterLabel} />
       {onClickSettings && (
-        <Button
-          onClick={onClickSettings}
-          color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
+        <Button onClick={onClickSettings}>
           <FaCog />
         </Button>
       )}
