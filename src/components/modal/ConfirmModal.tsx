@@ -118,8 +118,12 @@ export function ConfirmModal(props: ConfirmModalProps) {
               </ConfirmModalChildrenRoot>
 
               <ConfirmModalFooter>
-                <Button onClick={onConfirm}>{saveText}</Button>
-                <Button onClick={onCancel}>{cancelText}</Button>
+                <Button intent="primary" onClick={onConfirm}>
+                  {saveText}
+                </Button>
+                <Button intent="danger" onClick={onCancel}>
+                  {cancelText}
+                </Button>
               </ConfirmModalFooter>
             </ConfirmModalContents>
           </RootLayoutProvider>

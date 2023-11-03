@@ -1,5 +1,3 @@
-import { FaRegTrashAlt, FaFilter, FaPlus } from 'react-icons/fa';
-
 import {
   PanelHeader,
   Accordion,
@@ -21,15 +19,9 @@ export function Basic() {
       }}
     >
       <PanelHeader total={3} onClickSettings={() => {}}>
-        <Button intent="danger">
-          <FaRegTrashAlt />
-        </Button>
-        <Button>
-          <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
-        <Button>
-          <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
+        <Button minimal intent="danger" icon="trash" />
+        <Button minimal icon="filter" />
+        <Button minimal icon="plus" />
       </PanelHeader>
     </div>
   );
@@ -43,15 +35,9 @@ export function WithModal() {
       }}
     >
       <PanelHeader total={5} current={3} onClickSettings={open}>
-        <Button intent="danger">
-          <FaRegTrashAlt />
-        </Button>
-        <Button>
-          <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
-        <Button>
-          <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
+        <Button minimal intent="danger" icon="trash" />
+        <Button minimal icon="filter" />
+        <Button minimal icon="plus" />
       </PanelHeader>
       <Modal isOpen={isOpen} onRequestClose={close} width={400}>
         <Modal.Header>Settings</Modal.Header>
@@ -70,7 +56,9 @@ export function WithModal() {
               flexDirection: 'row-reverse',
             }}
           >
-            <Button onClick={close}>Save</Button>
+            <Button intent="primary" onClick={close}>
+              Save
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>
@@ -87,23 +75,15 @@ export function WithAccordion() {
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
           <PanelHeader total={20} onClickSettings={() => {}}>
-            <Button intent="danger">
-              <FaRegTrashAlt />
-            </Button>
-            <Button>
-              <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-            </Button>
-            <Button>
-              <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
-            </Button>
+            <Button minimal intent="danger" icon="trash" />
+            <Button minimal icon="filter" />
+            <Button minimal icon="plus" />
           </PanelHeader>
           This is the first content
         </Accordion.Item>
         <Accordion.Item title="Second Item">
           <PanelHeader current={2} total={3} onClickSettings={() => {}}>
-            <Button>
-              <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-            </Button>
+            <Button minimal icon="filter" />
           </PanelHeader>
           This is the content of the second item
         </Accordion.Item>

@@ -62,7 +62,7 @@ export function PanelHeader({
       <div css={styles.leftContainer}>{children}</div>
       <p ref={labelRef} css={styles.counterLabel} />
       {onClickSettings && (
-        <Button onClick={onClickSettings}>
+        <Button minimal onClick={onClickSettings}>
           <FaCog />
         </Button>
       )}
