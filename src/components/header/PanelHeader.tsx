@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { ReactNode, useEffect, useRef } from 'react';
-import { FaCog } from 'react-icons/fa';
 
 import { Button } from '../button/Button';
 
@@ -62,9 +61,7 @@ export function PanelHeader({
       <div css={styles.leftContainer}>{children}</div>
       <p ref={labelRef} css={styles.counterLabel} />
       {onClickSettings && (
-        <Button minimal onClick={onClickSettings}>
-          <FaCog />
-        </Button>
+        <Button color="black" minimal onClick={onClickSettings} icon="cog" />
       )}
     </div>
   );

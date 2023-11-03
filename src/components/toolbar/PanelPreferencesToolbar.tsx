@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FaCheck } from 'react-icons/fa';
 
 import { Button } from '../button/Button';
 
@@ -28,9 +27,7 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
   return (
     <div css={styles.toolbar}>
       <Button minimal onClick={onClose} intent="danger" icon="cross" />
-      <Button minimal onClick={onSave} intent="success">
-        <FaCheck />
-      </Button>
+      <Button minimal onClick={onSave} intent="success" icon="tick" />
     </div>
   );
 }
