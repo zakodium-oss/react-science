@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import {
   Button as BlueprintButton,
   AnchorButton as BlueprintAnchorButton,
@@ -24,7 +23,7 @@ export function Button(props: ButtonProps) {
     ? BlueprintAnchorButton
     : BlueprintButton;
   return (
-    <Tooltip {...tooltipProps}>
+    <Tooltip fill={tooltipProps?.fill || buttonProps.fill} {...tooltipProps}>
       <InnerButton {...buttonProps}>{children}</InnerButton>
     </Tooltip>
   );
