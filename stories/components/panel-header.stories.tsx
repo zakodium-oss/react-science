@@ -1,5 +1,3 @@
-import { FaRegTrashAlt, FaFilter, FaPlus } from 'react-icons/fa';
-
 import {
   PanelHeader,
   Accordion,
@@ -21,24 +19,9 @@ export function Basic() {
       }}
     >
       <PanelHeader total={3} onClickSettings={() => {}}>
-        <Button
-          color={{ basic: 'red', hover: 'red' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaRegTrashAlt />
-        </Button>
-        <Button
-          color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
-        <Button
-          color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
+        <Button minimal intent="danger" icon="trash" />
+        <Button minimal icon="filter" />
+        <Button minimal icon="plus" />
       </PanelHeader>
     </div>
   );
@@ -52,24 +35,9 @@ export function WithModal() {
       }}
     >
       <PanelHeader total={5} current={3} onClickSettings={open}>
-        <Button
-          color={{ basic: 'red', hover: 'red' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaRegTrashAlt />
-        </Button>
-        <Button
-          color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
-        <Button
-          color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
-        </Button>
+        <Button minimal intent="danger" icon="trash" />
+        <Button minimal icon="filter" />
+        <Button minimal icon="plus" />
       </PanelHeader>
       <Modal isOpen={isOpen} onRequestClose={close} width={400}>
         <Modal.Header>Settings</Modal.Header>
@@ -88,14 +56,7 @@ export function WithModal() {
               flexDirection: 'row-reverse',
             }}
           >
-            <Button
-              onClick={close}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
+            <Button intent="primary" onClick={close}>
               Save
             </Button>
           </div>
@@ -114,35 +75,15 @@ export function WithAccordion() {
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
           <PanelHeader total={20} onClickSettings={() => {}}>
-            <Button
-              color={{ basic: 'red', hover: 'red' }}
-              backgroundColor={{ basic: 'white', hover: 'white' }}
-            >
-              <FaRegTrashAlt />
-            </Button>
-            <Button
-              color={{ basic: 'black', hover: 'black' }}
-              backgroundColor={{ basic: 'white', hover: 'white' }}
-            >
-              <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-            </Button>
-            <Button
-              color={{ basic: 'black', hover: 'black' }}
-              backgroundColor={{ basic: 'white', hover: 'white' }}
-            >
-              <FaPlus style={{ pointerEvents: 'none', fontSize: '12px' }} />
-            </Button>
+            <Button minimal intent="danger" icon="trash" />
+            <Button minimal icon="filter" />
+            <Button minimal icon="plus" />
           </PanelHeader>
           This is the first content
         </Accordion.Item>
         <Accordion.Item title="Second Item">
           <PanelHeader current={2} total={3} onClickSettings={() => {}}>
-            <Button
-              color={{ basic: 'black', hover: 'black' }}
-              backgroundColor={{ basic: 'white', hover: 'white' }}
-            >
-              <FaFilter style={{ pointerEvents: 'none', fontSize: '12px' }} />
-            </Button>
+            <Button minimal icon="filter" />
           </PanelHeader>
           This is the content of the second item
         </Accordion.Item>

@@ -118,24 +118,10 @@ export function ConfirmModal(props: ConfirmModalProps) {
               </ConfirmModalChildrenRoot>
 
               <ConfirmModalFooter>
-                <Button
-                  onClick={onConfirm}
-                  backgroundColor={{
-                    basic: 'hsla(243deg, 75%, 58%, 1)',
-                    hover: 'hsla(245deg, 58%, 50%, 1)',
-                  }}
-                  color={{ basic: 'white' }}
-                >
+                <Button intent="primary" onClick={onConfirm}>
                   {saveText}
                 </Button>
-                <Button
-                  onClick={onCancel}
-                  backgroundColor={{
-                    basic: 'hsla(0deg, 72%, 50%, 1)',
-                    hover: 'hsla(0deg, 73%, 42%, 1)',
-                  }}
-                  color={{ basic: 'white' }}
-                >
+                <Button intent="danger" onClick={onCancel}>
                   {cancelText}
                 </Button>
               </ConfirmModalFooter>

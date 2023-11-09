@@ -1,12 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import {
-  Button,
   ButtonGroup,
   ButtonProps,
   Classes,
   Colors,
   Intent,
-  Tooltip,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
@@ -16,6 +14,8 @@ import {
   useMemo,
   useRef,
 } from 'react';
+
+import { Button } from '../index';
 
 import {
   ToolbarContext,
@@ -106,36 +106,32 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
 
   const { intent, large, vertical, disabled } = useToolbarContext();
   return (
-    <Tooltip
+    <Button
+      minimal
+      disabled={disabled}
       css={css`
-        flex-grow: 0 !important;
+        .${Classes.ICON} {
+          color: ${Colors.DARK_GRAY3};
+        }
       `}
-      compact={!large}
       intent={intent}
-      content={title}
-      placement={vertical ? 'right' : 'bottom'}
-    >
-      <Button
-        minimal
-        disabled={disabled}
-        css={css`
-          .${Classes.ICON} {
-            color: ${Colors.DARK_GRAY3};
-          }
-        `}
-        intent={intent}
-        style={{ position: 'relative', fontSize: '1.25em' }}
-        type="button"
-        active={active}
-        icon={icon}
-        onClick={() => {
-          if (onClick) {
-            onClick(props);
-          }
-        }}
-        {...other}
-      />
-    </Tooltip>
+      style={{ position: 'relative', fontSize: '1.25em' }}
+      type="button"
+      active={active}
+      icon={icon}
+      onClick={() => {
+        if (onClick) {
+          onClick(props);
+        }
+      }}
+      tooltipProps={{
+        content: title,
+        placement: vertical ? 'right' : 'bottom',
+        intent,
+        compact: !large,
+      }}
+      {...other}
+    />
   );
 };
 
