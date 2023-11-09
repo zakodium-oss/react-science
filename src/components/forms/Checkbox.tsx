@@ -41,8 +41,8 @@ export function Checkbox(props: CheckboxProps) {
           backgroundColor: disabled
             ? 'rgba(0, 0, 0, 0.04)'
             : checked
-            ? enabledColor
-            : 'white',
+              ? enabledColor
+              : 'white',
           borderWidth: '1px',
           borderColor: checked && !disabled ? enabledColor : disabledColor,
           borderRadius: '4px',

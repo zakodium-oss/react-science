@@ -17,8 +17,8 @@ export const LabelStyled = styled.label<StyledProps>`
         ? '2px 9px 4px 9px'
         : '2px 9px'
       : props.hasTrailing
-      ? '1px 7px 1px 7px'
-      : '1px 7px'};
+        ? '1px 7px 1px 7px'
+        : '1px 7px'};
 
   font-size: ${(props) => (props.variant === 'small' ? '1em' : '1.125em')};
   line-height: '17px';
