@@ -28,16 +28,16 @@ export function Control() {
   const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
     <ExampleGroup style={{ display: 'inline-block' }}>
-      <Field label="Name" name="name" required>
+      <Field label="Name" labelFor="name" required>
         <Input type="text" maxLength={10} />
       </Field>
-      <Field label="Email" name="email">
+      <Field label="Email" labelFor="email">
         <Input type="email" />
       </Field>
-      <Field label="date of birth" name="bd">
+      <Field label="date of birth" labelFor="bd">
         <Input type="date" />
       </Field>
-      <Field label="Status" name="status">
+      <Field label="Status" labelFor="status">
         <Select
           options={[
             [
@@ -50,7 +50,7 @@ export function Control() {
           onSelect={(value) => setStatus(value)}
         />
       </Field>
-      <Field label="Question" name="question">
+      <Field label="Question" labelFor="question">
         <Checkbox
           label="Answer 1"
           checked={question.includes(1)}
@@ -79,7 +79,7 @@ export function Control() {
           }
         />
       </Field>
-      <Field label="Radio" name="radio">
+      <Field label="Radio" labelFor="radio">
         <RadioGroup
           options={[
             { label: 'Option 1', value: 'option1' },
@@ -91,7 +91,7 @@ export function Control() {
           name="radio"
         />
       </Field>
-      <Field label="Introduction" name="introduction">
+      <Field label="Introduction" labelFor="introduction">
         <TextArea />
       </Field>
 

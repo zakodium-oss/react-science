@@ -1,44 +1,41 @@
-import styled from '@emotion/styled';
-import { TextareaHTMLAttributes } from 'react';
+import {
+  TextArea as BlueprintTextArea,
+  TextAreaProps as BlueprintTextAreaProps,
+} from '@blueprintjs/core';
 
 import { useFieldsContext } from './context/FieldsContext';
-import {
-  InputContainer,
-  GroupStyled,
-  LabelStyled,
-  InputVariant,
-} from './styles';
+import { InputContainer, InputVariant } from './styles';
 import { SubText, SubTextProps } from './utils';
 
-const TextAreaStyled = styled.textarea`
-  padding: 0;
-  flex: 1 1 0%;
-  border: none;
-  position: relative;
-  outline: none;
-`;
-
-export interface TextAreaProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement>,
-    SubTextProps {
+export interface TextAreaProps extends BlueprintTextAreaProps, SubTextProps {
   variant?: InputVariant;
 }
 
 export function TextArea(props: TextAreaProps) {
-  const { variant: variantProps, help, error, valid, ...otherProps } = props;
+  const {
+    help,
+    error,
+    valid,
+    small: smallProp,
+    large: largeProp,
+    intent: intentProp,
+    ...otherProps
+  } = props;
 
-  const { name, variant: contextVariant } = useFieldsContext();
-
-  const variant = variantProps || contextVariant;
+  const { name, small: smallContext, large: largeContext } = useFieldsContext();
+  const small = smallProp || smallContext;
+  const large = largeProp || largeContext;
+  const intent = (error && 'danger') || (valid && 'success') || 'none';
 
   return (
     <InputContainer>
-      <GroupStyled hasError={!!error} hasValid={!!valid}>
-        <LabelStyled variant={variant}>
-          <TextAreaStyled id={name} name={name} {...otherProps} />
-        </LabelStyled>
-      </GroupStyled>
-
+      <BlueprintTextArea
+        id={name}
+        intent={intentProp || intent}
+        small={small}
+        large={large}
+        {...otherProps}
+      />
       <SubText error={error} help={help} valid={valid} />
     </InputContainer>
   );

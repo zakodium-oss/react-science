@@ -10,12 +10,9 @@ import { css } from '@emotion/react';
 
 import { useFieldsContext } from './context/FieldsContext';
 import { InputContainer } from './styles';
-import { SubText } from './utils/SubText';
+import { SubText, SubTextProps } from './utils/SubText';
 
-export interface InputProps extends InputGroupProps {
-  help?: string;
-  error?: string;
-  valid?: true | string;
+export interface InputProps extends InputGroupProps, SubTextProps {
   clearable?: boolean;
   rightIcon?: IconName | MaybeElement;
 }

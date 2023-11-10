@@ -46,7 +46,7 @@ Control.args = {
   rightIcon: undefined,
   help: '',
   error: '',
-  valid: '',
+  valid: false,
   type: 'text',
 };
 
@@ -62,6 +62,10 @@ Control.argTypes = {
     options: [undefined, 'person', 'shield', 'add', 'lightning'],
   },
   type: { control: { type: 'inline-radio' }, options: ['text', 'search'] },
+  valid: {
+    control: { type: 'inline-radio' },
+    options: [true, false, 'valid message'],
+  },
 };
 
 export function FieldControl(props: Omit<FieldProps, 'value'>) {

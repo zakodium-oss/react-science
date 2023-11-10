@@ -13,35 +13,35 @@ const ExampleGroup = styled.div`
   gap: 5px;
 `;
 
-export function Control(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
+export function Control(prop: Omit<TextAreaProps, 'value'>) {
   const [state, setState] = useState('');
+
+  const { onChange: onChangeProps, ...otherProps } = prop;
 
   function onChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setState(event.target.value);
+    onChangeProps?.(event);
   }
 
   return (
     <ExampleGroup>
-      <TextArea {...prop} value={state} onChange={onChange} />
-      <TextArea {...prop} value={state} onChange={onChange} variant="small" />
+      <TextArea {...otherProps} value={state} onChange={onChange} />
     </ExampleGroup>
   );
 }
 Control.args = {
   placeholder: 'Control example',
-  variant: 'default',
+  small: false,
+  large: false,
   help: '',
   error: '',
   valid: false,
 };
 Control.argTypes = {
-  variant: {
-    options: ['default', 'small'],
-    control: { type: 'radio' },
-  },
+  onChange: { action: 'onChange' },
   valid: {
+    control: { type: 'inline-radio' },
     options: [true, false, 'valid message'],
-    control: { type: 'radio' },
   },
 };
 
@@ -54,7 +54,7 @@ export function WithLabel(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
 
   return (
     <ExampleGroup>
-      <Field name="TextAreaLabel" label="Label" required>
+      <Field labelFor="TextAreaLabel" label="Label" required>
         <TextArea
           name="TextAreaLabel"
           {...prop}
@@ -62,7 +62,7 @@ export function WithLabel(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
           onChange={onChange}
         />
       </Field>
-      <Field label="Label of two Textarea" name="oneLabel">
+      <Field label="Label of two Textarea" labelFor="oneLabel">
         <TextArea placeholder="a" />
         <TextArea placeholder="b" />
       </Field>
