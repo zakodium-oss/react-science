@@ -96,6 +96,7 @@ export function InfoPanel(props: InfoPanelProps) {
           if (target.value !== undefined) setSearch(target.value);
         }}
         style={inputStyle}
+        leftIcon="search"
         type="search"
       />
 
