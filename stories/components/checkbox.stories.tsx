@@ -1,6 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-
-import { CheckedState, Checkbox, Input } from '../../src/components/index';
+import { Checkbox, InputGroup } from '@blueprintjs/core';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 
 export default {
   title: 'Forms / Checkbox',
@@ -10,7 +9,7 @@ export function Simple() {
   return (
     <>
       <Checkbox checked={false} />
-      <Checkbox />
+      <Checkbox defaultIndeterminate />
       <Checkbox checked />
     </>
   );
@@ -27,17 +26,18 @@ export function Disabled() {
 }
 
 export function ControlledAndIndeterminate() {
-  const [orange, setOrange] = useState<CheckedState>(false);
-  const [apple, setApple] = useState<CheckedState>(false);
-  const [banana, setBanana] = useState<CheckedState>(false);
+  const [orange, setOrange] = useState<boolean>(false);
+  const [apple, setApple] = useState<boolean>(false);
+  const [banana, setBanana] = useState<boolean>(false);
 
   const allChecked = useMemo(() => {
     if (orange && apple && banana) return true;
     if (!orange && !apple && !banana) return false;
-    return 'indeterminate';
+    return undefined;
   }, [apple, banana, orange]);
 
-  const setAllChecked = useCallback((checked: CheckedState) => {
+  const setAllChecked = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
     setOrange(checked);
     setApple(checked);
     setBanana(checked);
@@ -49,7 +49,6 @@ export function ControlledAndIndeterminate() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        height: '100%',
       }}
     >
       <div>
@@ -59,27 +58,40 @@ export function ControlledAndIndeterminate() {
           onChange={setAllChecked}
         />
       </div>
-      <div style={{ display: 'flex' }}>
-        <Checkbox checked={orange} onChange={setOrange} label="Orange" />
-        <Checkbox checked={apple} onChange={setApple} label="Apple" />
-        <Checkbox checked={banana} onChange={setBanana} label="Banana" />
+      <div style={{ display: 'flex', gap: 10 }}>
+        <Checkbox
+          checked={orange}
+          onChange={(e) => setOrange(e.target.checked)}
+          label="Orange"
+        />
+        <Checkbox
+          checked={apple}
+          onChange={(e) => setApple(e.target.checked)}
+          label="Apple"
+        />
+        <Checkbox
+          checked={banana}
+          onChange={(e) => setBanana(e.target.checked)}
+          label="Banana"
+        />
       </div>
     </div>
   );
 }
 
 export function ControlledIndeterminateAndDisabled() {
-  const [orange, setOrange] = useState<CheckedState>(false);
-  const [apple, setApple] = useState<CheckedState>(false);
-  const [banana, setBanana] = useState<CheckedState>(false);
+  const [orange, setOrange] = useState<boolean>(false);
+  const [apple, setApple] = useState<boolean>(false);
+  const [banana, setBanana] = useState<boolean>(false);
 
   const allChecked = useMemo(() => {
     if (orange && apple && banana) return true;
     if (!orange && !apple && !banana) return false;
-    return 'indeterminate';
+    return undefined;
   }, [apple, banana, orange]);
 
-  const setAllChecked = useCallback((checked: CheckedState) => {
+  const setAllChecked = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
     setOrange(checked);
     setApple(checked);
     setBanana(checked);
@@ -91,7 +103,6 @@ export function ControlledIndeterminateAndDisabled() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        height: '100%',
       }}
     >
       <div>
@@ -101,26 +112,38 @@ export function ControlledIndeterminateAndDisabled() {
           onChange={setAllChecked}
         />
       </div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', gap: 10 }}>
         <Checkbox
           disabled
           checked={orange}
-          onChange={setOrange}
+          onChange={(e) => setOrange(e.target.checked)}
           label="Orange"
         />
-        <Checkbox checked={apple} onChange={setApple} label="Apple" />
-        <Checkbox checked={banana} onChange={setBanana} label="Banana" />
+        <Checkbox
+          checked={apple}
+          onChange={(e) => setApple(e.target.checked)}
+          label="Apple"
+        />
+        <Checkbox
+          checked={banana}
+          onChange={(e) => setBanana(e.target.checked)}
+          label="Banana"
+        />
       </div>
     </div>
   );
 }
 
 export function SimpleWithInput() {
-  const [checked, setChecked] = useState<CheckedState>(false);
+  const [checked, setChecked] = useState<boolean>(false);
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <Checkbox checked={checked} onChange={setChecked} label="Hello, world!" />
-      <Input />
+    <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+      <Checkbox
+        checked={checked}
+        onChange={(e) => setChecked(e.target.checked)}
+        label="Hello, world!"
+      />
+      <InputGroup />
     </div>
   );
 }

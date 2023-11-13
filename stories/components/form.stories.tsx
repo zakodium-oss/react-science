@@ -1,9 +1,9 @@
+import { Checkbox } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import {
   Button,
-  Checkbox,
   Field,
   Input,
   RadioGroup,
@@ -54,8 +54,8 @@ export function Control() {
         <Checkbox
           label="Answer 1"
           checked={question.includes(1)}
-          onChange={(checked) =>
-            checked
+          onChange={({ target }) =>
+            target.checked
               ? setQuestion([...question, 1])
               : setQuestion(question.filter((item) => item !== 1))
           }
@@ -63,8 +63,8 @@ export function Control() {
         <Checkbox
           label="Answer 2"
           checked={question.includes(2)}
-          onChange={(checked) =>
-            checked
+          onChange={({ target }) =>
+            target.checked
               ? setQuestion([...question, 2])
               : setQuestion(question.filter((item) => item !== 2))
           }
@@ -72,8 +72,8 @@ export function Control() {
         <Checkbox
           label="Answer 3"
           checked={question.includes(3)}
-          onChange={(checked) =>
-            checked
+          onChange={({ target }) =>
+            target.checked
               ? setQuestion([...question, 3])
               : setQuestion(question.filter((item) => item !== 3))
           }
