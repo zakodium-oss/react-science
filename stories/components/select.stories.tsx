@@ -306,16 +306,7 @@ export function InModal() {
   const [value, setValue] = useState<string | undefined>(undefined);
   return (
     <>
-      <Button
-        onClick={open}
-        backgroundColor={{
-          basic: 'hsla(243deg, 75%, 58%, 1)',
-          hover: 'hsla(245deg, 58%, 50%, 1)',
-        }}
-        color={{ basic: 'white' }}
-      >
-        Open
-      </Button>
+      <Button onClick={open}>Open</Button>
       <Modal
         isOpen={isOpen}
         onRequestClose={() => {

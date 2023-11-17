@@ -52,8 +52,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
               <div style={{ display: 'flex', gap: '3px' }}>
                 <Button
                   style={{ width: '15px' }}
-                  color={{ basic: 'white' }}
-                  backgroundColor={{ basic: 'green' }}
+                  intent="success"
                   onClick={() => {
                     const newFilters = [...filters];
                     newFilters.splice(
@@ -68,8 +67,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
                 </Button>
                 <Button
                   style={{ width: '15px' }}
-                  color={{ basic: 'white' }}
-                  backgroundColor={{ basic: 'red' }}
+                  intent="danger"
                   onClick={() => {
                     onChange?.(filters.filter((_, j) => j !== i));
                   }}
@@ -126,8 +124,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
       {filters.length === 0 && (
         <Button
           style={{ width: '15px', margin: '5px 20px' }}
-          color={{ basic: 'white' }}
-          backgroundColor={{ basic: 'green' }}
+          intent="success"
           onClick={() => {
             const newFilters = [getDefaultFilter(defaultFilters[0])];
             onChange?.(newFilters);

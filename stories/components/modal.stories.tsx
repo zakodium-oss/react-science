@@ -84,14 +84,7 @@ export function Control(props: {
               flexDirection: 'row-reverse',
             }}
           >
-            <Button
-              onClick={onSave}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
+            <Button intent="primary" onClick={onSave}>
               Save
             </Button>
           </div>
@@ -233,14 +226,7 @@ export function WithComplexContents({
               flex: '1 1 0%',
             }}
           >
-            <Button
-              onClick={onSave}
-              backgroundColor={{
-                basic: 'hsla(243deg, 75%, 58%, 1)',
-                hover: 'hsla(245deg, 58%, 50%, 1)',
-              }}
-              color={{ basic: 'white' }}
-            >
+            <Button intent="primary" onClick={onSave}>
               Save
             </Button>
           </div>
@@ -263,7 +249,9 @@ export function DynamicallySizedChildren() {
   const [isOpen, open, close] = useOnOff(false);
   return (
     <div style={{ margin: '2em' }}>
-      <Button onClick={open}>Open editor modal</Button>
+      <Button intent="warning" onClick={open}>
+        Open editor modal
+      </Button>
       <Modal width={700} height={500} isOpen={isOpen} onRequestClose={close}>
         <Modal.Header>Test OCL editor in modal</Modal.Header>
         <Modal.Body>
@@ -311,14 +299,7 @@ function DemoPage(props: { openModal: () => void }) {
         >
           <SplitPane size="35%">
             <div style={{ padding: 5 }}>
-              <Button
-                onClick={props.openModal}
-                backgroundColor={{
-                  basic: 'hsla(243deg, 75%, 58%, 1)',
-                  hover: 'hsla(245deg, 58%, 50%, 1)',
-                }}
-                color={{ basic: 'white' }}
-              >
+              <Button intent="primary" onClick={props.openModal}>
                 Open
               </Button>
             </div>

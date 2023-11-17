@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { ReactNode, useEffect, useRef } from 'react';
-import { FaCog } from 'react-icons/fa';
 
 import { Button } from '../button/Button';
 
@@ -62,13 +61,7 @@ export function PanelHeader({
       <div css={styles.leftContainer}>{children}</div>
       <p ref={labelRef} css={styles.counterLabel} />
       {onClickSettings && (
-        <Button
-          onClick={onClickSettings}
-          color={{ basic: 'black', hover: 'black' }}
-          backgroundColor={{ basic: 'white', hover: '#f7f7f7' }}
-        >
-          <FaCog />
-        </Button>
+        <Button color="black" minimal onClick={onClickSettings} icon="cog" />
       )}
     </div>
   );

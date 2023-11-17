@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import type { ReactElement, ReactNode } from 'react';
 import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 
+import { Button } from '../index';
 import { Portal } from '../root-layout/Portal';
 import { RootLayoutProvider } from '../root-layout/RootLayoutContext';
 
-import ModalCloseButton from './ModalCloseButton';
 import { useDialog } from './useDialog';
 
 export interface ModalProps {
@@ -113,7 +113,15 @@ export function Modal(props: ModalProps) {
               }}
             >
               {children}
-              {hasCloseButton && <ModalCloseButton onClick={onRequestClose} />}
+              {hasCloseButton && (
+                <Button
+                  style={{ position: 'absolute', top: 4, right: 4 }}
+                  onClick={onRequestClose}
+                  intent="danger"
+                  minimal
+                  icon="cross"
+                />
+              )}
             </DialogContents>
           </RootLayoutProvider>
         )}
