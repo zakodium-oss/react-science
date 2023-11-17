@@ -1,7 +1,14 @@
+/** @jsxImportSource @emotion/react */
+import {
+  FormGroup,
+  FormGroupProps,
+  Icon,
+  InputGroup,
+  InputGroupProps,
+} from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-
-import { Input, Field, InputProps, FieldProps } from '../../src/components';
 
 export default {
   title: 'Forms / Input',
@@ -21,7 +28,7 @@ const ExampleGroup = styled.div`
   padding: 5px;
 `;
 
-export function Control(props: Omit<InputProps, 'value'>) {
+export function Control(props: Omit<InputGroupProps, 'value'>) {
   const [state, setState] = useState('Hello, World!');
 
   const { onChange: onChangeProps, ...otherProps } = props;
@@ -32,7 +39,7 @@ export function Control(props: Omit<InputProps, 'value'>) {
 
   return (
     <ExampleGroup>
-      <Input {...otherProps} value={state} onChange={onChange} />
+      <InputGroup {...otherProps} value={state} onChange={onChange} />
     </ExampleGroup>
   );
 }
@@ -68,7 +75,7 @@ Control.argTypes = {
   },
 };
 
-export function FieldControl(props: Omit<FieldProps, 'value'>) {
+export function FormGroupControl(props: Omit<FormGroupProps, 'value'>) {
   const [state, setState] = useState('Hello, World!');
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -77,51 +84,65 @@ export function FieldControl(props: Omit<FieldProps, 'value'>) {
 
   return (
     <ExampleGroup>
-      <Field {...props}>
-        <Input placeholder="Label example" value={state} onChange={onChange} />
-      </Field>
+      <FormGroup {...props}>
+        <InputGroup
+          placeholder="Label example"
+          value={state}
+          onChange={onChange}
+        />
+      </FormGroup>
     </ExampleGroup>
   );
 }
-FieldControl.args = {
-  required: false,
-  small: false,
-  large: false,
+FormGroupControl.args = {
+  labelInfo: '*',
   labelFor: 'inputLabel',
   label: 'Label',
   inline: false,
 };
-export function Label() {
-  const [state, setState] = useState('Hello, World!');
-
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
-    setState(event.target.value);
-  }
-
-  return (
-    <ExampleGroup>
-      <Field labelFor="inputLabel" label="Label" inline>
-        <Input placeholder="Label example" value={state} onChange={onChange} />
-      </Field>
-      <Field labelFor="inputLabel" label="Label" small inline>
-        <Input placeholder="Label example" value={state} onChange={onChange} />
-      </Field>
-    </ExampleGroup>
-  );
-}
 
 export function WithTrailingAddon() {
   return (
     <ExampleContainerAddonGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" rightIcon="lightning" />
+        <InputGroup
+          placeholder="Basic example"
+          rightElement={
+            <Icon
+              css={css`
+                *:has(> &) {
+                  height: 100%;
+                  width: 30px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                }
+                color: #5f6b7c;
+              `}
+              icon="lightning"
+            />
+          }
+        />
 
-        <Input placeholder="Basic example" rightIcon="lightning" small />
-      </ExampleGroup>
-      <ExampleGroup>
-        <Input placeholder="Basic example" rightIcon="lightning" />
-
-        <Input placeholder="Basic example" rightIcon="lightning" small />
+        <InputGroup
+          placeholder="Basic example"
+          rightElement={
+            <Icon
+              css={css`
+                *:has(> &) {
+                  height: 100%;
+                  width: 30px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                }
+                color: #5f6b7c;
+              `}
+              icon="lightning"
+            />
+          }
+          small
+        />
       </ExampleGroup>
     </ExampleContainerAddonGroup>
   );
@@ -131,14 +152,14 @@ export function WithLeadingAddon() {
   return (
     <ExampleContainerAddonGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" leftIcon="shield" />
+        <InputGroup placeholder="Basic example" leftIcon="shield" />
 
-        <Input placeholder="Basic example" leftIcon="shield" small />
+        <InputGroup placeholder="Basic example" leftIcon="shield" small />
       </ExampleGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" leftIcon="shield" />
+        <InputGroup placeholder="Basic example" leftIcon="shield" />
 
-        <Input placeholder="Basic example" leftIcon="shield" small />
+        <InputGroup placeholder="Basic example" leftIcon="shield" small />
       </ExampleGroup>
     </ExampleContainerAddonGroup>
   );
@@ -148,22 +169,44 @@ export function WithLeadingAndTrailingAddon() {
   return (
     <ExampleContainerAddonGroup>
       <ExampleGroup>
-        <Input placeholder="Basic example" leftIcon="add" rightIcon="add" />
-
-        <Input
+        <InputGroup
           placeholder="Basic example"
           leftIcon="add"
-          rightIcon="add"
-          small
+          rightElement={
+            <Icon
+              css={css`
+                *:has(> &) {
+                  height: 100%;
+                  width: 30px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                }
+                color: #5f6b7c;
+              `}
+              icon="add"
+            />
+          }
         />
-      </ExampleGroup>
-      <ExampleGroup>
-        <Input placeholder="Basic example" leftIcon="add" rightIcon="add" />
 
-        <Input
+        <InputGroup
           placeholder="Basic example"
           leftIcon="add"
-          rightIcon="add"
+          rightElement={
+            <Icon
+              css={css`
+                *:has(> &) {
+                  height: 100%;
+                  width: 30px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                }
+                color: #5f6b7c;
+              `}
+              icon="add"
+            />
+          }
           small
         />
       </ExampleGroup>
@@ -174,18 +217,17 @@ export function WithLeadingAndTrailingAddon() {
 export function TwoInputWithOneLabel() {
   return (
     <ExampleContainerAddonGroup>
-      <Field label="One label" labelFor="oneLabel" inline>
+      <FormGroup
+        label="One label"
+        labelFor="oneLabel"
+        inline
+        helperText="Hello, World!"
+      >
         <ExampleGroup>
-          <Input placeholder="a" help="Hello, World!" />
-          <Input placeholder="b" />
+          <InputGroup placeholder="a" />
+          <InputGroup placeholder="b" />
         </ExampleGroup>
-      </Field>
-      <Field label="One label" labelFor="oneLabel" small inline>
-        <ExampleGroup>
-          <Input placeholder="a" />
-          <Input placeholder="b" />
-        </ExampleGroup>
-      </Field>
+      </FormGroup>
     </ExampleContainerAddonGroup>
   );
 }
@@ -193,46 +235,62 @@ export function TwoInputWithOneLabel() {
 export function WithSubtext() {
   return (
     <ExampleContainerAddonGroup>
-      <Field label="With help message" labelFor="oneLabel" inline>
-        <ExampleGroup>
-          <Input placeholder="a" help="help message" small />
-          <Input placeholder="b" help="help message" small leftIcon="person" />
-        </ExampleGroup>
-      </Field>
-      <Field label="With valid message" labelFor="oneLabel" inline>
-        <ExampleGroup>
-          <Input placeholder="a" valid="help message" leftIcon="person" />
-          <Input placeholder="b" valid="help message" small leftIcon="person" />
-        </ExampleGroup>
-      </Field>
-      <Field
-        label="With help message and valid boolean"
+      <FormGroup
+        label="With help message"
         labelFor="oneLabel"
         inline
+        helperText="help message"
       >
         <ExampleGroup>
-          <Input placeholder="a" help="help message" valid leftIcon="person" />
-          <Input
-            placeholder="b"
-            help="help message"
-            small
-            valid
-            leftIcon="person"
-          />
+          <InputGroup placeholder="a" leftIcon="person" />
+          <InputGroup placeholder="b" small leftIcon="person" />
         </ExampleGroup>
-      </Field>
-      <Field label="With error message" labelFor="oneLabel" inline>
+      </FormGroup>
+      <FormGroup
+        label="With valid message"
+        labelFor="oneLabel"
+        inline
+        helperText="help message"
+        intent="success"
+      >
         <ExampleGroup>
-          <Input placeholder="a" error="error message" leftIcon="person" />
-          <Input
+          <InputGroup placeholder="a" leftIcon="person" intent="success" />
+          <InputGroup
             placeholder="b"
-            error="error message"
             small
             leftIcon="person"
-            rightIcon="person"
+            intent="success"
           />
         </ExampleGroup>
-      </Field>
+      </FormGroup>
+      <FormGroup
+        label="With help message and valid"
+        labelFor="oneLabel"
+        inline
+        helperText="help message"
+      >
+        <ExampleGroup>
+          <InputGroup placeholder="a" leftIcon="person" intent="success" />
+          <InputGroup
+            placeholder="b"
+            intent="success"
+            small
+            leftIcon="person"
+          />
+        </ExampleGroup>
+      </FormGroup>
+      <FormGroup
+        label="With error message"
+        labelFor="oneLabel"
+        inline
+        helperText="error message"
+        intent="danger"
+      >
+        <ExampleGroup>
+          <InputGroup placeholder="a" leftIcon="person" intent="danger" />
+          <InputGroup placeholder="b" intent="danger" small leftIcon="person" />
+        </ExampleGroup>
+      </FormGroup>
     </ExampleContainerAddonGroup>
   );
 }
