@@ -1,7 +1,6 @@
+import { FormGroup, TextArea, TextAreaProps } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
-
-import { Field, TextArea, TextAreaProps } from '../../src/components';
 
 export default {
   title: 'Forms / TextArea',
@@ -54,18 +53,22 @@ export function WithLabel(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
 
   return (
     <ExampleGroup>
-      <Field labelFor="TextAreaLabel" label="Label" required>
+      <FormGroup
+        labelFor="TextAreaLabel"
+        label="Label"
+        labelInfo={<span style={{ color: 'red' }}>*</span>}
+      >
         <TextArea
           name="TextAreaLabel"
           {...prop}
           value={state}
           onChange={onChange}
         />
-      </Field>
-      <Field label="Label of two Textarea" labelFor="oneLabel">
+      </FormGroup>
+      <FormGroup label="Label of two Textarea" labelFor="oneLabel">
         <TextArea placeholder="a" />
         <TextArea placeholder="b" />
-      </Field>
+      </FormGroup>
     </ExampleGroup>
   );
 }
