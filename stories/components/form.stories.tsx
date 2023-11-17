@@ -1,16 +1,8 @@
-import { Checkbox } from '@blueprintjs/core';
+import { Checkbox, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import {
-  Button,
-  Field,
-  Input,
-  RadioGroup,
-  Select,
-  TextArea,
-  RadioOption,
-} from '../../src/components';
+import { Button, RadioGroup, Select, RadioOption } from '../../src/components';
 
 export default {
   title: 'Forms / Form',
@@ -28,16 +20,21 @@ export function Control() {
   const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
     <ExampleGroup style={{ display: 'inline-block' }}>
-      <Field label="Name" labelFor="name" required>
-        <Input type="text" maxLength={10} />
-      </Field>
-      <Field label="Email" labelFor="email">
-        <Input type="email" />
-      </Field>
-      <Field label="date of birth" labelFor="bd">
-        <Input type="date" />
-      </Field>
-      <Field label="Status" labelFor="status">
+      <FormGroup
+        label="Name"
+        labelFor="name"
+        labelInfo={<span style={{ color: 'red' }}>*</span>}
+        intent="danger"
+      >
+        <InputGroup type="text" maxLength={10} />
+      </FormGroup>
+      <FormGroup label="Email" labelFor="email">
+        <InputGroup type="email" />
+      </FormGroup>
+      <FormGroup label="date of birth" labelFor="bd">
+        <InputGroup type="date" />
+      </FormGroup>
+      <FormGroup label="Status" labelFor="status">
         <Select
           options={[
             [
@@ -49,8 +46,8 @@ export function Control() {
           value={status}
           onSelect={(value) => setStatus(value)}
         />
-      </Field>
-      <Field label="Question" labelFor="question">
+      </FormGroup>
+      <FormGroup label="Question" labelFor="question">
         <Checkbox
           label="Answer 1"
           checked={question.includes(1)}
@@ -78,8 +75,8 @@ export function Control() {
               : setQuestion(question.filter((item) => item !== 3))
           }
         />
-      </Field>
-      <Field label="Radio" labelFor="radio">
+      </FormGroup>
+      <FormGroup label="Radio" labelFor="radio">
         <RadioGroup
           options={[
             { label: 'Option 1', value: 'option1' },
@@ -90,10 +87,10 @@ export function Control() {
           onSelect={setRadio}
           name="radio"
         />
-      </Field>
-      <Field label="Introduction" labelFor="introduction">
+      </FormGroup>
+      <FormGroup label="Introduction" labelFor="introduction">
         <TextArea />
-      </Field>
+      </FormGroup>
 
       <Button>Submit</Button>
     </ExampleGroup>

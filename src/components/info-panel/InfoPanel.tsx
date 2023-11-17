@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore
@@ -6,7 +7,7 @@ import { Disclosure } from '@headlessui/react';
 import { CSSProperties, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 
-import { Input, ValueRenderers } from '../index';
+import { ValueRenderers } from '../index';
 import { Table } from '../table/Table';
 
 export interface InfoPanelData {
@@ -89,7 +90,7 @@ export function InfoPanel(props: InfoPanelProps) {
   return (
     <div css={style.container}>
       <div style={titleStyle}>{title}</div>
-      <Input
+      <InputGroup
         placeholder="search for a parameter ..."
         value={search}
         onChange={({ target }) => {
