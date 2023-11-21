@@ -12,7 +12,7 @@ type LoadFn = (
 
 export function useLoadFileCollectionFromHash(
   onLoad: LoadFn,
-): UseQueryResult<true | null, Error> {
+): UseQueryResult<true | null> {
   const appDispatch = useAppDispatch();
   const hashParams = useHashSearchParams();
   const filelistUrl = hashParams.get('filelist');
