@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { FileCollection, fileCollectionFromWebSource } from 'filelist-utils';
 import { useCallback } from 'react';
 
@@ -10,7 +10,9 @@ type LoadFn = (
   dispatch: AppDispatch,
 ) => Promise<void>;
 
-export function useLoadFileCollectionFromHash(onLoad: LoadFn) {
+export function useLoadFileCollectionFromHash(
+  onLoad: LoadFn,
+): UseQueryResult<true | null, Error> {
   const appDispatch = useAppDispatch();
   const hashParams = useHashSearchParams();
   const filelistUrl = hashParams.get('filelist');
