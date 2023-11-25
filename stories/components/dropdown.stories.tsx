@@ -1,72 +1,43 @@
+import {
+  ContextMenu,
+  Menu,
+  MenuDivider,
+  MenuItem,
+  Popover,
+} from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import { Menu } from '@headlessui/react';
 import { useMemo } from 'react';
-import {
-  FaMeteor,
-  FaAddressBook,
-  FaAccessibleIcon,
-  Fa500Px,
-  FaAccusoft,
-  FaAcquisitionsIncorporated,
-  FaAd,
-  FaAddressCard,
-  FaAdjust,
-} from 'react-icons/fa';
 
-import {
-  MenuItems,
-  MenuOptions,
-} from '../../src/components/dropdown-menu/MenuItems';
-import {
-  DropdownMenu,
-  Table,
-  ValueRenderers,
-} from '../../src/components/index';
+import { Button, Table, ValueRenderers } from '../../src/components/index';
 import data from '../data/table.json';
 
 export default {
   title: 'Components / DropdownMenu',
 };
 
-const defaultOptions: MenuOptions<string> = [
-  { label: 'Default workspace', type: 'option' },
-];
-
-function noop() {
-  // do nothing
-}
-
-const ButtonStyled = styled.div`
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  color: white;
-  font-weight: 600;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background-color: rgb(107 114 128);
-  border-color: transparent;
-  border-radius: 0.375rem;
-  border-width: 1px;
-`;
+const defaultOptions = <MenuItem text="Default workspace" />;
 
 export function Dropdown() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Default workspace', type: 'option' },
-      { label: 'Exercise', type: 'option', icon: <FaMeteor /> },
-      { type: 'divider' },
-      { label: 'Test', type: 'option', disabled: true },
-      { label: 'Test 2', type: 'option' },
-    ];
-  }, []);
+  const content = (
+    <Menu>
+      <MenuItem text="Default workspace" />
+      <MenuItem text="Exercise" icon="person" />
+      <MenuDivider />
+      <MenuItem text="Tests">
+        <MenuItem text="Test" disabled />
+        <MenuItem text="Test 2" />
+      </MenuItem>
+    </Menu>
+  );
 
   return (
-    <DropdownMenu trigger="click" onSelect={noop} options={options}>
-      <ButtonStyled>Default workspace</ButtonStyled>
-    </DropdownMenu>
+    <Popover content={content}>
+      <Button
+        alignText="left"
+        rightIcon="caret-down"
+        text="Default workspace"
+      />
+    </Popover>
   );
 }
 
@@ -80,158 +51,106 @@ const DivContextDropdown = styled.div`
 `;
 
 export function ContextDropdown() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Default workspace', type: 'option' },
-      { label: 'Exercise', type: 'option', icon: <FaMeteor /> },
-      { type: 'divider' },
-      { label: 'Test', type: 'option', disabled: true },
-      { label: 'Test 2', type: 'option' },
-    ];
-  }, []);
+  const content = (
+    <Menu>
+      <MenuItem text="Default workspace" />
+      <MenuItem text="Exercise" icon="person" />
+      <MenuDivider />
+      <MenuItem text="Tests">
+        <MenuItem text="Test" disabled />
+        <MenuItem text="Test 2" />
+      </MenuItem>
+    </Menu>
+  );
 
   return (
-    <DropdownMenu trigger="contextMenu" onSelect={noop} options={options}>
+    <ContextMenu content={content}>
       <DivContextDropdown tabIndex={1}>
         <p>Hello, World!</p>
       </DivContextDropdown>
-    </DropdownMenu>
+    </ContextMenu>
   );
 }
 
 export function WithIcon() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      ...defaultOptions,
-      { label: 'Exercise', type: 'option', icon: <FaMeteor /> },
-    ];
-  }, []);
+  const options = [
+    defaultOptions,
+    <MenuItem key="1" text="Exercise" icon="person" />,
+  ];
 
-  return (
-    <Menu>
-      <MenuItems itemsStatic options={options} onSelect={noop} />
-    </Menu>
-  );
+  return <Menu>{options}</Menu>;
 }
 
 export function WithoutIcon() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [...defaultOptions, { label: 'Exercise', type: 'option' }];
-  }, []);
+  const options = [defaultOptions, <MenuItem key="1" text="Exercise" />];
 
-  return (
-    <Menu>
-      <MenuItems itemsStatic options={options} onSelect={noop} />
-    </Menu>
-  );
+  return <Menu>{options}</Menu>;
 }
 
 export function WithDisabled() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      ...defaultOptions,
-      { label: 'Exercise', type: 'option', disabled: true },
-    ];
-  }, []);
+  const options = [
+    defaultOptions,
+    <MenuItem key="1" text="Exercise" disabled />,
+  ];
 
-  return (
-    <Menu>
-      <MenuItems itemsStatic options={options} onSelect={noop} />
-    </Menu>
-  );
+  return <Menu>{options}</Menu>;
 }
 
 export function WithDivider() {
-  const options = useMemo<MenuOptions<string>>(() => {
+  const options = useMemo(() => {
     return [
-      ...defaultOptions,
-      { type: 'divider' },
-      { label: 'Exercise', type: 'option' },
+      defaultOptions,
+      <MenuDivider key="0" />,
+      <MenuItem key="1" text="Exercise" />,
     ];
   }, []);
 
-  return (
-    <Menu>
-      <MenuItems itemsStatic options={options} onSelect={noop} />
-    </Menu>
-  );
+  return <Menu>{options}</Menu>;
 }
 
 export function Complex() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Back', type: 'option', icon: <FaAddressBook /> },
-      {
-        label: 'Forward',
-        type: 'option',
-        disabled: true,
-        icon: <FaAccessibleIcon />,
-      },
-      { label: 'Refresh', type: 'option', icon: <Fa500Px /> },
-      { type: 'divider' },
-      { label: 'Save as', type: 'option', icon: <FaAccusoft /> },
-      { label: 'Print', type: 'option', icon: <FaAcquisitionsIncorporated /> },
-      { label: 'Cast media to device', type: 'option', icon: <FaAd /> },
-      { type: 'divider' },
-      {
-        label: 'Send page to your devices',
-        type: 'option',
-        icon: <FaAddressCard />,
-      },
-      {
-        label: 'Create QR Code for this page',
-        type: 'option',
-        icon: <FaAdjust />,
-      },
-    ];
-  }, []);
-
   return (
     <Menu>
-      <MenuItems itemsStatic options={options} onSelect={noop} />
+      <MenuItem text="Back" icon="book" />
+      <MenuItem text="Forward" icon="step-forward" disabled />
+      <MenuItem text="Refresh" icon="refresh" />
+      <MenuDivider />
+      <MenuItem text="Save as" icon="saved" />
+      <MenuItem text="Print" icon="print" />
+      <MenuItem text="Cast media to device" icon="video" />
+      <MenuDivider />
+      <MenuItem text="Send page to your devices" icon="add" />
+      <MenuItem text="Create QR Code for this page" icon="settings" />
     </Menu>
   );
 }
 export function TableWithHeaderDropDownMenu() {
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Back', type: 'option', icon: <FaAddressBook /> },
-      {
-        label: 'Forward',
-        type: 'option',
-        disabled: true,
-        icon: <FaAccessibleIcon />,
-      },
-      { label: 'Refresh', type: 'option', icon: <Fa500Px /> },
-      { type: 'divider' },
-      { label: 'Save as', type: 'option', icon: <FaAccusoft /> },
-      { label: 'Print', type: 'option', icon: <FaAcquisitionsIncorporated /> },
-      { label: 'Cast media to device', type: 'option', icon: <FaAd /> },
-      { type: 'divider' },
-      {
-        label: 'Send page to your devices',
-        type: 'option',
-        icon: <FaAddressCard />,
-      },
-      {
-        label: 'Create QR Code for this page',
-        type: 'option',
-        icon: <FaAdjust />,
-      },
-    ];
-  }, []);
+  const content = (
+    <Menu>
+      <MenuItem text="Back" icon="book" />
+      <MenuItem text="Forward" icon="step-forward" disabled />
+      <MenuItem text="Refresh" icon="refresh" />
+      <MenuDivider />
+      <MenuItem text="Save as" icon="saved" />
+      <MenuItem text="Print" icon="print" />
+      <MenuItem text="Cast media to device" icon="video" />
+      <MenuDivider />
+      <MenuItem text="Send page to your devices" icon="add" />
+      <MenuItem text="Create QR Code for this page" icon="settings" />
+    </Menu>
+  );
 
   return (
     <table>
       <thead>
         <tr>
-          <ColumnWithDropdownMenu value="id" options={options} />
-          <ColumnWithDropdownMenu value="name" options={options} />
-          <ColumnWithDropdownMenu value="rn" options={options} />
-          <ColumnWithDropdownMenu value="mw" options={options} />
-          <ColumnWithDropdownMenu value="em" options={options} />
-          <ColumnWithDropdownMenu value="isExpensive" options={options} />
-          <ColumnWithDropdownMenu value="color" options={options} />
+          <ColumnWithDropdownMenu value="id" content={content} />
+          <ColumnWithDropdownMenu value="name" content={content} />
+          <ColumnWithDropdownMenu value="rn" content={content} />
+          <ColumnWithDropdownMenu value="mw" content={content} />
+          <ColumnWithDropdownMenu value="em" content={content} />
+          <ColumnWithDropdownMenu value="isExpensive" content={content} />
+          <ColumnWithDropdownMenu value="color" content={content} />
         </tr>
       </thead>
       <tbody>
@@ -255,17 +174,15 @@ export function TableWithHeaderDropDownMenu() {
 
 function ColumnWithDropdownMenu({
   value,
-  options,
+  content,
 }: {
   value: string;
-  options: MenuOptions<string>;
+  content: JSX.Element;
 }) {
   return (
-    <td>
-      <DropdownMenu trigger="contextMenu" onSelect={noop} options={options}>
-        <div>{value}</div>
-      </DropdownMenu>
-    </td>
+    <ContextMenu content={content} tagName="th">
+      {value}
+    </ContextMenu>
   );
 }
 
@@ -279,79 +196,49 @@ const TableWithContext = styled.table`
 `;
 
 export function TableWithContextMenu() {
-  const headerOptions = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Copy', type: 'option', icon: <FaAddressBook /> },
-      {
-        label: 'Past',
-        type: 'option',
-        disabled: true,
-        icon: <FaAccessibleIcon />,
-      },
-    ];
-  }, []);
-  const options = useMemo<MenuOptions<string>>(() => {
-    return [
-      { label: 'Back', type: 'option', icon: <FaAddressBook /> },
-      {
-        label: 'Forward',
-        type: 'option',
-        disabled: true,
-        icon: <FaAccessibleIcon />,
-      },
-      { label: 'Refresh', type: 'option', icon: <Fa500Px /> },
-      { type: 'divider' },
-      { label: 'Save as', type: 'option', icon: <FaAccusoft /> },
-      { label: 'Print', type: 'option', icon: <FaAcquisitionsIncorporated /> },
-      { label: 'Cast media to device', type: 'option', icon: <FaAd /> },
-      { type: 'divider' },
-      {
-        label: 'Send page to your devices',
-        type: 'option',
-        icon: <FaAddressCard />,
-      },
-      {
-        label: 'Create QR Code for this page',
-        type: 'option',
-        icon: <FaAdjust />,
-      },
-    ];
-  }, []);
+  const headerContent = (
+    <Menu>
+      <MenuItem text="Copy" icon="book" />
+      <MenuItem text="Paste" icon="paste-variable" disabled />
+    </Menu>
+  );
+  const content = (
+    <Menu>
+      <MenuItem text="Back" icon="book" />
+      <MenuItem text="Forward" icon="step-forward" disabled />
+      <MenuItem text="Refresh" icon="refresh" />
+      <MenuDivider />
+      <MenuItem text="Save as" icon="saved" />
+      <MenuItem text="Print" icon="print" />
+      <MenuItem text="Cast media to device" icon="video" />
+      <MenuDivider />
+      <MenuItem text="Send page to your devices" icon="add" />
+      <MenuItem text="Create QR Code for this page" icon="settings" />
+    </Menu>
+  );
 
   return (
     <TableWithContext>
       <thead>
-        <DropdownMenu
-          as="tr"
-          trigger="contextMenu"
-          onSelect={noop}
-          options={headerOptions}
-        >
+        <ContextMenu content={headerContent} tagName="tr">
           <th>id</th>
           <th>name</th>
           <th>rn</th>
           <th>mw</th>
           <th>em</th>
           <th>isExpensive</th>
-        </DropdownMenu>
+        </ContextMenu>
       </thead>
       <tbody>
         {data.slice(0, 2).map(({ id, name, rn, mw, em, isExpensive }) => (
-          <DropdownMenu
-            key={id}
-            trigger="contextMenu"
-            as="tr"
-            onSelect={noop}
-            options={options}
-            style={{ height: '50px' }}
-          >
+          <ContextMenu key={id} tagName="tr" content={content}>
             <td>{id}</td>
             <td>{name}</td>
             <td>{rn}</td>
             <td>{mw}</td>
             <td>{em}</td>
             <td>{isExpensive}</td>
-          </DropdownMenu>
+          </ContextMenu>
         ))}
       </tbody>
     </TableWithContext>
