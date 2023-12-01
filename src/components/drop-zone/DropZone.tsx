@@ -1,17 +1,22 @@
+import { NonIdealState, Button } from '@blueprintjs/core';
+import type { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
 import { CSSProperties, MouseEventHandler, useCallback, useMemo } from 'react';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export interface DropZoneProps {
-  color?: string;
   borderColor?: string;
   onDrop?: <T extends File>(
     acceptedFiles: T[],
     rejectedFiles?: FileRejection[],
   ) => void;
   fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
-  emptyText?: string;
+  emptyIcon?: IconName;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  emptyButtonText?: string;
+  emptyButtonIcon?: IconName;
 }
 
 const DropzoneRoot = styled.div`
@@ -22,7 +27,6 @@ const DropzoneRoot = styled.div`
 
 interface DropzoneColorProps {
   borderColor: CSSProperties['borderColor'];
-  color: CSSProperties['color'];
 }
 
 const DropzoneDragActive = styled.div<DropzoneColorProps>`
@@ -40,25 +44,20 @@ const DropzoneDragActive = styled.div<DropzoneColorProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: black;
 
   border-color: ${({ borderColor }) => borderColor};
-  color: ${({ color }) => color};
 `;
 
 const DropzoneEmpty = styled.div<DropzoneColorProps>`
-  font-size: 1.5em;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
   padding: 1em;
   border: 5px dashed;
   cursor: pointer;
+  color: black;
 
   border-color: ${({ borderColor }) => borderColor};
-  color: ${({ color }) => color};
 `;
 
 export function DropZone(props: DropZoneProps) {
@@ -77,17 +76,24 @@ function DropZoneContent(
   props: DropZoneProps & {
     children?: JSX.Element | null;
     onClick?: MouseEventHandler<HTMLDivElement>;
-    emptyText?: string;
+    emptyIcon?: IconName;
+    emptyTitle?: string;
+    emptyDescription?: string;
+    emptyButtonText?: string;
+    emptyButtonIcon?: IconName;
   },
 ) {
   const {
-    color = 'black',
     borderColor = 'gray',
     children = null,
     onDrop,
-    emptyText = 'Click or drag and drop to add data.',
     onClick,
     fileValidator,
+    emptyIcon = 'import',
+    emptyTitle = 'No data loaded',
+    emptyDescription = 'You can load data by drag-and-dropping files here',
+    emptyButtonText = 'Select files',
+    emptyButtonIcon = 'plus',
   } = props;
 
   const hasChildren = children !== null;
@@ -115,13 +121,25 @@ function DropZoneContent(
     <DropzoneRoot {...getRootProps(getPropsOptions)}>
       {children}
       {isDragActive ? (
-        <DropzoneDragActive borderColor={borderColor} color={color}>
+        <DropzoneDragActive borderColor={borderColor}>
           <FaCloudUploadAlt size={70} />
-          <p>Drop the files here.</p>
+          <p>Drop the files here</p>
         </DropzoneDragActive>
       ) : !hasChildren ? (
-        <DropzoneEmpty borderColor={borderColor} color={color}>
-          {emptyText}
+        <DropzoneEmpty borderColor={borderColor}>
+          <NonIdealState
+            icon={emptyIcon}
+            title={emptyTitle}
+            description={emptyDescription}
+            action={
+              <Button
+                outlined
+                text={emptyButtonText}
+                icon={emptyButtonIcon}
+                intent="primary"
+              />
+            }
+          />
         </DropzoneEmpty>
       ) : null}
       <input {...getInputProps()} />
