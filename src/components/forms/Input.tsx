@@ -1,7 +1,6 @@
+import { Spinner } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { InputHTMLAttributes, ReactNode } from 'react';
-
-import { FullSpinner } from '../index';
 
 import { useFieldsContext } from './context/FieldsContext';
 import {
@@ -125,10 +124,7 @@ export function Input(props: InputProps) {
             <TrailingInlineAddonStyled
               style={{ height: variant === 'default' ? 20 : 10 }}
             >
-              <FullSpinner
-                height={variant === 'default' ? 20 : 10}
-                width={variant === 'default' ? 20 : 10}
-              />
+              <Spinner size={variant === 'default' ? 20 : 10} />
             </TrailingInlineAddonStyled>
           )}
         </LabelStyled>
