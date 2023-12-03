@@ -1,3 +1,5 @@
+import { MenuItem } from '@blueprintjs/core';
+import { Select, ItemRenderer } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -7,7 +9,6 @@ import {
   Field,
   Input,
   RadioGroup,
-  Select,
   TextArea,
   RadioOption,
 } from '../../src/components';
@@ -21,9 +22,23 @@ const ExampleGroup = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+const render: ItemRenderer<string> = (
+  label,
+  { handleClick, handleFocus, modifiers },
+) => (
+  <MenuItem
+    active={modifiers.active}
+    icon={modifiers.active ? 'tick' : 'blank'}
+    key={label}
+    onClick={handleClick}
+    onFocus={handleFocus}
+    roleStructure="listoption"
+    text={label}
+  />
+);
 
 export function Control() {
-  const [status, setStatus] = useState<string | undefined>('single');
+  const [status, setStatus] = useState<string | undefined>(undefined);
   const [question, setQuestion] = useState<number[]>([]);
   const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
@@ -39,16 +54,17 @@ export function Control() {
       </Field>
       <Field label="Status" name="status">
         <Select
-          options={[
-            [
-              { label: 'Single', value: 'single' },
-              { label: 'Married', value: 'married' },
-              { label: 'Divorced', value: 'divorced' },
-            ],
-          ]}
-          value={status}
-          onSelect={(value) => setStatus(value)}
-        />
+          items={['Single', 'Married', 'Divorced']}
+          itemRenderer={render}
+          onItemSelect={setStatus}
+          filterable={false}
+          activeItem={status}
+        >
+          <Button
+            text={status ?? 'Select a status'}
+            rightIcon="double-caret-vertical"
+          />
+        </Select>
       </Field>
       <Field label="Question" name="question">
         <Checkbox
