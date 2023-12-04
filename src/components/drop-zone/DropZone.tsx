@@ -47,6 +47,9 @@ const DropzoneDragActive = styled.div<DropzoneColorProps>`
 `;
 
 const DropzoneEmpty = styled.div<DropzoneColorProps>`
+  :hover .dropzone-button {
+    background-color: ${rgba(Colors.BLUE3, 0.15)};
+  }
   width: 100%;
   height: 100%;
   padding: 1em;
@@ -128,6 +131,7 @@ function DropZoneContent(
             description={emptyDescription}
             action={
               <Button
+                className="dropzone-button"
                 outlined
                 text={emptyButtonText}
                 icon={emptyButtonIcon}
