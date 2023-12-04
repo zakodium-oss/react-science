@@ -1,4 +1,4 @@
-import { MenuDivider, MenuItem, Menu } from '@blueprintjs/core';
+import { Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { ItemListRenderer, ItemRenderer, Select } from '@blueprintjs/select';
 import { Fragment, useState } from 'react';
 
@@ -13,13 +13,10 @@ interface ItemsType {
   label: string;
   group?: string;
 }
-const renderMenu: ItemListRenderer<ItemsType> = ({
-  items,
-  itemsParentRef,
-  renderItem,
-  menuProps,
-}) => {
+
+function getGroups(items: ItemsType[]) {
   const groups: Array<{ group?: string; items: ItemsType[] }> = [];
+
   const withoutGroup: ItemsType[] = [];
   for (const item of items) {
     if (!item.group) {
@@ -33,6 +30,15 @@ const renderMenu: ItemListRenderer<ItemsType> = ({
       groups.push({ group: item.group, items: [item] });
     }
   }
+  return { groups, withoutGroup };
+}
+const renderMenu: ItemListRenderer<ItemsType> = ({
+  items,
+  itemsParentRef,
+  renderItem,
+  menuProps,
+}) => {
+  const { groups, withoutGroup } = getGroups(items);
   return (
     <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
       {groups.map(({ group, items }) => (
@@ -52,20 +58,8 @@ const renderMenuNested: ItemListRenderer<ItemsType> = ({
   renderItem,
   menuProps,
 }) => {
-  const groups: Array<{ group?: string; items: ItemsType[] }> = [];
-  const withoutGroup: ItemsType[] = [];
-  for (const item of items) {
-    if (!item.group) {
-      withoutGroup.push(item);
-      continue;
-    }
-    const group = groups.find((g) => g.group === item.group);
-    if (group) {
-      group.items.push(item);
-    } else {
-      groups.push({ group: item.group, items: [item] });
-    }
-  }
+  const { groups, withoutGroup } = getGroups(items);
+
   return (
     <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
       {groups.map(({ group, items }) => (
