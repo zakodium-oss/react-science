@@ -1,9 +1,9 @@
-import { NonIdealState, Button } from '@blueprintjs/core';
+import { NonIdealState, Button, Colors } from '@blueprintjs/core';
 import type { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
+import { rgba } from 'polished';
 import { CSSProperties, MouseEventHandler, useCallback, useMemo } from 'react';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
-import { FaCloudUploadAlt } from 'react-icons/fa';
 
 export interface DropZoneProps {
   borderColor?: string;
@@ -30,23 +30,20 @@ interface DropzoneColorProps {
 }
 
 const DropzoneDragActive = styled.div<DropzoneColorProps>`
-  font-size: 1.5em;
-  font-weight: 600;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  opacity: 0.7;
   background-color: white;
   border: 5px dashed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: black;
 
-  border-color: ${({ borderColor }) => borderColor};
+  border-color: ${({ borderColor }) =>
+    borderColor ? rgba(borderColor, 0.7) : ''};
 `;
 
 const DropzoneEmpty = styled.div<DropzoneColorProps>`
@@ -55,7 +52,6 @@ const DropzoneEmpty = styled.div<DropzoneColorProps>`
   padding: 1em;
   border: 5px dashed;
   cursor: pointer;
-  color: black;
 
   border-color: ${({ borderColor }) => borderColor};
 `;
@@ -84,7 +80,7 @@ function DropZoneContent(
   },
 ) {
   const {
-    borderColor = 'gray',
+    borderColor = Colors.GRAY3,
     children = null,
     onDrop,
     onClick,
@@ -122,8 +118,7 @@ function DropZoneContent(
       {children}
       {isDragActive ? (
         <DropzoneDragActive borderColor={borderColor}>
-          <FaCloudUploadAlt size={70} />
-          <p>Drop the files here</p>
+          <NonIdealState icon="cloud-upload" title="Drop the files here" />
         </DropzoneDragActive>
       ) : !hasChildren ? (
         <DropzoneEmpty borderColor={borderColor}>
