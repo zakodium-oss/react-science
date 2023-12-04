@@ -7,6 +7,12 @@ import { useRootLayoutContext } from '../../src/components/root-layout/RootLayou
 
 export default {
   title: 'Forms / Select',
+  decorators: [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (storyFn: any) => (
+      <div style={{ width: '100%', padding: '10px' }}>{storyFn()}</div>
+    ),
+  ],
 };
 
 interface ItemsType {
@@ -90,7 +96,7 @@ const render: ItemRenderer<ItemsType> = (
 export function OnlyOptions() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         activeItem={value}
         onItemSelect={(item) => setValue(item)}
@@ -98,6 +104,7 @@ export function OnlyOptions() {
         itemRenderer={render}
         filterable={false}
         itemsEqual={(a, b) => a.label === b.label}
+        popoverProps={{ minimal: true }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -105,13 +112,13 @@ export function OnlyOptions() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 export function OnlyCategories() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         activeItem={value}
         onItemSelect={(item) => setValue(item)}
@@ -127,20 +134,21 @@ export function OnlyCategories() {
           { label: 'Potato', group: 'Vegetables' },
           { label: 'Tomato', group: 'Vegetables' },
         ]}
+        popoverProps={{ minimal: true }}
       >
         <Button
           text={value?.label ?? 'Select'}
           rightIcon="double-caret-vertical"
         />
       </Select>
-      <p>Value outside component is {value?.label}.</p>
-    </div>
+      {/*<p>Value outside component is {value?.label}.</p>*/}
+    </>
   );
 }
 export function OptionsWithCategories() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         activeItem={value}
         onItemSelect={(item) => setValue(item)}
@@ -158,6 +166,7 @@ export function OptionsWithCategories() {
           { label: 'Pork' },
           { label: 'Beef' },
         ]}
+        popoverProps={{ minimal: true }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -165,13 +174,13 @@ export function OptionsWithCategories() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 export function CategoriesNested() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         activeItem={value}
         onItemSelect={(item) => setValue(item)}
@@ -189,6 +198,7 @@ export function CategoriesNested() {
           { label: 'Pork' },
           { label: 'Beef' },
         ]}
+        popoverProps={{ minimal: true }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -196,14 +206,14 @@ export function CategoriesNested() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 
 export function DisabledOptions() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         itemRenderer={render}
@@ -212,6 +222,7 @@ export function DisabledOptions() {
         filterable={false}
         itemsEqual={(a, b) => a.label === b.label}
         activeItem={value}
+        popoverProps={{ minimal: true }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -219,14 +230,14 @@ export function DisabledOptions() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 
 export function DisabledInCategories() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         activeItem={value}
         onItemSelect={(item) => setValue(item)}
@@ -252,14 +263,14 @@ export function DisabledInCategories() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 
 export function Disabled() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         itemRenderer={render}
@@ -275,13 +286,13 @@ export function Disabled() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 export function WithCustomStyle() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         itemRenderer={render}
@@ -298,14 +309,14 @@ export function WithCustomStyle() {
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
-    </div>
+    </>
   );
 }
 
 export function FixedValueNoopHandle() {
   const value = { label: 'Orange' };
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         onItemSelect={() => null}
@@ -320,14 +331,14 @@ export function FixedValueNoopHandle() {
         />
       </Select>
       <p>Value outside component is {value.label}.</p>
-    </div>
+    </>
   );
 }
 
 export function nullValueNoopHandle() {
   const value = null;
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         onItemSelect={() => null}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
@@ -342,14 +353,14 @@ export function nullValueNoopHandle() {
         />
       </Select>
       <p>Value outside component is {value}.</p>
-    </div>
+    </>
   );
 }
 
 export function ResetButton() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
-    <div style={{ width: '100%', padding: '10px' }}>
+    <>
       <Select
         onItemSelect={setValue}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
@@ -365,7 +376,7 @@ export function ResetButton() {
       </Select>
       <p>Value outside component is {value?.label}.</p>
       <Button onClick={() => setValue(null)}>Reset</Button>
-    </div>
+    </>
   );
 }
 
