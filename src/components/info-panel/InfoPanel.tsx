@@ -133,8 +133,9 @@ export function InfoPanel(props: InfoPanelProps) {
 function valueCell(value: number | string | object | boolean) {
   switch (typeof value) {
     case 'boolean':
+      return <ValueRenderers.Text value={value ? 'Yes' : 'No'} />;
     case 'string':
-      return <ValueRenderers.Text value={String(value)} />;
+      return <ValueRenderers.Text value={value} />;
     case 'number':
       return <ValueRenderers.Number value={value} />;
     case 'object':
