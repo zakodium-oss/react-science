@@ -31,6 +31,7 @@ export interface ToolbarItemProps {
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
+  intent?: Intent;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -65,6 +66,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const { intent, large, vertical, disabled } = useToolbarContext();
   return (
     <Button
+      {...other}
       minimal
       disabled={disabled}
       css={css`
@@ -88,7 +90,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         compact: !large,
         targetProps: { style: { flex: 'none' } },
       }}
-      {...other}
     />
   );
 };

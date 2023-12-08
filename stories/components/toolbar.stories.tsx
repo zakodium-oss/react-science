@@ -122,6 +122,7 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
           }}
           icon={item.icon}
           active={active === item.id}
+          intent={item.id.startsWith('clipboard') ? 'success' : undefined}
         />
       ))}
     </Toolbar>
@@ -174,7 +175,7 @@ export function HorizontalToolbar() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Toolbar>
+      <Toolbar intent="primary">
         {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
@@ -183,6 +184,7 @@ export function HorizontalToolbar() {
             active={state.id === item.id}
             onClick={handleChange}
             icon={item.icon}
+            intent={item.id === 'test5' ? 'danger' : undefined}
           />
         ))}
       </Toolbar>
