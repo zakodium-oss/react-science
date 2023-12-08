@@ -9,7 +9,7 @@ export function Simple() {
   return (
     <>
       <Checkbox checked={false} />
-      <Checkbox defaultIndeterminate />
+      <Checkbox indeterminate checked />
       <Checkbox checked />
     </>
   );
@@ -19,7 +19,7 @@ export function Disabled() {
   return (
     <>
       <Checkbox disabled checked={false} />
-      <Checkbox disabled />
+      <Checkbox disabled indeterminate />
       <Checkbox disabled checked />
     </>
   );
@@ -53,6 +53,7 @@ export function ControlledAndIndeterminate() {
     >
       <div>
         <Checkbox
+          indeterminate={!allChecked && (orange || apple || banana)}
           checked={allChecked}
           label="All checked"
           onChange={setAllChecked}
@@ -107,6 +108,7 @@ export function ControlledIndeterminateAndDisabled() {
     >
       <div>
         <Checkbox
+          indeterminate={!allChecked && (orange || apple || banana)}
           checked={allChecked}
           label="All checked"
           onChange={setAllChecked}
