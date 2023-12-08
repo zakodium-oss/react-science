@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.29.0](https://github.com/zakodium-oss/react-science/compare/v0.28.1...v0.29.0) (2023-12-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove ContextMenu and Dropdown components. We advise using the equivalent components provided by blueprintjs.
+* rewrite buttons to be wrappers around blueprintjs buttons
+
+### Features
+
+* remove ContextMenu and Dropdown components in favour of using blueprintjs ([#585](https://github.com/zakodium-oss/react-science/issues/585)) ([03d9ce9](https://github.com/zakodium-oss/react-science/commit/03d9ce980108245b0d305e1018ede8b17f90670f))
+* rewrite buttons to be wrappers around blueprintjs buttons ([c191026](https://github.com/zakodium-oss/react-science/commit/c191026e986e11cf097c9170cd429fe6dff2edde))
+
+
+### Bug Fixes
+
+* render explicit string literals for representing boolean values ([#589](https://github.com/zakodium-oss/react-science/issues/589)) ([40314a6](https://github.com/zakodium-oss/react-science/commit/40314a67bb899f8f9681eae1d37e71ffbd0dd853))
+* update dependencies ([#580](https://github.com/zakodium-oss/react-science/issues/580)) ([a85d339](https://github.com/zakodium-oss/react-science/commit/a85d339d06aae45371349ec7ecb2607df25ee61a))
+
 ## [0.28.1](https://github.com/zakodium-oss/react-science/compare/v0.28.0...v0.28.1) (2023-10-18)
 
 

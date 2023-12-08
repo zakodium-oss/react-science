@@ -1,3 +1,4 @@
+import { Spinner } from '@blueprintjs/core';
 import { ErrorBoundary } from 'react-error-boundary';
 import { FaBook, FaMeteor } from 'react-icons/fa';
 import { useKbsGlobal } from 'react-kbs';
@@ -20,7 +21,6 @@ import {
   Accordion,
   DropZoneContainer,
   FullscreenToolbarButton,
-  FullSpinner,
   Header,
   SplitPane,
   Toolbar,
@@ -126,8 +126,15 @@ export default function MainLayout() {
               }}
             >
               {appState.load.isLoading ? (
-                <div style={{ width: '100%', height: '100%' }}>
-                  <FullSpinner />
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Spinner />
                 </div>
               ) : (
                 <DropZoneContainer onDrop={onDrop}>
