@@ -59,13 +59,14 @@ export function WithLabel(prop: Omit<TextAreaProps, 'value' | 'onChange'>) {
         labelInfo={<span style={{ color: 'red' }}>*</span>}
       >
         <TextArea
+          id="TextAreaLabel"
           name="TextAreaLabel"
           {...prop}
           value={state}
           onChange={onChange}
         />
       </FormGroup>
-      <FormGroup label="Label of two Textarea" labelFor="oneLabel">
+      <FormGroup label="Label of two Textarea">
         <TextArea placeholder="a" />
         <TextArea placeholder="b" />
       </FormGroup>

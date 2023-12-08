@@ -1,53 +1,60 @@
-import { Checkbox, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
+import {
+  Checkbox,
+  FormGroup,
+  HTMLSelect,
+  InputGroup,
+  TextArea,
+} from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { Button, RadioGroup, Select, RadioOption } from '../../src/components';
+import { Button, RadioGroup, RadioOption } from '../../src/components';
 
 export default {
   title: 'Forms / Form',
 };
 
 const ExampleGroup = styled.div`
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   gap: 10px;
 `;
 
 export function Control() {
-  const [status, setStatus] = useState<string | undefined>('single');
+  const [status, setStatus] = useState<string>('single');
   const [question, setQuestion] = useState<number[]>([]);
   const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
-    <ExampleGroup style={{ display: 'inline-block' }}>
+    <ExampleGroup>
       <FormGroup
         label="Name"
         labelFor="name"
         labelInfo={<span style={{ color: 'red' }}>*</span>}
         intent="danger"
       >
-        <InputGroup type="text" maxLength={10} />
+        <InputGroup id="name" type="text" maxLength={10} />
       </FormGroup>
       <FormGroup label="Email" labelFor="email">
-        <InputGroup type="email" />
+        <InputGroup id="email" type="email" />
       </FormGroup>
       <FormGroup label="date of birth" labelFor="bd">
-        <InputGroup type="date" />
+        <InputGroup id="bd" type="date" />
       </FormGroup>
       <FormGroup label="Status" labelFor="status">
-        <Select
+        <HTMLSelect
+          id="status"
           options={[
-            [
-              { label: 'Single', value: 'single' },
-              { label: 'Married', value: 'married' },
-              { label: 'Divorced', value: 'divorced' },
-            ],
+            { label: 'Single', value: 'single' },
+            { label: 'Married', value: 'married' },
+            { label: 'Divorced', value: 'divorced' },
           ]}
           value={status}
-          onSelect={(value) => setStatus(value)}
+          onChange={(target) => {
+            setStatus(target.currentTarget.value);
+          }}
         />
       </FormGroup>
-      <FormGroup label="Question" labelFor="question">
+      <FormGroup label="Question">
         <Checkbox
           label="Answer 1"
           checked={question.includes(1)}
@@ -78,6 +85,7 @@ export function Control() {
       </FormGroup>
       <FormGroup label="Radio" labelFor="radio">
         <RadioGroup
+          id="radio"
           options={[
             { label: 'Option 1', value: 'option1' },
             { label: 'Option 2', value: 'option2' },
@@ -89,7 +97,7 @@ export function Control() {
         />
       </FormGroup>
       <FormGroup label="Introduction" labelFor="introduction">
-        <TextArea />
+        <TextArea id="introduction" />
       </FormGroup>
 
       <Button>Submit</Button>

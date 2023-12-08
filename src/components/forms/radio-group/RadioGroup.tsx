@@ -21,6 +21,7 @@ export interface RadioGroupProps {
   name?: string;
   disabled?: boolean;
   variant?: InputVariant;
+  id?: string;
 }
 const rootStyles = {
   basic: css({
@@ -41,6 +42,7 @@ const rootStyles = {
 };
 export function RadioGroup(props: RadioGroupProps) {
   const {
+    id,
     selected,
     type = 'classic',
     disabled: groupDisabled = false,
@@ -51,6 +53,7 @@ export function RadioGroup(props: RadioGroupProps) {
   } = props;
   return (
     <RadioGroupRadix.Root
+      id={id}
       css={[
         rootStyles.basic,
         type === 'classic' ? null : rootStyles.button(variant),
