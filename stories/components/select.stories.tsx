@@ -103,8 +103,8 @@ export function OnlyOptions() {
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
-        popoverProps={{ minimal: true }}
+        itemsEqual="label"
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -124,7 +124,7 @@ export function OnlyCategories() {
         onItemSelect={(item) => setValue(item)}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         itemListRenderer={renderMenu}
         items={[
           { label: 'Apple', group: 'Fruits' },
@@ -134,7 +134,7 @@ export function OnlyCategories() {
           { label: 'Potato', group: 'Vegetables' },
           { label: 'Tomato', group: 'Vegetables' },
         ]}
-        popoverProps={{ minimal: true }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -154,7 +154,7 @@ export function OptionsWithCategories() {
         onItemSelect={(item) => setValue(item)}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         itemListRenderer={renderMenu}
         items={[
           { label: 'Apple', group: 'Fruits' },
@@ -166,7 +166,7 @@ export function OptionsWithCategories() {
           { label: 'Pork' },
           { label: 'Beef' },
         ]}
-        popoverProps={{ minimal: true }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -186,7 +186,7 @@ export function CategoriesNested() {
         onItemSelect={(item) => setValue(item)}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         itemListRenderer={renderMenuNested}
         items={[
           { label: 'Apple', group: 'Fruits' },
@@ -198,7 +198,7 @@ export function CategoriesNested() {
           { label: 'Pork' },
           { label: 'Beef' },
         ]}
-        popoverProps={{ minimal: true }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -220,9 +220,9 @@ export function DisabledOptions() {
         onItemSelect={setValue}
         itemDisabled={(item) => item.label === 'Orange'}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         activeItem={value}
-        popoverProps={{ minimal: true }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -243,7 +243,7 @@ export function DisabledInCategories() {
         onItemSelect={(item) => setValue(item)}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         itemListRenderer={renderMenu}
         items={[
           { label: 'Apple', group: 'Fruits' },
@@ -276,11 +276,12 @@ export function Disabled() {
         itemRenderer={render}
         onItemSelect={setValue}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         activeItem={value}
         disabled
       >
         <Button
+          disabled
           text={value?.label ?? 'Select a status'}
           rightIcon="double-caret-vertical"
         />
@@ -298,7 +299,7 @@ export function WithCustomStyle() {
         itemRenderer={render}
         onItemSelect={setValue}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         activeItem={value}
         popoverContentProps={{ style: { width: '500px' } }}
       >
@@ -322,7 +323,7 @@ export function FixedValueNoopHandle() {
         onItemSelect={() => null}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         activeItem={value}
       >
         <Button
@@ -344,7 +345,7 @@ export function nullValueNoopHandle() {
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         activeItem={value}
       >
         <Button
@@ -366,7 +367,7 @@ export function ResetButton() {
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         itemRenderer={render}
         filterable={false}
-        itemsEqual={(a, b) => a.label === b.label}
+        itemsEqual="label"
         activeItem={value}
       >
         <Button
@@ -385,26 +386,36 @@ function ModalBody() {
   const context = useRootLayoutContext();
   return (
     <Modal.Body>
-      <p>Hello, world!</p>
-      {context && (
-        <Select
-          onItemSelect={setValue}
-          items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-          itemRenderer={render}
-          filterable={false}
-          itemsEqual={(a, b) => a.label === b.label}
-          activeItem={value}
-          popoverProps={{
-            portalContainer: context,
-            positioningStrategy: 'fixed',
-          }}
-        >
-          <Button
-            text={value?.label ?? 'Select a status'}
-            rightIcon="double-caret-vertical"
-          />
-        </Select>
-      )}
+      <div style={{ margin: 4 }}>
+        <p>Hello, world!</p>
+        {context && (
+          <Select
+            onItemSelect={setValue}
+            items={[
+              { label: 'Apple' },
+              { label: 'Banana' },
+              { label: 'Orange' },
+            ]}
+            itemRenderer={render}
+            filterable={false}
+            itemsEqual="label"
+            activeItem={value}
+            popoverProps={{
+              portalContainer: context,
+              positioningStrategy: 'fixed',
+            }}
+            popoverTargetProps={{
+              style: { display: 'inline-block', backgroundColor: 'red' },
+            }}
+          >
+            <Button
+              style={{ backgroundColor: 'green' }}
+              text={value?.label ?? 'Select a status'}
+              rightIcon="double-caret-vertical"
+            />
+          </Select>
+        )}
+      </div>
     </Modal.Body>
   );
 }
@@ -415,6 +426,8 @@ export function InModal() {
     <>
       <Button onClick={open}>Open</Button>
       <Modal
+        width={300}
+        height={200}
         isOpen={isOpen}
         onRequestClose={() => {
           close();
