@@ -35,7 +35,7 @@ const DropzoneDragActive = styled.div<DropzoneColorProps>`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: white;
+  background-color: rgb(255, 255, 255, 0.7);
   border: 5px dashed;
   display: flex;
   flex-direction: column;
