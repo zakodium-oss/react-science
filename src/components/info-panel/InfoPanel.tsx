@@ -111,8 +111,8 @@ export function InfoPanel(props: InfoPanelProps) {
                 <Disclosure.Panel>
                   <Table css={style.table} style={tableStyle}>
                     <Table.Header>
-                      <ValueRenderers.Title value="Parameter" />
-                      <ValueRenderers.Title value="Value" />
+                      <ValueRenderers.Header value="Parameter" />
+                      <ValueRenderers.Header value="Value" />
                     </Table.Header>
                     {content}
                   </Table>

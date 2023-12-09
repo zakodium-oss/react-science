@@ -42,9 +42,9 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
     <div>
       <Table border={false}>
         <Table.Header>
-          <ValueRenderers.Title value=" " />
-          <ValueRenderers.Title value="Name" />
-          <ValueRenderers.Title value="Options" />
+          <ValueRenderers.Header value=" " />
+          <ValueRenderers.Header value="Name" />
+          <ValueRenderers.Header value="Options" />
         </Table.Header>
         {filters.map(({ name, options }, i) => (
           <Table.Row key={name} border>

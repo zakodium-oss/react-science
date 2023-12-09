@@ -1,4 +1,6 @@
+/* eslint-disable react/no-unused-prop-types */
 /** @jsxImportSource @emotion/react */
+import { HTMLTable } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   Children,
@@ -18,11 +20,10 @@ import {
   Number,
   Object,
   Text,
-  Title,
 } from '../value-renderers';
 
 const styles = {
-  border: css({
+  hasBorder: css({
     border: '0.5px solid rgb(0, 0, 0)',
     padding: '5px',
     position: 'relative',
@@ -33,7 +34,7 @@ const styles = {
   }),
 };
 
-const TableContext = createContext({ border: true });
+const TableContext = createContext({ hasBorder: true, color: '' });
 function useTableContext() {
   const context = useContext(TableContext);
   return context;
@@ -59,26 +60,50 @@ function splitChildren(children: ReactNode) {
 }
 export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
-  border?: boolean;
+  bordered?: boolean;
+  compact?: boolean;
+  interactive?: boolean;
+  striped?: boolean;
+  hasBorder?: boolean;
+  color?: string;
 }
 
 export function Table(props: TableProps) {
-  const { border = true, children, ...tableProps } = props;
+  const {
+    hasBorder = false,
+    bordered = false,
+    compact = false,
+    interactive = false,
+    striped = false,
+    color = '',
+    children,
+    ...tableProps
+  } = props;
   const { Header, Rows } = splitChildren(children);
-  const tableContextValue = useMemo(() => ({ border }), [border]);
+
+  const tableContextValue = useMemo(
+    () => ({ hasBorder, color }),
+    [hasBorder, color],
+  );
   return (
     <TableContext.Provider value={tableContextValue}>
-      <table {...tableProps}>
+      <HTMLTable
+        bordered={bordered}
+        compact={compact}
+        interactive={interactive}
+        striped={striped}
+        {...tableProps}
+      >
         {Header}
         <tbody>{Rows}</tbody>
-      </table>
+      </HTMLTable>
     </TableContext.Provider>
   );
 }
 
 function useRowChildren(children: ReactNode) {
   const cells: ReactElement[] = [];
-  const { border } = useTableContext();
+  const { hasBorder, color } = useTableContext();
   for (const child of Children.toArray(children)) {
     if (
       typeof child === 'object' &&
@@ -87,20 +112,30 @@ function useRowChildren(children: ReactNode) {
         child.type === Boolean ||
         child.type === Text ||
         child.type === Number ||
-        child.type === Title ||
         child.type === Object ||
         child.type === Header ||
         child.type === Component)
     ) {
       if (child.type === Header) {
         cells.push(
-          <th key={child.key} css={border ? styles.border : styles.noBorder}>
+          <th
+            key={child.key}
+            style={{ color }}
+            css={hasBorder ? styles.hasBorder : styles.noBorder}
+          >
             {child}
           </th>,
         );
       } else {
         cells.push(
-          <td key={child.key} css={border ? styles.border : styles.noBorder}>
+          <td
+            key={child.key}
+            style={{
+              color,
+              position: 'relative',
+            }}
+            css={hasBorder ? styles.hasBorder : styles.noBorder}
+          >
             {child}
           </td>,
         );
@@ -114,19 +149,19 @@ function useRowChildren(children: ReactNode) {
   return { cells };
 }
 
-function Row({ children, style = {}, border = false }: TableProps) {
+function Row({ children, style = {}, hasBorder = false }: TableProps) {
   const { cells } = useRowChildren(children);
   return (
-    <tr style={{ border: border ? '1px solid black' : '', ...style }}>
+    <tr style={{ border: hasBorder ? '1px solid black' : '', ...style }}>
       {cells}
     </tr>
   );
 }
 Table.Row = Row;
-Table.Header = ({ children, style, border = false }: TableProps) => {
+Table.Header = ({ children, hasBorder, style }: TableProps) => {
   return (
     <thead>
-      <Table.Row border={border} style={style}>
+      <Table.Row hasBorder={hasBorder} style={style}>
         {children}
       </Table.Row>
     </thead>
