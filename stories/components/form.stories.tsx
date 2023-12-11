@@ -1,10 +1,12 @@
 import {
   Checkbox,
   FormGroup,
-  HTMLSelect,
   InputGroup,
+  MenuItem,
   TextArea,
 } from '@blueprintjs/core';
+import { HTMLSelect } from '@blueprintjs/core/lib/esnext';
+import { ItemRenderer, Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -18,14 +20,33 @@ const ExampleGroup = styled.div`
   display: inline-block;
   flex-direction: column;
   gap: 10px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  padding: 10px;
 `;
+const render: ItemRenderer<string> = (
+  label,
+  { handleClick, handleFocus, modifiers },
+) => (
+  <MenuItem
+    active={modifiers.active}
+    icon={modifiers.active ? 'tick' : 'blank'}
+    key={label}
+    onClick={handleClick}
+    onFocus={handleFocus}
+    roleStructure="listoption"
+    text={label}
+  />
+);
 
 export function Control() {
-  const [status, setStatus] = useState<string>('single');
+  const [status, setStatus] = useState<string | undefined>(undefined);
+  const [country, setCountry] = useState<string | undefined>(undefined);
   const [question, setQuestion] = useState<number[]>([]);
   const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
-    <ExampleGroup>
+    <ExampleGroup style={{ display: 'inline-block' }}>
       <FormGroup
         label="Name"
         labelFor="name"
@@ -54,6 +75,23 @@ export function Control() {
           }}
         />
       </FormGroup>
+      <FormGroup label="Country" labelFor="country">
+        <Select
+          items={['USA', 'Switzerland', 'Germany', 'France', 'UK']}
+          itemRenderer={render}
+          onItemSelect={(value) => {
+            setCountry(value);
+          }}
+          filterable={false}
+          activeItem={country}
+        >
+          <Button
+            text={country ?? 'Select a country'}
+            rightIcon="double-caret-vertical"
+          />
+        </Select>
+      </FormGroup>
+
       <FormGroup label="Question">
         <Checkbox
           label="Answer 1"

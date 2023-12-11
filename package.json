@@ -60,6 +60,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
+    "@blueprintjs/select": "^5.0.19",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.17",
