@@ -1,3 +1,4 @@
+import type { IconName } from '@blueprintjs/icons';
 import { useState } from 'react';
 import type { FileWithPath } from 'react-dropzone';
 
@@ -13,7 +14,11 @@ export default {
 };
 
 interface DropZoneStoryProps {
-  color: string;
+  emptyIcon?: IconName;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  emptyButtonText?: string;
+  emptyButtonIcon?: IconName;
 }
 
 function fileValidator(file: File) {
@@ -27,11 +32,12 @@ function fileValidator(file: File) {
 }
 
 export function Control({
-  color,
-  emptyText,
-}: DropZoneStoryProps & {
-  emptyText?: string;
-}) {
+  emptyIcon,
+  emptyTitle,
+  emptyDescription,
+  emptyButtonText,
+  emptyButtonIcon,
+}: DropZoneStoryProps) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div
@@ -48,11 +54,14 @@ export function Control({
       >
         <DropZone
           fileValidator={fileValidator}
-          color={color}
-          emptyText={emptyText}
           onDrop={(files: FileWithPath[]) => {
             setFiles(files);
           }}
+          emptyIcon={emptyIcon}
+          emptyTitle={emptyTitle}
+          emptyDescription={emptyDescription}
+          emptyButtonText={emptyButtonText}
+          emptyButtonIcon={emptyButtonIcon}
         />
       </div>
       {files.length > 0 && (
@@ -74,17 +83,19 @@ export function Control({
 }
 
 Control.args = {
-  color: 'black',
-  emptyText: 'Click or drag and drop to add data.',
+  emptyIcon: 'import',
+  emptyTitle: 'No data loaded',
+  emptyDescription: 'You can load data by drag-and-dropping files here',
+  emptyButtonText: 'Select files',
+  emptyButtonIcon: 'plus',
 };
 
-export function DropZoneContainerControl({ color }: DropZoneStoryProps) {
+export function DropZoneContainerControl() {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   return (
     <div style={{ height: 500 }}>
       <DropZoneContainer
         fileValidator={fileValidator}
-        color={color}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
         }}
