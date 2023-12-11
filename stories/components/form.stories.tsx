@@ -1,26 +1,29 @@
-import { MenuItem } from '@blueprintjs/core';
-import { Select, ItemRenderer } from '@blueprintjs/select';
+import {
+  Checkbox,
+  FormGroup,
+  InputGroup,
+  MenuItem,
+  TextArea,
+} from '@blueprintjs/core';
+import { HTMLSelect } from '@blueprintjs/core/lib/esnext';
+import { ItemRenderer, Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import {
-  Button,
-  Checkbox,
-  Field,
-  Input,
-  RadioGroup,
-  TextArea,
-  RadioOption,
-} from '../../src/components';
+import { Button, RadioGroup, RadioOption } from '../../src/components';
 
 export default {
   title: 'Forms / Form',
 };
 
 const ExampleGroup = styled.div`
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   gap: 10px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  padding: 10px;
 `;
 const render: ItemRenderer<string> = (
   label,
@@ -39,39 +42,62 @@ const render: ItemRenderer<string> = (
 
 export function Control() {
   const [status, setStatus] = useState<string | undefined>(undefined);
+  const [country, setCountry] = useState<string | undefined>(undefined);
   const [question, setQuestion] = useState<number[]>([]);
   const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
   return (
     <ExampleGroup style={{ display: 'inline-block' }}>
-      <Field label="Name" name="name" required>
-        <Input type="text" maxLength={10} />
-      </Field>
-      <Field label="Email" name="email">
-        <Input type="email" />
-      </Field>
-      <Field label="date of birth" name="bd">
-        <Input type="date" />
-      </Field>
-      <Field label="Status" name="status">
+      <FormGroup
+        label="Name"
+        labelFor="name"
+        labelInfo={<span style={{ color: 'red' }}>*</span>}
+        intent="danger"
+      >
+        <InputGroup id="name" type="text" maxLength={10} />
+      </FormGroup>
+      <FormGroup label="Email" labelFor="email">
+        <InputGroup id="email" type="email" />
+      </FormGroup>
+      <FormGroup label="date of birth" labelFor="bd">
+        <InputGroup id="bd" type="date" />
+      </FormGroup>
+      <FormGroup label="Status" labelFor="status">
+        <HTMLSelect
+          id="status"
+          options={[
+            { label: 'Single', value: 'single' },
+            { label: 'Married', value: 'married' },
+            { label: 'Divorced', value: 'divorced' },
+          ]}
+          value={status}
+          onChange={(target) => {
+            setStatus(target.currentTarget.value);
+          }}
+        />
+      </FormGroup>
+      <FormGroup label="Country" labelFor="country">
         <Select
-          items={['Single', 'Married', 'Divorced']}
+          items={['USA', 'Switzerland', 'Germany', 'France', 'UK']}
           itemRenderer={render}
-          onItemSelect={setStatus}
+          onItemSelect={(value) => {
+            setCountry(value);
+          }}
           filterable={false}
-          activeItem={status}
+          activeItem={country}
         >
           <Button
-            text={status ?? 'Select a status'}
+            text={country ?? 'Select a country'}
             rightIcon="double-caret-vertical"
           />
         </Select>
-      </Field>
-      <Field label="Question" name="question">
+      </FormGroup>
+
+      <FormGroup label="Question">
         <Checkbox
           label="Answer 1"
           checked={question.includes(1)}
-          onChange={(checked) =>
-            checked
+          onChange={({ target }) =>
+            target.checked
               ? setQuestion([...question, 1])
               : setQuestion(question.filter((item) => item !== 1))
           }
@@ -79,8 +105,8 @@ export function Control() {
         <Checkbox
           label="Answer 2"
           checked={question.includes(2)}
-          onChange={(checked) =>
-            checked
+          onChange={({ target }) =>
+            target.checked
               ? setQuestion([...question, 2])
               : setQuestion(question.filter((item) => item !== 2))
           }
@@ -88,15 +114,16 @@ export function Control() {
         <Checkbox
           label="Answer 3"
           checked={question.includes(3)}
-          onChange={(checked) =>
-            checked
+          onChange={({ target }) =>
+            target.checked
               ? setQuestion([...question, 3])
               : setQuestion(question.filter((item) => item !== 3))
           }
         />
-      </Field>
-      <Field label="Radio" name="radio">
+      </FormGroup>
+      <FormGroup label="Radio" labelFor="radio">
         <RadioGroup
+          id="radio"
           options={[
             { label: 'Option 1', value: 'option1' },
             { label: 'Option 2', value: 'option2' },
@@ -106,10 +133,10 @@ export function Control() {
           onSelect={setRadio}
           name="radio"
         />
-      </Field>
-      <Field label="Introduction" name="introduction">
-        <TextArea />
-      </Field>
+      </FormGroup>
+      <FormGroup label="Introduction" labelFor="introduction">
+        <TextArea id="introduction" />
+      </FormGroup>
 
       <Button>Submit</Button>
     </ExampleGroup>
