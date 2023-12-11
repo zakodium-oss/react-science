@@ -23,8 +23,14 @@ export function Button(props: ButtonProps) {
     ? BlueprintAnchorButton
     : BlueprintButton;
   return (
-    <Tooltip fill={tooltipProps?.fill || buttonProps.fill} {...tooltipProps}>
-      <InnerButton {...buttonProps}>{children}</InnerButton>
-    </Tooltip>
+    <Tooltip
+      fill={tooltipProps?.fill || buttonProps.fill}
+      {...tooltipProps}
+      renderTarget={(targetProps) => (
+        <InnerButton {...targetProps} {...buttonProps}>
+          {children}
+        </InnerButton>
+      )}
+    />
   );
 }
