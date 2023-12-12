@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.30.1](https://github.com/zakodium-oss/react-science/compare/v0.30.0...v0.30.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* use tinycolor to compute rgba ([d29b40d](https://github.com/zakodium-oss/react-science/commit/d29b40d64d7c2d3374cf2c644618297c2fc77170))
+
+## [0.30.0](https://github.com/zakodium-oss/react-science/compare/v0.29.0...v0.30.0) (2023-12-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove Select component. Use blueprintjs select component instead
+* remove our Input, Textarea, Checkbox and Field components. Use blueprintjs components directly instead.
+
+### Features
+
+* remove Input, Textarea, Checkbox and Field ([#579](https://github.com/zakodium-oss/react-science/issues/579)) ([104e2ad](https://github.com/zakodium-oss/react-science/commit/104e2ad54bf39d11f235381561fb4e1766a15f97))
+* remove Select component ([#588](https://github.com/zakodium-oss/react-science/issues/588)) ([f695596](https://github.com/zakodium-oss/react-science/commit/f69559624335640473dc4dd6e5bc7098e427926d))
+* use NonIdealState for empty DropZone ([#586](https://github.com/zakodium-oss/react-science/issues/586)) ([4ed7560](https://github.com/zakodium-oss/react-science/commit/4ed75604ccf19a1983957a546f8aeb57f5e7914f))
+
+
+### Bug Fixes
+
+* do not render button in span in Button component ([#595](https://github.com/zakodium-oss/react-science/issues/595)) ([88e0b37](https://github.com/zakodium-oss/react-science/commit/88e0b37afb49412e9f5b42b077f403fe6eea56cc))
+
 ## [0.29.0](https://github.com/zakodium-oss/react-science/compare/v0.28.1...v0.29.0) (2023-12-06)
 
 
