@@ -115,7 +115,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         }
       `}
       intent={intent}
-      style={{ position: 'relative', fontSize: '1.25em' }}
+      style={{ position: 'relative', fontSize: '1.25em', width: 'auto' }}
       type="button"
       active={active}
       icon={icon}
