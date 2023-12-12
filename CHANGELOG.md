@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.1](https://github.com/zakodium-oss/react-science/compare/v0.30.0...v0.30.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* use tinycolor to compute rgba ([d29b40d](https://github.com/zakodium-oss/react-science/commit/d29b40d64d7c2d3374cf2c644618297c2fc77170))
+
 ## [0.30.0](https://github.com/zakodium-oss/react-science/compare/v0.29.0...v0.30.0) (2023-12-12)
 
 
