@@ -1,9 +1,9 @@
-import { NonIdealState, Button, Colors } from '@blueprintjs/core';
+import { Button, Colors, NonIdealState } from '@blueprintjs/core';
 import type { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
-import { rgba } from 'polished';
 import { CSSProperties, MouseEventHandler, useCallback, useMemo } from 'react';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
+import tinycolor from 'tinycolor2';
 
 export interface DropZoneProps {
   borderColor?: string;
@@ -43,12 +43,12 @@ const DropzoneDragActive = styled.div<DropzoneColorProps>`
   justify-content: center;
 
   border-color: ${({ borderColor }) =>
-    borderColor ? rgba(borderColor, 0.7) : ''};
+    borderColor ?? tinycolor(borderColor).setAlpha(0.7).toRgbString()};
 `;
 
 const DropzoneEmpty = styled.div<DropzoneColorProps>`
   :hover .dropzone-button {
-    background-color: ${rgba(Colors.BLUE3, 0.15)};
+    background-color: ${tinycolor(Colors.BLUE3).setAlpha(0.15).toRgbString()};
   }
   width: 100%;
   height: 100%;
