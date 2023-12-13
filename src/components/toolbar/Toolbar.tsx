@@ -106,11 +106,17 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     onClick,
     title,
     id,
-    intent: intentProps,
+    intent: itemIntent,
     ...other
   } = props;
 
-  const { intent, large, vertical, disabled } = useToolbarContext();
+  const {
+    intent: toolbarIntent,
+    large,
+    vertical,
+    disabled,
+  } = useToolbarContext();
+  const intent = itemIntent || toolbarIntent;
   return (
     <Button
       minimal
@@ -120,7 +126,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
           color: ${Colors.DARK_GRAY3};
         }
       `}
-      intent={intentProps || intent}
+      intent={intent}
       style={{ position: 'relative', fontSize: '1.25em', width: 'auto' }}
       type="button"
       active={active}
@@ -131,7 +137,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       tooltipProps={{
         content: title,
         placement: vertical ? 'right' : 'bottom',
-        intent: intentProps || intent,
+        intent,
         compact: !large,
         targetProps: { style: { flex: 'none' } },
       }}
