@@ -26,6 +26,8 @@ export async function biologicLoader(
   for (const file of fileCollection.files) {
     try {
       if (/\.mpr$/i.test(file.name)) {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const mpr = parseMPR(await file.arrayBuffer());
         const meta = mpr.settings.variables;
         const info = getMeasurementInfoFromFile(
@@ -41,6 +43,8 @@ export async function biologicLoader(
         };
         entries.push(result);
       } else if (/\.mpt$/i.test(file.name)) {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const { data, settings } = parseMPT(await file.arrayBuffer());
         if (data.variables) {
           const metaData = settings?.variables;

@@ -23,6 +23,8 @@ export async function loadMeasurements(
   const logs: ParserLog[] = [];
   const { loaders = [], enhancers = {}, logger = true } = options;
   for (const loader of loaders) {
+    // TODO: load in parallel
+    // eslint-disable-next-line no-await-in-loop
     const loaderData = await loader(fileCollection, logger ? logs : undefined);
     for (const { entries } of Object.values(loaderData)) {
       for (const entry of entries) {

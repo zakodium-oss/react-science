@@ -6,7 +6,7 @@
     "./stories",
     "./tests",
     "**/__tests__",
-    "playwright*.ts",
+    "playwright-*.mts",
     "./playwright"
   ],
   "compilerOptions": {

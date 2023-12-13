@@ -18,7 +18,7 @@ export function Basic() {
         height: 300,
       }}
     >
-      <PanelHeader total={3} onClickSettings={() => {}}>
+      <PanelHeader total={3} onClickSettings={() => void 0}>
         <Button minimal intent="danger" icon="trash" />
         <Button minimal icon="filter" />
         <Button minimal icon="plus" />
@@ -74,7 +74,7 @@ export function WithAccordion() {
     >
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
-          <PanelHeader total={20} onClickSettings={() => {}}>
+          <PanelHeader total={20} onClickSettings={() => void 0}>
             <Button minimal intent="danger" icon="trash" />
             <Button minimal icon="filter" />
             <Button minimal icon="plus" />
@@ -82,7 +82,7 @@ export function WithAccordion() {
           This is the first content
         </Accordion.Item>
         <Accordion.Item title="Second Item">
-          <PanelHeader current={2} total={3} onClickSettings={() => {}}>
+          <PanelHeader current={2} total={3} onClickSettings={() => void 0}>
             <Button minimal icon="filter" />
           </PanelHeader>
           This is the content of the second item

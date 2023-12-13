@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/experimental-ct-react';
 
-import config from './playwright-base.config';
+import config from './playwright-base.config.mjs';
 
 config.testDir = './tests/components/';
 

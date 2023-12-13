@@ -21,6 +21,8 @@ export async function spcLoader(
   for (const file of fileCollection) {
     if (/\.spc$/i.test(file.name)) {
       try {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const parsed = parse(await file.arrayBuffer());
         const spectraType: MeasurementKind = guessSpectraType(parsed.meta);
         if (!measurements[spectraType]) {

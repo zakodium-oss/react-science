@@ -16,6 +16,8 @@ export async function cdfLoader(
   for (const file of fileCollection) {
     if (/\.cdf$/i.test(file.name)) {
       try {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const reader = new NetCDFReader(await file.arrayBuffer());
 
         if (
