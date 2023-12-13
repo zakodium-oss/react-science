@@ -15,7 +15,7 @@ interface ConfirmModalProps {
   requestCloseOnBackdrop?: boolean;
   onConfirm: () => void;
   onCancel?: () => void;
-  onRequestClose?: () => void;
+  onRequestClose: () => void;
   saveText?: string;
   cancelText?: string;
   headerColor: string;
