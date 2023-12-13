@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.32.0](https://github.com/zakodium-oss/react-science/compare/v0.31.0...v0.32.0) (2023-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Modal's and ConfirmModal's `onRequestClose` is now mandatory. Note that a Modal has to always be closed (`isOpen` must be set to `false`) when `onRequestClose` is called. This is driven by a change in the HTML spec that ensures a web page cannot indefinitely keep a dialog open. See https://github.com/whatwg/html/pull/9462 and https://bugs.chromium.org/p/chromium/issues/detail?id=1511166#c1
+
+### Bug Fixes
+
+* make Modal's onRequestClose mandatory and call it on close ([#602](https://github.com/zakodium-oss/react-science/issues/602)) ([e3f753f](https://github.com/zakodium-oss/react-science/commit/e3f753f45fc7e6c7acaba81ac6c89cd9b1696fd1))
+
 ## [0.31.0](https://github.com/zakodium-oss/react-science/compare/v0.30.1...v0.31.0) (2023-12-13)
 
 
