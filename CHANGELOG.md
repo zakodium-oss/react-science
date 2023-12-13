@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.31.0](https://github.com/zakodium-oss/react-science/compare/v0.30.1...v0.31.0) (2023-12-13)
+
+
+### Features
+
+* fix toolbar item alignement and allow different intents on each item ([#592](https://github.com/zakodium-oss/react-science/issues/592)) ([b54779b](https://github.com/zakodium-oss/react-science/commit/b54779bb0edb1d1f27463ffc1ec484531690dafe))
+
+
+### Bug Fixes
+
+* correct toolbar layout when items should fit the width of the container ([#599](https://github.com/zakodium-oss/react-science/issues/599)) ([6ab507f](https://github.com/zakodium-oss/react-science/commit/6ab507f5545232358c427eaed80e3bb32edebbec))
+
 ## [0.30.1](https://github.com/zakodium-oss/react-science/compare/v0.30.0...v0.30.1) (2023-12-12)
 
 
