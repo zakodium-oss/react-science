@@ -1,11 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {
-  ButtonGroup,
-  ButtonProps,
-  Classes,
-  Colors,
-  Intent,
-} from '@blueprintjs/core';
+import { ButtonGroup, Classes, Colors, Intent } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   ReactElement,
@@ -15,7 +9,7 @@ import {
   useRef,
 } from 'react';
 
-import { Button } from '../index';
+import { Button, ButtonProps } from '../index';
 
 import {
   ToolbarContext,
@@ -43,6 +37,7 @@ export interface ToolbarItemProps {
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
+  intent?: Intent;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -54,7 +49,6 @@ export function Toolbar(props: ToolbarProps) {
     () => ({ intent, large, vertical, disabled }),
     [intent, large, vertical, disabled],
   );
-
   const ref = useRef<HTMLDivElement>(null);
 
   // Work around wrong width on vertical flex when wrapping
@@ -87,13 +81,17 @@ export function Toolbar(props: ToolbarProps) {
       return () => observer.unobserve(element);
     }
   }, [vertical]);
+
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
         ref={ref}
         vertical={vertical}
         large={large}
-        style={{ flexWrap: 'wrap', borderRight: vertical ? border : undefined }}
+        style={{
+          flexWrap: 'wrap',
+          borderRight: vertical ? border : undefined,
+        }}
       >
         {children}
       </ButtonGroup>
@@ -102,9 +100,23 @@ export function Toolbar(props: ToolbarProps) {
 }
 
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
-  const { active = false, icon, onClick, title, id, ...other } = props;
+  const {
+    active = false,
+    icon,
+    onClick,
+    title,
+    id,
+    intent: itemIntent,
+    ...other
+  } = props;
 
-  const { intent, large, vertical, disabled } = useToolbarContext();
+  const {
+    intent: toolbarIntent,
+    large,
+    vertical,
+    disabled,
+  } = useToolbarContext();
+  const intent = itemIntent || toolbarIntent;
   return (
     <Button
       minimal
@@ -120,15 +132,14 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       active={active}
       icon={icon}
       onClick={() => {
-        if (onClick) {
-          onClick(props);
-        }
+        onClick?.(props);
       }}
       tooltipProps={{
         content: title,
         placement: vertical ? 'right' : 'bottom',
         intent,
         compact: !large,
+        targetProps: { style: { flex: 'none' } },
       }}
       {...other}
     />
