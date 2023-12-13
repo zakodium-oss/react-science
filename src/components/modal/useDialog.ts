@@ -8,20 +8,21 @@ import {
 } from 'react';
 import { useKbsDisableGlobal } from 'react-kbs';
 
-import { useOnOff } from '../index';
+import { useOnOff } from '../hooks/useOnOff';
 
 interface UseDialogOptions {
   dialogRef: RefObject<HTMLDialogElement>;
   isOpen: boolean;
   requestCloseOnEsc: boolean;
   requestCloseOnBackdrop: boolean;
-  onRequestClose?: () => void;
+  onRequestClose: () => void;
 }
 
 interface UseDialogReturn {
   dialogProps: {
     onClick: MouseEventHandler<HTMLDialogElement>;
     onCancel: ReactEventHandler<HTMLDialogElement>;
+    onClose: UseDialogOptions['onRequestClose'];
   };
   isModalShown: boolean;
 }
@@ -50,12 +51,11 @@ export function useDialog({
 
   const onCancel = useCallback<ReactEventHandler<HTMLDialogElement>>(
     (event) => {
-      event.preventDefault();
-      if (requestCloseOnEsc && onRequestClose) {
-        onRequestClose();
+      if (!requestCloseOnEsc) {
+        event.preventDefault();
       }
     },
-    [onRequestClose, requestCloseOnEsc],
+    [requestCloseOnEsc],
   );
 
   const onClick = useCallback<MouseEventHandler<HTMLDialogElement>>(
@@ -77,15 +77,15 @@ export function useDialog({
       // Since the dialog has no size of itself, this condition is only
       // `true` when we click on the backdrop.
       if (!isInDialog && requestCloseOnBackdrop) {
-        onRequestClose?.();
+        onRequestClose();
       }
     },
-    [dialogRef, requestCloseOnBackdrop, onRequestClose],
+    [requestCloseOnBackdrop, onRequestClose, dialogRef],
   );
 
   const dialogProps = useMemo<UseDialogReturn['dialogProps']>(
-    () => ({ onClick, onCancel }),
-    [onClick, onCancel],
+    () => ({ onClick, onCancel, onClose: onRequestClose }),
+    [onClick, onCancel, onRequestClose],
   );
 
   return {

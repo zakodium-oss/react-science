@@ -14,7 +14,7 @@ export interface ModalProps {
   requestCloseOnEsc?: boolean;
   hasCloseButton?: boolean;
   requestCloseOnBackdrop?: boolean;
-  onRequestClose?: () => void;
+  onRequestClose: () => void;
   maxWidth?: number;
   width?: number;
   height?: number;
