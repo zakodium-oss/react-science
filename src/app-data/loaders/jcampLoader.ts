@@ -21,6 +21,8 @@ export async function jcampLoader(
   for (const file of fileCollection) {
     if (/(?:\.jdx|\.dx)$/i.test(file.name)) {
       try {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const parsed = convert(await file.text(), { keepRecordsRegExp: /.*/ });
         for (const measurement of parsed.flatten) {
           let kind: MeasurementKind | undefined;

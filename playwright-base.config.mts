@@ -1,6 +1,6 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
-import viteConfig from './vite.config';
+import viteConfig from './vite.config.mjs';
 
 const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,

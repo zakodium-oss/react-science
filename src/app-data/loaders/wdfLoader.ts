@@ -23,6 +23,8 @@ export async function wdfLoader(
   for (const file of fileCollection) {
     if (/\.wdf$/i.test(file.name)) {
       try {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const parsed = parse(await file.arrayBuffer());
         entries.push({
           meta: parsed.fileHeader,

@@ -18,6 +18,8 @@ export async function cary500Loader(
   for (const file of fileCollection) {
     if (/\.csv$/i.test(file.name)) {
       try {
+        // TODO: load in parallel
+        // eslint-disable-next-line no-await-in-loop
         const experiments = await convert(file);
         for (const experiment of experiments) {
           entries.push(experiment);

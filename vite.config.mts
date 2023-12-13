@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { splitVendorChunkPlugin } from 'vite';
@@ -7,13 +7,16 @@ import { defineConfig } from 'vitest/config';
 
 const plugins = [react(), splitVendorChunkPlugin()];
 
-const pages = fs.readdirSync(path.join(__dirname, 'pages'));
+const pages = fs.readdirSync(new URL('pages', import.meta.url));
 
 const rollupOptions = {
   input: {
-    index: path.join(__dirname, 'index.html'),
+    index: fileURLToPath(new URL('index.html', import.meta.url)),
     ...Object.fromEntries(
-      pages.map((page) => [page, path.join(__dirname, 'pages', page)]),
+      pages.map((page) => [
+        page,
+        fileURLToPath(new URL(`pages/${page}`, import.meta.url)),
+      ]),
     ),
   },
 };

@@ -20,7 +20,7 @@
     "./stories",
     "./tests",
     "./playwright",
-    "playwright-*.ts"
+    "playwright-*.mts"
   ],
   "exclude": ["node_modules"]
 }
