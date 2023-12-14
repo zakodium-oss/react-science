@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.2](https://github.com/zakodium-oss/react-science/compare/v0.32.1...v0.32.2) (2023-12-14)
+
+
+### Bug Fixes
+
+* re-enable cjs build ([#608](https://github.com/zakodium-oss/react-science/issues/608)) ([8df2be7](https://github.com/zakodium-oss/react-science/commit/8df2be7e410421dc11688adc68ec358243dcfcf5))
+
 ## [0.32.1](https://github.com/zakodium-oss/react-science/compare/v0.32.0...v0.32.1) (2023-12-14)
 
 
