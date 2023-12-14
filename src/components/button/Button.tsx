@@ -1,8 +1,8 @@
 import {
-  Button as BlueprintButton,
   AnchorButton as BlueprintAnchorButton,
-  ButtonProps as BlueprintButtonProps,
   AnchorButtonProps as BlueprintAnchorButtonProps,
+  Button as BlueprintButton,
+  ButtonProps as BlueprintButtonProps,
   Tooltip,
   TooltipProps,
 } from '@blueprintjs/core';
@@ -26,7 +26,7 @@ export function Button(props: ButtonProps) {
     <Tooltip
       fill={tooltipProps?.fill || buttonProps.fill}
       {...tooltipProps}
-      renderTarget={(targetProps) => (
+      renderTarget={({ isOpen, ...targetProps }) => (
         <InnerButton {...targetProps} {...buttonProps}>
           {children}
         </InnerButton>
