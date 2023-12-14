@@ -3,6 +3,6 @@
   "compilerOptions": {
     "moduleResolution": "Node",
     "module": "CommonJS",
-    "outDir": "lib",
+    "outDir": "lib"
   }
 }
