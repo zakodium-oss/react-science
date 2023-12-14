@@ -127,7 +127,12 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         }
       `}
       intent={intent}
-      style={{ position: 'relative', fontSize: '1.25em', width: 'fit-content' }}
+      style={{
+        position: 'relative',
+        fontSize: '1.25em',
+        width: 'fit-content',
+        flex: 'none',
+      }}
       type="button"
       active={active}
       icon={icon}
@@ -139,7 +144,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         placement: vertical ? 'right' : 'bottom',
         intent,
         compact: !large,
-        targetProps: { style: { flex: 'none' } },
       }}
       {...other}
     />
