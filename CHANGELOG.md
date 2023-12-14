@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.1](https://github.com/zakodium-oss/react-science/compare/v0.32.0...v0.32.1) (2023-12-14)
+
+
+### Bug Fixes
+
+* avoid passing wrong props to toolbar item and underlying button ([02c7b1d](https://github.com/zakodium-oss/react-science/commit/02c7b1d7fcca7bb80c22e5a1e7152bb3b65eee09))
+
 ## [0.32.0](https://github.com/zakodium-oss/react-science/compare/v0.31.0...v0.32.0) (2023-12-13)
 
 
