@@ -1,18 +1,6 @@
 {
-  "extends": "./tsconfig.json",
-  "exclude": [
-    "./src/pages",
-    "./src/test-utils.ts",
-    "./stories",
-    "./tests",
-    "**/__tests__",
-    "playwright-*.mts",
-    "./playwright"
-  ],
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "outDir": "lib-esm"
   }
 }

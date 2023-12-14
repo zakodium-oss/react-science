@@ -13,7 +13,6 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "jsx": "react-jsx",
-    "outDir": "lib"
   },
   "include": [
     "./src",

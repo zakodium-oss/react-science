@@ -104,6 +104,7 @@ typings/
 
 # Build output
 lib-esm
+lib
 
 build
 dist
