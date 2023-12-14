@@ -37,7 +37,7 @@
     "createData": "npm run prepack && node scripts/createData",
     "dev": "echo Use npm run dev-app or npm run storybook && exit 1",
     "dev-app": "vite --open /pages/demo.html",
-    "eslint": "eslint .",
+    "eslint": "eslint . --cache",
     "eslint-fix": "npm run eslint -- --fix",
     "playwright": "npm run playwright-ct -- --project chromium && npm run playwright-e2e -- --project chromium",
     "playwright-ct": "playwright test -c playwright-ct.config.mts",
