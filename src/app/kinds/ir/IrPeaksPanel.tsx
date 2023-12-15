@@ -65,7 +65,7 @@ export function IrPeaksPanel(props: IrPeaksPanelProps) {
     getSortedRowModel: getSortedRowModel(),
   });
   return (
-    <Table>
+    <Table bordered>
       <Table.Header>
         {table
           .getHeaderGroups()
