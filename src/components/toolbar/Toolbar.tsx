@@ -17,11 +17,13 @@ import {
   useToolbarContext,
 } from './toolbarContext';
 
-export interface ToolbarProps {
-  vertical?: boolean;
-  large?: boolean;
+interface ToolbarBaseProps {
   intent?: Intent;
   disabled?: boolean;
+}
+export interface ToolbarProps extends ToolbarBaseProps {
+  vertical?: boolean;
+  large?: boolean;
   children?:
     | Array<ReactElement<ToolbarItemProps>>
     | ReactElement<ToolbarItemProps>
@@ -30,14 +32,13 @@ export interface ToolbarProps {
     | null;
 }
 
-export interface ToolbarItemProps {
+export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
   title: string;
   icon: ButtonProps['icon'];
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
-  intent?: Intent;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -107,16 +108,18 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     title,
     id,
     intent: itemIntent,
+    disabled: itemDisabled,
     ...other
   } = props;
 
   const {
     intent: toolbarIntent,
+    disabled: toolbarDisabled,
     large,
     vertical,
-    disabled,
   } = useToolbarContext();
-  const intent = itemIntent || toolbarIntent;
+  const intent = itemIntent ?? toolbarIntent;
+  const disabled = itemDisabled ?? toolbarDisabled;
   return (
     <Button
       minimal
