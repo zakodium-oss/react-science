@@ -24,6 +24,7 @@ type ToolbarItems = Array<{
   icon: ButtonProps['icon'];
   title: string;
   id: string;
+  disabled?: boolean;
 }>;
 
 const itemsBlueprintIcons: ToolbarItems = [
@@ -38,7 +39,7 @@ const itemsBlueprintIcons: ToolbarItems = [
   { id: 'test1', icon: 'undo', title: 'Undo' },
   { id: 'test2', icon: 'paperclip', title: 'Attachment' },
   { id: 'test3', icon: 'help', title: 'Help' },
-  { id: 'test4', icon: 'lab-test', title: 'Lab' },
+  { id: 'test4', icon: 'lab-test', title: 'Lab', disabled: true },
   { id: 'test5', icon: 'trash', title: 'Trash' },
 ];
 
@@ -103,6 +104,7 @@ const itemsMixedIcons: ToolbarItems = [
     id: 'credit-card-bi',
     icon: <BiCreditCard />,
     title: 'Box icons credit card icon',
+    disabled: true,
   },
 ];
 
@@ -175,7 +177,7 @@ export function HorizontalToolbar() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Toolbar intent="primary">
+      <Toolbar intent="primary" disabled={false}>
         {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
@@ -185,6 +187,7 @@ export function HorizontalToolbar() {
             onClick={handleChange}
             icon={item.icon}
             intent={item.id === 'test5' ? 'danger' : undefined}
+            disabled={item.disabled ?? undefined}
           />
         ))}
       </Toolbar>
