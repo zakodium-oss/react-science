@@ -20,7 +20,6 @@ interface InfoPanelProps {
   data?: InfoPanelData[];
   titleStyle?: CSSProperties;
   inputStyle?: CSSProperties;
-  tableStyle?: CSSProperties;
 }
 const style = {
   container: css({
@@ -37,23 +36,11 @@ const style = {
     gap: 5,
     padding: '5px 2px',
   }),
-  table: css`
-    width: 100%;
-    td:first-of-type {
-      width: 30%;
-    }
-  `,
 };
 
 export function InfoPanel(props: InfoPanelProps) {
   const [search, setSearch] = useState('');
-  const {
-    title = 'Information',
-    data = [],
-    titleStyle,
-    inputStyle,
-    tableStyle,
-  } = props;
+  const { title = 'Information', data = [], titleStyle, inputStyle } = props;
   function viewData(data: Record<string, string | number | object>) {
     const exactMatch: Array<[string, string | number | object]> = [];
     const startsWith: Array<[string, string | number | object]> = [];
@@ -112,10 +99,10 @@ export function InfoPanel(props: InfoPanelProps) {
                   {description}
                 </Disclosure.Button>
                 <Disclosure.Panel>
-                  <Table css={style.table} style={tableStyle}>
+                  <Table bordered>
                     <Table.Header>
-                      <ValueRenderers.Title value="Parameter" />
-                      <ValueRenderers.Title value="Value" />
+                      <ValueRenderers.Header value="Parameter" />
+                      <ValueRenderers.Header value="Value" />
                     </Table.Header>
                     {content}
                   </Table>

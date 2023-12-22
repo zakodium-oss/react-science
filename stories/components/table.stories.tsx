@@ -5,7 +5,30 @@ interface TableStoryProps {
   border: boolean;
 }
 
-export function Controls({ border }: TableStoryProps) {
+interface ControlProps extends React.HTMLAttributes<HTMLTableElement> {
+  bordered?: boolean;
+  compact?: boolean;
+  interactive?: boolean;
+  striped?: boolean;
+}
+
+export default {
+  title: 'Components / Table',
+  decorators: [
+    (Story: any) => (
+      <div style={{ padding: 12, height: '100%', overflowY: 'auto' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export function Control({
+  bordered,
+  compact,
+  interactive,
+  striped,
+}: ControlProps) {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
     <Table.Row key={id}>
       <ValueRenderers.Text value={id} />
@@ -18,55 +41,35 @@ export function Controls({ border }: TableStoryProps) {
     </Table.Row>
   ));
   return (
-    <Table border={border}>
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+    >
       <Table.Header>
-        <ValueRenderers.Title value="id" />
-        <ValueRenderers.Title value="name" />
-        <ValueRenderers.Title value="rn" />
-        <ValueRenderers.Title value="mw" />
-        <ValueRenderers.Title value="em" />
-        <ValueRenderers.Title value="isExpensive" />
-        <ValueRenderers.Title value="color" />
+        <ValueRenderers.Header value="id" />
+        <ValueRenderers.Header value="name" />
+        <ValueRenderers.Header value="rn" />
+        <ValueRenderers.Header value="mw" />
+        <ValueRenderers.Header value="em" />
+        <ValueRenderers.Header value="isExpensive" />
+        <ValueRenderers.Header value="color" />
       </Table.Header>
       {Rows}
     </Table>
   );
 }
-
-export default {
-  title: 'Components / Table',
+Control.args = {
+  bordered: false,
+  compact: false,
+  interactive: false,
+  striped: false,
 };
 
-export function Control({ border }: TableStoryProps) {
-  const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
-    <Table.Row key={id} border={border}>
-      <ValueRenderers.Text value={id} />
-      <ValueRenderers.Text value={name} />
-      <ValueRenderers.Text value={rn} />
-      <ValueRenderers.Number value={mw} fixed={2} />
-      <ValueRenderers.Number value={em} fixed={4} />
-      <ValueRenderers.Boolean value={isExpensive} />
-      <ValueRenderers.Color value={color} />
-    </Table.Row>
-  ));
-  return (
-    <Table border={border}>
-      <Table.Header>
-        <ValueRenderers.Title value="id" />
-        <ValueRenderers.Title value="name" />
-        <ValueRenderers.Title value="rn" />
-        <ValueRenderers.Title value="mw" />
-        <ValueRenderers.Title value="em" />
-        <ValueRenderers.Title value="isExpensive" />
-        <ValueRenderers.Title value="color" />
-      </Table.Header>
-      {Rows}
-    </Table>
-  );
-}
 export function RowBorder({ border }: TableStoryProps) {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
-    <Table.Row border={border} key={id}>
+    <Table.Row hasBorder={border} key={id}>
       <ValueRenderers.Text value={id} />
       <ValueRenderers.Text value={name} />
       <ValueRenderers.Text value={rn} />
@@ -77,21 +80,24 @@ export function RowBorder({ border }: TableStoryProps) {
     </Table.Row>
   ));
   return (
-    <Table border={false}>
+    <Table>
       <Table.Header>
-        <ValueRenderers.Title value="id" />
-        <ValueRenderers.Title value="name" />
-        <ValueRenderers.Title value="rn" />
-        <ValueRenderers.Title value="mw" />
-        <ValueRenderers.Title value="em" />
-        <ValueRenderers.Title value="isExpensive" />
-        <ValueRenderers.Title value="color" />
+        <ValueRenderers.Header value="id" />
+        <ValueRenderers.Header value="name" />
+        <ValueRenderers.Header value="rn" />
+        <ValueRenderers.Header value="mw" />
+        <ValueRenderers.Header value="em" />
+        <ValueRenderers.Header value="isExpensive" />
+        <ValueRenderers.Header value="color" />
       </Table.Header>
       {Rows}
     </Table>
   );
 }
-RowBorder.args = { border: false };
+RowBorder.args = {
+  border: false,
+};
+
 export function HeaderBorder({ border }: TableStoryProps) {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
     <Table.Row key={id}>
@@ -105,29 +111,42 @@ export function HeaderBorder({ border }: TableStoryProps) {
     </Table.Row>
   ));
   return (
-    <Table border={false}>
-      <Table.Header border={border}>
-        <ValueRenderers.Title value="id" />
-        <ValueRenderers.Title value="name" />
-        <ValueRenderers.Title value="rn" />
-        <ValueRenderers.Title value="mw" />
-        <ValueRenderers.Title value="em" />
-        <ValueRenderers.Title value="isExpensive" />
-        <ValueRenderers.Title value="color" />
+    <Table>
+      <Table.Header hasBorder={border}>
+        <ValueRenderers.Header value="id" />
+        <ValueRenderers.Header value="name" />
+        <ValueRenderers.Header value="rn" />
+        <ValueRenderers.Header value="mw" />
+        <ValueRenderers.Header value="em" />
+        <ValueRenderers.Header value="isExpensive" />
+        <ValueRenderers.Header value="color" />
       </Table.Header>
       {Rows}
     </Table>
   );
 }
-HeaderBorder.args = { border: false };
+HeaderBorder.args = {
+  border: false,
+};
 
-export function StyledTable() {
+export function StyledTable({
+  bordered,
+  compact,
+  interactive,
+  striped,
+}: ControlProps) {
   return (
-    <Table style={{ color: 'white' }}>
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+      color="white"
+    >
       <Table.Header style={{ backgroundColor: '#cccccc' }}>
-        <ValueRenderers.Title value="id" />
-        <ValueRenderers.Title value="name" />
-        <ValueRenderers.Title value="message" />
+        <ValueRenderers.Header value="id" />
+        <ValueRenderers.Header value="name" />
+        <ValueRenderers.Header value="message" />
       </Table.Header>
 
       <Table.Row style={{ backgroundColor: 'red' }}>
@@ -148,3 +167,9 @@ export function StyledTable() {
     </Table>
   );
 }
+StyledTable.args = {
+  bordered: false,
+  compact: false,
+  interactive: false,
+  striped: false,
+};
