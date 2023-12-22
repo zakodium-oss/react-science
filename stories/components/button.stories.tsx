@@ -41,30 +41,16 @@ Control.argTypes = {
   },
   onClick: { action: 'onClick' },
 };
-export function Tooltip(
-  props: ButtonProps['tooltipProps'] & {
-    buttonDisabled: boolean;
-    onClick: ButtonProps['onClick'];
-  },
-) {
-  const { buttonDisabled, onClick, ...tooltipProps } = props;
+export function Tooltip(tooltipProps: ButtonProps['tooltipProps']) {
   return (
     <ButtonWrapper>
-      <Button
-        disabled={buttonDisabled}
-        onClick={onClick}
-        tooltipProps={tooltipProps}
-      >
-        Hello, World!
-      </Button>
+      <Button tooltipProps={tooltipProps}>Hello, World!</Button>
     </ButtonWrapper>
   );
 }
 Tooltip.args = {
-  buttonDisabled: false,
   content: 'Tooltip content',
   compact: false,
-  disabled: false,
   intent: 'none',
   placement: 'right',
 };
@@ -77,9 +63,6 @@ Tooltip.argTypes = {
     control: { type: 'radio' },
     options: ['none', 'primary', 'success', 'warning', 'danger'],
   },
-  onOpening: { action: 'onOpening' },
-  onClosing: { action: 'onClosing' },
-  onClick: { action: 'onClick' },
 };
 export function ButtonGroupBasic() {
   return (
