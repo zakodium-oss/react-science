@@ -14,6 +14,13 @@ interface ControlProps extends React.HTMLAttributes<HTMLTableElement> {
 
 export default {
   title: 'Components / Table',
+  decorators: [
+    (Story: any) => (
+      <div style={{ padding: 12, height: '100%', overflowY: 'auto' }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export function Control({
