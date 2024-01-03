@@ -1,35 +1,56 @@
+/** @jsxImportSource @emotion/react */
+import { Tab, Tabs } from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import { ReactNode, useState } from 'react';
-
-import { Tabs, TabItem } from '../../src/components/index';
 
 export default {
   title: 'Components / Tabs',
 };
 
+export function Controlled() {
+  const items = [
+    { id: '1h', title: '1H', content: 'Hello, World! [a]' },
+    { id: '13c', title: '13C', content: 'Hello, World! [b]' },
+    { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
+    { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
+  ];
+  const [state, setState] = useState<number | string>(items[1].id);
+
+  return (
+    <Tabs selectedTabId={state} onChange={setState}>
+      {items.map((item) => (
+        <Tab
+          id={item.id}
+          key={item.id}
+          title={item.title}
+          panel={<div>{item.content}</div>}
+        />
+      ))}
+      <Tab id="bb" key="bb" disabled title="Backbone" />
+    </Tabs>
+  );
+}
 export function Horizontal() {
-  const items: TabItem[] = [
+  const items = [
     { id: '1h', title: '1H', content: 'Hello, World! [a]' },
     { id: '13c', title: '13C', content: 'Hello, World! [b]' },
     { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
     { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
   ];
 
-  const [state, setState] = useState(items[1].id);
-
-  function handleClick(id: string) {
-    setState(id);
-  }
-
   return (
-    <Tabs
-      orientation="horizontal"
-      items={items}
-      opened={state}
-      onClick={handleClick}
-    />
+    <Tabs>
+      {items.map((item) => (
+        <Tab
+          id={item.id}
+          key={item.id}
+          title={item.title}
+          panel={<div>{item.content}</div>}
+        />
+      ))}
+    </Tabs>
   );
 }
-
 function FullHeightContent({ children }: { children: ReactNode }) {
   return (
     <div style={{ backgroundColor: 'rgb(251, 207, 232)', height: '100%' }}>
@@ -39,7 +60,7 @@ function FullHeightContent({ children }: { children: ReactNode }) {
 }
 
 export function AllowHorizontalChildToTakeFullHeight() {
-  const items: TabItem[] = [
+  const items = [
     {
       id: '1h',
       title: '1H',
@@ -62,19 +83,26 @@ export function AllowHorizontalChildToTakeFullHeight() {
     },
   ];
 
-  const [state, setState] = useState(items[1].id);
-
-  function handleClick(id: string) {
-    setState(id);
-  }
-
   return (
     <Tabs
-      orientation="horizontal"
-      items={items}
-      opened={state}
-      onClick={handleClick}
-    />
+      css={css`
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        div[role='tabpanel'] {
+          flex-grow: 1;
+        }
+      `}
+    >
+      {items.map((item) => (
+        <Tab
+          id={item.id}
+          key={item.id}
+          title={item.title}
+          panel={item.content}
+        />
+      ))}
+    </Tabs>
   );
 }
 
@@ -83,7 +111,7 @@ export function ManyTabs({
 }: {
   orientation: 'horizontal' | 'vertical';
 }) {
-  const items: TabItem[] = [
+  const items = [
     { id: 'a', title: '1H', content: 'Hello, World! [a]' },
     { id: 'b', title: '13C', content: 'Hello, World! [b]' },
     { id: 'c', title: '1H,1H', content: 'Hello, World! [c]' },
@@ -102,47 +130,58 @@ export function ManyTabs({
     { id: 'p', title: '1H,13C', content: 'Hello, World! [p]' },
   ];
 
-  const [state, setState] = useState(items[1].id);
-
-  function handleClick(id: string) {
-    setState(id);
-  }
-
   return (
     <Tabs
-      orientation={orientation}
-      items={items}
-      opened={state}
-      onClick={handleClick}
-    />
+      vertical={orientation === 'vertical'}
+      css={css`
+        height: 100%;
+        div[role='tablist'] {
+          overflow-x: ${orientation === 'vertical' ? 'hidden' : 'auto'};
+          overflow-y: ${orientation === 'vertical' ? 'auto' : 'hidden'};
+        }
+      `}
+    >
+      {items.map((item) => (
+        <Tab
+          id={item.id}
+          key={item.id}
+          title={item.title}
+          panel={<div>{item.content}</div>}
+        />
+      ))}
+    </Tabs>
   );
 }
 ManyTabs.args = {
   orientation: 'horizontal',
 };
+ManyTabs.argTypes = {
+  orientation: {
+    control: { type: 'radio' },
+    options: ['horizontal', 'vertical'],
+  },
+};
 export function Vertical() {
-  const items: TabItem[] = [
+  const items = [
     { id: 'controllers', title: 'Controllers', content: 'Hello, World!' },
     {
       id: 'formatting',
       title: 'Controllers a',
-      content: 'Hello, World!',
+      content: 'Hello, World! a',
     },
     { id: 'display', title: 'Controllers', content: 'Hello, World!' },
   ];
 
-  const [state, setState] = useState(items[1].id);
-
-  function handleClick(id: string) {
-    setState(id);
-  }
-
   return (
-    <Tabs
-      orientation="vertical"
-      items={items}
-      opened={state}
-      onClick={handleClick}
-    />
+    <Tabs vertical>
+      {items.map((item) => (
+        <Tab
+          id={item.id}
+          key={item.id}
+          title={item.title}
+          panel={<div>{item.content}</div>}
+        />
+      ))}
+    </Tabs>
   );
 }
