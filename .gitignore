@@ -109,5 +109,9 @@ lib
 build
 dist
 .DS_Store
-playwright-report
+
 storybook-static
+
+# Playwright
+playwright-report*
+test-results

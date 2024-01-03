@@ -1,12 +1,12 @@
-import { PlaywrightTestConfig, devices } from '@playwright/test';
+import { devices, PlaywrightTestConfig } from '@playwright/test';
 
 import viteConfig from './vite.config.mjs';
 
 const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
-  retries: 0,
-  reporter: process.env.CI ? 'github' : 'list',
+  retries: 1,
   use: {
+    trace: 'on-first-retry',
     headless: true,
     ignoreHTTPSErrors: true,
     // video: 'on-first-retry',
