@@ -38,6 +38,25 @@ function getGroups(items: ItemsType[]) {
   }
   return { groups, withoutGroup };
 }
+
+function getItemRenderer(value: ItemsType | null) {
+  const render: ItemRenderer<ItemsType> = (
+    { label },
+    { handleClick, handleFocus, modifiers, index },
+  ) => (
+    <MenuItem
+      active={modifiers.active}
+      disabled={modifiers.disabled}
+      selected={value?.label === label}
+      key={index}
+      onClick={handleClick}
+      onFocus={handleFocus}
+      roleStructure="listoption"
+      text={label}
+    />
+  );
+  return render;
+}
 const renderMenu: ItemListRenderer<ItemsType> = ({
   items,
   itemsParentRef,
@@ -78,30 +97,15 @@ const renderMenuNested: ItemListRenderer<ItemsType> = ({
     </Menu>
   );
 };
-const render: ItemRenderer<ItemsType> = (
-  { label },
-  { handleClick, handleFocus, modifiers, index },
-) => (
-  <MenuItem
-    active={modifiers.active}
-    disabled={modifiers.disabled}
-    icon={modifiers.active ? 'tick' : 'blank'}
-    key={index}
-    onClick={handleClick}
-    onFocus={handleFocus}
-    roleStructure="listoption"
-    text={label}
-  />
-);
+
 export function OnlyOptions() {
   const [value, setValue] = useState<ItemsType | null>(null);
   return (
     <>
       <Select
-        activeItem={value}
         onItemSelect={(item) => setValue(item)}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         popoverTargetProps={{ style: { display: 'inline-block' } }}
@@ -120,9 +124,8 @@ export function OnlyCategories() {
   return (
     <>
       <Select
-        activeItem={value}
         onItemSelect={(item) => setValue(item)}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenu}
@@ -147,12 +150,12 @@ export function OnlyCategories() {
 }
 export function OptionsWithCategories() {
   const [value, setValue] = useState<ItemsType | null>(null);
+
   return (
     <>
       <Select
-        activeItem={value}
         onItemSelect={(item) => setValue(item)}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenu}
@@ -182,9 +185,8 @@ export function CategoriesNested() {
   return (
     <>
       <Select
-        activeItem={value}
         onItemSelect={(item) => setValue(item)}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenuNested}
@@ -216,12 +218,11 @@ export function DisabledOptions() {
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         onItemSelect={setValue}
         itemDisabled={(item) => item.label === 'Orange'}
         filterable={false}
         itemsEqual="label"
-        activeItem={value}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
@@ -239,9 +240,8 @@ export function DisabledInCategories() {
   return (
     <>
       <Select
-        activeItem={value}
         onItemSelect={(item) => setValue(item)}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenu}
@@ -273,11 +273,10 @@ export function Disabled() {
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         onItemSelect={setValue}
         filterable={false}
         itemsEqual="label"
-        activeItem={value}
         disabled
       >
         <Button
@@ -296,11 +295,10 @@ export function WithCustomStyle() {
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         onItemSelect={setValue}
         filterable={false}
         itemsEqual="label"
-        activeItem={value}
         popoverContentProps={{ style: { width: '500px' } }}
       >
         <Button
@@ -321,10 +319,9 @@ export function FixedValueNoopHandle() {
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
         onItemSelect={() => null}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        activeItem={value}
       >
         <Button
           text={value.label ?? 'Select a status'}
@@ -343,10 +340,9 @@ export function nullValueNoopHandle() {
       <Select
         onItemSelect={() => null}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        activeItem={value}
       >
         <Button
           text={value ?? 'Select a status'}
@@ -365,10 +361,9 @@ export function ResetButton() {
       <Select
         onItemSelect={setValue}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={render}
+        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        activeItem={value}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -396,10 +391,9 @@ function ModalBody() {
               { label: 'Banana' },
               { label: 'Orange' },
             ]}
-            itemRenderer={render}
+            itemRenderer={getItemRenderer(value)}
             filterable={false}
             itemsEqual="label"
-            activeItem={value}
             popoverProps={{
               portalContainer: context,
               positioningStrategy: 'fixed',
