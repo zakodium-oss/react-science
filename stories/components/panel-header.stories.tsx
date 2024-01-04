@@ -4,6 +4,7 @@ import {
   Button,
   Modal,
   useOnOff,
+  Toolbar,
 } from '../../src/components';
 
 export default {
@@ -19,9 +20,16 @@ export function Basic() {
       }}
     >
       <PanelHeader total={3} onClickSettings={() => void 0}>
-        <Button minimal intent="danger" icon="trash" />
-        <Button minimal icon="filter" />
-        <Button minimal icon="plus" />
+        <Toolbar>
+          <Toolbar.Item
+            tooltip={false}
+            title="trash"
+            intent="danger"
+            icon="trash"
+          />
+          <Toolbar.Item tooltip={false} title="filter" icon="filter" />
+          <Toolbar.Item tooltip={false} title="plus" icon="plus" />
+        </Toolbar>
       </PanelHeader>
     </div>
   );
@@ -35,9 +43,16 @@ export function WithModal() {
       }}
     >
       <PanelHeader total={5} current={3} onClickSettings={open}>
-        <Button minimal intent="danger" icon="trash" />
-        <Button minimal icon="filter" />
-        <Button minimal icon="plus" />
+        <Toolbar>
+          <Toolbar.Item
+            tooltip={false}
+            title="trash"
+            intent="danger"
+            icon="trash"
+          />
+          <Toolbar.Item tooltip={false} title="filter" icon="filter" />
+          <Toolbar.Item tooltip={false} title="plus" icon="plus" />
+        </Toolbar>
       </PanelHeader>
       <Modal isOpen={isOpen} onRequestClose={close} width={400}>
         <Modal.Header>Settings</Modal.Header>
@@ -75,9 +90,16 @@ export function WithAccordion() {
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
           <PanelHeader total={20} onClickSettings={() => void 0}>
-            <Button minimal intent="danger" icon="trash" />
-            <Button minimal icon="filter" />
-            <Button minimal icon="plus" />
+            <Toolbar>
+              <Toolbar.Item
+                tooltip={false}
+                title="trash"
+                intent="danger"
+                icon="trash"
+              />
+              <Toolbar.Item tooltip={false} title="filter" icon="filter" />
+              <Toolbar.Item tooltip={false} title="plus" icon="plus" />
+            </Toolbar>
           </PanelHeader>
           This is the first content
         </Accordion.Item>
