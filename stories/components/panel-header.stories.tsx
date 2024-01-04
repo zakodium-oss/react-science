@@ -1,10 +1,6 @@
-import {
-  PanelHeader,
-  Accordion,
-  Button,
-  Modal,
-  useOnOff,
-} from '../../src/components';
+import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
+
+import { PanelHeader, Accordion, Button, useOnOff } from '../../src/components';
 
 export default {
   title: 'Components / PanelHeader',
@@ -39,29 +35,25 @@ export function WithModal() {
         <Button minimal icon="filter" />
         <Button minimal icon="plus" />
       </PanelHeader>
-      <Modal isOpen={isOpen} onRequestClose={close} width={400}>
-        <Modal.Header>Settings</Modal.Header>
-        <Modal.Body>
+      <Dialog
+        title="Settings"
+        icon="cog"
+        isOpen={isOpen}
+        onClose={close}
+        style={{ width: 400 }}
+      >
+        <DialogBody>
           <p style={{ paddingLeft: 20, paddingRight: 20 }}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
             accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
             assumenda esse animi id atque natus ipsa sunt iure illo,
             exercitationem voluptates non.
           </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-            }}
-          >
-            <Button intent="primary" onClick={close}>
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </DialogBody>
+        <DialogFooter
+          actions={<Button intent="primary" text="Save" onClick={close} />}
+        />
+      </Dialog>
     </div>
   );
 }

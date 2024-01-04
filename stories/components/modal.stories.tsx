@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import {
   FaArrowsAlt,
@@ -17,7 +20,6 @@ import {
   Button,
   ConfirmModal,
   Header,
-  Modal,
   SplitPane,
   TabItem,
   Tabs,
@@ -28,13 +30,12 @@ import { AccordionDecorator } from '../utils';
 
 export default {
   title: 'Components / Modal',
-  component: Modal,
   decorators: [AccordionDecorator],
 };
 
 const actions = {
   onSave: { action: 'saved' },
-  onCancel: { action: 'canceled' },
+  onRequestClose: { action: 'canceled' },
 };
 
 export function Control(props: {
@@ -47,16 +48,18 @@ export function Control(props: {
   return (
     <>
       <DemoPage openModal={open} />
-      <Modal
+      <Dialog
         isOpen={isOpen}
-        onRequestClose={() => {
+        title="Hello, World!"
+        icon="info-sign"
+        onClose={() => {
           onRequestClose();
           close();
         }}
+        style={{ maxWidth: 500, height: 300 }}
         {...otherProps}
       >
-        <Modal.Header>Hello, World!</Modal.Header>
-        <Modal.Body>
+        <DialogBody>
           <div
             style={{
               display: 'flex',
@@ -76,30 +79,19 @@ export function Control(props: {
               exercitationem voluptates non.
             </p>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-            }}
-          >
-            <Button intent="primary" onClick={onSave}>
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </DialogBody>
+        <DialogFooter
+          actions={<Button intent="primary" text="Save" onClick={onSave} />}
+        />
+      </Dialog>
     </>
   );
 }
 
 Control.args = {
-  hasCloseButton: true,
-  height: 400,
-  maxWidth: 600,
-  requestCloseOnBackdrop: true,
-  requestCloseOnEsc: true,
+  isCloseButtonShown: true,
+  canOutsideClickClose: true,
+  canEscapeKeyClose: true,
 };
 
 Control.argTypes = actions;
@@ -201,46 +193,41 @@ export function WithComplexContents({
   return (
     <>
       <DemoPage openModal={open} />
-      <Modal
+      <Dialog
+        title="General Settings"
+        icon="cog"
         isOpen={isOpen}
-        onRequestClose={() => {
+        onClose={() => {
           onRequestClose();
           close();
         }}
+        style={{ width: 800, height: 600, overflow: 'visible' }}
         {...otherProps}
       >
-        <Modal.Header>General Settings</Modal.Header>
-        <Modal.Body>
+        <DialogBody
+          css={css({
+            maxHeight: 'none',
+          })}
+        >
           <Tabs
             items={tabs}
             opened={state}
             onClick={setState}
             orientation="vertical"
           />
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              flex: '1 1 0%',
-            }}
-          >
-            <Button intent="primary" onClick={onSave}>
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </DialogBody>
+        <DialogFooter
+          actions={<Button intent="primary" text="Save" onClick={onSave} />}
+        />
+      </Dialog>
     </>
   );
 }
 
 WithComplexContents.args = {
-  width: 800,
-  height: 600,
-  requestCloseOnBackdrop: true,
-  requestCloseOnEsc: true,
+  isCloseButtonShown: true,
+  canOutsideClickClose: true,
+  canEscapeKeyClose: true,
 };
 
 WithComplexContents.argTypes = actions;
@@ -252,12 +239,21 @@ export function DynamicallySizedChildren() {
       <Button intent="warning" onClick={open}>
         Open editor modal
       </Button>
-      <Modal width={700} height={500} isOpen={isOpen} onRequestClose={close}>
-        <Modal.Header>Test OCL editor in modal</Modal.Header>
-        <Modal.Body>
+      <Dialog
+        title="Test OCL editor in modal"
+        isOpen={isOpen}
+        onClose={close}
+        style={{ width: 700, maxHeight: 500 }}
+      >
+        <DialogBody
+          css={css({
+            maxHeight: 'none',
+            backgroundColor: 'white',
+          })}
+        >
           <StructureEditor width={600} height={400} svgMenu />
-        </Modal.Body>
-      </Modal>
+        </DialogBody>
+      </Dialog>
     </div>
   );
 }

@@ -1,9 +1,14 @@
-import { Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
+import {
+  Dialog,
+  DialogBody,
+  Menu,
+  MenuDivider,
+  MenuItem,
+} from '@blueprintjs/core';
 import { ItemListRenderer, ItemRenderer, Select } from '@blueprintjs/select';
 import { Fragment, useState } from 'react';
 
-import { Button, Modal, useOnOff } from '../../src/components';
-import { useRootLayoutContext } from '../../src/components/root-layout/RootLayoutContext';
+import { Button, useOnOff } from '../../src/components';
 
 export default {
   title: 'Forms / Select',
@@ -144,7 +149,7 @@ export function OnlyCategories() {
           rightIcon="double-caret-vertical"
         />
       </Select>
-      {/*<p>Value outside component is {value?.label}.</p>*/}
+      <p>Value outside component is {value?.label}.</p>
     </>
   );
 }
@@ -376,60 +381,47 @@ export function ResetButton() {
   );
 }
 
-function ModalBody() {
-  const [value, setValue] = useState<ItemsType | null>(null);
-  const context = useRootLayoutContext();
-  return (
-    <Modal.Body>
-      <div style={{ margin: 4 }}>
-        <p>Hello, world!</p>
-        {context && (
-          <Select
-            onItemSelect={setValue}
-            items={[
-              { label: 'Apple' },
-              { label: 'Banana' },
-              { label: 'Orange' },
-            ]}
-            itemRenderer={getItemRenderer(value)}
-            filterable={false}
-            itemsEqual="label"
-            popoverProps={{
-              portalContainer: context,
-              positioningStrategy: 'fixed',
-            }}
-            popoverTargetProps={{
-              style: { display: 'inline-block', backgroundColor: 'red' },
-            }}
-          >
-            <Button
-              style={{ backgroundColor: 'green' }}
-              text={value?.label ?? 'Select a status'}
-              rightIcon="double-caret-vertical"
-            />
-          </Select>
-        )}
-      </div>
-    </Modal.Body>
-  );
-}
-
 export function InModal() {
   const [isOpen, open, close] = useOnOff();
+  const [value, setValue] = useState<ItemsType | null>(null);
   return (
     <>
       <Button onClick={open}>Open</Button>
-      <Modal
-        width={300}
-        height={200}
+      <Dialog
+        title="Select a fruit"
         isOpen={isOpen}
-        onRequestClose={() => {
+        onClose={() => {
           close();
         }}
       >
-        <Modal.Header>Select a fruit</Modal.Header>
-        <ModalBody />
-      </Modal>
+        <DialogBody>
+          <div style={{ margin: 4 }}>
+            <p>Hello, world!</p>
+            <Select
+              onItemSelect={setValue}
+              items={[
+                { label: 'Apple' },
+                { label: 'Banana' },
+                { label: 'Orange' },
+              ]}
+              itemRenderer={getItemRenderer(value)}
+              filterable={false}
+              itemsEqual="label"
+              popoverProps={{
+                positioningStrategy: 'fixed',
+              }}
+              popoverTargetProps={{
+                style: { display: 'inline-block' },
+              }}
+            >
+              <Button
+                text={value?.label ?? 'Select a status'}
+                rightIcon="double-caret-vertical"
+              />
+            </Select>
+          </div>
+        </DialogBody>
+      </Dialog>
     </>
   );
 }
