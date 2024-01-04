@@ -18,7 +18,7 @@ import { StructureEditor } from 'react-ocl/full';
 import {
   Accordion,
   Button,
-  ConfirmModal,
+  ConfirmDialog,
   Header,
   SplitPane,
   TabItem,
@@ -35,16 +35,14 @@ export default {
 
 const actions = {
   onSave: { action: 'saved' },
-  onRequestClose: { action: 'canceled' },
+  onClose: { action: 'closed' },
+  onCancel: { action: 'canceled' },
 };
 
-export function Control(props: {
-  onSave: () => void;
-  onRequestClose: () => void;
-}) {
+export function Control(props: { onSave: () => void; onClose: () => void }) {
   const [isOpen, open, close] = useOnOff();
 
-  const { onSave, onRequestClose, ...otherProps } = props;
+  const { onSave, onClose, ...otherProps } = props;
   return (
     <>
       <DemoPage openModal={open} />
@@ -53,7 +51,7 @@ export function Control(props: {
         title="Hello, World!"
         icon="info-sign"
         onClose={() => {
-          onRequestClose();
+          onClose();
           close();
         }}
         style={{ maxWidth: 500, height: 300 }}
@@ -99,12 +97,12 @@ Control.argTypes = actions;
 export function ConfirmModalControl({
   onSave,
   onCancel,
-  onRequestClose,
+  onClose,
   ...otherProps
 }: {
   onSave: () => void;
   onCancel: () => void;
-  onRequestClose: () => void;
+  onClose: () => void;
   headerColor: string;
 }) {
   const [isOpen, open, close] = useOnOff();
@@ -112,7 +110,7 @@ export function ConfirmModalControl({
   return (
     <>
       <DemoPage openModal={open} />
-      <ConfirmModal
+      <ConfirmDialog
         onConfirm={() => {
           onSave();
           close();
@@ -122,8 +120,8 @@ export function ConfirmModalControl({
           close();
         }}
         isOpen={isOpen}
-        onRequestClose={() => {
-          onRequestClose();
+        onClose={() => {
+          onClose();
           close();
         }}
         {...otherProps}
@@ -131,15 +129,14 @@ export function ConfirmModalControl({
         Are you sure you want to deactivate your account? All of your data will
         be permanently removed from our servers forever. This action cannot be
         undone.
-      </ConfirmModal>
+      </ConfirmDialog>
     </>
   );
 }
 
 ConfirmModalControl.args = {
-  maxWidth: 400,
-  requestCloseOnBackdrop: true,
-  requestCloseOnEsc: true,
+  canOutsideClickClose: true,
+  canEscapeKeyClose: true,
   headerColor: 'hsl(351deg, 73%, 47%)',
 };
 
@@ -181,11 +178,11 @@ const tabs: TabItem[] = [
 
 export function WithComplexContents({
   onSave,
-  onRequestClose,
+  onClose,
   ...otherProps
 }: {
   onSave: () => void;
-  onRequestClose: () => void;
+  onClose: () => void;
 }) {
   const [isOpen, open, close] = useOnOff();
   const [state, setState] = useState(tabs[0].id);
@@ -198,7 +195,7 @@ export function WithComplexContents({
         icon="cog"
         isOpen={isOpen}
         onClose={() => {
-          onRequestClose();
+          onClose();
           close();
         }}
         style={{ width: 800, height: 600, overflow: 'visible' }}

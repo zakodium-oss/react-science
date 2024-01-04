@@ -7,7 +7,7 @@ import {
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index';
-import { ConfirmModal, useOnOff } from '../../../components/index';
+import { ConfirmDialog, useOnOff } from '../../../components/index';
 
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
@@ -139,17 +139,17 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
           }
           onClick={hasSelectedMeasurements ? openRemoveModal : undefined}
         />
-        <ConfirmModal
+        <ConfirmDialog
           headerColor="red"
           isOpen={isRemoveModalOpen}
           onConfirm={onRemove}
-          onRequestClose={closeRemoveModal}
+          onClose={closeRemoveModal}
           saveText="Remove"
         >
           <div style={{ fontWeight: 'bold', padding: 10 }}>
             Remove selected measurements?
           </div>
-        </ConfirmModal>
+        </ConfirmDialog>
       </MeasurementsHeaderColumn>
 
       <MeasurementsTableRoot>
