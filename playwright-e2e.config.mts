@@ -1,4 +1,4 @@
-import config from "./playwright-base.config.mjs";
+import config from './playwright-base.config.mjs';
 
 config.testDir = './tests/app/';
 config.webServer = {
