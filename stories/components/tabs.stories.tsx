@@ -1,35 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 export default {
   title: 'Components / Tabs',
 };
 
-export function Controlled() {
-  const items = [
-    { id: '1h', title: '1H', content: 'Hello, World! [a]' },
-    { id: '13c', title: '13C', content: 'Hello, World! [b]' },
-    { id: '1h,1h', title: '1H,1H', content: 'Hello, World! [c]' },
-    { id: '1h,13c', title: '1H,13C', content: 'Hello, World! [d]' },
-  ];
-  const [state, setState] = useState<number | string>(items[1].id);
-
-  return (
-    <Tabs selectedTabId={state} onChange={setState}>
-      {items.map((item) => (
-        <Tab
-          id={item.id}
-          key={item.id}
-          title={item.title}
-          panel={<div>{item.content}</div>}
-        />
-      ))}
-      <Tab id="bb" key="bb" disabled title="Backbone" />
-    </Tabs>
-  );
-}
 export function Horizontal() {
   const items = [
     { id: '1h', title: '1H', content: 'Hello, World! [a]' },
