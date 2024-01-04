@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
+import { Dialog, DialogBody, DialogFooter, Tabs, Tab } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import {
@@ -21,8 +21,6 @@ import {
   ConfirmDialog,
   Header,
   SplitPane,
-  TabItem,
-  Tabs,
   Toolbar,
   useOnOff,
 } from '../../src/components';
@@ -142,7 +140,7 @@ ConfirmModalControl.args = {
 
 ConfirmModalControl.argTypes = actions;
 
-const tabs: TabItem[] = [
+const tabs = [
   {
     id: 'controllers',
     title: 'Controllers',
@@ -185,7 +183,7 @@ export function WithComplexContents({
   onClose: () => void;
 }) {
   const [isOpen, open, close] = useOnOff();
-  const [state, setState] = useState(tabs[0].id);
+  const [state, setState] = useState<number | string>(tabs[0].id);
 
   return (
     <>
@@ -206,12 +204,16 @@ export function WithComplexContents({
             maxHeight: 'none',
           })}
         >
-          <Tabs
-            items={tabs}
-            opened={state}
-            onClick={setState}
-            orientation="vertical"
-          />
+          <Tabs selectedTabId={state} onChange={setState} vertical>
+            {tabs.map((tab) => (
+              <Tab
+                id={tab.id}
+                key={tab.id}
+                title={tab.title}
+                panel={tab.content}
+              />
+            ))}
+          </Tabs>
         </DialogBody>
         <DialogFooter
           actions={<Button intent="primary" text="Save" onClick={onSave} />}

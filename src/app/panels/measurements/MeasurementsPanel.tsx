@@ -1,3 +1,7 @@
+/** @jsxImportSource @emotion/react */
+import { Tab, Tabs } from '@blueprintjs/core';
+import { css } from '@emotion/react';
+
 import {
   kindLabels,
   MeasurementKind,
@@ -5,7 +9,6 @@ import {
   useAppState,
   useAppDispatch,
 } from '../../../app-data/index';
-import { TabItem, Tabs } from '../../../components/index';
 
 import { MeasurementsTable } from './MeasurementsTable';
 
@@ -25,7 +28,7 @@ export function MeasurementsPanel() {
     (label) => data.measurements[label].entries.length > 0,
   );
 
-  const items: Array<TabItem<MeasurementKind>> = availableKinds.map(kindItem);
+  const items = availableKinds.map(kindItem);
 
   function handleTabSelection(id: MeasurementKind) {
     dispatch({
@@ -36,12 +39,28 @@ export function MeasurementsPanel() {
 
   if (items.length > 1) {
     return (
-      <Tabs<MeasurementKind>
-        orientation="horizontal"
-        items={items}
-        opened={view.selectedKind}
-        onClick={handleTabSelection}
-      />
+      <Tabs
+        selectedTabId={view.selectedKind}
+        onChange={handleTabSelection}
+        css={css`
+          height: 100%;
+          div[role='tablist'] {
+            overflow-x: auto;
+            padding: 0 1rem;
+          }
+        `}
+      >
+        {items.map((item) => (
+          <Tab
+            id={item.id}
+            key={item.id}
+            title={item.title}
+            panel={item.content}
+            tagContent={data.measurements[item.id].entries.length}
+            tagProps={{ round: true }}
+          />
+        ))}
+      </Tabs>
     );
   }
 
