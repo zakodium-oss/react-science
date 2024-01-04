@@ -46,6 +46,7 @@ export function MeasurementsPanel() {
           height: 100%;
           div[role='tablist'] {
             overflow-x: auto;
+            padding: 0 1rem;
           }
         `}
       >
@@ -55,6 +56,8 @@ export function MeasurementsPanel() {
             key={item.id}
             title={item.title}
             panel={item.content}
+            tagContent={data.measurements[item.id].entries.length}
+            tagProps={{ round: true }}
           />
         ))}
       </Tabs>
