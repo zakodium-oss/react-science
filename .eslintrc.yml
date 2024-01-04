@@ -5,3 +5,13 @@ extends:
 rules:
   'react/no-unknown-property': ['error', { ignore: ['css'] }]
   '@typescript-eslint/no-dynamic-delete': 'off'
+ignorePatterns:
+  - /build
+  - /coverage
+  - /dist
+  - /lib-esm
+  - /lib
+  - /node_modules
+  - /storybook-static
+  - /playwright/.cache
+  - /playwright-report*

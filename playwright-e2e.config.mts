@@ -6,6 +6,9 @@ config.webServer = {
   port: 5173,
   reuseExistingServer: true,
 };
+config.reporter = process.env.CI
+  ? [['github'], ['html']]
+  : [['list'], ['html', { outputFolder: 'playwright-report-e2e' }]];
 
 // eslint-disable-next-line unicorn/prefer-export-from
 export default config;
