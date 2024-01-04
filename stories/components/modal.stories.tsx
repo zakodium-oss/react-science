@@ -1,3 +1,4 @@
+import { Tabs, Tab } from '@blueprintjs/core';
 import { useState } from 'react';
 import {
   FaArrowsAlt,
@@ -19,8 +20,6 @@ import {
   Header,
   Modal,
   SplitPane,
-  TabItem,
-  Tabs,
   Toolbar,
   useOnOff,
 } from '../../src/components';
@@ -153,7 +152,7 @@ ConfirmModalControl.args = {
 
 ConfirmModalControl.argTypes = actions;
 
-const tabs: TabItem[] = [
+const tabs = [
   {
     id: 'controllers',
     title: 'Controllers',
@@ -196,7 +195,7 @@ export function WithComplexContents({
   onRequestClose: () => void;
 }) {
   const [isOpen, open, close] = useOnOff();
-  const [state, setState] = useState(tabs[0].id);
+  const [state, setState] = useState<number | string>(tabs[0].id);
 
   return (
     <>
@@ -211,12 +210,16 @@ export function WithComplexContents({
       >
         <Modal.Header>General Settings</Modal.Header>
         <Modal.Body>
-          <Tabs
-            items={tabs}
-            opened={state}
-            onClick={setState}
-            orientation="vertical"
-          />
+          <Tabs selectedTabId={state} onChange={setState} vertical>
+            {tabs.map((tab) => (
+              <Tab
+                id={tab.id}
+                key={tab.id}
+                title={tab.title}
+                panel={tab.content}
+              />
+            ))}
+          </Tabs>
         </Modal.Body>
         <Modal.Footer>
           <div

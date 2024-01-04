@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { Tab, Tabs } from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import { useMemo, useState } from 'react';
 
 import {
@@ -6,7 +9,6 @@ import {
   SplitPane,
   SplitPaneProps,
   SplitPaneSize,
-  Tabs,
 } from '../../src/components/index';
 
 export default {
@@ -196,13 +198,31 @@ export function WithMinimalSizeAndEvilChild() {
     [],
   );
 
-  const [opened, setOpen] = useState<string>();
+  const [opened, setOpen] = useState<string | number>();
 
   return (
     <div style={{ height: '100%' }}>
       <SplitPane direction="horizontal" size="20%" controlledSide="end">
         <div style={{ width: '100%', minWidth: 0 }}>
-          <Tabs items={tabItems} onClick={setOpen} opened={opened} />
+          <Tabs
+            selectedTabId={opened}
+            onChange={setOpen}
+            css={css`
+              height: 100%;
+              div[role='tablist'] {
+                overflow-x: auto;
+              }
+            `}
+          >
+            {tabItems.map((item) => (
+              <Tab
+                id={item.id}
+                key={item.id}
+                title={item.title}
+                panel={<div>{item.content}</div>}
+              />
+            ))}
+          </Tabs>
         </div>
         <div
           style={{
