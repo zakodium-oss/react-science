@@ -32,14 +32,14 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
           onClick={onClose}
           intent="danger"
           icon="cross"
-          tooltip={false}
+          noTooltip
         />
         <Toolbar.Item
           title="save"
           onClick={onSave}
           intent="success"
           icon="tick"
-          tooltip={false}
+          noTooltip
         />
       </Toolbar>
     </div>

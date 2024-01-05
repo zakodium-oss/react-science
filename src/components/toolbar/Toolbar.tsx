@@ -39,7 +39,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
-  tooltip?: boolean;
+  noTooltip?: boolean;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -110,7 +110,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     id,
     intent: itemIntent,
     disabled: itemDisabled,
-    tooltip = true,
+    noTooltip = false,
     ...other
   } = props;
 
@@ -145,14 +145,13 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         onClick?.(props);
       }}
       tooltipProps={
-        tooltip
-          ? {
-              content: title,
-              placement: vertical ? 'right' : 'bottom',
-              intent,
-              compact: !large,
-            }
-          : undefined
+        (!noTooltip && {
+          content: title,
+          placement: vertical ? 'right' : 'bottom',
+          intent,
+          compact: !large,
+        }) ||
+        undefined
       }
       {...other}
     />
