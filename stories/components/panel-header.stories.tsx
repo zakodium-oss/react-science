@@ -21,14 +21,9 @@ export function Basic() {
     >
       <PanelHeader total={3} onClickSettings={() => void 0}>
         <Toolbar>
-          <Toolbar.Item
-            tooltip={false}
-            title="trash"
-            intent="danger"
-            icon="trash"
-          />
-          <Toolbar.Item tooltip={false} title="filter" icon="filter" />
-          <Toolbar.Item tooltip={false} title="plus" icon="plus" />
+          <Toolbar.Item noTooltip title="trash" intent="danger" icon="trash" />
+          <Toolbar.Item noTooltip title="filter" icon="filter" />
+          <Toolbar.Item noTooltip title="plus" icon="plus" />
         </Toolbar>
       </PanelHeader>
     </div>
@@ -44,14 +39,9 @@ export function WithModal() {
     >
       <PanelHeader total={5} current={3} onClickSettings={open}>
         <Toolbar>
-          <Toolbar.Item
-            tooltip={false}
-            title="trash"
-            intent="danger"
-            icon="trash"
-          />
-          <Toolbar.Item tooltip={false} title="filter" icon="filter" />
-          <Toolbar.Item tooltip={false} title="plus" icon="plus" />
+          <Toolbar.Item noTooltip title="trash" intent="danger" icon="trash" />
+          <Toolbar.Item noTooltip title="filter" icon="filter" />
+          <Toolbar.Item noTooltip title="plus" icon="plus" />
         </Toolbar>
       </PanelHeader>
       <Modal isOpen={isOpen} onRequestClose={close} width={400}>
@@ -92,13 +82,13 @@ export function WithAccordion() {
           <PanelHeader total={20} onClickSettings={() => void 0}>
             <Toolbar>
               <Toolbar.Item
-                tooltip={false}
+                noTooltip
                 title="trash"
                 intent="danger"
                 icon="trash"
               />
-              <Toolbar.Item tooltip={false} title="filter" icon="filter" />
-              <Toolbar.Item tooltip={false} title="plus" icon="plus" />
+              <Toolbar.Item noTooltip title="filter" icon="filter" />
+              <Toolbar.Item noTooltip title="plus" icon="plus" />
             </Toolbar>
           </PanelHeader>
           This is the first content
