@@ -55,11 +55,16 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
         style={{ maxWidth: 500, height: 300 }}
         {...otherProps}
       >
-        <DialogBody>
+        <DialogBody
+          css={css`
+            padding: 0;
+            background-color: white;
+          `}
+        >
           <div
             style={{
               display: 'flex',
-              flex: '1 1 0%',
+              // flex: '1 1 0%',
               flexDirection: 'row',
             }}
           >
@@ -68,7 +73,12 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
               <Toolbar.Item title="npm" icon={<FaNpm />} />
               <Toolbar.Item title="nodejs" icon={<FaNodeJs />} />
             </Toolbar>
-            <p style={{ paddingLeft: 10 }}>
+            <p
+              style={{
+                padding: 5,
+                paddingLeft: 20,
+              }}
+            >
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
               accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
               assumenda esse animi id atque natus ipsa sunt iure illo,
@@ -92,7 +102,7 @@ Control.args = {
 
 Control.argTypes = actions;
 
-export function ConfirmModalControl({
+export function ConfirmDialogControl({
   onSave,
   onCancel,
   onClose,
@@ -132,13 +142,13 @@ export function ConfirmModalControl({
   );
 }
 
-ConfirmModalControl.args = {
+ConfirmDialogControl.args = {
   canOutsideClickClose: true,
   canEscapeKeyClose: true,
   headerColor: 'hsl(351deg, 73%, 47%)',
 };
 
-ConfirmModalControl.argTypes = actions;
+ConfirmDialogControl.argTypes = actions;
 
 const tabs = [
   {
@@ -196,13 +206,16 @@ export function WithComplexContents({
           onClose();
           close();
         }}
-        style={{ width: 800, height: 600, overflow: 'visible' }}
+        style={{ width: 800, height: 400 }}
         {...otherProps}
       >
         <DialogBody
           css={css({
             maxHeight: 'none',
+            padding: 0,
+            backgroundColor: 'white',
           })}
+          useOverflowScrollContainer
         >
           <Tabs selectedTabId={state} onChange={setState} vertical>
             {tabs.map((tab) => (
@@ -242,11 +255,12 @@ export function DynamicallySizedChildren() {
         title="Test OCL editor in modal"
         isOpen={isOpen}
         onClose={close}
-        style={{ width: 700, maxHeight: 500 }}
+        style={{ width: 700 }}
       >
         <DialogBody
           css={css({
             maxHeight: 'none',
+            padding: 1,
             backgroundColor: 'white',
           })}
         >

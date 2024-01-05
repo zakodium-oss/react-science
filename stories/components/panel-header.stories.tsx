@@ -35,15 +35,9 @@ export function WithModal() {
         <Button minimal icon="filter" />
         <Button minimal icon="plus" />
       </PanelHeader>
-      <Dialog
-        title="Settings"
-        icon="cog"
-        isOpen={isOpen}
-        onClose={close}
-        style={{ width: 400 }}
-      >
+      <Dialog title="Settings" icon="cog" isOpen={isOpen} onClose={close}>
         <DialogBody>
-          <p style={{ paddingLeft: 20, paddingRight: 20 }}>
+          <p style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10 }}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
             accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
             assumenda esse animi id atque natus ipsa sunt iure illo,
