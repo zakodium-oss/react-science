@@ -145,13 +145,14 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         onClick?.(props);
       }}
       tooltipProps={
-        (!noTooltip && {
-          content: title,
-          placement: vertical ? 'right' : 'bottom',
-          intent,
-          compact: !large,
-        }) ||
-        undefined
+        noTooltip
+          ? undefined
+          : {
+              content: title,
+              placement: vertical ? 'right' : 'bottom',
+              intent,
+              compact: !large,
+            }
       }
       {...other}
     />
