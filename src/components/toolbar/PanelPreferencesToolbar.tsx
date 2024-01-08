@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import { Button } from '../button/Button';
+import { Toolbar } from './Toolbar';
 
 interface PanelPreferencesToolbarProps {
   onClose?: () => void;
@@ -26,8 +26,22 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
   const { onClose, onSave } = props;
   return (
     <div css={styles.toolbar}>
-      <Button minimal onClick={onClose} intent="danger" icon="cross" />
-      <Button minimal onClick={onSave} intent="success" icon="tick" />
+      <Toolbar>
+        <Toolbar.Item
+          title="close"
+          onClick={onClose}
+          intent="danger"
+          icon="cross"
+          noTooltip
+        />
+        <Toolbar.Item
+          title="save"
+          onClick={onSave}
+          intent="success"
+          icon="tick"
+          noTooltip
+        />
+      </Toolbar>
     </div>
   );
 }
