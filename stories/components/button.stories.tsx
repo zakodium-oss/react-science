@@ -64,6 +64,18 @@ Tooltip.argTypes = {
     options: ['none', 'primary', 'success', 'warning', 'danger'],
   },
 };
+export function TooltipOnDisabled(tooltipProps: ButtonProps['tooltipProps']) {
+  return (
+    <ButtonWrapper>
+      <Button disabled tooltipProps={tooltipProps}>
+        Hello, World!
+      </Button>
+    </ButtonWrapper>
+  );
+}
+TooltipOnDisabled.args = Tooltip.args;
+TooltipOnDisabled.argTypes = Tooltip.argTypes;
+
 export function ButtonGroupBasic() {
   return (
     <ButtonGroup>
