@@ -48,6 +48,9 @@ export function MeasurementsPanel() {
             padding: 2px 0 0 1rem;
             border-bottom: 1px solid gray;
           }
+          div[role='tabpanel'] {
+            margin-top: 4px;
+          }
         `}
       >
         {items.map((item) => (
