@@ -1,6 +1,12 @@
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 
-import { PanelHeader, Accordion, Button, useOnOff } from '../../src/components';
+import {
+  PanelHeader,
+  Accordion,
+  Button,
+  useOnOff,
+  Toolbar,
+} from '../../src/components';
 
 export default {
   title: 'Components / PanelHeader',
@@ -15,9 +21,11 @@ export function Basic() {
       }}
     >
       <PanelHeader total={3} onClickSettings={() => void 0}>
-        <Button minimal intent="danger" icon="trash" />
-        <Button minimal icon="filter" />
-        <Button minimal icon="plus" />
+        <Toolbar>
+          <Toolbar.Item noTooltip title="trash" intent="danger" icon="trash" />
+          <Toolbar.Item noTooltip title="filter" icon="filter" />
+          <Toolbar.Item noTooltip title="plus" icon="plus" />
+        </Toolbar>
       </PanelHeader>
     </div>
   );
@@ -31,9 +39,11 @@ export function WithModal() {
       }}
     >
       <PanelHeader total={5} current={3} onClickSettings={open}>
-        <Button minimal intent="danger" icon="trash" />
-        <Button minimal icon="filter" />
-        <Button minimal icon="plus" />
+        <Toolbar>
+          <Toolbar.Item noTooltip title="trash" intent="danger" icon="trash" />
+          <Toolbar.Item noTooltip title="filter" icon="filter" />
+          <Toolbar.Item noTooltip title="plus" icon="plus" />
+        </Toolbar>
       </PanelHeader>
       <Dialog title="Settings" icon="cog" isOpen={isOpen} onClose={close}>
         <DialogBody>
@@ -61,9 +71,16 @@ export function WithAccordion() {
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
           <PanelHeader total={20} onClickSettings={() => void 0}>
-            <Button minimal intent="danger" icon="trash" />
-            <Button minimal icon="filter" />
-            <Button minimal icon="plus" />
+            <Toolbar>
+              <Toolbar.Item
+                noTooltip
+                title="trash"
+                intent="danger"
+                icon="trash"
+              />
+              <Toolbar.Item noTooltip title="filter" icon="filter" />
+              <Toolbar.Item noTooltip title="plus" icon="plus" />
+            </Toolbar>
           </PanelHeader>
           This is the first content
         </Accordion.Item>
