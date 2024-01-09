@@ -59,11 +59,10 @@ const MeasurementsLinkButton = styled.span`
 const MeasurementsHeaderColumn = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   padding-left: 5px;
   padding-right: 5px;
-  justify-content: space-between;
   border-bottom: 1px solid black;
 `;
 
@@ -130,6 +129,14 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
     <MeasurementsTableContainer>
       <MeasurementsHeaderColumn>
         <MeasurementsHeaderGroup>
+          <MeasurementsLinkButton onClick={() => onSelectLink(true)}>
+            Select all
+          </MeasurementsLinkButton>
+          <MeasurementsLinkButton onClick={() => onSelectLink(false)}>
+            Unselect all
+          </MeasurementsLinkButton>
+        </MeasurementsHeaderGroup>
+        <MeasurementsHeaderGroup>
           <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
           <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
           <FaTrash
@@ -138,14 +145,6 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
             }
             onClick={hasSelectedMeasurements ? openRemoveModal : undefined}
           />
-        </MeasurementsHeaderGroup>
-        <MeasurementsHeaderGroup>
-          <MeasurementsLinkButton onClick={() => onSelectLink(true)}>
-            Select all
-          </MeasurementsLinkButton>
-          <MeasurementsLinkButton onClick={() => onSelectLink(false)}>
-            Unselect all
-          </MeasurementsLinkButton>
         </MeasurementsHeaderGroup>
 
         <ConfirmModal
