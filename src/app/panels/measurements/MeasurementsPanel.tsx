@@ -37,7 +37,7 @@ export function MeasurementsPanel() {
     });
   }
 
-  if (items.length > 1) {
+  if (items.length > 0) {
     return (
       <Tabs
         selectedTabId={view.selectedKind}
@@ -62,10 +62,6 @@ export function MeasurementsPanel() {
         ))}
       </Tabs>
     );
-  }
-
-  if (items.length === 1 && items[0].content) {
-    return <>{items[0].content}</>;
   }
 
   return (
