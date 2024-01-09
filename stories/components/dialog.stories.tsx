@@ -27,7 +27,7 @@ import {
 import { AccordionDecorator } from '../utils';
 
 export default {
-  title: 'Components / Modal',
+  title: 'Components / Dialog',
   decorators: [AccordionDecorator],
 };
 
@@ -215,9 +215,18 @@ export function WithComplexContents({
             padding: 0,
             backgroundColor: 'white',
           })}
-          useOverflowScrollContainer
         >
-          <Tabs selectedTabId={state} onChange={setState} vertical>
+          <Tabs
+            selectedTabId={state}
+            onChange={setState}
+            vertical
+            css={css`
+              height: 100%;
+              div[role='tabpanel'] {
+                overflow-y: auto;
+              }
+            `}
+          >
             {tabs.map((tab) => (
               <Tab
                 id={tab.id}
@@ -247,7 +256,7 @@ WithComplexContents.argTypes = actions;
 export function DynamicallySizedChildren() {
   const [isOpen, open, close] = useOnOff(false);
   return (
-    <div style={{ margin: '2em' }}>
+    <div style={{ margin: '2em 0 0 2em' }}>
       <Button intent="warning" onClick={open}>
         Open editor modal
       </Button>
