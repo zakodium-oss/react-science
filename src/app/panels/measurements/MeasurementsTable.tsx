@@ -6,8 +6,8 @@ import {
   MeasurementKind,
   useAppDispatch,
   useAppState,
-} from '../../../app-data/index';
-import { ConfirmModal, useOnOff } from '../../../components/index';
+} from '../../../app-data';
+import { ConfirmModal, useOnOff } from '../../../components';
 
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';
@@ -27,7 +27,6 @@ interface MeasurementsTableRowProps {
 const MeasurementsTableContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
 `;
 
 const MeasurementsTableRoot = styled.table`
@@ -60,11 +59,16 @@ const MeasurementsLinkButton = styled.span`
 const MeasurementsHeaderColumn = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   padding-left: 5px;
-
+  padding-right: 5px;
   border-bottom: 1px solid black;
+`;
+
+const MeasurementsHeaderGroup = styled.div`
+  display: flex;
+  gap: 6px;
 `;
 
 const MeasurementsTableRowData = styled.tr`
@@ -124,21 +128,25 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   return (
     <MeasurementsTableContainer>
       <MeasurementsHeaderColumn>
-        <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
-        <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
-        <MeasurementsLinkButton onClick={() => onSelectLink(true)}>
-          Select all
-        </MeasurementsLinkButton>
-        <MeasurementsLinkButton onClick={() => onSelectLink(false)}>
-          Unselect all
-        </MeasurementsLinkButton>
+        <MeasurementsHeaderGroup>
+          <MeasurementsLinkButton onClick={() => onSelectLink(true)}>
+            Select all
+          </MeasurementsLinkButton>
+          <MeasurementsLinkButton onClick={() => onSelectLink(false)}>
+            Unselect all
+          </MeasurementsLinkButton>
+        </MeasurementsHeaderGroup>
+        <MeasurementsHeaderGroup>
+          <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
+          <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
+          <FaTrash
+            style={
+              hasSelectedMeasurements ? { cursor: 'pointer' } : { opacity: 0.6 }
+            }
+            onClick={hasSelectedMeasurements ? openRemoveModal : undefined}
+          />
+        </MeasurementsHeaderGroup>
 
-        <FaTrash
-          style={
-            hasSelectedMeasurements ? { cursor: 'pointer' } : { opacity: 0.6 }
-          }
-          onClick={hasSelectedMeasurements ? openRemoveModal : undefined}
-        />
         <ConfirmModal
           headerColor="red"
           isOpen={isRemoveModalOpen}
