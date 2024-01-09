@@ -6,9 +6,9 @@ import {
   kindLabels,
   MeasurementKind,
   measurementKinds,
-  useAppState,
   useAppDispatch,
-} from '../../../app-data/index';
+  useAppState,
+} from '../../../app-data';
 
 import { MeasurementsTable } from './MeasurementsTable';
 
@@ -37,16 +37,19 @@ export function MeasurementsPanel() {
     });
   }
 
-  if (items.length > 1) {
+  if (items.length > 0) {
     return (
       <Tabs
         selectedTabId={view.selectedKind}
         onChange={handleTabSelection}
         css={css`
-          height: 100%;
           div[role='tablist'] {
             overflow-x: auto;
-            padding: 0 1rem;
+            padding: 2px 0 0 1rem;
+            border-bottom: 1px solid gray;
+          }
+          div[role='tabpanel'] {
+            margin-top: 4px;
           }
         `}
       >
@@ -62,10 +65,6 @@ export function MeasurementsPanel() {
         ))}
       </Tabs>
     );
-  }
-
-  if (items.length === 1 && items[0].content) {
-    return <>{items[0].content}</>;
   }
 
   return (
