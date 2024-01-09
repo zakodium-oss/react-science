@@ -6,8 +6,8 @@ import {
   MeasurementKind,
   useAppDispatch,
   useAppState,
-} from '../../../app-data/index';
-import { ConfirmModal, useOnOff } from '../../../components/index';
+} from '../../../app-data';
+import { ConfirmModal, useOnOff } from '../../../components';
 
 import { MeasurementCheckbox } from './MeasurementCheckbox';
 import MeasurementColorPreview from './MeasurementColorPreview';

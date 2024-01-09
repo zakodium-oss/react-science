@@ -8,7 +8,7 @@ import {
   measurementKinds,
   useAppDispatch,
   useAppState,
-} from '../../../app-data/index';
+} from '../../../app-data';
 
 import { MeasurementsTable } from './MeasurementsTable';
 
