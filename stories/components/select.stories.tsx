@@ -381,7 +381,7 @@ export function ResetButton() {
   );
 }
 
-export function InModal() {
+export function InDialog() {
   const [isOpen, open, close] = useOnOff();
   const [value, setValue] = useState<ItemsType | null>(null);
   return (

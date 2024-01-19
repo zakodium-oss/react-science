@@ -9,7 +9,7 @@ import { css } from '@emotion/react';
 
 import { Button } from '..';
 
-interface ConfirmModalProps extends Omit<DialogProps, 'isCloseButtonShown'> {
+interface ConfirmDialogProps extends Omit<DialogProps, 'isCloseButtonShown'> {
   onConfirm: () => void;
   onCancel?: () => void;
   saveText?: string;
@@ -17,7 +17,7 @@ interface ConfirmModalProps extends Omit<DialogProps, 'isCloseButtonShown'> {
   headerColor: string;
 }
 
-export function ConfirmDialog(props: ConfirmModalProps) {
+export function ConfirmDialog(props: ConfirmDialogProps) {
   const {
     saveText = 'Save',
     cancelText = 'Cancel',

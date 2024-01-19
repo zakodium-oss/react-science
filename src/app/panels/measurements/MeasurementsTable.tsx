@@ -106,7 +106,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
     view: { selectedMeasurements },
   } = useAppState();
   const dispatch = useAppDispatch();
-  const [isRemoveModalOpen, openRemoveModal, closeRemoveModal] = useOnOff();
+  const [isRemoveDialogOpen, openRemoveDialog, closeRemoveDialog] = useOnOff();
 
   const hasSelectedMeasurements = (selectedMeasurements[kind]?.length ?? 0) > 0;
 
@@ -122,7 +122,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
 
   function onRemove() {
     dispatch({ type: 'REMOVE_SELECTED_MEASUREMENTS', payload: { kind } });
-    closeRemoveModal();
+    closeRemoveDialog();
   }
 
   return (
@@ -143,14 +143,14 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
             style={
               hasSelectedMeasurements ? { cursor: 'pointer' } : { opacity: 0.6 }
             }
-            onClick={hasSelectedMeasurements ? openRemoveModal : undefined}
+            onClick={hasSelectedMeasurements ? openRemoveDialog : undefined}
           />
         </MeasurementsHeaderGroup>
         <ConfirmDialog
           headerColor="red"
-          isOpen={isRemoveModalOpen}
+          isOpen={isRemoveDialogOpen}
           onConfirm={onRemove}
-          onClose={closeRemoveModal}
+          onClose={closeRemoveDialog}
           saveText="Remove"
         >
           <div style={{ fontWeight: 'bold', padding: 10 }}>

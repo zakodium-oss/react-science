@@ -30,7 +30,7 @@ export function Basic() {
     </div>
   );
 }
-export function WithModal() {
+export function WithDialog() {
   const [isOpen, open, close] = useOnOff();
   return (
     <div

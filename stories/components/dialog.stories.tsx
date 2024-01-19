@@ -43,7 +43,7 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
   const { onSave, onClose, ...otherProps } = props;
   return (
     <>
-      <DemoPage openModal={open} />
+      <DemoPage openDialog={open} />
       <Dialog
         isOpen={isOpen}
         title="Hello, World!"
@@ -117,7 +117,7 @@ export function ConfirmDialogControl({
 
   return (
     <>
-      <DemoPage openModal={open} />
+      <DemoPage openDialog={open} />
       <ConfirmDialog
         onConfirm={() => {
           onSave();
@@ -197,7 +197,7 @@ export function WithComplexContents({
 
   return (
     <>
-      <DemoPage openModal={open} />
+      <DemoPage openDialog={open} />
       <Dialog
         title="General Settings"
         icon="cog"
@@ -256,12 +256,12 @@ WithComplexContents.argTypes = actions;
 export function DynamicallySizedChildren() {
   const [isOpen, open, close] = useOnOff(false);
   return (
-    <div style={{ margin: '2em 0 0 2em' }}>
+    <div style={{ padding: '2em' }}>
       <Button intent="warning" onClick={open}>
-        Open editor modal
+        Open editor Dialog
       </Button>
       <Dialog
-        title="Test OCL editor in modal"
+        title="Test OCL editor in Dialog"
         isOpen={isOpen}
         onClose={close}
         style={{ width: 700 }}
@@ -282,7 +282,7 @@ export function DynamicallySizedChildren() {
 
 DynamicallySizedChildren.storyName = 'With dynamically sized children';
 
-function DemoPage(props: { openModal: () => void }) {
+function DemoPage(props: { openDialog: () => void }) {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -317,7 +317,7 @@ function DemoPage(props: { openModal: () => void }) {
         >
           <SplitPane size="35%">
             <div style={{ padding: 5 }}>
-              <Button intent="primary" onClick={props.openModal}>
+              <Button intent="primary" onClick={props.openDialog}>
                 Open
               </Button>
             </div>
