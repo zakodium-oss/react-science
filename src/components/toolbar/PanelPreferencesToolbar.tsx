@@ -13,7 +13,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row-reverse',
     fontSize: 16,
-    padding: 3,
+    borderBottom: '0.55px solid rgb(240, 240, 240)',
     '& > button': {
       padding: 0,
       paddingLeft: 9,
