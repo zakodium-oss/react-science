@@ -111,7 +111,7 @@ export function WithAccordion() {
   );
 }
 interface PanelInfo {
-  content: ReactNode;
+  content: string;
 }
 function PanelContainer({ content }: PanelProps<PanelInfo>) {
   return (
