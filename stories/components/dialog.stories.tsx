@@ -1,4 +1,6 @@
-import { Tabs, Tab } from '@blueprintjs/core';
+/** @jsxImportSource @emotion/react */
+import { Dialog, DialogBody, DialogFooter, Tabs, Tab } from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import {
   FaArrowsAlt,
@@ -16,9 +18,8 @@ import { StructureEditor } from 'react-ocl/full';
 import {
   Accordion,
   Button,
-  ConfirmModal,
+  ConfirmDialog,
   Header,
-  Modal,
   SplitPane,
   Toolbar,
   useOnOff,
@@ -26,40 +27,44 @@ import {
 import { AccordionDecorator } from '../utils';
 
 export default {
-  title: 'Components / Modal',
-  component: Modal,
+  title: 'Components / Dialog',
   decorators: [AccordionDecorator],
 };
 
 const actions = {
   onSave: { action: 'saved' },
+  onClose: { action: 'closed' },
   onCancel: { action: 'canceled' },
 };
 
-export function Control(props: {
-  onSave: () => void;
-  onRequestClose: () => void;
-}) {
+export function Control(props: { onSave: () => void; onClose: () => void }) {
   const [isOpen, open, close] = useOnOff();
 
-  const { onSave, onRequestClose, ...otherProps } = props;
+  const { onSave, onClose, ...otherProps } = props;
   return (
     <>
-      <DemoPage openModal={open} />
-      <Modal
+      <DemoPage openDialog={open} />
+      <Dialog
         isOpen={isOpen}
-        onRequestClose={() => {
-          onRequestClose();
+        title="Hello, World!"
+        icon="info-sign"
+        onClose={() => {
+          onClose();
           close();
         }}
+        style={{ maxWidth: 500, height: 300 }}
         {...otherProps}
       >
-        <Modal.Header>Hello, World!</Modal.Header>
-        <Modal.Body>
+        <DialogBody
+          css={css`
+            padding: 0;
+            background-color: white;
+          `}
+        >
           <div
             style={{
               display: 'flex',
-              flex: '1 1 0%',
+              // flex: '1 1 0%',
               flexDirection: 'row',
             }}
           >
@@ -68,58 +73,52 @@ export function Control(props: {
               <Toolbar.Item title="npm" icon={<FaNpm />} />
               <Toolbar.Item title="nodejs" icon={<FaNodeJs />} />
             </Toolbar>
-            <p style={{ paddingLeft: 10 }}>
+            <p
+              style={{
+                padding: 5,
+                paddingLeft: 20,
+              }}
+            >
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
               accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
               assumenda esse animi id atque natus ipsa sunt iure illo,
               exercitationem voluptates non.
             </p>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-            }}
-          >
-            <Button intent="primary" onClick={onSave}>
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </DialogBody>
+        <DialogFooter
+          actions={<Button intent="primary" text="Save" onClick={onSave} />}
+        />
+      </Dialog>
     </>
   );
 }
 
 Control.args = {
-  hasCloseButton: true,
-  height: 400,
-  maxWidth: 600,
-  requestCloseOnBackdrop: true,
-  requestCloseOnEsc: true,
+  isCloseButtonShown: true,
+  canOutsideClickClose: true,
+  canEscapeKeyClose: true,
 };
 
 Control.argTypes = actions;
 
-export function ConfirmModalControl({
+export function ConfirmDialogControl({
   onSave,
   onCancel,
-  onRequestClose,
+  onClose,
   ...otherProps
 }: {
   onSave: () => void;
   onCancel: () => void;
-  onRequestClose: () => void;
+  onClose: () => void;
   headerColor: string;
 }) {
   const [isOpen, open, close] = useOnOff();
 
   return (
     <>
-      <DemoPage openModal={open} />
-      <ConfirmModal
+      <DemoPage openDialog={open} />
+      <ConfirmDialog
         onConfirm={() => {
           onSave();
           close();
@@ -129,8 +128,8 @@ export function ConfirmModalControl({
           close();
         }}
         isOpen={isOpen}
-        onRequestClose={() => {
-          onRequestClose();
+        onClose={() => {
+          onClose();
           close();
         }}
         {...otherProps}
@@ -138,19 +137,18 @@ export function ConfirmModalControl({
         Are you sure you want to deactivate your account? All of your data will
         be permanently removed from our servers forever. This action cannot be
         undone.
-      </ConfirmModal>
+      </ConfirmDialog>
     </>
   );
 }
 
-ConfirmModalControl.args = {
-  maxWidth: 400,
-  requestCloseOnBackdrop: true,
-  requestCloseOnEsc: true,
+ConfirmDialogControl.args = {
+  canOutsideClickClose: true,
+  canEscapeKeyClose: true,
   headerColor: 'hsl(351deg, 73%, 47%)',
 };
 
-ConfirmModalControl.argTypes = actions;
+ConfirmDialogControl.argTypes = actions;
 
 const tabs = [
   {
@@ -188,29 +186,47 @@ const tabs = [
 
 export function WithComplexContents({
   onSave,
-  onRequestClose,
+  onClose,
   ...otherProps
 }: {
   onSave: () => void;
-  onRequestClose: () => void;
+  onClose: () => void;
 }) {
   const [isOpen, open, close] = useOnOff();
   const [state, setState] = useState<number | string>(tabs[0].id);
 
   return (
     <>
-      <DemoPage openModal={open} />
-      <Modal
+      <DemoPage openDialog={open} />
+      <Dialog
+        title="General Settings"
+        icon="cog"
         isOpen={isOpen}
-        onRequestClose={() => {
-          onRequestClose();
+        onClose={() => {
+          onClose();
           close();
         }}
+        style={{ width: 800, height: 400 }}
         {...otherProps}
       >
-        <Modal.Header>General Settings</Modal.Header>
-        <Modal.Body>
-          <Tabs selectedTabId={state} onChange={setState} vertical>
+        <DialogBody
+          css={css({
+            maxHeight: 'none',
+            padding: 0,
+            backgroundColor: 'white',
+          })}
+        >
+          <Tabs
+            selectedTabId={state}
+            onChange={setState}
+            vertical
+            css={css`
+              height: 100%;
+              div[role='tabpanel'] {
+                overflow-y: auto;
+              }
+            `}
+          >
             {tabs.map((tab) => (
               <Tab
                 id={tab.id}
@@ -220,30 +236,19 @@ export function WithComplexContents({
               />
             ))}
           </Tabs>
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              flex: '1 1 0%',
-            }}
-          >
-            <Button intent="primary" onClick={onSave}>
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </DialogBody>
+        <DialogFooter
+          actions={<Button intent="primary" text="Save" onClick={onSave} />}
+        />
+      </Dialog>
     </>
   );
 }
 
 WithComplexContents.args = {
-  width: 800,
-  height: 600,
-  requestCloseOnBackdrop: true,
-  requestCloseOnEsc: true,
+  isCloseButtonShown: true,
+  canOutsideClickClose: true,
+  canEscapeKeyClose: true,
 };
 
 WithComplexContents.argTypes = actions;
@@ -251,23 +256,33 @@ WithComplexContents.argTypes = actions;
 export function DynamicallySizedChildren() {
   const [isOpen, open, close] = useOnOff(false);
   return (
-    <div style={{ margin: '2em' }}>
+    <div style={{ padding: '2em' }}>
       <Button intent="warning" onClick={open}>
-        Open editor modal
+        Open editor Dialog
       </Button>
-      <Modal width={700} height={500} isOpen={isOpen} onRequestClose={close}>
-        <Modal.Header>Test OCL editor in modal</Modal.Header>
-        <Modal.Body>
+      <Dialog
+        title="Test OCL editor in Dialog"
+        isOpen={isOpen}
+        onClose={close}
+        style={{ width: 700 }}
+      >
+        <DialogBody
+          css={css({
+            maxHeight: 'none',
+            padding: 1,
+            backgroundColor: 'white',
+          })}
+        >
           <StructureEditor width={600} height={400} svgMenu />
-        </Modal.Body>
-      </Modal>
+        </DialogBody>
+      </Dialog>
     </div>
   );
 }
 
 DynamicallySizedChildren.storyName = 'With dynamically sized children';
 
-function DemoPage(props: { openModal: () => void }) {
+function DemoPage(props: { openDialog: () => void }) {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -302,7 +317,7 @@ function DemoPage(props: { openModal: () => void }) {
         >
           <SplitPane size="35%">
             <div style={{ padding: 5 }}>
-              <Button intent="primary" onClick={props.openModal}>
+              <Button intent="primary" onClick={props.openDialog}>
                 Open
               </Button>
             </div>
