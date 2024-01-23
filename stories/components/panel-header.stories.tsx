@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { Panel, PanelStack2 } from '@blueprintjs/core';
+import { Panel, PanelStack2, Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { PanelProps } from '@blueprintjs/core/lib/esnext/index';
 import { css } from '@emotion/react';
 import { ReactNode, useCallback, useState } from 'react';
+
 
 import {
   PanelHeader,
   Accordion,
   Button,
-  Modal,
   useOnOff,
   Toolbar,
   PanelPreferencesToolbar,
@@ -36,7 +36,7 @@ export function Basic() {
     </div>
   );
 }
-export function WithModal() {
+export function WithDialog() {
   const [isOpen, open, close] = useOnOff();
   return (
     <div
@@ -51,29 +51,19 @@ export function WithModal() {
           <Toolbar.Item noTooltip title="plus" icon="plus" />
         </Toolbar>
       </PanelHeader>
-      <Modal isOpen={isOpen} onRequestClose={close} width={400}>
-        <Modal.Header>Settings</Modal.Header>
-        <Modal.Body>
-          <p style={{ paddingLeft: 20, paddingRight: 20 }}>
+      <Dialog title="Settings" icon="cog" isOpen={isOpen} onClose={close}>
+        <DialogBody>
+          <p style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10 }}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi
             accusamus voluptas odit minima amet obcaecati eveniet voluptatibus
             assumenda esse animi id atque natus ipsa sunt iure illo,
             exercitationem voluptates non.
           </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-            }}
-          >
-            <Button intent="primary" onClick={close}>
-              Save
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </DialogBody>
+        <DialogFooter
+          actions={<Button intent="primary" text="Save" onClick={close} />}
+        />
+      </Dialog>
     </div>
   );
 }
