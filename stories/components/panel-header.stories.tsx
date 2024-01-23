@@ -1,9 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { Panel, PanelStack2, Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
+import {
+  Panel,
+  PanelStack2,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+} from '@blueprintjs/core';
 import { PanelProps } from '@blueprintjs/core/lib/esnext/index';
 import { css } from '@emotion/react';
-import { ReactNode, useCallback, useState } from 'react';
-
+import { useCallback, useState } from 'react';
 
 import {
   PanelHeader,
@@ -101,9 +106,9 @@ export function WithAccordion() {
   );
 }
 interface PanelInfo {
-  content: string;
+  content?: string;
 }
-function PanelContainer({ content }: PanelProps<PanelInfo>) {
+function PanelContainer({ content = 'Panel' }: PanelProps<PanelInfo>) {
   return (
     <div style={{ width: '100%', backgroundColor: 'grey' }}>{content}</div>
   );
