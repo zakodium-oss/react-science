@@ -105,60 +105,30 @@ export function WithAccordion() {
     </div>
   );
 }
-interface PanelInfo {
-  content?: string;
-}
-function PanelContainer({ content = 'Panel' }: PanelProps<PanelInfo>) {
+function PanelHeaderInit({ openPanel }: PanelProps<PanelInfo>) {
   return (
-    <div style={{ width: '100%', backgroundColor: 'grey' }}>{content}</div>
-  );
-}
-
-export function WithAccordionPanelToolbarStackedPanel() {
-  const [currentPanelStack, setCurrentPanelStack] = useState<
-    Array<Panel<PanelInfo>>
-  >([]);
-  const addToPanelStack = useCallback(
-    (newPanel: Panel<PanelInfo>) =>
-      setCurrentPanelStack((stack) => [...stack, newPanel]),
-    [],
-  );
-  const removeFromPanelStack = useCallback(
-    () => setCurrentPanelStack((stack) => stack.slice(0, -1)),
-    [],
-  );
-
-  return (
-    <div
-      style={{
-        height: 300,
-      }}
-    >
-      <Accordion>
-        <Accordion.Item title="First Item" defaultOpened>
-          {currentPanelStack.length === 0 ? (
-            <PanelHeader total={20} onClickSettings={() => void 0}>
-              <Toolbar>
-                <Toolbar.Item
-                  noTooltip
-                  title="trash"
-                  intent="danger"
-                  icon="trash"
-                  onClick={() =>
-                    addToPanelStack({
-                      props: {
-                        content: 'Panel1',
-                      },
-                      renderPanel: PanelContainer,
-                      title: 'Panel 1',
-                    })
-                  }
-                />
-                <Toolbar.Item
-                  onClick={() =>
-                    addToPanelStack({
-                      props: {
-                        content: `Panel2 ................................................
+    <PanelHeader total={20} onClickSettings={() => void 0}>
+      <Toolbar>
+        <Toolbar.Item
+          noTooltip
+          title="trash"
+          intent="danger"
+          icon="trash"
+          onClick={() =>
+            openPanel({
+              props: {
+                content: 'Panel1',
+              },
+              renderPanel: PanelContainer,
+              title: 'Panel 1',
+            })
+          }
+        />
+        <Toolbar.Item
+          onClick={() =>
+            openPanel({
+              props: {
+                content: `Panel2 ................................................
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
                         dignissimos fugit porro debitis cupiditate similique quam exercitationem
                         natus hic delectus iste inventore itaque, dolorum eveniet ipsa sapiente
@@ -177,37 +147,75 @@ export function WithAccordionPanelToolbarStackedPanel() {
                         natus hic delectus iste inventore itaque, dolorum eveniet ipsa sapiente
                         voluptatibus a ipsam. Lorem ipsum dolor sit amet consectetur adipisicing
                         elit. Repellendus dignissimos fugit porro debitis cupiditate similique',`,
-                      },
-                      renderPanel: PanelContainer,
-                      title: 'Panel 2',
-                    })
-                  }
-                  noTooltip
-                  title="filter"
-                  icon="filter"
-                />
-                <Toolbar.Item
-                  onClick={() =>
-                    addToPanelStack({
-                      props: {
-                        content: 'Panel3',
-                      },
-                      renderPanel: PanelContainer,
-                      title: 'Panel 3',
-                    })
-                  }
-                  noTooltip
-                  title="plus"
-                  icon="plus"
-                />
-              </Toolbar>
-            </PanelHeader>
-          ) : (
-            <PanelPreferencesToolbar
-              onClose={removeFromPanelStack}
-              onSave={removeFromPanelStack}
-            />
-          )}
+              },
+              renderPanel: PanelContainer,
+              title: 'Panel 2',
+            })
+          }
+          noTooltip
+          title="filter"
+          icon="filter"
+        />
+        <Toolbar.Item
+          onClick={() =>
+            openPanel({
+              props: {
+                content: 'Panel3',
+              },
+              renderPanel: PanelContainer,
+              title: 'Panel 3',
+            })
+          }
+          noTooltip
+          title="plus"
+          icon="plus"
+        />
+      </Toolbar>
+    </PanelHeader>
+  );
+}
+interface PanelInfo {
+  content?: string;
+}
+function PanelContainer({
+  content = 'Panel',
+  closePanel,
+}: PanelProps<PanelInfo>) {
+  return (
+    <div>
+      <PanelPreferencesToolbar onClose={closePanel} onSave={closePanel} />
+      <div style={{ width: '100%', backgroundColor: 'grey' }}>{content}</div>
+    </div>
+  );
+}
+
+export function WithAccordionPanelToolbarStackedPanel() {
+  const [currentPanelStack, setCurrentPanelStack] = useState<
+    Array<Panel<PanelInfo>>
+  >([
+    {
+      renderPanel: PanelHeaderInit,
+      title: 'Panel Init',
+    },
+  ]);
+  const addToPanelStack = useCallback(
+    (newPanel: Panel<PanelInfo>) =>
+      setCurrentPanelStack((stack) => [...stack, newPanel]),
+    [],
+  );
+  const removeFromPanelStack = useCallback(
+    () => setCurrentPanelStack((stack) => stack.slice(0, -1)),
+    [],
+  );
+
+  return (
+    <div
+      style={{
+        height: 300,
+      }}
+    >
+      <Accordion>
+        <Accordion.Item title="First Item" defaultOpened>
           <div style={{ position: 'relative', height: '100%' }}>
             <PanelStack2
               css={css`
