@@ -1,4 +1,4 @@
-import { ButtonProps } from '@blueprintjs/core';
+import { ButtonProps, Menu, MenuItem } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
 import { useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -107,6 +107,16 @@ const itemsMixedIcons: ToolbarItems = [
     disabled: true,
   },
 ];
+const content = (
+  <Menu>
+    <MenuItem text="Menu item" />
+  </Menu>
+);
+const itemProps: ToolbarItemProps = {
+  id: 'help-blueprint',
+  icon: 'help',
+  title: 'Blueprint help icon',
+};
 
 export function Control(props: ToolbarProps & { onClick: () => void }) {
   const { onClick, ...toolbarProps } = props;
@@ -127,6 +137,7 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
           intent={item.id.startsWith('clipboard') ? 'success' : undefined}
         />
       ))}
+      <Toolbar.PopoverItem content={content} itemProps={itemProps} />
     </Toolbar>
   );
 }
@@ -159,6 +170,7 @@ export function VerticalToolbar() {
           />
         ))}
         <Toolbar.Item title="Inbox" icon="inbox" />
+        <Toolbar.PopoverItem content={content} itemProps={itemProps} />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
@@ -190,6 +202,7 @@ export function HorizontalToolbar() {
             disabled={item.disabled ?? undefined}
           />
         ))}
+        <Toolbar.PopoverItem content={content} itemProps={itemProps} />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>

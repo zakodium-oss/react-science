@@ -1,5 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { ButtonGroup, Classes, Colors, Intent } from '@blueprintjs/core';
+import {
+  ButtonGroup,
+  Classes,
+  Colors,
+  Intent,
+  Popover,
+  PopoverProps,
+} from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   ReactElement,
@@ -40,6 +47,10 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
   noTooltip?: boolean;
+}
+
+export interface ToolbarPopoverItemProps extends PopoverProps {
+  itemProps: ToolbarItemProps;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -156,6 +167,37 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       }
       {...other}
     />
+  );
+};
+
+Toolbar.PopoverItem = function ToolbarPopoverItem(
+  props: ToolbarPopoverItemProps,
+) {
+  const { itemProps, ...other } = props;
+  const { disabled, vertical } = useToolbarContext();
+
+  return (
+    <Popover
+      disabled={disabled}
+      placement={vertical ? 'right' : 'bottom'}
+      css={css`
+        .${Classes.ICON} {
+          color: ${Colors.DARK_GRAY3};
+        }
+      `}
+      targetProps={{
+        style: {
+          position: 'relative',
+          fontSize: '1.25em',
+          width: 'fit-content',
+          height: 'fit-content',
+          flex: 'none',
+        },
+      }}
+      {...other}
+    >
+      <Toolbar.Item noTooltip {...itemProps} />
+    </Popover>
   );
 };
 
