@@ -216,21 +216,15 @@ export function WithAccordionPanelToolbarStackedPanel() {
     >
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
-          <div style={{ position: 'relative', height: '100%' }}>
-            <PanelStack2
-              css={css`
-                position: static;
-                & > div {
-                  margin: 0;
-                  border: none;
-                }
-              `}
-              onOpen={addToPanelStack}
-              onClose={removeFromPanelStack}
-              stack={currentPanelStack}
-              showPanelHeader={false}
-            />
-          </div>
+          <PanelStack2
+            css={css`
+              height: 100%;
+            `}
+            onOpen={addToPanelStack}
+            onClose={removeFromPanelStack}
+            stack={currentPanelStack}
+            showPanelHeader={false}
+          />
         </Accordion.Item>
         <Accordion.Item title="Second Item">
           <PanelHeader current={2} total={3} onClickSettings={() => void 0}>
