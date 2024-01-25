@@ -47,6 +47,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
   noTooltip?: boolean;
+  isPopover?: boolean;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -122,6 +123,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     intent: itemIntent,
     disabled: itemDisabled,
     noTooltip = false,
+    isPopover,
     ...other
   } = props;
 
@@ -135,6 +137,10 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const disabled = itemDisabled ?? toolbarDisabled;
   return (
     <Button
+      alignText={isPopover ? 'left' : undefined}
+      rightIcon={
+        isPopover ? (vertical ? 'caret-right' : 'caret-down') : undefined
+      }
       minimal
       disabled={disabled}
       css={css`
@@ -196,7 +202,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       }}
       {...other}
     >
-      <Toolbar.Item noTooltip {...itemProps} />
+      <Toolbar.Item noTooltip isPopover {...itemProps} />
     </Popover>
   );
 };
