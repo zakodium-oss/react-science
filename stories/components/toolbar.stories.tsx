@@ -25,6 +25,7 @@ type ToolbarItems = Array<{
   title: string;
   id: string;
   disabled?: boolean;
+  content?: JSX.Element;
 }>;
 
 const itemsBlueprintIcons: ToolbarItems = [
@@ -107,16 +108,40 @@ const itemsMixedIcons: ToolbarItems = [
     disabled: true,
   },
 ];
-const content = (
-  <Menu>
-    <MenuItem text="Menu item" />
-  </Menu>
-);
-const itemProps: ToolbarItemProps = {
-  id: 'help-blueprint',
-  icon: 'help',
-  title: 'Blueprint help icon',
-};
+
+const itemsPopover: ToolbarItems = [
+  {
+    id: 'clipboard-bi',
+    icon: <BiClipboard />,
+    title: 'Box icons clipboard icon',
+    content: (
+      <Menu>
+        <MenuItem text="Box icons clipboard icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'paste',
+    icon: 'add-column-left',
+    title: 'Add left',
+    content: (
+      <Menu>
+        <MenuItem text="Add left" />
+      </Menu>
+    ),
+  },
+
+  {
+    id: 'paperclip-bi',
+    icon: <BiPaperclip />,
+    title: 'Box icons paperclip icon',
+    content: (
+      <Menu>
+        <MenuItem text="Box icons paperclip icon" />
+      </Menu>
+    ),
+  },
+];
 
 export function Control(props: ToolbarProps & { onClick: () => void }) {
   const { onClick, ...toolbarProps } = props;
@@ -137,7 +162,6 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
           intent={item.id.startsWith('clipboard') ? 'success' : undefined}
         />
       ))}
-      <Toolbar.PopoverItem content={content} itemProps={itemProps} />
     </Toolbar>
   );
 }
@@ -170,7 +194,6 @@ export function VerticalToolbar() {
           />
         ))}
         <Toolbar.Item title="Inbox" icon="inbox" />
-        <Toolbar.PopoverItem content={content} itemProps={itemProps} />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
@@ -202,12 +225,34 @@ export function HorizontalToolbar() {
             disabled={item.disabled ?? undefined}
           />
         ))}
-        <Toolbar.PopoverItem content={content} itemProps={itemProps} />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
         <p>Value selected: {state.title}</p>
       </div>
     </div>
+  );
+}
+
+export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
+  const { onClick, ...toolbarProps } = props;
+  const [active, setActive] = useState<string | null>(null);
+  return (
+    <Toolbar {...toolbarProps}>
+      {itemsPopover.map(({ content, ...itemProps }) => (
+        <Toolbar.PopoverItem
+          key={itemProps.id}
+          content={content}
+          itemProps={{
+            ...itemProps,
+            active: active === itemProps.id,
+            onClick: () => {
+              setActive(itemProps.id);
+              onClick();
+            },
+          }}
+        />
+      ))}
+    </Toolbar>
   );
 }
