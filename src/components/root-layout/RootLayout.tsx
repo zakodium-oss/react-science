@@ -33,7 +33,7 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    <div style={{ ...style, ...props.style }}>
+    <div style={{ ...style, ...props.style }} translate="no">
       <CustomDivPreflight ref={ref}>
         <RootLayoutProvider innerRef={rootRef}>
           <QueryClientProvider client={queryClient}>
