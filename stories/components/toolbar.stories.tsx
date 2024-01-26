@@ -130,7 +130,6 @@ const itemsPopover: ToolbarItems = [
       </Menu>
     ),
   },
-
   {
     id: 'paperclip-bi',
     icon: <BiPaperclip />,
@@ -138,6 +137,46 @@ const itemsPopover: ToolbarItems = [
     content: (
       <Menu>
         <MenuItem text="Box icons paperclip icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'clipboard-blueprint',
+    icon: 'clipboard',
+    title: 'BlueprintJS paperclip icon',
+    content: (
+      <Menu>
+        <MenuItem text="BlueprintJS paperclip icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'credit-card-bi',
+    icon: <BiCreditCard />,
+    title: 'Box icons credit card icon',
+    content: (
+      <Menu>
+        <MenuItem text="Box icons credit card icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'credit-card-blueprint',
+    icon: 'credit-card',
+    title: 'BlueprintJS credit-card icon',
+    content: (
+      <Menu>
+        <MenuItem text="BlueprintJS credit-card icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'clipboard-hi-2',
+    icon: <HiClipboard />,
+    title: 'Heroicons 2 clipboard icon',
+    content: (
+      <Menu>
+        <MenuItem text="Heroicons 2 clipboard icon" />
       </Menu>
     ),
   },
@@ -256,3 +295,49 @@ export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
     </Toolbar>
   );
 }
+
+export function MixedItems(
+  props: ToolbarItems & { onClick: () => void } & { popoverFirst: boolean },
+) {
+  const { popoverFirst, onClick, ...toolbarProps } = props;
+  const [active, setActive] = useState<string | null>(null);
+
+  const set = new Set<number>([0, 1, 4, 6, 7]);
+  const showPopover = (value: number) => popoverFirst === set.has(value);
+
+  return (
+    <Toolbar {...toolbarProps}>
+      {itemsPopover.map(({ content, ...itemProps }, index) =>
+        showPopover(index) ? (
+          <Toolbar.PopoverItem
+            key={itemProps.id}
+            content={content}
+            itemProps={{
+              ...itemProps,
+              active: active === itemProps.id,
+              onClick: () => {
+                setActive(itemProps.id);
+                onClick();
+              },
+            }}
+          />
+        ) : (
+          <Toolbar.Item
+            key={itemProps.id}
+            id={itemProps.id}
+            title={itemProps.title}
+            onClick={() => {
+              setActive(itemProps.id);
+              onClick();
+            }}
+            icon={itemProps.icon}
+            active={active === itemProps.id}
+          />
+        ),
+      )}
+    </Toolbar>
+  );
+}
+MixedItems.args = {
+  popoverFirst: false,
+};
