@@ -70,6 +70,9 @@ export function Toolbar(props: ToolbarProps) {
   // In Firefox: work-around needed (https://bugzilla.mozilla.org/show_bug.cgi?id=995020)
   // In Safari: work-around needed
   useLayoutEffect(() => {
+    if (!vertical) {
+      return;
+    }
     function update() {
       const lastElement = ref.current?.lastElementChild;
       if (!lastElement) {
@@ -95,7 +98,9 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
-        ref={ref}
+        // Reset because of layout effect above
+        // TODO: remove once the workaround is no longer needed
+        key={String(vertical)}
         vertical={vertical}
         large={large}
         style={{
