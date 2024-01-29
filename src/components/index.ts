@@ -8,7 +8,7 @@ export * from './header/index';
 export * from './hooks/index';
 export * from './info-panel/index';
 export * from './layout-manager/index';
-export * from './modal/index';
+export * from './dialog/index';
 export * from './root-layout/index';
 export * from './split-pane/index';
 export * from './table/index';
