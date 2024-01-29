@@ -1,12 +1,12 @@
-import { ButtonProps } from '@blueprintjs/core';
+import { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
-import { ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 
 import { Modal, Toolbar, useOnOff } from '../../components';
 
 interface AboutDialogToolbarButtonProps {
   name: string;
-  icon: ButtonProps['icon'];
+  icon: IconName | JSX.Element;
   body: ReactNode;
 }
 

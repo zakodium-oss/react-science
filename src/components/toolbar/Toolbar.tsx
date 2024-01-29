@@ -7,8 +7,11 @@ import {
   Popover,
   PopoverProps,
 } from '@blueprintjs/core';
+import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
 import {
+  cloneElement,
+  JSX,
   ReactElement,
   ReactNode,
   useLayoutEffect,
@@ -16,7 +19,7 @@ import {
   useRef,
 } from 'react';
 
-import { Button, ButtonProps } from '../index';
+import { Button } from '../index';
 
 import {
   ToolbarContext,
@@ -42,7 +45,7 @@ export interface ToolbarProps extends ToolbarBaseProps {
 export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
   title: string;
-  icon: ButtonProps['icon'];
+  icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
@@ -136,6 +139,14 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   } = useToolbarContext();
   const intent = itemIntent ?? toolbarIntent;
   const disabled = itemDisabled ?? toolbarDisabled;
+  const resizedIcon =
+    typeof icon === 'string'
+      ? icon
+      : cloneElement(icon, {
+          className: icon.props.className
+            ? `${icon.props.className} bp5-icon`
+            : 'bp5-icon',
+        });
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
@@ -158,7 +169,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       }}
       type="button"
       active={active}
-      icon={icon}
+      icon={resizedIcon}
       onClick={() => {
         onClick?.(props);
       }}

@@ -1,6 +1,7 @@
-import { ButtonProps, Menu, MenuItem } from '@blueprintjs/core';
+import { Menu, MenuItem } from '@blueprintjs/core';
+import { IconName } from '@blueprintjs/icons';
 import { Meta } from '@storybook/react';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
@@ -21,7 +22,7 @@ export default {
 } as Meta<ToolbarProps>;
 
 type ToolbarItems = Array<{
-  icon: ButtonProps['icon'];
+  icon: IconName | JSX.Element;
   title: string;
   id: string;
   disabled?: boolean;
