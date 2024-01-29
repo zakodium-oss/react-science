@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.33.0](https://github.com/zakodium-oss/react-science/compare/v0.32.2...v0.33.0) (2024-01-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove Modal component in favor of blueprintjs' Dialog component ([#626](https://github.com/zakodium-oss/react-science/issues/626))
+* remove component tabs in favor of blueprintjs Tabs component ([#624](https://github.com/zakodium-oss/react-science/issues/624))
+* Table's font size changed from 12px to 14px. Table `border` prop rename to `hasBorder`
+* You should use ValueRenderer.Header instead of ValueRenderer.Title inside of Table.Header
+
+### Features
+
+* add a 'disabled' prop to Toolbar.Item ([#615](https://github.com/zakodium-oss/react-science/issues/615)) ([c5352bc](https://github.com/zakodium-oss/react-science/commit/c5352bc0fbbd8440775d3c6d512075f992fefa91))
+* add noTooltip prop to Toolbar.Item ([#629](https://github.com/zakodium-oss/react-science/issues/629)) ([82a2be9](https://github.com/zakodium-oss/react-science/commit/82a2be9ed4b48d1e67d624fbd079af36394ee1cc))
+* improve layout of tabs ([#630](https://github.com/zakodium-oss/react-science/issues/630)) ([123f72f](https://github.com/zakodium-oss/react-science/commit/123f72f3177c0676d391c7f254d879ce8c4d20e1))
+* remove Modal component in favor of blueprintjs' Dialog component ([#626](https://github.com/zakodium-oss/react-science/issues/626)) ([64ad1d0](https://github.com/zakodium-oss/react-science/commit/64ad1d01e1f8464545b0887a27b0663df2253225))
+* use blueprint html table, adds bordered, compact, interactive and striped props ([#611](https://github.com/zakodium-oss/react-science/issues/611)) ([fef5ea7](https://github.com/zakodium-oss/react-science/commit/fef5ea723ec64b9dec692b4e860f0e3f16addc3d))
+
+
+### Bug Fixes
+
+* disable auto-translate of applications ([#637](https://github.com/zakodium-oss/react-science/issues/637)) ([c6bef12](https://github.com/zakodium-oss/react-science/commit/c6bef12a1d7500b43b393955fda35e85672f11f4))
+
+
+### Documentation
+
+* create controllable tooltip on button stories ([#619](https://github.com/zakodium-oss/react-science/issues/619)) ([bf1bfde](https://github.com/zakodium-oss/react-science/commit/bf1bfde5b8bb437746a56bf9daaa6116936f4364))
+* fix keyboard navigation in most select stories ([f917094](https://github.com/zakodium-oss/react-science/commit/f9170945ececc365b31537d933b66090667bc74b))
+
+
+### Miscellaneous Chores
+
+* add missing breaking changes to changelog ([#618](https://github.com/zakodium-oss/react-science/issues/618)) ([d2d3871](https://github.com/zakodium-oss/react-science/commit/d2d3871001e344e69d52a052de491b2fb23674d7))
+
+
+### Code Refactoring
+
+* remove component tabs in favor of blueprintjs Tabs component ([#624](https://github.com/zakodium-oss/react-science/issues/624)) ([ebf6eb7](https://github.com/zakodium-oss/react-science/commit/ebf6eb7475f41a9262d6ef574d2b413dd281afdd))
+
 ## [0.32.2](https://github.com/zakodium-oss/react-science/compare/v0.32.1...v0.32.2) (2023-12-14)
 
 
