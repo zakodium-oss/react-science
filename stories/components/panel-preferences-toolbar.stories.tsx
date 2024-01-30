@@ -13,6 +13,13 @@ export default {
 export function Basic() {
   return (
     <div style={{ width: 300, height: 300 }}>
+      <PanelPreferencesToolbar title="With title" />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, adipisci
+        culpa. Sapiente nesciunt perferendis repellendus. Voluptatum, cumque,
+        autem maiores eaque non vero, ut tempora esse possimus corporis ex
+        doloribus culpa!
+      </p>
       <PanelPreferencesToolbar />
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, adipisci

@@ -118,6 +118,7 @@ function PanelHeaderInit({ openPanel }: PanelProps<PanelInfo>) {
             openPanel({
               props: {
                 content: 'Panel1',
+                title: 'Panel1',
               },
               renderPanel: PanelContainer,
               title: 'Panel 1',
@@ -147,6 +148,7 @@ function PanelHeaderInit({ openPanel }: PanelProps<PanelInfo>) {
                         natus hic delectus iste inventore itaque, dolorum eveniet ipsa sapiente
                         voluptatibus a ipsam. Lorem ipsum dolor sit amet consectetur adipisicing
                         elit. Repellendus dignissimos fugit porro debitis cupiditate similique',`,
+                title: 'Panel 2',
               },
               renderPanel: PanelContainer,
               title: 'Panel 2',
@@ -161,6 +163,7 @@ function PanelHeaderInit({ openPanel }: PanelProps<PanelInfo>) {
             openPanel({
               props: {
                 content: 'Panel3',
+                title: 'Panel3',
               },
               renderPanel: PanelContainer,
               title: 'Panel 3',
@@ -176,14 +179,20 @@ function PanelHeaderInit({ openPanel }: PanelProps<PanelInfo>) {
 }
 interface PanelInfo {
   content?: string;
+  title?: string;
 }
 function PanelContainer({
   content = 'Panel',
+  title = 'Panel',
   closePanel,
 }: PanelProps<PanelInfo>) {
   return (
     <div>
-      <PanelPreferencesToolbar onClose={closePanel} onSave={closePanel} />
+      <PanelPreferencesToolbar
+        title={title}
+        onClose={closePanel}
+        onSave={closePanel}
+      />
       <div style={{ width: '100%', backgroundColor: 'grey' }}>{content}</div>
     </div>
   );
