@@ -224,6 +224,7 @@ export function WithAccordionPanelToolbarStackedPanel() {
             onClose={removeFromPanelStack}
             stack={currentPanelStack}
             showPanelHeader={false}
+            renderActivePanelOnly={false}
           />
         </Accordion.Item>
         <Accordion.Item title="Second Item">
