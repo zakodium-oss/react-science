@@ -1,16 +1,16 @@
-import { Popover, PopoverProps } from "@blueprintjs/core";
-import styled from "@emotion/styled";
+import { Popover, PopoverProps } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 
-import FixedColorPreview from "../preview/FixedColorPreview";
-import { ColorPicker, ColorPickerProps } from "../react-color/ColorPicker";
-import * as colorHelper from "../react-color/helpers/color";
+import FixedColorPreview from '../preview/FixedColorPreview';
+import { ColorPicker, ColorPickerProps } from '../react-color/ColorPicker';
+import * as colorHelper from '../react-color/helpers/color';
 
 interface ColorPickerDropdownProps
   extends Pick<
     ColorPickerProps,
-    "color" | "presetColors" | "disableAlpha" | "onChange" | "onChangeComplete"
+    'color' | 'presetColors' | 'disableAlpha' | 'onChange' | 'onChangeComplete'
   > {
-  popoverProps?: Omit<PopoverProps, "content">;
+  popoverProps?: Omit<PopoverProps, 'content'>;
 }
 
 const ColorPickerRoot = styled.button`
@@ -31,11 +31,11 @@ const ColorPickerPreview = styled.div`
 export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
   const { color, popoverProps, ...otherProps } = props;
 
-  const { hex } = colorHelper.toState(color || "white");
+  const { hex } = colorHelper.toState(color || 'white');
 
   return (
     <Popover
-      targetProps={{ style: { width: "100%" } }}
+      targetProps={{ style: { width: '100%' } }}
       content={<ColorPicker color={color} {...otherProps} />}
       minimal
       {...popoverProps}
