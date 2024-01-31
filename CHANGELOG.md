@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.0](https://github.com/zakodium-oss/react-science/compare/v0.33.0...v0.34.0) (2024-01-31)
+
+
+### Features
+
+* render color picker dropdown in blueprintjs Popover ([5c48821](https://github.com/zakodium-oss/react-science/commit/5c488211e9a8d2d2f13c0180d292fd7b76ff1711))
+
 ## [0.33.0](https://github.com/zakodium-oss/react-science/compare/v0.32.2...v0.33.0) (2024-01-26)
 
 
