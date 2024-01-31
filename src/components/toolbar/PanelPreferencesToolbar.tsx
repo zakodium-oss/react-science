@@ -13,7 +13,7 @@ const styles = {
   container: css({
     display: 'flex',
     justifyContent: 'space-between',
-    borderBottom: '0.55px solid rgb(240, 240, 240)',
+    borderBottom: '1px solid rgb(240, 240, 240)',
   }),
   title: css({
     display: 'flex',

@@ -5,8 +5,8 @@ import {
   Dialog,
   DialogBody,
   DialogFooter,
+  PanelProps,
 } from '@blueprintjs/core';
-import { PanelProps } from '@blueprintjs/core/lib/esnext/index';
 import { css } from '@emotion/react';
 import { useCallback, useState } from 'react';
 
