@@ -62,7 +62,7 @@ export function StackedPanel({
       }}
     >
       <StackedPanelComponent {...props}>
-        {({ openConfirmPanel, closePanel }) => (
+        {({ openConfirmPanel }) => (
           <Toolbar>
             <Toolbar.Item
               noTooltip
@@ -72,7 +72,7 @@ export function StackedPanel({
               onClick={() =>
                 openConfirmPanel({
                   renderPanel: () => <div>Panel1</div>,
-                  onSave: () => {
+                  onSave: (closePanel) => {
                     onSave();
                     closePanel();
                   },

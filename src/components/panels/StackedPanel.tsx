@@ -11,12 +11,11 @@ import { FC } from 'react';
 import { PanelPreferencesToolbar } from '../index';
 
 interface ConfirmPanelActions {
-  onSave?: () => void;
+  onSave?: (closePanel: () => void) => void;
   onClose?: () => void;
 }
 interface PanelProps<T extends Panel<object>> {
   openConfirmPanel: (NewPanel: T & ConfirmPanelActions) => void;
-  closePanel: () => void;
 }
 interface StackedPanelProps<T extends Panel<object>>
   extends PanelStack2Props<T> {
@@ -42,7 +41,7 @@ function ConfirmPanel<T extends object>({
           onClose?.();
           closePanel();
         }}
-        onSave={onSave}
+        onSave={() => onSave(closePanel)}
       />
       {children}
     </div>
@@ -53,7 +52,7 @@ export function StackedPanel<T extends Panel<object>>(
 ) {
   const { children: InitialPanel, ...panelStackProps } = props;
   const initialPanel = {
-    renderPanel: ({ openPanel, closePanel }) => (
+    renderPanel: ({ openPanel }) => (
       <InitialPanel
         openConfirmPanel={({
           renderPanel,
@@ -77,7 +76,6 @@ export function StackedPanel<T extends Panel<object>>(
             ...others,
           })
         }
-        closePanel={closePanel}
       />
     ),
     title: 'Panel Init',
