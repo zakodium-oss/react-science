@@ -1,5 +1,4 @@
 import { Menu, MenuItem } from '@blueprintjs/core';
-import { IconName } from '@blueprintjs/icons';
 import { Meta } from '@storybook/react';
 import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -21,13 +20,12 @@ export default {
   },
 } as Meta<ToolbarProps>;
 
-type ToolbarItems = Array<{
-  icon: IconName | JSX.Element;
-  title: string;
-  id: string;
-  disabled?: boolean;
-  content?: JSX.Element;
-}>;
+type ToolbarItems = Array<
+  Pick<ToolbarItemProps, 'title' | 'icon' | 'disabled'> & {
+    id: string;
+    content?: JSX.Element;
+  }
+>;
 
 const itemsBlueprintIcons: ToolbarItems = [
   { id: 'copy', icon: 'phone', title: 'Phone' },
@@ -186,6 +184,7 @@ const itemsPopover: ToolbarItems = [
 export function Control(props: ToolbarProps & { onClick: () => void }) {
   const { onClick, ...toolbarProps } = props;
   const [active, setActive] = useState<string | null>(null);
+
   return (
     <Toolbar {...toolbarProps}>
       {itemsMixedIcons.map((item) => (
@@ -277,6 +276,7 @@ export function HorizontalToolbar() {
 export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
   const { onClick, ...toolbarProps } = props;
   const [active, setActive] = useState<string | null>(null);
+
   return (
     <Toolbar {...toolbarProps}>
       {itemsPopover.map(({ content, ...itemProps }) => (
