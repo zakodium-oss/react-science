@@ -114,6 +114,7 @@ export function OnlyOptions() {
         filterable={false}
         itemsEqual="label"
         popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -143,6 +144,7 @@ export function OnlyCategories() {
           { label: 'Tomato', group: 'Vegetables' },
         ]}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -175,6 +177,7 @@ export function OptionsWithCategories() {
           { label: 'Beef' },
         ]}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -206,6 +209,7 @@ export function CategoriesNested() {
           { label: 'Beef' },
         ]}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -229,6 +233,7 @@ export function DisabledOptions() {
         filterable={false}
         itemsEqual="label"
         popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -261,6 +266,7 @@ export function DisabledInCategories() {
         itemDisabled={(item) =>
           item.label === 'Potato' || item.group === 'Fruits'
         }
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -283,6 +289,7 @@ export function Disabled() {
         filterable={false}
         itemsEqual="label"
         disabled
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           disabled
@@ -305,6 +312,7 @@ export function WithCustomStyle() {
         filterable={false}
         itemsEqual="label"
         popoverContentProps={{ style: { width: '500px' } }}
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           style={{ width: '500px' }}
@@ -327,6 +335,7 @@ export function FixedValueNoopHandle() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value.label ?? 'Select a status'}
@@ -348,6 +357,7 @@ export function nullValueNoopHandle() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value ?? 'Select a status'}
@@ -369,6 +379,7 @@ export function ResetButton() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
+        popoverProps={{ autoFocus: true, usePortal: false }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -409,6 +420,8 @@ export function InDialog() {
               itemsEqual="label"
               popoverProps={{
                 positioningStrategy: 'fixed',
+                autoFocus: true,
+                usePortal: false,
               }}
               popoverTargetProps={{
                 style: { display: 'inline-block' },
