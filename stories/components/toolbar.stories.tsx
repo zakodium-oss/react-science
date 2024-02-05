@@ -1,6 +1,6 @@
-import { ButtonProps } from '@blueprintjs/core';
+import { Menu, MenuItem } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
@@ -20,12 +20,12 @@ export default {
   },
 } as Meta<ToolbarProps>;
 
-type ToolbarItems = Array<{
-  icon: ButtonProps['icon'];
-  title: string;
-  id: string;
-  disabled?: boolean;
-}>;
+type ToolbarItems = Array<
+  Pick<ToolbarItemProps, 'title' | 'icon' | 'disabled'> & {
+    id: string;
+    content?: JSX.Element;
+  }
+>;
 
 const itemsBlueprintIcons: ToolbarItems = [
   { id: 'copy', icon: 'phone', title: 'Phone' },
@@ -108,9 +108,83 @@ const itemsMixedIcons: ToolbarItems = [
   },
 ];
 
+const itemsPopover: ToolbarItems = [
+  {
+    id: 'clipboard-bi',
+    icon: <BiClipboard />,
+    title: 'Box icons clipboard icon',
+    content: (
+      <Menu>
+        <MenuItem text="Box icons clipboard icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'paste',
+    icon: 'add-column-left',
+    title: 'Add left',
+    content: (
+      <Menu>
+        <MenuItem text="Add left" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'paperclip-bi',
+    icon: <BiPaperclip />,
+    title: 'Box icons paperclip icon',
+    content: (
+      <Menu>
+        <MenuItem text="Box icons paperclip icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'clipboard-blueprint',
+    icon: 'clipboard',
+    title: 'BlueprintJS paperclip icon',
+    content: (
+      <Menu>
+        <MenuItem text="BlueprintJS paperclip icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'credit-card-bi',
+    icon: <BiCreditCard />,
+    title: 'Box icons credit card icon',
+    content: (
+      <Menu>
+        <MenuItem text="Box icons credit card icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'credit-card-blueprint',
+    icon: 'credit-card',
+    title: 'BlueprintJS credit-card icon',
+    content: (
+      <Menu>
+        <MenuItem text="BlueprintJS credit-card icon" />
+      </Menu>
+    ),
+  },
+  {
+    id: 'clipboard-hi-2',
+    icon: <HiClipboard />,
+    title: 'Heroicons 2 clipboard icon',
+    content: (
+      <Menu>
+        <MenuItem text="Heroicons 2 clipboard icon" />
+      </Menu>
+    ),
+  },
+];
+
 export function Control(props: ToolbarProps & { onClick: () => void }) {
   const { onClick, ...toolbarProps } = props;
   const [active, setActive] = useState<string | null>(null);
+
   return (
     <Toolbar {...toolbarProps}>
       {itemsMixedIcons.map((item) => (
@@ -198,3 +272,73 @@ export function HorizontalToolbar() {
     </div>
   );
 }
+
+export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
+  const { onClick, ...toolbarProps } = props;
+  const [active, setActive] = useState<string | null>(null);
+
+  return (
+    <Toolbar {...toolbarProps}>
+      {itemsPopover.map(({ content, ...itemProps }) => (
+        <Toolbar.PopoverItem
+          key={itemProps.id}
+          content={content}
+          itemProps={{
+            ...itemProps,
+            active: active === itemProps.id,
+            onClick: () => {
+              setActive(itemProps.id);
+              onClick();
+            },
+          }}
+        />
+      ))}
+    </Toolbar>
+  );
+}
+
+export function MixedItems(
+  props: ToolbarItems & { onClick: () => void } & { popoverFirst: boolean },
+) {
+  const { popoverFirst, onClick, ...toolbarProps } = props;
+  const [active, setActive] = useState<string | null>(null);
+
+  const set = new Set<number>([0, 1, 4, 6, 7]);
+  const showPopover = (value: number) => popoverFirst === set.has(value);
+
+  return (
+    <Toolbar {...toolbarProps}>
+      {itemsPopover.map(({ content, ...itemProps }, index) =>
+        showPopover(index) ? (
+          <Toolbar.PopoverItem
+            key={itemProps.id}
+            content={content}
+            itemProps={{
+              ...itemProps,
+              active: active === itemProps.id,
+              onClick: () => {
+                setActive(itemProps.id);
+                onClick();
+              },
+            }}
+          />
+        ) : (
+          <Toolbar.Item
+            key={itemProps.id}
+            id={itemProps.id}
+            title={itemProps.title}
+            onClick={() => {
+              setActive(itemProps.id);
+              onClick();
+            }}
+            icon={itemProps.icon}
+            active={active === itemProps.id}
+          />
+        ),
+      )}
+    </Toolbar>
+  );
+}
+MixedItems.args = {
+  popoverFirst: false,
+};
