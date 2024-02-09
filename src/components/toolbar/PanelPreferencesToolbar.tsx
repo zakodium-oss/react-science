@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { Toolbar } from './Toolbar';
 
 interface PanelPreferencesToolbarProps {
-  title?: string;
+  title?: React.ReactNode;
   onClose?: () => void;
   onSave?: () => void;
 }
