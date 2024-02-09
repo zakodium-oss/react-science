@@ -196,8 +196,9 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
 
   return (
     <Popover
+      minimal
       disabled={disabled}
-      placement={vertical ? 'right' : 'bottom'}
+      placement={vertical ? 'right-start' : 'bottom-start'}
       css={css`
         .${Classes.ICON} {
           color: ${Colors.DARK_GRAY3};
