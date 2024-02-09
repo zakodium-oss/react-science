@@ -28,7 +28,13 @@ export default function IvPlotVariablesSelector() {
 
   return (
     <div
-      style={{ display: 'flex', flexDirection: 'row', gap: 5, fontSize: 18 }}
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+
+        gap: 30,
+        fontSize: '1.125em',
+      }}
     >
       <MeasurementVariableSelect
         label="Y variable"
