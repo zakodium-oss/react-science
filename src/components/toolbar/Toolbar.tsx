@@ -163,7 +163,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       intent={intent}
       style={{
         position: 'relative',
-        fontSize: '1.25em',
+        fontSize: '1.125em',
         width: 'fit-content',
         flex: 'none',
       }}
@@ -206,7 +206,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       targetProps={{
         style: {
           position: 'relative',
-          fontSize: '1.25em',
+          fontSize: '1.125em',
           width: 'fit-content',
           height: 'fit-content',
           flex: 'none',
