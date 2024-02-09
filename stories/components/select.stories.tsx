@@ -82,26 +82,32 @@ const renderMenu: ItemListRenderer<ItemsType> = ({
     </Menu>
   );
 };
-const renderMenuNested: ItemListRenderer<ItemsType> = ({
-  items,
-  itemsParentRef,
-  renderItem,
-  menuProps,
-}) => {
-  const { groups, withoutGroup } = getGroups(items);
-
-  return (
-    <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
-      {groups.map(({ group, items }) => (
-        <MenuItem key={group} text={group}>
-          {items.map(renderItem)}
-        </MenuItem>
-      ))}
-      {groups.length > 0 && withoutGroup.length > 0 && <MenuDivider />}
-      {withoutGroup.map(renderItem)}
-    </Menu>
-  );
-};
+function renderMenuNested(
+  value: ItemsType | null,
+): ItemListRenderer<ItemsType> {
+  return ({ items, itemsParentRef, renderItem, menuProps, activeItem }) => {
+    const { groups, withoutGroup } = getGroups(items);
+    return (
+      <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
+        {groups.map(({ group, items }) => (
+          <MenuItem
+            key={group}
+            text={group}
+            active={items.map((item) => item === activeItem).includes(true)}
+            selected={items
+              .map((item) => item.label === value?.label)
+              .includes(true)}
+            roleStructure="listoption"
+          >
+            {items.map(renderItem)}
+          </MenuItem>
+        ))}
+        {groups.length > 0 && withoutGroup.length > 0 && <MenuDivider />}
+        {withoutGroup.map(renderItem)}
+      </Menu>
+    );
+  };
+}
 
 export function OnlyOptions() {
   const [value, setValue] = useState<ItemsType | null>(null);
@@ -114,7 +120,15 @@ export function OnlyOptions() {
         filterable={false}
         itemsEqual="label"
         popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -144,7 +158,15 @@ export function OnlyCategories() {
           { label: 'Tomato', group: 'Vegetables' },
         ]}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -177,7 +199,15 @@ export function OptionsWithCategories() {
           { label: 'Beef' },
         ]}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -197,7 +227,7 @@ export function CategoriesNested() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        itemListRenderer={renderMenuNested}
+        itemListRenderer={renderMenuNested(value)}
         items={[
           { label: 'Apple', group: 'Fruits' },
           { label: 'Banana', group: 'Fruits' },
@@ -209,7 +239,15 @@ export function CategoriesNested() {
           { label: 'Beef' },
         ]}
         popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -233,7 +271,15 @@ export function DisabledOptions() {
         filterable={false}
         itemsEqual="label"
         popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -266,7 +312,16 @@ export function DisabledInCategories() {
         itemDisabled={(item) =>
           item.label === 'Potato' || item.group === 'Fruits'
         }
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -289,7 +344,16 @@ export function Disabled() {
         filterable={false}
         itemsEqual="label"
         disabled
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
       >
         <Button
           disabled
@@ -311,8 +375,17 @@ export function WithCustomStyle() {
         onItemSelect={setValue}
         filterable={false}
         itemsEqual="label"
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
         popoverContentProps={{ style: { width: '500px' } }}
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           style={{ width: '500px' }}
@@ -335,7 +408,16 @@ export function FixedValueNoopHandle() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value.label ?? 'Select a status'}
@@ -357,7 +439,16 @@ export function nullValueNoopHandle() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value ?? 'Select a status'}
@@ -379,7 +470,16 @@ export function ResetButton() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverProps={{ autoFocus: true, usePortal: false }}
+        popoverTargetProps={{ style: { display: 'inline-block' } }}
+        popoverProps={{
+          onOpened: (node) => {
+            const firstUl = node.querySelector('ul');
+            if (firstUl) {
+              firstUl.tabIndex = 0;
+              firstUl.focus();
+            }
+          },
+        }}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -420,8 +520,13 @@ export function InDialog() {
               itemsEqual="label"
               popoverProps={{
                 positioningStrategy: 'fixed',
-                autoFocus: true,
-                usePortal: false,
+                onOpened: (node) => {
+                  const firstLi = node.querySelector('li');
+                  if (firstLi) {
+                    firstLi.tabIndex = 0;
+                    firstLi.focus();
+                  }
+                },
               }}
               popoverTargetProps={{
                 style: { display: 'inline-block' },
