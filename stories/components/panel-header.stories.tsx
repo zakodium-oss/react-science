@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import {
-  Panel,
   PanelStack2,
   Dialog,
   DialogBody,
@@ -8,7 +7,6 @@ import {
   PanelProps,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { useCallback, useState } from 'react';
 
 import {
   PanelHeader,
@@ -105,7 +103,7 @@ export function WithAccordion() {
     </div>
   );
 }
-function PanelHeaderInit({ openPanel }: PanelProps<PanelInfo>) {
+function InitialPanel({ openPanel }: PanelProps<PanelInfo>) {
   return (
     <PanelHeader total={20} onClickSettings={() => void 0}>
       <Toolbar>
@@ -199,24 +197,6 @@ function PanelContainer({
 }
 
 export function WithAccordionPanelToolbarStackedPanel() {
-  const [currentPanelStack, setCurrentPanelStack] = useState<
-    Array<Panel<PanelInfo>>
-  >([
-    {
-      renderPanel: PanelHeaderInit,
-      title: 'Panel Init',
-    },
-  ]);
-  const addToPanelStack = useCallback(
-    (newPanel: Panel<PanelInfo>) =>
-      setCurrentPanelStack((stack) => [...stack, newPanel]),
-    [],
-  );
-  const removeFromPanelStack = useCallback(
-    () => setCurrentPanelStack((stack) => stack.slice(0, -1)),
-    [],
-  );
-
   return (
     <div
       style={{
@@ -229,9 +209,9 @@ export function WithAccordionPanelToolbarStackedPanel() {
             css={css`
               height: 100%;
             `}
-            onOpen={addToPanelStack}
-            onClose={removeFromPanelStack}
-            stack={currentPanelStack}
+            initialPanel={{
+              renderPanel: InitialPanel,
+            }}
             showPanelHeader={false}
             renderActivePanelOnly={false}
           />
