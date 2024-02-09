@@ -1,4 +1,12 @@
-import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
+/** @jsxImportSource @emotion/react */
+import {
+  PanelStack2,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  PanelProps,
+} from '@blueprintjs/core';
+import { css } from '@emotion/react';
 
 import {
   PanelHeader,
@@ -6,6 +14,7 @@ import {
   Button,
   useOnOff,
   Toolbar,
+  PanelPreferencesToolbar,
 } from '../../src/components';
 
 export default {
@@ -83,6 +92,129 @@ export function WithAccordion() {
             </Toolbar>
           </PanelHeader>
           This is the first content
+        </Accordion.Item>
+        <Accordion.Item title="Second Item">
+          <PanelHeader current={2} total={3} onClickSettings={() => void 0}>
+            <Button minimal icon="filter" />
+          </PanelHeader>
+          This is the content of the second item
+        </Accordion.Item>
+      </Accordion>
+    </div>
+  );
+}
+function InitialPanel({ openPanel }: PanelProps<PanelInfo>) {
+  return (
+    <PanelHeader total={20} onClickSettings={() => void 0}>
+      <Toolbar>
+        <Toolbar.Item
+          noTooltip
+          title="trash"
+          intent="danger"
+          icon="trash"
+          onClick={() =>
+            openPanel({
+              props: {
+                content: 'Panel1',
+                title: 'Panel1',
+              },
+              renderPanel: PanelContainer,
+              title: 'Panel 1',
+            })
+          }
+        />
+        <Toolbar.Item
+          onClick={() =>
+            openPanel({
+              props: {
+                content: `Panel2 ................................................
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+                        dignissimos fugit porro debitis cupiditate similique quam exercitationem
+                        natus hic delectus iste inventore itaque, dolorum eveniet ipsa sapiente
+                        voluptatibus a ipsam. Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit. Repellendus dignissimos fugit porro debitis cupiditate similique
+                        quam exercitationem natus hic delectus iste inventore itaque, dolorum
+                        eveniet ipsa sapiente voluptatibus a ipsam. Lorem ipsum dolor sit amet
+                        consectetur adipisicing elit. Repellendus dignissimos fugit porro debitis
+                        cupiditate similique quam exercitationem natus hic delectus iste inventore
+                        itaque, dolorum eveniet ipsa sapiente voluptatibus a ipsam. Lorem ipsum
+                        dolor sit amet consectetur adipisicing elit. Repellendus dignissimos fugit
+                        porro debitis cupiditate similique quam exercitationem natus hic delectus
+                        iste inventore itaque, dolorum eveniet ipsa sapiente voluptatibus a ipsam.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+                        dignissimos fugit porro debitis cupiditate similique quam exercitationem
+                        natus hic delectus iste inventore itaque, dolorum eveniet ipsa sapiente
+                        voluptatibus a ipsam. Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit. Repellendus dignissimos fugit porro debitis cupiditate similique',`,
+                title: 'Panel 2',
+              },
+              renderPanel: PanelContainer,
+              title: 'Panel 2',
+            })
+          }
+          noTooltip
+          title="filter"
+          icon="filter"
+        />
+        <Toolbar.Item
+          onClick={() =>
+            openPanel({
+              props: {
+                content: 'Panel3',
+                title: 'Panel3',
+              },
+              renderPanel: PanelContainer,
+              title: 'Panel 3',
+            })
+          }
+          noTooltip
+          title="plus"
+          icon="plus"
+        />
+      </Toolbar>
+    </PanelHeader>
+  );
+}
+interface PanelInfo {
+  content?: string;
+  title?: string;
+}
+function PanelContainer({
+  content = 'Panel',
+  title = 'Panel',
+  closePanel,
+}: PanelProps<PanelInfo>) {
+  return (
+    <div>
+      <PanelPreferencesToolbar
+        title={title}
+        onClose={closePanel}
+        onSave={closePanel}
+      />
+      <div style={{ width: '100%', backgroundColor: 'grey' }}>{content}</div>
+    </div>
+  );
+}
+
+export function WithAccordionPanelToolbarStackedPanel() {
+  return (
+    <div
+      style={{
+        height: 300,
+      }}
+    >
+      <Accordion>
+        <Accordion.Item title="First Item" defaultOpened>
+          <PanelStack2
+            css={css`
+              height: 100%;
+            `}
+            initialPanel={{
+              renderPanel: InitialPanel,
+            }}
+            showPanelHeader={false}
+            renderActivePanelOnly={false}
+          />
         </Accordion.Item>
         <Accordion.Item title="Second Item">
           <PanelHeader current={2} total={3} onClickSettings={() => void 0}>
