@@ -51,6 +51,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   className?: string;
   noTooltip?: boolean;
   isPopover?: boolean;
+  tag?: ReactNode;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -128,6 +129,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: itemDisabled,
     noTooltip = false,
     isPopover,
+    tag,
     ...other
   } = props;
 
@@ -149,6 +151,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         });
   return (
     <Button
+      tag={tag}
       alignText={isPopover ? 'left' : undefined}
       rightIcon={
         isPopover ? (vertical ? 'caret-right' : 'caret-down') : undefined

@@ -199,6 +199,7 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
           icon={item.icon}
           active={active === item.id}
           intent={item.id.startsWith('clipboard') ? 'success' : undefined}
+          tag={item.id.startsWith('credit-card') ? 1 : undefined}
         />
       ))}
     </Toolbar>

@@ -29,6 +29,7 @@ Control.args = {
   intent: 'none',
   icon: 'plus',
   rightIcon: 'minus',
+  tag: '1',
 };
 Control.argTypes = {
   alignText: {
