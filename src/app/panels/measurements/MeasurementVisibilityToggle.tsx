@@ -1,15 +1,16 @@
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { useAppDispatch } from '../../../app-data/index';
+import { Button } from '../../../components/index';
 
-import { MeasurementsTableProps } from './MeasurementsTable';
+import { MeasurementsTableProps } from '.';
 
 interface MeasurementVisibilityToggleProps {
   id: string;
   isVisible: boolean;
 }
 
-export default function MeasurementVisibilityToggle(
+export function MeasurementVisibilityToggle(
   props: MeasurementVisibilityToggleProps,
 ) {
   const { id, isVisible } = props;
@@ -23,11 +24,13 @@ export default function MeasurementVisibilityToggle(
   }
 
   return isVisible ? (
-    <FaEye onClick={() => setVisibility(false)} style={{ cursor: 'pointer' }} />
+    <Button icon="eye-on" onClick={() => setVisibility(false)} minimal />
   ) : (
-    <FaEyeSlash
+    <Button
+      icon="eye-off"
       onClick={() => setVisibility(true)}
-      style={{ cursor: 'pointer', opacity: 0.6 }}
+      style={{ opacity: 0.6 }}
+      minimal
     />
   );
 }

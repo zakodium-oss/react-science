@@ -14,6 +14,7 @@ const InputMeasurementCheckBox = styled.input`
   width: 1rem;
   height: 1rem;
   border-width: 1px;
+  margin-left: 10px;
 `;
 
 export function MeasurementCheckbox(props: MeasurementCheckboxProps) {

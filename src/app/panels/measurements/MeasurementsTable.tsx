@@ -4,16 +4,26 @@ import { FaTrash } from 'react-icons/fa';
 import {
   MeasurementBase,
   MeasurementKind,
+  getMeasurement,
   useAppDispatch,
   useAppState,
 } from '../../../app-data';
-import { ConfirmDialog, useOnOff } from '../../../components';
+import {
+  Button,
+  ConfirmDialog,
+  InfoPanel,
+  InfoPanelData,
+  PanelPreferencesToolbar,
+  useOnOff,
+} from '../../../components';
 
-import { MeasurementCheckbox } from './MeasurementCheckbox';
-import MeasurementColorPreview from './MeasurementColorPreview';
-import MeasurementVisibilityToggle, {
+import {
+  MeasurementColorPreview,
+  MeasurementCheckbox,
+  MeasurementVisibilityToggle,
   MeasurementSelectedVisibilityChange,
-} from './MeasurementVisibilityToggle';
+  useMeasurementPanel,
+} from '.';
 
 export interface MeasurementsTableProps {
   kind: MeasurementKind;
@@ -93,9 +103,8 @@ const MeasurementsIconsContainer = styled.td`
   justify-items: center;
   height: 50px;
   flex-direction: row;
-  gap: 0.5rem;
   cursor: default;
-  width: 70px;
+  width: 120px;
 `;
 
 export function MeasurementsTable(props: MeasurementsTableProps) {
@@ -205,8 +214,10 @@ function MeasurementsTableHeader() {
 
 function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   const { item, kind } = props;
+  const { openPanel } = useMeasurementPanel();
 
   const {
+    data,
     view: { selectedMeasurements, measurements },
   } = useAppState();
 
@@ -227,10 +238,42 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       payload: { id: item.id, kind, acc: isAlreadyChecked ? 'remove' : 'add' },
     });
   }
+  const { info = {}, meta = {} } =
+    getMeasurement(data.measurements, kind, item.id) || {};
+
+  const infoPanelData: InfoPanelData[] = [
+    {
+      description: 'Information',
+      data: info,
+    },
+    {
+      description: 'Metadata',
+      data: meta,
+    },
+  ];
 
   return (
     <MeasurementsTableRowData>
       <MeasurementsIconsContainer>
+        <Button
+          icon="info-sign"
+          minimal
+          onClick={() =>
+            openPanel?.({
+              title: item.info.file?.name ?? item.info.title,
+              renderPanel: ({ closePanel }) => (
+                <div>
+                  <PanelPreferencesToolbar
+                    title={item.info.file?.name ?? item.info.title}
+                    onClose={closePanel}
+                    onSave={closePanel}
+                  />
+                  <InfoPanel data={infoPanelData} title="" />
+                </div>
+              ),
+            })
+          }
+        />
         <MeasurementVisibilityToggle
           id={item.id}
           isVisible={measurements[item.id].visible}
