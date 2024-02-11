@@ -1,5 +1,3 @@
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
 import { useAppDispatch } from '../../../app-data/index';
 import { Button } from '../../../components/index';
 
@@ -36,10 +34,10 @@ export function MeasurementVisibilityToggle(
 }
 
 export function MeasurementSelectedVisibilityChange(props: {
-  openedEyes: boolean;
+  isVisible: boolean;
   kind: MeasurementsTableProps['kind'];
 }) {
-  const { kind, openedEyes } = props;
+  const { kind, isVisible } = props;
   const dispatch = useAppDispatch();
 
   function setVisibility(isVisible: boolean) {
@@ -49,12 +47,20 @@ export function MeasurementSelectedVisibilityChange(props: {
     });
   }
 
-  return openedEyes ? (
-    <FaEye onClick={() => setVisibility(false)} style={{ cursor: 'pointer' }} />
-  ) : (
-    <FaEyeSlash
+  return isVisible ? (
+    <Button
+      icon="eye-on"
       onClick={() => setVisibility(true)}
-      style={{ cursor: 'pointer', opacity: 0.6 }}
+      minimal
+      tooltipProps={{ content: 'Show selected', position: 'bottom' }}
+    />
+  ) : (
+    <Button
+      icon="eye-off"
+      onClick={() => setVisibility(false)}
+      style={{ opacity: 0.6 }}
+      minimal
+      tooltipProps={{ content: 'Hide selected', position: 'bottom' }}
     />
   );
 }
