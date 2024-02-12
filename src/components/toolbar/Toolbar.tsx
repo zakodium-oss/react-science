@@ -7,6 +7,7 @@ import {
   Popover,
   PopoverProps,
   TagProps,
+  Icon,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
@@ -153,9 +154,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
-      rightIcon={
-        isPopover ? (vertical ? 'caret-right' : 'caret-down') : undefined
-      }
       minimal
       disabled={disabled}
       css={css`
@@ -172,7 +170,31 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       }}
       type="button"
       active={active}
-      icon={resizedIcon}
+      icon={
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 0,
+            height: 0,
+          }}
+        >
+          <Icon icon={resizedIcon} />
+          {isPopover && (
+            <Icon
+              icon="caret-right"
+              size={large ? 14 : 9}
+              style={{
+                transform: 'rotate(45deg)',
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+              }}
+            />
+          )}
+        </div>
+      }
       onClick={() => {
         onClick?.(props);
       }}
@@ -199,8 +221,9 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
 
   return (
     <Popover
+      minimal
       disabled={disabled}
-      placement={vertical ? 'right' : 'bottom'}
+      placement={vertical ? 'right-start' : 'bottom-start'}
       css={css`
         .${Classes.ICON} {
           color: ${Colors.DARK_GRAY3};
