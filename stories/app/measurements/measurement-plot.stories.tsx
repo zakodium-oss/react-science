@@ -11,8 +11,22 @@ export default {
   title: 'Layout/MeasurementPlot',
 };
 
-export function Control(props: Omit<MeasurementPlotProps, 'measurement'>) {
-  return <MeasurementPlot measurement={irMeasurement} {...props} />;
+export function Control(
+  props: Omit<MeasurementPlotProps, 'measurement' | 'measurementDisplay'> & {
+    color: string;
+  },
+) {
+  const { color, ...rest } = props;
+  return (
+    <MeasurementPlot
+      measurement={irMeasurement}
+      measurementDisplay={{
+        color: { kind: 'fixed', color },
+        visible: true,
+      }}
+      {...rest}
+    />
+  );
 }
 
 Control.args = {
@@ -27,6 +41,7 @@ Control.args = {
   showHorizontalGrid: true,
   showVerticalGrid: true,
   flipHorizontalAxis: false,
+  color: 'red',
 };
 
 Control.argTypes = {
