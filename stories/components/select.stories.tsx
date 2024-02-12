@@ -6,7 +6,7 @@ import {
   MenuItem,
 } from '@blueprintjs/core';
 import { ItemListRenderer, ItemRenderer, Select } from '@blueprintjs/select';
-import { Fragment, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 
 import { Button, useOnOff } from '../../src/components';
 
@@ -84,8 +84,18 @@ const renderMenu: ItemListRenderer<ItemsType> = ({
 };
 function renderMenuNested(
   value: ItemsType | null,
-): ItemListRenderer<ItemsType> {
-  return ({ items, itemsParentRef, renderItem, menuProps, activeItem }) => {
+  [hoveredGroup, setHoveredGroup]: [
+    string | undefined,
+    Dispatch<SetStateAction<string | undefined>>,
+  ],
+) {
+  const render: ItemListRenderer<ItemsType> = ({
+    items,
+    itemsParentRef,
+    renderItem,
+    menuProps,
+    activeItem,
+  }) => {
     const { groups, withoutGroup } = getGroups(items);
     return (
       <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
@@ -97,6 +107,17 @@ function renderMenuNested(
             selected={items
               .map((item) => item.label === value?.label)
               .includes(true)}
+            popoverProps={{
+              isOpen: hoveredGroup
+                ? hoveredGroup === group
+                : items.map((item) => item === activeItem).includes(true),
+            }}
+            onMouseEnter={() => {
+              setHoveredGroup(group);
+            }}
+            onMouseLeave={() => {
+              setHoveredGroup(undefined);
+            }}
             roleStructure="listoption"
           >
             {items.map(renderItem)}
@@ -107,6 +128,7 @@ function renderMenuNested(
       </Menu>
     );
   };
+  return render;
 }
 
 export function OnlyOptions() {
@@ -220,6 +242,7 @@ export function OptionsWithCategories() {
 }
 export function CategoriesNested() {
   const [value, setValue] = useState<ItemsType | null>(null);
+  const hoverState = useState<string | undefined>(undefined);
   return (
     <>
       <Select
@@ -227,7 +250,7 @@ export function CategoriesNested() {
         itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        itemListRenderer={renderMenuNested(value)}
+        itemListRenderer={renderMenuNested(value, hoverState)}
         items={[
           { label: 'Apple', group: 'Fruits' },
           { label: 'Banana', group: 'Fruits' },
