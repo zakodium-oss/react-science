@@ -32,4 +32,4 @@ jobs:
         with:
           name: playwright-report-${{ matrix.project }}-${{ matrix.test-type }}
           path: playwright-report/
-          retention-days: 1
+          retention-days: 15
