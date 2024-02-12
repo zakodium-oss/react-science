@@ -25,6 +25,7 @@ const beforeZoom = [
   2500,
   3000,
   3500,
+  4000,
   '1/CM',
 
   // vertical axis default values
@@ -76,7 +77,7 @@ test('default props', async ({ mount, page }) => {
 
   await test.step('Grids', async () => {
     // vertical
-    await expect(component.locator('_react=line[y2="0"]')).toHaveCount(7);
+    await expect(component.locator('_react=line[y2="0"]')).toHaveCount(8);
 
     // horizontal
     await expect(component.locator('_react=line[x1="0"]')).toHaveCount(10);
@@ -106,6 +107,7 @@ test('default props', async ({ mount, page }) => {
       800,
       820,
       840,
+      860,
       '1/CM',
 
       // vertical axis default values
@@ -217,6 +219,7 @@ test('vertical zoom', async ({ mount, page }) => {
     2500,
     3000,
     3500,
+    4000,
     '1/CM',
 
     // new vertical axis values after zoom
@@ -264,6 +267,7 @@ test('rectangular zoom', async ({ mount, page }) => {
     800,
     820,
     840,
+    860,
     '1/CM',
 
     // new vertical axis values after zoom

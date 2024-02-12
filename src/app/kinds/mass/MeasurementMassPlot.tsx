@@ -121,14 +121,14 @@ function MassComponent(props: MeasurementPlotProps) {
               style={{ strokeWidth: 2, stroke: 'blue' }}
             />
             <Annotation.Text
-              style={{ fontSize: '13px', fontWeight: '600' }}
+              style={{ fontSize: '0.875rem', fontWeight: '600' }}
               x="2"
               y="0"
             >
               {shortLabel}
             </Annotation.Text>
             <Annotation.Text
-              style={{ fontSize: '13px', fontWeight: '600' }}
+              style={{ fontSize: '0.875rem', fontWeight: '600' }}
               x="2"
               y="-14"
             >

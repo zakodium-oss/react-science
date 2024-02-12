@@ -132,6 +132,7 @@ export function Control() {
           selected={radio}
           onSelect={setRadio}
           name="radio"
+          variant="small"
         />
       </FormGroup>
       <FormGroup label="Introduction" labelFor="introduction">

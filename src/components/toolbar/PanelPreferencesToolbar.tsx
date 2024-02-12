@@ -23,7 +23,6 @@ const styles = {
     fontWeight: 500,
   }),
   toolbar: css({
-    fontSize: 16,
     display: 'flex',
     flexDirection: 'row-reverse',
     '& > button': {

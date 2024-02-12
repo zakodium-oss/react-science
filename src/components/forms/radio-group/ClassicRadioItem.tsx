@@ -54,7 +54,6 @@ const classicStyles = {
       cursor: 'pointer',
       lineHeight: 1,
       paddingLeft: 5,
-      fontSize: '12px',
       ':hover': {
         '& ~ button': {
           borderColor: disabled ? 'grey' : enabledColor,
