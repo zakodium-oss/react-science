@@ -6,6 +6,7 @@ import {
   Intent,
   Popover,
   PopoverProps,
+  TagProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
@@ -52,6 +53,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   noTooltip?: boolean;
   isPopover?: boolean;
   tag?: ReactNode;
+  tagProps?: Omit<TagProps, 'children'>;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -129,7 +131,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: itemDisabled,
     noTooltip = false,
     isPopover,
-    tag,
     ...other
   } = props;
 
@@ -151,7 +152,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         });
   return (
     <Button
-      tag={tag}
       alignText={isPopover ? 'left' : undefined}
       rightIcon={
         isPopover ? (vertical ? 'caret-right' : 'caret-down') : undefined

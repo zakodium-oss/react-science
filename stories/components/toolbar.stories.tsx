@@ -199,14 +199,41 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
           icon={item.icon}
           active={active === item.id}
           intent={item.id.startsWith('clipboard') ? 'success' : undefined}
-          tag={item.id.startsWith('credit-card') ? 1 : undefined}
         />
       ))}
     </Toolbar>
   );
 }
+export function WithTag() {
+  const [active, setActive] = useState<string | null>(null);
 
-export function VerticalToolbar() {
+  return (
+    <Toolbar>
+      {itemsMixedIcons.map((item) => (
+        <Toolbar.Item
+          key={item.id}
+          id={item.id}
+          title={item.title}
+          onClick={() => {
+            setActive(item.id);
+          }}
+          icon={item.icon}
+          active={active === item.id}
+          intent={item.id.startsWith('clipboard') ? 'success' : undefined}
+          tag={item.id.startsWith('credit-card') ? 1 : undefined}
+          tagProps={
+            item.id === 'credit-card-fa'
+              ? {
+                  intent: 'danger',
+                }
+              : undefined
+          }
+        />
+      ))}
+    </Toolbar>
+  );
+}
+export function Vertical() {
   const [state, setState] = useState(itemsBlueprintIcons[1]);
   function handleChange({ id, icon, title }: ToolbarItemProps) {
     setState({ id: id as string, icon, title });
@@ -243,7 +270,7 @@ export function VerticalToolbar() {
   );
 }
 
-export function HorizontalToolbar() {
+export function Horizontal() {
   const [state, setState] = useState(itemsBlueprintIcons[1]);
 
   function handleChange({ id, icon, title }: ToolbarItemProps) {

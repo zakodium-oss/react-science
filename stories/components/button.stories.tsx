@@ -8,6 +8,9 @@ export default {
 
 const ButtonWrapper = styled.div`
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
   return (
@@ -16,6 +19,7 @@ export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
     </ButtonWrapper>
   );
 }
+
 Control.args = {
   active: false,
   disabled: false,
@@ -29,7 +33,6 @@ Control.args = {
   intent: 'none',
   icon: 'plus',
   rightIcon: 'minus',
-  tag: '1',
 };
 Control.argTypes = {
   alignText: {
@@ -42,6 +45,22 @@ Control.argTypes = {
   },
   onClick: { action: 'onClick' },
 };
+
+export function WithTag() {
+  return (
+    <ButtonWrapper>
+      <Button tag="1" icon="person">
+        Hello, World!
+      </Button>
+      <Button tag="14">Hello, World!</Button>
+      <Button tag="Error !" icon="person">
+        Hello, World!
+      </Button>
+      <Button tag="Error !">Hello, World!</Button>
+    </ButtonWrapper>
+  );
+}
+
 export function Tooltip(tooltipProps: ButtonProps['tooltipProps']) {
   return (
     <ButtonWrapper>
@@ -79,10 +98,12 @@ TooltipOnDisabled.argTypes = Tooltip.argTypes;
 
 export function ButtonGroupBasic() {
   return (
-    <ButtonGroup>
-      <ButtonGroup.Button position="first" label="A" onClick={noop} />
-      <ButtonGroup.Button position="last" label="B" onClick={noop} />
-    </ButtonGroup>
+    <ButtonWrapper>
+      <ButtonGroup>
+        <ButtonGroup.Button position="first" label="A" onClick={noop} />
+        <ButtonGroup.Button position="last" label="B" onClick={noop} />
+      </ButtonGroup>
+    </ButtonWrapper>
   );
 }
 
