@@ -129,7 +129,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
             intent="danger"
             style={{ opacity: hasSelectedMeasurements ? 1 : 0.6 }}
             onClick={hasSelectedMeasurements ? openRemoveDialog : undefined}
-            tooltipProps={{ content: 'Remove all', position: 'bottom' }}
+            tooltipProps={{ content: 'Remove selected', position: 'bottom' }}
           />
         </MeasurementsHeaderGroup>
         <ConfirmDialog
