@@ -47,7 +47,7 @@ export function Button(props: ButtonProps) {
                 min-height: 15px;
                 min-width: 15px;
                 line-height: 1em;
-                flex-direction: column;
+                text-align: center;
                 z-index: 20;
               `}
               round
