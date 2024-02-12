@@ -111,12 +111,16 @@ function renderMenuNested(
               isOpen: hoveredGroup
                 ? hoveredGroup === group
                 : items.map((item) => item === activeItem).includes(true),
-            }}
-            onMouseEnter={() => {
-              setHoveredGroup(group);
-            }}
-            onMouseLeave={() => {
-              setHoveredGroup(undefined);
+              onInteraction: (nextOpenState) => {
+                if (items.map((item) => item === activeItem).includes(true)) {
+                  return;
+                }
+                if (nextOpenState) {
+                  setHoveredGroup(group);
+                } else if (hoveredGroup) {
+                  setHoveredGroup(undefined);
+                }
+              },
             }}
             roleStructure="listoption"
           >
