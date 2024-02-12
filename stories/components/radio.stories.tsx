@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { RadioGroup, RadioOption, RadioGroupProps } from '../../src/components';
+import { RadioGroup as BlueprintjsRadioGroup, Radio } from '@blueprintjs/core';
 
 export default {
   title: 'Forms / Radio',
@@ -24,19 +25,20 @@ export function Basic() {
   const [option, setOption] = useState(options[2]);
   return (
     <ExampleGroup>
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        name="classic"
-      />
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        variant="small"
-        name="small_classic"
-      />
+      <BlueprintjsRadioGroup
+        label="Radio Group label"
+        onChange={(event) => {
+          const value = event.currentTarget.value;
+          setOption(
+            (option) => options.find((o) => o.value === value) || option,
+          );
+        }}
+        selectedValue={option.value}
+      >
+        {options.map(({ label, ...other }) => (
+          <Radio {...other} label={label?.toString()} />
+        ))}
+      </BlueprintjsRadioGroup>
       <RadioGroup
         options={options}
         selected={option}
