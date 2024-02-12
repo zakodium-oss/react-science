@@ -48,19 +48,13 @@ export function MeasurementSelectedVisibilityChange(props: {
   }
 
   return isVisible ? (
-    <Button
-      icon="eye-on"
-      onClick={() => setVisibility(true)}
-      minimal
-      tooltipProps={{ content: 'Show selected', position: 'bottom' }}
-    />
+    <Button icon="eye-on" onClick={() => setVisibility(true)} minimal />
   ) : (
     <Button
       icon="eye-off"
       onClick={() => setVisibility(false)}
       style={{ opacity: 0.6 }}
       minimal
-      tooltipProps={{ content: 'Hide selected', position: 'bottom' }}
     />
   );
 }

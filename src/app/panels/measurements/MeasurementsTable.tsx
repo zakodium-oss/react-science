@@ -1,3 +1,4 @@
+import { Menu, MenuItem, Popover } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
@@ -16,6 +17,7 @@ import {
   PanelPreferencesToolbar,
   useOnOff,
 } from '../../../components';
+import { MeasurementConfigPanel } from '../index';
 
 import {
   MeasurementColorPreview,
@@ -267,33 +269,64 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       data: meta,
     },
   ];
+  const content = (
+    <Menu
+      style={{
+        minWidth: 0,
+      }}
+    >
+      <MenuItem
+        text="Information"
+        icon="info-sign"
+        onClick={() =>
+          openPanel?.({
+            title: item.info.file?.name ?? item.info.title,
+            renderPanel: ({ closePanel }) => (
+              <div>
+                <PanelPreferencesToolbar
+                  title={item.info.file?.name ?? item.info.title}
+                  onClose={closePanel}
+                />
+                <InfoPanel data={infoPanelData} title="" />
+              </div>
+            ),
+          })
+        }
+      />
+      <MenuItem
+        text="Configuration"
+        icon="settings"
+        onClick={() =>
+          openPanel?.({
+            title: item.info.file?.name ?? item.info.title,
+            renderPanel: ({ closePanel }) => (
+              <div>
+                <PanelPreferencesToolbar
+                  title={item.info.file?.name ?? item.info.title}
+                  onClose={closePanel}
+                />
+                <MeasurementConfigPanel />
+              </div>
+            ),
+          })
+        }
+      />
+    </Menu>
+  );
 
   return (
     <MeasurementsTableRowData>
       <MeasurementsIconsContainer>
-        <Button
-          minimal
-          icon="more"
-          style={{
-            transform: 'rotate(90deg)',
-          }}
-          small
-          onClick={() =>
-            openPanel?.({
-              title: item.info.file?.name ?? item.info.title,
-              renderPanel: ({ closePanel }) => (
-                <div>
-                  <PanelPreferencesToolbar
-                    title={item.info.file?.name ?? item.info.title}
-                    onClose={closePanel}
-                    onSave={closePanel}
-                  />
-                  <InfoPanel data={infoPanelData} title="" />
-                </div>
-              ),
-            })
-          }
-        />
+        <Popover content={content} position="bottom-left">
+          <Button
+            minimal
+            icon="more"
+            style={{
+              transform: 'rotate(90deg)',
+            }}
+            small
+          />
+        </Popover>
         <MeasurementCheckbox
           checked={selectedMeasurements[kind]?.includes(item.id) || false}
           onSelectCheckbox={onSelectCheckbox}
