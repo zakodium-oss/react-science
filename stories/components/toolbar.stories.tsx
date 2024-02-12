@@ -220,14 +220,17 @@ export function WithTag() {
           icon={item.icon}
           active={active === item.id}
           intent={item.id.startsWith('clipboard') ? 'success' : undefined}
-          tag={item.id.startsWith('credit-card') ? 1 : undefined}
-          tagProps={
-            item.id === 'credit-card-fa'
-              ? {
-                  intent: 'danger',
-                }
-              : undefined
+          tag={
+            (item.id.startsWith('credit-card') && 1) ||
+            (item.id.startsWith('clipboard') && 14) ||
+            142
           }
+          tagProps={{
+            intent:
+              (item.id.startsWith('credit-card') && 'danger') ||
+              (item.id.startsWith('clipboard') && 'primary') ||
+              'success',
+          }}
         />
       ))}
     </Toolbar>
