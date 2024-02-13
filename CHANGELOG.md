@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.35.0](https://github.com/zakodium-oss/react-science/compare/v0.34.0...v0.35.0) (2024-02-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove ButtonGroup component ([#663](https://github.com/zakodium-oss/react-science/issues/663))
+* changed font sizes in components accordingly but this is possibly breaking layout
+
+### Features
+
+* add Toolbar.PopoverItem ([#635](https://github.com/zakodium-oss/react-science/issues/635)) ([d11e8b7](https://github.com/zakodium-oss/react-science/commit/d11e8b76392df7155e5144f966ead701a8e00c53))
+* improve measurements panel ([6ccb3a6](https://github.com/zakodium-oss/react-science/commit/6ccb3a6033d49ee9a7086724ef26c0fb762e6e01))
+* improve popover toolbar item layout ([#653](https://github.com/zakodium-oss/react-science/issues/653)) ([ec8193c](https://github.com/zakodium-oss/react-science/commit/ec8193c45700cb25de04886269f6580fbab2e32e))
+* remove ButtonGroup component ([#663](https://github.com/zakodium-oss/react-science/issues/663)) ([3d8bfe9](https://github.com/zakodium-oss/react-science/commit/3d8bfe92a3c03a398e692d706abd6892e3dd044b))
+* use 14px as base font size ([#652](https://github.com/zakodium-oss/react-science/issues/652)) ([3a3bdc6](https://github.com/zakodium-oss/react-science/commit/3a3bdc6891c4df6dc9b3088f9dd406c4a391098c))
+
+
+### Documentation
+
+* add accordion scroll example ([#646](https://github.com/zakodium-oss/react-science/issues/646)) ([b4f919d](https://github.com/zakodium-oss/react-science/commit/b4f919ddc6a1df381061a825d0ff9465356d970a))
+* fix measurement-plot story ([#661](https://github.com/zakodium-oss/react-science/issues/661)) ([48ae20c](https://github.com/zakodium-oss/react-science/commit/48ae20c2bc69ab340bea3b635ad9b977779ea285))
+* story with accordion + panel toolbar + stacked panel ([#633](https://github.com/zakodium-oss/react-science/issues/633)) ([1dd41a8](https://github.com/zakodium-oss/react-science/commit/1dd41a8beb0ec54ec492dd382ed734b778997a46))
+
 ## [0.34.0](https://github.com/zakodium-oss/react-science/compare/v0.33.0...v0.34.0) (2024-01-31)
 
 
