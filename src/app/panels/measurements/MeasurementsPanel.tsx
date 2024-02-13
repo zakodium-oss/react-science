@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { Tab, Tabs } from '@blueprintjs/core';
+import { PanelProps, Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
+import { useMemo } from 'react';
 
 import {
   kindLabels,
@@ -10,9 +11,9 @@ import {
   useAppState,
 } from '../../../app-data';
 
-import { MeasurementsTable } from './MeasurementsTable';
+import { MeasurementsTable, MeasurementPanelProvider } from '.';
 
-export function MeasurementsPanel() {
+export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
   const appState = useAppState();
   const { data, view } = appState;
 
@@ -36,34 +37,42 @@ export function MeasurementsPanel() {
       payload: id,
     });
   }
+  const measurementState = useMemo(
+    () => ({
+      openPanel,
+    }),
+    [openPanel],
+  );
 
   if (items.length > 0) {
     return (
-      <Tabs
-        selectedTabId={view.selectedKind}
-        onChange={handleTabSelection}
-        css={css`
-          div[role='tablist'] {
-            overflow-x: auto;
-            padding: 2px 0 0 1rem;
-            border-bottom: 1px solid gray;
-          }
-          div[role='tabpanel'] {
-            margin-top: 4px;
-          }
-        `}
-      >
-        {items.map((item) => (
-          <Tab
-            id={item.id}
-            key={item.id}
-            title={item.title}
-            panel={item.content}
-            tagContent={data.measurements[item.id].entries.length}
-            tagProps={{ round: true }}
-          />
-        ))}
-      </Tabs>
+      <MeasurementPanelProvider value={measurementState}>
+        <Tabs
+          selectedTabId={view.selectedKind}
+          onChange={handleTabSelection}
+          css={css`
+            div[role='tablist'] {
+              overflow-x: auto;
+              padding: 2px 0 0 1rem;
+              border-bottom: 1px solid gray;
+            }
+            div[role='tabpanel'] {
+              margin-top: 4px;
+            }
+          `}
+        >
+          {items.map((item) => (
+            <Tab
+              id={item.id}
+              key={item.id}
+              title={item.title}
+              panel={item.content}
+              tagContent={data.measurements[item.id].entries.length}
+              tagProps={{ round: true }}
+            />
+          ))}
+        </Tabs>
+      </MeasurementPanelProvider>
     );
   }
 
