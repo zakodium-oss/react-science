@@ -28,6 +28,12 @@ import {
   useToolbarContext,
 } from './toolbarContext';
 
+export type PopoverInteractionType =
+  | 'click'
+  | 'hover'
+  | 'click-target'
+  | 'hover-target';
+
 interface ToolbarBaseProps {
   intent?: Intent;
   disabled?: boolean;
@@ -56,6 +62,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
   itemProps: ToolbarItemProps;
+  popoverInteraction?: PopoverInteractionType;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -213,7 +220,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
 Toolbar.PopoverItem = function ToolbarPopoverItem(
   props: ToolbarPopoverItemProps,
 ) {
-  const { itemProps, ...other } = props;
+  const { itemProps, popoverInteraction, ...other } = props;
   const { disabled, vertical } = useToolbarContext();
 
   return (
@@ -221,6 +228,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       minimal
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
+      interactionKind={popoverInteraction}
       css={css`
         .${Classes.ICON} {
           color: ${Colors.DARK_GRAY3};

@@ -5,7 +5,12 @@ import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
-import { Toolbar, ToolbarItemProps, ToolbarProps } from '../../src/components';
+import {
+  Toolbar,
+  ToolbarItemProps,
+  ToolbarProps,
+  PopoverInteractionType,
+} from '../../src/components';
 
 export default {
   title: 'Components / Toolbar',
@@ -273,8 +278,12 @@ export function HorizontalToolbar() {
   );
 }
 
-export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
-  const { onClick, ...toolbarProps } = props;
+export function PopoverItems(
+  props: ToolbarItems & { onClick: () => void } & {
+    popoverInteraction: PopoverInteractionType;
+  },
+) {
+  const { popoverInteraction, onClick, ...toolbarProps } = props;
   const [active, setActive] = useState<string | null>(null);
 
   return (
@@ -283,6 +292,7 @@ export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
         <Toolbar.PopoverItem
           key={itemProps.id}
           content={content}
+          popoverInteraction={popoverInteraction}
           itemProps={{
             ...itemProps,
             active: active === itemProps.id,
@@ -296,11 +306,22 @@ export function PopoverItems(props: ToolbarItems & { onClick: () => void }) {
     </Toolbar>
   );
 }
+PopoverItems.args = {
+  popoverInteraction: 'click',
+};
+PopoverItems.argTypes = {
+  popoverInteraction: {
+    options: ['click', 'hover', 'click-target', 'hover-target'],
+    control: { type: 'radio' },
+  },
+};
 
 export function MixedItems(
-  props: ToolbarItems & { onClick: () => void } & { popoverFirst: boolean },
+  props: ToolbarItems & { onClick: () => void } & { popoverFirst: boolean } & {
+    popoverInteraction: PopoverInteractionType;
+  },
 ) {
-  const { popoverFirst, onClick, ...toolbarProps } = props;
+  const { popoverInteraction, popoverFirst, onClick, ...toolbarProps } = props;
   const [active, setActive] = useState<string | null>(null);
 
   const set = new Set<number>([0, 1, 4, 6, 7]);
@@ -313,6 +334,7 @@ export function MixedItems(
           <Toolbar.PopoverItem
             key={itemProps.id}
             content={content}
+            popoverInteraction={popoverInteraction}
             itemProps={{
               ...itemProps,
               active: active === itemProps.id,
@@ -341,4 +363,11 @@ export function MixedItems(
 }
 MixedItems.args = {
   popoverFirst: false,
+  popoverInteraction: 'click',
+};
+MixedItems.argTypes = {
+  popoverInteraction: {
+    options: ['click', 'hover', 'click-target', 'hover-target'],
+    control: { type: 'radio' },
+  },
 };
