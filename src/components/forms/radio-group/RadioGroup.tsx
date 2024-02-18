@@ -6,7 +6,6 @@ import { ReactNode } from 'react';
 import { InputVariant } from '../styles';
 
 import { ButtonRadioItem } from './ButtonRadioItem';
-import { ClassicRadioItem } from './ClassicRadioItem';
 
 export interface RadioOption {
   value: string;
@@ -15,7 +14,6 @@ export interface RadioOption {
 }
 export interface RadioGroupProps {
   selected?: RadioOption;
-  type?: 'classic' | 'button';
   options?: RadioOption[];
   onSelect?: (option: RadioOption) => void;
   name?: string;
@@ -44,7 +42,6 @@ export function RadioGroup(props: RadioGroupProps) {
   const {
     id,
     selected,
-    type = 'classic',
     disabled: groupDisabled = false,
     options = [],
     onSelect,
@@ -54,12 +51,9 @@ export function RadioGroup(props: RadioGroupProps) {
   return (
     <RadioGroupRadix.Root
       id={id}
-      css={[
-        rootStyles.basic,
-        type === 'classic' ? null : rootStyles.button(variant),
-      ]}
+      css={[rootStyles.basic, rootStyles.button(variant)]}
       style={{
-        gap: type === 'classic' ? (variant === 'default' ? 10 : 5) : 0,
+        gap: 0,
       }}
       value={selected?.value}
       name={name}
@@ -67,7 +61,6 @@ export function RadioGroup(props: RadioGroupProps) {
     >
       {options?.map(({ value, label, disabled }) => {
         const childProps = {
-          key: value,
           value,
           label,
           disabled: groupDisabled || disabled,
@@ -75,11 +68,7 @@ export function RadioGroup(props: RadioGroupProps) {
           variant,
           name,
         };
-        return type === 'classic' ? (
-          <ClassicRadioItem {...childProps} />
-        ) : (
-          <ButtonRadioItem {...childProps} />
-        );
+        return <ButtonRadioItem key={value} {...childProps} />;
       })}
     </RadioGroupRadix.Root>
   );
