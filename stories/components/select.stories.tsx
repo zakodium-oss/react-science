@@ -5,10 +5,10 @@ import {
   MenuDivider,
   MenuItem,
 } from '@blueprintjs/core';
-import { ItemListRenderer, ItemRenderer, Select } from '@blueprintjs/select';
+import { ItemListRenderer, Select } from '@blueprintjs/select';
 import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 
-import { Button, useOnOff } from '../../src/components';
+import { Button, useOnOff, useSelect } from '../../src/components';
 
 export default {
   title: 'Forms / Select',
@@ -44,31 +44,13 @@ function getGroups(items: ItemsType[]) {
   return { groups, withoutGroup };
 }
 
-function getItemRenderer(value: ItemsType | null) {
-  const render: ItemRenderer<ItemsType> = (
-    { label },
-    { handleClick, handleFocus, modifiers, index },
-  ) => (
-    <MenuItem
-      active={modifiers.active}
-      disabled={modifiers.disabled}
-      selected={value?.label === label}
-      key={index}
-      onClick={handleClick}
-      onFocus={handleFocus}
-      roleStructure="listoption"
-      text={label}
-    />
-  );
-  return render;
-}
 const renderMenu: ItemListRenderer<ItemsType> = ({
-  items,
   itemsParentRef,
+  filteredItems,
   renderItem,
   menuProps,
 }) => {
-  const { groups, withoutGroup } = getGroups(items);
+  const { groups, withoutGroup } = getGroups(filteredItems);
   return (
     <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
       {groups.map(({ group, items }) => (
@@ -90,13 +72,13 @@ function renderMenuNested(
   ],
 ) {
   const render: ItemListRenderer<ItemsType> = ({
-    items,
+    filteredItems,
     itemsParentRef,
     renderItem,
     menuProps,
     activeItem,
   }) => {
-    const { groups, withoutGroup } = getGroups(items);
+    const { groups, withoutGroup } = getGroups(filteredItems);
     return (
       <Menu role="listbox" {...menuProps} ulRef={itemsParentRef}>
         {groups.map(({ group, items }) => (
@@ -136,25 +118,33 @@ function renderMenuNested(
 }
 
 export function OnlyOptions() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect();
   return (
     <>
       <Select
-        onItemSelect={(item) => setValue(item)}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
+      >
+        <Button
+          text={value?.label ?? 'Select a status'}
+          rightIcon="double-caret-vertical"
+        />
+      </Select>
+      <p>Value outside component is {value?.label}.</p>
+    </>
+  );
+}
+
+export function FiltrableOptions() {
+  const { value, ...defaultProps } = useSelect();
+  return (
+    <>
+      <Select
+        items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
+        itemsEqual="label"
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -166,12 +156,10 @@ export function OnlyOptions() {
   );
 }
 export function OnlyCategories() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect<ItemsType>();
   return (
     <>
       <Select
-        onItemSelect={(item) => setValue(item)}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenu}
@@ -183,16 +171,33 @@ export function OnlyCategories() {
           { label: 'Potato', group: 'Vegetables' },
           { label: 'Tomato', group: 'Vegetables' },
         ]}
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
+      >
+        <Button
+          text={value?.label ?? 'Select'}
+          rightIcon="double-caret-vertical"
+        />
+      </Select>
+      <p>Value outside component is {value?.label}.</p>
+    </>
+  );
+}
+export function FilteredCategories() {
+  const { value, ...defaultProps } = useSelect<ItemsType>();
+  return (
+    <>
+      <Select
+        itemsEqual="label"
+        itemListRenderer={renderMenu}
+        items={[
+          { label: 'Apple', group: 'Fruits' },
+          { label: 'Banana', group: 'Fruits' },
+          { label: 'Orange', group: 'Fruits' },
+          { label: 'Carrot', group: 'Vegetables' },
+          { label: 'Potato', group: 'Vegetables' },
+          { label: 'Tomato', group: 'Vegetables' },
+        ]}
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -204,14 +209,12 @@ export function OnlyCategories() {
   );
 }
 export function OptionsWithCategories() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect<ItemsType>();
 
   return (
     <>
       <Select
-        onItemSelect={(item) => setValue(item)}
-        itemRenderer={getItemRenderer(value)}
-        filterable={false}
+        // filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenu}
         items={[
@@ -224,16 +227,7 @@ export function OptionsWithCategories() {
           { label: 'Pork' },
           { label: 'Beef' },
         ]}
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -245,16 +239,14 @@ export function OptionsWithCategories() {
   );
 }
 export function CategoriesNested() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect<ItemsType>();
   const hoverState = useState<string | undefined>(undefined);
   return (
     <>
       <Select
-        onItemSelect={(item) => setValue(item)}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        itemListRenderer={renderMenuNested(value, hoverState)}
+        itemListRenderer={renderMenuNested(value as ItemsType, hoverState)}
         items={[
           { label: 'Apple', group: 'Fruits' },
           { label: 'Banana', group: 'Fruits' },
@@ -265,16 +257,7 @@ export function CategoriesNested() {
           { label: 'Pork' },
           { label: 'Beef' },
         ]}
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -287,26 +270,15 @@ export function CategoriesNested() {
 }
 
 export function DisabledOptions() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect();
   return (
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={getItemRenderer(value)}
-        onItemSelect={setValue}
         itemDisabled={(item) => item.label === 'Orange'}
         filterable={false}
         itemsEqual="label"
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -319,12 +291,10 @@ export function DisabledOptions() {
 }
 
 export function DisabledInCategories() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect<ItemsType>();
   return (
     <>
       <Select
-        onItemSelect={(item) => setValue(item)}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
         itemListRenderer={renderMenu}
@@ -339,16 +309,7 @@ export function DisabledInCategories() {
         itemDisabled={(item) =>
           item.label === 'Potato' || item.group === 'Fruits'
         }
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select'}
@@ -361,26 +322,15 @@ export function DisabledInCategories() {
 }
 
 export function Disabled() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect();
   return (
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={getItemRenderer(value)}
-        onItemSelect={setValue}
         filterable={false}
         itemsEqual="label"
         disabled
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
+        {...defaultProps}
       >
         <Button
           disabled
@@ -393,26 +343,15 @@ export function Disabled() {
   );
 }
 export function WithCustomStyle() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect();
   return (
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={getItemRenderer(value)}
-        onItemSelect={setValue}
         filterable={false}
         itemsEqual="label"
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
         popoverContentProps={{ style: { width: '500px' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
       >
         <Button
           style={{ width: '500px' }}
@@ -426,25 +365,16 @@ export function WithCustomStyle() {
 }
 
 export function FixedValueNoopHandle() {
+  const defaultProps = useSelect();
   const value = { label: 'Orange' };
   return (
     <>
       <Select
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        onItemSelect={() => null}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
+        onItemSelect={() => null}
       >
         <Button
           text={value.label ?? 'Select a status'}
@@ -456,26 +386,17 @@ export function FixedValueNoopHandle() {
   );
 }
 
-export function nullValueNoopHandle() {
+export function NullValueNoopHandle() {
+  const defaultProps = useSelect();
   const value = null;
   return (
     <>
       <Select
-        onItemSelect={() => null}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
+        onItemSelect={() => null}
       >
         <Button
           text={value ?? 'Select a status'}
@@ -488,25 +409,14 @@ export function nullValueNoopHandle() {
 }
 
 export function ResetButton() {
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, setValue, ...defaultProps } = useSelect();
   return (
     <>
       <Select
-        onItemSelect={setValue}
         items={[{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }]}
-        itemRenderer={getItemRenderer(value)}
         filterable={false}
         itemsEqual="label"
-        popoverTargetProps={{ style: { display: 'inline-block' } }}
-        popoverProps={{
-          onOpened: (node) => {
-            const firstUl = node.querySelector('ul');
-            if (firstUl) {
-              firstUl.tabIndex = 0;
-              firstUl.focus();
-            }
-          },
-        }}
+        {...defaultProps}
       >
         <Button
           text={value?.label ?? 'Select a status'}
@@ -521,7 +431,7 @@ export function ResetButton() {
 
 export function InDialog() {
   const [isOpen, open, close] = useOnOff();
-  const [value, setValue] = useState<ItemsType | null>(null);
+  const { value, ...defaultProps } = useSelect();
   return (
     <>
       <Button onClick={open}>Open</Button>
@@ -536,28 +446,14 @@ export function InDialog() {
           <div style={{ margin: 4 }}>
             <p>Hello, world!</p>
             <Select
-              onItemSelect={setValue}
               items={[
                 { label: 'Apple' },
                 { label: 'Banana' },
                 { label: 'Orange' },
               ]}
-              itemRenderer={getItemRenderer(value)}
               filterable={false}
               itemsEqual="label"
-              popoverProps={{
-                positioningStrategy: 'fixed',
-                onOpened: (node) => {
-                  const firstLi = node.querySelector('li');
-                  if (firstLi) {
-                    firstLi.tabIndex = 0;
-                    firstLi.focus();
-                  }
-                },
-              }}
-              popoverTargetProps={{
-                style: { display: 'inline-block' },
-              }}
+              {...defaultProps}
             >
               <Button
                 text={value?.label ?? 'Select a status'}
