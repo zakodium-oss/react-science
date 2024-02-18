@@ -12,14 +12,14 @@
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "allowJs": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
   "include": [
     "./src",
     "./stories",
     "./tests",
     "./playwright",
-    "playwright-*.mts",
+    "playwright-*.mts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
