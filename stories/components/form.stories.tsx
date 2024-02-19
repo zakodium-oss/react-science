@@ -3,6 +3,8 @@ import {
   FormGroup,
   InputGroup,
   MenuItem,
+  Radio,
+  RadioGroup,
   TextArea,
 } from '@blueprintjs/core';
 import { HTMLSelect } from '@blueprintjs/core/lib/esnext';
@@ -10,7 +12,7 @@ import { ItemRenderer, Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { Button, RadioGroup, RadioOption } from '../../src/components';
+import { Button } from '../../src/components';
 
 export default {
   title: 'Forms / Form',
@@ -44,7 +46,7 @@ export function Control() {
   const [status, setStatus] = useState<string | undefined>(undefined);
   const [country, setCountry] = useState<string | undefined>(undefined);
   const [question, setQuestion] = useState<number[]>([]);
-  const [radio, setRadio] = useState<RadioOption | undefined>(undefined);
+  const [radio, setRadio] = useState<string | undefined>(undefined);
   return (
     <ExampleGroup style={{ display: 'inline-block' }}>
       <FormGroup
@@ -123,16 +125,16 @@ export function Control() {
       </FormGroup>
       <FormGroup label="Radio" labelFor="radio">
         <RadioGroup
-          id="radio"
-          options={[
-            { label: 'Option 1', value: 'option1' },
-            { label: 'Option 2', value: 'option2' },
-            { label: 'Option 3', value: 'option3' },
-          ]}
-          selected={radio}
-          onSelect={setRadio}
           name="radio"
-        />
+          onChange={(event) => {
+            setRadio(event.currentTarget.value);
+          }}
+          selectedValue={radio}
+        >
+          <Radio label="Option 1" value="option1" />
+          <Radio label="Option 2" value="option2" />
+          <Radio label="Option 3" value="option3" />
+        </RadioGroup>
       </FormGroup>
       <FormGroup label="Introduction" labelFor="introduction">
         <TextArea id="introduction" />

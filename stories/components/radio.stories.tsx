@@ -1,3 +1,7 @@
+import {
+  RadioGroup as BlueprintjsRadioGroup,
+  RadioGroupProps as BlueprintjsRadioGroupProps,
+} from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -7,7 +11,7 @@ export default {
   title: 'Forms / Radio',
 };
 
-const options: RadioOption[] = [
+const options = [
   { label: 'Option 1', value: 'option1' },
   { label: 'Option 2', value: 'option2', disabled: true },
   { label: 'Option 3', value: 'option3' },
@@ -20,45 +24,38 @@ const ExampleGroup = styled.div`
   flex-direction: column;
   gap: 20px;
 `;
-export function Basic() {
+export function ControlBlueprint(
+  props: Omit<
+    BlueprintjsRadioGroupProps,
+    'onChange' | 'selectedValue' | 'children'
+  >,
+) {
   const [option, setOption] = useState(options[2]);
   return (
     <ExampleGroup>
-      <RadioGroup
+      <BlueprintjsRadioGroup
+        onChange={(event) => {
+          const value = event.currentTarget.value;
+          setOption(
+            (option) => options.find((o) => o.value === value) || option,
+          );
+        }}
+        selectedValue={option.value}
         options={options}
-        selected={option}
-        onSelect={setOption}
-        name="classic"
-      />
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        variant="small"
-        name="small_classic"
-      />
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        type="button"
-        name="button"
-      />
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        variant="small"
-        type="button"
-        name="small_button"
+        {...props}
       />
     </ExampleGroup>
   );
 }
-export function Control(
+ControlBlueprint.args = {
+  label: 'Radio Group label',
+  disabled: false,
+  inline: false,
+};
+export function ControlButton(
   props: Omit<RadioGroupProps, 'options' | 'selected' | 'onSelect' | 'name'>,
 ) {
-  const [option, setOption] = useState(options[2]);
+  const [option, setOption] = useState(options[2] as RadioOption);
   return (
     <ExampleGroup>
       <RadioGroup
@@ -70,19 +67,14 @@ export function Control(
     </ExampleGroup>
   );
 }
-Control.args = {
+ControlButton.args = {
   variant: 'default',
-  type: 'classic',
   disabled: false,
 };
 
-Control.argTypes = {
+ControlButton.argTypes = {
   variant: {
     options: ['default', 'small'],
-    control: { type: 'radio' },
-  },
-  type: {
-    options: ['classic', 'button'],
     control: { type: 'radio' },
   },
 };

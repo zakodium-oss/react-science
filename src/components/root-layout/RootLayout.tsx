@@ -18,7 +18,7 @@ interface RootLayoutProps {
 const style: CSSProperties = {
   width: '100%',
   height: '100%',
-  fontSize: '12px',
+  fontSize: '14px',
 };
 
 export function RootLayout(props: RootLayoutProps) {

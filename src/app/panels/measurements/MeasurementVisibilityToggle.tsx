@@ -1,15 +1,14 @@
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
 import { useAppDispatch } from '../../../app-data/index';
+import { Button } from '../../../components/index';
 
-import { MeasurementsTableProps } from './MeasurementsTable';
+import { MeasurementsTableProps } from '.';
 
 interface MeasurementVisibilityToggleProps {
   id: string;
   isVisible: boolean;
 }
 
-export default function MeasurementVisibilityToggle(
+export function MeasurementVisibilityToggle(
   props: MeasurementVisibilityToggleProps,
 ) {
   const { id, isVisible } = props;
@@ -23,20 +22,22 @@ export default function MeasurementVisibilityToggle(
   }
 
   return isVisible ? (
-    <FaEye onClick={() => setVisibility(false)} style={{ cursor: 'pointer' }} />
+    <Button icon="eye-on" onClick={() => setVisibility(false)} minimal />
   ) : (
-    <FaEyeSlash
+    <Button
+      icon="eye-off"
       onClick={() => setVisibility(true)}
-      style={{ cursor: 'pointer', opacity: 0.6 }}
+      style={{ opacity: 0.6 }}
+      minimal
     />
   );
 }
 
 export function MeasurementSelectedVisibilityChange(props: {
-  openedEyes: boolean;
+  isVisible: boolean;
   kind: MeasurementsTableProps['kind'];
 }) {
-  const { kind, openedEyes } = props;
+  const { kind, isVisible } = props;
   const dispatch = useAppDispatch();
 
   function setVisibility(isVisible: boolean) {
@@ -46,12 +47,14 @@ export function MeasurementSelectedVisibilityChange(props: {
     });
   }
 
-  return openedEyes ? (
-    <FaEye onClick={() => setVisibility(false)} style={{ cursor: 'pointer' }} />
+  return isVisible ? (
+    <Button icon="eye-on" onClick={() => setVisibility(true)} minimal />
   ) : (
-    <FaEyeSlash
-      onClick={() => setVisibility(true)}
-      style={{ cursor: 'pointer', opacity: 0.6 }}
+    <Button
+      icon="eye-off"
+      onClick={() => setVisibility(false)}
+      style={{ opacity: 0.6 }}
+      minimal
     />
   );
 }

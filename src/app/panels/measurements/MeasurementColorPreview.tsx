@@ -13,7 +13,6 @@ import {
   useOnClickOutside,
   useOnOff,
 } from '../../../components/index';
-import { Portal } from '../../../components/root-layout/Portal';
 
 interface MeasurementColorPreviewProps {
   measurementId: string;
@@ -24,11 +23,12 @@ interface MeasurementColorPreviewProps {
 const ColorPreviewButton = styled.button`
   width: 1em;
   height: 1em;
+  & > div {
+    border-radius: 0.5em;
+  }
 `;
 
-export default function MeasurementColorPreview(
-  props: MeasurementColorPreviewProps,
-) {
+export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
   const { measurementId, kind, color } = props;
 
   const dispatch = useAppDispatch();
@@ -53,35 +53,33 @@ export default function MeasurementColorPreview(
         <ColorPreview color={color} />
       </ColorPreviewButton>
       {isOpened && (
-        <Portal>
-          <div
-            ref={(div) => {
-              setPopperElement(div);
-              ref.current = div;
-            }}
-            {...popperProps}
-          >
-            {color.kind === 'fixed' ? (
-              <FixedColorPicker
-                color={color.color}
-                onChange={(newColor) =>
-                  dispatch({
-                    type: 'CHANGE_MEASUREMENT_DISPLAY',
-                    payload: {
-                      display: {
-                        color: {
-                          kind: 'fixed',
-                          color: newColor,
-                        },
+        <div
+          ref={(div) => {
+            setPopperElement(div);
+            ref.current = div;
+          }}
+          {...popperProps}
+        >
+          {color.kind === 'fixed' ? (
+            <FixedColorPicker
+              color={color.color}
+              onChange={(newColor) =>
+                dispatch({
+                  type: 'CHANGE_MEASUREMENT_DISPLAY',
+                  payload: {
+                    display: {
+                      color: {
+                        kind: 'fixed',
+                        color: newColor,
                       },
-                      measurement: { id: measurementId, kind },
                     },
-                  })
-                }
-              />
-            ) : null}
-          </div>
-        </Portal>
+                    measurement: { id: measurementId, kind },
+                  },
+                })
+              }
+            />
+          ) : null}
+        </div>
       )}
     </>
   );
@@ -94,6 +92,7 @@ function FixedColorPicker(props: {
   const { color, onChange } = props;
   return (
     <ColorPicker
+      style={{ fontSize: '0.875em' }}
       color={{ hex: color }}
       onChangeComplete={(color) => {
         onChange(color.hex);

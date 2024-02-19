@@ -111,6 +111,7 @@ export function BasicComponent(props: BasicComponentProps) {
               flip={flipHorizontalAxis}
               position="bottom"
               label={`${x.label}${x.units ? `(${x.units})` : ''}`}
+              paddingEnd="20"
             />
             <Axis
               hidden={!showVerticalAxis}

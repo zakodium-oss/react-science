@@ -1,19 +1,31 @@
+import { Menu, MenuItem, Popover } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import { FaTrash } from 'react-icons/fa';
+import { useMemo } from 'react';
 
 import {
   MeasurementBase,
   MeasurementKind,
+  getMeasurement,
   useAppDispatch,
   useAppState,
 } from '../../../app-data';
-import { ConfirmDialog, useOnOff } from '../../../components';
+import {
+  Button,
+  ConfirmDialog,
+  InfoPanel,
+  InfoPanelData,
+  PanelPreferencesToolbar,
+  useOnOff,
+} from '../../../components';
+import { MeasurementConfigPanel } from '../index';
 
-import { MeasurementCheckbox } from './MeasurementCheckbox';
-import MeasurementColorPreview from './MeasurementColorPreview';
-import MeasurementVisibilityToggle, {
+import {
+  MeasurementColorPreview,
+  MeasurementCheckbox,
+  MeasurementVisibilityToggle,
   MeasurementSelectedVisibilityChange,
-} from './MeasurementVisibilityToggle';
+  useMeasurementPanel,
+} from '.';
 
 export interface MeasurementsTableProps {
   kind: MeasurementKind;
@@ -49,13 +61,6 @@ const MeasurementsTableBody = styled.tbody`
   background-color: white;
 `;
 
-const MeasurementsLinkButton = styled.span`
-  cursor: pointer;
-  :hover {
-    text-decoration: underline;
-  }
-`;
-
 const MeasurementsHeaderColumn = styled.div`
   display: flex;
   flex-direction: row;
@@ -65,7 +70,6 @@ const MeasurementsHeaderColumn = styled.div`
   padding-right: 5px;
   border-bottom: 1px solid black;
 `;
-
 const MeasurementsHeaderGroup = styled.div`
   display: flex;
   gap: 6px;
@@ -88,14 +92,14 @@ const MeasurementsTableRowData = styled.tr`
 
 const MeasurementsIconsContainer = styled.td`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   justify-items: center;
   height: 50px;
   flex-direction: row;
-  gap: 0.5rem;
   cursor: default;
-  width: 70px;
+  gap: 2px;
+  width: 100px;
 `;
 
 export function MeasurementsTable(props: MeasurementsTableProps) {
@@ -110,16 +114,6 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
 
   const hasSelectedMeasurements = (selectedMeasurements[kind]?.length ?? 0) > 0;
 
-  function onSelectLink(select: boolean) {
-    dispatch({
-      type: 'SELECT_ALL_MEASUREMENTS',
-      payload: {
-        kind,
-        select,
-      },
-    });
-  }
-
   function onRemove() {
     dispatch({ type: 'REMOVE_SELECTED_MEASUREMENTS', payload: { kind } });
     closeRemoveDialog();
@@ -129,21 +123,13 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
     <MeasurementsTableContainer>
       <MeasurementsHeaderColumn>
         <MeasurementsHeaderGroup>
-          <MeasurementsLinkButton onClick={() => onSelectLink(true)}>
-            Select all
-          </MeasurementsLinkButton>
-          <MeasurementsLinkButton onClick={() => onSelectLink(false)}>
-            Unselect all
-          </MeasurementsLinkButton>
-        </MeasurementsHeaderGroup>
-        <MeasurementsHeaderGroup>
-          <MeasurementSelectedVisibilityChange kind={kind} openedEyes />
-          <MeasurementSelectedVisibilityChange kind={kind} openedEyes={false} />
-          <FaTrash
-            style={
-              hasSelectedMeasurements ? { cursor: 'pointer' } : { opacity: 0.6 }
-            }
+          <Button
+            minimal
+            icon="trash"
+            intent="danger"
+            style={{ opacity: hasSelectedMeasurements ? 1 : 0.6 }}
             onClick={hasSelectedMeasurements ? openRemoveDialog : undefined}
+            tooltipProps={{ content: 'Remove selected', position: 'bottom' }}
           />
         </MeasurementsHeaderGroup>
         <ConfirmDialog
@@ -160,7 +146,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
       </MeasurementsHeaderColumn>
 
       <MeasurementsTableRoot>
-        <MeasurementsTableHeader />
+        <MeasurementsTableHeader kind={kind} />
         <MeasurementsTableBody>
           {measurements[kind].entries.map((element) => (
             <MeasurementsTableRow key={element.id} item={element} kind={kind} />
@@ -171,15 +157,8 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
   );
 }
 
-const TableHeaderEmpty = styled.th`
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  width: 70px;
-`;
-
 const TableHeaderFilename = styled.th`
-  width: 60%;
+  width: 50%;
 `;
 
 const TableHeaderTechnique = styled.th`
@@ -187,15 +166,63 @@ const TableHeaderTechnique = styled.th`
 `;
 
 const TableDataHeaderName = styled.td`
-  width: 60%;
+  width: 50%;
   overflow: hidden;
 `;
 
-function MeasurementsTableHeader() {
+function MeasurementsTableHeader({
+  kind,
+}: {
+  kind: MeasurementsTableProps['kind'];
+}) {
+  const {
+    data: { measurements: measurementsData },
+    view: { selectedMeasurements, measurements },
+  } = useAppState();
+  const dispatch = useAppDispatch();
+  function onSelectLink(select: boolean) {
+    dispatch({
+      type: 'SELECT_ALL_MEASUREMENTS',
+      payload: {
+        kind,
+        select,
+      },
+    });
+  }
+  const allSelected = useMemo(
+    () =>
+      selectedMeasurements[kind]?.length ===
+      measurementsData[kind]?.entries.length,
+    [kind, measurementsData, selectedMeasurements],
+  );
+  const selectedVisible = useMemo(() => {
+    const ids = selectedMeasurements[kind];
+    if (ids) {
+      return ids.every((id) => measurements[id]?.visible);
+    }
+    return false;
+  }, [selectedMeasurements, kind, measurements]);
   return (
     <thead>
       <MeasurementsTableHeaderStyled>
-        <TableHeaderEmpty />
+        <th>
+          <MeasurementsIconsContainer
+            style={{
+              paddingLeft: '26px',
+            }}
+          >
+            <MeasurementCheckbox
+              checked={allSelected}
+              onSelectCheckbox={() => {
+                onSelectLink(!allSelected);
+              }}
+            />
+            <MeasurementSelectedVisibilityChange
+              kind={kind}
+              isVisible={selectedVisible}
+            />
+          </MeasurementsIconsContainer>
+        </th>
         <TableHeaderFilename>Filename</TableHeaderFilename>
         <TableHeaderTechnique>Technique</TableHeaderTechnique>
       </MeasurementsTableHeaderStyled>
@@ -205,8 +232,10 @@ function MeasurementsTableHeader() {
 
 function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   const { item, kind } = props;
+  const { openPanel } = useMeasurementPanel();
 
   const {
+    data,
     view: { selectedMeasurements, measurements },
   } = useAppState();
 
@@ -227,10 +256,81 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       payload: { id: item.id, kind, acc: isAlreadyChecked ? 'remove' : 'add' },
     });
   }
+  const { info = {}, meta = {} } =
+    getMeasurement(data.measurements, kind, item.id) || {};
+
+  const infoPanelData: InfoPanelData[] = [
+    {
+      description: 'Information',
+      data: info,
+    },
+    {
+      description: 'Metadata',
+      data: meta,
+    },
+  ];
+  const content = (
+    <Menu
+      style={{
+        minWidth: 0,
+      }}
+    >
+      <MenuItem
+        text="Information"
+        icon="info-sign"
+        onClick={() =>
+          openPanel?.({
+            title: item.info.file?.name ?? item.info.title,
+            renderPanel: ({ closePanel }) => (
+              <div>
+                <PanelPreferencesToolbar
+                  title={item.info.file?.name ?? item.info.title}
+                  onClose={closePanel}
+                />
+                <InfoPanel data={infoPanelData} title="" />
+              </div>
+            ),
+          })
+        }
+      />
+      <MenuItem
+        text="Configuration"
+        icon="settings"
+        onClick={() =>
+          openPanel?.({
+            title: item.info.file?.name ?? item.info.title,
+            renderPanel: ({ closePanel }) => (
+              <div>
+                <PanelPreferencesToolbar
+                  title={item.info.file?.name ?? item.info.title}
+                  onClose={closePanel}
+                />
+                <MeasurementConfigPanel />
+              </div>
+            ),
+          })
+        }
+      />
+    </Menu>
+  );
 
   return (
     <MeasurementsTableRowData>
       <MeasurementsIconsContainer>
+        <Popover content={content} position="bottom-left">
+          <Button
+            minimal
+            icon="more"
+            style={{
+              transform: 'rotate(90deg)',
+            }}
+            small
+          />
+        </Popover>
+        <MeasurementCheckbox
+          checked={selectedMeasurements[kind]?.includes(item.id) || false}
+          onSelectCheckbox={onSelectCheckbox}
+        />
         <MeasurementVisibilityToggle
           id={item.id}
           isVisible={measurements[item.id].visible}
@@ -239,10 +339,6 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
           measurementId={item.id}
           kind={kind}
           color={measurements[item.id].color}
-        />
-        <MeasurementCheckbox
-          checked={selectedMeasurements[kind]?.includes(item.id) || false}
-          onSelectCheckbox={onSelectCheckbox}
         />
       </MeasurementsIconsContainer>
       <TableDataHeaderName onClick={onSelectRow} title={item.id}>

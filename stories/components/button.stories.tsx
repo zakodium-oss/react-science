@@ -1,6 +1,9 @@
+/** @jsxImportSource @emotion/react */
+import { ButtonGroup } from '@blueprintjs/core';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { Button, ButtonGroup, ButtonProps } from '../../src/components/index';
+import { Button, ButtonProps } from '../../src/components/index';
 
 export default {
   title: 'Components / Button',
@@ -99,14 +102,21 @@ TooltipOnDisabled.argTypes = Tooltip.argTypes;
 export function ButtonGroupBasic() {
   return (
     <ButtonWrapper>
-      <ButtonGroup>
-        <ButtonGroup.Button position="first" label="A" onClick={noop} />
-        <ButtonGroup.Button position="last" label="B" onClick={noop} />
+      <ButtonGroup
+        css={css({
+          ' & > *:first-of-type': {
+            borderRadius: '6px 0 0 6px',
+          },
+          ' & > *:last-of-type': {
+            borderRightWidth: 1,
+            borderRadius: '0 6px 6px 0',
+          },
+        })}
+      >
+        <Button icon="database">A</Button>
+        <Button icon="function">B</Button>
+        <Button icon="settings">C</Button>
       </ButtonGroup>
     </ButtonWrapper>
   );
-}
-
-function noop() {
-  // Do nothing
 }
