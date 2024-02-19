@@ -47,6 +47,7 @@ export interface ToolbarProps extends ToolbarBaseProps {
     | Iterable<ReactNode>
     | boolean
     | null;
+  popoverInteractionKind?: PopoverInteractionType;
 }
 
 export interface ToolbarItemProps extends ToolbarBaseProps {
@@ -62,17 +63,23 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
   itemProps: ToolbarItemProps;
-  popoverInteraction?: PopoverInteractionType;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
 
 export function Toolbar(props: ToolbarProps) {
-  const { children, disabled, intent, large, vertical } = props;
+  const {
+    children,
+    disabled,
+    intent,
+    large,
+    vertical,
+    popoverInteractionKind,
+  } = props;
 
   const contextValue = useMemo(
-    () => ({ intent, large, vertical, disabled }),
-    [intent, large, vertical, disabled],
+    () => ({ intent, large, vertical, disabled, popoverInteractionKind }),
+    [intent, large, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
 
@@ -220,15 +227,15 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
 Toolbar.PopoverItem = function ToolbarPopoverItem(
   props: ToolbarPopoverItemProps,
 ) {
-  const { itemProps, popoverInteraction, ...other } = props;
-  const { disabled, vertical } = useToolbarContext();
+  const { itemProps, ...other } = props;
+  const { disabled, vertical, popoverInteractionKind } = useToolbarContext();
 
   return (
     <Popover
       minimal
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
-      interactionKind={popoverInteraction}
+      interactionKind={popoverInteractionKind}
       css={css`
         .${Classes.ICON} {
           color: ${Colors.DARK_GRAY3};

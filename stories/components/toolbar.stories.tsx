@@ -280,19 +280,18 @@ export function HorizontalToolbar() {
 
 export function PopoverItems(
   props: ToolbarItems & { onClick: () => void } & {
-    popoverInteraction: PopoverInteractionType;
+    popoverInteractionKind: PopoverInteractionType;
   },
 ) {
-  const { popoverInteraction, onClick, ...toolbarProps } = props;
+  const { popoverInteractionKind, onClick, ...toolbarProps } = props;
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <Toolbar {...toolbarProps}>
+    <Toolbar popoverInteractionKind={popoverInteractionKind} {...toolbarProps}>
       {itemsPopover.map(({ content, ...itemProps }) => (
         <Toolbar.PopoverItem
           key={itemProps.id}
           content={content}
-          popoverInteraction={popoverInteraction}
           itemProps={{
             ...itemProps,
             active: active === itemProps.id,
@@ -307,10 +306,10 @@ export function PopoverItems(
   );
 }
 PopoverItems.args = {
-  popoverInteraction: 'click',
+  popoverInteractionKind: 'click',
 };
 PopoverItems.argTypes = {
-  popoverInteraction: {
+  popoverInteractionKind: {
     options: ['click', 'hover', 'click-target', 'hover-target'],
     control: { type: 'radio' },
   },
@@ -318,23 +317,23 @@ PopoverItems.argTypes = {
 
 export function MixedItems(
   props: ToolbarItems & { onClick: () => void } & { popoverFirst: boolean } & {
-    popoverInteraction: PopoverInteractionType;
+    popoverInteractionKind: PopoverInteractionType;
   },
 ) {
-  const { popoverInteraction, popoverFirst, onClick, ...toolbarProps } = props;
+  const { popoverInteractionKind, popoverFirst, onClick, ...toolbarProps } =
+    props;
   const [active, setActive] = useState<string | null>(null);
 
   const set = new Set<number>([0, 1, 4, 6, 7]);
   const showPopover = (value: number) => popoverFirst === set.has(value);
 
   return (
-    <Toolbar {...toolbarProps}>
+    <Toolbar popoverInteractionKind={popoverInteractionKind} {...toolbarProps}>
       {itemsPopover.map(({ content, ...itemProps }, index) =>
         showPopover(index) ? (
           <Toolbar.PopoverItem
             key={itemProps.id}
             content={content}
-            popoverInteraction={popoverInteraction}
             itemProps={{
               ...itemProps,
               active: active === itemProps.id,
@@ -363,10 +362,10 @@ export function MixedItems(
 }
 MixedItems.args = {
   popoverFirst: false,
-  popoverInteraction: 'click',
+  popoverInteractionKind: 'click',
 };
 MixedItems.argTypes = {
-  popoverInteraction: {
+  popoverInteractionKind: {
     options: ['click', 'hover', 'click-target', 'hover-target'],
     control: { type: 'radio' },
   },
