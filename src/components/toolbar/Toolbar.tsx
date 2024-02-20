@@ -6,6 +6,7 @@ import {
   Intent,
   Popover,
   PopoverProps,
+  TagProps,
   Icon,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
@@ -52,6 +53,8 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   className?: string;
   noTooltip?: boolean;
   isPopover?: boolean;
+  tag?: ReactNode;
+  tagProps?: Omit<TagProps, 'children'>;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {

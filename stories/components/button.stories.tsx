@@ -11,6 +11,9 @@ export default {
 
 const ButtonWrapper = styled.div`
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
   return (
@@ -19,6 +22,7 @@ export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
     </ButtonWrapper>
   );
 }
+
 Control.args = {
   active: false,
   disabled: false,
@@ -44,6 +48,22 @@ Control.argTypes = {
   },
   onClick: { action: 'onClick' },
 };
+
+export function WithTag() {
+  return (
+    <ButtonWrapper>
+      <Button tag="1" icon="person">
+        Hello, World!
+      </Button>
+      <Button tag="14">Hello, World!</Button>
+      <Button tag="Error !" icon="person">
+        Hello, World!
+      </Button>
+      <Button tag="Error !">Hello, World!</Button>
+    </ButtonWrapper>
+  );
+}
+
 export function Tooltip(tooltipProps: ButtonProps['tooltipProps']) {
   return (
     <ButtonWrapper>
