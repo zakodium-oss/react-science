@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.36.0](https://github.com/zakodium-oss/react-science/compare/v0.35.0...v0.36.0) (2024-02-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* `type` prop was removed from RadioGroup component, the classic type being replaced by the blueprintjs component
+
+### Features
+
+* add tag to button component and toolbar items ([#654](https://github.com/zakodium-oss/react-science/issues/654)) ([bd04e6e](https://github.com/zakodium-oss/react-science/commit/bd04e6e93cc97f803b537fd6caa4476ff95ef512))
+* add trigger option to popover toolbar ([#666](https://github.com/zakodium-oss/react-science/issues/666)) ([5eebe1b](https://github.com/zakodium-oss/react-science/commit/5eebe1b2e92e7b508da70a27cdd589b00321a16e))
+* create useSelect hook to make the Select component better with keyboard navigation ([#645](https://github.com/zakodium-oss/react-science/issues/645)) ([2317f62](https://github.com/zakodium-oss/react-science/commit/2317f62dd381bff938dfbe490a9a9a8120bf1d51))
+* replace classic radio button with blueprintjs radio ([#664](https://github.com/zakodium-oss/react-science/issues/664)) ([c944af2](https://github.com/zakodium-oss/react-science/commit/c944af2a6a379a14716a5d9af108c133bece8de5))
+
 ## [0.35.0](https://github.com/zakodium-oss/react-science/compare/v0.34.0...v0.35.0) (2024-02-13)
 
 
