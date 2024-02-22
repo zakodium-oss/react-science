@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 
 import { Button } from '../button/Button';
 
@@ -42,26 +42,26 @@ export function PanelHeader({
   children,
   onClickSettings,
 }: PanelHeaderProps) {
-  const counterLabel = useMemo(() => {
-    if (current !== undefined && total !== undefined) {
-      return `${current} / ${total}`;
-    }
-    if (current !== undefined) {
-      return `[ ${current} ]`;
-    }
-    if (total !== undefined) {
-      return `[ ${total} ]`;
-    }
-    return '';
-  }, [current, total]);
-
   return (
     <div css={styles.container}>
       <div css={styles.leftContainer}>{children}</div>
-      <p css={styles.counterLabel}>{counterLabel}</p>
+      <p css={styles.counterLabel}>{formatCounterLabel(current, total)}</p>
       {onClickSettings && (
         <Button color="black" minimal onClick={onClickSettings} icon="cog" />
       )}
     </div>
   );
+}
+
+function formatCounterLabel(current?: number, total?: number) {
+  if (current !== undefined && total !== undefined) {
+    return `${current} / ${total}`;
+  }
+  if (current !== undefined) {
+    return `[ ${current} ]`;
+  }
+  if (total !== undefined) {
+    return `[ ${total} ]`;
+  }
+  return '';
 }
