@@ -53,7 +53,7 @@ export function Control({
         }}
       >
         <DropZone
-          fileValidator={fileValidator}
+          validator={fileValidator}
           onDrop={(files: FileWithPath[]) => {
             setFiles(files);
           }}
@@ -95,7 +95,7 @@ export function DropZoneContainerControl() {
   return (
     <div style={{ height: 500 }}>
       <DropZoneContainer
-        fileValidator={fileValidator}
+        validator={fileValidator}
         onDrop={(files: FileWithPath[]) => {
           setFiles(files);
         }}

@@ -1,17 +1,12 @@
 import { Button, Colors, NonIdealState } from '@blueprintjs/core';
 import type { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
-import { CSSProperties, MouseEventHandler, useCallback, useMemo } from 'react';
-import { FileError, FileRejection, useDropzone } from 'react-dropzone';
+import { CSSProperties, MouseEventHandler } from 'react';
+import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import tinycolor from 'tinycolor2';
 
-export interface DropZoneProps {
+export interface DropZoneProps extends DropzoneOptions {
   borderColor?: string;
-  onDrop?: <T extends File>(
-    acceptedFiles: T[],
-    rejectedFiles?: FileRejection[],
-  ) => void;
-  fileValidator?: <T extends File>(file: T) => FileError | FileError[] | null;
   emptyIcon?: IconName;
   emptyTitle?: string;
   emptyDescription?: string;
@@ -85,39 +80,25 @@ function DropZoneContent(
   const {
     borderColor = Colors.GRAY3,
     children = null,
-    onDrop,
     onClick,
-    fileValidator,
     emptyIcon = 'import',
     emptyTitle = 'No data loaded',
     emptyDescription = 'You can load data by drag-and-dropping files here',
     emptyButtonText = 'Select files',
     emptyButtonIcon = 'plus',
+    noClick,
+    ...otherProps
   } = props;
 
   const hasChildren = children !== null;
 
-  const handleOnDrop = useCallback(
-    <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
-      onDrop?.(acceptedFiles, rejectedFiles);
-    },
-    [onDrop],
-  );
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    noClick: hasChildren,
-    validator: fileValidator,
-    onDrop: handleOnDrop,
+    noClick: noClick ?? hasChildren,
+    ...otherProps,
   });
 
-  const getPropsOptions = useMemo(() => {
-    if (onClick) {
-      return { onClick };
-    }
-  }, [onClick]);
-
   return (
-    <DropzoneRoot {...getRootProps(getPropsOptions)}>
+    <DropzoneRoot {...getRootProps({ onClick })}>
       {children}
       {isDragActive ? (
         <DropzoneDragActive borderColor={borderColor}>
