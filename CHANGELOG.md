@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.37.0](https://github.com/zakodium-oss/react-science/compare/v0.36.0...v0.37.0) (2024-02-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* in the dropzone component, rename "fileValidator" prop to "validator"
+
+### Features
+
+* extend drop zone component properties ([#675](https://github.com/zakodium-oss/react-science/issues/675)) ([34f23b5](https://github.com/zakodium-oss/react-science/commit/34f23b5c4ccee61cfb6e7aa71d7dc3a56c76ef00))
+
 ## [0.36.0](https://github.com/zakodium-oss/react-science/compare/v0.35.0...v0.36.0) (2024-02-21)
 
 
