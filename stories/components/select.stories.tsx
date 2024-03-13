@@ -118,7 +118,9 @@ function renderMenuNested(
 }
 
 export function OnlyOptions() {
-  const { value, ...defaultProps } = useSelect();
+  const { value, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -138,7 +140,9 @@ export function OnlyOptions() {
 }
 
 export function FiltrableOptions() {
-  const { value, ...defaultProps } = useSelect();
+  const { value, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -156,7 +160,9 @@ export function FiltrableOptions() {
   );
 }
 export function OnlyCategories() {
-  const { value, ...defaultProps } = useSelect<ItemsType>();
+  const { value, ...defaultProps } = useSelect<ItemsType>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -183,7 +189,9 @@ export function OnlyCategories() {
   );
 }
 export function FilteredCategories() {
-  const { value, ...defaultProps } = useSelect<ItemsType>();
+  const { value, ...defaultProps } = useSelect<ItemsType>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -209,7 +217,9 @@ export function FilteredCategories() {
   );
 }
 export function OptionsWithCategories() {
-  const { value, ...defaultProps } = useSelect<ItemsType>();
+  const { value, ...defaultProps } = useSelect<ItemsType>({
+    itemLabelKey: 'label',
+  });
 
   return (
     <>
@@ -239,7 +249,9 @@ export function OptionsWithCategories() {
   );
 }
 export function CategoriesNested() {
-  const { value, ...defaultProps } = useSelect<ItemsType>();
+  const { value, ...defaultProps } = useSelect<ItemsType>({
+    itemLabelKey: 'label',
+  });
   const hoverState = useState<string | undefined>(undefined);
   return (
     <>
@@ -270,7 +282,9 @@ export function CategoriesNested() {
 }
 
 export function DisabledOptions() {
-  const { value, ...defaultProps } = useSelect();
+  const { value, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelMap: (item) => item.label,
+  });
   return (
     <>
       <Select
@@ -291,7 +305,9 @@ export function DisabledOptions() {
 }
 
 export function DisabledInCategories() {
-  const { value, ...defaultProps } = useSelect<ItemsType>();
+  const { value, ...defaultProps } = useSelect<ItemsType>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -322,7 +338,9 @@ export function DisabledInCategories() {
 }
 
 export function Disabled() {
-  const { value, ...defaultProps } = useSelect();
+  const { value, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -343,7 +361,9 @@ export function Disabled() {
   );
 }
 export function WithCustomStyle() {
-  const { value, ...defaultProps } = useSelect();
+  const { value, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -365,7 +385,7 @@ export function WithCustomStyle() {
 }
 
 export function FixedValueNoopHandle() {
-  const defaultProps = useSelect();
+  const defaultProps = useSelect<{ label: string }>({ itemLabelKey: 'label' });
   const value = { label: 'Orange' };
   return (
     <>
@@ -387,7 +407,7 @@ export function FixedValueNoopHandle() {
 }
 
 export function NullValueNoopHandle() {
-  const defaultProps = useSelect();
+  const defaultProps = useSelect<{ label: string }>({ itemLabelKey: 'label' });
   const value = null;
   return (
     <>
@@ -409,7 +429,9 @@ export function NullValueNoopHandle() {
 }
 
 export function ResetButton() {
-  const { value, setValue, ...defaultProps } = useSelect();
+  const { value, setValue, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Select
@@ -431,7 +453,9 @@ export function ResetButton() {
 
 export function InDialog() {
   const [isOpen, open, close] = useOnOff();
-  const { value, ...defaultProps } = useSelect();
+  const { value, ...defaultProps } = useSelect<{ label: string }>({
+    itemLabelKey: 'label',
+  });
   return (
     <>
       <Button onClick={open}>Open</Button>
