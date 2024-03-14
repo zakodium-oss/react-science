@@ -119,7 +119,7 @@ function renderMenuNested(
 
 export function OnlyOptions() {
   const { value, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -141,7 +141,7 @@ export function OnlyOptions() {
 
 export function FiltrableOptions() {
   const { value, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -161,7 +161,7 @@ export function FiltrableOptions() {
 }
 export function OnlyCategories() {
   const { value, ...defaultProps } = useSelect<ItemsType>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -190,7 +190,7 @@ export function OnlyCategories() {
 }
 export function FilteredCategories() {
   const { value, ...defaultProps } = useSelect<ItemsType>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -218,7 +218,7 @@ export function FilteredCategories() {
 }
 export function OptionsWithCategories() {
   const { value, ...defaultProps } = useSelect<ItemsType>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
 
   return (
@@ -250,7 +250,7 @@ export function OptionsWithCategories() {
 }
 export function CategoriesNested() {
   const { value, ...defaultProps } = useSelect<ItemsType>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   const hoverState = useState<string | undefined>(undefined);
   return (
@@ -283,7 +283,7 @@ export function CategoriesNested() {
 
 export function DisabledOptions() {
   const { value, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelMap: (item) => item.label,
+    getItemText: (item) => item.label,
   });
   return (
     <>
@@ -306,7 +306,7 @@ export function DisabledOptions() {
 
 export function DisabledInCategories() {
   const { value, ...defaultProps } = useSelect<ItemsType>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -339,7 +339,7 @@ export function DisabledInCategories() {
 
 export function Disabled() {
   const { value, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -362,7 +362,7 @@ export function Disabled() {
 }
 export function WithCustomStyle() {
   const { value, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -385,7 +385,7 @@ export function WithCustomStyle() {
 }
 
 export function FixedValueNoopHandle() {
-  const defaultProps = useSelect<{ label: string }>({ itemLabelKey: 'label' });
+  const defaultProps = useSelect<{ label: string }>({ itemTextKey: 'label' });
   const value = { label: 'Orange' };
   return (
     <>
@@ -407,7 +407,7 @@ export function FixedValueNoopHandle() {
 }
 
 export function NullValueNoopHandle() {
-  const defaultProps = useSelect<{ label: string }>({ itemLabelKey: 'label' });
+  const defaultProps = useSelect<{ label: string }>({ itemTextKey: 'label' });
   const value = null;
   return (
     <>
@@ -430,7 +430,7 @@ export function NullValueNoopHandle() {
 
 export function ResetButton() {
   const { value, setValue, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>
@@ -454,7 +454,7 @@ export function ResetButton() {
 export function InDialog() {
   const [isOpen, open, close] = useOnOff();
   const { value, ...defaultProps } = useSelect<{ label: string }>({
-    itemLabelKey: 'label',
+    itemTextKey: 'label',
   });
   return (
     <>

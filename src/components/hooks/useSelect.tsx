@@ -10,12 +10,12 @@ type FilterType<SourceType, Type> = Pick<
 >;
 
 interface BaseOptions<T> {
-  itemLabelKey: keyof FilterType<T, string>;
+  itemTextKey: keyof FilterType<T, string>;
   defaultSelectedItem?: T;
 }
 
 interface RenderOptions<T> {
-  itemLabelMap: (item: T) => string;
+  getItemText: (item: T) => string;
   defaultSelectedItem?: T;
 }
 
@@ -24,21 +24,21 @@ type SelectOptions<T> = BaseOptions<T> | RenderOptions<T>;
 function isAccessLabelByKey<T>(
   options: SelectOptions<T>,
 ): options is BaseOptions<T> {
-  return 'itemLabelKey' in options;
+  return 'itemTextKey' in options;
 }
 
 function getLabel<T>(item: T, options: SelectOptions<T>) {
   const isAccessLByLabelKey = isAccessLabelByKey(options);
 
-  if (!item || (isAccessLByLabelKey && !options.itemLabelKey)) {
+  if (!item || (isAccessLByLabelKey && !options.itemTextKey)) {
     return null;
   }
 
   if (isAccessLByLabelKey) {
-    return item[options.itemLabelKey] as string;
+    return item[options.itemTextKey] as string;
   }
 
-  return options.itemLabelMap(item);
+  return options.getItemText(item);
 }
 
 export function useSelect<T>(options: SelectOptions<T>) {
