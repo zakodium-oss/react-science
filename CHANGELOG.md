@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/zakodium-oss/react-science/compare/v0.37.0...v1.0.0) (2024-03-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* useSelect now takes `itemTextKey` or `getItemText` prop to choose what text should be rendered  in a Select option
+
+### Features
+
+* default selected value and custom text with useSelect ([#681](https://github.com/zakodium-oss/react-science/issues/681)) ([c9125c8](https://github.com/zakodium-oss/react-science/commit/c9125c876707cb520e8141d35a0f5e9bcc1fbd66))
+
 ## [0.37.0](https://github.com/zakodium-oss/react-science/compare/v0.36.0...v0.37.0) (2024-02-27)
 
 
