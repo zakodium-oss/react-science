@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/zakodium-oss/react-science/compare/v1.0.0...v1.0.1) (2024-03-16)
+
+
+### Bug Fixes
+
+* update dependencies ([#683](https://github.com/zakodium-oss/react-science/issues/683)) ([79a784f](https://github.com/zakodium-oss/react-science/commit/79a784f22b3a8c5e256771d632c7957d9120c026))
+
 ## [1.0.0](https://github.com/zakodium-oss/react-science/compare/v0.37.0...v1.0.0) (2024-03-14)
 
 
