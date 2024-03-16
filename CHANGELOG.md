@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/zakodium-oss/react-science/compare/v1.0.1...v1.0.2) (2024-03-16)
+
+
+### Bug Fixes
+
+* add blueprint provider to root layout ([#687](https://github.com/zakodium-oss/react-science/issues/687)) ([e8aebd4](https://github.com/zakodium-oss/react-science/commit/e8aebd40319dcdf4127eb591a6eb952907fc251d))
+
 ## [1.0.1](https://github.com/zakodium-oss/react-science/compare/v1.0.0...v1.0.1) (2024-03-16)
 
 
