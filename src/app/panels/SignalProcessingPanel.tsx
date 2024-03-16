@@ -31,7 +31,7 @@ const defaultFilters = filterXY.anyOf.map(({ properties }) => {
   }
 
   return {
-    name: properties.name.enum[0] as FilterXYType['name'],
+    name: properties.name.const as FilterXYType['name'],
     options,
   };
 });
