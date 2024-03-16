@@ -10,14 +10,14 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 export default function App() {
   return (
-    <RootLayout>
-      <KbsProvider>
-        <AppStateProvider>
-          <FullScreenProvider>
+    <FullScreenProvider>
+      <RootLayout>
+        <KbsProvider>
+          <AppStateProvider>
             <MainLayout />
-          </FullScreenProvider>
-        </AppStateProvider>
-      </KbsProvider>
-    </RootLayout>
+          </AppStateProvider>
+        </KbsProvider>
+      </RootLayout>
+    </FullScreenProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { FocusStyleManager } from '@blueprintjs/core';
+import { BlueprintProvider, FocusStyleManager } from '@blueprintjs/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { CSSProperties, ReactNode, useCallback, useState } from 'react';
 
@@ -35,11 +35,15 @@ export function RootLayout(props: RootLayoutProps) {
   return (
     <div style={{ ...style, ...props.style }} translate="no">
       <CustomDivPreflight ref={ref}>
-        <RootLayoutProvider innerRef={rootRef}>
-          <QueryClientProvider client={queryClient}>
-            <AccordionProvider>{props.children}</AccordionProvider>
-          </QueryClientProvider>
-        </RootLayoutProvider>
+        <BlueprintProvider
+          {...(rootRef ? { portalContainer: rootRef } : undefined)}
+        >
+          <RootLayoutProvider innerRef={rootRef}>
+            <QueryClientProvider client={queryClient}>
+              <AccordionProvider>{props.children}</AccordionProvider>
+            </QueryClientProvider>
+          </RootLayoutProvider>
+        </BlueprintProvider>
       </CustomDivPreflight>
     </div>
   );
