@@ -9,7 +9,6 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 const preview: Preview = {
   decorators: [RootLayoutDecorator],
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
