@@ -10,6 +10,7 @@ import {
   ToolbarItemProps,
   ToolbarProps,
   PopoverInteractionType,
+  PanelHeader,
 } from '../../src/components';
 
 export default {
@@ -207,6 +208,29 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
         />
       ))}
     </Toolbar>
+  );
+}
+export function InPanelHeader() {
+  const [active, setActive] = useState<string | null>(null);
+
+  return (
+    <PanelHeader total={3} onClickSettings={() => void 0}>
+      <Toolbar>
+        {itemsMixedIcons.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            onClick={() => {
+              setActive(item.id);
+            }}
+            icon={item.icon}
+            active={active === item.id}
+            intent={item.id.startsWith('clipboard') ? 'success' : undefined}
+          />
+        ))}
+      </Toolbar>
+    </PanelHeader>
   );
 }
 export function WithTag() {

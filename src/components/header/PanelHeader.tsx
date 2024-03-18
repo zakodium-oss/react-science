@@ -11,6 +11,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottom: '0.55px solid rgb(240, 240, 240)',
+    button: {
+      scale: '0.875',
+    },
   }),
   leftContainer: css({
     display: 'flex',
