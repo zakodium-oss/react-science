@@ -460,6 +460,7 @@ export function InDialog() {
     <>
       <Button onClick={open}>Open</Button>
       <Dialog
+        shouldReturnFocusOnClose={false}
         title="Select a fruit"
         isOpen={isOpen}
         onClose={() => {
