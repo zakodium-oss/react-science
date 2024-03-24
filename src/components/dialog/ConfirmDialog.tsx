@@ -31,7 +31,6 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
 
   return (
     <Dialog
-      shouldReturnFocusOnClose={false}
       onClose={onClose}
       {...otherProps}
       title=" "
