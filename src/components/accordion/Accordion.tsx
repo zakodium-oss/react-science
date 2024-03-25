@@ -23,6 +23,7 @@ export interface AccordionItemProps {
   title: string;
   children: ReactNode;
   defaultOpened?: boolean;
+  toolbar?: ReactNode;
 }
 
 const styles = {
@@ -62,7 +63,8 @@ export function Accordion(props: AccordionProps) {
 }
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
-  const { item, utils } = useAccordionContext(props.title, props.defaultOpened);
+  const { title, children, defaultOpened, toolbar } = props;
+  const { item, utils } = useAccordionContext(title, defaultOpened);
 
   const onClickHandle = useCallback(
     (event: ReactMouseEvent<HTMLButtonElement>) => {
@@ -75,16 +77,10 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
     [utils],
   );
 
-  let displayable = false;
-
-  if (item) {
-    displayable = item.isOpen;
-  }
-
   return (
     <div
       style={{
-        flex: displayable ? '1 1 1px' : 'none',
+        flex: item?.isOpen ? '1 1 1px' : 'none',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -97,15 +93,24 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
           alignItems: 'center',
           width: '100%',
           userSelect: 'none',
+          justifyContent: 'space-between',
+          padding: '0px 12px',
         }}
         css={styles.header}
       >
-        {props.title}
+        <div
+          style={{
+            padding: '5px 0px',
+          }}
+        >
+          {title}
+        </div>
+        {toolbar}
       </button>
       <div
         style={{
-          display: displayable ? 'flex' : 'none',
-          flex: displayable ? '1 1 1px' : 'none',
+          display: item?.isOpen ? 'flex' : 'none',
+          flex: item?.isOpen ? '1 1 1px' : 'none',
           backgroundColor: 'white',
           maxHeight: '100%',
           overflow: 'hidden',
@@ -120,7 +125,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
             flexDirection: 'column',
           }}
         >
-          {props.children}
+          {children}
         </div>
       </div>
     </div>

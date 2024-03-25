@@ -4,6 +4,7 @@ import {
   Accordion,
   SplitPane,
   Toolbar,
+  ToolbarItemProps,
   useToggleAccordion,
 } from '../../src/components';
 import { AccordionDecorator } from '../utils';
@@ -12,6 +13,30 @@ export default {
   title: 'Components / Accordion',
   decorators: [AccordionDecorator],
 };
+const items: Array<
+  Pick<ToolbarItemProps, 'title' | 'icon' | 'disabled'> & {
+    id: string;
+  }
+> = [
+  {
+    id: 'paperclip-blueprint',
+    icon: 'paperclip',
+    title: 'BlueprintJS paperclip icon',
+  },
+
+  {
+    id: 'clipboard-blueprint',
+    icon: 'clipboard',
+    title: 'BlueprintJS paperclip icon',
+  },
+
+  {
+    id: 'credit-card-blueprint',
+    icon: 'credit-card',
+    title: 'BlueprintJS credit-card icon',
+    disabled: false,
+  },
+];
 
 export function Fixed() {
   return (
@@ -21,7 +46,25 @@ export function Fixed() {
       }}
     >
       <Accordion>
-        <Accordion.Item title="First Item" defaultOpened>
+        <Accordion.Item
+          title="First Item"
+          defaultOpened
+          toolbar={
+            <Toolbar>
+              {items.map((item) => (
+                <Toolbar.Item
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  icon={item.icon}
+                  onClick={({ event }) => {
+                    event?.stopPropagation();
+                  }}
+                />
+              ))}
+            </Toolbar>
+          }
+        >
           This is the first content
         </Accordion.Item>
         <Accordion.Item title="Second Item">
