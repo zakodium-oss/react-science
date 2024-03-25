@@ -45,6 +45,7 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
     <>
       <DemoPage openDialog={open} />
       <Dialog
+        shouldReturnFocusOnClose={false}
         isOpen={isOpen}
         title="Hello, World!"
         icon="info-sign"
@@ -199,6 +200,7 @@ export function WithComplexContents({
     <>
       <DemoPage openDialog={open} />
       <Dialog
+        shouldReturnFocusOnClose={false}
         title="General Settings"
         icon="cog"
         isOpen={isOpen}
@@ -261,6 +263,7 @@ export function DynamicallySizedChildren() {
         Open editor Dialog
       </Button>
       <Dialog
+        shouldReturnFocusOnClose={false}
         title="Test OCL editor in Dialog"
         isOpen={isOpen}
         onClose={close}

@@ -39,6 +39,7 @@ export function InDialog() {
     <>
       <Button onClick={open}>Open Dialog</Button>
       <Dialog
+        shouldReturnFocusOnClose={false}
         title="General Settings"
         icon="cog"
         isOpen={isOpen}

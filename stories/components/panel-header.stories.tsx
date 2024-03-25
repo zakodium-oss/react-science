@@ -54,7 +54,13 @@ export function WithDialog() {
           <Toolbar.Item noTooltip title="plus" icon="plus" />
         </Toolbar>
       </PanelHeader>
-      <Dialog title="Settings" icon="cog" isOpen={isOpen} onClose={close}>
+      <Dialog
+        shouldReturnFocusOnClose={false}
+        title="Settings"
+        icon="cog"
+        isOpen={isOpen}
+        onClose={close}
+      >
         <DialogBody>
           <p style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10 }}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi

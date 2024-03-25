@@ -18,6 +18,7 @@ export function AboutDialogToolbarButton(props: AboutDialogToolbarButtonProps) {
     <>
       <Toolbar.Item title={`About ${name}`} onClick={openDialog} icon={icon} />
       <Dialog
+        shouldReturnFocusOnClose={false}
         isOpen={isOpenDialog}
         onClose={closeDialog}
         title={name}
