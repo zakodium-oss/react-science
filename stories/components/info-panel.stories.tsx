@@ -10,9 +10,10 @@ const data: InfoPanelData[] = [
     data: {
       prop5: 'field5',
       __field4__: 'value4',
-      field1: 'value1',
+      field1: 'VALue1',
       field2: 'value2',
       fie: 'value3',
+      FIeld6: 'value6',
     },
   },
   {
@@ -22,6 +23,7 @@ const data: InfoPanelData[] = [
       solvent: 'CDCl3',
       isFi: false,
       temperature: 0,
+      Test: Number.NaN,
     },
   },
 ];
