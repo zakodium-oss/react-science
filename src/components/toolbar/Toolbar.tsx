@@ -8,12 +8,14 @@ import {
   PopoverProps,
   TagProps,
   Icon,
+  TooltipProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
 import {
   cloneElement,
   JSX,
+  MouseEvent,
   ReactElement,
   ReactNode,
   useLayoutEffect,
@@ -56,12 +58,17 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   title: string;
   icon: IconName | JSX.Element;
   active?: boolean;
-  onClick?: (item: ToolbarItemProps) => void;
+  onClick?: (
+    item: ToolbarItemProps & {
+      event: MouseEvent;
+    },
+  ) => void;
   className?: string;
   noTooltip?: boolean;
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
+  tooltipProps?: Omit<TooltipProps, 'content'>;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -146,6 +153,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: itemDisabled,
     noTooltip = false,
     isPopover,
+    tooltipProps,
     ...other
   } = props;
 
@@ -209,8 +217,8 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
           )}
         </div>
       }
-      onClick={() => {
-        onClick?.(props);
+      onClick={(event) => {
+        onClick?.({ event, ...props });
       }}
       tooltipProps={
         noTooltip
@@ -220,6 +228,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: !large,
+              ...tooltipProps,
             }
       }
       {...other}
