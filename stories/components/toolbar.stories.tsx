@@ -1,6 +1,6 @@
 import { Menu, MenuItem } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
-import { JSX, useState } from 'react';
+import { CSSProperties, JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
@@ -401,3 +401,153 @@ MixedItems.argTypes = {
     control: { type: 'radio' },
   },
 };
+
+interface CustomTipItem {
+  // eslint-disable-next-line react/no-unused-prop-types
+  id: string;
+  // eslint-disable-next-line react/no-unused-prop-types
+  icon: ToolbarItemProps['icon'];
+  title: string;
+  shortcuts: string[];
+  description: string;
+}
+
+const itemsShortcuts: CustomTipItem[] = [
+  {
+    id: 'copy',
+    icon: 'phone',
+    title: 'Copy text tool',
+    shortcuts: ['Ctrl', 'C'],
+    description: 'Copy selected item to clipboard.',
+  },
+  {
+    id: 'paste',
+    icon: 'add-column-left',
+    title: 'Paste text tool',
+    shortcuts: ['Ctrl', 'V'],
+    description: 'Paste copied item from clipboard.',
+  },
+  {
+    id: 'undo',
+    icon: 'add-column-right',
+    title: 'Undo text tool',
+    shortcuts: ['Ctrl', 'Z'],
+    description: 'Undo the last action.',
+  },
+  {
+    id: 'redo',
+    icon: 'redo',
+    title: 'Redo text tool',
+    shortcuts: ['Ctrl', 'Y'],
+    description: 'Redo the previously undone action.',
+  },
+  {
+    id: 'cut',
+    icon: 'cut',
+    title: 'Cut text tool',
+    shortcuts: ['Ctrl', 'X'],
+    description: 'Cut selected item to clipboard.',
+  },
+];
+
+export function CustomTipContent() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: 200,
+      }}
+    >
+      <div style={{ padding: 5 }}>
+        <p>Something on the left</p>
+      </div>
+      <Toolbar vertical popoverInteractionKind="hover">
+        {itemsShortcuts.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            title={<CustomTip {...item} />}
+            icon={item.icon}
+            noArrow
+            interactionKind="hover"
+          />
+        ))}
+        <Toolbar.Item title="Inbox" icon="inbox" />
+      </Toolbar>
+    </div>
+  );
+}
+
+const styles: Record<
+  | 'titleContainer'
+  | 'title'
+  | 'description'
+  | 'shortcutContainer'
+  | 'shortcutItem',
+  CSSProperties
+> = {
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: '0.9rem',
+    minWidth: '50%',
+    padding: '5px 0',
+  },
+  description: {
+    paddingTop: '3rem',
+    fontSize: '0.7rem',
+  },
+  shortcutContainer: {
+    display: 'flex',
+    textWrap: 'nowrap',
+  },
+  shortcutItem: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '0.5em',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    height: 'calc(0.5em + 15px)',
+    minWidth: 'calc(0.5em + 15px)' /* Adjust padding and border width */,
+    marginLeft: '5px',
+    fontSize: '0.6rem',
+    fontWeight: 'bolder',
+  },
+};
+
+function CustomTip({ title, shortcuts, description }: CustomTipItem) {
+  return (
+    <div style={{ width: 250, padding: '0.5rem' }}>
+      <div style={styles.titleContainer}>
+        <span style={styles.title}>{title}</span>
+        <div style={styles.shortcutContainer}>
+          {shortcuts?.map((key, index) => {
+            return (
+              <div
+                key={key}
+                style={{
+                  ...styles.shortcutItem,
+                  ...(index === 0 && { margin: 0 }),
+                }}
+              >
+                <span>{key}</span>{' '}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <p style={styles.description}>
+        {description}{' '}
+        <a target="_blank" href="">
+          Learn more
+        </a>{' '}
+      </p>
+    </div>
+  );
+}
