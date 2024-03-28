@@ -8,6 +8,7 @@ import {
   PopoverProps,
   TagProps,
   Icon,
+  TooltipProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
@@ -51,9 +52,11 @@ export interface ToolbarProps extends ToolbarBaseProps {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
-export interface ToolbarItemProps extends ToolbarBaseProps {
+export interface ToolbarItemProps
+  extends ToolbarBaseProps,
+    Pick<TooltipProps, 'interactionKind'> {
   id?: string;
-  title: string;
+  title: TooltipProps['content'];
   icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
@@ -62,6 +65,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
+  noArrow?: boolean;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -146,6 +150,8 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: itemDisabled,
     noTooltip = false,
     isPopover,
+    noArrow = false,
+    interactionKind,
     ...other
   } = props;
 
@@ -216,10 +222,12 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         noTooltip
           ? undefined
           : {
+              modifiers: { arrow: { enabled: !noArrow } },
               content: title,
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: !large,
+              interactionKind,
             }
       }
       {...other}
