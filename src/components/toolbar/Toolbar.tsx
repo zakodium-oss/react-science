@@ -52,9 +52,7 @@ export interface ToolbarProps extends ToolbarBaseProps {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
-export interface ToolbarItemProps
-  extends ToolbarBaseProps,
-    Pick<TooltipProps, 'interactionKind'> {
+export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
   title: TooltipProps['content'];
   icon: IconName | JSX.Element;
@@ -151,7 +149,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     noTooltip = false,
     isPopover,
     noArrow = false,
-    interactionKind,
     ...other
   } = props;
 
@@ -227,7 +224,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: !large,
-              interactionKind,
+              interactionKind: 'hover',
             }
       }
       {...other}
