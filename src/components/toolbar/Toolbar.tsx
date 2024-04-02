@@ -54,12 +54,12 @@ export interface ToolbarProps extends ToolbarBaseProps {
 
 export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
-  title: TooltipProps['content'];
+  hoverContent: TooltipProps['content'];
   icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
-  noTooltip?: boolean;
+  noHoverContent?: boolean;
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
@@ -67,7 +67,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
-  itemProps: ToolbarItemProps;
+  itemProps: Omit<ToolbarItemProps, 'hoverContent' | 'noHoverContent'>;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -142,11 +142,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     active = false,
     icon,
     onClick,
-    title,
+    hoverContent,
     id,
     intent: itemIntent,
     disabled: itemDisabled,
-    noTooltip = false,
+    noHoverContent = false,
     isPopover,
     noArrow = false,
     ...other
@@ -216,11 +216,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         onClick?.(props);
       }}
       tooltipProps={
-        noTooltip
+        noHoverContent
           ? undefined
           : {
               modifiers: { arrow: { enabled: !noArrow } },
-              content: title,
+              content: hoverContent,
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: !large,
@@ -237,7 +237,6 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
 ) {
   const { itemProps, ...other } = props;
   const { disabled, vertical, popoverInteractionKind } = useToolbarContext();
-
   return (
     <Popover
       minimal
@@ -261,7 +260,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       }}
       {...other}
     >
-      <Toolbar.Item noTooltip isPopover {...itemProps} />
+      <Toolbar.Item noHoverContent hoverContent="" isPopover {...itemProps} />
     </Popover>
   );
 };
