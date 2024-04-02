@@ -49,7 +49,11 @@ function VerticalToolbar() {
 
   return (
     <Toolbar vertical>
-      <Toolbar.Item onClick={onZoomOut} title="Zoom out" icon="zoom-out" />
+      <Toolbar.Item
+        onClick={onZoomOut}
+        hoverContent="Zoom out"
+        icon="zoom-out"
+      />
     </Toolbar>
   );
 }

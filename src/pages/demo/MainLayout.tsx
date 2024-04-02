@@ -95,14 +95,14 @@ export default function MainLayout() {
             }
           />
           <Toolbar.Item
-            title="Save as ium"
+            hoverContent="Save as ium"
             icon="floppy-disk"
             onClick={() => saveHandler()}
           />
         </Toolbar>
         <Toolbar>
-          <Toolbar.Item title="User manual" icon={<FaBook />} />
-          <Toolbar.Item title="General settings" icon="cog" />
+          <Toolbar.Item hoverContent="User manual" icon={<FaBook />} />
+          <Toolbar.Item hoverContent="General settings" icon="cog" />
           <FullscreenToolbarButton />
         </Toolbar>
       </Header>

@@ -8,12 +8,12 @@ export function Basic() {
   return (
     <Header>
       <Toolbar>
-        <Toolbar.Item title="Logo" icon="airplane" />
+        <Toolbar.Item hoverContent="Logo" icon="airplane" />
       </Toolbar>
       <Toolbar>
-        <Toolbar.Item title="User manual" icon="manual" />
-        <Toolbar.Item title="General settings" icon="cog" />
-        <Toolbar.Item title="Full screen" icon="fullscreen" />
+        <Toolbar.Item hoverContent="User manual" icon="manual" />
+        <Toolbar.Item hoverContent="General settings" icon="cog" />
+        <Toolbar.Item hoverContent="Full screen" icon="fullscreen" />
       </Toolbar>
     </Header>
   );
