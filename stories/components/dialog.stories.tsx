@@ -70,9 +70,9 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
             }}
           >
             <Toolbar vertical>
-              <Toolbar.Item title="react" icon={<FaReact />} />
-              <Toolbar.Item title="npm" icon={<FaNpm />} />
-              <Toolbar.Item title="nodejs" icon={<FaNodeJs />} />
+              <Toolbar.Item tooltip="react" icon={<FaReact />} />
+              <Toolbar.Item tooltip="npm" icon={<FaNpm />} />
+              <Toolbar.Item tooltip="nodejs" icon={<FaNodeJs />} />
             </Toolbar>
             <p
               style={{
@@ -291,12 +291,12 @@ function DemoPage(props: { openDialog: () => void }) {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Header>
           <Toolbar>
-            <Toolbar.Item title="Logo" icon={<FaMeteor />} />
+            <Toolbar.Item tooltip="Logo" icon={<FaMeteor />} />
           </Toolbar>
           <Toolbar>
-            <Toolbar.Item title="User manual" icon={<FaBook />} />
-            <Toolbar.Item title="General settings" icon={<FaCogs />} />
-            <Toolbar.Item title="Full screen" icon={<FaTabletAlt />} />
+            <Toolbar.Item tooltip="User manual" icon={<FaBook />} />
+            <Toolbar.Item tooltip="General settings" icon={<FaCogs />} />
+            <Toolbar.Item tooltip="Full screen" icon={<FaTabletAlt />} />
           </Toolbar>
         </Header>
       </div>
@@ -308,8 +308,8 @@ function DemoPage(props: { openDialog: () => void }) {
       >
         <div>
           <Toolbar vertical>
-            <Toolbar.Item title="Glasses" active icon={<FaGlasses />} />
-            <Toolbar.Item title="Open in large mode" icon={<FaArrowsAlt />} />
+            <Toolbar.Item tooltip="Glasses" active icon={<FaGlasses />} />
+            <Toolbar.Item tooltip="Open in large mode" icon={<FaArrowsAlt />} />
           </Toolbar>
         </div>
         <div

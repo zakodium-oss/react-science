@@ -31,9 +31,9 @@ export function Basic() {
     >
       <PanelHeader total={3} onClickSettings={() => void 0}>
         <Toolbar>
-          <Toolbar.Item noTooltip title="trash" intent="danger" icon="trash" />
-          <Toolbar.Item noTooltip title="filter" icon="filter" />
-          <Toolbar.Item noTooltip title="plus" icon="plus" />
+          <Toolbar.Item intent="danger" icon="trash" />
+          <Toolbar.Item icon="filter" />
+          <Toolbar.Item icon="plus" />
         </Toolbar>
       </PanelHeader>
     </div>
@@ -49,9 +49,9 @@ export function WithDialog() {
     >
       <PanelHeader total={5} current={3} onClickSettings={open}>
         <Toolbar>
-          <Toolbar.Item noTooltip title="trash" intent="danger" icon="trash" />
-          <Toolbar.Item noTooltip title="filter" icon="filter" />
-          <Toolbar.Item noTooltip title="plus" icon="plus" />
+          <Toolbar.Item intent="danger" icon="trash" />
+          <Toolbar.Item icon="filter" />
+          <Toolbar.Item icon="plus" />
         </Toolbar>
       </PanelHeader>
       <Dialog
@@ -87,14 +87,9 @@ export function WithAccordion() {
         <Accordion.Item title="First Item" defaultOpened>
           <PanelHeader total={20} onClickSettings={() => void 0}>
             <Toolbar>
-              <Toolbar.Item
-                noTooltip
-                title="trash"
-                intent="danger"
-                icon="trash"
-              />
-              <Toolbar.Item noTooltip title="filter" icon="filter" />
-              <Toolbar.Item noTooltip title="plus" icon="plus" />
+              <Toolbar.Item intent="danger" icon="trash" />
+              <Toolbar.Item icon="filter" />
+              <Toolbar.Item icon="plus" />
             </Toolbar>
           </PanelHeader>
           This is the first content
@@ -114,8 +109,6 @@ function InitialPanel({ openPanel }: PanelProps<PanelInfo>) {
     <PanelHeader total={20} onClickSettings={() => void 0}>
       <Toolbar>
         <Toolbar.Item
-          noTooltip
-          title="trash"
           intent="danger"
           icon="trash"
           onClick={() =>
@@ -158,8 +151,6 @@ function InitialPanel({ openPanel }: PanelProps<PanelInfo>) {
               title: 'Panel 2',
             })
           }
-          noTooltip
-          title="filter"
           icon="filter"
         />
         <Toolbar.Item
@@ -173,8 +164,6 @@ function InitialPanel({ openPanel }: PanelProps<PanelInfo>) {
               title: 'Panel 3',
             })
           }
-          noTooltip
-          title="plus"
           icon="plus"
         />
       </Toolbar>

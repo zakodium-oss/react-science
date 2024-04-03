@@ -8,6 +8,7 @@ import {
   PopoverProps,
   TagProps,
   Icon,
+  TooltipProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
@@ -43,22 +44,22 @@ export interface ToolbarProps extends ToolbarBaseProps {
   vertical?: boolean;
   large?: boolean;
   children?:
-  | Array<ReactElement<ToolbarItemProps>>
-  | ReactElement<ToolbarItemProps>
-  | Iterable<ReactNode>
-  | boolean
-  | null;
+    | Array<ReactElement<ToolbarItemProps>>
+    | ReactElement<ToolbarItemProps>
+    | Iterable<ReactNode>
+    | boolean
+    | null;
   popoverInteractionKind?: PopoverInteractionType;
 }
 
 export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
-  title: string;
+  tooltip?: TooltipProps['content'];
+  tooltipProps?: Omit<TooltipProps, 'content'>;
   icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
-  noTooltip?: boolean;
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
@@ -140,11 +141,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     active = false,
     icon,
     onClick,
-    title,
+    tooltip,
+    tooltipProps,
     id,
     intent: itemIntent,
     disabled: itemDisabled,
-    noTooltip = false,
     isPopover,
     ...other
   } = props;
@@ -161,10 +162,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     typeof icon === 'string'
       ? icon
       : cloneElement(icon, {
-        className: icon.props.className
-          ? `${icon.props.className} bp5-icon`
-          : 'bp5-icon',
-      });
+          className: icon.props.className
+            ? `${icon.props.className} bp5-icon`
+            : 'bp5-icon',
+        });
+
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
@@ -213,14 +215,16 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         onClick?.(props);
       }}
       tooltipProps={
-        noTooltip
+        !tooltip
           ? undefined
           : {
-            content: title,
-            placement: vertical ? 'right' : 'bottom',
-            intent,
-            compact: !large,
-          }
+              content: tooltip,
+              placement: vertical ? 'right' : 'bottom',
+              intent,
+              compact: !large,
+              interactionKind: 'hover',
+              ...tooltipProps,
+            }
       }
       {...other}
     />
@@ -256,7 +260,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       }}
       {...other}
     >
-      <Toolbar.Item noTooltip isPopover {...itemProps} />
+      <Toolbar.Item isPopover {...itemProps} />
     </Popover>
   );
 };
