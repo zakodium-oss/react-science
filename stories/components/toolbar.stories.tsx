@@ -26,10 +26,9 @@ export default {
 } as Meta<ToolbarProps>;
 
 type ToolbarItems = Array<
-  Pick<ToolbarItemProps, 'icon' | 'disabled'> & {
+  Pick<ToolbarItemProps, 'title' | 'icon' | 'disabled'> & {
     id: string;
     content?: JSX.Element;
-    title: ToolbarItemProps['hoverContent'];
   }
 >;
 
@@ -197,7 +196,7 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
         <Toolbar.Item
           key={item.id}
           id={item.id}
-          hoverContent={item.title}
+          title={item.title}
           onClick={() => {
             setActive(item.id);
             onClick();
@@ -219,7 +218,7 @@ export function WithTag() {
         <Toolbar.Item
           key={item.id}
           id={item.id}
-          hoverContent={item.title}
+          title={item.title}
           onClick={() => {
             setActive(item.id);
           }}
@@ -244,7 +243,7 @@ export function WithTag() {
 }
 export function Vertical() {
   const [state, setState] = useState(itemsBlueprintIcons[1]);
-  function handleChange({ id, icon, hoverContent: title }: ToolbarItemProps) {
+  function handleChange({ id, icon, title }: ToolbarItemProps) {
     setState({ id: id as string, icon, title });
   }
 
@@ -263,13 +262,13 @@ export function Vertical() {
           <Toolbar.Item
             key={item.id}
             id={item.id}
-            hoverContent={item.title}
+            title={item.title}
             active={state.title === item.title}
             onClick={handleChange}
             icon={item.icon}
           />
         ))}
-        <Toolbar.Item hoverContent="Inbox" icon="inbox" />
+        <Toolbar.Item title="Inbox" icon="inbox" />
       </Toolbar>
       <div style={{ padding: 5 }}>
         <p>Hello, World!</p>
@@ -282,7 +281,7 @@ export function Vertical() {
 export function Horizontal() {
   const [state, setState] = useState(itemsBlueprintIcons[1]);
 
-  function handleChange({ id, icon, hoverContent: title }: ToolbarItemProps) {
+  function handleChange({ id, icon, title }: ToolbarItemProps) {
     setState({ id: id as string, icon, title });
   }
 
@@ -293,7 +292,7 @@ export function Horizontal() {
           <Toolbar.Item
             key={item.id}
             id={item.id}
-            hoverContent={item.title}
+            title={item.title}
             active={state.id === item.id}
             onClick={handleChange}
             icon={item.icon}
@@ -379,7 +378,7 @@ export function MixedItems(
           <Toolbar.Item
             key={itemProps.id}
             id={itemProps.id}
-            hoverContent={itemProps.title}
+            title={itemProps.title}
             onClick={() => {
               setActive(itemProps.id);
               onClick();
@@ -462,17 +461,18 @@ export function CustomTipContent() {
       <div style={{ padding: 5 }}>
         <p>Something on the left</p>
       </div>
-      <Toolbar vertical>
+      <Toolbar vertical popoverInteractionKind="hover">
         {itemsShortcuts.map((item) => (
           <Toolbar.Item
             key={item.id}
             id={item.id}
-            hoverContent={<CustomTip {...item} />}
+            title={<CustomTip {...item} />}
             icon={item.icon}
             noArrow
+            interactionKind="hover"
           />
         ))}
-        <Toolbar.Item hoverContent="Inbox" icon="inbox" />
+        <Toolbar.Item title="Inbox" icon="inbox" />
       </Toolbar>
     </div>
   );

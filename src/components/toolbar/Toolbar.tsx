@@ -54,12 +54,12 @@ export interface ToolbarProps extends ToolbarBaseProps {
 
 export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
-  hoverContent: TooltipProps['content'];
+  title: TooltipProps['content'];
   icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
   className?: string;
-  noHoverContent?: boolean;
+  noTooltip?: boolean;
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
@@ -67,7 +67,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
-  itemProps: Omit<ToolbarItemProps, 'hoverContent' | 'noHoverContent'>;
+  itemProps: ToolbarItemProps;
 }
 
 const border = '1px solid rgb(247, 247, 247)';
@@ -142,11 +142,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     active = false,
     icon,
     onClick,
-    hoverContent,
+    title,
     id,
     intent: itemIntent,
     disabled: itemDisabled,
-    noHoverContent = false,
+    noTooltip = false,
     isPopover,
     noArrow = false,
     ...other
@@ -216,11 +216,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         onClick?.(props);
       }}
       tooltipProps={
-        noHoverContent
+        noTooltip
           ? undefined
           : {
               modifiers: { arrow: { enabled: !noArrow } },
-              content: hoverContent,
+              content: title,
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: !large,
@@ -237,6 +237,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
 ) {
   const { itemProps, ...other } = props;
   const { disabled, vertical, popoverInteractionKind } = useToolbarContext();
+
   return (
     <Popover
       minimal
@@ -260,7 +261,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       }}
       {...other}
     >
-      <Toolbar.Item noHoverContent hoverContent="" isPopover {...itemProps} />
+      <Toolbar.Item noTooltip isPopover {...itemProps} />
     </Popover>
   );
 };
