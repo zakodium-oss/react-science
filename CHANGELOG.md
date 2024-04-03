@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/zakodium-oss/react-science/compare/v2.0.0...v3.0.0) (2024-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename `title` to `tooltip`, which now any custom content. Remove `noTooltip` and make `tooltip` optional instead. Add tooltipProps to customize the tooltip's behaviour.
+
+### Features
+
+* allow to customize toolbar item's tooltip ([#699](https://github.com/zakodium-oss/react-science/issues/699)) ([d050d83](https://github.com/zakodium-oss/react-science/commit/d050d83499eff4184261c57793470f45e1e81699))
+
 ## [2.0.0](https://github.com/zakodium-oss/react-science/compare/v1.0.2...v2.0.0) (2024-04-02)
 
 
