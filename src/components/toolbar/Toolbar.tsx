@@ -8,7 +8,6 @@ import {
   PopoverProps,
   TagProps,
   Icon,
-  TooltipProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
@@ -44,17 +43,17 @@ export interface ToolbarProps extends ToolbarBaseProps {
   vertical?: boolean;
   large?: boolean;
   children?:
-    | Array<ReactElement<ToolbarItemProps>>
-    | ReactElement<ToolbarItemProps>
-    | Iterable<ReactNode>
-    | boolean
-    | null;
+  | Array<ReactElement<ToolbarItemProps>>
+  | ReactElement<ToolbarItemProps>
+  | Iterable<ReactNode>
+  | boolean
+  | null;
   popoverInteractionKind?: PopoverInteractionType;
 }
 
 export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
-  title: TooltipProps['content'];
+  title: string;
   icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (item: ToolbarItemProps) => void;
@@ -63,7 +62,6 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
-  noArrow?: boolean;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -148,7 +146,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: itemDisabled,
     noTooltip = false,
     isPopover,
-    noArrow = false,
     ...other
   } = props;
 
@@ -164,10 +161,10 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     typeof icon === 'string'
       ? icon
       : cloneElement(icon, {
-          className: icon.props.className
-            ? `${icon.props.className} bp5-icon`
-            : 'bp5-icon',
-        });
+        className: icon.props.className
+          ? `${icon.props.className} bp5-icon`
+          : 'bp5-icon',
+      });
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
@@ -219,13 +216,11 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         noTooltip
           ? undefined
           : {
-              modifiers: { arrow: { enabled: !noArrow } },
-              content: title,
-              placement: vertical ? 'right' : 'bottom',
-              intent,
-              compact: !large,
-              interactionKind: 'hover',
-            }
+            content: title,
+            placement: vertical ? 'right' : 'bottom',
+            intent,
+            compact: !large,
+          }
       }
       {...other}
     />
