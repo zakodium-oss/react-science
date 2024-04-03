@@ -42,20 +42,20 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
         <Toolbar>
           {onClose && (
             <Toolbar.Item
-              hoverContent="close"
+              title="close"
               onClick={onClose}
               intent="danger"
               icon="cross"
-              noHoverContent
+              noTooltip
             />
           )}
           {onSave && (
             <Toolbar.Item
-              hoverContent="save"
+              title="save"
               onClick={onSave}
               intent="success"
               icon="tick"
-              noHoverContent
+              noTooltip
             />
           )}
         </Toolbar>
