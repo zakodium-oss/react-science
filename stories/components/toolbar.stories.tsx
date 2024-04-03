@@ -458,7 +458,7 @@ export function CustomTipContent() {
         height: 200,
       }}
     >
-      <Toolbar vertical popoverInteractionKind="hover">
+      <Toolbar vertical>
         {itemsShortcuts.map((item) => (
           <Toolbar.Item
             key={item.id}
