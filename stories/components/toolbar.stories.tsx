@@ -469,7 +469,7 @@ export function CustomTipContent() {
             id={item.id}
             hoverContent={<CustomTip {...item} />}
             icon={item.icon}
-            minimal
+            noArrow
           />
         ))}
         <Toolbar.Item hoverContent="Inbox" icon="inbox" />

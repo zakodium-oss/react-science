@@ -52,9 +52,7 @@ export interface ToolbarProps extends ToolbarBaseProps {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
-export interface ToolbarItemProps
-  extends ToolbarBaseProps,
-    Pick<TooltipProps, 'minimal'> {
+export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
   hoverContent: TooltipProps['content'];
   icon: IconName | JSX.Element;
@@ -65,6 +63,7 @@ export interface ToolbarItemProps
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
+  noArrow?: boolean;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -149,7 +148,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: itemDisabled,
     noHoverContent = false,
     isPopover,
-    minimal,
+    noArrow = false,
     ...other
   } = props;
 
@@ -220,7 +219,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         noHoverContent
           ? undefined
           : {
-              minimal,
+              modifiers: { arrow: { enabled: !noArrow } },
               content: hoverContent,
               placement: vertical ? 'right' : 'bottom',
               intent,
