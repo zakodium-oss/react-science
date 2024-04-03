@@ -41,22 +41,10 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
       <div css={styles.toolbar}>
         <Toolbar>
           {onClose && (
-            <Toolbar.Item
-              title="close"
-              onClick={onClose}
-              intent="danger"
-              icon="cross"
-              noTooltip
-            />
+            <Toolbar.Item onClick={onClose} intent="danger" icon="cross" />
           )}
           {onSave && (
-            <Toolbar.Item
-              title="save"
-              onClick={onSave}
-              intent="success"
-              icon="tick"
-              noTooltip
-            />
+            <Toolbar.Item onClick={onSave} intent="success" icon="tick" />
           )}
         </Toolbar>
       </div>
