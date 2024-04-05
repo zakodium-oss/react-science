@@ -35,3 +35,10 @@ export function Basic() {
     </div>
   );
 }
+export function Small() {
+  return (
+    <div style={{ width: '20%' }}>
+      <InfoPanel data={data} />
+    </div>
+  );
+}
