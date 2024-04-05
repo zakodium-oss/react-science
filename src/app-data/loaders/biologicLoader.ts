@@ -1,11 +1,11 @@
 import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
+import { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 
-import type { Measurements, MeasurementBase } from '../index';
+import type { MeasurementBase, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { createLogEntry, ParserLog } from './utility/parserLog';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */
@@ -18,7 +18,7 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
  */
 export async function biologicLoader(
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
@@ -67,14 +67,15 @@ export async function biologicLoader(
     } catch (error) {
       //send error to UI to show to User ?
       if (error instanceof Error) {
-        if (logs) {
-          logs.push(createLogEntry({ error, relativePath: file.relativePath }));
+        if (logger) {
+          logger.error(error);
         } else {
           throw error;
         }
       }
     }
   }
+  logger?.debug(`Loaded ${entries.length} entries with biologicLoader`);
   measurements.iv = { entries };
   return measurements;
 }

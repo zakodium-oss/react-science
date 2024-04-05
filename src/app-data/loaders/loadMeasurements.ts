@@ -1,7 +1,8 @@
+import { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { xMinMaxValues } from 'ml-spectra-processing';
 
-import { Measurements, enhance, Enhancers, MeasurementBase } from '../index';
+import { enhance, Enhancers, MeasurementBase, Measurements } from '../index';
 
 import {
   MeasurementsLoader,
@@ -12,20 +13,20 @@ import type { ParserLog } from './utility/parserLog';
 export interface LoadOptions {
   loaders?: MeasurementsLoader[];
   enhancers?: Partial<Enhancers>;
-  logger?: boolean;
+  logger?: FifoLogger;
 }
 
 export async function loadMeasurements(
   fileCollection: FileCollection,
-  options: LoadOptions = {},
+  options: LoadOptions,
 ) {
   const measurements: Partial<Measurements> = {};
   const logs: ParserLog[] = [];
-  const { loaders = [], enhancers = {}, logger = true } = options;
+  const { loaders = [], enhancers = {}, logger } = options;
   for (const loader of loaders) {
     // TODO: load in parallel
     // eslint-disable-next-line no-await-in-loop
-    const loaderData = await loader(fileCollection, logger ? logs : undefined);
+    const loaderData = await loader(fileCollection, logger);
     for (const { entries } of Object.values(loaderData)) {
       for (const entry of entries) {
         computeMinMax(entry);

@@ -1,18 +1,19 @@
+import { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
 import { assert } from '../../components/index';
-import type { MeasurementBase, Measurements, MeasurementKind } from '../index';
+import type { MeasurementBase, MeasurementKind, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { ParserLog, createLogEntry } from './utility/parserLog';
 
 export async function cdfLoader(
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
   let kind: MeasurementKind | undefined;
+  let count = 0;
   for (const file of fileCollection) {
     if (/\.cdf$/i.test(file.name)) {
       try {
@@ -57,18 +58,12 @@ export async function cdfLoader(
               : chromatogram(reader),
         };
         newMeasurements[kind]?.entries.push(newMeasurement);
+        count++;
       } catch (error) {
         if (error instanceof Error) {
           //send error to UI ?
-          if (logs) {
-            logs.push(
-              createLogEntry({
-                error,
-                parser: 'cdfLoader',
-                message: 'error parsing file from cdfLoader',
-                relativePath: file.relativePath,
-              }),
-            );
+          if (logger) {
+            logger.error(error);
           } else {
             throw error;
           }
@@ -76,7 +71,7 @@ export async function cdfLoader(
       }
     }
   }
-
+  logger?.debug(`Loaded ${count} measurements with cdfLoader`);
   return newMeasurements;
 }
 

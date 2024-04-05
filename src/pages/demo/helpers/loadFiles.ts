@@ -1,25 +1,25 @@
+import { FifoLogger } from 'fifo-logger';
 import {
   FileCollection,
-  FileCollectionItem,
   fileCollectionFromFiles,
+  FileCollectionItem,
 } from 'filelist-utils';
 
 import {
-  getIrAutoPeakPickingEnhancer,
-  irMeasurementEnhancer,
   AppDispatch,
   AppState,
   biologicLoader,
-  cdfLoader,
-  jcampLoader,
   cary500Loader,
+  cdfLoader,
+  getIrAutoPeakPickingEnhancer,
+  irMeasurementEnhancer,
+  jcampLoader,
+  loadMeasurements,
   spcLoader,
   wdfLoader,
-  loadMeasurements,
-  LoadOptions,
-} from '../../../app-data/index';
+} from '../../../app-data';
 
-const options: LoadOptions = {
+const baseOptions = {
   loaders: [
     jcampLoader,
     spcLoader,
@@ -38,6 +38,7 @@ const options: LoadOptions = {
 
 export async function loadFiles(
   files: File[] | FileCollection,
+  logger: FifoLogger,
   dispatch: AppDispatch,
 ) {
   dispatch({ type: 'LOAD_START' });
@@ -49,7 +50,10 @@ export async function loadFiles(
         await loadFullState(files.files[0], dispatch);
       } else {
         // multiple items in FileCollection
-        const { measurements, logs } = await loadMeasurements(files, options);
+        const { measurements, logs } = await loadMeasurements(files, {
+          ...baseOptions,
+          logger,
+        });
         if (logs.length > 0) {
           reportError(logs);
         }
@@ -61,10 +65,10 @@ export async function loadFiles(
     } else {
       //multiple items in File[]
       const fileCollection = await fileCollectionFromFiles(files);
-      const { measurements, logs } = await loadMeasurements(
-        fileCollection,
-        options,
-      );
+      const { measurements, logs } = await loadMeasurements(fileCollection, {
+        ...baseOptions,
+        logger,
+      });
       if (logs.length > 0) {
         reportError(logs);
       }
