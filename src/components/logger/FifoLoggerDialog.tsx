@@ -6,9 +6,7 @@ import styled from '@emotion/styled';
 import type { LogEntry } from 'fifo-logger';
 import { CSSProperties } from 'react';
 
-import { Button, Table, ValueRenderers } from '../index';
-
-import useFifoLogger from './useFifoLogger';
+import { Button, Table, useFifoLogger, ValueRenderers } from '../index';
 
 const ActionsFooter = styled.div`
   display: flex;

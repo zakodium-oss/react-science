@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { fifoLoggerContext } from './loggerContext';
 
-export default function useFifoLogger() {
+export function useFifoLogger() {
   const fifoLogger = useContext(fifoLoggerContext);
   if (!fifoLogger) {
     throw new Error('useFifoLogger must be used within a FifoLoggerProvider');

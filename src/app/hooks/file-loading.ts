@@ -4,8 +4,7 @@ import { FileCollection, fileCollectionFromWebSource } from 'filelist-utils';
 import { useCallback } from 'react';
 
 import { AppDispatch, useAppDispatch } from '../../app-data';
-import { useHashSearchParams } from '../../components';
-import useFifoLogger from '../../components/logger/useFifoLogger';
+import { useFifoLogger, useHashSearchParams } from '../../components';
 
 type LoadFn = (
   files: File[] | FileCollection,
