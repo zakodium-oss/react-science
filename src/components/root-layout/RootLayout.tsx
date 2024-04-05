@@ -19,6 +19,8 @@ const style: CSSProperties = {
   width: '100%',
   height: '100%',
   fontSize: '14px',
+  display: 'flex',
+  flexDirection: 'column',
 };
 
 export function RootLayout(props: RootLayoutProps) {
@@ -33,18 +35,23 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    <div style={{ ...style, ...props.style }} translate="no">
-      <CustomDivPreflight ref={ref}>
-        <BlueprintProvider
-          {...(rootRef ? { portalContainer: rootRef } : undefined)}
-        >
-          <RootLayoutProvider innerRef={rootRef}>
-            <QueryClientProvider client={queryClient}>
-              <AccordionProvider>{props.children}</AccordionProvider>
-            </QueryClientProvider>
-          </RootLayoutProvider>
-        </BlueprintProvider>
-      </CustomDivPreflight>
-    </div>
+    <CustomDivPreflight
+      ref={ref}
+      style={{
+        ...style,
+        ...props.style,
+      }}
+      translate="no"
+    >
+      <BlueprintProvider
+        {...(rootRef ? { portalContainer: rootRef } : undefined)}
+      >
+        <RootLayoutProvider innerRef={rootRef}>
+          <QueryClientProvider client={queryClient}>
+            <AccordionProvider>{props.children}</AccordionProvider>
+          </QueryClientProvider>
+        </RootLayoutProvider>
+      </BlueprintProvider>
+    </CustomDivPreflight>
   );
 }
