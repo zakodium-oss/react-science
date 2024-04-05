@@ -55,7 +55,8 @@ export interface ToolbarProps extends ToolbarBaseProps {
 
 export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
-  title: string;
+  tooltip?: TooltipProps['content'];
+  tooltipProps?: Omit<TooltipProps, 'content'>;
   icon: IconName | JSX.Element;
   active?: boolean;
   onClick?: (
@@ -64,11 +65,9 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
     },
   ) => void;
   className?: string;
-  noTooltip?: boolean;
   isPopover?: boolean;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
-  tooltipProps?: Omit<TooltipProps, 'content'>;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -147,13 +146,12 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     active = false,
     icon,
     onClick,
-    title,
+    tooltip,
+    tooltipProps,
     id,
     intent: itemIntent,
     disabled: itemDisabled,
-    noTooltip = false,
     isPopover,
-    tooltipProps,
     ...other
   } = props;
 
@@ -173,6 +171,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
             ? `${icon.props.className} bp5-icon`
             : 'bp5-icon',
         });
+
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
@@ -221,13 +220,14 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         onClick?.({ event, ...props });
       }}
       tooltipProps={
-        noTooltip
+        !tooltip
           ? undefined
           : {
-              content: title,
+              content: tooltip,
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: !large,
+              interactionKind: 'hover',
               ...tooltipProps,
             }
       }
@@ -265,7 +265,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       }}
       {...other}
     >
-      <Toolbar.Item noTooltip isPopover {...itemProps} />
+      <Toolbar.Item isPopover {...itemProps} />
     </Popover>
   );
 };

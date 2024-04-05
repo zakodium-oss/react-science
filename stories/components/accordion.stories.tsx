@@ -145,8 +145,8 @@ export function Fixed() {
         </Accordion.Item>
         <Accordion.Item title="With Toolbar">
           <Toolbar>
-            <Toolbar.Item title="Test A" icon="lab-test" />
-            <Toolbar.Item title="Test B" icon="airplane" />
+            <Toolbar.Item tooltip="Test A" icon="lab-test" />
+            <Toolbar.Item tooltip="Test B" icon="airplane" />
           </Toolbar>
         </Accordion.Item>
       </Accordion>

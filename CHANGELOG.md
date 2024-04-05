@@ -1,5 +1,28 @@
 # Changelog
 
+## [3.0.0](https://github.com/zakodium-oss/react-science/compare/v2.0.0...v3.0.0) (2024-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename `title` to `tooltip`, which now any custom content. Remove `noTooltip` and make `tooltip` optional instead. Add tooltipProps to customize the tooltip's behaviour.
+
+### Features
+
+* allow to customize toolbar item's tooltip ([#699](https://github.com/zakodium-oss/react-science/issues/699)) ([d050d83](https://github.com/zakodium-oss/react-science/commit/d050d83499eff4184261c57793470f45e1e81699))
+
+## [2.0.0](https://github.com/zakodium-oss/react-science/compare/v1.0.2...v2.0.0) (2024-04-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove LayoutManager ([#692](https://github.com/zakodium-oss/react-science/issues/692))
+
+### Features
+
+* improve info-panel design ([#696](https://github.com/zakodium-oss/react-science/issues/696)) ([792b7df](https://github.com/zakodium-oss/react-science/commit/792b7df9150430d77f04bcb4e61dc05962a11dd9))
+* remove LayoutManager ([#692](https://github.com/zakodium-oss/react-science/issues/692)) ([636c2f2](https://github.com/zakodium-oss/react-science/commit/636c2f27308f0657e198690f1f49a0b5b2cbd6fe))
+
 ## [1.0.2](https://github.com/zakodium-oss/react-science/compare/v1.0.1...v1.0.2) (2024-03-16)
 
 
