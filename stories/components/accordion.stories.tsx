@@ -14,26 +14,26 @@ export default {
   decorators: [AccordionDecorator],
 };
 const items: Array<
-  Pick<ToolbarItemProps, 'title' | 'icon' | 'disabled'> & {
+  Pick<ToolbarItemProps, 'tooltip' | 'icon' | 'disabled'> & {
     id: string;
   }
 > = [
   {
     id: 'paperclip-blueprint',
     icon: 'paperclip',
-    title: 'BlueprintJS paperclip icon',
+    tooltip: 'BlueprintJS paperclip icon',
   },
 
   {
     id: 'clipboard-blueprint',
     icon: 'clipboard',
-    title: 'BlueprintJS paperclip icon',
+    tooltip: 'BlueprintJS paperclip icon',
   },
 
   {
     id: 'credit-card-blueprint',
     icon: 'credit-card',
-    title: 'BlueprintJS credit-card icon',
+    tooltip: 'BlueprintJS credit-card icon',
     disabled: false,
   },
 ];
@@ -55,7 +55,7 @@ export function Fixed() {
                 <Toolbar.Item
                   key={item.id}
                   id={item.id}
-                  title={item.title}
+                  tooltip={item.tooltip}
                   icon={item.icon}
                   onClick={({ event }) => {
                     event?.stopPropagation();
