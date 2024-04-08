@@ -15,6 +15,7 @@ import { css } from '@emotion/react';
 import {
   cloneElement,
   JSX,
+  MouseEvent,
   ReactElement,
   ReactNode,
   useLayoutEffect,
@@ -58,7 +59,11 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   tooltipProps?: Omit<TooltipProps, 'content'>;
   icon: IconName | JSX.Element;
   active?: boolean;
-  onClick?: (item: ToolbarItemProps) => void;
+  onClick?: (
+    item: ToolbarItemProps & {
+      event: MouseEvent;
+    },
+  ) => void;
   className?: string;
   isPopover?: boolean;
   tag?: ReactNode;
@@ -211,8 +216,8 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
           )}
         </div>
       }
-      onClick={() => {
-        onClick?.(props);
+      onClick={(event) => {
+        onClick?.({ event, ...props });
       }}
       tooltipProps={
         !tooltip
