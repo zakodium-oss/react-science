@@ -1,6 +1,6 @@
 import { Menu, MenuItem } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
-import { CSSProperties, JSX, useState } from 'react';
+import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
@@ -11,6 +11,10 @@ import {
   ToolbarProps,
   PopoverInteractionType,
 } from '../../src/components';
+import {
+  TooltipItem,
+  TooltipTemplate,
+} from '../../src/components/toolbar/TooltipTemplate';
 
 export default {
   title: 'Components / Toolbar',
@@ -402,17 +406,9 @@ MixedItems.argTypes = {
   },
 };
 
-interface CustomTipItem {
-  // eslint-disable-next-line react/no-unused-prop-types
-  id: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  icon: ToolbarItemProps['icon'];
-  title: string;
-  shortcuts: string[];
-  description: string;
-}
-
-const itemsShortcuts: CustomTipItem[] = [
+const itemsShortcuts: Array<
+  TooltipItem & { id: string; icon: ToolbarItemProps['icon'] }
+> = [
   {
     id: 'copy',
     icon: 'phone',
@@ -463,7 +459,7 @@ export function CustomTipContent() {
           <Toolbar.Item
             key={item.id}
             id={item.id}
-            tooltip={<CustomTip {...item} />}
+            tooltip={<TooltipTemplate {...item} />}
             icon={item.icon}
             tooltipProps={{ minimal: true }}
           />
@@ -473,77 +469,25 @@ export function CustomTipContent() {
     </div>
   );
 }
-
-const styles: Record<
-  | 'titleContainer'
-  | 'title'
-  | 'description'
-  | 'shortcutContainer'
-  | 'shortcutItem',
-  CSSProperties
-> = {
-  titleContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: '0.9rem',
-    minWidth: '50%',
-    padding: '5px 0',
-  },
-  description: {
-    paddingTop: '3rem',
-    fontSize: '0.7rem',
-  },
-  shortcutContainer: {
-    display: 'flex',
-    textWrap: 'nowrap',
-  },
-  shortcutItem: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0.5em',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    height: 'calc(0.5em + 15px)',
-    minWidth: 'calc(0.5em + 15px)' /* Adjust padding and border width */,
-    marginLeft: '5px',
-    fontSize: '0.6rem',
-    fontWeight: 'bolder',
-  },
-};
-
-function CustomTip({ title, shortcuts, description }: CustomTipItem) {
+export function TooltipSample() {
   return (
-    <div style={{ width: 250, padding: '0.5rem' }}>
-      <div style={styles.titleContainer}>
-        <span style={styles.title}>{title}</span>
-        <div style={styles.shortcutContainer}>
-          {shortcuts?.map((key, index) => {
-            return (
-              <div
-                key={key}
-                style={{
-                  ...styles.shortcutItem,
-                  ...(index === 0 && { margin: 0 }),
-                }}
-              >
-                <span>{key}</span>{' '}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <p style={styles.description}>
-        {description}{' '}
-        <a target="_blank" href="">
-          Learn more
-        </a>{' '}
-      </p>
+    <div>
+      <TooltipTemplate
+        style={{ backgroundColor: 'rgb(62, 62, 62)' }}
+        title="Cut text tool"
+        shortcuts={['Ctrl', 'x']}
+        subTitles={[
+          {
+            title: 'sub title 1',
+            shortcuts: ['x'],
+          },
+          {
+            title: 'sub title 2',
+            shortcuts: ['z'],
+          },
+        ]}
+        description="Cut selected item to clipboard."
+      />
     </div>
   );
 }
