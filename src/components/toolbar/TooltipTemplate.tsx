@@ -1,89 +1,80 @@
-/** @jsxImportSource @emotion/react */
-import { SerializedStyles, css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { CSSProperties } from 'react';
 
 const shortcutBoxSize = 1.5;
-const color: CSSProperties['color'] = 'white';
 
-const styles: Record<
-  | 'titleContainer'
-  | 'title'
-  | 'description'
-  | 'shortcutContainer'
-  | 'shortcutItem',
-  CSSProperties
-> &
-  Record<'subTitleListItem' | 'subTitleList', SerializedStyles> = {
-  titleContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: '0.9rem',
-    flex: 1,
-    padding: '5px 0',
-    textAlign: 'left',
-    color,
-  },
-  description: {
-    paddingTop: '1rem',
-    fontSize: '0.7rem',
-    textAlign: 'left',
-    color,
-  },
-  shortcutContainer: {
-    display: 'flex',
-    textWrap: 'nowrap',
-    color,
-  },
-  shortcutItem: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0.2rem',
-    border: `1px solid ${color}`,
-    borderRadius: '4px',
-    height: `${shortcutBoxSize}rem`,
-    minWidth: `${shortcutBoxSize}rem`,
-    marginLeft: '5px',
-    fontSize: '0.75rem',
-    fontWeight: 'bold',
-  },
-  subTitleList: css({
-    paddingLeft: '5px',
-    listStyle: 'none',
-  }),
-  subTitleListItem: css({
-    position: 'relative',
-    paddingLeft: '15px',
-    boxSizing: 'border-box',
-    '&::before': {
-      position: 'absolute',
-      top: `${shortcutBoxSize / 2}rem`,
-      left: '0',
-      width: '10px',
-      height: '1px',
-      margin: 'auto',
-      content: "''",
-      backgroundColor: color,
-    },
-    '&::after': {
-      position: 'absolute',
-      top: '0',
-      bottom: '0',
-      left: '0',
-      width: '1px',
-      height: '100%',
-      content: "''",
-      backgroundColor: color,
-    },
-    '&:last-child::after': {
-      height: `${shortcutBoxSize / 2}rem`,
-    },
-  }),
-};
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+`;
+
+interface TitleProps {
+  size: CSSProperties['fontSize'];
+}
+
+const Title = styled.span<TitleProps>`
+  font-size: ${({ size }) => size};
+  flex: 1;
+  padding: 5px 0;
+  text-align: left;
+`;
+const Description = styled.p`
+  padding-top: 1rem;
+  font-size: 0.7rem;
+  text-align: left;
+`;
+
+const ShortcutItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
+  border: 1px solid;
+  border-radius: 4px;
+  height: ${shortcutBoxSize}rem;
+  min-width: ${shortcutBoxSize}rem;
+  margin-left: 5px;
+  font-size: 0.75rem;
+  font-weight: bold;
+`;
+
+const SubTitleItem = styled.div`
+  position: relative;
+  padding-left: 15px;
+  box-sizing: border-box;
+
+  &::before {
+    position: absolute;
+    top: ${shortcutBoxSize / 2}rem;
+    left: 0;
+    width: 10px;
+    height: 1px;
+    margin: auto;
+    content: '';
+    border-bottom: 1px solid;
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    content: '';
+    border-left: 1px solid;
+  }
+
+  &:last-child::after {
+    height: ${shortcutBoxSize / 2}rem;
+  }
+
+  &:first-child {
+    margin: 0;
+  }
+`;
 
 export interface TooltipItem {
   title: string;
@@ -107,19 +98,20 @@ export function TooltipTemplate(props: TooltipItem) {
   return (
     <div
       style={{
-        width: 250,
+        color: 'white',
+        width: '250px',
         padding: '0.5rem',
         ...style,
       }}
     >
-      <div style={styles.titleContainer}>
-        <span style={styles.title}>{title}</span>
+      <FlexContainer>
+        <Title size="0.9rem">{title}</Title>
         <ShortCuts shortcuts={shortcuts} />
-      </div>
+      </FlexContainer>
       <SubTitles items={subTitles} />
 
       {(description || link) && (
-        <p style={styles.description}>
+        <Description>
           {description}
           {link && (
             <a
@@ -131,33 +123,25 @@ export function TooltipTemplate(props: TooltipItem) {
               Learn more
             </a>
           )}
-        </p>
+        </Description>
       )}
     </div>
   );
 }
 
-function ShortCuts({
-  shortcuts,
-  style = {},
-}: {
-  shortcuts: string[];
-  style?: CSSProperties;
-}) {
+function ShortCuts({ shortcuts }: { shortcuts: string[] }) {
   return (
-    <div style={styles.shortcutContainer}>
-      {shortcuts.map((key, index) => {
+    <div
+      style={{
+        display: 'flex',
+        textWrap: 'nowrap',
+      }}
+    >
+      {shortcuts.map((key) => {
         return (
-          <div
-            key={key}
-            style={{
-              ...styles.shortcutItem,
-              ...(index === 0 && { margin: 0 }),
-              ...style,
-            }}
-          >
+          <ShortcutItem key={key}>
             <span>{key}</span>
-          </div>
+          </ShortcutItem>
         );
       })}
     </div>
@@ -170,14 +154,19 @@ function SubTitles({ items }: { items: TooltipItem[] }) {
   }
 
   return (
-    <ul css={styles.subTitleList}>
+    <ul
+      style={{
+        paddingLeft: '5px',
+        listStyle: 'none',
+      }}
+    >
       {items.map(({ shortcuts = [], title }) => (
-        <li css={styles.subTitleListItem} key={title}>
-          <div style={styles.titleContainer}>
-            <span style={{ ...styles.title, fontSize: '0.7rem' }}>{title}</span>
+        <SubTitleItem key={title}>
+          <FlexContainer>
+            <Title size="0.7rem">{title}</Title>
             <ShortCuts shortcuts={shortcuts} />
-          </div>
-        </li>
+          </FlexContainer>
+        </SubTitleItem>
       ))}
     </ul>
   );
