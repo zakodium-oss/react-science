@@ -85,7 +85,7 @@ export interface TooltipItem {
   style?: CSSProperties;
 }
 
-export function TooltipTemplate(props: TooltipItem) {
+export function TooltipHelpContent(props: TooltipItem) {
   const {
     title,
     shortcuts = [],

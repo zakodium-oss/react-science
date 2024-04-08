@@ -13,8 +13,8 @@ import {
 } from '../../src/components';
 import {
   TooltipItem,
-  TooltipTemplate,
-} from '../../src/components/toolbar/TooltipTemplate';
+  TooltipHelpContent,
+} from '../../src/components/toolbar/TooltipHelpContent';
 
 export default {
   title: 'Components / Toolbar',
@@ -446,7 +446,7 @@ const itemsShortcuts: Array<
   },
 ];
 
-export function CustomTipContent() {
+export function CustomTooltipContent() {
   return (
     <div
       style={{
@@ -459,7 +459,7 @@ export function CustomTipContent() {
           <Toolbar.Item
             key={item.id}
             id={item.id}
-            tooltip={<TooltipTemplate {...item} />}
+            tooltip={<TooltipHelpContent {...item} />}
             icon={item.icon}
             tooltipProps={{ minimal: true }}
           />
@@ -469,10 +469,10 @@ export function CustomTipContent() {
     </div>
   );
 }
-export function TooltipSample() {
+export function TooltipContent() {
   return (
     <div>
-      <TooltipTemplate
+      <TooltipHelpContent
         style={{ backgroundColor: 'rgb(62, 62, 62)' }}
         title="Cut text tool"
         shortcuts={['Ctrl', 'x']}
