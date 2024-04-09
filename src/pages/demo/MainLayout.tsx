@@ -7,6 +7,7 @@ import {
   AboutDialogToolbarButton,
   ExplorerPlotView,
   MeasurementConfigPanelAccordion,
+  MeasurementInfoPanelAccordion,
   MeasurementsPanelAccordion,
   useDropFiles,
   useLoadFileCollectionFromHash,
@@ -151,6 +152,7 @@ export default function MainLayout() {
           >
             <Accordion>
               <MeasurementsPanelAccordion />
+              <MeasurementInfoPanelAccordion />
               <MeasurementConfigPanelAccordion />
             </Accordion>
           </div>
