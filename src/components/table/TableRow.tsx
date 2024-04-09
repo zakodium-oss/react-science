@@ -21,6 +21,8 @@ import {
 import type { TableProps } from './Table';
 import { useTableContext } from './tableContext';
 
+export type TableRowProps = TableProps & HTMLAttributes<HTMLTableRowElement>;
+
 const styles = {
   hasBorder: css({
     border: '0.5px solid rgb(0, 0, 0)',
@@ -38,7 +40,7 @@ export const TableRow = ({
   style = {},
   hasBorder = false,
   ...other
-}: TableProps & HTMLAttributes<HTMLTableRowElement>) => {
+}: TableRowProps) => {
   const { cells } = useRowChildren(children);
   return (
     <tr
