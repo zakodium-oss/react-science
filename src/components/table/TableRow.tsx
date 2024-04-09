@@ -1,6 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Children, isValidElement, ReactElement, ReactNode } from 'react';
+import {
+  Children,
+  HTMLAttributes,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 
 import {
   Boolean,
@@ -14,6 +20,8 @@ import {
 
 import type { TableProps } from './Table';
 import { useTableContext } from './tableContext';
+
+export type TableRowProps = TableProps & HTMLAttributes<HTMLTableRowElement>;
 
 const styles = {
   hasBorder: css({
@@ -31,10 +39,14 @@ export const TableRow = ({
   children,
   style = {},
   hasBorder = false,
-}: TableProps) => {
+  ...other
+}: TableRowProps) => {
   const { cells } = useRowChildren(children);
   return (
-    <tr style={{ border: hasBorder ? '1px solid black' : '', ...style }}>
+    <tr
+      style={{ border: hasBorder ? '1px solid black' : '', ...style }}
+      {...other}
+    >
       {cells}
     </tr>
   );
