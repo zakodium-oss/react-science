@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.0](https://github.com/zakodium-oss/react-science/compare/v3.0.0...v3.1.0) (2024-04-09)
+
+
+### Features
+
+* spread Table.Row props into HTML row tag ([#718](https://github.com/zakodium-oss/react-science/issues/718)) ([e02f013](https://github.com/zakodium-oss/react-science/commit/e02f01370e1adb43ec63feaa1ae51b18449749bb))
+* toolbar in accordion ([#698](https://github.com/zakodium-oss/react-science/issues/698)) ([93f8f45](https://github.com/zakodium-oss/react-science/commit/93f8f45afc197a013c9038ebf4829067c4e54e11))
+
 ## [3.0.0](https://github.com/zakodium-oss/react-science/compare/v2.0.0...v3.0.0) (2024-04-03)
 
 
