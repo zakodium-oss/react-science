@@ -74,13 +74,7 @@ export default function MainLayout() {
     },
   ]);
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <>
       <Header>
         <Toolbar>
           <AboutDialogToolbarButton
@@ -158,6 +152,6 @@ export default function MainLayout() {
           </div>
         </SplitPane>
       </div>
-    </div>
+    </>
   );
 }
