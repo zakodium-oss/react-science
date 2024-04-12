@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from '@blueprintjs/core';
+import { Button, Menu, MenuItem, Popover, Tooltip } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
 import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -469,25 +469,31 @@ export function CustomTooltipContent() {
     </div>
   );
 }
-export function TooltipContent() {
+
+export function TooltipHelpContentStory() {
   return (
-    <div>
-      <TooltipHelpContent
-        style={{ backgroundColor: 'rgb(62, 62, 62)' }}
-        title="Cut text tool"
-        shortcuts={['Ctrl', 'x']}
-        subTitles={[
-          {
-            title: 'sub title 1',
-            shortcuts: ['x'],
-          },
-          {
-            title: 'sub title 2',
-            shortcuts: ['z'],
-          },
-        ]}
-        description="Cut selected item to clipboard."
-      />
-    </div>
+    <Tooltip
+      minimal
+      isOpen
+      content={
+        <TooltipHelpContent
+          title="Cut text tool"
+          shortcuts={['Ctrl', 'x']}
+          subTitles={[
+            {
+              title: 'sub title 1',
+              shortcuts: ['x'],
+            },
+            {
+              title: 'sub title 2',
+              shortcuts: ['z'],
+            },
+          ]}
+          description="Cut selected item to clipboard."
+        />
+      }
+    />
   );
 }
+
+TooltipHelpContentStory.storyName = 'TooltipHelpContent';
