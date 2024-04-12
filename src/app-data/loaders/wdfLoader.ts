@@ -1,5 +1,5 @@
 import { MeasurementVariable } from 'cheminfo-types';
-import { FifoLogger } from 'fifo-logger';
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { parse, Wdf } from 'wdf-parser';
 

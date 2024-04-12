@@ -1,4 +1,4 @@
-import { FifoLogger } from 'fifo-logger';
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 

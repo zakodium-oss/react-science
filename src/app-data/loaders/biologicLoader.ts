@@ -1,6 +1,6 @@
 import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
-import { FifoLogger } from 'fifo-logger';
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 
 import type { MeasurementBase, Measurements } from '../index';

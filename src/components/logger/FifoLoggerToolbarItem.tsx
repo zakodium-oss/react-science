@@ -1,5 +1,5 @@
 import { Intent } from '@blueprintjs/core';
-import { LogEntry } from 'fifo-logger';
+import type { LogEntry } from 'fifo-logger';
 import { useState } from 'react';
 
 import { useOnOff } from '../hooks';

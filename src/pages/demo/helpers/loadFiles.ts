@@ -1,4 +1,4 @@
-import { FifoLogger } from 'fifo-logger';
+import type { FifoLogger } from 'fifo-logger';
 import {
   FileCollection,
   fileCollectionFromFiles,
