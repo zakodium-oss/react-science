@@ -29,12 +29,15 @@ const RowIndexCell = styled.div<RowIndexCellProps>`
     background-color: ${({ pillColor }) => pillColor};
   }
 `;
-export function FifoLoggerDialog(props: {
+
+export interface FifoLoggerDialogProps {
   isOpen: boolean;
   onClose: () => void;
   logs: LogEntry[];
   unseen: number;
-}) {
+}
+
+export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
   const logger = useFifoLogger();
   return (
     <Dialog
