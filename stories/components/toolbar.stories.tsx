@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem, Popover, Tooltip } from '@blueprintjs/core';
+import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
 import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -10,11 +10,9 @@ import {
   ToolbarItemProps,
   ToolbarProps,
   PopoverInteractionType,
-} from '../../src/components';
-import {
   TooltipItem,
   TooltipHelpContent,
-} from '../../src/components/toolbar/TooltipHelpContent';
+} from '../../src/components';
 
 export default {
   title: 'Components / Toolbar',
