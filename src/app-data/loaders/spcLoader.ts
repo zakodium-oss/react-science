@@ -1,11 +1,11 @@
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
-import { parse, guessSpectraType } from 'spc-parser';
+import { guessSpectraType, parse } from 'spc-parser';
 
 import { assert } from '../../components/index';
-import type { MeasurementKind, Measurements, MeasurementBase } from '../index';
+import type { MeasurementBase, MeasurementKind, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { ParserLog, createLogEntry } from './utility/parserLog';
 
 /**
  *
@@ -15,7 +15,7 @@ import { ParserLog, createLogEntry } from './utility/parserLog';
  */
 export async function spcLoader(
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
   for (const file of fileCollection) {
@@ -38,14 +38,8 @@ export async function spcLoader(
           data: parsed.spectra as unknown as MeasurementBase['data'],
         });
       } catch (error) {
-        if (error instanceof Error && logs) {
-          logs.push(
-            createLogEntry({
-              parser: 'spc-parser',
-              relativePath: file.relativePath,
-              error,
-            }),
-          );
+        if (error instanceof Error && logger) {
+          logger.error(error);
         } else {
           throw error;
         }

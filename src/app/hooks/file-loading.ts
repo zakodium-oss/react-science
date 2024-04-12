@@ -1,22 +1,25 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import type { FifoLogger } from 'fifo-logger';
 import { FileCollection, fileCollectionFromWebSource } from 'filelist-utils';
 import { useCallback } from 'react';
 
-import { AppDispatch, useAppDispatch } from '../../app-data/index';
-import { useHashSearchParams } from '../../components/index';
+import { AppDispatch, useAppDispatch } from '../../app-data';
+import { useFifoLogger, useHashSearchParams } from '../../components';
 
 type LoadFn = (
   files: File[] | FileCollection,
+  logger: FifoLogger,
   dispatch: AppDispatch,
 ) => Promise<void>;
 
 export function useLoadFileCollectionFromHash(
   onLoad: LoadFn,
 ): UseQueryResult<true | null> {
+  const logger = useFifoLogger();
   const appDispatch = useAppDispatch();
   const hashParams = useHashSearchParams();
   const filelistUrl = hashParams.get('filelist');
-  const query = useQuery({
+  return useQuery({
     queryKey: ['filelist', filelistUrl],
     queryFn: async () => {
       if (!filelistUrl) {
@@ -29,20 +32,19 @@ export function useLoadFileCollectionFromHash(
         entries: data,
         baseURL,
       });
-      void onLoad(fileCollection, appDispatch);
+      void onLoad(fileCollection, logger, appDispatch);
       return true;
     },
   });
-  return query;
 }
 
 export function useDropFiles(onLoad: LoadFn) {
   const dispatch = useAppDispatch();
-  const onDrop = useCallback(
+  const logger = useFifoLogger();
+  return useCallback(
     (files: File[]) => {
-      void onLoad(files, dispatch);
+      void onLoad(files, logger, dispatch);
     },
-    [dispatch, onLoad],
+    [dispatch, onLoad, logger],
   );
-  return onDrop;
 }

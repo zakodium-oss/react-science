@@ -1,13 +1,12 @@
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 
 import { assert } from '../../../components/index';
 import type { MeasurementBase, Measurements } from '../../index';
 
-import type { ParserLog } from './parserLog';
-
 export type MeasurementsLoader = (
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ) => Promise<Partial<Measurements>>;
 
 export function mergeMeasurements(

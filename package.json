@@ -60,6 +60,7 @@
   "peerDependencies": {
     "@blueprintjs/core": "^5.3.2",
     "@blueprintjs/icons": "^5.1.7",
+    "fifo-logger": "^1.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
@@ -128,6 +129,7 @@
     "eslint": "^8.57.0",
     "eslint-config-zakodium": "^8.1.0",
     "eslint-plugin-storybook": "^0.8.0",
+    "fifo-logger": "^1.0.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
