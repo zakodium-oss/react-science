@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Tooltip, IntentProps } from '@blueprintjs/core';
+import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
 import { JSX, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -24,6 +24,10 @@ export default {
   },
   argTypes: {
     onClick: { action: 'handle' },
+    intent: {
+      options: ['none', 'primary', 'success', 'warning', 'danger'],
+      control: { type: 'select' },
+    },
   },
 } as Meta<ToolbarProps>;
 
@@ -468,16 +472,6 @@ export function CustomTooltipContent({ intent }: ToolbarProps) {
   );
 }
 
-CustomTooltipContent.args = {
-  intent: 'none',
-};
-CustomTooltipContent.argTypes = {
-  intent: {
-    options: ['none', 'primary', 'success', 'warning', 'danger'],
-    control: { type: 'select' },
-  },
-};
-
 export function TooltipHelpContentStory({ intent }: ToolbarProps) {
   return (
     <Tooltip
@@ -504,15 +498,5 @@ export function TooltipHelpContentStory({ intent }: ToolbarProps) {
     />
   );
 }
-
-TooltipHelpContentStory.args = {
-  intent: 'none',
-};
-TooltipHelpContentStory.argTypes = {
-  intent: {
-    options: ['none', 'primary', 'success', 'warning', 'danger'],
-    control: { type: 'select' },
-  },
-};
 
 TooltipHelpContentStory.storyName = 'TooltipHelpContent';
