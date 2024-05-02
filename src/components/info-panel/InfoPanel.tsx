@@ -160,7 +160,6 @@ export function InfoPanel(props: InfoPanelProps) {
                       {data.map(([key, value]) => (
                         <Table.Row
                           key={key}
-                          bordered
                           style={{
                             height: '10px',
                             padding: '0 !imporant',
