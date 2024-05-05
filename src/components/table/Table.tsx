@@ -34,13 +34,11 @@ export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   compact?: boolean;
   interactive?: boolean;
   striped?: boolean;
-  hasBorder?: boolean;
   color?: string;
 }
 
 export function Table(props: TableProps) {
   const {
-    hasBorder = false,
     bordered = false,
     compact = false,
     interactive = false,
@@ -51,10 +49,7 @@ export function Table(props: TableProps) {
   } = props;
   const { Header, Rows } = splitChildren(children);
 
-  const tableContextValue = useMemo(
-    () => ({ hasBorder, color }),
-    [hasBorder, color],
-  );
+  const tableContextValue = useMemo(() => ({ color }), [color]);
   return (
     <TableContext.Provider value={tableContextValue}>
       <HTMLTable
