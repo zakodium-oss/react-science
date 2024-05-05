@@ -47,7 +47,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
           <ValueRenderers.Header value="Options" />
         </Table.Header>
         {filters.map(({ name, options }, i) => (
-          <Table.Row key={name} hasBorder>
+          <Table.Row key={name} bordered>
             <ValueRenderers.Component>
               <div style={{ display: 'flex', gap: '3px' }}>
                 <Button
