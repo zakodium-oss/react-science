@@ -1,10 +1,10 @@
 import type { TableProps } from './Table';
 import { TableRow } from './TableRow';
 
-export const TableHeader = ({ children, hasBorder, style }: TableProps) => {
+export const TableHeader = ({ children, bordered, style }: TableProps) => {
   return (
     <thead>
-      <TableRow hasBorder={hasBorder} style={style}>
+      <TableRow bordered={bordered} style={style}>
         {children}
       </TableRow>
     </thead>

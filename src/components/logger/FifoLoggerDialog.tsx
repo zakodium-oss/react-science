@@ -56,7 +56,7 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
       <DialogBody>
         <Table
           compact
-          hasBorder
+          bordered
           css={css`
             width: 100%;
           `}
