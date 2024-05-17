@@ -92,10 +92,11 @@ function normalizeSpectra(spectra: any) {
       for (const key in variables) {
         const variable = variables[key];
         if (variable.label) continue;
-        variable.label = variable.name || variable.symbol || key;
-        if (variable.units && !variable.label.includes(variable.units)) {
-          variable.label += ` [${variable.units}]`;
+        let label: string = variable.name || variable.symbol || key;
+        if (variable.units && !label.includes(variable.units)) {
+          label += ` [${variable.units}]`;
         }
+        variable.label = label;
       }
     }
     data.push({ variables });
