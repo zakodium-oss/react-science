@@ -69,7 +69,7 @@ Control.args = {
 
 export function RowBorder({ border }: TableStoryProps) {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
-    <Table.Row hasBorder={border} key={id}>
+    <Table.Row bordered={border} key={id}>
       <ValueRenderers.Text value={id} />
       <ValueRenderers.Text value={name} />
       <ValueRenderers.Text value={rn} />
@@ -112,7 +112,7 @@ export function HeaderBorder({ border }: TableStoryProps) {
   ));
   return (
     <Table>
-      <Table.Header hasBorder={border}>
+      <Table.Header bordered={border}>
         <ValueRenderers.Header value="id" />
         <ValueRenderers.Header value="name" />
         <ValueRenderers.Header value="rn" />

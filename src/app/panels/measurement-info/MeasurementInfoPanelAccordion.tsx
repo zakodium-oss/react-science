@@ -4,7 +4,7 @@ import { MeasurementInfoPanel } from './MeasurementInfoPanel';
 
 export function MeasurementInfoPanelAccordion() {
   return (
-    <Accordion.Item title="Measurement info">
+    <Accordion.Item title="Measurement info" defaultOpened>
       <MeasurementInfoPanel />
     </Accordion.Item>
   );

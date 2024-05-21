@@ -1,11 +1,11 @@
 import { MeasurementVariable } from 'cheminfo-types';
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { parse, Wdf } from 'wdf-parser';
 
-import type { Measurements, MeasurementBase } from '../index';
+import type { MeasurementBase, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { ParserLog, createLogEntry } from './utility/parserLog';
 
 /**
  *
@@ -15,7 +15,7 @@ import { ParserLog, createLogEntry } from './utility/parserLog';
  */
 export async function wdfLoader(
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ): Promise<Partial<Measurements>> {
   const measurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
@@ -33,15 +33,8 @@ export async function wdfLoader(
         });
       } catch (error) {
         if (error instanceof Error) {
-          if (logs) {
-            logs.push(
-              createLogEntry({
-                parser: 'wdf',
-                error,
-                message: 'error reading wdf file',
-                relativePath: file.relativePath,
-              }),
-            );
+          if (logger) {
+            logger.error(error);
           } else {
             throw error;
           }

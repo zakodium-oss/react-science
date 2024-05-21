@@ -150,32 +150,22 @@ export function InfoPanel(props: InfoPanelProps) {
                       striped
                       css={css({
                         width: '100%',
-                        'td:first-child': {
-                          width: '30%',
-                        },
                       })}
                       compact
                     >
                       <Table.Header>
-                        <ValueRenderers.Header
-                          style={{ width: '50px' }}
-                          value="Parameter"
-                        />
+                        <ValueRenderers.Header value="Parameter" />
                         <ValueRenderers.Header value="Value" />
                       </Table.Header>
                       {data.map(([key, value]) => (
                         <Table.Row
                           key={key}
-                          bordered
                           style={{
                             height: '10px',
                             padding: '0 !imporant',
                           }}
                         >
-                          <ValueRenderers.Text
-                            style={{ width: '50px' }}
-                            value={key}
-                          />
+                          <ValueRenderers.Text value={key} />
                           {valueCell(value)}
                         </Table.Row>
                       ))}

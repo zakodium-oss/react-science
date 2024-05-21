@@ -1,3 +1,4 @@
+import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
@@ -5,7 +6,6 @@ import { assert } from '../../components/index';
 import type { MeasurementKind, Measurements } from '../index';
 
 import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
-import { createLogEntry, ParserLog } from './utility/parserLog';
 
 /**
  *
@@ -15,8 +15,9 @@ import { createLogEntry, ParserLog } from './utility/parserLog';
  */
 export async function jcampLoader(
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ): Promise<Partial<Measurements>> {
+  let count = 0;
   const newMeasurements: Partial<Measurements> = {};
   for (const file of fileCollection) {
     if (/(?:\.jdx|\.dx)$/i.test(file.name)) {
@@ -50,22 +51,15 @@ export async function jcampLoader(
               meta: measurement.meta,
               data: normalizeSpectra(measurement.spectra),
             };
+            count++;
             Object.assign(newMeasurement.info, measurement.info);
             newMeasurements[kind]?.entries.push(newMeasurement);
           }
         }
       } catch (error) {
-        // send error to UI ?
         if (error instanceof Error) {
-          if (logs) {
-            logs.push(
-              createLogEntry({
-                error,
-                parser: 'jcamp converter',
-                relativePath: file.relativePath,
-                message: 'error parsing jdx or dx file',
-              }),
-            );
+          if (logger) {
+            logger?.error(error);
           } else {
             throw error;
           }
@@ -74,6 +68,7 @@ export async function jcampLoader(
     }
   }
 
+  logger?.debug(`Loaded ${count} measurements with jcampLoader`);
   return newMeasurements;
 }
 
@@ -97,10 +92,11 @@ function normalizeSpectra(spectra: any) {
       for (const key in variables) {
         const variable = variables[key];
         if (variable.label) continue;
-        variable.label = variable.name || variable.symbol || key;
-        if (variable.units && !variable.label.includes(variable.units)) {
-          variable.label += ` [${variable.units}]`;
+        let label: string = variable.name || variable.symbol || key;
+        if (variable.units && !label.includes(variable.units)) {
+          label += ` [${variable.units}]`;
         }
+        variable.label = label;
       }
     }
     data.push({ variables });

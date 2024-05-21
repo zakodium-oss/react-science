@@ -1,16 +1,15 @@
-import type { FileCollectionItem, FileCollection } from 'filelist-utils';
+import type { FifoLogger } from 'fifo-logger';
+import type { FileCollection, FileCollectionItem } from 'filelist-utils';
 
 import {
-  Measurements,
-  MeasurementBase,
   getMeasurementInfoFromFile,
-  ParserLog,
-  createLogEntry,
+  MeasurementBase,
+  Measurements,
 } from '../../../index';
 
 export async function cary500Loader(
   fileCollection: FileCollection,
-  logs?: ParserLog[],
+  logger?: FifoLogger,
 ): Promise<Partial<Measurements>> {
   const newMeasurements: Partial<Measurements> = {};
   const entries: MeasurementBase[] = [];
@@ -26,16 +25,8 @@ export async function cary500Loader(
         }
       } catch (error) {
         if (error instanceof Error) {
-          if (logs) {
-            logs.push(
-              createLogEntry({
-                kind: 'error',
-                parser: 'cary500Loader',
-                message: 'Error parsing cary500 experiment.',
-                error,
-                relativePath: file.relativePath,
-              }),
-            );
+          if (logger) {
+            logger.error(error);
           } else {
             throw error;
           }
@@ -43,6 +34,7 @@ export async function cary500Loader(
       }
     }
   }
+  logger?.debug(`Loaded ${entries.length} entries with cary500Loader`);
   newMeasurements.uvvis = { entries };
   return newMeasurements;
 }

@@ -1,6 +1,10 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { Children, isValidElement, ReactElement, ReactNode } from 'react';
+import {
+  Children,
+  HTMLAttributes,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 
 import {
   Boolean,
@@ -15,26 +19,20 @@ import {
 import type { TableProps } from './Table';
 import { useTableContext } from './tableContext';
 
-const styles = {
-  hasBorder: css({
-    border: '0.5px solid rgb(0, 0, 0)',
-    padding: '5px',
-    position: 'relative',
-  }),
-  noBorder: css({
-    padding: '5px',
-    position: 'relative',
-  }),
-};
+export type TableRowProps = TableProps & HTMLAttributes<HTMLTableRowElement>;
 
 export const TableRow = ({
   children,
   style = {},
-  hasBorder = false,
-}: TableProps) => {
+  bordered = false,
+  ...other
+}: TableRowProps) => {
   const { cells } = useRowChildren(children);
   return (
-    <tr style={{ border: hasBorder ? '1px solid black' : '', ...style }}>
+    <tr
+      style={{ border: bordered ? '1px solid black' : '', ...style }}
+      {...other}
+    >
       {cells}
     </tr>
   );
@@ -42,7 +40,7 @@ export const TableRow = ({
 
 function useRowChildren(children: ReactNode) {
   const cells: ReactElement[] = [];
-  const { hasBorder, color } = useTableContext();
+  const { color } = useTableContext();
   for (const child of Children.toArray(children)) {
     if (
       typeof child === 'object' &&
@@ -57,11 +55,7 @@ function useRowChildren(children: ReactNode) {
     ) {
       if (child.type === Header) {
         cells.push(
-          <th
-            key={child.key}
-            style={{ color }}
-            css={hasBorder ? styles.hasBorder : styles.noBorder}
-          >
+          <th key={child.key} style={{ color }}>
             {child}
           </th>,
         );
@@ -73,7 +67,6 @@ function useRowChildren(children: ReactNode) {
               color,
               position: 'relative',
             }}
-            css={hasBorder ? styles.hasBorder : styles.noBorder}
           >
             {child}
           </td>,

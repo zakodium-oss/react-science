@@ -7,6 +7,7 @@ import {
   AboutDialogToolbarButton,
   ExplorerPlotView,
   MeasurementConfigPanelAccordion,
+  MeasurementInfoPanelAccordion,
   MeasurementsPanelAccordion,
   useDropFiles,
   useLoadFileCollectionFromHash,
@@ -19,6 +20,7 @@ import {
 import {
   Accordion,
   DropZoneContainer,
+  FifoLoggerToolbarItem,
   FullscreenToolbarButton,
   Header,
   SplitPane,
@@ -73,13 +75,7 @@ export default function MainLayout() {
     },
   ]);
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <>
       <Header>
         <Toolbar>
           <AboutDialogToolbarButton
@@ -102,6 +98,7 @@ export default function MainLayout() {
         </Toolbar>
         <Toolbar>
           <Toolbar.Item tooltip="User manual" icon={<FaBook />} />
+          <FifoLoggerToolbarItem />
           <Toolbar.Item tooltip="General settings" icon="cog" />
           <FullscreenToolbarButton />
         </Toolbar>
@@ -151,11 +148,12 @@ export default function MainLayout() {
           >
             <Accordion>
               <MeasurementsPanelAccordion />
+              <MeasurementInfoPanelAccordion />
               <MeasurementConfigPanelAccordion />
             </Accordion>
           </div>
         </SplitPane>
       </div>
-    </div>
+    </>
   );
 }
