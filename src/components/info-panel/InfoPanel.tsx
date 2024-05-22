@@ -20,24 +20,32 @@ interface InfoPanelProps {
 }
 const style = {
   container: css({
-    padding: '5px',
+    padding: '5px 0 0 0',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   }),
   chevron: (open: boolean) =>
     css({
       rotate: open ? '90deg' : '0deg',
       transition: 'all 0.3s ease-in-out',
     }),
-  button: css({
-    borderBottom: '1px solid #f5f5f5',
-    display: 'flex',
-    alignItems: 'center',
-    gap: 5,
-    padding: '5px 2px',
-    width: '100%',
-    ':hover': {
-      backgroundColor: '#f5f5f5',
-    },
-  }),
+  button: (index: number) =>
+    css({
+      zIndex: 10,
+      position: 'sticky',
+      height: 30,
+      top: index * 30,
+      borderBottom: '1px solid #f5f5f5',
+      backgroundColor: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '5px 2px',
+      width: '100%',
+      ':hover': {
+        backgroundColor: '#f5f5f5',
+      },
+    }),
 };
 
 export function InfoPanel(props: InfoPanelProps) {
@@ -95,13 +103,19 @@ export function InfoPanel(props: InfoPanelProps) {
   }, [data, viewData]);
   return (
     <div css={style.container}>
-      <div style={titleStyle}>{title}</div>
+      <div
+        style={{
+          padding: '0 5px',
+          ...titleStyle,
+        }}
+      >
+        {title}
+      </div>
       <div
         tabIndex={0}
         css={css({
-          zIndex: 10,
+          padding: '0 5px',
           marginTop: '5px',
-          position: 'sticky',
           backgroundColor: 'white',
           top: '5px',
           display: 'flex',
@@ -114,7 +128,7 @@ export function InfoPanel(props: InfoPanelProps) {
           css={css({
             flexGrow: 1,
           })}
-          placeholder="search for a parameter ..."
+          placeholder="Search for a parameter"
           value={search}
           onChange={({ target }) => {
             if (target.value !== undefined) {
@@ -130,18 +144,20 @@ export function InfoPanel(props: InfoPanelProps) {
       </div>
       <div
         style={{
+          position: 'relative',
           marginTop: '5px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '5px',
+          overflowY: 'auto',
+          flex: 1,
         }}
       >
-        {filteredData.map(({ description, data }) => {
+        {filteredData.map(({ description, data }, index) => {
           return (
             <Disclosure defaultOpen key={description}>
               {({ open }) => (
                 <>
-                  <Disclosure.Button css={style.button}>
+                  <Disclosure.Button css={style.button(index)}>
                     <Icon icon="chevron-right" css={style.chevron(open)} />
                     {description}
                   </Disclosure.Button>
