@@ -10,6 +10,7 @@ interface ControlProps extends React.HTMLAttributes<HTMLTableElement> {
   compact?: boolean;
   interactive?: boolean;
   striped?: boolean;
+  stickyHeader?: boolean;
 }
 
 export default {
@@ -28,6 +29,7 @@ export function Control({
   compact,
   interactive,
   striped,
+  stickyHeader,
 }: ControlProps) {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
     <Table.Row key={id}>
@@ -46,6 +48,7 @@ export function Control({
       compact={compact}
       interactive={interactive}
       striped={striped}
+      stickyHeader={stickyHeader}
     >
       <Table.Header>
         <ValueRenderers.Header value="id" />
@@ -65,6 +68,7 @@ Control.args = {
   compact: false,
   interactive: false,
   striped: false,
+  stickyHeader: false,
 };
 
 export function RowBorder({ border }: TableStoryProps) {
@@ -134,6 +138,7 @@ export function StyledTable({
   compact,
   interactive,
   striped,
+  stickyHeader,
 }: ControlProps) {
   return (
     <Table
@@ -141,6 +146,7 @@ export function StyledTable({
       compact={compact}
       interactive={interactive}
       striped={striped}
+      stickyHeader={stickyHeader}
       color="white"
     >
       <Table.Header style={{ backgroundColor: '#cccccc' }}>
@@ -172,4 +178,5 @@ StyledTable.args = {
   compact: false,
   interactive: false,
   striped: false,
+  stickyHeader: false,
 };
