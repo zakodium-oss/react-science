@@ -38,20 +38,12 @@ export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   color?: string;
 }
 
-const headerStyle: React.CSSProperties = {
-  position: 'sticky',
-  top: 0,
-  zIndex: 10,
-  backgroundColor: 'white',
-};
-
 export function Table(props: TableProps) {
   const {
     bordered = false,
     compact = false,
     interactive = false,
     striped = false,
-    stickyHeader = false,
     color = '',
     children,
     ...tableProps
@@ -68,7 +60,7 @@ export function Table(props: TableProps) {
         striped={striped}
         {...tableProps}
       >
-        <thead style={stickyHeader ? headerStyle : undefined}>{Header}</thead>
+        {Header}
         <tbody>{Rows}</tbody>
       </HTMLTable>
     </TableContext.Provider>

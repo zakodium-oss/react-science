@@ -48,9 +48,8 @@ export function Control({
       compact={compact}
       interactive={interactive}
       striped={striped}
-      stickyHeader={stickyHeader}
     >
-      <Table.Header>
+      <Table.Header stickyHeader={stickyHeader}>
         <ValueRenderers.Header value="id" />
         <ValueRenderers.Header value="name" />
         <ValueRenderers.Header value="rn" />
@@ -146,10 +145,12 @@ export function StyledTable({
       compact={compact}
       interactive={interactive}
       striped={striped}
-      stickyHeader={stickyHeader}
       color="white"
     >
-      <Table.Header style={{ backgroundColor: '#cccccc' }}>
+      <Table.Header
+        stickyHeader={stickyHeader}
+        style={{ backgroundColor: '#cccccc' }}
+      >
         <ValueRenderers.Header value="id" />
         <ValueRenderers.Header value="name" />
         <ValueRenderers.Header value="message" />
