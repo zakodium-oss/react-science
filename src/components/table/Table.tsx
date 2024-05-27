@@ -34,7 +34,6 @@ export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   compact?: boolean;
   interactive?: boolean;
   striped?: boolean;
-  stickyHeader?: boolean;
   color?: string;
 }
 

@@ -10,7 +10,7 @@ interface ControlProps extends React.HTMLAttributes<HTMLTableElement> {
   compact?: boolean;
   interactive?: boolean;
   striped?: boolean;
-  stickyHeader?: boolean;
+  sticky?: boolean;
 }
 
 export default {
@@ -29,7 +29,7 @@ export function Control({
   compact,
   interactive,
   striped,
-  stickyHeader,
+  sticky,
 }: ControlProps) {
   const Rows = data.map(({ id, name, rn, mw, em, isExpensive, color }) => (
     <Table.Row key={id}>
@@ -49,7 +49,7 @@ export function Control({
       interactive={interactive}
       striped={striped}
     >
-      <Table.Header stickyHeader={stickyHeader}>
+      <Table.Header sticky={sticky}>
         <ValueRenderers.Header value="id" />
         <ValueRenderers.Header value="name" />
         <ValueRenderers.Header value="rn" />
@@ -67,7 +67,7 @@ Control.args = {
   compact: false,
   interactive: false,
   striped: false,
-  stickyHeader: false,
+  sticky: false,
 };
 
 export function RowBorder({ border }: TableStoryProps) {
@@ -137,7 +137,7 @@ export function StyledTable({
   compact,
   interactive,
   striped,
-  stickyHeader,
+  sticky,
 }: ControlProps) {
   return (
     <Table
@@ -147,10 +147,7 @@ export function StyledTable({
       striped={striped}
       color="white"
     >
-      <Table.Header
-        stickyHeader={stickyHeader}
-        style={{ backgroundColor: '#cccccc' }}
-      >
+      <Table.Header sticky={sticky} style={{ backgroundColor: '#cccccc' }}>
         <ValueRenderers.Header value="id" />
         <ValueRenderers.Header value="name" />
         <ValueRenderers.Header value="message" />
@@ -179,5 +176,5 @@ StyledTable.args = {
   compact: false,
   interactive: false,
   striped: false,
-  stickyHeader: false,
+  sticky: false,
 };

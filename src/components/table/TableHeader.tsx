@@ -12,10 +12,10 @@ export const TableHeader = ({
   children,
   bordered,
   style,
-  stickyHeader,
-}: TableProps) => {
+  sticky,
+}: TableProps & { sticky?: boolean }) => {
   return (
-    <thead style={stickyHeader ? headerStyle : undefined}>
+    <thead style={sticky ? headerStyle : undefined}>
       <TableRow bordered={bordered} style={style}>
         {children}
       </TableRow>
