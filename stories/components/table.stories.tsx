@@ -17,7 +17,7 @@ export default {
   title: 'Components / Table',
   decorators: [
     (Story: any) => (
-      <div style={{ padding: 12, height: '100%', overflowY: 'auto' }}>
+      <div style={{ margin: 12, height: '100%', overflowY: 'auto' }}>
         <Story />
       </div>
     ),
