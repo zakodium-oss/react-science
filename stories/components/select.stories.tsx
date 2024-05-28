@@ -6,7 +6,14 @@ import {
   MenuItem,
 } from '@blueprintjs/core';
 import { ItemListRenderer, Select } from '@blueprintjs/select';
-import { Dispatch, Fragment, SetStateAction, useState } from 'react';
+import styled from '@emotion/styled';
+import {
+  CSSProperties,
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useState,
+} from 'react';
 
 import { Button, useOnOff, useSelect } from '../../src/components';
 
@@ -371,6 +378,73 @@ export function WithCustomStyle() {
         filterable={false}
         itemsEqual="label"
         popoverContentProps={{ style: { width: '500px' } }}
+        {...defaultProps}
+      >
+        <Button
+          style={{ width: '500px' }}
+          text={value?.label ?? 'Select a status'}
+          rightIcon="double-caret-vertical"
+        />
+      </Select>
+      <p>Value outside component is {value?.label}.</p>
+    </>
+  );
+}
+
+const Row = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
+});
+
+const Tag = styled.div({
+  borderRadius: '25px',
+  minWidth: '25px',
+  minHeight: '25px',
+  display: 'flex',
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "11px",
+});
+
+export function WithCustomRenderItem() {
+  const { value, ...defaultProps } = useSelect<{
+    label: string;
+    color: CSSProperties['color'];
+  }>({
+    itemTextKey: 'label',
+    renderItem: ({ label, color }) => (
+      <Row>
+        <Tag
+          style={{
+            backgroundColor: color,
+          }}
+        >
+          <span>{label.charAt(0)}</span>
+        </Tag>
+        <span style={{ flex: 1, padding: '0 5px' }}>{label}</span>
+        <Tag
+          style={{
+            border: `${color} 1px solid`,
+            padding: '0 10px',
+          }}
+        >
+          <span>
+            fruits
+          </span>
+        </Tag>
+      </Row>
+    ),
+  });
+  return (
+    <>
+      <Select
+        items={[
+          { label: 'Apple', color: 'greenyellow' },
+          { label: 'Banana', color: 'yellow' },
+          { label: 'Orange', color: 'orange' },
+        ]}
+        filterable={false}
+        itemsEqual="label"
         {...defaultProps}
       >
         <Button
