@@ -1,6 +1,6 @@
 import { MenuItem } from '@blueprintjs/core';
 import { ItemRenderer } from '@blueprintjs/select';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 type FilterType<SourceType, Type> = Pick<
   SourceType,
@@ -19,7 +19,9 @@ interface RenderOptions<T> {
   defaultSelectedItem?: T;
 }
 
-type SelectOptions<T> = BaseOptions<T> | RenderOptions<T>;
+type SelectOptions<T> = {
+  renderItem?: (item: T) => ReactNode;
+} & (BaseOptions<T> | RenderOptions<T>);
 
 function isAccessLabelByKey<T>(
   options: SelectOptions<T>,
@@ -91,16 +93,18 @@ function getItemRenderer<T>(value: T, options: SelectOptions<T>) {
     { handleClick, handleFocus, modifiers, index },
   ) => {
     const label = getLabel(item, options);
+    const { renderItem } = options;
+    const isSelected = selectedLabel === label;
     return (
       <MenuItem
-        active={modifiers.active}
+        active={isSelected}
         disabled={modifiers.disabled}
-        selected={selectedLabel === label}
+        selected={isSelected}
         key={index}
         onClick={handleClick}
         onFocus={handleFocus}
         roleStructure="listoption"
-        text={label}
+        text={renderItem?.(item) || label}
       />
     );
   };
