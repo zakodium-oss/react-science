@@ -18,21 +18,28 @@ type BlueprintProps = {
     BlueprintAnchorButtonProps[key];
 };
 export type ButtonProps = BlueprintProps & {
-  tooltipProps?: Omit<TooltipProps, 'children'>;
+  tooltipProps?: Partial<Omit<TooltipProps, 'children'>>;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
 };
 
 export function Button(props: ButtonProps) {
-  const { tooltipProps, children, tag, tagProps, ...buttonProps } = props;
-
+  const { tooltipProps = {}, children, tag, tagProps, ...buttonProps } = props;
+  const {
+    fill,
+    content = '',
+    disabled = !tooltipProps.content,
+    ...otherToolTipProps
+  } = tooltipProps;
   const InnerButton = buttonProps.disabled
     ? BlueprintAnchorButton
     : BlueprintButton;
   return (
     <Tooltip
-      fill={tooltipProps?.fill || buttonProps.fill}
-      {...tooltipProps}
+      fill={fill || buttonProps.fill}
+      disabled={disabled}
+      content={content}
+      {...otherToolTipProps}
       renderTarget={({ isOpen, ...targetProps }) => (
         <div style={{ position: 'relative' }}>
           {tag && (
