@@ -401,9 +401,9 @@ const Tag = styled.div({
   minWidth: '25px',
   minHeight: '25px',
   display: 'flex',
-  alignItems: "center",
-  justifyContent: "center",
-  fontSize: "11px",
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '11px',
 });
 
 export function WithCustomRenderItem() {
@@ -428,9 +428,7 @@ export function WithCustomRenderItem() {
             padding: '0 10px',
           }}
         >
-          <span>
-            fruits
-          </span>
+          <span>fruits</span>
         </Tag>
       </Row>
     ),
