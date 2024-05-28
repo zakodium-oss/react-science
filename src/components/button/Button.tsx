@@ -18,7 +18,7 @@ type BlueprintProps = {
     BlueprintAnchorButtonProps[key];
 };
 export type ButtonProps = BlueprintProps & {
-  tooltipProps?: Omit<TooltipProps, 'children'>;
+  tooltipProps?: Partial<Omit<TooltipProps, 'children'>>;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
 };
