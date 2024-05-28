@@ -95,10 +95,11 @@ function getItemRenderer<T>(value: T, options: SelectOptions<T>) {
     const label = getLabel(item, options);
     const { renderItem } = options;
     const isSelected = selectedLabel === label;
+    const { active, disabled } = modifiers;
     return (
       <MenuItem
-        active={isSelected}
-        disabled={modifiers.disabled}
+        active={active && isSelected}
+        disabled={disabled}
         selected={isSelected}
         key={index}
         onClick={handleClick}
