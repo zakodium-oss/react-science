@@ -9,19 +9,20 @@ type FilterType<SourceType, Type> = Pick<
   }[keyof SourceType]
 >;
 
-interface BaseOptions<T> {
-  itemTextKey: keyof FilterType<T, string>;
-  defaultSelectedItem?: T;
-}
-
-interface RenderOptions<T> {
-  getItemText: (item: T) => string;
-  defaultSelectedItem?: T;
-}
-
-type SelectOptions<T> = {
+interface ItemRenderOptions<T> {
   renderItem?: (item: T) => ReactNode;
-} & (BaseOptions<T> | RenderOptions<T>);
+  defaultSelectedItem?: T;
+}
+
+interface BaseOptions<T> extends ItemRenderOptions<T> {
+  itemTextKey: keyof FilterType<T, string>;
+}
+
+interface RenderOptions<T> extends ItemRenderOptions<T> {
+  getItemText: (item: T) => string;
+}
+
+type SelectOptions<T> = BaseOptions<T> | RenderOptions<T>;
 
 function isAccessLabelByKey<T>(
   options: SelectOptions<T>,
