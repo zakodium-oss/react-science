@@ -9,16 +9,16 @@ type FilterType<SourceType, Type> = Pick<
   }[keyof SourceType]
 >;
 
-interface ItemRenderOptions<T> {
+interface ItemOptions<T> {
   renderItem?: (item: T) => ReactNode;
   defaultSelectedItem?: T;
 }
 
-interface BaseOptions<T> extends ItemRenderOptions<T> {
+interface BaseOptions<T> extends ItemOptions<T> {
   itemTextKey: keyof FilterType<T, string>;
 }
 
-interface RenderOptions<T> extends ItemRenderOptions<T> {
+interface RenderOptions<T> extends ItemOptions<T> {
   getItemText: (item: T) => string;
 }
 
@@ -95,13 +95,12 @@ function getItemRenderer<T>(value: T, options: SelectOptions<T>) {
   ) => {
     const label = getLabel(item, options);
     const { renderItem } = options;
-    const isSelected = selectedLabel === label;
     const { active, disabled } = modifiers;
     return (
       <MenuItem
-        active={active && isSelected}
+        active={active}
         disabled={disabled}
-        selected={isSelected}
+        selected={selectedLabel === label}
         key={index}
         onClick={handleClick}
         onFocus={handleFocus}
