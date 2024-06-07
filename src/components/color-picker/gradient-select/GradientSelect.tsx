@@ -86,10 +86,11 @@ export function GradientSelect(props: GradientSelectProps) {
                       font-weight: bold;
                     }
                     &[data-state='unchecked'] {
-                      opacity: 0.8;
+                      opacity: 1;
                     }
                     &[data-highlighted] {
-                      opacity: 1;
+                      opacity: 0.7;
+                      font-weight: bold;
                     }
                   `}
                 >
