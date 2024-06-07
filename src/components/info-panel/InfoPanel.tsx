@@ -50,6 +50,7 @@ const style = {
     "&[data-state='open'] > span": {
       rotate: '90deg',
     },
+    cursor: 'pointer',
     borderBottom: '1px solid #f5f5f5',
     display: 'flex',
     alignItems: 'center',
@@ -160,7 +161,11 @@ export function InfoPanel(props: InfoPanelProps) {
       >
         {filteredData.map(({ description, data }) => {
           return (
-            <Collapsible.Root key={description} className="CollapsibleRoot">
+            <Collapsible.Root
+              key={description}
+              className="CollapsibleRoot"
+              defaultOpen
+            >
               <Collapsible.Trigger asChild css={style.button}>
                 <div>
                   <Icon icon="chevron-right" css={style.chevron} />
