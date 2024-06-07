@@ -30,22 +30,21 @@ const style = {
       rotate: open ? '90deg' : '0deg',
       transition: 'all 0.3s ease-in-out',
     }),
-  button: (index: number) =>
-    css({
-      zIndex: 10,
-      position: 'sticky',
-      height: 30,
-      top: index * 30,
-      borderBottom: '1px solid #f5f5f5',
-      backgroundColor: 'white',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '5px 2px',
-      width: '100%',
-      ':hover': {
-        backgroundColor: '#f5f5f5',
-      },
-    }),
+  button: css({
+    zIndex: 10,
+    position: 'sticky',
+    height: 30,
+    top: 0,
+    borderBottom: '1px solid #f5f5f5',
+    backgroundColor: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '5px 2px',
+    width: '100%',
+    ':hover': {
+      backgroundColor: '#f5f5f5',
+    },
+  }),
 };
 
 export function InfoPanel(props: InfoPanelProps) {
@@ -152,12 +151,12 @@ export function InfoPanel(props: InfoPanelProps) {
           flex: 1,
         }}
       >
-        {filteredData.map(({ description, data }, index) => {
+        {filteredData.map(({ description, data }) => {
           return (
             <Disclosure defaultOpen key={description}>
               {({ open }) => (
                 <>
-                  <Disclosure.Button css={style.button(index)}>
+                  <Disclosure.Button css={style.button}>
                     <Icon icon="chevron-right" css={style.chevron(open)} />
                     {description}
                   </Disclosure.Button>
