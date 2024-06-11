@@ -81,16 +81,33 @@ export function GradientSelect(props: GradientSelectProps) {
                   key={option}
                   value={option}
                   css={css`
+                    outline: none;
+                    padding: 8px 0 8px 0;
                     cursor: pointer;
+                    margin-left: 20px;
                     &[data-state='checked'] {
                       font-weight: bold;
                     }
                     &[data-state='unchecked'] {
                       opacity: 1;
                     }
+
+                    &:not([data-highlighted]) span {
+                      margin-left: 12px;
+                    }
                     &[data-highlighted] {
-                      opacity: 0.7;
-                      font-weight: bold;
+                      span {
+                        margin-left: 4px;
+                      }
+                      ::before {
+                        content: '';
+                        display: inline-block;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 1px;
+                        filter: brightness(60%);
+                        background-color: dimgray;
+                      }
                     }
                   `}
                 >
