@@ -1,9 +1,8 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-// @ts-ignore This import fails when compiling to CJS.
-import { Listbox } from '@headlessui/react';
+import * as Select from '@radix-ui/react-select';
 import * as scaleChromatic from 'd3-scale-chromatic';
-import { Fragment } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 import FixedGradientPreview from '../preview/FixedGradientPreview';
@@ -24,14 +23,8 @@ const GradientSelectListbox = styled.div`
   position: relative;
   width: 100%;
   border: 1px solid darkgray;
+  margin-top: 100px;
   border-radius: 0.25rem;
-`;
-
-const GradientSelectButton = styled.button`
-  position: relative;
-  width: 100%;
-  height: 30px;
-  padding: 3px;
 `;
 
 const GradientSelectChevron = styled(FaChevronDown)`
@@ -41,23 +34,11 @@ const GradientSelectChevron = styled(FaChevronDown)`
   right: 0.5rem;
 `;
 
-const GradientSelectOptions = styled.ul`
-  position: absolute;
-  width: 100%;
-  margin-top: 5px;
-  border: 1px solid darkgray;
-  border-radius: 0.25rem;
-  padding-inline: 3px;
-  padding-bottom: 5px;
-`;
-
-const GradientSelectOption = styled.li<{ active: boolean }>`
+const GradientSelectOption = styled.li`
   display: flex;
   flex-direction: column;
   padding-top: 5px;
   cursor: pointer;
-  ${(props) => !props.active && 'opacity: 0.8;'}
-  ${(props) => props.active && 'font-weight: bold;'}
 `;
 
 export interface GradientSelectProps {
@@ -68,27 +49,82 @@ export interface GradientSelectProps {
 export function GradientSelect(props: GradientSelectProps) {
   const { value, onChange } = props;
   return (
-    <Listbox value={value} onChange={onChange}>
-      <GradientSelectListbox>
-        <Listbox.Button as={GradientSelectButton}>
-          <FixedGradientPreview gradient={value} />
-          <GradientSelectChevron />
-        </Listbox.Button>
-        <Listbox.Options as={GradientSelectOptions}>
-          {scaleOptions.map((option) => (
-            <Listbox.Option as={Fragment} key={option} value={option}>
-              {({ active }) => (
-                <GradientSelectOption active={active}>
-                  {option}
-                  <div style={{ height: 15 }}>
-                    <FixedGradientPreview gradient={option} />
-                  </div>
-                </GradientSelectOption>
-              )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </GradientSelectListbox>
-    </Listbox>
+    <GradientSelectListbox>
+      <Select.Root value={value} onValueChange={onChange}>
+        <Select.Trigger
+          css={css`
+            width: 100%;
+            height: 30px;
+            padding: 4px;
+          `}
+        >
+          <Select.Value>
+            <FixedGradientPreview gradient={value} />
+            <GradientSelectChevron />
+          </Select.Value>
+        </Select.Trigger>
+        <Select.Portal>
+          <Select.Content
+            position="popper"
+            sideOffset={10}
+            css={css`
+              background-color: white;
+              width: var(--radix-select-trigger-width);
+              border: 1px solid darkgray;
+              border-radius: 0.25rem;
+              padding: 4px;
+            `}
+          >
+            <Select.Viewport>
+              {scaleOptions.map((option) => (
+                <Select.Item
+                  key={option}
+                  value={option}
+                  css={css`
+                    outline: none;
+                    padding: 8px 0 8px 0;
+                    cursor: pointer;
+                    margin-left: 20px;
+                    &[data-state='checked'] {
+                      font-weight: bold;
+                    }
+                    &[data-state='unchecked'] {
+                      opacity: 1;
+                    }
+
+                    &:not([data-highlighted]) span {
+                      margin-left: 12px;
+                    }
+                    &[data-highlighted] {
+                      span {
+                        margin-left: 4px;
+                      }
+                      ::before {
+                        content: '';
+                        display: inline-block;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 1px;
+                        filter: brightness(60%);
+                        background-color: dimgray;
+                      }
+                    }
+                  `}
+                >
+                  <Select.ItemText>
+                    {option}
+                    <GradientSelectOption>
+                      <div style={{ height: 15 }}>
+                        <FixedGradientPreview gradient={option} />
+                      </div>
+                    </GradientSelectOption>
+                  </Select.ItemText>
+                </Select.Item>
+              ))}
+            </Select.Viewport>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
+    </GradientSelectListbox>
   );
 }

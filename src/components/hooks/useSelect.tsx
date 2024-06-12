@@ -1,6 +1,6 @@
 import { MenuItem } from '@blueprintjs/core';
 import { ItemRenderer } from '@blueprintjs/select';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 type FilterType<SourceType, Type> = Pick<
   SourceType,
@@ -9,14 +9,17 @@ type FilterType<SourceType, Type> = Pick<
   }[keyof SourceType]
 >;
 
-interface BaseOptions<T> {
-  itemTextKey: keyof FilterType<T, string>;
+interface ItemOptions<T> {
+  renderItem?: (item: T) => ReactNode;
   defaultSelectedItem?: T;
 }
 
-interface RenderOptions<T> {
+interface BaseOptions<T> extends ItemOptions<T> {
+  itemTextKey: keyof FilterType<T, string>;
+}
+
+interface RenderOptions<T> extends ItemOptions<T> {
   getItemText: (item: T) => string;
-  defaultSelectedItem?: T;
 }
 
 type SelectOptions<T> = BaseOptions<T> | RenderOptions<T>;
@@ -91,16 +94,18 @@ function getItemRenderer<T>(value: T, options: SelectOptions<T>) {
     { handleClick, handleFocus, modifiers, index },
   ) => {
     const label = getLabel(item, options);
+    const { renderItem } = options;
+    const { active, disabled } = modifiers;
     return (
       <MenuItem
-        active={modifiers.active}
-        disabled={modifiers.disabled}
+        active={active}
+        disabled={disabled}
         selected={selectedLabel === label}
         key={index}
         onClick={handleClick}
         onFocus={handleFocus}
         roleStructure="listoption"
-        text={label}
+        text={renderItem?.(item) || label}
       />
     );
   };
