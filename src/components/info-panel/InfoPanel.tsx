@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Icon, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { Disclosure } from '@headlessui/react';
+import * as Collapsible from '@radix-ui/react-collapsible';
 import { CSSProperties, useCallback, useMemo, useState } from 'react';
 
 import { ValueRenderers } from '../index';
@@ -19,15 +19,38 @@ interface InfoPanelProps {
   inputStyle?: CSSProperties;
 }
 const style = {
+  content: css({
+    overflow: 'hidden',
+    "&[data-state='open']": {
+      animation: 'slideDown 300ms ease-out',
+    },
+    '&[data-state="closed"]': {
+      animation: 'slideUp 300ms ease-out',
+    },
+    '@keyframes slideDown': {
+      from: {
+        height: 0,
+      },
+      to: { height: 'var(--radix-collapsible-content-height)' },
+    },
+    '@keyframes slideUp': {
+      from: {
+        height: 'var(--radix-collapsible-content-height)',
+      },
+      to: { height: 0 },
+    },
+  }),
   container: css({
     padding: '5px',
   }),
-  chevron: (open: boolean) =>
-    css({
-      rotate: open ? '90deg' : '0deg',
-      transition: 'all 0.3s ease-in-out',
-    }),
+  chevron: css({
+    transition: 'all 0.3s ease-in-out',
+  }),
   button: css({
+    "&[data-state='open'] > span": {
+      rotate: '90deg',
+    },
+    cursor: 'pointer',
     borderBottom: '1px solid #f5f5f5',
     display: 'flex',
     alignItems: 'center',
@@ -138,42 +161,44 @@ export function InfoPanel(props: InfoPanelProps) {
       >
         {filteredData.map(({ description, data }) => {
           return (
-            <Disclosure defaultOpen key={description}>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button css={style.button}>
-                    <Icon icon="chevron-right" css={style.chevron(open)} />
-                    {description}
-                  </Disclosure.Button>
-                  <Disclosure.Panel>
-                    <Table
-                      striped
-                      css={css({
-                        width: '100%',
-                      })}
-                      compact
+            <Collapsible.Root
+              key={description}
+              className="CollapsibleRoot"
+              defaultOpen
+            >
+              <Collapsible.Trigger asChild css={style.button}>
+                <div>
+                  <Icon icon="chevron-right" css={style.chevron} />
+                  {description}
+                </div>
+              </Collapsible.Trigger>
+              <Collapsible.Content css={style.content}>
+                <Table
+                  striped
+                  css={css({
+                    width: '100%',
+                  })}
+                  compact
+                >
+                  <Table.Header>
+                    <ValueRenderers.Header value="Parameter" />
+                    <ValueRenderers.Header value="Value" />
+                  </Table.Header>
+                  {data.map(([key, value]) => (
+                    <Table.Row
+                      key={key}
+                      style={{
+                        height: '10px',
+                        padding: '0 !imporant',
+                      }}
                     >
-                      <Table.Header>
-                        <ValueRenderers.Header value="Parameter" />
-                        <ValueRenderers.Header value="Value" />
-                      </Table.Header>
-                      {data.map(([key, value]) => (
-                        <Table.Row
-                          key={key}
-                          style={{
-                            height: '10px',
-                            padding: '0 !imporant',
-                          }}
-                        >
-                          <ValueRenderers.Text value={key} />
-                          {valueCell(value)}
-                        </Table.Row>
-                      ))}
-                    </Table>
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
+                      <ValueRenderers.Text value={key} />
+                      {valueCell(value)}
+                    </Table.Row>
+                  ))}
+                </Table>
+              </Collapsible.Content>
+            </Collapsible.Root>
           );
         })}
       </div>
