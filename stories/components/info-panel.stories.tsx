@@ -24,20 +24,25 @@ const data: InfoPanelData[] = [
       isFi: false,
       temperature: 0,
       Test: Number.NaN,
+      test1: '400 MHz',
+      test5: 'CDCl3',
+      test2: false,
+      test3: 0,
+      test4: Number.NaN,
     },
   },
 ];
 
 export function Basic() {
   return (
-    <div style={{ width: 500 }}>
+    <div style={{ width: 500, height: 400 }}>
       <InfoPanel data={data} />
     </div>
   );
 }
 export function Small() {
   return (
-    <div style={{ width: '20%' }}>
+    <div style={{ width: 250, height: '100%' }}>
       <InfoPanel data={data} />
     </div>
   );

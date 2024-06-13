@@ -41,20 +41,27 @@ const style = {
     },
   }),
   container: css({
-    padding: '5px',
+    padding: '5px 0 0 0',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   }),
   chevron: css({
     transition: 'all 0.3s ease-in-out',
   }),
   button: css({
+    zIndex: 10,
+    position: 'sticky',
+    height: 30,
+    top: 0,
     "&[data-state='open'] > span": {
       rotate: '90deg',
     },
     cursor: 'pointer',
     borderBottom: '1px solid #f5f5f5',
+    backgroundColor: 'white',
     display: 'flex',
     alignItems: 'center',
-    gap: 5,
     padding: '5px 2px',
     width: '100%',
     ':hover': {
@@ -118,13 +125,19 @@ export function InfoPanel(props: InfoPanelProps) {
   }, [data, viewData]);
   return (
     <div css={style.container}>
-      <div style={titleStyle}>{title}</div>
+      <div
+        style={{
+          padding: '0 5px',
+          ...titleStyle,
+        }}
+      >
+        {title}
+      </div>
       <div
         tabIndex={0}
         css={css({
-          zIndex: 10,
+          padding: '0 5px',
           marginTop: '5px',
-          position: 'sticky',
           backgroundColor: 'white',
           top: '5px',
           display: 'flex',
@@ -137,7 +150,7 @@ export function InfoPanel(props: InfoPanelProps) {
           css={css({
             flexGrow: 1,
           })}
-          placeholder="search for a parameter ..."
+          placeholder="Search for a parameter"
           value={search}
           onChange={({ target }) => {
             if (target.value !== undefined) {
@@ -153,10 +166,12 @@ export function InfoPanel(props: InfoPanelProps) {
       </div>
       <div
         style={{
+          position: 'relative',
           marginTop: '5px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '5px',
+          overflowY: 'auto',
+          flex: 1,
         }}
       >
         {filteredData.map(({ description, data }) => {
