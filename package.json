@@ -1,6 +1,6 @@
 {
   "name": "react-science",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "React components to build scientific applications UI",
   "exports": {
     "./app": {

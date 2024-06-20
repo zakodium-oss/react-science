@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.1.0](https://github.com/zakodium-oss/react-science/compare/v4.0.0...v4.1.0) (2024-06-13)
+
+
+### Features
+
+* add sticky table header option ([#729](https://github.com/zakodium-oss/react-science/issues/729)) ([1827fe7](https://github.com/zakodium-oss/react-science/commit/1827fe72a7391acd7c5ceb06db9984cbaa5f01d1))
+* improve InfoPanel ([#727](https://github.com/zakodium-oss/react-science/issues/727)) ([7e62024](https://github.com/zakodium-oss/react-science/commit/7e6202430dd8c83ed10df6c9f37f3d710d6a579f))
+* improve useSelect hook item render ([#732](https://github.com/zakodium-oss/react-science/issues/732)) ([76ac3f4](https://github.com/zakodium-oss/react-science/commit/76ac3f43faccc8fd8bca575a68ceeb3a20df9ad9))
+
+
+### Bug Fixes
+
+* disable button tooltips with empty content ([#730](https://github.com/zakodium-oss/react-science/issues/730)) ([ebdd792](https://github.com/zakodium-oss/react-science/commit/ebdd792930bc8aac01e5b857cc367bff32859284))
+
 ## [4.0.0](https://github.com/zakodium-oss/react-science/compare/v3.1.0...v4.0.0) (2024-05-17)
 
 
