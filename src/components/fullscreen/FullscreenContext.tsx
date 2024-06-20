@@ -79,11 +79,11 @@ function FullscreenInner(props: FullscreenProps) {
     if (isFullScreen && ref.current) {
       if (ref.current.requestFullscreen) {
         ref.current.requestFullscreen().catch(() => {
-          alert('Fullscreen is not supported');
+          window.alert('Fullscreen is not supported');
         });
       } else if (ref.current.webkitRequestFullscreen) {
         ref.current.webkitRequestFullscreen()?.catch(() => {
-          alert('Fullscreen is not supported');
+          window.alert('Fullscreen is not supported');
         });
       }
     }
@@ -91,11 +91,11 @@ function FullscreenInner(props: FullscreenProps) {
     if (!isFullScreen && document.fullscreenElement) {
       if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {
-          alert("Can't exit fullscreen");
+          window.alert("Can't exit fullscreen");
         });
       } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen().catch(() => {
-          alert("Can't exit fullscreen");
+          window.alert("Can't exit fullscreen");
         });
       }
     }
