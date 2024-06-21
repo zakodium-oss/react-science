@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/zakodium-oss/react-science/compare/v4.1.0...v4.1.1) (2024-06-21)
+
+
+### Bug Fixes
+
+* organize and update dependencies ([#736](https://github.com/zakodium-oss/react-science/issues/736)) ([3134c16](https://github.com/zakodium-oss/react-science/commit/3134c16861a43743281f48c6d52ee93c5e3adfc0))
+
 ## [4.1.0](https://github.com/zakodium-oss/react-science/compare/v4.0.0...v4.1.0) (2024-06-13)
 
 
