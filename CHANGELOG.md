@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.2](https://github.com/zakodium-oss/react-science/compare/v4.1.1...v4.1.2) (2024-06-24)
+
+
+### Bug Fixes
+
+* remove dependency on d3-scale-chromatic types ([#738](https://github.com/zakodium-oss/react-science/issues/738)) ([0e6a485](https://github.com/zakodium-oss/react-science/commit/0e6a4858cebc601fabe4ac94de5d0578904722de))
+
 ## [4.1.1](https://github.com/zakodium-oss/react-science/compare/v4.1.0...v4.1.1) (2024-06-21)
 
 
