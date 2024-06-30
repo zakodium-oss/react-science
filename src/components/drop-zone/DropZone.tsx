@@ -1,7 +1,7 @@
 import { Button, Colors, NonIdealState } from '@blueprintjs/core';
 import type { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
-import { CSSProperties, MouseEventHandler } from 'react';
+import { CSSProperties, MouseEventHandler, ReactElement } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import tinycolor from 'tinycolor2';
 
@@ -59,7 +59,7 @@ export function DropZone(props: DropZoneProps) {
 }
 
 export interface DropZoneContainerProps extends DropZoneProps {
-  children: JSX.Element | null;
+  children: ReactElement | null;
 }
 
 export function DropZoneContainer(props: DropZoneContainerProps) {
@@ -68,7 +68,7 @@ export function DropZoneContainer(props: DropZoneContainerProps) {
 
 function DropZoneContent(
   props: DropZoneProps & {
-    children?: JSX.Element | null;
+    children?: ReactElement | null;
     onClick?: MouseEventHandler<HTMLDivElement>;
     emptyIcon?: IconName;
     emptyTitle?: string;

@@ -9,6 +9,7 @@ import { Table } from '../table/Table';
 
 export interface InfoPanelData {
   description: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, string | number | object | boolean | any>;
 }
 

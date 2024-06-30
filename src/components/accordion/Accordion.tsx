@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import type {
   ReactElement,
   ReactNode,
-  ReactFragment,
   MouseEvent as ReactMouseEvent,
 } from 'react';
 import { useCallback } from 'react';
@@ -14,7 +13,6 @@ export interface AccordionProps {
   children?:
     | Array<ReactElement<AccordionItemProps>>
     | ReactElement<AccordionItemProps>
-    | ReactFragment
     | boolean
     | null;
 }

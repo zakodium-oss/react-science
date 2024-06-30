@@ -1,3 +1,5 @@
+import { ComponentType } from 'react';
+
 import { Table, ValueRenderers } from '../../src/components/index';
 import data from '../data/table.json';
 
@@ -16,7 +18,7 @@ interface ControlProps extends React.HTMLAttributes<HTMLTableElement> {
 export default {
   title: 'Components / Table',
   decorators: [
-    (Story: any) => (
+    (Story: ComponentType) => (
       <div style={{ margin: 12, height: '100%', overflowY: 'auto' }}>
         <Story />
       </div>

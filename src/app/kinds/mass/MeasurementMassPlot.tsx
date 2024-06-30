@@ -1,5 +1,4 @@
 import { xyToXYObject } from 'ml-spectra-processing';
-// @ts-expect-error ms-spectrum has no types at the moment.
 import { getBestPeaks, Spectrum } from 'ms-spectrum';
 import { useMemo } from 'react';
 import {
@@ -93,8 +92,8 @@ function MassComponent(props: MeasurementPlotProps) {
   const bestPeaks = useMemo(
     () =>
       getBestPeaks(peaks, {
-        from: xDomain?.min,
-        to: xDomain?.max,
+        from: xDomain?.min ?? undefined,
+        to: xDomain?.max ?? undefined,
         limit: 10,
         numberSlots: 10,
         threshold: 0.01,

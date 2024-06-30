@@ -4,7 +4,7 @@ import { CSSProperties, ReactNode, useCallback, useState } from 'react';
 
 import { AccordionProvider } from '../accordion';
 
-import { RootLayoutProvider } from './RootLayoutContext';
+import { RootLayoutProvider } from './RootLayoutContext.provider';
 import { CustomDivPreflight } from './css-reset/customPreflight';
 import { queryClient } from './queryClient';
 

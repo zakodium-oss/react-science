@@ -70,7 +70,7 @@ async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
     };
     experiments.push({
       ...getMeasurementInfoFromFile(file, titles[column]),
-      meta: JSON.parse(JSON.stringify(meta)),
+      meta: structuredClone(meta),
       data: [{ variables: { x: xVariable, y: yVariable } }],
     });
   }
