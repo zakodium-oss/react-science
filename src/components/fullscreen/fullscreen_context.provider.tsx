@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import { ReactNode, useEffect, useMemo, useReducer, useRef } from 'react';
 
-import { fullscreenContext, useFullscreen } from './FullscreenContext';
+import { fullscreenContext, useFullscreen } from './fullscreen_context';
 
 type ElementType = HTMLDivElement & {
   webkitRequestFullscreen(): Promise<void>;

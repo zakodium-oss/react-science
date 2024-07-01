@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { rootLayoutContext } from './RootLayoutContext';
+import { rootLayoutContext } from './root_layout_context';
 
 export function RootLayoutProvider(props: {
   children: ReactNode;

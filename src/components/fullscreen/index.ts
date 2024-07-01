@@ -1,3 +1,3 @@
-export * from './FullscreenContext';
-export * from './FullscreenContext.provider';
-export * from './FullscreenToolbarButton';
+export * from './fullscreen_context';
+export * from './fullscreen_context.provider';
+export * from './fullscreen_toolbar_button';
