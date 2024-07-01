@@ -1,6 +1,6 @@
 import { Toolbar } from '../toolbar';
 
-import { useFullscreen } from './FullscreenContext';
+import { useFullscreen } from './fullscreen_context';
 
 export function FullscreenToolbarButton() {
   const { toggle } = useFullscreen();

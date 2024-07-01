@@ -2,6 +2,7 @@
 import { ContextMenu, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { ReactElement } from 'react';
 
 import { Table, ValueRenderers } from '../../src/components/index';
 import data from '../data/table.json';
@@ -93,7 +94,7 @@ function ColumnWithDropdownMenu({
   content,
 }: {
   value: string;
-  content: JSX.Element;
+  content: ReactElement;
 }) {
   return (
     <ContextMenu content={content} tagName="th">

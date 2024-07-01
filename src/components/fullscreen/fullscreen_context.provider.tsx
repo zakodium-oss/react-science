@@ -1,13 +1,7 @@
 /* eslint-disable no-alert */
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-} from 'react';
+import { ReactNode, useEffect, useMemo, useReducer, useRef } from 'react';
+
+import { fullscreenContext, useFullscreen } from './fullscreen_context';
 
 type ElementType = HTMLDivElement & {
   webkitRequestFullscreen(): Promise<void>;
@@ -20,24 +14,7 @@ type DocumentType = Document & {
 interface FullscreenProps {
   children: ReactNode;
 }
-interface FullscreenState {
-  isFullScreen: boolean;
-}
 
-interface ContextType extends FullscreenState {
-  toggle: () => void;
-}
-const fullscreenContextInit = {
-  isFullScreen: false,
-  toggle: () => {
-    // empty
-  },
-};
-const FullscreenContext = createContext<ContextType>(fullscreenContextInit);
-
-export function useFullscreen() {
-  return useContext(FullscreenContext);
-}
 export function FullScreenProvider(props: FullscreenProps) {
   const [isFullScreen, toggle] = useReducer((value: boolean) => !value, false);
 
@@ -46,9 +23,9 @@ export function FullScreenProvider(props: FullscreenProps) {
     [isFullScreen, toggle],
   );
   return (
-    <FullscreenContext.Provider value={value}>
+    <fullscreenContext.Provider value={value}>
       <FullscreenInner {...props} />
-    </FullscreenContext.Provider>
+    </fullscreenContext.Provider>
   );
 }
 function FullscreenInner(props: FullscreenProps) {

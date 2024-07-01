@@ -1,6 +1,6 @@
 import { useEffect, RefObject } from 'react';
 
-import { useRootLayoutContext } from '../root-layout/RootLayoutContext';
+import { useRootLayoutContext } from '../root-layout/root_layout_context';
 
 export function useOnClickOutside<T extends Node = Node>(
   ref: RefObject<T>,

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
   Annotations,
@@ -49,7 +50,7 @@ export default function IvMeasurementsPlot() {
   assert(ivView && !!ivView.xVariable && !!ivView.yVariable);
   const { selectedEntries, unselectedEntries } = splitEntries(appState, 'iv');
 
-  const series: JSX.Element[] = [];
+  const series: ReactElement[] = [];
   for (const { measurement, view } of unselectedEntries) {
     series.push(
       <IvSeries

@@ -70,8 +70,8 @@ export function Control({
             <ValueRenderers.Header value="path" />
             <ValueRenderers.Header value="name" />
           </Table.Header>
-          {files.map(({ name, path }, i) => (
-            <Table.Row key={i}>
+          {files.map(({ name, path }) => (
+            <Table.Row key={`${path}-${name}`}>
               <ValueRenderers.Text value={path} />
               <ValueRenderers.Text value={name} />
             </Table.Row>
@@ -106,8 +106,8 @@ export function DropZoneContainerControl() {
               <ValueRenderers.Header value="path" />
               <ValueRenderers.Header value="name" />
             </Table.Header>
-            {files.map(({ name, path }, i) => (
-              <Table.Row key={i}>
+            {files.map(({ name, path }) => (
+              <Table.Row key={`${path}-${name}`}>
                 <ValueRenderers.Text value={path} />
                 <ValueRenderers.Text value={name} />
               </Table.Row>
