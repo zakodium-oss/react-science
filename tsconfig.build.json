@@ -1,6 +1,7 @@
 {
   "extends": ["./tsconfig.json"],
   "exclude": [
+    "./.storybook",
     "./src/pages",
     "./src/test-utils.ts",
     "./stories",
