@@ -123,7 +123,7 @@
     "cheminfo-font": "^1.13.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
-    "eslint-config-zakodium": "^10.0.0",
+    "eslint-config-zakodium": "^11.0.0",
     "eslint-plugin-storybook": "^0.8.0",
     "fifo-logger": "^1.0.0",
     "prettier": "^3.3.2",
