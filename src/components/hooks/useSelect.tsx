@@ -9,28 +9,30 @@ type FilterType<SourceType, Type> = Pick<
   }[keyof SourceType]
 >;
 
-interface ItemOptions<T> {
+interface UseSelectCommonOptions<T> {
   renderItem?: (item: T) => ReactNode;
   defaultSelectedItem?: T;
 }
 
-interface BaseOptions<T> extends ItemOptions<T> {
+interface UseSelectBaseOptions<T> extends UseSelectCommonOptions<T> {
   itemTextKey: keyof FilterType<T, string>;
 }
 
-interface RenderOptions<T> extends ItemOptions<T> {
+interface UseSelectRenderOptions<T> extends UseSelectCommonOptions<T> {
   getItemText: (item: T) => string;
 }
 
-type SelectOptions<T> = BaseOptions<T> | RenderOptions<T>;
+export type UseSelectOptions<T> =
+  | UseSelectBaseOptions<T>
+  | UseSelectRenderOptions<T>;
 
 function isAccessLabelByKey<T>(
-  options: SelectOptions<T>,
-): options is BaseOptions<T> {
+  options: UseSelectOptions<T>,
+): options is UseSelectBaseOptions<T> {
   return 'itemTextKey' in options;
 }
 
-function getLabel<T>(item: T, options: SelectOptions<T>) {
+function getLabel<T>(item: T, options: UseSelectOptions<T>) {
   const isAccessLByLabelKey = isAccessLabelByKey(options);
 
   if (!item || (isAccessLByLabelKey && !options.itemTextKey)) {
@@ -44,7 +46,7 @@ function getLabel<T>(item: T, options: SelectOptions<T>) {
   return options.getItemText(item);
 }
 
-export function useSelect<T>(options: SelectOptions<T>) {
+export function useSelect<T>(options: UseSelectOptions<T>) {
   const { defaultSelectedItem = null } = options;
 
   const [value, setValue] = useState<T | null>(defaultSelectedItem);
@@ -86,7 +88,7 @@ export function useSelect<T>(options: SelectOptions<T>) {
   };
 }
 
-function getItemRenderer<T>(value: T, options: SelectOptions<T>) {
+function getItemRenderer<T>(value: T, options: UseSelectOptions<T>) {
   const selectedLabel = getLabel(value, options);
 
   const render: ItemRenderer<T> = (
