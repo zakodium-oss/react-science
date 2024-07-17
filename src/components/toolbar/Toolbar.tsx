@@ -22,7 +22,7 @@ import {
   useRef,
 } from 'react';
 
-import { Button } from '../index';
+import { Button } from '../button';
 
 import {
   ToolbarContext,

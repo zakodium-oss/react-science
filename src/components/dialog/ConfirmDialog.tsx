@@ -7,7 +7,7 @@ import {
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 
-import { Button } from '..';
+import { Button } from '../button';
 
 interface ConfirmDialogProps extends Omit<DialogProps, 'isCloseButtonShown'> {
   onConfirm: () => void;
