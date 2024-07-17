@@ -1,14 +1,8 @@
-import {
-  ColumnDef,
-  useReactTable,
-  getCoreRowModel,
-  SortingState,
-  getSortedRowModel,
-} from '@tanstack/react-table';
+import { ColumnDef, SortingState } from '@tanstack/react-table';
 import { useState } from 'react';
 
 import type { IrPeak } from '../../../app-data/index';
-import { Table, ValueRenderers } from '../../../components/index';
+import { Table } from '../../../components/index';
 
 export interface IrColumnPreferences<T extends keyof IrPeak = keyof IrPeak> {
   visible?: boolean;
@@ -53,49 +47,19 @@ export function IrPeaksPanel(props: IrPeaksPanelProps) {
   }
 
   const [sorting, setSorting] = useState<SortingState>([]);
-  const table = useReactTable({
-    data: peaks,
-    columns: defaultColumns,
-    state: {
-      sorting,
-      columnVisibility: getColumnVisibility(),
-    },
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+
   return (
-    <Table bordered>
-      <Table.Header>
-        {table
-          .getHeaderGroups()
-          .map(({ headers }) =>
-            headers.map((header) => (
-              <ValueRenderers.Header
-                style={{ cursor: 'pointer' }}
-                onClick={header.column.getToggleSortingHandler()}
-                key={header.id}
-                value={header.column.columnDef.header?.toString()}
-                sorted={header.column.getIsSorted()}
-              />
-            )),
-          )}
-      </Table.Header>
-      {table.getRowModel().rows.map((row) => (
-        <Table.Row key={row.id}>
-          {row.getVisibleCells().map((cell) => {
-            const value = (cell.column.columnDef.cell as CallableFunction)(
-              cell.getContext(),
-            );
-            return (
-              <ValueRenderers.Text
-                key={cell.id}
-                value={value !== undefined ? value : cell.getValue()}
-              />
-            );
-          })}
-        </Table.Row>
-      ))}
-    </Table>
+    <Table
+      bordered
+      data={peaks}
+      columns={defaultColumns}
+      reactTable={{
+        state: {
+          sorting,
+          columnVisibility: getColumnVisibility(),
+        },
+        onSortingChange: setSorting,
+      }}
+    />
   );
 }

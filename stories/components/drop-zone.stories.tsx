@@ -3,11 +3,11 @@ import { useState } from 'react';
 import type { FileWithPath } from 'react-dropzone';
 
 import {
-  DropZoneContainer,
+  createTableColumnHelper,
   DropZone,
+  DropZoneContainer,
   Table,
-  ValueRenderers,
-} from '../../src/components/index';
+} from '../../src/components';
 
 export default {
   title: 'Components / DropZone',
@@ -30,6 +30,12 @@ function fileValidator(file: File) {
   }
   return null;
 }
+
+const columnHelper = createTableColumnHelper<FileWithPath>();
+const columns = [
+  columnHelper.accessor('path', { header: 'Path' }),
+  columnHelper.accessor('name', { header: 'Name' }),
+];
 
 export function Control({
   emptyIcon,
@@ -64,20 +70,7 @@ export function Control({
           emptyButtonIcon={emptyButtonIcon}
         />
       </div>
-      {files.length > 0 && (
-        <Table>
-          <Table.Header>
-            <ValueRenderers.Header value="path" />
-            <ValueRenderers.Header value="name" />
-          </Table.Header>
-          {files.map(({ name, path }) => (
-            <Table.Row key={`${path}-${name}`}>
-              <ValueRenderers.Text value={path} />
-              <ValueRenderers.Text value={name} />
-            </Table.Row>
-          ))}
-        </Table>
-      )}
+      {files.length > 0 && <Table data={files} columns={columns} />}
     </div>
   );
 }
@@ -101,18 +94,7 @@ export function DropZoneContainerControl() {
         }}
       >
         {files.length > 0 ? (
-          <Table>
-            <Table.Header>
-              <ValueRenderers.Header value="path" />
-              <ValueRenderers.Header value="name" />
-            </Table.Header>
-            {files.map(({ name, path }) => (
-              <Table.Row key={`${path}-${name}`}>
-                <ValueRenderers.Text value={path} />
-                <ValueRenderers.Text value={name} />
-              </Table.Row>
-            ))}
-          </Table>
+          <Table data={files} columns={columns} />
         ) : (
           <div
             style={{
