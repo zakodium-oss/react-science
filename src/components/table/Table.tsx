@@ -2,6 +2,7 @@
 import { HTMLTable } from '@blueprintjs/core';
 import {
   Children,
+  HTMLAttributes,
   isValidElement,
   ReactElement,
   ReactNode,
@@ -28,7 +29,7 @@ function splitChildren(children: ReactNode) {
   }
   return { Rows, Header };
 }
-export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+export interface TableProps extends HTMLAttributes<HTMLTableElement> {
   children?: ReactNode;
   bordered?: boolean;
   compact?: boolean;

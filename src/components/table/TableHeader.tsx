@@ -1,7 +1,9 @@
+import { CSSProperties } from 'react';
+
 import type { TableProps } from './Table';
 import { TableRow } from './TableRow';
 
-const headerStyle: React.CSSProperties = {
+const headerStyle: CSSProperties = {
   position: 'sticky',
   top: 0,
   zIndex: 10,

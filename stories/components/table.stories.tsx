@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { ComponentType, HTMLAttributes } from 'react';
 
 import { Table, ValueRenderers } from '../../src/components/index';
 import data from '../data/table.json';
@@ -7,7 +7,7 @@ interface TableStoryProps {
   border: boolean;
 }
 
-interface ControlProps extends React.HTMLAttributes<HTMLTableElement> {
+interface ControlProps extends HTMLAttributes<HTMLTableElement> {
   bordered?: boolean;
   compact?: boolean;
   interactive?: boolean;
