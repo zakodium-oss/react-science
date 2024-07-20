@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button, MenuItem } from '@blueprintjs/core';
-import { ItemRenderer, Select as BlueprintSelect } from '@blueprintjs/select';
+import { ItemRenderer, Select } from '@blueprintjs/select';
 import * as scaleChromatic from 'd3-scale-chromatic';
 import { FaChevronDown } from 'react-icons/fa';
 
@@ -64,9 +64,7 @@ const renderFilm: ItemRenderer<GradientScaleName> = (
   return (
     <MenuItem
       active={modifiers.active}
-      disabled={modifiers.disabled}
       key={option}
-      // label={option}
       onClick={handleClick}
       onFocus={handleFocus}
       roleStructure="listoption"
@@ -87,7 +85,7 @@ export function GradientSelect(props: GradientSelectProps) {
   const { value, onChange } = props;
   return (
     <GradientSelectListbox>
-      <BlueprintSelect
+      <Select
         popoverProps={{ matchTargetWidth: true }}
         activeItem={value}
         onItemSelect={onChange}
@@ -107,7 +105,7 @@ export function GradientSelect(props: GradientSelectProps) {
           <FixedGradientPreview gradient={value} />
           <GradientSelectChevron />
         </Button>
-      </BlueprintSelect>
+      </Select>
     </GradientSelectListbox>
   );
 }
