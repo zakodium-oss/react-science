@@ -6,15 +6,12 @@ import {
   Intent,
   Popover,
   PopoverProps,
-  TagProps,
   Icon,
   TooltipProps,
 } from '@blueprintjs/core';
-import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
 import {
   cloneElement,
-  JSX,
   MouseEvent,
   ReactElement,
   ReactNode,
@@ -23,7 +20,7 @@ import {
   useRef,
 } from 'react';
 
-import { Button } from '../index';
+import { Button, ButtonProps } from '../index';
 
 import {
   ToolbarContext,
@@ -53,21 +50,17 @@ export interface ToolbarProps extends ToolbarBaseProps {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
-export interface ToolbarItemProps extends ToolbarBaseProps {
-  id?: string;
+export interface ToolbarItemProps
+  extends ToolbarBaseProps,
+    Omit<ButtonProps, 'onClick' | 'tooltipProps'> {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
-  icon: IconName | JSX.Element;
-  active?: boolean;
   onClick?: (
     item: ToolbarItemProps & {
       event: MouseEvent;
     },
   ) => void;
-  className?: string;
   isPopover?: boolean;
-  tag?: ReactNode;
-  tagProps?: Omit<TagProps, 'children'>;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -144,11 +137,11 @@ export function Toolbar(props: ToolbarProps) {
 Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const {
     active = false,
+    minimal = true,
     icon,
     onClick,
     tooltip,
     tooltipProps,
-    id,
     intent: itemIntent,
     disabled: itemDisabled,
     isPopover,
@@ -164,18 +157,17 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const intent = itemIntent ?? toolbarIntent;
   const disabled = itemDisabled ?? toolbarDisabled;
   const resizedIcon =
-    typeof icon === 'string'
+    !icon || typeof icon === 'string'
       ? icon
       : cloneElement(icon, {
           className: icon.props.className
             ? `${icon.props.className} bp5-icon`
             : 'bp5-icon',
         });
-
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
-      minimal
+      minimal={minimal}
       disabled={disabled}
       css={css`
         .${Classes.ICON} {

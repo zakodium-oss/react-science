@@ -13,6 +13,5 @@ export * from './root-layout/index';
 export * from './split-pane/index';
 export * from './table/index';
 export * from './toolbar/index';
-export * from './tool-window/index';
 export * from './utils/index';
 export * as ValueRenderers from './value-renderers/index';
