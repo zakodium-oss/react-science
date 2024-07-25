@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-
 import { Icon, InputGroup } from '@blueprintjs/core';
-import { useEffect, useState } from 'react';
+import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
+import { useEffect, useState } from 'react';
+
 import { Button, Table, ValueRenderers } from '../index';
 
 export interface FileBrowserProps {
@@ -61,70 +61,150 @@ const style = {
     },
   }),
 };
+function getLinksForChildren(children: any[]) {
+  const links: any = {
+    oneD: { ids: [] },
+    twoD: { ids: [] },
+    fid: { ids: [] },
+    ft: { ids: [] },
+    all: { ids: [] },
+  };
+  for (const child of children) {
+    links.all.ids.push(child.id);
+    if (child.is1D) {
+      links.oneD.ids.push(child.id);
+    }
+    if (child.is2D) {
+      links.twoD.ids.push(child.id);
+    }
+    if (child.isFid) {
+      links.fid.ids.push(child.id);
+    }
+    if (child.isFt) {
+      links.ft.ids.push(child.id);
+    }
+  }
+  return links;
+}
+function getLastModified(entry: any) {
+  let lastModified = 0;
+  for (const child of entry.children) {
+    if (child.lastModified > lastModified) {
+      lastModified = child.lastModified;
+    }
+  }
+  return lastModified;
+}
+const dbURL = 'https:/nmrdb.cheminfo.org/';
+async function processQuery(query: string) {
+  const params = new URLSearchParams();
+  params.set('query', query);
+
+  const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
+  const answer = await response.json();
+  const entries = answer.result;
+
+  for (const entry of entries) {
+    entry.links = getLinksForChildren(entry.children);
+    entry.lastModified = getLastModified(entry);
+  }
+  return entries;
+  // displayTable(entries);
+}
+function findCommonParentFolder(paths: any) {
+  paths = paths.sort();
+  const first = paths[0];
+  const last = paths.at(-1);
+  let i = 0;
+  for (; i < first.length && first[i] === last[i]; i++);
+  const common = first.slice(0, i);
+  return common.split('/').slice(0, -1).join('/');
+}
+function getDownloadLink(entry: any) {
+  if (entry.children.length === 0) {
+    return '';
+  }
+  const source = entry.children[0].source;
+  const relativePath = findCommonParentFolder(
+    entry.children.map((child: any) => child.relativePath),
+  );
+  const params = new URLSearchParams();
+  params.set('source', source);
+  params.set('relativePath', relativePath);
+  const link = `${dbURL}v1/getZip?${params.toString()}`;
+
+  return (
+    <a
+      href={link}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      🔗
+    </a>
+  );
+}
+
+function epochToString(epoch: any) {
+  const epochNow = Date.now();
+  const difference = Math.abs(epoch - epochNow);
+  const milliInDay = 1000 * 60 * 60 * 24;
+  const milliInHour = 1000 * 60 * 60;
+
+  let nbDays = Math.round(difference / milliInDay);
+
+  if (nbDays > 30) {
+    return new Date(epoch).toISOString().slice(0, 16).replace('T', ' ');
+  }
+
+  const nbHour = Math.round(difference / milliInHour);
+
+  const relativeHour = (nbDays === 0 ? nbHour : nbHour - nbDays * 24) % 24;
+
+  if (nbHour === 0) {
+    nbDays += 1;
+  } else if (nbHour === (nbDays - 1) * 24) {
+    nbDays -= 1;
+  }
+
+  const dayS = nbDays > 1 ? 'days' : 'day';
+  const hourS = relativeHour > 1 ? 'hours' : 'hour';
+
+  let fullString = '';
+
+  if (nbDays > 0) {
+    fullString += `${nbDays} ${dayS}`;
+    if (relativeHour > 0) {
+      fullString += ' ';
+    }
+  }
+
+  if (relativeHour > 0) {
+    fullString += `${relativeHour} ${hourS}`;
+  }
+
+  if (epoch > epochNow) {
+    return `Will be in ${fullString}`;
+  } else if (epoch === epochNow || (relativeHour === 0 && nbDays === 0)) {
+    return 'Now';
+  } else {
+    return `${fullString} ago`;
+  }
+}
 export function FileBrowser(props: FileBrowserProps) {
   const { setSpectra } = props;
-  const dbURL = 'https:/nmrdb.cheminfo.org/';
 
   const [entries, setEntries] = useState<any>([]);
   const [total, setTotal] = useState(0);
-  function getLinksForChildren(children: any[]) {
-    const links: any = {
-      oneD: { ids: [] },
-      twoD: { ids: [] },
-      fid: { ids: [] },
-      ft: { ids: [] },
-      all: { ids: [] },
-    };
-    for (const child of children) {
-      links.all.ids.push(child.id);
-      if (child.is1D) {
-        links.oneD.ids.push(child.id);
-      }
-      if (child.is2D) {
-        links.twoD.ids.push(child.id);
-      }
-      if (child.isFid) {
-        links.fid.ids.push(child.id);
-      }
-      if (child.isFt) {
-        links.ft.ids.push(child.id);
-      }
-    }
-    return links;
-  }
-  function getLastModified(entry: any) {
-    let lastModified = 0;
-    for (const child of entry.children) {
-      if (child.lastModified > lastModified) {
-        lastModified = child.lastModified;
-      }
-    }
-    return lastModified;
-  }
-  async function processQuery(query: string) {
-    const params = new URLSearchParams();
-    params.set('query', query);
 
-    const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
-    const answer = await response.json();
-    const entries = answer.result;
-
-    for (const entry of entries) {
-      entry.links = getLinksForChildren(entry.children);
-      entry.lastModified = getLastModified(entry);
-    }
-    return entries;
-    // displayTable(entries);
-  }
-
-  const labels: any = {
-    all: 'All',
-    oneD: '1D',
-    twoD: '2D',
-    fid: 'FID',
-    ft: 'FT',
-  };
   function getLink(entry: any, kind: any) {
+    const labels: any = {
+      all: 'All',
+      oneD: '1D',
+      twoD: '2D',
+      fid: 'FID',
+      ft: 'FT',
+    };
     const label = labels[kind];
     const ids = entry.links[kind].ids;
     if (ids.length === 0) {
@@ -161,93 +241,14 @@ export function FileBrowser(props: FileBrowserProps) {
       </Button>
     );
   }
-
-  function findCommonParentFolder(paths: any) {
-    paths = paths.sort();
-    const first = paths[0];
-    const last = paths.at(-1);
-    let i = 0;
-    for (; i < first.length && first[i] === last[i]; i++);
-    const common = first.slice(0, i);
-    return common.split('/').slice(0, -1).join('/');
-  }
-  function getDownloadLink(entry: any) {
-    if (entry.children.length === 0) {
-      return '';
-    }
-    const source = entry.children[0].source;
-    const relativePath = findCommonParentFolder(
-      entry.children.map((child: any) => child.relativePath),
-    );
-    const params = new URLSearchParams();
-    params.set('source', source);
-    params.set('relativePath', relativePath);
-    const link = `${dbURL}v1/getZip?${params.toString()}`;
-
-    return (
-      <a
-        href={link}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        🔗
-      </a>
-    );
-  }
-
-  function epochToString(epoch: any) {
-    const epochNow = Date.now();
-    const difference = Math.abs(epoch - epochNow);
-    const milliInDay = 1000 * 60 * 60 * 24;
-    const milliInHour = 1000 * 60 * 60;
-
-    let nbDays = Math.round(difference / milliInDay);
-
-    if (nbDays > 30) {
-      return new Date(epoch).toISOString().slice(0, 16).replace('T', ' ');
-    }
-
-    const nbHour = Math.round(difference / milliInHour);
-
-    let relativeHour = (nbDays === 0 ? nbHour : nbHour - nbDays * 24) % 24;
-
-    if (nbHour === 0) {
-      nbDays += 1;
-    } else if (nbHour === (nbDays - 1) * 24) {
-      nbDays -= 1;
-    }
-
-    const dayS = nbDays > 1 ? 'days' : 'day';
-    const hourS = relativeHour > 1 ? 'hours' : 'hour';
-
-    let fullString = '';
-
-    if (nbDays > 0) {
-      fullString += `${nbDays} ${dayS}`;
-      if (relativeHour > 0) {
-        fullString += ' ';
-      }
-    }
-
-    if (relativeHour > 0) {
-      fullString += `${relativeHour} ${hourS}`;
-    }
-
-    if (epoch > epochNow) {
-      return `Will be in ${fullString}`;
-    } else if (epoch === epochNow || (relativeHour === 0 && nbDays === 0)) {
-      return 'Now';
-    } else {
-      return `${fullString} ago`;
-    }
-  }
   const displayFirst = 100;
   useEffect(() => {
-    processQuery('').then((entries) => {
-      setEntries(entries);
-      setTotal(entries.length);
-    });
+    processQuery('')
+      .then((entries) => {
+        setEntries(entries);
+        setTotal(entries.length);
+      })
+      .catch(() => {});
   }, []);
 
   return (
@@ -279,16 +280,18 @@ export function FileBrowser(props: FileBrowserProps) {
           placeholder="Search for a parameter"
           onChange={({ target }) => {
             if (target.value !== undefined) {
-              processQuery(target.value).then((entries) => {
-                setEntries(entries);
-              });
+              processQuery(target.value)
+                .then((entries) => {
+                  setEntries(entries);
+                })
+                .catch(() => {});
             }
           }}
           leftIcon="search"
           type="search"
           fill
         />
-        [{entries.length}/{total}]<div id="selection"></div>
+        [{entries.length}/{total}]<div id="selection" />
       </div>
       <div
         style={{

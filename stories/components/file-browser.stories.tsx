@@ -1,6 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-
 import { FileBrowser } from '../../src/components/index';
 
 export default {
