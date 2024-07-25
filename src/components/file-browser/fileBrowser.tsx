@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { Icon, InputGroup } from '@blueprintjs/core';
+import { AnchorButton, Icon, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useEffect, useState } from 'react';
-
+// @ts-ignore - no type definitions
+import TimeDiff from 'js-time-diff';
 import { Button, Table, ValueRenderers } from '../index';
 
 export interface FileBrowserProps {
   setSpectra?: (ids: string | string[]) => void;
+  appendSpectra?: (ids: string | string[]) => void;
 }
 
 const style = {
@@ -42,10 +44,6 @@ const style = {
     transition: 'all 0.3s ease-in-out',
   }),
   button: css({
-    zIndex: 10,
-    position: 'sticky',
-    // height: 30,
-    top: 0,
     "&[data-state='open'] > span": {
       rotate: '90deg',
     },
@@ -86,6 +84,22 @@ function getLinksForChildren(children: any[]) {
   }
   return links;
 }
+const timer = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const createThrottler = (rateLimit: number) => {
+  let requestTimestamp = 0;
+  return (requestHandler: any) => {
+    return async (...params: any) => {
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+      if (currentTimestamp < requestTimestamp + rateLimit) {
+        await timer(rateLimit - (currentTimestamp - requestTimestamp));
+      }
+      requestTimestamp = Math.floor(Date.now() / 1000);
+      return await requestHandler(...params);
+    };
+  };
+};
+
 function getLastModified(entry: any) {
   let lastModified = 0;
   for (const child of entry.children) {
@@ -100,7 +114,11 @@ async function processQuery(query: string) {
   const params = new URLSearchParams();
   params.set('query', query);
 
-  const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
+  const throttle = createThrottler(200);
+  const throttleFetch = throttle(fetch);
+  const response = await throttleFetch(
+    `${dbURL}v1/searchNMRs?${params.toString()}`,
+  );
   const answer = await response.json();
   const entries = answer.result;
 
@@ -109,7 +127,6 @@ async function processQuery(query: string) {
     entry.lastModified = getLastModified(entry);
   }
   return entries;
-  // displayTable(entries);
 }
 function findCommonParentFolder(paths: any) {
   paths = paths.sort();
@@ -134,67 +151,40 @@ function getDownloadLink(entry: any) {
   const link = `${dbURL}v1/getZip?${params.toString()}`;
 
   return (
-    <a
+    <AnchorButton
       href={link}
       onClick={(e) => {
         e.stopPropagation();
       }}
-    >
-      🔗
-    </a>
+      minimal
+      icon="import"
+    />
   );
 }
 
-function epochToString(epoch: any) {
-  const epochNow = Date.now();
-  const difference = Math.abs(epoch - epochNow);
-  const milliInDay = 1000 * 60 * 60 * 24;
-  const milliInHour = 1000 * 60 * 60;
-
-  let nbDays = Math.round(difference / milliInDay);
-
-  if (nbDays > 30) {
-    return new Date(epoch).toISOString().slice(0, 16).replace('T', ' ');
+function getDim(child: any) {
+  if (child.is1D) {
+    return '1D';
   }
-
-  const nbHour = Math.round(difference / milliInHour);
-
-  const relativeHour = (nbDays === 0 ? nbHour : nbHour - nbDays * 24) % 24;
-
-  if (nbHour === 0) {
-    nbDays += 1;
-  } else if (nbHour === (nbDays - 1) * 24) {
-    nbDays -= 1;
+  if (child.is2D) {
+    return '2D';
   }
-
-  const dayS = nbDays > 1 ? 'days' : 'day';
-  const hourS = relativeHour > 1 ? 'hours' : 'hour';
-
-  let fullString = '';
-
-  if (nbDays > 0) {
-    fullString += `${nbDays} ${dayS}`;
-    if (relativeHour > 0) {
-      fullString += ' ';
-    }
+  return '';
+}
+function getType(child: any) {
+  if (child.isFid) {
+    return 'FID';
   }
-
-  if (relativeHour > 0) {
-    fullString += `${relativeHour} ${hourS}`;
+  if (child.isFt) {
+    return 'FT';
   }
-
-  if (epoch > epochNow) {
-    return `Will be in ${fullString}`;
-  } else if (epoch === epochNow || (relativeHour === 0 && nbDays === 0)) {
-    return 'Now';
-  } else {
-    return `${fullString} ago`;
-  }
+  return '';
 }
 export function FileBrowser(props: FileBrowserProps) {
-  const { setSpectra } = props;
+  const { setSpectra, appendSpectra } = props;
 
   const [entries, setEntries] = useState<any>([]);
+  const [opened, setOpened] = useState<string>('');
   const [total, setTotal] = useState(0);
 
   function getLink(entry: any, kind: any) {
@@ -213,11 +203,12 @@ export function FileBrowser(props: FileBrowserProps) {
           onClick={(e) => {
             e.stopPropagation();
           }}
-          tooltipProps={{ content: `No spectra` }}
+          // tooltipProps={{ content: `No spectra`, position: 'bottom-left' }}
           style={{
             borderRadius: '5px',
             padding: '5px',
           }}
+          disabled
         >
           {label}
         </Button>
@@ -229,7 +220,10 @@ export function FileBrowser(props: FileBrowserProps) {
           e.stopPropagation();
           setSpectra?.(ids);
         }}
-        tooltipProps={{ content: `Nb spectra: ${ids.length}` }}
+        tooltipProps={{
+          content: `Nb spectra: ${ids.length}`,
+          position: 'bottom-left',
+        }}
         intent="success"
         style={{
           borderRadius: '5px',
@@ -303,7 +297,18 @@ export function FileBrowser(props: FileBrowserProps) {
         }}
       >
         {entries.slice(0, displayFirst).map((entry: any) => (
-          <Collapsible.Root key={entry.groupName} className="CollapsibleRoot">
+          <Collapsible.Root
+            key={entry.groupName}
+            className="CollapsibleRoot"
+            open={opened === entry.groupName}
+            onOpenChange={(open) => {
+              if (open) {
+                setOpened(entry.groupName);
+              } else {
+                setOpened('');
+              }
+            }}
+          >
             <Collapsible.Trigger asChild css={style.button}>
               <div>
                 <Icon icon="chevron-right" css={style.chevron} />
@@ -313,7 +318,7 @@ export function FileBrowser(props: FileBrowserProps) {
                     justifyContent: 'space-between',
                     width: '100%',
                     gap: '10px',
-                    marginLeft: '5px',
+                    marginLeft: '10px',
                   }}
                 >
                   <div
@@ -324,7 +329,13 @@ export function FileBrowser(props: FileBrowserProps) {
                   >
                     {entry.groupName}
                   </div>
-                  <div>{epochToString(entry.lastModified)}</div>
+                  <div
+                    style={{
+                      alignSelf: 'center',
+                    }}
+                  >
+                    {TimeDiff(entry.lastModified)}
+                  </div>
                   <div
                     style={{
                       display: 'flex',
@@ -337,7 +348,13 @@ export function FileBrowser(props: FileBrowserProps) {
                     {getLink(entry, 'ft')}
                     {getLink(entry, 'all')}
                   </div>
-                  <div>{getDownloadLink(entry)}</div>
+                  <div
+                    style={{
+                      alignSelf: 'center',
+                    }}
+                  >
+                    {getDownloadLink(entry)}
+                  </div>
                 </div>
               </div>
             </Collapsible.Trigger>
@@ -363,28 +380,37 @@ export function FileBrowser(props: FileBrowserProps) {
                         .slice(0, 16)
                         .replace('T', ' ')}
                     />
-                    <ValueRenderers.Text value={child.is1D ? '1D' : ''} />
-                    <ValueRenderers.Text value={child.is2D ? '2D' : ''} />
-                    <ValueRenderers.Text value={child.isFid ? 'FID' : ''} />
-                    <ValueRenderers.Text value={child.isFt ? 'FT' : ''} />
+                    <ValueRenderers.Text value={getDim(child)} />
+                    <ValueRenderers.Text value={getType(child)} />
                     <ValueRenderers.Text value={child.solvent} />
                     <ValueRenderers.Text value={child.frequency.toFixed(0)} />
                     <ValueRenderers.Text value={child.pulseSequence} />
                     <ValueRenderers.Component>
-                      <Button
-                        onClick={() => setSpectra?.(child._nmrID)}
-                        intent="success"
+                      <div
+                        style={{
+                          display: 'flex',
+                          gap: '5px',
+                        }}
                       >
-                        Append
-                      </Button>
-                    </ValueRenderers.Component>
-                    <ValueRenderers.Component>
-                      <Button
-                        onClick={() => setSpectra?.(child._nmrID)}
-                        intent="success"
-                      >
-                        Set
-                      </Button>
+                        <Button
+                          onClick={() => appendSpectra?.(child._nmrID)}
+                          tooltipProps={{
+                            content: 'Append',
+                            position: 'bottom-left',
+                          }}
+                          icon="add"
+                          minimal
+                        />
+                        <Button
+                          onClick={() => setSpectra?.(child._nmrID)}
+                          tooltipProps={{
+                            content: 'Set',
+                            position: 'bottom-left',
+                          }}
+                          icon="reset"
+                          minimal
+                        />
+                      </div>
                     </ValueRenderers.Component>
                   </Table.Row>
                 ))}
