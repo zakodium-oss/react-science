@@ -2,9 +2,9 @@
 import { AnchorButton, Icon, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
+import { formatDistance } from 'date-fns';
 import { useEffect, useState } from 'react';
-// @ts-ignore - no type definitions
-import TimeDiff from 'js-time-diff';
+
 import { Button, Table, ValueRenderers } from '../index';
 
 export interface FileBrowserProps {
@@ -84,21 +84,6 @@ function getLinksForChildren(children: any[]) {
   }
   return links;
 }
-const timer = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const createThrottler = (rateLimit: number) => {
-  let requestTimestamp = 0;
-  return (requestHandler: any) => {
-    return async (...params: any) => {
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-      if (currentTimestamp < requestTimestamp + rateLimit) {
-        await timer(rateLimit - (currentTimestamp - requestTimestamp));
-      }
-      requestTimestamp = Math.floor(Date.now() / 1000);
-      return await requestHandler(...params);
-    };
-  };
-};
 
 function getLastModified(entry: any) {
   let lastModified = 0;
@@ -114,11 +99,7 @@ async function processQuery(query: string) {
   const params = new URLSearchParams();
   params.set('query', query);
 
-  const throttle = createThrottler(200);
-  const throttleFetch = throttle(fetch);
-  const response = await throttleFetch(
-    `${dbURL}v1/searchNMRs?${params.toString()}`,
-  );
+  const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
   const answer = await response.json();
   const entries = answer.result;
 
@@ -334,7 +315,9 @@ export function FileBrowser(props: FileBrowserProps) {
                       alignSelf: 'center',
                     }}
                   >
-                    {TimeDiff(entry.lastModified)}
+                    {formatDistance(entry.lastModified, new Date(), {
+                      addSuffix: true,
+                    })}
                   </div>
                   <div
                     style={{
