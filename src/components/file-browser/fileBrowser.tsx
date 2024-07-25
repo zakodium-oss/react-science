@@ -213,12 +213,11 @@ export function FileBrowser(props: FileBrowserProps) {
           onClick={(e) => {
             e.stopPropagation();
           }}
-          title="No spectra"
+          tooltipProps={{ content: `No spectra` }}
           style={{
             borderRadius: '5px',
             padding: '5px',
           }}
-          disabled
         >
           {label}
         </Button>
@@ -230,7 +229,7 @@ export function FileBrowser(props: FileBrowserProps) {
           e.stopPropagation();
           setSpectra?.(ids);
         }}
-        title={`Nb spectra: ${ids.length}`}
+        tooltipProps={{ content: `Nb spectra: ${ids.length}` }}
         intent="success"
         style={{
           borderRadius: '5px',
@@ -329,14 +328,14 @@ export function FileBrowser(props: FileBrowserProps) {
                   <div
                     style={{
                       display: 'flex',
-                      gap: '1px',
+                      gap: '2px',
                     }}
                   >
-                    <div>{getLink(entry, 'oneD')}</div>
-                    <div>{getLink(entry, 'twoD')}</div>
-                    <div>{getLink(entry, 'fid')}</div>
-                    <div>{getLink(entry, 'ft')}</div>
-                    <div>{getLink(entry, 'all')}</div>
+                    {getLink(entry, 'oneD')}
+                    {getLink(entry, 'twoD')}
+                    {getLink(entry, 'fid')}
+                    {getLink(entry, 'ft')}
+                    {getLink(entry, 'all')}
                   </div>
                   <div>{getDownloadLink(entry)}</div>
                 </div>
