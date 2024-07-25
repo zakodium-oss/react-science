@@ -15,3 +15,4 @@ export * from './table/index';
 export * from './toolbar/index';
 export * from './utils/index';
 export * as ValueRenderers from './value-renderers/index';
+export * from './file-browser/index';
