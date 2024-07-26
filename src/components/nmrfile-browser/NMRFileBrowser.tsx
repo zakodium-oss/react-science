@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { Button, Table, ValueRenderers } from '../index';
 
-export interface FileBrowserProps {
+export interface NMRFileBrowserProps {
   setSpectra?: (ids: string | string[]) => void;
   appendSpectra?: (ids: string | string[]) => void;
 }
@@ -49,6 +49,7 @@ const style = {
     },
     cursor: 'pointer',
     borderBottom: '1px solid #f5f5f5',
+    borderTop: '1px solid #f5f5f5',
     backgroundColor: 'white',
     display: 'flex',
     alignItems: 'center',
@@ -59,8 +60,33 @@ const style = {
     },
   }),
 };
-function getLinksForChildren(children: any[]) {
-  const links: any = {
+interface NMREntryChild {
+  id: string;
+  is1D: boolean;
+  is2D: boolean;
+  isFid: boolean;
+  isFt: boolean;
+  lastModified: number;
+  solvent: string;
+  frequency: number;
+  pulseSequence: string;
+  _nmrID: string;
+  relativePath: string;
+  source: string;
+}
+
+interface NMREntryLink {
+  ids: string[];
+}
+interface NMREntry {
+  groupName: string;
+  lastModified: number;
+  children: NMREntryChild[];
+  links: Record<SpectrumKinds, NMREntryLink>;
+}
+type SpectrumKinds = 'all' | 'oneD' | 'twoD' | 'fid' | 'ft';
+function getLinksForChildren(children: NMREntryChild[]) {
+  const links: Record<SpectrumKinds, NMREntryLink> = {
     oneD: { ids: [] },
     twoD: { ids: [] },
     fid: { ids: [] },
@@ -85,7 +111,7 @@ function getLinksForChildren(children: any[]) {
   return links;
 }
 
-function getLastModified(entry: any) {
+function getLastModified(entry: NMREntry) {
   let lastModified = 0;
   for (const child of entry.children) {
     if (child.lastModified > lastModified) {
@@ -109,22 +135,22 @@ async function processQuery(query: string) {
   }
   return entries;
 }
-function findCommonParentFolder(paths: any) {
+function findCommonParentFolder(paths: string[]) {
   paths = paths.sort();
   const first = paths[0];
-  const last = paths.at(-1);
+  const last = paths.at(-1) || '';
   let i = 0;
   for (; i < first.length && first[i] === last[i]; i++);
   const common = first.slice(0, i);
   return common.split('/').slice(0, -1).join('/');
 }
-function getDownloadLink(entry: any) {
+function getDownloadLink(entry: NMREntry) {
   if (entry.children.length === 0) {
     return '';
   }
   const source = entry.children[0].source;
   const relativePath = findCommonParentFolder(
-    entry.children.map((child: any) => child.relativePath),
+    entry.children.map((child: NMREntryChild) => child.relativePath),
   );
   const params = new URLSearchParams();
   params.set('source', source);
@@ -143,7 +169,7 @@ function getDownloadLink(entry: any) {
   );
 }
 
-function getDim(child: any) {
+function getDim(child: NMREntryChild) {
   if (child.is1D) {
     return '1D';
   }
@@ -152,7 +178,7 @@ function getDim(child: any) {
   }
   return '';
 }
-function getType(child: any) {
+function getType(child: NMREntryChild) {
   if (child.isFid) {
     return 'FID';
   }
@@ -161,15 +187,15 @@ function getType(child: any) {
   }
   return '';
 }
-export function FileBrowser(props: FileBrowserProps) {
+export function NMRFileBrowser(props: NMRFileBrowserProps) {
   const { setSpectra, appendSpectra } = props;
 
-  const [entries, setEntries] = useState<any>([]);
+  const [entries, setEntries] = useState<NMREntry[]>([]);
   const [opened, setOpened] = useState<string>('');
   const [total, setTotal] = useState(0);
 
-  function getLink(entry: any, kind: any) {
-    const labels: any = {
+  function getLink(entry: NMREntry, kind: SpectrumKinds) {
+    const labels: Record<SpectrumKinds, string> = {
       all: 'All',
       oneD: '1D',
       twoD: '2D',
@@ -277,7 +303,7 @@ export function FileBrowser(props: FileBrowserProps) {
           flex: 1,
         }}
       >
-        {entries.slice(0, displayFirst).map((entry: any) => (
+        {entries.slice(0, displayFirst).map((entry: NMREntry) => (
           <Collapsible.Root
             key={entry.groupName}
             className="CollapsibleRoot"
@@ -305,14 +331,23 @@ export function FileBrowser(props: FileBrowserProps) {
                   <div
                     style={{
                       alignSelf: 'center',
-                      flex: 1,
+                      flex: 2,
                     }}
                   >
-                    {entry.groupName}
+                    {/* if name is long use ... */}
+                    {entry.groupName.slice(0, 30)}
+                    {opened !== entry.groupName && entry.groupName.length > 30
+                      ? '...'
+                      : ''}
+                    <br />
+                    {opened === entry.groupName
+                      ? entry.groupName.slice(30)
+                      : ''}
                   </div>
                   <div
                     style={{
                       alignSelf: 'center',
+                      flex: 1,
                     }}
                   >
                     {formatDistance(entry.lastModified, new Date(), {
@@ -322,6 +357,7 @@ export function FileBrowser(props: FileBrowserProps) {
                   <div
                     style={{
                       display: 'flex',
+                      alignSelf: 'center',
                       gap: '2px',
                     }}
                   >
@@ -349,9 +385,9 @@ export function FileBrowser(props: FileBrowserProps) {
                 })}
                 compact
               >
-                {entry.children.map((child: any, i: number) => (
+                {entry.children.map((child: NMREntryChild) => (
                   <Table.Row
-                    key={i}
+                    key={child.id}
                     style={{
                       height: '10px',
                       padding: '0 !imporant',

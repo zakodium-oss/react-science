@@ -1,13 +1,13 @@
-import { FileBrowser } from '../../src/components/index';
+import { NMRFileBrowser } from '../../src/components/index';
 
 export default {
-  title: 'Components / FileBrowser',
+  title: 'Components / NMRFileBrowser',
 };
 
 export function Basic() {
   return (
     <div style={{ width: '700px', height: '100%' }}>
-      <FileBrowser />
+      <NMRFileBrowser />
     </div>
   );
 }
