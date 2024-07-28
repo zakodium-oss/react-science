@@ -7,11 +7,6 @@ import { useEffect, useState } from 'react';
 
 import { Button, Table, ValueRenderers } from '../index';
 
-export interface NMRFileBrowserProps {
-  setSpectra?: (ids: string | string[]) => void;
-  appendSpectra?: (ids: string | string[]) => void;
-}
-
 const style = {
   content: css({
     overflow: 'hidden',
@@ -60,6 +55,8 @@ const style = {
     },
   }),
 };
+
+type SpectrumKinds = 'all' | 'oneD' | 'twoD' | 'fid' | 'ft';
 interface NMREntryChild {
   id: string;
   is1D: boolean;
@@ -84,7 +81,7 @@ interface NMREntry {
   children: NMREntryChild[];
   links: Record<SpectrumKinds, NMREntryLink>;
 }
-type SpectrumKinds = 'all' | 'oneD' | 'twoD' | 'fid' | 'ft';
+
 function getLinksForChildren(children: NMREntryChild[]) {
   const links: Record<SpectrumKinds, NMREntryLink> = {
     oneD: { ids: [] },
@@ -120,14 +117,34 @@ function getLastModified(entry: NMREntry) {
   }
   return lastModified;
 }
-const dbURL = 'https:/nmrdb.cheminfo.org/';
-async function processQuery(query: string) {
-  const params = new URLSearchParams();
-  params.set('query', query);
 
-  const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
-  const answer = await response.json();
-  const entries = answer.result;
+const dbURL = 'https://nmrdb.cheminfo.org/';
+
+function throttle<T extends (...args: any[]) => any>(func: T, delay: number) {
+  let lastCall = 0;
+  return (...args: any) => {
+    const now = Date.now();
+    if (now - lastCall < delay) {
+      return;
+    }
+    lastCall = now;
+    return func(...args);
+  };
+}
+
+async function processQuery(query: string) {
+  const throttledFetch = throttle(async (query: string): Promise<any> => {
+    const params = new URLSearchParams();
+    params.set('query', query);
+
+    const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
+    const answer = await response.json();
+
+    return answer;
+  }, 200);
+
+  const response = await throttledFetch(query);
+  const entries = response.result;
 
   for (const entry of entries) {
     entry.links = getLinksForChildren(entry.children);
@@ -135,6 +152,7 @@ async function processQuery(query: string) {
   }
   return entries;
 }
+
 function findCommonParentFolder(paths: string[]) {
   paths = paths.sort();
   const first = paths[0];
@@ -144,6 +162,7 @@ function findCommonParentFolder(paths: string[]) {
   const common = first.slice(0, i);
   return common.split('/').slice(0, -1).join('/');
 }
+
 function getDownloadLink(entry: NMREntry) {
   if (entry.children.length === 0) {
     return '';
@@ -178,6 +197,7 @@ function getDim(child: NMREntryChild) {
   }
   return '';
 }
+
 function getType(child: NMREntryChild) {
   if (child.isFid) {
     return 'FID';
@@ -187,6 +207,12 @@ function getType(child: NMREntryChild) {
   }
   return '';
 }
+
+export interface NMRFileBrowserProps {
+  setSpectra?: (ids: string | string[]) => void;
+  appendSpectra?: (ids: string | string[]) => void;
+}
+
 export function NMRFileBrowser(props: NMRFileBrowserProps) {
   const { setSpectra, appendSpectra } = props;
 
@@ -210,7 +236,6 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           onClick={(e) => {
             e.stopPropagation();
           }}
-          // tooltipProps={{ content: `No spectra`, position: 'bottom-left' }}
           style={{
             borderRadius: '5px',
             padding: '5px',
