@@ -1,13 +1,27 @@
-import { NMRFileBrowser } from '../../src/components/index';
+import {
+  NMRFileBrowser,
+  NMRFileBrowserProps,
+} from '../../src/components/index';
 
 export default {
   title: 'Components / NMRFileBrowser',
 };
 
-export function Basic() {
+const actions = {
+  setSpectra: {
+    action: 'Spectra loaded',
+  },
+  appendSpectra: {
+    action: 'Spectra appended',
+  },
+};
+
+export function Basic(props: NMRFileBrowserProps) {
   return (
     <div style={{ width: '700px', height: '100%' }}>
-      <NMRFileBrowser />
+      <NMRFileBrowser {...props} />
     </div>
   );
 }
+
+Basic.argTypes = actions;
