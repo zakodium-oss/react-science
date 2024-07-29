@@ -85,6 +85,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
     >
       <div
         onClick={onClickHandle}
+        role="button"
         style={{
           display: 'flex',
           alignItems: 'center',
