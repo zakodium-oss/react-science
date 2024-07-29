@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.3](https://github.com/zakodium-oss/react-science/compare/v4.1.2...v4.1.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* export useSelect hook's parameter type ([#742](https://github.com/zakodium-oss/react-science/issues/742)) ([f672494](https://github.com/zakodium-oss/react-science/commit/f6724946f2e448cc37b97ae6bdea2d4204abb31b))
+* replace 'button' with 'div' to prevent nested button ([#749](https://github.com/zakodium-oss/react-science/issues/749)) ([633d2ec](https://github.com/zakodium-oss/react-science/commit/633d2ec54eb88b81dccb5338ed6a9eb5e9246bcf))
+
 ## [4.1.2](https://github.com/zakodium-oss/react-science/compare/v4.1.1...v4.1.2) (2024-06-24)
 
 
