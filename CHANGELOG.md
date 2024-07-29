@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.0.0](https://github.com/zakodium-oss/react-science/compare/v4.1.3...v5.0.0) (2024-07-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* reimplement Table component with react-table
+
+### Features
+
+* reimplement Table component with react-table ([52251d4](https://github.com/zakodium-oss/react-science/commit/52251d49a0c9f8ad504a95e68e863314f7e62f66))
+
+
+### Bug Fixes
+
+* do not use `React` global type ([1566417](https://github.com/zakodium-oss/react-science/commit/1566417c74af615a45ce0b146062fd106bd4d65c))
+* use `ReactElement` instead of `JSX.Element` ([2921eb2](https://github.com/zakodium-oss/react-science/commit/2921eb230d290f63ae4e92f75f9f83657f322ca4))
+
 ## [4.1.3](https://github.com/zakodium-oss/react-science/compare/v4.1.2...v4.1.3) (2024-07-29)
 
 
