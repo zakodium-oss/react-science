@@ -77,6 +77,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
 
   return (
     <div
+      key={title}
       style={{
         flex: item?.isOpen ? '1 1 1px' : 'none',
         display: 'flex',
