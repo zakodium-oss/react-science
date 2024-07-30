@@ -54,7 +54,7 @@ export interface GradientSelectProps {
   value: GradientScaleName;
   onChange: (value: GradientScaleName) => void;
 }
-const renderFilm: ItemRenderer<GradientScaleName> = (
+const renderItem: ItemRenderer<GradientScaleName> = (
   option,
   { handleClick, handleFocus, modifiers },
 ) => {
@@ -90,7 +90,7 @@ export function GradientSelect(props: GradientSelectProps) {
         activeItem={value}
         onItemSelect={onChange}
         items={scaleOptions}
-        itemRenderer={renderFilm}
+        itemRenderer={renderItem}
         filterable={false}
         fill
       >
