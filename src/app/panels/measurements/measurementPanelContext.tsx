@@ -1,5 +1,5 @@
 import { Panel } from '@blueprintjs/core';
-import { createContext, useContext } from 'react';
+import { createContext, type ReactNode, useContext } from 'react';
 
 export interface MeasurementState {
   openPanel?: (panel: Panel<object>) => void;
@@ -21,7 +21,7 @@ export function MeasurementPanelProvider({
   children,
   value,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   value: MeasurementState;
 }) {
   return (

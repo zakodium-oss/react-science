@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { CSSProperties, useCallback, useMemo, useState } from 'react';
 
-import { ValueRenderers } from '../index';
-import { Table } from '../table/Table';
+import { createTableColumnHelper, Table } from '../table';
+import * as ValueRenderers from '../value-renderers';
 
 export interface InfoPanelData {
   description: string;
@@ -71,35 +71,51 @@ const style = {
   }),
 };
 
+interface InfoPanelDatum {
+  parameter: string;
+  value: string | number | object;
+}
+
+const columnHelper = createTableColumnHelper<InfoPanelDatum>();
+const columns = [
+  columnHelper.accessor('parameter', {
+    header: 'Parameter',
+  }),
+  columnHelper.accessor('value', {
+    header: 'Value',
+    cell: ({ getValue }) => valueCell(getValue()),
+  }),
+];
+
 export function InfoPanel(props: InfoPanelProps) {
   const [search, setSearch] = useState('');
   const { title = 'Information', data = [], titleStyle, inputStyle } = props;
   const viewData = useCallback(
     (data: Record<string, string | number | object>) => {
-      const exactMatch: Array<[string, string | number | object]> = [];
-      const startsWith: Array<[string, string | number | object]> = [];
-      const includes: Array<[string, string | number | object]> = [];
-      const valueContains: Array<[string, string | number | object]> = [];
+      const exactMatch: InfoPanelDatum[] = [];
+      const startsWith: InfoPanelDatum[] = [];
+      const includes: InfoPanelDatum[] = [];
+      const valueContains: InfoPanelDatum[] = [];
 
-      for (const [key, value] of Object.entries(data).sort(([a], [b]) =>
+      for (const [parameter, value] of Object.entries(data).sort(([a], [b]) =>
         a.localeCompare(b),
       )) {
-        const lowerKey = key.toLowerCase();
+        const lowerKey = parameter.toLowerCase();
         const lowerSearch = search.toLowerCase();
         if (lowerKey === lowerSearch) {
-          exactMatch.push([key, value]);
+          exactMatch.push({ parameter, value });
           continue;
         }
         if (lowerKey.startsWith(lowerSearch)) {
-          startsWith.push([key, value]);
+          startsWith.push({ parameter, value });
           continue;
         }
         if (lowerKey.includes(lowerSearch)) {
-          includes.push([key, value]);
+          includes.push({ parameter, value });
           continue;
         }
         if (valueSearch(value, search)) {
-          valueContains.push([key, value]);
+          valueContains.push({ parameter, value });
           continue;
         }
       }
@@ -110,7 +126,7 @@ export function InfoPanel(props: InfoPanelProps) {
   const { filteredData, total, count } = useMemo(() => {
     const filteredData: Array<
       Omit<InfoPanelData, 'data'> & {
-        data: Array<[string, string | number | object]>;
+        data: InfoPanelDatum[];
       }
     > = [];
     let total = 0;
@@ -190,29 +206,12 @@ export function InfoPanel(props: InfoPanelProps) {
               </Collapsible.Trigger>
               <Collapsible.Content css={style.content}>
                 <Table
+                  data={data}
+                  columns={columns}
                   striped
-                  css={css({
-                    width: '100%',
-                  })}
+                  tableProps={{ style: { width: '100%' } }}
                   compact
-                >
-                  <Table.Header>
-                    <ValueRenderers.Header value="Parameter" />
-                    <ValueRenderers.Header value="Value" />
-                  </Table.Header>
-                  {data.map(([key, value]) => (
-                    <Table.Row
-                      key={key}
-                      style={{
-                        height: '10px',
-                        padding: '0 !imporant',
-                      }}
-                    >
-                      <ValueRenderers.Text value={key} />
-                      {valueCell(value)}
-                    </Table.Row>
-                  ))}
-                </Table>
+                />
               </Collapsible.Content>
             </Collapsible.Root>
           );

@@ -3,27 +3,26 @@ import {
   ButtonGroup,
   Classes,
   Colors,
+  Icon,
   Intent,
   Popover,
   PopoverProps,
   TagProps,
-  Icon,
   TooltipProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
 import {
   cloneElement,
-  JSX,
-  MouseEvent,
-  ReactElement,
-  ReactNode,
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode,
   useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 
-import { Button } from '../index';
+import { Button } from '../button';
 
 import {
   ToolbarContext,
@@ -57,7 +56,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
-  icon: IconName | JSX.Element;
+  icon: IconName | ReactElement;
   active?: boolean;
   onClick?: (
     item: ToolbarItemProps & {
