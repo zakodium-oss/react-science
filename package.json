@@ -92,7 +92,7 @@
     "react-dropzone": "^14.2.3",
     "react-icons": "^5.2.1",
     "react-inspector": "^6.0.2",
-    "react-plot": "^1.4.2",
+    "react-plot": "^2.0.0",
     "react-popper": "^2.3.0",
     "spc-parser": "^1.0.0",
     "tinycolor2": "^1.6.0",
