@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { AnchorButton, Icon, InputGroup } from '@blueprintjs/core';
+import { BlueprintIcons_16Id as BlueprintIcons } from '@blueprintjs/icons/lib/esm/generated/16px/blueprint-icons-16';
 import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { formatDistance } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { formatDistanceToNowStrict, formatISO9075 } from 'date-fns';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button, Table, ValueRenderers } from '../index';
 
@@ -133,6 +134,8 @@ function throttle<T extends (...args: any[]) => any>(func: T, delay: number) {
 }
 
 async function processQuery(query: string) {
+  const throttleTime = 250;
+
   const throttledFetch = throttle(async (query: string): Promise<any> => {
     const params = new URLSearchParams();
     params.set('query', query);
@@ -141,7 +144,7 @@ async function processQuery(query: string) {
     const answer = await response.json();
 
     return answer;
-  }, 200);
+  }, throttleTime);
 
   const response = await throttledFetch(query);
   const entries = response.result;
@@ -182,6 +185,10 @@ function getDownloadLink(entry: NMREntry) {
       onClick={(e) => {
         e.stopPropagation();
       }}
+      style={{
+        borderRadius: '5px',
+        padding: '5px',
+      }}
       minimal
       icon="import"
     />
@@ -220,7 +227,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
   const [opened, setOpened] = useState<string>('');
   const [total, setTotal] = useState(0);
 
-  function getLink(entry: NMREntry, kind: SpectrumKinds) {
+  function getLink(entry: NMREntry, showAll: boolean) {
     const labels: Record<SpectrumKinds, string> = {
       all: 'All',
       oneD: '1D',
@@ -228,43 +235,50 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
       fid: 'FID',
       ft: 'FT',
     };
-    const label = labels[kind];
-    const ids = entry.links[kind].ids;
-    if (ids.length === 0) {
+    const icons: Record<SpectrumKinds, BlueprintIcons | null> = {
+      all: 'multi-select',
+      oneD: 'pulse',
+      twoD: 'scatter-plot',
+      fid: null,
+      ft: null,
+    };
+    const otherKinds: SpectrumKinds[] = ['oneD', 'twoD', 'fid', 'ft'];
+    const kindsRender: SpectrumKinds[] = ['all'];
+
+    if (showAll) {
+      kindsRender.unshift(...otherKinds);
+    }
+    return kindsRender.map((kind) => {
+      const label = labels[kind];
+      const icon = icons[kind];
+      const ids = entry.links[kind].ids;
       return (
         <Button
+          key={kind}
           onClick={(e) => {
             e.stopPropagation();
+            setSpectra?.(ids);
           }}
-          style={{
+          tooltipProps={
+            ids.length > 0
+              ? {
+                  content: `Nb ${label} spectra: ${ids.length}`,
+                  position: 'bottom-left',
+                }
+              : {}
+          }
+          css={css({
             borderRadius: '5px',
             padding: '5px',
-          }}
-          disabled
+          })}
+          disabled={ids.length === 0}
+          icon={icon}
+          minimal={ids.length > 0}
         >
-          {label}
+          {icon ? null : label}
         </Button>
       );
-    }
-    return (
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          setSpectra?.(ids);
-        }}
-        tooltipProps={{
-          content: `Nb spectra: ${ids.length}`,
-          position: 'bottom-left',
-        }}
-        intent="success"
-        style={{
-          borderRadius: '5px',
-          padding: '5px',
-        }}
-      >
-        {label}
-      </Button>
-    );
+    });
   }
   const displayFirst = 100;
   useEffect(() => {
@@ -276,6 +290,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
       .catch(() => {});
   }, []);
 
+  const TableRef = useRef<HTMLDivElement>(null);
   return (
     <div
       style={{
@@ -284,6 +299,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
         display: 'flex',
         flexDirection: 'column',
       }}
+      ref={TableRef}
     >
       <div
         tabIndex={0}
@@ -342,7 +358,14 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
             }}
           >
             <Collapsible.Trigger asChild css={style.button}>
-              <div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  gap: '10px',
+                }}
+              >
                 <Icon icon="chevron-right" css={style.chevron} />
                 <div
                   style={{
@@ -350,35 +373,33 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                     justifyContent: 'space-between',
                     width: '100%',
                     gap: '10px',
-                    marginLeft: '10px',
                   }}
                 >
-                  <div
+                  <span
                     style={{
+                      overflow: 'hidden',
                       alignSelf: 'center',
-                      flex: 2,
-                    }}
-                  >
-                    {/* if name is long use ... */}
-                    {entry.groupName.slice(0, 30)}
-                    {opened !== entry.groupName && entry.groupName.length > 30
-                      ? '...'
-                      : ''}
-                    <br />
-                    {opened === entry.groupName
-                      ? entry.groupName.slice(30)
-                      : ''}
-                  </div>
-                  <div
-                    style={{
-                      alignSelf: 'center',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: opened === entry.groupName ? '' : 'nowrap',
+                      wordWrap: 'break-word',
+                      width: '1em',
                       flex: 1,
                     }}
                   >
-                    {formatDistance(entry.lastModified, new Date(), {
-                      addSuffix: true,
-                    })}
-                  </div>
+                    {entry.groupName}
+                  </span>
+                  {TableRef.current?.offsetWidth === undefined ||
+                    (TableRef.current?.offsetWidth > 300 && (
+                      <div
+                        style={{
+                          alignSelf: 'center',
+                        }}
+                      >
+                        {formatDistanceToNowStrict(entry.lastModified, {
+                          addSuffix: true,
+                        })}
+                      </div>
+                    ))}
                   <div
                     style={{
                       display: 'flex',
@@ -386,19 +407,22 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                       gap: '2px',
                     }}
                   >
-                    {getLink(entry, 'oneD')}
-                    {getLink(entry, 'twoD')}
-                    {getLink(entry, 'fid')}
-                    {getLink(entry, 'ft')}
-                    {getLink(entry, 'all')}
+                    {getLink(
+                      entry,
+                      TableRef.current?.offsetWidth === undefined ||
+                        TableRef.current?.offsetWidth > 500,
+                    )}
                   </div>
-                  <div
-                    style={{
-                      alignSelf: 'center',
-                    }}
-                  >
-                    {getDownloadLink(entry)}
-                  </div>
+                  {TableRef.current?.offsetWidth === undefined ||
+                    (TableRef.current?.offsetWidth > 500 && (
+                      <div
+                        style={{
+                          alignSelf: 'center',
+                        }}
+                      >
+                        {getDownloadLink(entry)}
+                      </div>
+                    ))}
                 </div>
               </div>
             </Collapsible.Trigger>
@@ -419,14 +443,20 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                     }}
                   >
                     <ValueRenderers.Text
-                      value={new Date(child.lastModified)
-                        .toISOString()
-                        .slice(0, 16)
-                        .replace('T', ' ')}
+                      value={formatISO9075(child.lastModified)}
                     />
                     <ValueRenderers.Text value={getDim(child)} />
                     <ValueRenderers.Text value={getType(child)} />
-                    <ValueRenderers.Text value={child.solvent} />
+                    <ValueRenderers.Component>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: child.solvent.replaceAll(
+                            /(\d+)/g,
+                            '<sub>$1</sub>',
+                          ),
+                        }}
+                      />
+                    </ValueRenderers.Component>
                     <ValueRenderers.Text value={child.frequency.toFixed(0)} />
                     <ValueRenderers.Text value={child.pulseSequence} />
                     <ValueRenderers.Component>
@@ -442,7 +472,12 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                             content: 'Append',
                             position: 'bottom-left',
                           }}
-                          icon="add"
+                          style={{
+                            borderRadius: '5px',
+                            padding: '5px',
+                          }}
+                          color="red"
+                          icon="plus"
                           minimal
                         />
                         <Button
@@ -451,7 +486,11 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                             content: 'Set',
                             position: 'bottom-left',
                           }}
-                          icon="reset"
+                          style={{
+                            borderRadius: '5px',
+                            padding: '5px',
+                          }}
+                          icon="selection"
                           minimal
                         />
                       </div>

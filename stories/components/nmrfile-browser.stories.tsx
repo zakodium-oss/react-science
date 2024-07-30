@@ -18,7 +18,7 @@ const actions = {
 
 export function Basic(props: NMRFileBrowserProps) {
   return (
-    <div style={{ width: '700px', height: '100%' }}>
+    <div style={{ width: '50%', height: '100%' }}>
       <NMRFileBrowser {...props} />
     </div>
   );
