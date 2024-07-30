@@ -7,11 +7,7 @@ import type { LogEntry } from 'fifo-logger';
 import { CSSProperties, useMemo } from 'react';
 
 import { Button } from '../button';
-import {
-  createTableColumnHelper,
-  Table,
-  type TableRowTrPropsGetter,
-} from '../table';
+import { createTableColumnHelper, Table } from '../table';
 
 import { useFifoLogger } from './useFifoLogger';
 
@@ -79,14 +75,6 @@ function useColumns(unseen: number) {
   );
 }
 
-const getRowTrProps: TableRowTrPropsGetter<LogEntry> = (row) => {
-  return {
-    style: {
-      backgroundColor: rowBackgroundColor[row.original.levelLabel],
-    },
-  };
-};
-
 export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
   const logger = useFifoLogger();
 
@@ -113,7 +101,15 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
           compact
           bordered
           tableProps={{ style: { width: '100%' } }}
-          getRowTrProps={getRowTrProps}
+          renderRowTr={({ row, children }) => (
+            <tr
+              style={{
+                backgroundColor: rowBackgroundColor[row.original.levelLabel],
+              }}
+            >
+              {children}
+            </tr>
+          )}
         />
       </DialogBody>
       <DialogFooter

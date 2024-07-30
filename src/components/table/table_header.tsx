@@ -2,7 +2,6 @@ import type { Header, RowData } from '@tanstack/react-table';
 import { CSSProperties } from 'react';
 
 import { TableHeaderCell } from './table_header_cell';
-import { TableRow } from './table_row';
 
 const headerStyle: CSSProperties = {
   position: 'sticky',
@@ -22,11 +21,11 @@ export function TableHeader<TData extends RowData>(
   const { headers, sticky } = props;
   return (
     <thead style={sticky ? headerStyle : undefined}>
-      <TableRow>
+      <tr>
         {headers.map((header) => (
           <TableHeaderCell key={header.id} header={header} />
         ))}
-      </TableRow>
+      </tr>
     </thead>
   );
 }
