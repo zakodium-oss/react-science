@@ -12,7 +12,7 @@ import { TableHTMLAttributes } from 'react';
 
 import { TableBody } from './table_body';
 import { TableHeader } from './table_header';
-import type { TableColumnDef, TableRowTrPropsGetter } from './table_utils';
+import type { TableColumnDef, TableRowTrRenderer } from './table_utils';
 import { useTableColumns } from './use_table_columns';
 
 export interface TableProps<TData extends RowData> {
@@ -31,7 +31,7 @@ export interface TableProps<TData extends RowData> {
     'data' | 'columns' | 'getCoreRowModel' | 'getSortedRowModel'
   >;
   tableProps?: Omit<TableHTMLAttributes<HTMLTableElement>, 'children'>;
-  getRowTrProps?: TableRowTrPropsGetter<TData>;
+  renderRowTr?: TableRowTrRenderer<TData>;
 }
 
 export function Table<TData extends RowData>(props: TableProps<TData>) {
@@ -47,7 +47,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
 
     reactTable,
     tableProps,
-    getRowTrProps,
+    renderRowTr,
   } = props;
 
   const columnDefs = useTableColumns(columns);
@@ -68,10 +68,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
       {...tableProps}
     >
       <TableHeader sticky={stickyHeader} headers={table.getFlatHeaders()} />
-      <TableBody
-        rows={table.getRowModel().rows}
-        getRowTrProps={getRowTrProps}
-      />
+      <TableBody rows={table.getRowModel().rows} renderRowTr={renderRowTr} />
     </HTMLTable>
   );
 }

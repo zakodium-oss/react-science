@@ -4,8 +4,7 @@ import {
   type Row,
   type RowData,
 } from '@tanstack/react-table';
-
-import type { TrProps } from './table_row';
+import type { ReactNode } from 'react';
 
 export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<
   TData,
@@ -16,6 +15,10 @@ export function createTableColumnHelper<TData extends RowData>() {
   return createColumnHelper<TData>();
 }
 
-export type TableRowTrPropsGetter<TData extends RowData> = (
-  row: Row<TData>,
-) => TrProps;
+export interface TableRowTrRendererProps<TData extends RowData> {
+  row: Row<TData>;
+  children: ReactNode;
+}
+export type TableRowTrRenderer<TData extends RowData> = (
+  props: TableRowTrRendererProps<TData>,
+) => ReactNode;
