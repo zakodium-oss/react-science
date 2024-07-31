@@ -1,5 +1,21 @@
 # Changelog
 
+## [6.0.0](https://github.com/zakodium-oss/react-science/compare/v5.0.0...v6.0.0) (2024-07-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace `getRowTrProps` with render prop `renderRowTr` ([#753](https://github.com/zakodium-oss/react-science/issues/753))
+
+### Features
+
+* replace `getRowTrProps` with render prop `renderRowTr` ([#753](https://github.com/zakodium-oss/react-science/issues/753)) ([19346d9](https://github.com/zakodium-oss/react-science/commit/19346d93ea83379c567898344f313b8ee4268881))
+
+
+### Bug Fixes
+
+* update react-plot ([#754](https://github.com/zakodium-oss/react-science/issues/754)) ([36283d2](https://github.com/zakodium-oss/react-science/commit/36283d2d79fc2749498f455620cd99a9c3a2e2cc))
+
 ## [5.0.0](https://github.com/zakodium-oss/react-science/compare/v4.1.3...v5.0.0) (2024-07-29)
 
 
