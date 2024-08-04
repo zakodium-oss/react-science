@@ -1,34 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { AnchorButton, Icon, InputGroup } from '@blueprintjs/core';
-import { BlueprintIcons_16Id as BlueprintIcons } from '@blueprintjs/icons/lib/esm/generated/16px/blueprint-icons-16';
+import {
+  AnchorButton,
+  Collapse,
+  Icon,
+  IconProps,
+  InputGroup,
+} from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { formatDistanceToNowStrict, formatISO9075 } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button, Table, ValueRenderers } from '../index';
+import useResizeObserver from 'use-resize-observer';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 
 const style = {
   content: css({
     overflow: 'hidden',
-    "&[data-state='open']": {
-      animation: 'slideDown 300ms ease-out',
-    },
-    '&[data-state="closed"]': {
-      animation: 'slideUp 300ms ease-out',
-    },
-    '@keyframes slideDown': {
-      from: {
-        height: 0,
-      },
-      to: { height: 'var(--radix-collapsible-content-height)' },
-    },
-    '@keyframes slideUp': {
-      from: {
-        height: 'var(--radix-collapsible-content-height)',
-      },
-      to: { height: 0 },
-    },
   }),
   container: css({
     padding: '5px 0 0 0',
@@ -36,13 +25,12 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
   }),
-  chevron: css({
-    transition: 'all 0.3s ease-in-out',
-  }),
+  chevron: (open: boolean) =>
+    css({
+      transition: 'all 0.3s ease-in-out',
+      rotate: open ? '90deg' : '0deg',
+    }),
   button: css({
-    "&[data-state='open'] > span": {
-      rotate: '90deg',
-    },
     cursor: 'pointer',
     borderBottom: '1px solid #f5f5f5',
     borderTop: '1px solid #f5f5f5',
@@ -132,28 +120,24 @@ function throttle<T extends (...args: any[]) => any>(func: T, delay: number) {
     return func(...args);
   };
 }
-
-async function processQuery(query: string) {
-  const throttleTime = 250;
-
-  const throttledFetch = throttle(async (query: string): Promise<any> => {
-    const params = new URLSearchParams();
-    params.set('query', query);
-
-    const response = await fetch(`${dbURL}v1/searchNMRs?${params.toString()}`);
-    const answer = await response.json();
-
-    return answer;
-  }, throttleTime);
-
-  const response = await throttledFetch(query);
-  const entries = response.result;
-
-  for (const entry of entries) {
-    entry.links = getLinksForChildren(entry.children);
-    entry.lastModified = getLastModified(entry);
-  }
-  return entries;
+function usePostQuery(query: string, setTotal: (total: number) => void) {
+  return useQuery({
+    queryKey: ['post', query],
+    queryFn: async () => {
+      const response = await fetch(`${dbURL}v1/searchNMRs?query=${query}`);
+      const answer = await response.json();
+      const entries = answer.result;
+      for (const entry of entries) {
+        entry.links = getLinksForChildren(entry.children);
+        entry.lastModified = getLastModified(entry);
+      }
+      if (query === '') {
+        setTotal(entries.length);
+      }
+      return entries;
+    },
+    staleTime: 250,
+  });
 }
 
 function findCommonParentFolder(paths: string[]) {
@@ -223,7 +207,8 @@ export interface NMRFileBrowserProps {
 export function NMRFileBrowser(props: NMRFileBrowserProps) {
   const { setSpectra, appendSpectra } = props;
 
-  const [entries, setEntries] = useState<NMREntry[]>([]);
+  // const [entries, setEntries] = useState<NMREntry[]>([]);
+  const [query, setQuery] = useState('');
   const [opened, setOpened] = useState<string>('');
   const [total, setTotal] = useState(0);
 
@@ -235,7 +220,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
       fid: 'FID',
       ft: 'FT',
     };
-    const icons: Record<SpectrumKinds, BlueprintIcons | null> = {
+    const icons: Record<SpectrumKinds, IconProps['icon'] | null> = {
       all: 'multi-select',
       oneD: 'pulse',
       twoD: 'scatter-plot',
@@ -280,17 +265,10 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
       );
     });
   }
-  const displayFirst = 100;
-  useEffect(() => {
-    processQuery('')
-      .then((entries) => {
-        setEntries(entries);
-        setTotal(entries.length);
-      })
-      .catch(() => {});
-  }, []);
 
-  const TableRef = useRef<HTMLDivElement>(null);
+  const displayFirst = 100;
+  const { status, data, error, isFetching } = usePostQuery(query, setTotal);
+  const { ref, width = 0 } = useResizeObserver<HTMLDivElement>();
   return (
     <div
       style={{
@@ -299,7 +277,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
         display: 'flex',
         flexDirection: 'column',
       }}
-      ref={TableRef}
+      ref={ref}
     >
       <div
         tabIndex={0}
@@ -318,21 +296,26 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           css={css({
             flexGrow: 1,
           })}
+          value={query}
           placeholder="Search for a parameter"
           onChange={({ target }) => {
             if (target.value !== undefined) {
-              processQuery(target.value)
-                .then((entries) => {
-                  setEntries(entries);
-                })
-                .catch(() => {});
+              setQuery(target.value);
             }
           }}
           leftIcon="search"
           type="search"
           fill
         />
-        [{entries.length}/{total}]<div id="selection" />
+        {status === 'pending' ? (
+          <Button loading minimal />
+        ) : (
+          status === 'success' && (
+            <span>
+              [{data.length}/{total}]
+            </span>
+          )
+        )}
       </div>
       <div
         style={{
@@ -344,21 +327,21 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           flex: 1,
         }}
       >
-        {entries.slice(0, displayFirst).map((entry: NMREntry) => (
-          <Collapsible.Root
-            key={entry.groupName}
-            className="CollapsibleRoot"
-            open={opened === entry.groupName}
-            onOpenChange={(open) => {
-              if (open) {
-                setOpened(entry.groupName);
-              } else {
-                setOpened('');
-              }
-            }}
-          >
-            <Collapsible.Trigger asChild css={style.button}>
+        {status === 'error' ? (
+          <span>Error: {error.message}</span>
+        ) : (
+          status === 'success' &&
+          data.slice(0, displayFirst).map((entry: NMREntry) => (
+            <div>
               <div
+                css={style.button}
+                onClick={() => {
+                  if (opened === entry.groupName) {
+                    setOpened('');
+                  } else {
+                    setOpened(entry.groupName);
+                  }
+                }}
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -366,7 +349,10 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                   gap: '10px',
                 }}
               >
-                <Icon icon="chevron-right" css={style.chevron} />
+                <Icon
+                  icon="chevron-right"
+                  css={style.chevron(opened === entry.groupName)}
+                />
                 <div
                   style={{
                     display: 'flex',
@@ -388,18 +374,17 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                   >
                     {entry.groupName}
                   </span>
-                  {TableRef.current?.offsetWidth === undefined ||
-                    (TableRef.current?.offsetWidth > 300 && (
-                      <div
-                        style={{
-                          alignSelf: 'center',
-                        }}
-                      >
-                        {formatDistanceToNowStrict(entry.lastModified, {
-                          addSuffix: true,
-                        })}
-                      </div>
-                    ))}
+                  {width > 500 && (
+                    <div
+                      style={{
+                        alignSelf: 'center',
+                      }}
+                    >
+                      {formatDistanceToNowStrict(entry.lastModified, {
+                        addSuffix: true,
+                      })}
+                    </div>
+                  )}
                   <div
                     style={{
                       display: 'flex',
@@ -407,100 +392,108 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                       gap: '2px',
                     }}
                   >
-                    {getLink(
-                      entry,
-                      TableRef.current?.offsetWidth === undefined ||
-                        TableRef.current?.offsetWidth > 500,
-                    )}
+                    {getLink(entry, width > 300)}
                   </div>
-                  {TableRef.current?.offsetWidth === undefined ||
-                    (TableRef.current?.offsetWidth > 500 && (
-                      <div
-                        style={{
-                          alignSelf: 'center',
-                        }}
-                      >
-                        {getDownloadLink(entry)}
-                      </div>
-                    ))}
+                  {
+                    !(
+                      width > 300 && (
+                        <div
+                          style={{
+                            alignSelf: 'center',
+                          }}
+                        >
+                          {getDownloadLink(entry)}
+                        </div>
+                      )
+                    )
+                  }
                 </div>
               </div>
-            </Collapsible.Trigger>
-            <Collapsible.Content css={style.content}>
-              <Table
-                striped
-                css={css({
-                  width: '100%',
-                })}
-                compact
+              <Collapse
+                transitionDuration={300}
+                key={entry.groupName}
+                className="CollapsibleRoot"
+                isOpen={opened === entry.groupName}
+                css={style.content}
               >
-                {entry.children.map((child: NMREntryChild) => (
-                  <Table.Row
-                    key={child.id}
-                    style={{
-                      height: '10px',
-                      padding: '0 !imporant',
-                    }}
-                  >
-                    <ValueRenderers.Text
-                      value={formatISO9075(child.lastModified)}
-                    />
-                    <ValueRenderers.Text value={getDim(child)} />
-                    <ValueRenderers.Text value={getType(child)} />
-                    <ValueRenderers.Component>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: child.solvent.replaceAll(
-                            /(\d+)/g,
-                            '<sub>$1</sub>',
-                          ),
-                        }}
+                <Table
+                  striped
+                  css={css({
+                    width: '100%',
+                  })}
+                  compact
+                >
+                  {entry.children.map((child: NMREntryChild) => (
+                    <Table.Row
+                      key={child.id}
+                      style={{
+                        height: '10px',
+                        padding: '0 !imporant',
+                      }}
+                    >
+                      <ValueRenderers.Text
+                        value={formatISO9075(child.lastModified)}
                       />
-                    </ValueRenderers.Component>
-                    <ValueRenderers.Text value={child.frequency.toFixed(0)} />
-                    <ValueRenderers.Text value={child.pulseSequence} />
-                    <ValueRenderers.Component>
-                      <div
-                        style={{
-                          display: 'flex',
-                          gap: '5px',
-                        }}
-                      >
-                        <Button
-                          onClick={() => appendSpectra?.(child._nmrID)}
-                          tooltipProps={{
-                            content: 'Append',
-                            position: 'bottom-left',
-                          }}
+                      <ValueRenderers.Text value={getDim(child)} />
+                      <ValueRenderers.Text value={getType(child)} />
+                      <ValueRenderers.Component>
+                        <div>
+                          {child.solvent
+                            .split(/(\d+)/)
+                            .map((part, index) =>
+                              /\d/.test(part) ? (
+                                <sub key={index}>{part}</sub>
+                              ) : (
+                                part
+                              ),
+                            )}
+                        </div>
+                      </ValueRenderers.Component>
+                      <ValueRenderers.Text value={child.frequency.toFixed(0)} />
+                      <ValueRenderers.Text value={child.pulseSequence} />
+                      <ValueRenderers.Component>
+                        <div
                           style={{
-                            borderRadius: '5px',
-                            padding: '5px',
+                            display: 'flex',
+                            gap: '5px',
                           }}
-                          color="red"
-                          icon="plus"
-                          minimal
-                        />
-                        <Button
-                          onClick={() => setSpectra?.(child._nmrID)}
-                          tooltipProps={{
-                            content: 'Set',
-                            position: 'bottom-left',
-                          }}
-                          style={{
-                            borderRadius: '5px',
-                            padding: '5px',
-                          }}
-                          icon="selection"
-                          minimal
-                        />
-                      </div>
-                    </ValueRenderers.Component>
-                  </Table.Row>
-                ))}
-              </Table>
-            </Collapsible.Content>
-          </Collapsible.Root>
-        ))}
+                        >
+                          <Button
+                            onClick={() => appendSpectra?.(child._nmrID)}
+                            tooltipProps={{
+                              content: 'Append',
+                              position: 'bottom-left',
+                            }}
+                            style={{
+                              borderRadius: '5px',
+                              padding: '5px',
+                            }}
+                            color="red"
+                            icon="plus"
+                            minimal
+                          />
+                          <Button
+                            onClick={() => setSpectra?.(child._nmrID)}
+                            tooltipProps={{
+                              content: 'Set',
+                              position: 'bottom-left',
+                            }}
+                            style={{
+                              borderRadius: '5px',
+                              padding: '5px',
+                            }}
+                            icon="selection"
+                            minimal
+                          />
+                        </div>
+                      </ValueRenderers.Component>
+                    </Table.Row>
+                  ))}
+                </Table>
+              </Collapse>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
