@@ -1,7 +1,7 @@
 import type { FilterXYType } from 'ml-signal-processing';
 import filterXY from 'ml-signal-processing/FilterXYSchema.json';
 
-import { Button, Table, ValueRenderers } from '../../components/index';
+import { Button, createTableColumnHelper, Table } from '../../components/index';
 
 export interface Filter<OptionsType = string | number> {
   name: FilterXYType['name'];
@@ -35,92 +35,106 @@ const defaultFilters = filterXY.anyOf.map(({ properties }) => {
     options,
   };
 });
+
+const columnHelper = createTableColumnHelper<Filter>();
+
 export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
   const { filters = [], onChange } = props;
 
+  const columns = [
+    columnHelper.display({
+      header: ' ',
+      cell: ({ row }) => {
+        return (
+          <div style={{ display: 'flex', gap: '3px' }}>
+            <Button
+              style={{ width: '15px' }}
+              intent="success"
+              onClick={() => {
+                const newFilters = [...filters];
+                newFilters.splice(
+                  row.index + 1,
+                  0,
+                  getDefaultFilter(defaultFilters[0]),
+                );
+                onChange?.(newFilters);
+              }}
+            >
+              +
+            </Button>
+            <Button
+              style={{ width: '15px' }}
+              intent="danger"
+              onClick={() => {
+                onChange?.(filters.filter((_, j) => j !== row.index));
+              }}
+            >
+              -
+            </Button>
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor('name', {
+      header: 'Name',
+      cell: ({ row, getValue }) => {
+        return (
+          <select
+            onChange={({ target }) => {
+              const value = Number(target.value);
+              if (!Number.isNaN(value)) {
+                const filter = getDefaultFilter(defaultFilters[value]);
+                const newFilters = [...filters];
+                newFilters[row.index] = filter;
+                onChange?.(newFilters);
+              }
+            }}
+            style={{ border: '1px solid black' }}
+            value={defaultFilters.findIndex((f) => f.name === getValue())}
+          >
+            {defaultFilters.map(({ name }, i: number) => (
+              <option key={name} value={i}>
+                {normalCase(name)}
+              </option>
+            ))}
+          </select>
+        );
+      },
+    }),
+    columnHelper.accessor('options', {
+      header: 'Options',
+      cell: ({ row, getValue }) => {
+        const options = getValue();
+        if (!options) return null;
+        return (
+          <>
+            {Object.entries(
+              defaultFilters.find((f) => f.name === row.original.name)
+                ?.options || {},
+            ).map((option) =>
+              optionInput(option, options, (value) => {
+                const FilterOptions = {
+                  ...filters[row.index].options,
+                  [option[0]]: value,
+                };
+                const filter = {
+                  name: filters[row.index].name,
+                  options: FilterOptions,
+                };
+                const newFilters = [...filters];
+                newFilters[row.index] = filter;
+                onChange?.(newFilters);
+              }),
+            )}
+          </>
+        );
+      },
+    }),
+  ];
+
   return (
     <div>
-      <Table>
-        <Table.Header>
-          <ValueRenderers.Header value=" " />
-          <ValueRenderers.Header value="Name" />
-          <ValueRenderers.Header value="Options" />
-        </Table.Header>
-        {filters.map(({ name, options }, i) => (
-          <Table.Row key={name} bordered>
-            <ValueRenderers.Component>
-              <div style={{ display: 'flex', gap: '3px' }}>
-                <Button
-                  style={{ width: '15px' }}
-                  intent="success"
-                  onClick={() => {
-                    const newFilters = [...filters];
-                    newFilters.splice(
-                      i + 1,
-                      0,
-                      getDefaultFilter(defaultFilters[0]),
-                    );
-                    onChange?.(newFilters);
-                  }}
-                >
-                  +
-                </Button>
-                <Button
-                  style={{ width: '15px' }}
-                  intent="danger"
-                  onClick={() => {
-                    onChange?.(filters.filter((_, j) => j !== i));
-                  }}
-                >
-                  -
-                </Button>
-              </div>
-            </ValueRenderers.Component>
-            <ValueRenderers.Component>
-              <select
-                onChange={({ target }) => {
-                  const value = Number(target.value);
-                  if (!Number.isNaN(value)) {
-                    const filter = getDefaultFilter(defaultFilters[value]);
-                    const newFilters = [...filters];
-                    newFilters[i] = filter;
-                    onChange?.(newFilters);
-                  }
-                }}
-                style={{ border: '1px solid black' }}
-                value={defaultFilters.findIndex((f) => f.name === name)}
-              >
-                {defaultFilters.map(({ name }, i: number) => (
-                  <option key={name} value={i}>
-                    {normalCase(name)}
-                  </option>
-                ))}
-              </select>
-            </ValueRenderers.Component>
-            {options && (
-              <ValueRenderers.Component>
-                {Object.entries(
-                  defaultFilters.find((f) => f.name === name)?.options || {},
-                ).map((option) =>
-                  optionInput(option, options, (value) => {
-                    const FilterOptions = {
-                      ...filters[i].options,
-                      [option[0]]: value,
-                    };
-                    const filter = {
-                      name: filters[i].name,
-                      options: FilterOptions,
-                    };
-                    const newFilters = [...filters];
-                    newFilters[i] = filter;
-                    onChange?.(newFilters);
-                  }),
-                )}
-              </ValueRenderers.Component>
-            )}
-          </Table.Row>
-        ))}
-      </Table>
+      <Table data={filters} columns={columns} bordered />
       {filters.length === 0 && (
         <Button
           style={{ width: '15px', margin: '5px 20px' }}
@@ -136,6 +150,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
     </div>
   );
 }
+
 function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   if (options) {
     const result: Record<string, string | number> = {};
@@ -147,10 +162,12 @@ function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   }
   return { name };
 }
+
 function normalCase(str: string) {
   const result = str.replaceAll(/(?<upper>[A-Z])/g, ' $<upper>').trim();
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
+
 function optionInput(
   [key, { description, choices }]: [string, FilterOptionsInfo],
   options: Record<string, string | number>,

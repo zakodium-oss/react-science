@@ -4,9 +4,12 @@ import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { LogEntry } from 'fifo-logger';
-import { CSSProperties } from 'react';
+import { CSSProperties, useMemo } from 'react';
 
-import { Button, Table, useFifoLogger, ValueRenderers } from '../index';
+import { Button } from '../button';
+import { createTableColumnHelper, Table } from '../table';
+
+import { useFifoLogger } from './useFifoLogger';
 
 const ActionsFooter = styled.div`
   display: flex;
@@ -37,8 +40,46 @@ export interface FifoLoggerDialogProps {
   unseen: number;
 }
 
+const columnHelper = createTableColumnHelper<LogEntry>();
+function useColumns(unseen: number) {
+  return useMemo(
+    () => [
+      columnHelper.display({
+        header: '#',
+        cell: ({ row }) => {
+          return (
+            <RowIndexCell
+              pillColor={
+                row.index >= unseen
+                  ? 'transparent'
+                  : rowBackgroundColor[row.original.levelLabel]
+              }
+            >
+              {String(row.index + 1)}
+            </RowIndexCell>
+          );
+        },
+      }),
+      columnHelper.accessor('time', {
+        header: 'Time',
+        cell: ({ getValue }) => new Date(getValue()).toLocaleTimeString(),
+      }),
+      columnHelper.accessor('levelLabel', {
+        header: 'Level',
+      }),
+      columnHelper.accessor('message', {
+        header: 'Message',
+      }),
+    ],
+    [unseen],
+  );
+}
+
 export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
   const logger = useFifoLogger();
+
+  const columns = useColumns(props.unseen);
+
   return (
     <Dialog
       shouldReturnFocusOnClose={false}
@@ -55,44 +96,21 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
     >
       <DialogBody>
         <Table
+          data={props.logs}
+          columns={columns}
           compact
           bordered
-          css={css`
-            width: 100%;
-          `}
-        >
-          <Table.Header>
-            <ValueRenderers.Header value="#" />
-            <ValueRenderers.Header value="Time" />
-            <ValueRenderers.Header value="Level" />
-            <ValueRenderers.Header value="Message" />
-          </Table.Header>
-          {props.logs.map((logEntry, idx) => (
-            <Table.Row
-              key={logEntry.id}
+          tableProps={{ style: { width: '100%' } }}
+          renderRowTr={({ row, children }) => (
+            <tr
               style={{
-                backgroundColor: rowBackgroundColor[logEntry.levelLabel],
+                backgroundColor: rowBackgroundColor[row.original.levelLabel],
               }}
             >
-              <ValueRenderers.Component>
-                <RowIndexCell
-                  pillColor={
-                    idx >= props.unseen
-                      ? 'transparent'
-                      : rowBackgroundColor[logEntry.levelLabel]
-                  }
-                >
-                  {String(idx + 1)}
-                </RowIndexCell>
-              </ValueRenderers.Component>
-              <ValueRenderers.Text
-                value={new Date(logEntry.time).toLocaleTimeString()}
-              />
-              <ValueRenderers.Text value={logEntry.levelLabel} />
-              <ValueRenderers.Text value={logEntry.message} />
-            </Table.Row>
-          ))}
-        </Table>
+              {children}
+            </tr>
+          )}
+        />
       </DialogBody>
       <DialogFooter
         actions={

@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
 import {
+  getMeasurement,
   MeasurementBase,
   MeasurementKind,
-  getMeasurement,
   useAppDispatch,
   useAppState,
 } from '../../../app-data';
@@ -20,10 +20,10 @@ import {
 import { MeasurementConfigPanel } from '../index';
 
 import {
-  MeasurementColorPreview,
   MeasurementCheckbox,
-  MeasurementVisibilityToggle,
+  MeasurementColorPreview,
   MeasurementSelectedVisibilityChange,
+  MeasurementVisibilityToggle,
   useMeasurementPanel,
 } from '.';
 
@@ -90,7 +90,7 @@ const MeasurementsTableRowData = styled.tr`
   line-height: 1.25rem;
 `;
 
-const MeasurementsIconsContainer = styled.td`
+const MeasurementsIconsContainer = styled.th`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -205,24 +205,22 @@ function MeasurementsTableHeader({
   return (
     <thead>
       <MeasurementsTableHeaderStyled>
-        <th>
-          <MeasurementsIconsContainer
-            style={{
-              paddingLeft: '26px',
+        <MeasurementsIconsContainer
+          style={{
+            paddingLeft: '26px',
+          }}
+        >
+          <MeasurementCheckbox
+            checked={allSelected}
+            onSelectCheckbox={() => {
+              onSelectLink(!allSelected);
             }}
-          >
-            <MeasurementCheckbox
-              checked={allSelected}
-              onSelectCheckbox={() => {
-                onSelectLink(!allSelected);
-              }}
-            />
-            <MeasurementSelectedVisibilityChange
-              kind={kind}
-              isVisible={selectedVisible}
-            />
-          </MeasurementsIconsContainer>
-        </th>
+          />
+          <MeasurementSelectedVisibilityChange
+            kind={kind}
+            isVisible={selectedVisible}
+          />
+        </MeasurementsIconsContainer>
         <TableHeaderFilename>Filename</TableHeaderFilename>
         <TableHeaderTechnique>Technique</TableHeaderTechnique>
       </MeasurementsTableHeaderStyled>

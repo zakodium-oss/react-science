@@ -65,7 +65,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const { item, utils } = useAccordionContext(title, defaultOpened);
 
   const onClickHandle = useCallback(
-    (event: ReactMouseEvent<HTMLButtonElement>) => {
+    (event: ReactMouseEvent<HTMLDivElement>) => {
       if (event.shiftKey) {
         utils.clear();
       } else {
@@ -83,9 +83,9 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
         flexDirection: 'column',
       }}
     >
-      <button
+      <div
         onClick={onClickHandle}
-        type="button"
+        role="button"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -104,7 +104,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
           {title}
         </div>
         {toolbar}
-      </button>
+      </div>
       <div
         style={{
           display: item?.isOpen ? 'flex' : 'none',

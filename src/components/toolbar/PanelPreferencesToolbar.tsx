@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import type { ReactNode } from 'react';
 
 import { Toolbar } from './Toolbar';
 
 interface PanelPreferencesToolbarProps {
-  title?: React.ReactNode;
+  title?: ReactNode;
   onClose?: () => void;
   onSave?: () => void;
 }
