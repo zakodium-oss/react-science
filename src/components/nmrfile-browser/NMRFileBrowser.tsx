@@ -7,13 +7,17 @@ import {
   InputGroup,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import * as Collapsible from '@radix-ui/react-collapsible';
+import { useQuery } from '@tanstack/react-query';
 import { formatDistanceToNowStrict, formatISO9075 } from 'date-fns';
-import { useEffect, useRef, useState } from 'react';
-
-import { Button, Table, ValueRenderers } from '../index';
+import { useState } from 'react';
 import useResizeObserver from 'use-resize-observer';
-import { QueryClient, useQuery } from '@tanstack/react-query';
+
+import {
+  Button,
+  createTableColumnHelper,
+  Table,
+  ValueRenderers,
+} from '../index';
 
 const style = {
   content: css({
@@ -109,17 +113,6 @@ function getLastModified(entry: NMREntry) {
 
 const dbURL = 'https://nmrdb.cheminfo.org/';
 
-function throttle<T extends (...args: any[]) => any>(func: T, delay: number) {
-  let lastCall = 0;
-  return (...args: any) => {
-    const now = Date.now();
-    if (now - lastCall < delay) {
-      return;
-    }
-    lastCall = now;
-    return func(...args);
-  };
-}
 function usePostQuery(query: string, setTotal: (total: number) => void) {
   return useQuery({
     queryKey: ['post', query],
@@ -267,8 +260,88 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
   }
 
   const displayFirst = 100;
-  const { status, data, error, isFetching } = usePostQuery(query, setTotal);
+  const { status, data, error } = usePostQuery(query, setTotal);
   const { ref, width = 0 } = useResizeObserver<HTMLDivElement>();
+  const columnHelper = createTableColumnHelper<NMREntryChild>();
+  const columns = [
+    columnHelper.accessor('lastModified', {
+      header: 'Last Modified',
+      cell: ({ getValue }) => (
+        <ValueRenderers.Text value={formatISO9075(getValue())} />
+      ),
+    }),
+    columnHelper.accessor('is1D', {
+      header: 'Dimension',
+      cell: ({ row }) => <ValueRenderers.Text value={getDim(row.original)} />,
+    }),
+    columnHelper.accessor('isFid', {
+      header: 'Type',
+      cell: ({ row }) => <ValueRenderers.Text value={getType(row.original)} />,
+    }),
+    columnHelper.accessor('solvent', {
+      header: 'Solvent',
+      cell: ({ getValue }) => (
+        <ValueRenderers.Component>
+          <div>
+            {getValue()
+              .split(/(\d+)/)
+              .map((part, index) =>
+                /\d/.test(part) ? <sub key={index}>{part}</sub> : part,
+              )}
+          </div>
+        </ValueRenderers.Component>
+      ),
+    }),
+    columnHelper.accessor('frequency', {
+      header: 'Frequency',
+      cell: ({ getValue }) => (
+        <ValueRenderers.Number value={getValue()} fixed={0} />
+      ),
+    }),
+
+    columnHelper.accessor('pulseSequence', { header: 'Pulse Sequence' }),
+    columnHelper.accessor('_nmrID', {
+      header: 'Actions',
+      cell: ({ getValue }) => (
+        <ValueRenderers.Component>
+          <div
+            style={{
+              display: 'flex',
+              gap: '5px',
+            }}
+          >
+            <Button
+              onClick={() => appendSpectra?.(getValue())}
+              tooltipProps={{
+                content: 'Append',
+                position: 'bottom-left',
+              }}
+              style={{
+                borderRadius: '5px',
+                padding: '5px',
+              }}
+              color="red"
+              icon="plus"
+              minimal
+            />
+            <Button
+              onClick={() => setSpectra?.(getValue())}
+              tooltipProps={{
+                content: 'Set',
+                position: 'bottom-left',
+              }}
+              style={{
+                borderRadius: '5px',
+                padding: '5px',
+              }}
+              icon="selection"
+              minimal
+            />
+          </div>
+        </ValueRenderers.Component>
+      ),
+    }),
+  ];
   return (
     <div
       style={{
@@ -332,7 +405,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
         ) : (
           status === 'success' &&
           data.slice(0, displayFirst).map((entry: NMREntry) => (
-            <div>
+            <div key={entry.groupName}>
               <div
                 css={style.button}
                 onClick={() => {
@@ -411,85 +484,20 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
               </div>
               <Collapse
                 transitionDuration={300}
-                key={entry.groupName}
-                className="CollapsibleRoot"
                 isOpen={opened === entry.groupName}
                 css={style.content}
               >
                 <Table
-                  striped
-                  css={css({
-                    width: '100%',
-                  })}
+                  tableProps={{
+                    style: {
+                      width: '100%',
+                    },
+                  }}
                   compact
-                >
-                  {entry.children.map((child: NMREntryChild) => (
-                    <Table.Row
-                      key={child.id}
-                      style={{
-                        height: '10px',
-                        padding: '0 !imporant',
-                      }}
-                    >
-                      <ValueRenderers.Text
-                        value={formatISO9075(child.lastModified)}
-                      />
-                      <ValueRenderers.Text value={getDim(child)} />
-                      <ValueRenderers.Text value={getType(child)} />
-                      <ValueRenderers.Component>
-                        <div>
-                          {child.solvent
-                            .split(/(\d+)/)
-                            .map((part, index) =>
-                              /\d/.test(part) ? (
-                                <sub key={index}>{part}</sub>
-                              ) : (
-                                part
-                              ),
-                            )}
-                        </div>
-                      </ValueRenderers.Component>
-                      <ValueRenderers.Text value={child.frequency.toFixed(0)} />
-                      <ValueRenderers.Text value={child.pulseSequence} />
-                      <ValueRenderers.Component>
-                        <div
-                          style={{
-                            display: 'flex',
-                            gap: '5px',
-                          }}
-                        >
-                          <Button
-                            onClick={() => appendSpectra?.(child._nmrID)}
-                            tooltipProps={{
-                              content: 'Append',
-                              position: 'bottom-left',
-                            }}
-                            style={{
-                              borderRadius: '5px',
-                              padding: '5px',
-                            }}
-                            color="red"
-                            icon="plus"
-                            minimal
-                          />
-                          <Button
-                            onClick={() => setSpectra?.(child._nmrID)}
-                            tooltipProps={{
-                              content: 'Set',
-                              position: 'bottom-left',
-                            }}
-                            style={{
-                              borderRadius: '5px',
-                              padding: '5px',
-                            }}
-                            icon="selection"
-                            minimal
-                          />
-                        </div>
-                      </ValueRenderers.Component>
-                    </Table.Row>
-                  ))}
-                </Table>
+                  striped
+                  columns={columns}
+                  data={entry.children}
+                />
               </Collapse>
             </div>
           ))
