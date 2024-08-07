@@ -122,6 +122,7 @@
     "@vitest/coverage-v8": "^2.0.4",
     "cheminfo-font": "^1.13.0",
     "cross-env": "^7.0.3",
+    "date-fns": "^3.6.0",
     "eslint": "^8.57.0",
     "eslint-config-zakodium": "^11.2.0",
     "eslint-plugin-storybook": "^0.8.0",
