@@ -96,6 +96,7 @@
     "react-popper": "^2.3.0",
     "spc-parser": "^1.0.0",
     "tinycolor2": "^1.6.0",
+    "use-resize-observer": "^9.1.0",
     "wdf-parser": "^0.3.0"
   },
   "devDependencies": {

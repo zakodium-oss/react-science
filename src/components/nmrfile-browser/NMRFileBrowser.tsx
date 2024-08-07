@@ -8,7 +8,7 @@ import useResizeObserver from 'use-resize-observer';
 import { Button } from '../index';
 
 import { NMRFileDownload, NMRFileSpectraLink } from './NMRButtons';
-import { getDim, getType, NMREntry, usePostQuery } from './utills';
+import { getDim, getType, NMREntry, usePostQuery } from './utils';
 
 const style = {
   content: css({

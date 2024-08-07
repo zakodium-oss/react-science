@@ -9,7 +9,7 @@ import {
   NMREntry,
   NMREntryChild,
   SpectrumKinds,
-} from './utills';
+} from './utils';
 
 export function NMRFileSpectraLink(props: {
   entry: NMREntry;
