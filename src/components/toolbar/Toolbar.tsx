@@ -247,6 +247,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
       interactionKind={popoverInteractionKind}
+      hasBackdrop
       hoverCloseDelay={0}
       css={css`
         .${Classes.ICON} {
