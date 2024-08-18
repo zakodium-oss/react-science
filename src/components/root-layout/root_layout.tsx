@@ -4,9 +4,9 @@ import { CSSProperties, ReactNode, useCallback, useState } from 'react';
 
 import { AccordionProvider } from '../accordion';
 
-import { RootLayoutProvider } from './RootLayoutContext';
 import { CustomDivPreflight } from './css-reset/customPreflight';
-import { queryClient } from './queryClient';
+import { queryClient } from './query_client';
+import { RootLayoutProvider } from './root_layout_context.provider';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 

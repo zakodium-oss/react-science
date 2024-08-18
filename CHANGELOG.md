@@ -1,5 +1,74 @@
 # Changelog
 
+## [6.0.0](https://github.com/zakodium-oss/react-science/compare/v5.0.0...v6.0.0) (2024-07-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace `getRowTrProps` with render prop `renderRowTr` ([#753](https://github.com/zakodium-oss/react-science/issues/753))
+
+### Features
+
+* replace `getRowTrProps` with render prop `renderRowTr` ([#753](https://github.com/zakodium-oss/react-science/issues/753)) ([19346d9](https://github.com/zakodium-oss/react-science/commit/19346d93ea83379c567898344f313b8ee4268881))
+
+
+### Bug Fixes
+
+* update react-plot ([#754](https://github.com/zakodium-oss/react-science/issues/754)) ([36283d2](https://github.com/zakodium-oss/react-science/commit/36283d2d79fc2749498f455620cd99a9c3a2e2cc))
+
+## [5.0.0](https://github.com/zakodium-oss/react-science/compare/v4.1.3...v5.0.0) (2024-07-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* reimplement Table component with react-table
+
+### Features
+
+* reimplement Table component with react-table ([52251d4](https://github.com/zakodium-oss/react-science/commit/52251d49a0c9f8ad504a95e68e863314f7e62f66))
+
+
+### Bug Fixes
+
+* do not use `React` global type ([1566417](https://github.com/zakodium-oss/react-science/commit/1566417c74af615a45ce0b146062fd106bd4d65c))
+* use `ReactElement` instead of `JSX.Element` ([2921eb2](https://github.com/zakodium-oss/react-science/commit/2921eb230d290f63ae4e92f75f9f83657f322ca4))
+
+## [4.1.3](https://github.com/zakodium-oss/react-science/compare/v4.1.2...v4.1.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* export useSelect hook's parameter type ([#742](https://github.com/zakodium-oss/react-science/issues/742)) ([f672494](https://github.com/zakodium-oss/react-science/commit/f6724946f2e448cc37b97ae6bdea2d4204abb31b))
+* replace 'button' with 'div' to prevent nested button ([#749](https://github.com/zakodium-oss/react-science/issues/749)) ([633d2ec](https://github.com/zakodium-oss/react-science/commit/633d2ec54eb88b81dccb5338ed6a9eb5e9246bcf))
+
+## [4.1.2](https://github.com/zakodium-oss/react-science/compare/v4.1.1...v4.1.2) (2024-06-24)
+
+
+### Bug Fixes
+
+* remove dependency on d3-scale-chromatic types ([#738](https://github.com/zakodium-oss/react-science/issues/738)) ([0e6a485](https://github.com/zakodium-oss/react-science/commit/0e6a4858cebc601fabe4ac94de5d0578904722de))
+
+## [4.1.1](https://github.com/zakodium-oss/react-science/compare/v4.1.0...v4.1.1) (2024-06-21)
+
+
+### Bug Fixes
+
+* organize and update dependencies ([#736](https://github.com/zakodium-oss/react-science/issues/736)) ([3134c16](https://github.com/zakodium-oss/react-science/commit/3134c16861a43743281f48c6d52ee93c5e3adfc0))
+
+## [4.1.0](https://github.com/zakodium-oss/react-science/compare/v4.0.0...v4.1.0) (2024-06-13)
+
+
+### Features
+
+* add sticky table header option ([#729](https://github.com/zakodium-oss/react-science/issues/729)) ([1827fe7](https://github.com/zakodium-oss/react-science/commit/1827fe72a7391acd7c5ceb06db9984cbaa5f01d1))
+* improve InfoPanel ([#727](https://github.com/zakodium-oss/react-science/issues/727)) ([7e62024](https://github.com/zakodium-oss/react-science/commit/7e6202430dd8c83ed10df6c9f37f3d710d6a579f))
+* improve useSelect hook item render ([#732](https://github.com/zakodium-oss/react-science/issues/732)) ([76ac3f4](https://github.com/zakodium-oss/react-science/commit/76ac3f43faccc8fd8bca575a68ceeb3a20df9ad9))
+
+
+### Bug Fixes
+
+* disable button tooltips with empty content ([#730](https://github.com/zakodium-oss/react-science/issues/730)) ([ebdd792](https://github.com/zakodium-oss/react-science/commit/ebdd792930bc8aac01e5b857cc367bff32859284))
+
 ## [4.0.0](https://github.com/zakodium-oss/react-science/compare/v3.1.0...v4.0.0) (2024-05-17)
 
 

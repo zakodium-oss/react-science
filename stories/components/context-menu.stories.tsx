@@ -2,8 +2,13 @@
 import { ContextMenu, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { ReactElement } from 'react';
 
-import { Table, ValueRenderers } from '../../src/components/index';
+import {
+  createTableColumnHelper,
+  Table,
+  ValueRenderers,
+} from '../../src/components/index';
 import data from '../data/table.json';
 
 export default {
@@ -40,52 +45,59 @@ export function ContextDropdown() {
   );
 }
 
-export function TableWithHeaderDropDownMenu() {
-  const content = (
-    <Menu>
-      <MenuItem text="Back" icon="book" />
-      <MenuItem text="Forward" icon="step-forward" disabled />
-      <MenuItem text="Refresh" icon="refresh" />
-      <MenuDivider />
-      <MenuItem text="Save as" icon="saved" />
-      <MenuItem text="Print" icon="print" />
-      <MenuItem text="Cast media to device" icon="video" />
-      <MenuDivider />
-      <MenuItem text="Send page to your devices" icon="add" />
-      <MenuItem text="Create QR Code for this page" icon="settings" />
-    </Menu>
-  );
+const content = (
+  <Menu>
+    <MenuItem text="Back" icon="book" />
+    <MenuItem text="Forward" icon="step-forward" disabled />
+    <MenuItem text="Refresh" icon="refresh" />
+    <MenuDivider />
+    <MenuItem text="Save as" icon="saved" />
+    <MenuItem text="Print" icon="print" />
+    <MenuItem text="Cast media to device" icon="video" />
+    <MenuDivider />
+    <MenuItem text="Send page to your devices" icon="add" />
+    <MenuItem text="Create QR Code for this page" icon="settings" />
+  </Menu>
+);
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <ColumnWithDropdownMenu value="id" content={content} />
-          <ColumnWithDropdownMenu value="name" content={content} />
-          <ColumnWithDropdownMenu value="rn" content={content} />
-          <ColumnWithDropdownMenu value="mw" content={content} />
-          <ColumnWithDropdownMenu value="em" content={content} />
-          <ColumnWithDropdownMenu value="isExpensive" content={content} />
-          <ColumnWithDropdownMenu value="color" content={content} />
-        </tr>
-      </thead>
-      <tbody>
-        {data
-          .slice(0, 2)
-          .map(({ id, name, rn, mw, em, isExpensive, color }) => (
-            <Table.Row key={id}>
-              <ValueRenderers.Text value={id} />
-              <ValueRenderers.Text value={name} />
-              <ValueRenderers.Text value={rn} />
-              <ValueRenderers.Number value={mw} fixed={2} />
-              <ValueRenderers.Number value={em} fixed={4} />
-              <ValueRenderers.Boolean value={isExpensive} />
-              <ValueRenderers.Color value={color} />
-            </Table.Row>
-          ))}
-      </tbody>
-    </table>
-  );
+const columnHelper = createTableColumnHelper<(typeof data)[number]>();
+const columns = [
+  columnHelper.accessor('id', {
+    header: () => <ColumnWithDropdownMenu value="id" content={content} />,
+  }),
+  columnHelper.accessor('name', {
+    header: () => <ColumnWithDropdownMenu value="name" content={content} />,
+    enableSorting: true,
+  }),
+  columnHelper.accessor('rn', {
+    header: () => <ColumnWithDropdownMenu value="rn" content={content} />,
+  }),
+  columnHelper.accessor('mw', {
+    header: () => <ColumnWithDropdownMenu value="mw" content={content} />,
+    cell: ({ getValue }) => (
+      <ValueRenderers.Number value={getValue()} fixed={2} />
+    ),
+  }),
+  columnHelper.accessor('em', {
+    header: () => <ColumnWithDropdownMenu value="em" content={content} />,
+    cell: ({ getValue }) => (
+      <ValueRenderers.Number value={getValue()} fixed={4} />
+    ),
+  }),
+  columnHelper.accessor('isExpensive', {
+    header: () => (
+      <ColumnWithDropdownMenu value="isExpensive" content={content} />
+    ),
+    cell: ({ getValue }) => <ValueRenderers.Boolean value={getValue()} />,
+  }),
+  columnHelper.accessor('color', {
+    header: () => <ColumnWithDropdownMenu value="color" content={content} />,
+    cell: ({ getValue }) => <ValueRenderers.Color value={getValue()} />,
+  }),
+];
+
+export function TableWithHeaderDropDownMenu() {
+  return <Table data={data.slice(0, 10)} columns={columns} />;
 }
 
 function ColumnWithDropdownMenu({
@@ -93,13 +105,9 @@ function ColumnWithDropdownMenu({
   content,
 }: {
   value: string;
-  content: JSX.Element;
+  content: ReactElement;
 }) {
-  return (
-    <ContextMenu content={content} tagName="th">
-      {value}
-    </ContextMenu>
-  );
+  return <ContextMenu content={content}>{value}</ContextMenu>;
 }
 
 const TableWithContext = styled.table`

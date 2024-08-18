@@ -1,7 +1,7 @@
 import { Decorator } from '@storybook/react';
 
 import { AccordionProvider, RootLayout } from '../src/components/index';
-import { RootLayoutProvider } from '../src/components/root-layout/RootLayoutContext';
+import { RootLayoutProvider } from '../src/components/root-layout/root_layout_context.provider';
 
 export const AccordionDecorator: Decorator = (Story) => (
   <AccordionProvider>

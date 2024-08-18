@@ -60,7 +60,9 @@ export default function MainLayout() {
     const data = JSON.stringify(
       { data: appState.data, view: appState.view },
       (_key, value) =>
-        ArrayBuffer.isView(value) ? Array.from(value as any) : value,
+        ArrayBuffer.isView(value) && 'length' in value
+          ? Array.from(value as Uint8Array)
+          : value,
       spaceIndent,
     );
     const blob = new Blob([data], { type: 'text/plain' });

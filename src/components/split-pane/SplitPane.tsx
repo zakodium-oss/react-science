@@ -2,10 +2,8 @@
 import { css } from '@emotion/react';
 import {
   PointerEvent as ReactPointerEvent,
-  createContext,
   CSSProperties,
   ReactNode,
-  useContext,
   useRef,
   useState,
   RefObject,
@@ -67,12 +65,6 @@ export interface SplitPaneProps {
    * The two React elements to show on both sides of the pane.
    */
   children: [ReactNode, ReactNode];
-}
-
-const splitPaneContext = createContext<boolean>(false);
-
-export function useSplitPaneContext() {
-  return useContext(splitPaneContext);
 }
 
 export function SplitPane(props: SplitPaneProps) {

@@ -4,11 +4,12 @@ import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { CSSProperties, useCallback, useMemo, useState } from 'react';
 
-import { ValueRenderers } from '../index';
-import { Table } from '../table/Table';
+import { createTableColumnHelper, Table } from '../table';
+import * as ValueRenderers from '../value-renderers';
 
 export interface InfoPanelData {
   description: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, string | number | object | boolean | any>;
 }
 
@@ -41,20 +42,27 @@ const style = {
     },
   }),
   container: css({
-    padding: '5px',
+    padding: '5px 0 0 0',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   }),
   chevron: css({
     transition: 'all 0.3s ease-in-out',
   }),
   button: css({
+    zIndex: 10,
+    position: 'sticky',
+    height: 30,
+    top: 0,
     "&[data-state='open'] > span": {
       rotate: '90deg',
     },
     cursor: 'pointer',
     borderBottom: '1px solid #f5f5f5',
+    backgroundColor: 'white',
     display: 'flex',
     alignItems: 'center',
-    gap: 5,
     padding: '5px 2px',
     width: '100%',
     ':hover': {
@@ -63,35 +71,51 @@ const style = {
   }),
 };
 
+interface InfoPanelDatum {
+  parameter: string;
+  value: string | number | object;
+}
+
+const columnHelper = createTableColumnHelper<InfoPanelDatum>();
+const columns = [
+  columnHelper.accessor('parameter', {
+    header: 'Parameter',
+  }),
+  columnHelper.accessor('value', {
+    header: 'Value',
+    cell: ({ getValue }) => valueCell(getValue()),
+  }),
+];
+
 export function InfoPanel(props: InfoPanelProps) {
   const [search, setSearch] = useState('');
   const { title = 'Information', data = [], titleStyle, inputStyle } = props;
   const viewData = useCallback(
     (data: Record<string, string | number | object>) => {
-      const exactMatch: Array<[string, string | number | object]> = [];
-      const startsWith: Array<[string, string | number | object]> = [];
-      const includes: Array<[string, string | number | object]> = [];
-      const valueContains: Array<[string, string | number | object]> = [];
+      const exactMatch: InfoPanelDatum[] = [];
+      const startsWith: InfoPanelDatum[] = [];
+      const includes: InfoPanelDatum[] = [];
+      const valueContains: InfoPanelDatum[] = [];
 
-      for (const [key, value] of Object.entries(data).sort(([a], [b]) =>
+      for (const [parameter, value] of Object.entries(data).sort(([a], [b]) =>
         a.localeCompare(b),
       )) {
-        const lowerKey = key.toLowerCase();
+        const lowerKey = parameter.toLowerCase();
         const lowerSearch = search.toLowerCase();
         if (lowerKey === lowerSearch) {
-          exactMatch.push([key, value]);
+          exactMatch.push({ parameter, value });
           continue;
         }
         if (lowerKey.startsWith(lowerSearch)) {
-          startsWith.push([key, value]);
+          startsWith.push({ parameter, value });
           continue;
         }
         if (lowerKey.includes(lowerSearch)) {
-          includes.push([key, value]);
+          includes.push({ parameter, value });
           continue;
         }
         if (valueSearch(value, search)) {
-          valueContains.push([key, value]);
+          valueContains.push({ parameter, value });
           continue;
         }
       }
@@ -102,7 +126,7 @@ export function InfoPanel(props: InfoPanelProps) {
   const { filteredData, total, count } = useMemo(() => {
     const filteredData: Array<
       Omit<InfoPanelData, 'data'> & {
-        data: Array<[string, string | number | object]>;
+        data: InfoPanelDatum[];
       }
     > = [];
     let total = 0;
@@ -118,13 +142,19 @@ export function InfoPanel(props: InfoPanelProps) {
   }, [data, viewData]);
   return (
     <div css={style.container}>
-      <div style={titleStyle}>{title}</div>
+      <div
+        style={{
+          padding: '0 5px',
+          ...titleStyle,
+        }}
+      >
+        {title}
+      </div>
       <div
         tabIndex={0}
         css={css({
-          zIndex: 10,
+          padding: '0 5px',
           marginTop: '5px',
-          position: 'sticky',
           backgroundColor: 'white',
           top: '5px',
           display: 'flex',
@@ -137,7 +167,7 @@ export function InfoPanel(props: InfoPanelProps) {
           css={css({
             flexGrow: 1,
           })}
-          placeholder="search for a parameter ..."
+          placeholder="Search for a parameter"
           value={search}
           onChange={({ target }) => {
             if (target.value !== undefined) {
@@ -153,10 +183,12 @@ export function InfoPanel(props: InfoPanelProps) {
       </div>
       <div
         style={{
+          position: 'relative',
           marginTop: '5px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '5px',
+          overflowY: 'auto',
+          flex: 1,
         }}
       >
         {filteredData.map(({ description, data }) => {
@@ -174,29 +206,12 @@ export function InfoPanel(props: InfoPanelProps) {
               </Collapsible.Trigger>
               <Collapsible.Content css={style.content}>
                 <Table
+                  data={data}
+                  columns={columns}
                   striped
-                  css={css({
-                    width: '100%',
-                  })}
+                  tableProps={{ style: { width: '100%' } }}
                   compact
-                >
-                  <Table.Header>
-                    <ValueRenderers.Header value="Parameter" />
-                    <ValueRenderers.Header value="Value" />
-                  </Table.Header>
-                  {data.map(([key, value]) => (
-                    <Table.Row
-                      key={key}
-                      style={{
-                        height: '10px',
-                        padding: '0 !imporant',
-                      }}
-                    >
-                      <ValueRenderers.Text value={key} />
-                      {valueCell(value)}
-                    </Table.Row>
-                  ))}
-                </Table>
+                />
               </Collapsible.Content>
             </Collapsible.Root>
           );

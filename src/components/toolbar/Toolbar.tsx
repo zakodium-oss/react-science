@@ -3,11 +3,11 @@ import {
   ButtonGroup,
   Classes,
   Colors,
+  Icon,
   Intent,
   Popover,
   PopoverProps,
   TagProps,
-  Icon,
   TooltipProps,
 } from '@blueprintjs/core';
 import { IconName } from '@blueprintjs/icons';
@@ -22,7 +22,7 @@ import {
   useRef,
 } from 'react';
 
-import { Button } from '../index';
+import { Button } from '../button';
 
 import {
   ToolbarContext,
@@ -57,7 +57,7 @@ export interface ToolbarItemProps extends ToolbarBaseProps {
   id?: string;
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
-  icon: IconName | JSX.Element;
+  icon: IconName | ReactElement;
   active?: boolean;
   onClick?: (
     item: ToolbarItemProps & {
@@ -257,6 +257,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
       interactionKind={popoverInteractionKind}
+      hasBackdrop
       hoverCloseDelay={0}
       css={css`
         .${Classes.ICON} {

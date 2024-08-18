@@ -1,17 +1,17 @@
 import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
 import { Meta } from '@storybook/react';
-import { JSX, useState } from 'react';
+import { type ReactElement, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import {
+  PopoverInteractionType,
   Toolbar,
   ToolbarItemProps,
   ToolbarProps,
-  PopoverInteractionType,
-  TooltipItem,
   TooltipHelpContent,
+  TooltipItem,
 } from '../../src/components';
 
 export default {
@@ -34,7 +34,7 @@ export default {
 type ToolbarItems = Array<
   Pick<ToolbarItemProps, 'tooltip' | 'icon' | 'disabled'> & {
     id: string;
-    content?: JSX.Element;
+    content?: ReactElement;
   }
 >;
 
