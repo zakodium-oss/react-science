@@ -49,10 +49,11 @@ const style = {
 export interface NMRFileBrowserProps {
   setSpectra?: (ids: string | string[]) => void;
   appendSpectra?: (ids: string | string[]) => void;
+  useTag?: boolean;
 }
 
 export function NMRFileBrowser(props: NMRFileBrowserProps) {
-  const { setSpectra, appendSpectra } = props;
+  const { setSpectra, appendSpectra, useTag = true } = props;
   const [query, setQuery] = useState('');
   const [opened, setOpened] = useState<string>('');
   const [total, setTotal] = useState(0);
@@ -181,6 +182,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                       entry={entry}
                       showAll={width > 400}
                       setSpectra={setSpectra}
+                      useTag={useTag}
                     />
                   </div>
                   {width > 400 && <NMRFileDownload entry={entry} />}
@@ -203,20 +205,28 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                         alignItems: 'center',
                         padding: '5px 2px',
                         width: '100%',
-                        gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr auto',
+                        gridTemplateColumns:
+                          width > 500
+                            ? '3fr 1fr 1fr 1fr 1fr 1fr auto'
+                            : '1fr 1fr 1fr 1fr 1fr auto',
                       }}
                     >
-                      <span
+                      {width > 500 && (
+                        <span
+                          style={{
+                            padding: '0px 5px',
+                          }}
+                        >
+                          {formatISO9075(child.lastModified)}
+                        </span>
+                      )}
+                      <div
                         style={{
-                          overflow: 'hidden',
-                          paddingLeft: '5px',
-                          textOverflow: 'ellipsis',
-                          wordWrap: 'break-word',
+                          paddingLeft: width > 500 ? 0 : 25,
                         }}
                       >
-                        {formatISO9075(child.lastModified)}
-                      </span>
-                      <div>{getDim(child)}</div>
+                        {getDim(child)}
+                      </div>
                       <div>{getType(child)}</div>
                       <div>
                         {child.solvent
@@ -245,7 +255,8 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                           }}
                           css={css({
                             borderRadius: '5px',
-                            padding: '5px 8px',
+                            width: '30px',
+                            height: '30px',
                           })}
                           color="red"
                           icon="plus"
@@ -259,7 +270,8 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                           }}
                           css={css({
                             borderRadius: '5px',
-                            padding: '5px 8px',
+                            width: '30px',
+                            height: '30px',
                           })}
                           icon="selection"
                           minimal

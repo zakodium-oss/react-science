@@ -15,8 +15,9 @@ export function NMRFileSpectraLink(props: {
   entry: NMREntry;
   showAll: boolean;
   setSpectra?: (ids: string | string[]) => void;
+  useTag?: boolean;
 }) {
-  const { entry, showAll, setSpectra } = props;
+  const { entry, showAll, setSpectra, useTag } = props;
   const labels: Record<SpectrumKinds, string> = {
     all: 'All',
     oneD: '1D',
@@ -41,9 +42,10 @@ export function NMRFileSpectraLink(props: {
     const label = labels[kind];
     const icon = icons[kind];
     const ids = entry.links[kind].ids;
+
     return (
       <Button
-        tag={ids.length > 0 ? ids.length : null}
+        tag={ids.length > 0 && useTag ? ids.length : null}
         tagProps={{
           style: {
             margin: '-4px -1px',
@@ -58,14 +60,15 @@ export function NMRFileSpectraLink(props: {
         tooltipProps={
           ids.length > 0
             ? {
-                content: `Select ${label} ${ids.length === 1 ? 'spectrum' : 'spectra'}`,
+                content: `Select ${useTag ? '' : ids.length} ${label} ${ids.length === 1 ? 'spectrum' : 'spectra'}`,
                 position: 'bottom-left',
               }
             : {}
         }
         css={css({
           borderRadius: '5px',
-          padding: '8px',
+          width: '30px',
+          height: '30px',
         })}
         disabled={ids.length === 0}
         icon={icon}
@@ -99,7 +102,8 @@ export function NMRFileDownload({ entry }: { entry: NMREntry }) {
       }}
       style={{
         borderRadius: '5px',
-        padding: '8px',
+        width: '30px',
+        height: '30px',
       }}
       minimal
       icon="import"

@@ -18,10 +18,13 @@ const actions = {
 
 export function Basic(props: NMRFileBrowserProps) {
   return (
-    <div style={{ width: '50%', height: '100%' }}>
+    <div style={{ width: '75%', height: '100%' }}>
       <NMRFileBrowser {...props} />
     </div>
   );
 }
 
 Basic.argTypes = actions;
+Basic.args = {
+  useTag: true,
+};
