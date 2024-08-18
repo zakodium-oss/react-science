@@ -39,12 +39,9 @@ export function Basic() {
       }}
     >
       <div>
-        <Toolbar vertical>
+        <Toolbar vertical large>
           {itemsBlueprintIcons.map((item) => (
             <Toolbar.Item
-              minimal={false}
-              large
-              fill
               key={item.id}
               id={item.id}
               icon={item.icon}
