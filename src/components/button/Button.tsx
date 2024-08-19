@@ -4,6 +4,7 @@ import {
   AnchorButtonProps as BlueprintAnchorButtonProps,
   Button as BlueprintButton,
   ButtonProps as BlueprintButtonProps,
+  Icon,
   Tag,
   TagProps,
   Tooltip,
@@ -41,33 +42,39 @@ export function Button(props: ButtonProps) {
       content={content}
       {...otherToolTipProps}
       renderTarget={({ isOpen, ...targetProps }) => (
-        <div style={{ position: 'relative' }}>
-          {tag && (
-            <Tag
-              css={css`
-                position: absolute;
-                top: 0;
-                left: 0;
-                cursor: default;
-                font-size: 0.875em;
-                padding: 2px !important;
-                min-height: 15px;
-                min-width: 15px;
-                line-height: 1em;
-                text-align: center;
-                z-index: 20;
-              `}
-              round
-              intent="success"
-              {...tagProps}
-            >
-              {tag}
-            </Tag>
-          )}
-          <InnerButton {...targetProps} {...buttonProps} style={{}}>
-            {children}
-          </InnerButton>
-        </div>
+        <InnerButton
+          {...targetProps}
+          {...buttonProps}
+          icon={
+            <div>
+              <Icon icon={buttonProps.icon} />
+              {tag && (
+                <Tag
+                  css={css`
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    cursor: default;
+                    font-size: 0.875em;
+                    padding: 2px !important;
+                    min-height: 15px;
+                    min-width: 15px;
+                    line-height: 1em;
+                    text-align: center;
+                    z-index: 20;
+                  `}
+                  round
+                  intent="success"
+                  {...tagProps}
+                >
+                  {tag}
+                </Tag>
+              )}
+            </div>
+          }
+        >
+          {children}
+        </InnerButton>
       )}
     />
   );
