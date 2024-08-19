@@ -21,6 +21,8 @@ export default {
     vertical: false,
     intent: 'none',
     disabled: false,
+    fill: false,
+    alignText: 'center',
   },
   argTypes: {
     onClick: { action: 'handle' },
@@ -117,6 +119,11 @@ const itemsMixedIcons: ToolbarItems = [
     tooltip: 'Box icons credit card icon',
     disabled: true,
   },
+  {
+    id: 'custom',
+    icon: <span>BC</span>,
+    tooltip: 'Custom icon',
+  },
 ];
 
 const itemsPopover: ToolbarItems = [
@@ -190,6 +197,16 @@ const itemsPopover: ToolbarItems = [
       </Menu>
     ),
   },
+  {
+    id: 'custom',
+    icon: <span>BC</span>,
+    tooltip: 'Custom icon',
+    content: (
+      <Menu>
+        <MenuItem text="Custom icon" />
+      </Menu>
+    ),
+  },
 ];
 
 export function Control(props: ToolbarProps & { onClick: () => void }) {
@@ -197,22 +214,29 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <Toolbar {...toolbarProps}>
-      {itemsMixedIcons.map((item) => (
-        <Toolbar.Item
-          key={item.id}
-          id={item.id}
-          tooltip={item.tooltip}
-          onClick={() => {
-            setActive(item.id);
-            onClick();
-          }}
-          icon={item.icon}
-          active={active === item.id}
-          intent={item.id.startsWith('clipboard') ? 'success' : undefined}
-        />
-      ))}
-    </Toolbar>
+    <div
+      style={{
+        border: '1px solid #f7f7f7',
+        width: '100%',
+      }}
+    >
+      <Toolbar {...toolbarProps}>
+        {itemsMixedIcons.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            tooltip={item.tooltip}
+            onClick={() => {
+              setActive(item.id);
+              onClick();
+            }}
+            icon={item.icon}
+            active={active === item.id}
+            intent={item.id.startsWith('clipboard') ? 'success' : undefined}
+          />
+        ))}
+      </Toolbar>
+    </div>
   );
 }
 export function WithTag() {
@@ -336,6 +360,7 @@ export function PopoverItems(
               setActive(itemProps.id);
               onClick();
             },
+            tag: (itemProps.id.startsWith('credit-card') && 1) || null,
           }}
         />
       ))}

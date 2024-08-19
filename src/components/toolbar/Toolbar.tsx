@@ -1,28 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import {
   ButtonGroup,
+  ButtonGroupProps,
   Classes,
   Colors,
   Icon,
   Intent,
   Popover,
   PopoverProps,
-  TagProps,
   TooltipProps,
 } from '@blueprintjs/core';
-import { IconName } from '@blueprintjs/icons';
 import { css } from '@emotion/react';
 import {
   cloneElement,
   MouseEvent,
-  ReactElement,
   ReactNode,
   useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 
-import { Button } from '../button';
+import { Button, ButtonProps } from '../button';
 
 import {
   ToolbarContext,
@@ -40,34 +38,23 @@ interface ToolbarBaseProps {
   intent?: Intent;
   disabled?: boolean;
 }
-export interface ToolbarProps extends ToolbarBaseProps {
-  vertical?: boolean;
-  large?: boolean;
-  minimal?: boolean;
-  children?:
-    | Array<ReactElement<ToolbarItemProps>>
-    | ReactElement<ToolbarItemProps>
-    | Iterable<ReactNode>
-    | boolean
-    | null;
+export interface ToolbarProps
+  extends ToolbarBaseProps,
+    Pick<ButtonGroupProps, 'children' | 'minimal' | 'large' | 'vertical'> {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
-export interface ToolbarItemProps extends ToolbarBaseProps {
-  id?: string;
+export interface ToolbarItemProps
+  extends ToolbarBaseProps,
+    Pick<ButtonProps, 'id' | 'icon' | 'active' | 'tag' | 'tagProps'> {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
-  icon: IconName | ReactElement;
-  active?: boolean;
   onClick?: (
     item: ToolbarItemProps & {
       event: MouseEvent;
     },
   ) => void;
-  className?: string;
   isPopover?: boolean;
-  tag?: ReactNode;
-  tagProps?: Omit<TagProps, 'children'>;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -94,9 +81,8 @@ export function Toolbar(props: ToolbarProps) {
       vertical,
       disabled,
       popoverInteractionKind,
-      minimal,
     }),
-    [intent, large, vertical, disabled, popoverInteractionKind, minimal],
+    [intent, large, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
 
@@ -138,6 +124,7 @@ export function Toolbar(props: ToolbarProps) {
         key={String(vertical)}
         vertical={vertical}
         large={large}
+        minimal={minimal}
         style={{
           flexWrap: 'wrap',
           borderRight: vertical ? border : undefined,
@@ -156,7 +143,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     onClick,
     tooltip,
     tooltipProps,
-    id,
     intent: itemIntent,
     disabled: itemDisabled,
     isPopover,
@@ -168,7 +154,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
     disabled: toolbarDisabled,
     large,
     vertical,
-    minimal,
   } = useToolbarContext();
   const intent = itemIntent ?? toolbarIntent;
   const disabled = itemDisabled ?? toolbarDisabled;
@@ -184,7 +169,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   return (
     <Button
       alignText={isPopover ? 'left' : undefined}
-      minimal={minimal}
       disabled={disabled}
       css={css`
         .${Classes.ICON} {
