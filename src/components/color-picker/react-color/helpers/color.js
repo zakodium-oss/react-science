@@ -27,16 +27,23 @@ function toState(data, oldHue) {
   const hsl = color.toHsl();
   const hsv = color.toHsv();
   const rgb = color.toRgb();
-  const hex = color.toHex();
+
+  let hex;
+
+  if (rgb.a < 1) {
+    hex = color.toHex8();
+  } else {
+    hex = color.toHex();
+  }
+
   if (hsl.s === 0) {
     hsl.h = oldHue || 0;
     hsv.h = oldHue || 0;
   }
-  const transparent = hex === '000000' && rgb.a === 0;
 
   return {
     hsl,
-    hex: transparent ? 'transparent' : `#${hex}`,
+    hex: `#${hex}`,
     rgb,
     hsv,
     oldHue: data.h || oldHue || hsl.h,
