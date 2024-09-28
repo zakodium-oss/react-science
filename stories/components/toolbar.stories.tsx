@@ -525,3 +525,30 @@ export function TooltipHelpContentStory({ intent }: ToolbarProps) {
 }
 
 TooltipHelpContentStory.storyName = 'TooltipHelpContent';
+
+export function PanelToolbar() {
+  const [selected, setSelected] = useState('copy');
+  return (
+    <div
+      style={{
+        height: 300,
+        display: 'flex',
+      }}
+    >
+      <div>
+        <Toolbar vertical large>
+          {itemsBlueprintIcons.map((item) => (
+            <Toolbar.Item
+              key={item.id}
+              id={item.id}
+              icon={item.icon}
+              active={selected === item.id}
+              onClick={() => setSelected(item.id)}
+            />
+          ))}
+        </Toolbar>
+      </div>
+      <div>{selected}</div>
+    </div>
+  );
+}
