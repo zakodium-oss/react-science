@@ -53,9 +53,6 @@ export function BoxPlot(props: BoxPlotProps) {
   const q3Pos = horizontalFactor * q3;
   const medianPos = horizontalFactor * median;
 
-  console.log(q1Pos, q3Pos);
-
-  const style = {};
   return (
     <svg width={width} height={height}>
       <rect
@@ -116,6 +113,7 @@ export function BoxPlot(props: BoxPlotProps) {
       />
       {outliers.map((outlier) => (
         <circle
+          key={outlier}
           cx={horizontalFactor * outlier}
           cy={verticalMiddlePos}
           style={{
@@ -129,6 +127,7 @@ export function BoxPlot(props: BoxPlotProps) {
       ))}
       {markers.map((marker) => (
         <circle
+          key={marker}
           cx={horizontalFactor * marker}
           cy={verticalMiddlePos}
           r={markerRadius}
