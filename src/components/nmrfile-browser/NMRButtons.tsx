@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import { Button } from '../index';
 
 import {
+  dbURL,
   findCommonParentFolder,
   NMREntry,
   NMREntryChild,
@@ -80,7 +81,6 @@ export function NMRFileSpectraLink(props: {
   });
 }
 
-const dbURL = 'https://nmrdb.cheminfo.org/';
 export function NMRFileDownload({ entry }: { entry: NMREntry }) {
   if (entry.children.length === 0) {
     return null;
@@ -92,7 +92,7 @@ export function NMRFileDownload({ entry }: { entry: NMREntry }) {
   const params = new URLSearchParams();
   params.set('source', source);
   params.set('relativePath', relativePath);
-  const link = `${dbURL}v1/getZip?${params.toString()}`;
+  const link = `${dbURL}getZip?${params.toString()}`;
 
   return (
     <AnchorButton

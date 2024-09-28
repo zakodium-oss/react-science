@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
+export const dbURL = 'https://nmrdb.cheminfo.org/v1/';
+
 export type SpectrumKinds = 'all' | 'oneD' | 'twoD' | 'fid' | 'ft';
 export interface NMREntryChild {
   id: string;
@@ -62,25 +64,32 @@ function getLastModified(entry: NMREntry) {
   return lastModified;
 }
 
-const dbURL = 'https://nmrdb.cheminfo.org/';
-
-export function usePostQuery(query: string, setTotal: (total: number) => void) {
+export function useSearchQuery(query: string, staleTime = 250) {
   return useQuery({
     queryKey: ['post', query],
     queryFn: async () => {
-      const response = await fetch(`${dbURL}v1/searchNMRs?query=${query}`);
+      const response = await fetch(`${dbURL}searchNMRs?query=${query}`);
       const answer = await response.json();
       const entries = answer.result;
       for (const entry of entries) {
         entry.links = getLinksForChildren(entry.children);
         entry.lastModified = getLastModified(entry);
       }
-      if (query === '') {
-        setTotal(entries.length);
-      }
       return entries;
     },
-    staleTime: 250,
+    staleTime,
+  });
+}
+
+export function useStatsQuery(staleTime = 250) {
+  return useQuery({
+    queryKey: ['stats'],
+    queryFn: async () => {
+      const response = await fetch(`${dbURL}getStats`);
+      const answer = await response.json();
+      return answer.result;
+    },
+    staleTime,
   });
 }
 
@@ -112,4 +121,12 @@ export function getType(child: NMREntryChild) {
     return 'FT';
   }
   return '';
+}
+
+export function getSolvent(child: NMREntryChild) {
+  return child.solvent
+    .split(/(\d+)/)
+    .map((part, index) =>
+      /\d/.test(part) ? <sub key={index}>{part}</sub> : part,
+    );
 }

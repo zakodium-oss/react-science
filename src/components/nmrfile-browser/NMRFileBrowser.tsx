@@ -8,7 +8,14 @@ import useResizeObserver from 'use-resize-observer';
 import { Button } from '../index';
 
 import { NMRFileDownload, NMRFileSpectraLink } from './NMRButtons';
-import { getDim, getType, NMREntry, usePostQuery } from './utils';
+import {
+  getDim,
+  getType,
+  NMREntry,
+  useStatsQuery,
+  useSearchQuery,
+  getSolvent,
+} from './utils';
 
 const style = {
   content: css({
@@ -50,16 +57,22 @@ export interface NMRFileBrowserProps {
   setSpectra?: (ids: string | string[]) => void;
   appendSpectra?: (ids: string | string[]) => void;
   useTag?: boolean;
+  displayNumber?: number;
+  staleTime?: number;
 }
 
 export function NMRFileBrowser(props: NMRFileBrowserProps) {
-  const { setSpectra, appendSpectra, useTag = true } = props;
+  const {
+    setSpectra,
+    appendSpectra,
+    useTag = true,
+    staleTime = 250,
+    displayNumber = 100,
+  } = props;
   const [query, setQuery] = useState('');
   const [opened, setOpened] = useState<string>('');
-  const [total, setTotal] = useState(0);
-
-  const displayFirst = 100;
-  const { status, data, error } = usePostQuery(query, setTotal);
+  const statsQuery = useStatsQuery(staleTime);
+  const searchQuery = useSearchQuery(query, staleTime);
   const { ref, width = 0 } = useResizeObserver<HTMLDivElement>();
   return (
     <div
@@ -99,12 +112,13 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           type="search"
           fill
         />
-        {status === 'pending' ? (
+        {statsQuery.status === 'pending' || searchQuery.status === 'pending' ? (
           <Button loading minimal />
         ) : (
-          status === 'success' && (
+          statsQuery.status === 'success' &&
+          searchQuery.status === 'success' && (
             <span>
-              [{data.length}/{total}]
+              [{searchQuery.data.length}/{statsQuery.data.nbNMRs}]
             </span>
           )
         )}
@@ -119,11 +133,14 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           flex: 1,
         }}
       >
-        {status === 'error' ? (
-          <span>Error: {error.message}</span>
+        {statsQuery.status === 'error' ? (
+          <span>Error: {statsQuery.error.message}</span>
+        ) : searchQuery.status === 'error' ? (
+          <span>Error: {searchQuery.error.message}</span>
         ) : (
-          status === 'success' &&
-          data.slice(0, displayFirst).map((entry: NMREntry) => (
+          statsQuery.status === 'success' &&
+          searchQuery.status === 'success' &&
+          searchQuery.data.slice(0, displayNumber).map((entry: NMREntry) => (
             <div key={entry.groupName}>
               <div
                 css={style.button}
@@ -160,7 +177,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                   >
                     {entry.groupName}
                   </span>
-                  {width > 500 && (
+                  {width > 600 && (
                     <div
                       style={{
                         alignSelf: 'center',
@@ -180,12 +197,12 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                   >
                     <NMRFileSpectraLink
                       entry={entry}
-                      showAll={width > 400}
+                      showAll={width > 450}
                       setSpectra={setSpectra}
                       useTag={useTag}
                     />
                   </div>
-                  {width > 400 && <NMRFileDownload entry={entry} />}
+                  {width > 450 && <NMRFileDownload entry={entry} />}
                 </div>
               </div>
               <Collapse
@@ -193,93 +210,104 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                 isOpen={opened === entry.groupName}
                 css={style.content}
               >
-                {entry.children.map((child) => {
-                  return (
-                    <div
-                      className="row"
-                      key={child.id}
-                      style={{
-                        borderBottom: '1px solid #f5f5f5',
-                        borderTop: '1px solid #f5f5f5',
-                        display: 'grid',
-                        alignItems: 'center',
-                        padding: '5px 2px',
-                        width: '100%',
-                        gridTemplateColumns:
-                          width > 500
-                            ? '3fr 1fr 1fr 1fr 1fr 1fr auto'
-                            : '1fr 1fr 1fr 1fr 1fr auto',
-                      }}
-                    >
-                      {width > 500 && (
-                        <span
+                <table
+                  style={{
+                    width: '100%',
+                  }}
+                >
+                  <tbody>
+                    {entry.children.map((child) => (
+                      <tr
+                        key={child.id}
+                        style={{ borderBottom: '1px solid #f5f5f5' }}
+                      >
+                        {width > 600 && (
+                          <td
+                            style={{
+                              width: '3fr',
+                              padding: width > 450 ? 8 : 4,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            {formatISO9075(child.lastModified)}
+                          </td>
+                        )}
+                        <td
+                          style={{ width: '1fr', padding: width > 450 ? 8 : 4 }}
+                        >
+                          {getDim(child)}
+                        </td>
+                        <td
+                          style={{ width: '1fr', padding: width > 450 ? 8 : 4 }}
+                        >
+                          {getType(child)}
+                        </td>
+                        <td
+                          style={{ width: '1fr', padding: width > 450 ? 8 : 4 }}
+                        >
+                          {getSolvent(child)}
+                        </td>
+                        <td
+                          style={{ width: '1fr', padding: width > 450 ? 8 : 4 }}
+                        >
+                          {child.frequency.toFixed(2)}
+                        </td>
+                        <td
                           style={{
-                            padding: '0px 5px',
+                            width: '1fr',
+                            padding: width > 450 ? 8 : 4,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
                           }}
                         >
-                          {formatISO9075(child.lastModified)}
-                        </span>
-                      )}
-                      <div
-                        style={{
-                          paddingLeft: width > 500 ? 0 : 25,
-                        }}
-                      >
-                        {getDim(child)}
-                      </div>
-                      <div>{getType(child)}</div>
-                      <div>
-                        {child.solvent
-                          .split(/(\d+)/)
-                          .map((part, index) =>
-                            /\d/.test(part) ? (
-                              <sub key={index}>{part}</sub>
-                            ) : (
-                              part
-                            ),
-                          )}
-                      </div>
-                      <div>{child.frequency}</div>
-                      <div>{child.pulseSequence}</div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          gap: '10px',
-                        }}
-                      >
-                        <Button
-                          onClick={() => appendSpectra?.(child._nmrID)}
-                          tooltipProps={{
-                            content: 'Append',
-                            position: 'bottom-left',
+                          {child.pulseSequence}
+                        </td>
+                        <td
+                          style={{
+                            width: '1fr',
+                            padding: width > 450 ? '8 8 8 0' : '4 4 4 0',
+                            display: 'flex',
+                            gap: width > 450 ? 10 : 5,
+                            justifyContent: 'right',
                           }}
-                          css={css({
-                            borderRadius: '5px',
-                            width: '30px',
-                            height: '30px',
-                          })}
-                          color="red"
-                          icon="plus"
-                          minimal
-                        />
-                        <Button
-                          onClick={() => setSpectra?.(child._nmrID)}
-                          tooltipProps={{
-                            content: 'Set',
-                            position: 'bottom-left',
-                          }}
-                          css={css({
-                            borderRadius: '5px',
-                            width: '30px',
-                            height: '30px',
-                          })}
-                          icon="selection"
-                          minimal
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                        >
+                          <Button
+                            onClick={() => appendSpectra?.(child._nmrID)}
+                            tooltipProps={{
+                              content: 'Append',
+                              position: 'bottom-left',
+                            }}
+                            css={css({
+                              borderRadius: '5px',
+                              width: '30px',
+                              height: '30px',
+                            })}
+                            color="red"
+                            icon="plus"
+                            minimal
+                          />
+                          <Button
+                            onClick={() => setSpectra?.(child._nmrID)}
+                            tooltipProps={{
+                              content: 'Set',
+                              position: 'bottom-left',
+                            }}
+                            css={css({
+                              borderRadius: '5px',
+                              width: '30px',
+                              height: '30px',
+                            })}
+                            icon="selection"
+                            minimal
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </Collapse>
             </div>
           ))
