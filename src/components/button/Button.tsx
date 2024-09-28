@@ -43,9 +43,12 @@ export function Button(props: ButtonProps) {
       {...otherToolTipProps}
       renderTarget={({ isOpen, ...targetProps }) => (
         <InnerButton
-          css={css`
-            position: relative;
-          `}
+          css={css({
+            position: 'relative',
+            '.bp5-icon': !children && {
+              marginRight: '0',
+            },
+          })}
           {...targetProps}
           {...buttonProps}
           icon={
