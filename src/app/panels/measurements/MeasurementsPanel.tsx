@@ -11,8 +11,9 @@ import {
   useAppState,
 } from '../../../app-data';
 
-import { MeasurementsTable, MeasurementPanelProvider } from '.';
+import { MeasurementPanelProvider, MeasurementsTable } from '.';
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
 export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
   const appState = useAppState();
   const { data, view } = appState;
