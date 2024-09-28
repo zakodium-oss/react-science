@@ -279,11 +279,11 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
         onClick={() =>
           openPanel?.({
             title: item.info.file?.name ?? item.info.title,
-            renderPanel: ({ closePanel }) => (
+            renderPanel: (props) => (
               <div>
                 <PanelPreferencesToolbar
                   title={item.info.file?.name ?? item.info.title}
-                  onClose={closePanel}
+                  onClose={() => props.closePanel()}
                 />
                 <InfoPanel data={infoPanelData} title="" />
               </div>
@@ -297,11 +297,11 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
         onClick={() =>
           openPanel?.({
             title: item.info.file?.name ?? item.info.title,
-            renderPanel: ({ closePanel }) => (
+            renderPanel: (props) => (
               <div>
                 <PanelPreferencesToolbar
                   title={item.info.file?.name ?? item.info.title}
-                  onClose={closePanel}
+                  onClose={() => props.closePanel()}
                 />
                 <MeasurementConfigPanel />
               </div>
