@@ -21,6 +21,8 @@ export default {
     vertical: false,
     intent: 'none',
     disabled: false,
+    minimal: false,
+    large: false,
     fill: false,
   },
   argTypes: {
@@ -234,6 +236,19 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
             intent={item.id.startsWith('clipboard') ? 'success' : undefined}
           />
         ))}
+        <Toolbar.PopoverItem
+          content={
+            <Menu>
+              <MenuItem text="Item 1" />
+              <MenuItem text="Item 2" />
+            </Menu>
+          }
+          itemProps={{
+            id: 'popover',
+            icon: 'more',
+            tooltip: 'More',
+          }}
+        />
       </Toolbar>
     </div>
   );
@@ -339,7 +354,7 @@ export function Horizontal() {
 }
 
 export function PopoverItems(
-  props: ToolbarItems & { onClick: () => void } & {
+  props: ToolbarProps & { onClick: () => void } & {
     popoverInteractionKind: PopoverInteractionType;
   },
 ) {
@@ -347,23 +362,28 @@ export function PopoverItems(
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <Toolbar popoverInteractionKind={popoverInteractionKind} {...toolbarProps}>
-      {itemsPopover.map(({ content, ...itemProps }) => (
-        <Toolbar.PopoverItem
-          key={itemProps.id}
-          content={content}
-          itemProps={{
-            ...itemProps,
-            active: active === itemProps.id,
-            onClick: () => {
-              setActive(itemProps.id);
-              onClick();
-            },
-            tag: itemProps.id.startsWith('credit-card') ? 1 : null,
-          }}
-        />
-      ))}
-    </Toolbar>
+    <div>
+      <Toolbar
+        popoverInteractionKind={popoverInteractionKind}
+        {...toolbarProps}
+      >
+        {itemsPopover.map(({ content, ...itemProps }) => (
+          <Toolbar.PopoverItem
+            key={itemProps.id}
+            content={content}
+            itemProps={{
+              ...itemProps,
+              active: active === itemProps.id,
+              onClick: () => {
+                setActive(itemProps.id);
+                onClick();
+              },
+              tag: itemProps.id.startsWith('credit-card') ? 1 : null,
+            }}
+          />
+        ))}
+      </Toolbar>
+    </div>
   );
 }
 PopoverItems.args = {
@@ -377,7 +397,7 @@ PopoverItems.argTypes = {
 };
 
 export function MixedItems(
-  props: ToolbarItems & { onClick: () => void } & { popoverFirst: boolean } & {
+  props: ToolbarProps & { onClick: () => void } & { popoverFirst: boolean } & {
     popoverInteractionKind: PopoverInteractionType;
   },
 ) {
@@ -389,36 +409,41 @@ export function MixedItems(
   const showPopover = (value: number) => popoverFirst === set.has(value);
 
   return (
-    <Toolbar popoverInteractionKind={popoverInteractionKind} {...toolbarProps}>
-      {itemsPopover.map(({ content, ...itemProps }, index) =>
-        showPopover(index) ? (
-          <Toolbar.PopoverItem
-            key={itemProps.id}
-            content={content}
-            itemProps={{
-              ...itemProps,
-              active: active === itemProps.id,
-              onClick: () => {
+    <div>
+      <Toolbar
+        popoverInteractionKind={popoverInteractionKind}
+        {...toolbarProps}
+      >
+        {itemsPopover.map(({ content, ...itemProps }, index) =>
+          showPopover(index) ? (
+            <Toolbar.PopoverItem
+              key={itemProps.id}
+              content={content}
+              itemProps={{
+                ...itemProps,
+                active: active === itemProps.id,
+                onClick: () => {
+                  setActive(itemProps.id);
+                  onClick();
+                },
+              }}
+            />
+          ) : (
+            <Toolbar.Item
+              key={itemProps.id}
+              id={itemProps.id}
+              tooltip={itemProps.tooltip}
+              onClick={() => {
                 setActive(itemProps.id);
                 onClick();
-              },
-            }}
-          />
-        ) : (
-          <Toolbar.Item
-            key={itemProps.id}
-            id={itemProps.id}
-            tooltip={itemProps.tooltip}
-            onClick={() => {
-              setActive(itemProps.id);
-              onClick();
-            }}
-            icon={itemProps.icon}
-            active={active === itemProps.id}
-          />
-        ),
-      )}
-    </Toolbar>
+              }}
+              icon={itemProps.icon}
+              active={active === itemProps.id}
+            />
+          ),
+        )}
+      </Toolbar>
+    </div>
   );
 }
 MixedItems.args = {
@@ -498,28 +523,30 @@ export function CustomTooltipContent({ intent }: ToolbarProps) {
 
 export function TooltipHelpContentStory({ intent }: ToolbarProps) {
   return (
-    <Tooltip
-      minimal
-      intent={intent}
-      isOpen
-      content={
-        <TooltipHelpContent
-          title="Cut text tool"
-          shortcuts={['Ctrl', 'x']}
-          subTitles={[
-            {
-              title: 'sub title 1',
-              shortcuts: ['x'],
-            },
-            {
-              title: 'sub title 2',
-              shortcuts: ['z'],
-            },
-          ]}
-          description="Cut selected item to clipboard."
-        />
-      }
-    />
+    <div>
+      <Tooltip
+        minimal
+        intent={intent}
+        isOpen
+        content={
+          <TooltipHelpContent
+            title="Cut text tool"
+            shortcuts={['Ctrl', 'x']}
+            subTitles={[
+              {
+                title: 'sub title 1',
+                shortcuts: ['x'],
+              },
+              {
+                title: 'sub title 2',
+                shortcuts: ['z'],
+              },
+            ]}
+            description="Cut selected item to clipboard."
+          />
+        }
+      />
+    </div>
   );
 }
 
