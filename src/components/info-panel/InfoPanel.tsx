@@ -2,7 +2,7 @@
 import { Icon, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { CSSProperties, useCallback, useMemo, useState } from 'react';
+import { CSSProperties, memo, useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../table';
 import * as ValueRenderers from '../value-renderers';
@@ -19,6 +19,7 @@ interface InfoPanelProps {
   titleStyle?: CSSProperties;
   inputStyle?: CSSProperties;
 }
+
 const style = {
   content: css({
     overflow: 'hidden',
@@ -87,9 +88,17 @@ const columns = [
   }),
 ];
 
+const emptyData: InfoPanelData[] = [];
+
 export function InfoPanel(props: InfoPanelProps) {
+  const {
+    title = 'Information',
+    data = emptyData,
+    titleStyle,
+    inputStyle,
+  } = props;
+
   const [search, setSearch] = useState('');
-  const { title = 'Information', data = [], titleStyle, inputStyle } = props;
   const viewData = useCallback(
     (data: Record<string, string | number | object>) => {
       const exactMatch: InfoPanelDatum[] = [];
@@ -123,12 +132,9 @@ export function InfoPanel(props: InfoPanelProps) {
     },
     [search],
   );
+
   const { filteredData, total, count } = useMemo(() => {
-    const filteredData: Array<
-      Omit<InfoPanelData, 'data'> & {
-        data: InfoPanelDatum[];
-      }
-    > = [];
+    const filteredData: InfoPanelContentDatum[] = [];
     let total = 0;
     let count = 0;
     for (const { data: dataContent, ...other } of data) {
@@ -140,6 +146,7 @@ export function InfoPanel(props: InfoPanelProps) {
     }
     return { filteredData, total, count };
   }, [data, viewData]);
+
   return (
     <div css={style.container}>
       <div
@@ -181,45 +188,61 @@ export function InfoPanel(props: InfoPanelProps) {
         />
         [{count}/{total}]
       </div>
-      <div
-        style={{
-          position: 'relative',
-          marginTop: '5px',
-          display: 'flex',
-          flexDirection: 'column',
-          overflowY: 'auto',
-          flex: 1,
-        }}
-      >
-        {filteredData.map(({ description, data }) => {
-          return (
-            <Collapsible.Root
-              key={description}
-              className="CollapsibleRoot"
-              defaultOpen
-            >
-              <Collapsible.Trigger asChild css={style.button}>
-                <div>
-                  <Icon icon="chevron-right" css={style.chevron} />
-                  {description}
-                </div>
-              </Collapsible.Trigger>
-              <Collapsible.Content css={style.content}>
-                <Table
-                  data={data}
-                  columns={columns}
-                  striped
-                  tableProps={{ style: { width: '100%' } }}
-                  compact
-                />
-              </Collapsible.Content>
-            </Collapsible.Root>
-          );
-        })}
-      </div>
+      <InfoPanelContent filteredData={filteredData} />
     </div>
   );
 }
+
+type InfoPanelContentDatum = Omit<InfoPanelData, 'data'> & {
+  data: InfoPanelDatum[];
+};
+
+interface InfoPanelContentProps {
+  filteredData: InfoPanelContentDatum[];
+}
+
+const InfoPanelContent = memo((props: InfoPanelContentProps) => {
+  const { filteredData } = props;
+  return (
+    <div
+      style={{
+        position: 'relative',
+        marginTop: '5px',
+        display: 'flex',
+        flexDirection: 'column',
+        overflowY: 'auto',
+        flex: 1,
+      }}
+    >
+      {filteredData.map(({ description, data }) => {
+        return (
+          <Collapsible.Root
+            key={description}
+            className="CollapsibleRoot"
+            defaultOpen
+          >
+            <Collapsible.Trigger asChild css={style.button}>
+              <div>
+                <Icon icon="chevron-right" css={style.chevron} />
+                {description}
+              </div>
+            </Collapsible.Trigger>
+            <Collapsible.Content css={style.content}>
+              <Table
+                data={data}
+                columns={columns}
+                striped
+                tableProps={{ style: { width: '100%' } }}
+                compact
+              />
+            </Collapsible.Content>
+          </Collapsible.Root>
+        );
+      })}
+    </div>
+  );
+});
+
 /**
  * Get the value cell depending on the type of the value
  * @param value - ValueRenderers value.
@@ -236,7 +259,7 @@ function valueCell(value: number | string | object | boolean) {
     case 'string':
       return <ValueRenderers.Text value={value} />;
     default:
-      <ValueRenderers.Text value={value} />;
+      return <ValueRenderers.Text value={value} />;
   }
 }
 
