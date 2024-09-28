@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.2](https://github.com/zakodium-oss/react-science/compare/v6.0.1...v6.0.2) (2024-09-28)
+
+
+### Bug Fixes
+
+* avoid unnecessary rerenders of InfoPanel contents ([245173e](https://github.com/zakodium-oss/react-science/commit/245173efd364004509cc71fdae0cfeb7bf48da9d))
+
 ## [6.0.1](https://github.com/zakodium-oss/react-science/compare/v6.0.0...v6.0.1) (2024-09-11)
 
 
