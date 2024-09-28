@@ -40,7 +40,10 @@ interface ToolbarBaseProps {
 }
 export interface ToolbarProps
   extends ToolbarBaseProps,
-    Pick<ButtonGroupProps, 'children' | 'minimal' | 'large' | 'vertical'> {
+    Pick<
+      ButtonGroupProps,
+      'children' | 'minimal' | 'large' | 'vertical' | 'fill'
+    > {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
@@ -72,6 +75,7 @@ export function Toolbar(props: ToolbarProps) {
     vertical,
     popoverInteractionKind,
     minimal,
+    fill,
   } = props;
 
   const contextValue = useMemo(
@@ -119,6 +123,7 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
+        fill={fill}
         // Reset because of layout effect above
         // TODO: remove once the workaround is no longer needed
         key={String(vertical)}
@@ -180,7 +185,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
         position: 'relative',
         fontSize: '1.125em',
         width: 'fit-content',
-        flex: 'none',
       }}
       type="button"
       active={active}
@@ -192,6 +196,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
             alignItems: 'center',
             width: 0,
             height: 0,
+            marginRight: '0',
           }}
         >
           <Icon icon={resizedIcon} />
@@ -254,7 +259,6 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
           fontSize: '1.125em',
           width: 'fit-content',
           height: 'fit-content',
-          flex: 'none',
         },
       }}
       {...other}

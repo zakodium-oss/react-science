@@ -22,7 +22,6 @@ export default {
     intent: 'none',
     disabled: false,
     fill: false,
-    alignText: 'center',
   },
   argTypes: {
     onClick: { action: 'handle' },
@@ -258,7 +257,7 @@ export function WithTag() {
           tag={
             (item.id.startsWith('credit-card') && 1) ||
             (item.id.startsWith('clipboard') && 14) ||
-            142
+            undefined
           }
           tagProps={{
             intent:
@@ -360,7 +359,7 @@ export function PopoverItems(
               setActive(itemProps.id);
               onClick();
             },
-            tag: (itemProps.id.startsWith('credit-card') && 1) || null,
+            tag: itemProps.id.startsWith('credit-card') ? 1 : null,
           }}
         />
       ))}
