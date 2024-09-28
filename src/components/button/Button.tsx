@@ -11,7 +11,7 @@ import {
   TooltipProps,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 
 type BlueprintProps = {
   [key in keyof BlueprintButtonProps &
@@ -43,10 +43,13 @@ export function Button(props: ButtonProps) {
       {...otherToolTipProps}
       renderTarget={({ isOpen, ...targetProps }) => (
         <InnerButton
+          css={css`
+            position: relative;
+          `}
           {...targetProps}
           {...buttonProps}
           icon={
-            <div>
+            <Fragment>
               <Icon icon={buttonProps.icon} />
               {tag && (
                 <Tag
@@ -70,7 +73,7 @@ export function Button(props: ButtonProps) {
                   {tag}
                 </Tag>
               )}
-            </div>
+            </Fragment>
           }
         >
           {children}

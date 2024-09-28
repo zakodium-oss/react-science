@@ -11,8 +11,9 @@ export default {
 
 const ButtonWrapper = styled.div`
   padding: 10px;
-  display: flex;
   flex-direction: column;
+  align-items: start;
+  display: flex;
   gap: 5px;
 `;
 export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
