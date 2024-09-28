@@ -1,5 +1,20 @@
 # Changelog
 
+## [6.0.2](https://github.com/zakodium-oss/react-science/compare/v6.0.1...v6.0.2) (2024-09-28)
+
+
+### Bug Fixes
+
+* avoid unnecessary rerenders of InfoPanel contents ([245173e](https://github.com/zakodium-oss/react-science/commit/245173efd364004509cc71fdae0cfeb7bf48da9d))
+
+## [6.0.1](https://github.com/zakodium-oss/react-science/compare/v6.0.0...v6.0.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* include alpha in hex code for semi-transparent colors ([6cc6a97](https://github.com/zakodium-oss/react-science/commit/6cc6a97864c201c3e04ba5529733c559a11ba8c7))
+* toolbar popover item should have backdrop to avoid interactions outside of it when it is open ([#756](https://github.com/zakodium-oss/react-science/issues/756)) ([c2f3ff3](https://github.com/zakodium-oss/react-science/commit/c2f3ff37edbd6b4bcc23c38d08271e59d2a3877f))
+
 ## [6.0.0](https://github.com/zakodium-oss/react-science/compare/v5.0.0...v6.0.0) (2024-07-31)
 
 

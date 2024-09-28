@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
 import { useMemo, useState } from 'react';
-import { FaExchangeAlt, FaArrowsAltH } from 'react-icons/fa';
+import { FaArrowsAltH, FaExchangeAlt } from 'react-icons/fa';
 
-import { MeasurementPlot, MeasurementPlotProps } from '../helpers/index';
+import { MeasurementPlot, MeasurementPlotProps } from '../helpers';
 
-export interface MeasurementExplorerProps
-  extends Omit<MeasurementPlotProps, keyof ExplorerInfo> {}
+export type MeasurementExplorerProps = Omit<
+  MeasurementPlotProps,
+  keyof ExplorerInfo
+>;
 interface ExplorerInfo {
   dataIndex: number;
   xVariableName: string;

@@ -26,4 +26,10 @@ export default [
       '@typescript-eslint/no-dynamic-delete': 'off',
     },
   },
+  {
+    files: ['stories/**', 'tests/**'],
+    rules: {
+      '@typescript-eslint/unbound-method': 'off',
+    },
+  },
 ];
