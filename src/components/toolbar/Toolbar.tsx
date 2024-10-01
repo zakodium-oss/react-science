@@ -178,6 +178,9 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       css={css`
         .${Classes.ICON} {
           color: ${Colors.DARK_GRAY3};
+          width: ${large ? '20px' : '16px'};
+          height: ${large ? '20px' : '16px'};
+          font-size: ${large ? '14px' : '12px'};
         }
       `}
       intent={intent}
@@ -209,6 +212,8 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
+                width: large ? 14 : 9,
+                height: large ? 14 : 9,
               }}
             />
           )}
