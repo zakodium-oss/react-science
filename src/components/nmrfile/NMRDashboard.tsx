@@ -1,8 +1,8 @@
 import { ResponsiveBar } from '@nivo/bar';
 import { formatISO9075 } from 'date-fns';
 
-export interface PeriodMonth {
-  month: number;
+interface Period {
+  count: number;
   count1D: number;
   count2D: number;
   count1H: number;
@@ -10,19 +10,18 @@ export interface PeriodMonth {
   count1H1H: number;
   count1H13C: number;
   countOtherNuclei: number;
-  [key: string]: number | string;
+  [key: string]: number;
 }
-export interface PeriodYear {
+export interface PeriodYear extends Period {
   year: number;
-  count1D: number;
-  count2D: number;
-  count1H: number;
-  count13C: number;
-  count1H1H: number;
-  count1H13C: number;
-  countOtherNuclei: number;
-  [key: string]: number | string;
+  firstDayOfYearEpoch: number;
 }
+
+export interface PeriodMonth extends Period {
+  month: number;
+  firstDayOfMonthEpoch: number;
+}
+
 export interface ValueStats {
   total: number;
   last12Months: number;
