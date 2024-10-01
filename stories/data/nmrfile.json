@@ -1,368 +1,392 @@
 {
-    "status": "ok",
-    "result": {
-      "lastUpdate": 1727636833761,
-      "nbFiles": 7240,
-      "nbNMRs": 3567,
-      "nb1D": 3155,
-      "nb2D": 412,
-      "nbIsFid": 745,
-      "nbIsFt": 2822,
-      "solvents": [
-        {
-          "count": 13,
-          "solvent": "Acetone"
-        },
-        {
-          "count": 2642,
-          "solvent": "CDCl3"
-        },
-        {
-          "count": 42,
-          "solvent": "D2O"
-        },
-        {
-          "count": 2,
-          "solvent": "DMF"
-        },
-        {
-          "count": 856,
-          "solvent": "DMSO"
-        },
-        {
-          "count": 1,
-          "solvent": "H2O+D2O"
-        },
-        {
-          "count": 1,
-          "solvent": "MeOD"
-        },
-        {
-          "count": 10,
-          "solvent": "TFA"
-        }
-      ],
-      "formats": [
-        {
-          "count": 917,
-          "format": "Bruker"
-        },
-        {
-          "count": 2650,
-          "format": "JCAMP-DX"
-        }
-      ],
-      "nuclei": [
-        {
-          "count": 263,
-          "nucleus": "13C"
-        },
-        {
-          "count": 10,
-          "nucleus": "19F"
-        },
-        {
-          "count": 4,
-          "nucleus": "19F,1H"
-        },
-        {
-          "count": 2882,
-          "nucleus": "1H"
-        },
-        {
-          "count": 223,
-          "nucleus": "1H,13C"
-        },
-        {
-          "count": 19,
-          "nucleus": "1H,15N"
-        },
-        {
-          "count": 166,
-          "nucleus": "1H,1H"
-        }
-      ],
-      "pulseSequences": [
-        {
-          "count": 2,
-          "pulseSequence": "apt"
-        },
-        {
-          "count": 1,
-          "pulseSequence": "aptsp.ber"
-        },
-        {
-          "count": 1,
-          "pulseSequence": "cosygpmfph"
-        },
-        {
-          "count": 102,
-          "pulseSequence": "cosygpmfqf"
-        },
-        {
-          "count": 8,
-          "pulseSequence": "cosygpqf"
-        },
-        {
-          "count": 4,
-          "pulseSequence": "dept135"
-        },
-        {
-          "count": 1,
-          "pulseSequence": "deptqgpsp"
-        },
-        {
-          "count": 114,
-          "pulseSequence": "deptsp135"
-        },
-        {
-          "count": 4,
-          "pulseSequence": "hfcoqfqn"
-        },
-        {
-          "count": 1,
-          "pulseSequence": "hmbcetgpl2nd.ber"
-        },
-        {
-          "count": 109,
-          "pulseSequence": "hmbcgplpndqf"
-        },
-        {
-          "count": 13,
-          "pulseSequence": "hmbcgpndqf"
-        },
-        {
-          "count": 4,
-          "pulseSequence": "hmqcgpqf"
-        },
-        {
-          "count": 2,
-          "pulseSequence": "hsqcedetgp"
-        },
-        {
-          "count": 1,
-          "pulseSequence": "hsqcedetgpsisp"
-        },
-        {
-          "count": 104,
-          "pulseSequence": "hsqcedetgpsisp2.3"
-        },
-        {
-          "count": 2,
-          "pulseSequence": "hsqcetgp"
-        },
-        {
-          "count": 6,
-          "pulseSequence": "hsqcetgpsi2"
-        },
-        {
-          "count": 2,
-          "pulseSequence": "jmod"
-        },
-        {
-          "count": 3,
-          "pulseSequence": "noesygpph"
-        },
-        {
-          "count": 52,
-          "pulseSequence": "noesygpphpp"
-        },
-        {
-          "count": 2,
-          "pulseSequence": "selnogp.nes"
-        },
-        {
-          "count": 2,
-          "pulseSequence": "zg"
-        },
-        {
-          "count": 2872,
-          "pulseSequence": "zg30"
-        },
-        {
-          "count": 7,
-          "pulseSequence": "zgdc30"
-        },
-        {
-          "count": 5,
-          "pulseSequence": "zgfhigqn.2"
-        },
-        {
-          "count": 5,
-          "pulseSequence": "zgflqn"
-        },
-        {
-          "count": 1,
-          "pulseSequence": "zggd30"
-        },
-        {
-          "count": 6,
-          "pulseSequence": "zghfigqn"
-        },
-        {
-          "count": 131,
-          "pulseSequence": "zgpg30"
-        }
-      ],
-      "users": [
-        {
-          "count": 3567,
-          "lastModified": 1678720863671,
-          "username": ""
-        }
-      ],
-      "sources": [
-        {
-          "count": 66,
-          "lastModified": 1715681872000,
-          "source": "nils"
-        },
-        {
-          "count": 2650,
-          "lastModified": 1678720863671,
-          "source": "maybridge"
-        },
-        {
-          "count": 851,
-          "lastModified": 1485341684000,
-          "source": "johannes"
-        }
-      ],
-      "perYears": [
-        {
-          "count": 734,
-          "count1D": 401,
-          "count2D": 333,
-          "count1H": 182,
-          "count13C": 209,
-          "count1H1H": 134,
-          "count1H13C": 176,
-          "countOtherNuclei": 33,
-          "year": 2016,
-          "firstDayOfYearEpoch": 1451606400000
-        },
-        {
-          "count": 13,
-          "count1D": 12,
-          "count2D": 1,
-          "count1H": 6,
-          "count13C": 6,
-          "count1H1H": 1,
-          "count1H13C": 0,
-          "countOtherNuclei": 0,
-          "year": 2017,
-          "firstDayOfYearEpoch": 1483228800000
-        },
-        {
-          "count": 5,
-          "count1D": 4,
-          "count2D": 1,
-          "count1H": 3,
-          "count13C": 1,
-          "count1H1H": 1,
-          "count1H13C": 0,
-          "countOtherNuclei": 0,
-          "year": 2020,
-          "firstDayOfYearEpoch": 1577836800000
-        },
-        {
-          "count": 82,
-          "count1D": 43,
-          "count2D": 39,
-          "count1H": 13,
-          "count13C": 30,
-          "count1H1H": 14,
-          "count1H13C": 25,
-          "countOtherNuclei": 0,
-          "year": 2021,
-          "firstDayOfYearEpoch": 1609459200000
-        },
-        {
-          "count": 12,
-          "count1D": 12,
-          "count2D": 0,
-          "count1H": 10,
-          "count13C": 2,
-          "count1H1H": 0,
-          "count1H13C": 0,
-          "countOtherNuclei": 0,
-          "year": 2022,
-          "firstDayOfYearEpoch": 1640995200000
-        },
-        {
-          "count": 2691,
-          "count1D": 2665,
-          "count2D": 26,
-          "count1H": 2652,
-          "count13C": 13,
-          "count1H1H": 10,
-          "count1H13C": 16,
-          "countOtherNuclei": 0,
-          "year": 2023,
-          "firstDayOfYearEpoch": 1672531200000
-        },
-        {
-          "count": 30,
-          "count1D": 18,
-          "count2D": 12,
-          "count1H": 16,
-          "count13C": 2,
-          "count1H1H": 6,
-          "count1H13C": 6,
-          "countOtherNuclei": 0,
-          "year": 2024,
-          "firstDayOfYearEpoch": 1704067200000
-        }
-      ],
-      "perMonths": [
-        {
-          "count": 8,
-          "count1D": 0,
-          "count2D": 8,
-          "count1H": 0,
-          "count13C": 0,
-          "count1H1H": 4,
-          "count1H13C": 4,
-          "countOtherNuclei": 0,
-          "month": 2,
-          "firstDayOfMonthEpoch": 1706745600000
-        },
-        {
-          "count": 18,
-          "count1D": 18,
-          "count2D": 0,
-          "count1H": 16,
-          "count13C": 2,
-          "count1H1H": 0,
-          "count1H13C": 0,
-          "countOtherNuclei": 0,
-          "month": 5,
-          "firstDayOfMonthEpoch": 1714521600000
-        },
-        {
-          "count": 2,
-          "count1D": 0,
-          "count2D": 2,
-          "count1H": 0,
-          "count13C": 0,
-          "count1H1H": 0,
-          "count1H13C": 2,
-          "countOtherNuclei": 0,
-          "month": 6,
-          "firstDayOfMonthEpoch": 1717200000000
-        },
-        {
-          "count": 2,
-          "count1D": 0,
-          "count2D": 2,
-          "count1H": 0,
-          "count13C": 0,
-          "count1H1H": 2,
-          "count1H13C": 0,
-          "countOtherNuclei": 0,
-          "month": 9,
-          "firstDayOfMonthEpoch": 1725148800000
-        }
-      ]
-    }
+  "status": "ok",
+  "result": {
+    "lastUpdate": 1727798832033,
+    "nbFiles": {
+      "total": 7240,
+      "last12Months": 110,
+      "lastMonth": 10
+    },
+    "nbNMRs": {
+      "total": 3567,
+      "last12Months": 30,
+      "lastMonth": 2
+    },
+    "nb1D": {
+      "total": 3155,
+      "last12Months": 18,
+      "lastMonth": 0
+    },
+    "nb2D": {
+      "total": 412,
+      "last12Months": 12,
+      "lastMonth": 2
+    },
+    "nbIsFid": {
+      "total": 745,
+      "last12Months": 15,
+      "lastMonth": 1
+    },
+    "nbIsFt": {
+      "total": 2822,
+      "last12Months": 15,
+      "lastMonth": 1
+    },
+    "solvents": [
+      {
+        "count": 13,
+        "solvent": "Acetone"
+      },
+      {
+        "count": 2642,
+        "solvent": "CDCl3"
+      },
+      {
+        "count": 42,
+        "solvent": "D2O"
+      },
+      {
+        "count": 2,
+        "solvent": "DMF"
+      },
+      {
+        "count": 856,
+        "solvent": "DMSO"
+      },
+      {
+        "count": 1,
+        "solvent": "H2O+D2O"
+      },
+      {
+        "count": 1,
+        "solvent": "MeOD"
+      },
+      {
+        "count": 10,
+        "solvent": "TFA"
+      }
+    ],
+    "formats": [
+      {
+        "count": 917,
+        "format": "Bruker"
+      },
+      {
+        "count": 2650,
+        "format": "JCAMP-DX"
+      }
+    ],
+    "nuclei": [
+      {
+        "count": 263,
+        "nucleus": "13C"
+      },
+      {
+        "count": 10,
+        "nucleus": "19F"
+      },
+      {
+        "count": 4,
+        "nucleus": "19F,1H"
+      },
+      {
+        "count": 2882,
+        "nucleus": "1H"
+      },
+      {
+        "count": 223,
+        "nucleus": "1H,13C"
+      },
+      {
+        "count": 19,
+        "nucleus": "1H,15N"
+      },
+      {
+        "count": 166,
+        "nucleus": "1H,1H"
+      }
+    ],
+    "pulseSequences": [
+      {
+        "count": 2,
+        "pulseSequence": "apt"
+      },
+      {
+        "count": 1,
+        "pulseSequence": "aptsp.ber"
+      },
+      {
+        "count": 1,
+        "pulseSequence": "cosygpmfph"
+      },
+      {
+        "count": 102,
+        "pulseSequence": "cosygpmfqf"
+      },
+      {
+        "count": 8,
+        "pulseSequence": "cosygpqf"
+      },
+      {
+        "count": 4,
+        "pulseSequence": "dept135"
+      },
+      {
+        "count": 1,
+        "pulseSequence": "deptqgpsp"
+      },
+      {
+        "count": 114,
+        "pulseSequence": "deptsp135"
+      },
+      {
+        "count": 4,
+        "pulseSequence": "hfcoqfqn"
+      },
+      {
+        "count": 1,
+        "pulseSequence": "hmbcetgpl2nd.ber"
+      },
+      {
+        "count": 109,
+        "pulseSequence": "hmbcgplpndqf"
+      },
+      {
+        "count": 13,
+        "pulseSequence": "hmbcgpndqf"
+      },
+      {
+        "count": 4,
+        "pulseSequence": "hmqcgpqf"
+      },
+      {
+        "count": 2,
+        "pulseSequence": "hsqcedetgp"
+      },
+      {
+        "count": 1,
+        "pulseSequence": "hsqcedetgpsisp"
+      },
+      {
+        "count": 104,
+        "pulseSequence": "hsqcedetgpsisp2.3"
+      },
+      {
+        "count": 2,
+        "pulseSequence": "hsqcetgp"
+      },
+      {
+        "count": 6,
+        "pulseSequence": "hsqcetgpsi2"
+      },
+      {
+        "count": 2,
+        "pulseSequence": "jmod"
+      },
+      {
+        "count": 3,
+        "pulseSequence": "noesygpph"
+      },
+      {
+        "count": 52,
+        "pulseSequence": "noesygpphpp"
+      },
+      {
+        "count": 2,
+        "pulseSequence": "selnogp.nes"
+      },
+      {
+        "count": 2,
+        "pulseSequence": "zg"
+      },
+      {
+        "count": 2872,
+        "pulseSequence": "zg30"
+      },
+      {
+        "count": 7,
+        "pulseSequence": "zgdc30"
+      },
+      {
+        "count": 5,
+        "pulseSequence": "zgfhigqn.2"
+      },
+      {
+        "count": 5,
+        "pulseSequence": "zgflqn"
+      },
+      {
+        "count": 1,
+        "pulseSequence": "zggd30"
+      },
+      {
+        "count": 6,
+        "pulseSequence": "zghfigqn"
+      },
+      {
+        "count": 131,
+        "pulseSequence": "zgpg30"
+      }
+    ],
+    "users": [
+      {
+        "count": 3567,
+        "lastModified": 1678720863671,
+        "username": ""
+      }
+    ],
+    "sources": [
+      {
+        "count": 66,
+        "lastModified": 1715681872000,
+        "source": "nils"
+      },
+      {
+        "count": 2650,
+        "lastModified": 1678720863671,
+        "source": "maybridge"
+      },
+      {
+        "count": 851,
+        "lastModified": 1485341684000,
+        "source": "johannes"
+      }
+    ],
+    "perYears": [
+      {
+        "count": 734,
+        "count1D": 401,
+        "count2D": 333,
+        "count1H": 182,
+        "count13C": 209,
+        "count1H1H": 134,
+        "count1H13C": 176,
+        "countOtherNuclei": 33,
+        "year": 2016,
+        "firstDayOfYearEpoch": 1451606400000
+      },
+      {
+        "count": 13,
+        "count1D": 12,
+        "count2D": 1,
+        "count1H": 6,
+        "count13C": 6,
+        "count1H1H": 1,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "year": 2017,
+        "firstDayOfYearEpoch": 1483228800000
+      },
+      {
+        "count": 5,
+        "count1D": 4,
+        "count2D": 1,
+        "count1H": 3,
+        "count13C": 1,
+        "count1H1H": 1,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "year": 2020,
+        "firstDayOfYearEpoch": 1577836800000
+      },
+      {
+        "count": 82,
+        "count1D": 43,
+        "count2D": 39,
+        "count1H": 13,
+        "count13C": 30,
+        "count1H1H": 14,
+        "count1H13C": 25,
+        "countOtherNuclei": 0,
+        "year": 2021,
+        "firstDayOfYearEpoch": 1609459200000
+      },
+      {
+        "count": 12,
+        "count1D": 12,
+        "count2D": 0,
+        "count1H": 10,
+        "count13C": 2,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "year": 2022,
+        "firstDayOfYearEpoch": 1640995200000
+      },
+      {
+        "count": 2691,
+        "count1D": 2665,
+        "count2D": 26,
+        "count1H": 2652,
+        "count13C": 13,
+        "count1H1H": 10,
+        "count1H13C": 16,
+        "countOtherNuclei": 0,
+        "year": 2023,
+        "firstDayOfYearEpoch": 1672531200000
+      },
+      {
+        "count": 30,
+        "count1D": 18,
+        "count2D": 12,
+        "count1H": 16,
+        "count13C": 2,
+        "count1H1H": 6,
+        "count1H13C": 6,
+        "countOtherNuclei": 0,
+        "year": 2024,
+        "firstDayOfYearEpoch": 1704067200000
+      }
+    ],
+    "perMonths": [
+      {
+        "count": 8,
+        "count1D": 0,
+        "count2D": 8,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 4,
+        "count1H13C": 4,
+        "countOtherNuclei": 0,
+        "month": 2,
+        "firstDayOfMonthEpoch": 1706745600000
+      },
+      {
+        "count": 18,
+        "count1D": 18,
+        "count2D": 0,
+        "count1H": 16,
+        "count13C": 2,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 5,
+        "firstDayOfMonthEpoch": 1714521600000
+      },
+      {
+        "count": 2,
+        "count1D": 0,
+        "count2D": 2,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 2,
+        "countOtherNuclei": 0,
+        "month": 6,
+        "firstDayOfMonthEpoch": 1717200000000
+      },
+      {
+        "count": 2,
+        "count1D": 0,
+        "count2D": 2,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 2,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 9,
+        "firstDayOfMonthEpoch": 1725148800000
+      }
+    ]
   }
+}

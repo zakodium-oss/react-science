@@ -23,15 +23,19 @@ export interface PeriodYear {
   countOtherNuclei: number;
   [key: string]: number | string;
 }
-
+export interface ValueStats {
+  total: number;
+  last12Months: number;
+  lastMonth: number;
+}
 export interface Stats {
   lastUpdate: number;
-  nbFiles: number;
-  nbNMRs: number;
-  nb1D: number;
-  nb2D: number;
-  nbIsFid: number;
-  nbIsFt: number;
+  nbFiles: ValueStats;
+  nbNMRs: ValueStats;
+  nb1D: ValueStats;
+  nb2D: ValueStats;
+  nbIsFid: ValueStats;
+  nbIsFt: ValueStats;
   solvents: Array<{ count: number; solvent: string }>;
   formats: Array<{ count: number; format: string }>;
   nuclei: Array<{ count: number; nucleus: string }>;
@@ -46,7 +50,7 @@ interface NMRStatsGraphProps {
   data: Stats;
 }
 
-export function NMRStatsGraph(props: NMRStatsGraphProps) {
+export function NMRDashboard(props: NMRStatsGraphProps) {
   const { data } = props;
 
   return (
@@ -57,19 +61,19 @@ export function NMRStatsGraph(props: NMRStatsGraphProps) {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            gap: '8px',
+            gap: 20,
           }}
         >
-          <p>Last month: xxx</p>
-          <p>Last 12 months: xxx</p>
-          <p>Nb spectra:: {data.nbNMRs}</p>
+          <p>Last month: {data.nbNMRs.lastMonth}</p>
+          <p>Last 12 months: {data.nbNMRs.last12Months}</p>
+          <p>Nb spectra: {data.nbNMRs.total}</p>
         </div>
       </div>
       <div
         style={{
           display: 'flex',
           flexDirection: 'row',
-          gap: '8px',
+          gap: 20,
         }}
       >
         <div
@@ -171,7 +175,6 @@ export function NMRStatsGraph(props: NMRStatsGraphProps) {
               },
             ]}
             role="application"
-            ariaLabel="Nivo bar chart demo"
           />
         </div>
         <div

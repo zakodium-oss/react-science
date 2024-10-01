@@ -1,13 +1,13 @@
 import {
   Button,
   useStatsQuery,
-  NMRStatsGraph,
+  NMRDashboard,
   Stats,
 } from '../../src/components/index';
 import nmrfile from '../data/nmrfile.json';
 
 export default {
-  title: 'Components / NMRStatsGraph',
+  title: 'Components / NMRDashboard',
 };
 const nmrdata = nmrfile.result as Stats;
 
@@ -21,9 +21,9 @@ export function FromFetch() {
     return <Button loading minimal />;
   }
 
-  return <NMRStatsGraph data={data} />;
+  return <NMRDashboard data={data} />;
 }
 
 export function FromJson() {
-  return <NMRStatsGraph data={nmrdata} />;
+  return <NMRDashboard data={nmrdata} />;
 }

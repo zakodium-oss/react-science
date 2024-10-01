@@ -1,2 +1,2 @@
-export * from './NMRStatsGraph';
+export * from './NMRDashboard';
 export { useStatsQuery } from './utils';
