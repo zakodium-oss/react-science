@@ -378,7 +378,11 @@ export function PopoverItems(
                 setActive(itemProps.id);
                 onClick();
               },
-              tag: itemProps.id.startsWith('credit-card') ? 1 : null,
+              tag: itemProps.id.startsWith('credit-card')
+                ? 1
+                : itemProps.id.startsWith('clipboard')
+                  ? 15
+                  : undefined,
             }}
           />
         ))}

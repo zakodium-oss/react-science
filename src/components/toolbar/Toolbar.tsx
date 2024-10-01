@@ -178,9 +178,17 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       css={css`
         .${Classes.ICON} {
           color: ${Colors.DARK_GRAY3};
+        }
+        .bp5-icon {
           width: ${large ? '20px' : '16px'};
           height: ${large ? '20px' : '16px'};
           font-size: ${large ? '14px' : '12px'};
+        }
+        .bp5-tag {
+          font-size: ${large ? '12px' : '10px'};
+          line-height: ${large ? '14px' : '12px'};
+          min-width: ${large ? '18px' : '15px'};
+          min-height: ${large ? '18px' : '15px'};
         }
       `}
       intent={intent}
@@ -202,7 +210,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
             marginRight: 0,
           }}
         >
-          <Icon icon={resizedIcon} />
+          <Icon icon={resizedIcon} size={large ? 20 : 16} />
           {isPopover && (
             <Icon
               icon="caret-right"
