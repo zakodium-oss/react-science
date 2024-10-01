@@ -21,7 +21,7 @@ export default {
     vertical: false,
     intent: 'none',
     disabled: false,
-    minimal: false,
+    minimal: true,
     large: false,
     fill: false,
   },

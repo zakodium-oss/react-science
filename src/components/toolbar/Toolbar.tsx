@@ -196,7 +196,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
             alignItems: 'center',
             width: 0,
             height: 0,
-            marginRight: '0',
+            marginRight: 0,
           }}
         >
           <Icon icon={resizedIcon} />
