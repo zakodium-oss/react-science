@@ -219,6 +219,7 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
       style={{
         border: '1px solid #f7f7f7',
         width: '100%',
+        height: 800,
       }}
     >
       <Toolbar {...toolbarProps}>
@@ -362,7 +363,11 @@ export function PopoverItems(
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <div>
+    <div
+      style={{
+        height: 800,
+      }}
+    >
       <Toolbar
         popoverInteractionKind={popoverInteractionKind}
         {...toolbarProps}

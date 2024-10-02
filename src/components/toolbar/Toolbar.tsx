@@ -274,10 +274,9 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
           height: 'fit-content',
         },
       }}
+      renderTarget={() => <Toolbar.Item isPopover {...itemProps} />}
       {...other}
-    >
-      <Toolbar.Item isPopover {...itemProps} />
-    </Popover>
+    />
   );
 };
 
