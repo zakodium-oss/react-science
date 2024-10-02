@@ -107,6 +107,8 @@
     "@blueprintjs/core": "^5.13.0",
     "@blueprintjs/icons": "^5.13.0",
     "@nivo/bar": "^0.87.0",
+    "@nivo/core": "^0.87.0",
+    "@nivo/pie": "^0.87.0",
     "@playwright/experimental-ct-react": "^1.47.2",
     "@playwright/test": "^1.47.2",
     "@storybook/addon-essentials": "^8.3.3",
