@@ -42,19 +42,19 @@ type ToolbarItems = Array<
 >;
 
 const itemsBlueprintIcons: ToolbarItems = [
-  { id: 'copy', icon: 'phone', tooltip: 'Phone' },
-  { id: 'paste', icon: 'add-column-left', tooltip: 'Add left' },
-  { id: 'undo', icon: 'add-column-right', tooltip: 'Right' },
+  { id: 'phone', icon: 'phone', tooltip: 'Phone' },
+  { id: 'add-column-left', icon: 'add-column-left', tooltip: 'Add left' },
+  { id: 'add-column-right', icon: 'add-column-right', tooltip: 'Right' },
   {
     id: 'redo',
     icon: 'redo',
     tooltip: 'Redo',
   },
-  { id: 'test1', icon: 'undo', tooltip: 'Undo' },
-  { id: 'test2', icon: 'paperclip', tooltip: 'Attachment' },
-  { id: 'test3', icon: 'help', tooltip: 'Help' },
-  { id: 'test4', icon: 'lab-test', tooltip: 'Lab', disabled: true },
-  { id: 'test5', icon: 'trash', tooltip: 'Trash' },
+  { id: 'undo', icon: 'undo', tooltip: 'Undo' },
+  { id: 'paperclip', icon: 'paperclip', tooltip: 'Attachment' },
+  { id: 'help', icon: 'help', tooltip: 'Help' },
+  { id: 'lab-test', icon: 'lab-test', tooltip: 'Lab', disabled: true },
+  { id: 'trash', icon: 'trash', tooltip: 'Trash' },
 ];
 
 const itemsMixedIcons: ToolbarItems = [
@@ -562,28 +562,26 @@ export function TooltipHelpContentStory({ intent }: ToolbarProps) {
 TooltipHelpContentStory.storyName = 'TooltipHelpContent';
 
 export function PanelToolbar() {
-  const [selected, setSelected] = useState('copy');
+  const [selected, setSelected] = useState<string>();
   return (
     <div
       style={{
-        height: 300,
         display: 'flex',
+        height: '100%',
       }}
     >
-      <div>
-        <Toolbar vertical large>
-          {itemsBlueprintIcons.map((item) => (
-            <Toolbar.Item
-              key={item.id}
-              id={item.id}
-              icon={item.icon}
-              active={selected === item.id}
-              onClick={() => setSelected(item.id)}
-            />
-          ))}
-        </Toolbar>
-      </div>
-      <div>{selected}</div>
+      <Toolbar vertical large fill>
+        {itemsBlueprintIcons.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            icon={item.icon}
+            active={selected === item.id}
+            onClick={() => setSelected(item.id)}
+          />
+        ))}
+      </Toolbar>
+      <div>{selected ?? 'Select an item in the toolbar'}</div>
     </div>
   );
 }
