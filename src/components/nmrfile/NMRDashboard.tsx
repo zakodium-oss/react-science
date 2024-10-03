@@ -49,6 +49,13 @@ const ChartTitle = styled.h3`
   font-weight: bold;
 `;
 
+const CardNumber = styled.h3`
+  margin: 30px;
+  font-size: 36px;
+  text-align: center;
+  font-weight: bold;
+`;
+
 const InnerChartContainer = styled.div`
   height: 400px;
 `;
@@ -193,15 +200,15 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
       <CardContainer>
         <Card>
           <CardTitle>Last month</CardTitle>
-          <p>{data.nbNMRs.lastMonth}</p>
+          <CardNumber>{data.nbNMRs.lastMonth}</CardNumber>
         </Card>
         <Card>
           <CardTitle>Last 12 months</CardTitle>
-          <p>{data.nbNMRs.last12Months}</p>
+          <CardNumber>{data.nbNMRs.last12Months}</CardNumber>
         </Card>
         <Card>
           <CardTitle>All time</CardTitle>
-          <p>{data.nbNMRs.total}</p>
+          <CardNumber>{data.nbNMRs.total}</CardNumber>
         </Card>
       </CardContainer>
 
