@@ -156,18 +156,18 @@ function getData(data: Stats, threshold = 0.03) {
     month: m.month,
     '1H': m.count1H,
     '13C': m.count13C,
-    '1H1H': m.count1H1H,
-    '1H13C': m.count1H13C,
-    OtherNuclei: m.countOtherNuclei,
+    '1H,1H': m.count1H1H,
+    '1H,13C': m.count1H13C,
+    'Other Nuclei': m.countOtherNuclei,
   }));
 
   const perYears = data.perYears.map((m) => ({
     year: m.year,
     '1H': m.count1H,
     '13C': m.count13C,
-    '1H1H': m.count1H1H,
-    '1H13C': m.count1H13C,
-    OtherNuclei: m.countOtherNuclei,
+    '1H,1H': m.count1H1H,
+    '1H,13C': m.count1H13C,
+    'Other Nuclei': m.countOtherNuclei,
   }));
 
   return {
@@ -200,14 +200,14 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
           <p>{data.nbNMRs.last12Months}</p>
         </Card>
         <Card>
-          <CardTitle>Number of spectra</CardTitle>
+          <CardTitle>All time</CardTitle>
           <p>{data.nbNMRs.total}</p>
         </Card>
       </CardContainer>
 
       <CardsWrapper>
         <ChartContainer>
-          <ChartTitle>Monthly Spectra</ChartTitle>
+          <ChartTitle>Nb Spectra per Month</ChartTitle>
           <InnerChartContainer>
             <ResponsiveBar
               data={perMonths}
@@ -257,7 +257,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Spectrum count',
+                legend: 'Nb spectra',
                 legendPosition: 'middle',
                 legendOffset: -50,
                 truncateTickAt: 0,
@@ -299,7 +299,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
         </ChartContainer>
 
         <ChartContainer>
-          <ChartTitle>Yearly Spectra</ChartTitle>
+          <ChartTitle>Nb Spectra per year</ChartTitle>
           <InnerChartContainer>
             <ResponsiveBar
               data={perYears}
@@ -340,7 +340,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Month',
+                legend: 'Year',
                 legendPosition: 'middle',
                 legendOffset: 32,
                 truncateTickAt: 0,
@@ -349,7 +349,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Spectrum count',
+                legend: 'Nb spectra',
                 legendPosition: 'middle',
                 legendOffset: -50,
                 truncateTickAt: 0,
