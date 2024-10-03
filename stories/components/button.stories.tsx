@@ -11,8 +11,9 @@ export default {
 
 const ButtonWrapper = styled.div`
   padding: 10px;
-  display: flex;
   flex-direction: column;
+  align-items: start;
+  display: flex;
   gap: 5px;
 `;
 export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
@@ -60,6 +61,8 @@ export function WithTag() {
         Hello, World!
       </Button>
       <Button tag="Error !">Hello, World!</Button>
+      <Button tag="Error !" icon="person" />
+      <Button tag="1" icon="person" />
     </ButtonWrapper>
   );
 }
@@ -113,9 +116,26 @@ export function ButtonGroupBasic() {
           },
         })}
       >
-        <Button icon="database">A</Button>
+        <Button tag="1" icon="database">
+          A
+        </Button>
         <Button icon="function">B</Button>
         <Button icon="settings">C</Button>
+      </ButtonGroup>
+      <ButtonGroup
+        css={css({
+          ' & > *:first-of-type': {
+            borderRadius: '6px 0 0 6px',
+          },
+          ' & > *:last-of-type': {
+            borderRightWidth: 1,
+            borderRadius: '0 6px 6px 0',
+          },
+        })}
+      >
+        <Button tag="1" icon="database" />
+        <Button tag="2" icon="function" />
+        <Button icon="settings" />
       </ButtonGroup>
     </ButtonWrapper>
   );
