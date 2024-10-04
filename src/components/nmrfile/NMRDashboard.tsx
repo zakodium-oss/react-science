@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { ResponsiveBar } from '@nivo/bar';
 import { ResponsivePie } from '@nivo/pie';
 import { formatISO9075 } from 'date-fns';
+import useResizeObserver from 'use-resize-observer';
 
 import { Button } from '../button/Button';
 import { useSelect } from '../hooks/useSelect';
@@ -23,7 +24,6 @@ const Container = styled.div`
 `;
 
 const UpdateInfo = styled.div`
-  margin-bottom: 10px;
   font-size: 14px;
   color: #888;
 
@@ -35,7 +35,7 @@ const UpdateInfo = styled.div`
 const CardContainer = styled.div`
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   @media (max-width: 1000px) {
     flex-direction: column;
@@ -102,7 +102,7 @@ const InnerChartContainer = styled.div`
 const CardsWrapper = styled.div`
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  margin: 10px 0;
   flex: 1;
   overflow-y: hidden;
 
@@ -271,9 +271,10 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
     data.pulseSequences[valuePulseSequences?.key || defaultSelectedItem.key],
     data.nbNMRs[valuePulseSequences?.key || defaultSelectedItem.key],
   );
-
+  const { ref, width } = useResizeObserver<HTMLDivElement>();
+  const isMobile = (width && width < 1000) || false;
   return (
-    <Container>
+    <Container ref={ref}>
       <UpdateInfo>
         <p>Last update: {formatISO9075(data.lastUpdate)}</p>
       </UpdateInfo>
@@ -338,7 +339,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickRotation: 0,
                 legend: 'Month',
                 legendPosition: 'middle',
-                legendOffset: 32,
+                legendOffset: 35,
                 truncateTickAt: 0,
               }}
               axisLeft={{
@@ -366,13 +367,13 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   justify: false,
                   translateX: 0,
                   translateY: 75,
-                  itemsSpacing: 0,
-                  itemWidth: 60,
-                  symbolSpacing: 2,
+                  itemsSpacing: isMobile ? 0 : 2,
+                  itemWidth: isMobile ? 60 : 100,
+                  symbolSpacing: isMobile ? 2 : 5,
                   itemHeight: 20,
                   itemDirection: 'left-to-right',
                   itemOpacity: 0.85,
-                  symbolSize: 15,
+                  symbolSize: isMobile ? 15 : 20,
                 },
               ]}
               role="application"
@@ -424,7 +425,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickRotation: 0,
                 legend: 'Year',
                 legendPosition: 'middle',
-                legendOffset: 32,
+                legendOffset: 35,
                 truncateTickAt: 0,
               }}
               axisLeft={{
@@ -452,13 +453,13 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   justify: false,
                   translateX: 0,
                   translateY: 75,
-                  itemsSpacing: 0,
-                  itemWidth: 60,
-                  symbolSpacing: 2,
+                  itemsSpacing: isMobile ? 0 : 2,
+                  itemWidth: isMobile ? 60 : 100,
+                  symbolSpacing: isMobile ? 2 : 5,
                   itemHeight: 20,
                   itemDirection: 'left-to-right',
                   itemOpacity: 0.85,
-                  symbolSize: 15,
+                  symbolSize: isMobile ? 15 : 20,
                 },
               ]}
               role="application"
@@ -511,8 +512,8 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
-                arcLinkLabelsStraightLength={5}
-                arcLinkLabelsDiagonalLength={5}
+                arcLinkLabelsStraightLength={isMobile ? 10 : 25}
+                arcLinkLabelsDiagonalLength={isMobile ? 6 : 15}
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={10}
                 arcLabelsTextColor={{
@@ -566,8 +567,8 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
-                arcLinkLabelsStraightLength={5}
-                arcLinkLabelsDiagonalLength={5}
+                arcLinkLabelsStraightLength={isMobile ? 10 : 25}
+                arcLinkLabelsDiagonalLength={isMobile ? 6 : 15}
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={10}
                 arcLabelsTextColor={{
@@ -621,8 +622,8 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
-                arcLinkLabelsStraightLength={5}
-                arcLinkLabelsDiagonalLength={5}
+                arcLinkLabelsStraightLength={isMobile ? 10 : 25}
+                arcLinkLabelsDiagonalLength={isMobile ? 6 : 15}
                 startAngle={-50}
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={0}
