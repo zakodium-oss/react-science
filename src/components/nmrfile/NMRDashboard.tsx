@@ -42,6 +42,7 @@ const Card = styled.div`
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   flex: 1;
+  min-width: 100px;
 
   /* Adjust padding on mobile */
   @media (max-width: 768px) {
@@ -169,7 +170,6 @@ function getData(data: Stats) {
     '1H,13C': m.count1H13C,
     'Other Nuclei': m.countOtherNuclei,
   }));
-  perMonths.sort((a, b) => a.month - b.month);
 
   const perYears = data.perYears.map((m) => ({
     year: m.year,
