@@ -16,7 +16,7 @@ const Container = styled.div`
   overflow: hidden;
 
   @media (max-width: 1000px) {
-    padding: 10px;
+    padding: 5px;
     height: auto;
     overflow: auto;
   }
@@ -53,12 +53,12 @@ const Card = styled.div`
   flex-direction: column;
 
   @media (max-width: 1000px) {
-    padding: 15px;
+    padding: 5px;
   }
 `;
 
 const Title = styled.p`
-  margin: 0;
+  margin: 0px 5px;
   font-size: 20px;
   text-align: left;
 
@@ -95,6 +95,7 @@ const InnerChartContainer = styled.div`
 
   @media (max-width: 1000px) {
     height: 250px;
+    flex: none;
   }
 `;
 
@@ -176,7 +177,7 @@ function getData(data: Stats) {
     '13C': m.count13C,
     '1H,1H': m.count1H1H,
     '1H,13C': m.count1H13C,
-    'Other Nuclei': m.countOtherNuclei,
+    Other: m.countOtherNuclei,
   }));
 
   const perYears = data.perYears.map((m) => ({
@@ -185,7 +186,7 @@ function getData(data: Stats) {
     '13C': m.count13C,
     '1H,1H': m.count1H1H,
     '1H,13C': m.count1H13C,
-    'Other Nuclei': m.countOtherNuclei,
+    Other: m.countOtherNuclei,
   }));
   perYears.sort((a, b) => a.year - b.year);
 
@@ -298,7 +299,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
           <InnerChartContainer>
             <ResponsiveBar
               data={perMonths}
-              keys={['1H', '13C', '1H1H', '1H13C', 'OtherNuclei']}
+              keys={['1H', '13C', '1H1H', '1H13C', 'Other']}
               indexBy="month"
               margin={{ top: 10, right: 30, bottom: 90, left: 60 }}
               padding={0.3}
@@ -365,20 +366,13 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   justify: false,
                   translateX: 0,
                   translateY: 75,
-                  itemsSpacing: 2,
-                  itemWidth: 100,
+                  itemsSpacing: 0,
+                  itemWidth: 60,
+                  symbolSpacing: 2,
                   itemHeight: 20,
                   itemDirection: 'left-to-right',
                   itemOpacity: 0.85,
-                  symbolSize: 20,
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
+                  symbolSize: 15,
                 },
               ]}
               role="application"
@@ -391,7 +385,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
           <InnerChartContainer>
             <ResponsiveBar
               data={perYears}
-              keys={['1H', '13C', '1H1H', '1H13C', 'OtherNuclei']}
+              keys={['1H', '13C', '1H1H', '1H13C', 'Other']}
               indexBy="year"
               margin={{ top: 10, right: 30, bottom: 90, left: 60 }}
               padding={0.3}
@@ -458,20 +452,13 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   justify: false,
                   translateX: 0,
                   translateY: 75,
-                  itemsSpacing: 2,
-                  itemWidth: 100,
+                  itemsSpacing: 0,
+                  itemWidth: 60,
+                  symbolSpacing: 2,
                   itemHeight: 20,
                   itemDirection: 'left-to-right',
                   itemOpacity: 0.85,
-                  symbolSize: 20,
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
+                  symbolSize: 15,
                 },
               ]}
               role="application"
@@ -511,7 +498,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 data={solvents}
                 id="value"
                 value="count"
-                margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                margin={{ top: 40, right: 80, bottom: 40, left: 80 }}
                 innerRadius={0.5}
                 padAngle={0.7}
                 cornerRadius={3}
@@ -521,40 +508,17 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   from: 'color',
                   modifiers: [['darker', 0.2]],
                 }}
-                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
+                arcLinkLabelsStraightLength={5}
+                arcLinkLabelsDiagonalLength={5}
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={10}
                 arcLabelsTextColor={{
                   from: 'color',
                   modifiers: [['darker', 2]],
                 }}
-                legends={[
-                  {
-                    anchor: 'bottom',
-                    direction: 'row',
-                    justify: false,
-                    translateX: 0,
-                    translateY: 56,
-                    itemsSpacing: 0,
-                    itemWidth: 100,
-                    itemHeight: 18,
-                    itemTextColor: '#999',
-                    itemDirection: 'left-to-right',
-                    itemOpacity: 1,
-                    symbolSize: 18,
-                    symbolShape: 'circle',
-                    effects: [
-                      {
-                        on: 'hover',
-                        style: {
-                          itemTextColor: '#000',
-                        },
-                      },
-                    ],
-                  },
-                ]}
               />
             )}
           </InnerChartContainer>
@@ -589,7 +553,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 data={nuclei}
                 id="value"
                 value="count"
-                margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                margin={{ top: 40, right: 80, bottom: 40, left: 80 }}
                 innerRadius={0.5}
                 padAngle={0.7}
                 cornerRadius={3}
@@ -599,40 +563,17 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   from: 'color',
                   modifiers: [['darker', 0.2]],
                 }}
-                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
+                arcLinkLabelsStraightLength={5}
+                arcLinkLabelsDiagonalLength={5}
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={10}
                 arcLabelsTextColor={{
                   from: 'color',
                   modifiers: [['darker', 2]],
                 }}
-                legends={[
-                  {
-                    anchor: 'bottom',
-                    direction: 'row',
-                    justify: false,
-                    translateX: 0,
-                    translateY: 56,
-                    itemsSpacing: 0,
-                    itemWidth: 80,
-                    itemHeight: 18,
-                    itemTextColor: '#999',
-                    itemDirection: 'left-to-right',
-                    itemOpacity: 1,
-                    symbolSize: 18,
-                    symbolShape: 'circle',
-                    effects: [
-                      {
-                        on: 'hover',
-                        style: {
-                          itemTextColor: '#000',
-                        },
-                      },
-                    ],
-                  },
-                ]}
               />
             )}
           </InnerChartContainer>
@@ -667,7 +608,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 data={pulseSequences}
                 id="value"
                 value="count"
-                margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                margin={{ top: 40, right: 80, bottom: 40, left: 80 }}
                 innerRadius={0.5}
                 padAngle={0.7}
                 cornerRadius={3}
@@ -677,9 +618,11 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   from: 'color',
                   modifiers: [['darker', 0.2]],
                 }}
-                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
+                arcLinkLabelsStraightLength={5}
+                arcLinkLabelsDiagonalLength={5}
                 startAngle={-50}
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={0}
@@ -687,31 +630,6 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                   from: 'color',
                   modifiers: [['darker', 2]],
                 }}
-                legends={[
-                  {
-                    anchor: 'bottom',
-                    direction: 'row',
-                    justify: false,
-                    translateX: 0,
-                    translateY: 56,
-                    itemsSpacing: 0,
-                    itemWidth: 80,
-                    itemHeight: 18,
-                    itemTextColor: '#999',
-                    itemDirection: 'left-to-right',
-                    itemOpacity: 1,
-                    symbolSize: 18,
-                    symbolShape: 'circle',
-                    effects: [
-                      {
-                        on: 'hover',
-                        style: {
-                          itemTextColor: '#000',
-                        },
-                      },
-                    ],
-                  },
-                ]}
               />
             )}
           </InnerChartContainer>
