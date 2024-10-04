@@ -79,6 +79,9 @@ const ChartPieTitle = styled.div`
 
 const InnerChartContainer = styled.div`
   height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     height: 250px;
@@ -485,55 +488,65 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
             </Select>
           </ChartPieTitle>
           <InnerChartContainer>
-            <ResponsivePie
-              data={solvents}
-              id="value"
-              value="count"
-              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
-              activeOuterRadiusOffset={8}
-              borderWidth={1}
-              borderColor={{
-                from: 'color',
-                modifiers: [['darker', 0.2]],
-              }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
-              arcLinkLabelsThickness={2}
-              arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={10}
-              arcLabelsTextColor={{
-                from: 'color',
-                modifiers: [['darker', 2]],
-              }}
-              legends={[
-                {
-                  anchor: 'bottom',
-                  direction: 'row',
-                  justify: false,
-                  translateX: 0,
-                  translateY: 56,
-                  itemsSpacing: 0,
-                  itemWidth: 100,
-                  itemHeight: 18,
-                  itemTextColor: '#999',
-                  itemDirection: 'left-to-right',
-                  itemOpacity: 1,
-                  symbolSize: 18,
-                  symbolShape: 'circle',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
+            {solvents.length === 0 ? (
+              <div
+                style={{
+                  fontSize: '20px',
+                }}
+              >
+                No Data
+              </div>
+            ) : (
+              <ResponsivePie
+                data={solvents}
+                id="value"
+                value="count"
+                margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                innerRadius={0.5}
+                padAngle={0.7}
+                cornerRadius={3}
+                activeOuterRadiusOffset={8}
+                borderWidth={1}
+                borderColor={{
+                  from: 'color',
+                  modifiers: [['darker', 0.2]],
+                }}
+                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsTextColor="#333333"
+                arcLinkLabelsThickness={2}
+                arcLinkLabelsColor={{ from: 'color' }}
+                arcLabelsSkipAngle={10}
+                arcLabelsTextColor={{
+                  from: 'color',
+                  modifiers: [['darker', 2]],
+                }}
+                legends={[
+                  {
+                    anchor: 'bottom',
+                    direction: 'row',
+                    justify: false,
+                    translateX: 0,
+                    translateY: 56,
+                    itemsSpacing: 0,
+                    itemWidth: 100,
+                    itemHeight: 18,
+                    itemTextColor: '#999',
+                    itemDirection: 'left-to-right',
+                    itemOpacity: 1,
+                    symbolSize: 18,
+                    symbolShape: 'circle',
+                    effects: [
+                      {
+                        on: 'hover',
+                        style: {
+                          itemTextColor: '#000',
+                        },
                       },
-                    },
-                  ],
-                },
-              ]}
-            />
+                    ],
+                  },
+                ]}
+              />
+            )}
           </InnerChartContainer>
         </Card>
         <Card>
@@ -553,55 +566,65 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
             </Select>
           </ChartPieTitle>
           <InnerChartContainer>
-            <ResponsivePie
-              data={nuclei}
-              id="value"
-              value="count"
-              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
-              activeOuterRadiusOffset={8}
-              borderWidth={1}
-              borderColor={{
-                from: 'color',
-                modifiers: [['darker', 0.2]],
-              }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
-              arcLinkLabelsThickness={2}
-              arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={10}
-              arcLabelsTextColor={{
-                from: 'color',
-                modifiers: [['darker', 2]],
-              }}
-              legends={[
-                {
-                  anchor: 'bottom',
-                  direction: 'row',
-                  justify: false,
-                  translateX: 0,
-                  translateY: 56,
-                  itemsSpacing: 0,
-                  itemWidth: 80,
-                  itemHeight: 18,
-                  itemTextColor: '#999',
-                  itemDirection: 'left-to-right',
-                  itemOpacity: 1,
-                  symbolSize: 18,
-                  symbolShape: 'circle',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
+            {nuclei.length === 0 ? (
+              <div
+                style={{
+                  fontSize: '20px',
+                }}
+              >
+                No Data
+              </div>
+            ) : (
+              <ResponsivePie
+                data={nuclei}
+                id="value"
+                value="count"
+                margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                innerRadius={0.5}
+                padAngle={0.7}
+                cornerRadius={3}
+                activeOuterRadiusOffset={8}
+                borderWidth={1}
+                borderColor={{
+                  from: 'color',
+                  modifiers: [['darker', 0.2]],
+                }}
+                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsTextColor="#333333"
+                arcLinkLabelsThickness={2}
+                arcLinkLabelsColor={{ from: 'color' }}
+                arcLabelsSkipAngle={10}
+                arcLabelsTextColor={{
+                  from: 'color',
+                  modifiers: [['darker', 2]],
+                }}
+                legends={[
+                  {
+                    anchor: 'bottom',
+                    direction: 'row',
+                    justify: false,
+                    translateX: 0,
+                    translateY: 56,
+                    itemsSpacing: 0,
+                    itemWidth: 80,
+                    itemHeight: 18,
+                    itemTextColor: '#999',
+                    itemDirection: 'left-to-right',
+                    itemOpacity: 1,
+                    symbolSize: 18,
+                    symbolShape: 'circle',
+                    effects: [
+                      {
+                        on: 'hover',
+                        style: {
+                          itemTextColor: '#000',
+                        },
                       },
-                    },
-                  ],
-                },
-              ]}
-            />
+                    ],
+                  },
+                ]}
+              />
+            )}
           </InnerChartContainer>
         </Card>
         <Card>
@@ -621,56 +644,66 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
             </Select>
           </ChartPieTitle>
           <InnerChartContainer>
-            <ResponsivePie
-              data={pulseSequences}
-              id="value"
-              value="count"
-              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
-              activeOuterRadiusOffset={8}
-              borderWidth={1}
-              borderColor={{
-                from: 'color',
-                modifiers: [['darker', 0.2]],
-              }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
-              arcLinkLabelsThickness={2}
-              startAngle={-50}
-              arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={0}
-              arcLabelsTextColor={{
-                from: 'color',
-                modifiers: [['darker', 2]],
-              }}
-              legends={[
-                {
-                  anchor: 'bottom',
-                  direction: 'row',
-                  justify: false,
-                  translateX: 0,
-                  translateY: 56,
-                  itemsSpacing: 0,
-                  itemWidth: 80,
-                  itemHeight: 18,
-                  itemTextColor: '#999',
-                  itemDirection: 'left-to-right',
-                  itemOpacity: 1,
-                  symbolSize: 18,
-                  symbolShape: 'circle',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
+            {pulseSequences.length === 0 ? (
+              <div
+                style={{
+                  fontSize: '20px',
+                }}
+              >
+                No Data
+              </div>
+            ) : (
+              <ResponsivePie
+                data={pulseSequences}
+                id="value"
+                value="count"
+                margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                innerRadius={0.5}
+                padAngle={0.7}
+                cornerRadius={3}
+                activeOuterRadiusOffset={8}
+                borderWidth={1}
+                borderColor={{
+                  from: 'color',
+                  modifiers: [['darker', 0.2]],
+                }}
+                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsTextColor="#333333"
+                arcLinkLabelsThickness={2}
+                startAngle={-50}
+                arcLinkLabelsColor={{ from: 'color' }}
+                arcLabelsSkipAngle={0}
+                arcLabelsTextColor={{
+                  from: 'color',
+                  modifiers: [['darker', 2]],
+                }}
+                legends={[
+                  {
+                    anchor: 'bottom',
+                    direction: 'row',
+                    justify: false,
+                    translateX: 0,
+                    translateY: 56,
+                    itemsSpacing: 0,
+                    itemWidth: 80,
+                    itemHeight: 18,
+                    itemTextColor: '#999',
+                    itemDirection: 'left-to-right',
+                    itemOpacity: 1,
+                    symbolSize: 18,
+                    symbolShape: 'circle',
+                    effects: [
+                      {
+                        on: 'hover',
+                        style: {
+                          itemTextColor: '#000',
+                        },
                       },
-                    },
-                  ],
-                },
-              ]}
-            />
+                    ],
+                  },
+                ]}
+              />
+            )}
           </InnerChartContainer>
         </Card>
       </CardsWrapper>
