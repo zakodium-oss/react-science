@@ -1,16 +1,16 @@
 {
   "status": "ok",
   "result": {
-    "lastUpdate": 1727798832033,
+    "lastUpdate": 1728050733807,
     "nbFiles": {
       "total": 7240,
       "last12Months": 110,
-      "lastMonth": 10
+      "lastMonth": 0
     },
     "nbNMRs": {
       "total": 3567,
       "last12Months": 30,
-      "lastMonth": 2
+      "lastMonth": 0
     },
     "nb1D": {
       "total": 3155,
@@ -20,238 +20,427 @@
     "nb2D": {
       "total": 412,
       "last12Months": 12,
-      "lastMonth": 2
+      "lastMonth": 0
     },
     "nbIsFid": {
       "total": 745,
       "last12Months": 15,
-      "lastMonth": 1
+      "lastMonth": 0
     },
     "nbIsFt": {
       "total": 2822,
       "last12Months": 15,
-      "lastMonth": 1
+      "lastMonth": 0
     },
-    "solvents": [
-      {
-        "count": 13,
-        "solvent": "Acetone"
-      },
-      {
-        "count": 2642,
-        "solvent": "CDCl3"
-      },
-      {
-        "count": 42,
-        "solvent": "D2O"
-      },
-      {
-        "count": 2,
-        "solvent": "DMF"
-      },
-      {
-        "count": 856,
-        "solvent": "DMSO"
-      },
-      {
-        "count": 1,
-        "solvent": "H2O+D2O"
-      },
-      {
-        "count": 1,
-        "solvent": "MeOD"
-      },
-      {
-        "count": 10,
-        "solvent": "TFA"
-      }
-    ],
-    "formats": [
-      {
-        "count": 917,
-        "format": "Bruker"
-      },
-      {
-        "count": 2650,
-        "format": "JCAMP-DX"
-      }
-    ],
-    "nuclei": [
-      {
-        "count": 263,
-        "nucleus": "13C"
-      },
-      {
-        "count": 10,
-        "nucleus": "19F"
-      },
-      {
-        "count": 4,
-        "nucleus": "19F,1H"
-      },
-      {
-        "count": 2882,
-        "nucleus": "1H"
-      },
-      {
-        "count": 223,
-        "nucleus": "1H,13C"
-      },
-      {
-        "count": 19,
-        "nucleus": "1H,15N"
-      },
-      {
-        "count": 166,
-        "nucleus": "1H,1H"
-      }
-    ],
-    "pulseSequences": [
-      {
-        "count": 2,
-        "pulseSequence": "apt"
-      },
-      {
-        "count": 1,
-        "pulseSequence": "aptsp.ber"
-      },
-      {
-        "count": 1,
-        "pulseSequence": "cosygpmfph"
-      },
-      {
-        "count": 102,
-        "pulseSequence": "cosygpmfqf"
-      },
-      {
-        "count": 8,
-        "pulseSequence": "cosygpqf"
-      },
-      {
-        "count": 4,
-        "pulseSequence": "dept135"
-      },
-      {
-        "count": 1,
-        "pulseSequence": "deptqgpsp"
-      },
-      {
-        "count": 114,
-        "pulseSequence": "deptsp135"
-      },
-      {
-        "count": 4,
-        "pulseSequence": "hfcoqfqn"
-      },
-      {
-        "count": 1,
-        "pulseSequence": "hmbcetgpl2nd.ber"
-      },
-      {
-        "count": 109,
-        "pulseSequence": "hmbcgplpndqf"
-      },
-      {
-        "count": 13,
-        "pulseSequence": "hmbcgpndqf"
-      },
-      {
-        "count": 4,
-        "pulseSequence": "hmqcgpqf"
-      },
-      {
-        "count": 2,
-        "pulseSequence": "hsqcedetgp"
-      },
-      {
-        "count": 1,
-        "pulseSequence": "hsqcedetgpsisp"
-      },
-      {
-        "count": 104,
-        "pulseSequence": "hsqcedetgpsisp2.3"
-      },
-      {
-        "count": 2,
-        "pulseSequence": "hsqcetgp"
-      },
-      {
-        "count": 6,
-        "pulseSequence": "hsqcetgpsi2"
-      },
-      {
-        "count": 2,
-        "pulseSequence": "jmod"
-      },
-      {
-        "count": 3,
-        "pulseSequence": "noesygpph"
-      },
-      {
-        "count": 52,
-        "pulseSequence": "noesygpphpp"
-      },
-      {
-        "count": 2,
-        "pulseSequence": "selnogp.nes"
-      },
-      {
-        "count": 2,
-        "pulseSequence": "zg"
-      },
-      {
-        "count": 2872,
-        "pulseSequence": "zg30"
-      },
-      {
-        "count": 7,
-        "pulseSequence": "zgdc30"
-      },
-      {
-        "count": 5,
-        "pulseSequence": "zgfhigqn.2"
-      },
-      {
-        "count": 5,
-        "pulseSequence": "zgflqn"
-      },
-      {
-        "count": 1,
-        "pulseSequence": "zggd30"
-      },
-      {
-        "count": 6,
-        "pulseSequence": "zghfigqn"
-      },
-      {
-        "count": 131,
-        "pulseSequence": "zgpg30"
-      }
-    ],
-    "users": [
-      {
-        "count": 3567,
-        "lastModified": 1678720863671,
-        "username": ""
-      }
-    ],
-    "sources": [
-      {
-        "count": 66,
-        "lastModified": 1715681872000,
-        "source": "nils"
-      },
-      {
-        "count": 2650,
-        "lastModified": 1678720863671,
-        "source": "maybridge"
-      },
-      {
-        "count": 851,
-        "lastModified": 1485341684000,
-        "source": "johannes"
-      }
-    ],
+    "solvents": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 4,
+          "lastModified": 1725347386000,
+          "value": "DMSO"
+        },
+        {
+          "count": 2,
+          "lastModified": 1715681852000,
+          "value": "Acetone"
+        },
+        {
+          "count": 24,
+          "lastModified": 1709120794000,
+          "value": "CDCl3"
+        }
+      ],
+      "total": [
+        {
+          "count": 1,
+          "lastModified": 1678720863945,
+          "value": "MeOD"
+        },
+        {
+          "count": 2,
+          "lastModified": 1678720863753,
+          "value": "DMF"
+        },
+        {
+          "count": 10,
+          "lastModified": 1678720863676,
+          "value": "TFA"
+        },
+        {
+          "count": 13,
+          "lastModified": 1621229536000,
+          "value": "Acetone"
+        },
+        {
+          "count": 1,
+          "lastModified": 1620763178000,
+          "value": "H2O+D2O"
+        },
+        {
+          "count": 856,
+          "lastModified": 1472667752000,
+          "value": "DMSO"
+        },
+        {
+          "count": 42,
+          "lastModified": 1456232030000,
+          "value": "D2O"
+        },
+        {
+          "count": 2642,
+          "lastModified": 1456154804000,
+          "value": "CDCl3"
+        }
+      ]
+    },
+    "formats": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 30,
+          "lastModified": 1709120794000,
+          "value": 1
+        }
+      ],
+      "total": [
+        {
+          "count": 2650,
+          "lastModified": 1678720863671,
+          "value": 2
+        },
+        {
+          "count": 917,
+          "lastModified": 1456154804000,
+          "value": 1
+        }
+      ]
+    },
+    "nuclei": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 2,
+          "lastModified": 1715681872000,
+          "value": "13C"
+        },
+        {
+          "count": 16,
+          "lastModified": 1715681862000,
+          "value": "1H"
+        },
+        {
+          "count": 6,
+          "lastModified": 1709120794000,
+          "value": "1H,1H"
+        },
+        {
+          "count": 6,
+          "lastModified": 1709120702000,
+          "value": "1H,13C"
+        }
+      ],
+      "total": [
+        {
+          "count": 223,
+          "lastModified": 1611941466000,
+          "value": "1H,13C"
+        },
+        {
+          "count": 19,
+          "lastModified": 1470815448000,
+          "value": "1H,15N"
+        },
+        {
+          "count": 4,
+          "lastModified": 1461080542000,
+          "value": "19F,1H"
+        },
+        {
+          "count": 10,
+          "lastModified": 1461078236000,
+          "value": "19F"
+        },
+        {
+          "count": 166,
+          "lastModified": 1456279742000,
+          "value": "1H,1H"
+        },
+        {
+          "count": 263,
+          "lastModified": 1456274458000,
+          "value": "13C"
+        },
+        {
+          "count": 2882,
+          "lastModified": 1456154804000,
+          "value": "1H"
+        }
+      ]
+    },
+    "pulseSequences": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 2,
+          "lastModified": 1725347386000,
+          "value": "noesygpph"
+        },
+        {
+          "count": 2,
+          "lastModified": 1715681872000,
+          "value": "zgdc30"
+        },
+        {
+          "count": 14,
+          "lastModified": 1715681862000,
+          "value": "zg30"
+        },
+        {
+          "count": 2,
+          "lastModified": 1715681836000,
+          "value": "zg"
+        },
+        {
+          "count": 2,
+          "lastModified": 1709120794000,
+          "value": "noesygpphpp"
+        },
+        {
+          "count": 2,
+          "lastModified": 1709120702000,
+          "value": "hmbcgplpndqf"
+        },
+        {
+          "count": 4,
+          "lastModified": 1709120692000,
+          "value": "hsqcedetgpsisp2.3"
+        },
+        {
+          "count": 2,
+          "lastModified": 1709120612000,
+          "value": "cosygpmfqf"
+        }
+      ],
+      "total": [
+        {
+          "count": 2,
+          "lastModified": 1715681836000,
+          "value": "zg"
+        },
+        {
+          "count": 2,
+          "lastModified": 1678720863831,
+          "value": "jmod"
+        },
+        {
+          "count": 1,
+          "lastModified": 1621242990000,
+          "value": "aptsp.ber"
+        },
+        {
+          "count": 1,
+          "lastModified": 1621242958000,
+          "value": "hmbcetgpl2nd.ber"
+        },
+        {
+          "count": 1,
+          "lastModified": 1621242914000,
+          "value": "hsqcedetgpsisp"
+        },
+        {
+          "count": 3,
+          "lastModified": 1621242872000,
+          "value": "noesygpph"
+        },
+        {
+          "count": 1,
+          "lastModified": 1621242866000,
+          "value": "cosygpmfph"
+        },
+        {
+          "count": 2,
+          "lastModified": 1621237760000,
+          "value": "hsqcedetgp"
+        },
+        {
+          "count": 1,
+          "lastModified": 1620763178000,
+          "value": "zggd30"
+        },
+        {
+          "count": 4,
+          "lastModified": 1619254378000,
+          "value": "hmqcgpqf"
+        },
+        {
+          "count": 8,
+          "lastModified": 1619254336000,
+          "value": "cosygpqf"
+        },
+        {
+          "count": 2,
+          "lastModified": 1619254278000,
+          "value": "apt"
+        },
+        {
+          "count": 4,
+          "lastModified": 1619254264000,
+          "value": "dept135"
+        },
+        {
+          "count": 7,
+          "lastModified": 1619254244000,
+          "value": "zgdc30"
+        },
+        {
+          "count": 2,
+          "lastModified": 1619254214000,
+          "value": "selnogp.nes"
+        },
+        {
+          "count": 2,
+          "lastModified": 1619252292000,
+          "value": "hsqcetgp"
+        },
+        {
+          "count": 109,
+          "lastModified": 1611941466000,
+          "value": "hmbcgplpndqf"
+        },
+        {
+          "count": 104,
+          "lastModified": 1611941310000,
+          "value": "hsqcedetgpsisp2.3"
+        },
+        {
+          "count": 102,
+          "lastModified": 1611941280000,
+          "value": "cosygpmfqf"
+        },
+        {
+          "count": 131,
+          "lastModified": 1611941234000,
+          "value": "zgpg30"
+        },
+        {
+          "count": 1,
+          "lastModified": 1602747838000,
+          "value": "deptqgpsp"
+        },
+        {
+          "count": 13,
+          "lastModified": 1470815448000,
+          "value": "hmbcgpndqf"
+        },
+        {
+          "count": 4,
+          "lastModified": 1461080542000,
+          "value": "hfcoqfqn"
+        },
+        {
+          "count": 6,
+          "lastModified": 1461078520000,
+          "value": "zghfigqn"
+        },
+        {
+          "count": 5,
+          "lastModified": 1461078236000,
+          "value": "zgfhigqn.2"
+        },
+        {
+          "count": 5,
+          "lastModified": 1461078130000,
+          "value": "zgflqn"
+        },
+        {
+          "count": 6,
+          "lastModified": 1457556742000,
+          "value": "hsqcetgpsi2"
+        },
+        {
+          "count": 52,
+          "lastModified": 1456279742000,
+          "value": "noesygpphpp"
+        },
+        {
+          "count": 114,
+          "lastModified": 1456274458000,
+          "value": "deptsp135"
+        },
+        {
+          "count": 2872,
+          "lastModified": 1456154804000,
+          "value": "zg30"
+        }
+      ]
+    },
+    "usernames": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 30,
+          "lastModified": 1709120794000,
+          "value": ""
+        }
+      ],
+      "total": [
+        {
+          "count": 3567,
+          "lastModified": 1456154804000,
+          "value": ""
+        }
+      ]
+    },
+    "groupNames": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 30,
+          "lastModified": 1709120794000,
+          "value": ""
+        }
+      ],
+      "total": [
+        {
+          "count": 3567,
+          "lastModified": 1456154804000,
+          "value": ""
+        }
+      ]
+    },
+    "sources": {
+      "lastMonth": [],
+      "last12Months": [
+        {
+          "count": 10,
+          "lastModified": 1718705092000,
+          "value": "johannes"
+        },
+        {
+          "count": 20,
+          "lastModified": 1715681872000,
+          "value": "nils"
+        }
+      ],
+      "total": [
+        {
+          "count": 66,
+          "lastModified": 1715681872000,
+          "value": "nils"
+        },
+        {
+          "count": 2650,
+          "lastModified": 1678720863671,
+          "value": "maybridge"
+        },
+        {
+          "count": 851,
+          "lastModified": 1485341684000,
+          "value": "johannes"
+        }
+      ]
+    },
     "perYears": [
       {
         "count": 734,
@@ -276,6 +465,30 @@
         "countOtherNuclei": 0,
         "year": 2017,
         "firstDayOfYearEpoch": 1483228800000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "year": 2018,
+        "firstDayOfYearEpoch": 1514764800000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "year": 2019,
+        "firstDayOfYearEpoch": 1546300800000
       },
       {
         "count": 5,
@@ -340,6 +553,42 @@
     ],
     "perMonths": [
       {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 10,
+        "firstDayOfMonthEpoch": 1698796800000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 11,
+        "firstDayOfMonthEpoch": 1701388800000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 0,
+        "firstDayOfMonthEpoch": 1704067200000
+      },
+      {
         "count": 8,
         "count1D": 0,
         "count2D": 8,
@@ -352,6 +601,30 @@
         "firstDayOfMonthEpoch": 1706745600000
       },
       {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 1,
+        "firstDayOfMonthEpoch": 1706745600000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 3,
+        "firstDayOfMonthEpoch": 1711929600000
+      },
+      {
         "count": 18,
         "count1D": 18,
         "count2D": 0,
@@ -361,6 +634,18 @@
         "count1H13C": 0,
         "countOtherNuclei": 0,
         "month": 5,
+        "firstDayOfMonthEpoch": 1714521600000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 4,
         "firstDayOfMonthEpoch": 1714521600000
       },
       {
@@ -376,6 +661,18 @@
         "firstDayOfMonthEpoch": 1717200000000
       },
       {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 7,
+        "firstDayOfMonthEpoch": 1722470400000
+      },
+      {
         "count": 2,
         "count1D": 0,
         "count2D": 2,
@@ -385,6 +682,18 @@
         "count1H13C": 0,
         "countOtherNuclei": 0,
         "month": 9,
+        "firstDayOfMonthEpoch": 1725148800000
+      },
+      {
+        "count": 0,
+        "count1D": 0,
+        "count2D": 0,
+        "count1H": 0,
+        "count13C": 0,
+        "count1H1H": 0,
+        "count1H13C": 0,
+        "countOtherNuclei": 0,
+        "month": 8,
         "firstDayOfMonthEpoch": 1725148800000
       }
     ]

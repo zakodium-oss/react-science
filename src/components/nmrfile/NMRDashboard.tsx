@@ -1,52 +1,62 @@
+import { Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { ResponsiveBar } from '@nivo/bar';
 import { ResponsivePie } from '@nivo/pie';
 import { formatISO9075 } from 'date-fns';
 
+import { Button } from '../button/Button';
+import { useSelect } from '../hooks/useSelect';
+
 const Container = styled.div`
   padding: 20px;
   background-color: #f5f5f5;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const UpdateInfo = styled.div`
   margin-bottom: 20px;
   font-size: 14px;
   color: #888;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const CardContainer = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Card = styled.div`
   background-color: #fff;
   padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  flex: 1;
-`;
-
-const CardTitle = styled.p`
-  font-weight: bold;
-  font-size: 16px;
-  color: #333;
-`;
-
-const ChartContainer = styled.div`
-  background-color: #fff;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   flex: 1;
+
+  /* Adjust padding on mobile */
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 `;
 
-const ChartTitle = styled.h3`
-  margin-bottom: 20px;
+const Title = styled.p`
+  margin: 0;
   font-size: 22px;
-  text-align: center;
-  font-weight: bold;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const CardNumber = styled.h3`
@@ -54,16 +64,39 @@ const CardNumber = styled.h3`
   font-size: 36px;
   text-align: center;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin: 15px;
+  }
+`;
+
+const ChartPieTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const InnerChartContainer = styled.div`
   height: 400px;
+
+  @media (max-width: 768px) {
+    height: 250px;
+  }
+
+  @media (min-width: 1440px) {
+    height: 500px;
+  }
 `;
 
 const CardsWrapper = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 interface Period {
   count: number;
@@ -74,7 +107,6 @@ interface Period {
   count1H1H: number;
   count1H13C: number;
   countOtherNuclei: number;
-  [key: string]: number;
 }
 export interface PeriodYear extends Period {
   year: number;
@@ -91,6 +123,17 @@ export interface ValueStats {
   last12Months: number;
   lastMonth: number;
 }
+
+export interface EntryStat {
+  count: number;
+  lastModified: number;
+  value: string;
+}
+export interface ArrayStats {
+  total: EntryStat[];
+  last12Months: EntryStat[];
+  lastMonth: EntryStat[];
+}
 export interface Stats {
   lastUpdate: number;
   nbFiles: ValueStats;
@@ -99,12 +142,13 @@ export interface Stats {
   nb2D: ValueStats;
   nbIsFid: ValueStats;
   nbIsFt: ValueStats;
-  solvents: Array<{ count: number; solvent: string }>;
-  formats: Array<{ count: number; format: string }>;
-  nuclei: Array<{ count: number; nucleus: string }>;
-  pulseSequences: Array<{ count: number; pulseSequence: string }>;
-  users: Array<{ count: number; lastModified: number; username: string }>;
-  sources: Array<{ count: number; lastModified: number; source: string }>;
+  solvents: ArrayStats;
+  formats: ArrayStats;
+  nuclei: ArrayStats;
+  pulseSequences: ArrayStats;
+  usernames: ArrayStats;
+  groupNames: ArrayStats;
+  sources: ArrayStats;
   perMonths: PeriodMonth[];
   perYears: PeriodYear[];
 }
@@ -113,52 +157,7 @@ interface NMRStatsGraphProps {
   data: Stats;
 }
 
-function getData(data: Stats, threshold = 0.03) {
-  const total = data.nbNMRs.total;
-
-  const solvent = data.solvents.filter((s) => s.count / total > threshold);
-  const otherSolvent = data.solvents.filter(
-    (s) => s.count / total <= threshold,
-  );
-
-  for (const s of otherSolvent) {
-    const index = solvent.findIndex((sol) => sol.solvent === 'Other');
-    if (index === -1) {
-      solvent.push({ solvent: 'Other', count: s.count });
-    } else {
-      solvent[index].count += s.count;
-    }
-  }
-  const nuclei = data.nuclei.filter((s) => s.count / total > threshold);
-  const otherNuclei = data.nuclei.filter((s) => s.count / total <= threshold);
-
-  for (const s of otherNuclei) {
-    const index = nuclei.findIndex((sol) => sol.nucleus === 'Other');
-    if (index === -1) {
-      nuclei.push({ nucleus: 'Other', count: s.count });
-    } else {
-      nuclei[index].count += s.count;
-    }
-  }
-
-  const pulseSequences = data.pulseSequences.filter(
-    (s) => s.count / total > threshold,
-  );
-  const otherPulseSequences = data.pulseSequences.filter(
-    (s) => s.count / total <= threshold,
-  );
-
-  for (const s of otherPulseSequences) {
-    const index = pulseSequences.findIndex(
-      (sol) => sol.pulseSequence === 'Other',
-    );
-    if (index === -1) {
-      pulseSequences.push({ pulseSequence: 'Other', count: s.count });
-    } else {
-      pulseSequences[index].count += s.count;
-    }
-  }
-
+function getData(data: Stats) {
   const perMonths = data.perMonths.map((m) => ({
     month: m.month,
     '1H': m.count1H,
@@ -178,18 +177,86 @@ function getData(data: Stats, threshold = 0.03) {
   }));
 
   return {
-    solvents: solvent,
-    nuclei,
-    pulseSequences,
     perMonths,
     perYears,
   };
 }
+
+function getPieData(data: EntryStat[], total: number, threshold = 0.03) {
+  const outData = data.filter((s) => s.count / total > threshold);
+  const otherData = data.filter((s) => s.count / total <= threshold);
+
+  for (const s of otherData) {
+    const index = outData.findIndex((sol) => sol.value === 'Other');
+    if (index === -1) {
+      outData.push({ value: 'Other', count: s.count, lastModified: 0 });
+    } else {
+      outData[index].count += s.count;
+    }
+  }
+
+  return outData;
+}
+
+interface SelectType {
+  label: string;
+  key: keyof ArrayStats;
+}
+
 export function NMRDashboard(props: NMRStatsGraphProps) {
   const { data } = props;
 
-  const { solvents, nuclei, pulseSequences, perMonths, perYears } =
-    getData(data);
+  const defaultSelectedItem: SelectType = {
+    label: 'Last year',
+    key: 'last12Months',
+  };
+
+  const selectItems: SelectType[] = [
+    {
+      label: 'Last month',
+      key: 'lastMonth',
+    },
+    {
+      label: 'Last year',
+      key: 'last12Months',
+    },
+    {
+      label: 'All time',
+      key: 'total',
+    },
+  ];
+
+  const { value: valueSolvents, ...defaultPropsSolvents } =
+    useSelect<SelectType>({
+      itemTextKey: 'label',
+      defaultSelectedItem,
+    });
+  const { value: valueNuclei, ...defaultPropsNuclei } = useSelect<SelectType>({
+    itemTextKey: 'label',
+    defaultSelectedItem,
+  });
+  const { value: valuePulseSequences, ...defaultPropsPulseSequences } =
+    useSelect<SelectType>({
+      itemTextKey: 'label',
+      defaultSelectedItem,
+    });
+
+  const { perMonths, perYears } = getData(data);
+
+  const solvents = getPieData(
+    data.solvents[valueSolvents?.key || defaultSelectedItem.key],
+    data.nbNMRs[valueSolvents?.key || defaultSelectedItem.key],
+  );
+
+  const nuclei = getPieData(
+    data.nuclei[valueNuclei?.key || defaultSelectedItem.key],
+    data.nbNMRs[valueNuclei?.key || defaultSelectedItem.key],
+  );
+
+  const pulseSequences = getPieData(
+    data.pulseSequences[valuePulseSequences?.key || defaultSelectedItem.key],
+    data.nbNMRs[valuePulseSequences?.key || defaultSelectedItem.key],
+  );
 
   return (
     <Container>
@@ -199,28 +266,28 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
 
       <CardContainer>
         <Card>
-          <CardTitle>Last month</CardTitle>
+          <Title>Last month</Title>
           <CardNumber>{data.nbNMRs.lastMonth}</CardNumber>
         </Card>
         <Card>
-          <CardTitle>Last 12 months</CardTitle>
+          <Title>Last 12 months</Title>
           <CardNumber>{data.nbNMRs.last12Months}</CardNumber>
         </Card>
         <Card>
-          <CardTitle>All time</CardTitle>
+          <Title>All time</Title>
           <CardNumber>{data.nbNMRs.total}</CardNumber>
         </Card>
       </CardContainer>
 
       <CardsWrapper>
-        <ChartContainer>
-          <ChartTitle>Nb Spectra per Month</ChartTitle>
+        <Card>
+          <Title>Nb Spectra per Month</Title>
           <InnerChartContainer>
             <ResponsiveBar
               data={perMonths}
               keys={['1H', '13C', '1H1H', '1H13C', 'OtherNuclei']}
               indexBy="month"
-              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+              margin={{ top: 10, right: 30, bottom: 90, left: 60 }}
               padding={0.3}
               valueScale={{ type: 'linear' }}
               indexScale={{ type: 'band', round: true }}
@@ -279,11 +346,11 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               legends={[
                 {
                   dataFrom: 'keys',
-                  anchor: 'bottom-right',
-                  direction: 'column',
+                  anchor: 'bottom',
+                  direction: 'row',
                   justify: false,
-                  translateX: 120,
-                  translateY: 0,
+                  translateX: 0,
+                  translateY: 75,
                   itemsSpacing: 2,
                   itemWidth: 100,
                   itemHeight: 20,
@@ -303,16 +370,16 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               role="application"
             />
           </InnerChartContainer>
-        </ChartContainer>
+        </Card>
 
-        <ChartContainer>
-          <ChartTitle>Nb Spectra per year</ChartTitle>
+        <Card>
+          <Title>Nb Spectra per year</Title>
           <InnerChartContainer>
             <ResponsiveBar
               data={perYears}
               keys={['1H', '13C', '1H1H', '1H13C', 'OtherNuclei']}
               indexBy="year"
-              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+              margin={{ top: 10, right: 30, bottom: 90, left: 60 }}
               padding={0.3}
               valueScale={{ type: 'linear' }}
               indexScale={{ type: 'band', round: true }}
@@ -347,7 +414,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Year',
+                legend: 'Month',
                 legendPosition: 'middle',
                 legendOffset: 32,
                 truncateTickAt: 0,
@@ -371,11 +438,11 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               legends={[
                 {
                   dataFrom: 'keys',
-                  anchor: 'bottom-right',
-                  direction: 'column',
+                  anchor: 'bottom',
+                  direction: 'row',
                   justify: false,
-                  translateX: 120,
-                  translateY: 0,
+                  translateX: 0,
+                  translateY: 75,
                   itemsSpacing: 2,
                   itemWidth: 100,
                   itemHeight: 20,
@@ -395,16 +462,30 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               role="application"
             />
           </InnerChartContainer>
-        </ChartContainer>
+        </Card>
       </CardsWrapper>
 
       <CardsWrapper>
-        <ChartContainer>
-          <ChartTitle>Solvents Distribution</ChartTitle>
+        <Card>
+          <ChartPieTitle>
+            <Title>Solvents Distribution</Title>
+            <Select
+              items={selectItems}
+              filterable={false}
+              itemsEqual="label"
+              {...defaultPropsSolvents}
+            >
+              <Button
+                minimal
+                text={valueSolvents?.label}
+                rightIcon="caret-down"
+              />
+            </Select>
+          </ChartPieTitle>
           <InnerChartContainer>
             <ResponsivePie
               data={solvents}
-              id="solvent"
+              id="value"
               value="count"
               margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
               innerRadius={0.5}
@@ -452,13 +533,27 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               ]}
             />
           </InnerChartContainer>
-        </ChartContainer>
-        <ChartContainer>
-          <ChartTitle>Nuclei Distribution</ChartTitle>
+        </Card>
+        <Card>
+          <ChartPieTitle>
+            <Title>Nuclei Distribution</Title>
+            <Select
+              items={selectItems}
+              filterable={false}
+              itemsEqual="label"
+              {...defaultPropsNuclei}
+            >
+              <Button
+                minimal
+                text={valueNuclei?.label}
+                rightIcon="caret-down"
+              />
+            </Select>
+          </ChartPieTitle>
           <InnerChartContainer>
             <ResponsivePie
               data={nuclei}
-              id="nucleus"
+              id="value"
               value="count"
               margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
               innerRadius={0.5}
@@ -506,13 +601,27 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               ]}
             />
           </InnerChartContainer>
-        </ChartContainer>
-        <ChartContainer>
-          <ChartTitle>Pulse Sequences Distribution</ChartTitle>
+        </Card>
+        <Card>
+          <ChartPieTitle>
+            <Title>Pulse Sequences Distribution</Title>
+            <Select
+              items={selectItems}
+              filterable={false}
+              itemsEqual="label"
+              {...defaultPropsPulseSequences}
+            >
+              <Button
+                minimal
+                text={valuePulseSequences?.label}
+                rightIcon="caret-down"
+              />
+            </Select>
+          </ChartPieTitle>
           <InnerChartContainer>
             <ResponsivePie
               data={pulseSequences}
-              id="pulseSequence"
+              id="value"
               value="count"
               margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
               innerRadius={0.5}
@@ -561,7 +670,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
               ]}
             />
           </InnerChartContainer>
-        </ChartContainer>
+        </Card>
       </CardsWrapper>
     </Container>
   );
