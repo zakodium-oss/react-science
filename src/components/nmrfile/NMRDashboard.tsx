@@ -8,20 +8,20 @@ import { Button } from '../button/Button';
 import { useSelect } from '../hooks/useSelect';
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 10px 20px;
   background-color: #f5f5f5;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     padding: 10px;
   }
 `;
 
 const UpdateInfo = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 14px;
   color: #888;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     font-size: 12px;
   }
 `;
@@ -29,23 +29,23 @@ const UpdateInfo = styled.div`
 const CardContainer = styled.div`
   display: flex;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
   }
 `;
 
 const Card = styled.div`
   background-color: #fff;
-  padding: 25px;
+  padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   flex: 1;
   min-width: 100px;
 
   /* Adjust padding on mobile */
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     padding: 15px;
   }
 `;
@@ -55,20 +55,20 @@ const Title = styled.p`
   font-size: 22px;
   text-align: left;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     font-size: 18px;
   }
 `;
 
 const CardNumber = styled.h3`
-  margin: 30px;
+  margin: 0 0 5px 0;
   font-size: 36px;
   text-align: center;
   font-weight: bold;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     font-size: 28px;
-    margin: 15px;
+    margin: 5px;
   }
 `;
 
@@ -79,17 +79,18 @@ const ChartPieTitle = styled.div`
 `;
 
 const InnerChartContainer = styled.div`
-  height: 400px;
+  margin-top: 5px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     height: 250px;
   }
 
-  @media (min-width: 1440px) {
-    height: 500px;
+  @media (min-width: 2000px) {
+    height: 400px;
   }
 `;
 
@@ -98,7 +99,7 @@ const CardsWrapper = styled.div`
   gap: 20px;
   margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
   }
 `;
