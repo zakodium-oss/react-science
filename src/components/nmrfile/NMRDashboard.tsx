@@ -159,13 +159,14 @@ interface NMRStatsGraphProps {
 
 function getData(data: Stats) {
   const perMonths = data.perMonths.map((m) => ({
-    month: m.month,
+    month: m.month + 1,
     '1H': m.count1H,
     '13C': m.count13C,
     '1H,1H': m.count1H1H,
     '1H,13C': m.count1H13C,
     'Other Nuclei': m.countOtherNuclei,
   }));
+  perMonths.sort((a, b) => a.month - b.month);
 
   const perYears = data.perYears.map((m) => ({
     year: m.year,
@@ -175,6 +176,7 @@ function getData(data: Stats) {
     '1H,13C': m.count1H13C,
     'Other Nuclei': m.countOtherNuclei,
   }));
+  perYears.sort((a, b) => a.year - b.year);
 
   return {
     perMonths,
