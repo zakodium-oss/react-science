@@ -10,9 +10,15 @@ import { useSelect } from '../hooks/useSelect';
 const Container = styled.div`
   padding: 10px 20px;
   background-color: #f5f5f5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
   @media (max-width: 1000px) {
     padding: 10px;
+    height: auto;
+    overflow: auto;
   }
 `;
 
@@ -43,8 +49,9 @@ const Card = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   flex: 1;
   min-width: 100px;
+  display: flex;
+  flex-direction: column;
 
-  /* Adjust padding on mobile */
   @media (max-width: 1000px) {
     padding: 15px;
   }
@@ -52,7 +59,7 @@ const Card = styled.div`
 
 const Title = styled.p`
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
   text-align: left;
 
   @media (max-width: 1000px) {
@@ -80,7 +87,8 @@ const ChartPieTitle = styled.div`
 
 const InnerChartContainer = styled.div`
   margin-top: 5px;
-  height: 300px;
+  flex: 1;
+  min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,19 +96,18 @@ const InnerChartContainer = styled.div`
   @media (max-width: 1000px) {
     height: 250px;
   }
-
-  @media (min-width: 2000px) {
-    height: 400px;
-  }
 `;
 
 const CardsWrapper = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
+  flex: 1;
+  overflow-y: hidden;
 
   @media (max-width: 1000px) {
     flex-direction: column;
+    flex: none;
   }
 `;
 interface Period {
@@ -337,6 +344,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
+                tickValues: 5,
                 legend: 'Nb spectra',
                 legendPosition: 'middle',
                 legendOffset: -50,
@@ -379,7 +387,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
         </Card>
 
         <Card>
-          <Title>Nb Spectra per year</Title>
+          <Title>Nb Spectra per Year</Title>
           <InnerChartContainer>
             <ResponsiveBar
               data={perYears}
@@ -420,7 +428,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Month',
+                legend: 'Year',
                 legendPosition: 'middle',
                 legendOffset: 32,
                 truncateTickAt: 0,
@@ -429,6 +437,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
+                tickValues: 5,
                 legend: 'Nb spectra',
                 legendPosition: 'middle',
                 legendOffset: -50,
@@ -474,7 +483,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
       <CardsWrapper>
         <Card>
           <ChartPieTitle>
-            <Title>Solvents Distribution</Title>
+            <Title>Solvents</Title>
             <Select
               items={selectItems}
               filterable={false}
@@ -552,7 +561,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
         </Card>
         <Card>
           <ChartPieTitle>
-            <Title>Nuclei Distribution</Title>
+            <Title>Nuclei</Title>
             <Select
               items={selectItems}
               filterable={false}
@@ -630,7 +639,7 @@ export function NMRDashboard(props: NMRStatsGraphProps) {
         </Card>
         <Card>
           <ChartPieTitle>
-            <Title>Pulse Sequences Distribution</Title>
+            <Title>Pulse Sequences</Title>
             <Select
               items={selectItems}
               filterable={false}
