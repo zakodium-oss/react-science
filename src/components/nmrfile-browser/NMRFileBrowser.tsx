@@ -118,7 +118,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           statsQuery.status === 'success' &&
           searchQuery.status === 'success' && (
             <span>
-              [{searchQuery.data.length}/{statsQuery.data.nbNMRs}]
+              [{searchQuery.data.length}/{statsQuery.data.nbNMRs.total}]
             </span>
           )
         )}
