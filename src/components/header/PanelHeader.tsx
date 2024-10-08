@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { ReactNode } from 'react';
 
 import { Button } from '../button/Button';
+import { SelectedTotal } from '../selected-total/SelectedTotal';
 
 const styles = {
   container: css({
@@ -20,12 +21,6 @@ const styles = {
       padding: '0 5px',
       minWidth: 'auto',
     },
-  }),
-  counterLabel: css({
-    margin: 0,
-    textAlign: 'right',
-    lineHeight: '22px',
-    whiteSpace: 'nowrap',
   }),
 };
 
@@ -45,23 +40,10 @@ export function PanelHeader({
   return (
     <div css={styles.container}>
       <div css={styles.leftContainer}>{children}</div>
-      <p css={styles.counterLabel}>{formatCounterLabel(current, total)}</p>
+      <SelectedTotal count={current} total={total} />
       {onClickSettings && (
         <Button color="black" minimal onClick={onClickSettings} icon="cog" />
       )}
     </div>
   );
-}
-
-function formatCounterLabel(current?: number, total?: number) {
-  if (current !== undefined && total !== undefined) {
-    return `${current} / ${total}`;
-  }
-  if (current !== undefined) {
-    return `[ ${current} ]`;
-  }
-  if (total !== undefined) {
-    return `[ ${total} ]`;
-  }
-  return '';
 }
