@@ -163,6 +163,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                     justifyContent: 'space-between',
                     width: '100%',
                     gap: '10px',
+                    lineHeight: 1.2,
                   }}
                 >
                   <span
@@ -215,6 +216,8 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                   style={{
                     width: '100%',
                     minWidth: 250,
+                    backgroundColor: '#f8f9fa',
+                    lineHeight: 0.8,
                   }}
                 >
                   <tbody>
