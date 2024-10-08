@@ -131,6 +131,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
           flexDirection: 'column',
           overflowY: 'auto',
           flex: 1,
+          minWidth: 270,
         }}
       >
         {statsQuery.status === 'error' ? (
@@ -213,6 +214,7 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                 <table
                   style={{
                     width: '100%',
+                    minWidth: 250,
                   }}
                 >
                   <tbody>
@@ -244,16 +246,27 @@ export function NMRFileBrowser(props: NMRFileBrowserProps) {
                         >
                           {getType(child)}
                         </td>
-                        <td
-                          style={{ width: '1fr', padding: width > 450 ? 8 : 4 }}
-                        >
-                          {getSolvent(child)}
-                        </td>
-                        <td
-                          style={{ width: '1fr', padding: width > 450 ? 8 : 4 }}
-                        >
-                          {child.frequency.toFixed(2)}
-                        </td>
+
+                        {width > 450 && (
+                          <td
+                            style={{
+                              width: '1fr',
+                              padding: width > 450 ? 8 : 4,
+                            }}
+                          >
+                            {getSolvent(child)}
+                          </td>
+                        )}
+                        {width > 450 && (
+                          <td
+                            style={{
+                              width: '1fr',
+                              padding: width > 450 ? 8 : 4,
+                            }}
+                          >
+                            {child.frequency.toFixed(2)}
+                          </td>
+                        )}
                         <td
                           style={{
                             width: '1fr',
