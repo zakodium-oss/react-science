@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.0.0](https://github.com/zakodium-oss/react-science/compare/v6.0.2...v7.0.0) (2024-10-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Toolbar: the new `minimal` prop must be set to `true` in order to keep a similar appearance when upgrading.
+
+### Features
+
+* add minimal and fill props to toolbar component and improve style ([87eafb3](https://github.com/zakodium-oss/react-science/commit/87eafb34d902e6ea7ff752ff6784e4721786194c))
+* add SelectedTotal component ([26700a7](https://github.com/zakodium-oss/react-science/commit/26700a7eb81488455480636c4fc6bb991d90b7e2))
+
 ## [6.0.2](https://github.com/zakodium-oss/react-science/compare/v6.0.1...v6.0.2) (2024-09-28)
 
 
