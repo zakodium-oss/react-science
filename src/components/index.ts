@@ -16,3 +16,4 @@ export * from './toolbar/index';
 export * from './utils/index';
 export * from './selected-total/index';
 export * as ValueRenderers from './value-renderers/index';
+export * from './nmrfile-browser/index';
