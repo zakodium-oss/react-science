@@ -14,4 +14,5 @@ export * from './split-pane/index';
 export * from './table/index';
 export * from './toolbar/index';
 export * from './utils/index';
+export * from './selected-total/index';
 export * as ValueRenderers from './value-renderers/index';

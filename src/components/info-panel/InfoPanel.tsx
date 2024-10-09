@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { CSSProperties, memo, useCallback, useMemo, useState } from 'react';
 
+import { SelectedTotal } from '../selected-total/SelectedTotal';
 import { createTableColumnHelper, Table } from '../table';
 import * as ValueRenderers from '../value-renderers';
 
@@ -186,7 +187,7 @@ export function InfoPanel(props: InfoPanelProps) {
           type="search"
           fill
         />
-        [{count}/{total}]
+        <SelectedTotal count={count} total={total} />
       </div>
       <InfoPanelContent filteredData={filteredData} />
     </div>
