@@ -6,7 +6,9 @@ import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import {
+  Accordion,
   PopoverInteractionType,
+  SplitPane,
   Toolbar,
   ToolbarItemProps,
   ToolbarProps,
@@ -582,6 +584,85 @@ export function PanelToolbar() {
         ))}
       </Toolbar>
       <div>{selected ?? 'Select an item in the toolbar'}</div>
+    </div>
+  );
+}
+
+const PlaceHolder = () => (
+  <div
+    style={{
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'rgba(147, 197, 253)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: 24,
+    }}
+  >
+    Place Holder
+  </div>
+);
+export function ActivityToolbar() {
+  const [selected, setSelected] = useState<string[]>([
+    'phone',
+    'add-column-left',
+  ]);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+      }}
+    >
+      {selected.length > 0 ? (
+        <SplitPane size="70%">
+          <PlaceHolder />
+
+          <Accordion>
+            <>
+              {itemsBlueprintIcons.map(
+                ({ id }) =>
+                  selected.includes(id) && (
+                    <Accordion.Item key={id} title={id}>
+                      This is the content of {id}
+                    </Accordion.Item>
+                  ),
+              )}
+              {}
+            </>
+          </Accordion>
+        </SplitPane>
+      ) : (
+        <PlaceHolder />
+      )}
+      <div
+        style={{
+          height: '100%',
+          boxShadow:
+            'inset 0 0 0 1px rgba(17, 20, 24, 0.2), 0 1px 2px rgba(17, 20, 24, 0.1)',
+          padding: 5,
+        }}
+      >
+        <Toolbar vertical large>
+          {itemsBlueprintIcons.map((item) => (
+            <Toolbar.Item
+              key={item.id}
+              id={item.id}
+              icon={item.icon}
+              active={selected.includes(item.id)}
+              onClick={() => {
+                setSelected((prev) =>
+                  prev.includes(item.id)
+                    ? prev.filter((id) => id !== item.id)
+                    : [...prev, item.id],
+                );
+              }}
+            />
+          ))}
+        </Toolbar>
+      </div>
     </div>
   );
 }
