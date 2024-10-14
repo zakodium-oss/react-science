@@ -666,3 +666,83 @@ export function ActivityToolbar() {
     </div>
   );
 }
+
+const groupIcons: Array<
+  ToolbarItems[0] & {
+    panels: string[];
+  }
+> = [
+  {
+    id: 'g1',
+    icon: 'info-sign',
+    tooltip: 'Info',
+    panels: ['g11', 'g12'],
+  },
+  {
+    id: 'g2',
+    icon: 'edit',
+    tooltip: 'Edit',
+    panels: ['g21', 'g22'],
+  },
+  {
+    id: 'g3',
+    icon: 'trash',
+    tooltip: 'Delete',
+    panels: ['g31', 'g32', 'g33'],
+  },
+];
+
+export function GroupActivityToolbar() {
+  const [selected, setSelected] = useState<string>('g1');
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+      }}
+    >
+      {selected ? (
+        <SplitPane size="70%">
+          <PlaceHolder />
+
+          <Accordion>
+            <>
+              {groupIcons
+                .find((item) => item.id === selected)
+                ?.panels.map((id) => (
+                  <Accordion.Item key={id} title={id}>
+                    This is the content of {id}
+                  </Accordion.Item>
+                ))}
+            </>
+          </Accordion>
+        </SplitPane>
+      ) : (
+        <PlaceHolder />
+      )}
+      <div
+        style={{
+          height: '100%',
+          boxShadow:
+            'inset 0 0 0 1px rgba(17, 20, 24, 0.2), 0 1px 2px rgba(17, 20, 24, 0.1)',
+          padding: 5,
+        }}
+      >
+        <Toolbar vertical large>
+          {groupIcons.map((item) => (
+            <Toolbar.Item
+              key={item.id}
+              id={item.id}
+              icon={item.icon}
+              active={selected === item.id}
+              onClick={() => {
+                setSelected((prev) => (prev === item.id ? '' : item.id));
+              }}
+            />
+          ))}
+        </Toolbar>
+      </div>
+    </div>
+  );
+}
