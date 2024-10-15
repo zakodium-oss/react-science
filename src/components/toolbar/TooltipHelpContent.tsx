@@ -137,10 +137,11 @@ function ShortCuts({ shortcuts }: { shortcuts: string[] }) {
         textWrap: 'nowrap',
       }}
     >
-      {shortcuts.map((key) => {
+      {shortcuts.map((shortcut, index) => {
         return (
-          <ShortcutItem key={key}>
-            <span>{key}</span>
+          // eslint-disable-next-line react/no-array-index-key
+          <ShortcutItem key={`${index}`}>
+            <span>{shortcut}</span>
           </ShortcutItem>
         );
       })}
