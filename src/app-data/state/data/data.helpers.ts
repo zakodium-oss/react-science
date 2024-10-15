@@ -1,13 +1,13 @@
-import { assertNotNull } from '../../../components/index';
-import type { AppState, AppView } from '../index';
+import { assertNotNull } from '../../../components/index.js';
+import type { AppState, AppView } from '../index.js';
 
 import type {
   AppData,
   MeasurementBase,
   MeasurementKind,
   Measurements,
-} from './AppData';
-import { measurementKinds } from './kinds';
+} from './AppData.js';
+import { measurementKinds } from './kinds.js';
 
 export function getMeasurement(
   measurements: Measurements,

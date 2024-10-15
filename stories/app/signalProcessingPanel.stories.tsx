@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import {
-  Filter,
+  type Filter,
   SignalProcessingPanel,
-  SignalProcessingPanelProps,
-} from '../../src/app/index';
+  type SignalProcessingPanelProps,
+} from '../../src/app/index.js';
 
 export default {
   title: 'Layout/Panels/SignalProcessingPanel',

@@ -2,10 +2,10 @@ import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { convert } from 'jcampconverter';
 
-import { assert } from '../../components/index';
-import type { MeasurementKind, Measurements } from '../index';
+import { assert } from '../../components/index.js';
+import type { MeasurementKind, Measurements } from '../index.js';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
+import { getMeasurementInfoFromFile } from './utility/index.js';
 
 /**
  *

@@ -3,11 +3,11 @@ import { useMemo } from 'react';
 import { LineSeries } from 'react-plot';
 
 import {
-  ColorConfig,
+  type ColorConfig,
   getVariableByLabel,
-  IvMeasurement,
-} from '../../../../app-data/index';
-import { getColorFromConfig } from '../../../helpers/index';
+  type IvMeasurement,
+} from '../../../../app-data/index.js';
+import { getColorFromConfig } from '../../../helpers/index.js';
 
 interface IvSeriesProps {
   measurement: IvMeasurement;

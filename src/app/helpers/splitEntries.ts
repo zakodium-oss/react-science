@@ -1,9 +1,9 @@
 import {
-  AppState,
+  type AppState,
   iterateKindMeasurementsAndView,
-  MeasurementAndView,
-  MeasurementKind,
-} from '../../app-data/index';
+  type MeasurementAndView,
+  type MeasurementKind,
+} from '../../app-data/index.js';
 
 export function splitEntries<Kind extends MeasurementKind>(
   appState: AppState,

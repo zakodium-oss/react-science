@@ -1,18 +1,18 @@
 import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
-import { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { type ReactElement, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import {
-  PopoverInteractionType,
+  type PopoverInteractionType,
   Toolbar,
-  ToolbarItemProps,
-  ToolbarProps,
+  type ToolbarItemProps,
+  type ToolbarProps,
   TooltipHelpContent,
-  TooltipItem,
-} from '../../src/components';
+  type TooltipItem,
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / Toolbar',

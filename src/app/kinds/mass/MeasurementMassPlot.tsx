@@ -10,7 +10,10 @@ import {
   usePlotControllerAxes,
 } from 'react-plot';
 
-import { BasicComponent, MeasurementPlotProps } from '../../helpers/index';
+import {
+  BasicComponent,
+  type MeasurementPlotProps,
+} from '../../helpers/index.js';
 
 interface Peak {
   label: string;

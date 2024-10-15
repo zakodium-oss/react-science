@@ -2,9 +2,9 @@
 import { css } from '@emotion/react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
-import { enabledColor, InputVariant } from '../styles';
+import { enabledColor, type InputVariant } from '../styles.js';
 
-import { RadioOption, RadioGroupProps } from './RadioGroup';
+import type { RadioGroupProps, RadioOption } from './RadioGroup.js';
 
 const buttonStyles = {
   container: css({

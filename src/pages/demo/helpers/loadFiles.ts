@@ -2,12 +2,12 @@ import type { FifoLogger } from 'fifo-logger';
 import {
   FileCollection,
   fileCollectionFromFiles,
-  FileCollectionItem,
+  type FileCollectionItem,
 } from 'filelist-utils';
 
 import {
-  AppDispatch,
-  AppState,
+  type AppDispatch,
+  type AppState,
   biologicLoader,
   cary500Loader,
   cdfLoader,
@@ -17,7 +17,7 @@ import {
   loadMeasurements,
   spcLoader,
   wdfLoader,
-} from '../../../app-data';
+} from '../../../app-data/index.js';
 
 const baseOptions = {
   loaders: [

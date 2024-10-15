@@ -1,3 +1,3 @@
-export * from './Toolbar';
-export * from './PanelPreferencesToolbar';
-export * from './TooltipHelpContent';
+export * from './Toolbar.js';
+export * from './PanelPreferencesToolbar.js';
+export * from './TooltipHelpContent.js';

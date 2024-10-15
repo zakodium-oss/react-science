@@ -1,1 +1,1 @@
-export * from './plot-view/IvPlotView';
+export * from './plot-view/IvPlotView.js';

@@ -1,8 +1,8 @@
 import {
   getCurrentMeasurementData,
   useAppState,
-} from '../../../app-data/index';
-import { InfoPanelData, InfoPanel } from '../../../components/index';
+} from '../../../app-data/index.js';
+import { InfoPanel, type InfoPanelData } from '../../../components/index.js';
 
 export function MeasurementInfoPanel() {
   const appState = useAppState();

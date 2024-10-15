@@ -1,8 +1,8 @@
-import { CSSProperties, useCallback } from 'react';
+import { type CSSProperties, useCallback } from 'react';
 
-import type { HSL, RGB } from '../ColorPicker';
-import { EditableInput } from '../common';
-import * as color from '../helpers/color';
+import type { HSL, RGB } from '../ColorPicker.js';
+import { EditableInput } from '../common/index.js';
+import * as color from '../helpers/color.js';
 
 interface SketchFieldsProps {
   onChange: (

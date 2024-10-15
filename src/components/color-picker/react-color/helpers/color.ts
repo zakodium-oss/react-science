@@ -1,4 +1,7 @@
-import each from 'lodash/each';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
+import each from 'lodash/each.js';
 import tinycolor from 'tinycolor2';
 
 function simpleCheckForValidColor(data) {
@@ -22,7 +25,7 @@ function simpleCheckForValidColor(data) {
   return checked === passed ? data : false;
 }
 
-function toState(data, oldHue) {
+function toState(data, oldHue?: number) {
   const color = data.hex ? tinycolor(data.hex) : tinycolor(data);
   const hsl = color.toHsl();
   const hsv = color.toHsv();
@@ -56,7 +59,7 @@ function isValidHex(hex) {
     return true;
   }
   // disable hex4 and hex8
-  const lh = String(hex).charAt(0) === '#' ? 1 : 0;
+  const lh = String(hex).startsWith('#') ? 1 : 0;
   return (
     hex.length !== 4 + lh && hex.length < 7 + lh && tinycolor(hex).isValid()
   );

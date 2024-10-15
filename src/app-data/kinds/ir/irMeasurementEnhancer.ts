@@ -1,4 +1,4 @@
-import type { MeasurementBase } from '../../index';
+import type { MeasurementBase } from '../../index.js';
 
 /**
  * we add missing absorbance / transmittance

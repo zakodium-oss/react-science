@@ -1,8 +1,8 @@
-import { ColumnDef, SortingState } from '@tanstack/react-table';
+import type { ColumnDef, SortingState } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import type { IrPeak } from '../../../app-data/index';
-import { Table } from '../../../components/index';
+import type { IrPeak } from '../../../app-data/index.js';
+import { Table } from '../../../components/index.js';
 
 export interface IrColumnPreferences<T extends keyof IrPeak = keyof IrPeak> {
   visible?: boolean;

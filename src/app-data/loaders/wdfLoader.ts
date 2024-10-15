@@ -1,11 +1,11 @@
-import { MeasurementVariable } from 'cheminfo-types';
+import type { MeasurementVariable } from 'cheminfo-types';
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
-import { parse, Wdf } from 'wdf-parser';
+import { parse, type Wdf } from 'wdf-parser';
 
-import type { MeasurementBase, Measurements } from '../index';
+import type { MeasurementBase, Measurements } from '../index.js';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
+import { getMeasurementInfoFromFile } from './utility/index.js';
 
 /**
  *

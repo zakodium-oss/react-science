@@ -5,7 +5,7 @@ import {
   Button,
   ColorPickerDropdown,
   useOnOff,
-} from '../../src/components/index';
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / Color Pickers',

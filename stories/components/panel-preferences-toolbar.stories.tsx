@@ -3,7 +3,7 @@ import {
   Button,
   PanelPreferencesToolbar,
   useOnOff,
-} from '../../src/components';
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / PanelPreferencesToolbar',

@@ -1,13 +1,13 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../test-utils';
+import { getTestFileCollection } from '../../test-utils.js';
 import {
-  loadMeasurements,
-  jcampLoader,
-  wdfLoader,
   getIrAutoPeakPickingEnhancer,
   irMeasurementEnhancer,
-} from '../index';
+  jcampLoader,
+  loadMeasurements,
+  wdfLoader,
+} from '../index.js';
 
 const loaders = [jcampLoader, wdfLoader];
 const enhancers = {

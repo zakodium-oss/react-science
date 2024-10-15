@@ -1,9 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { useCallback, useRef } from 'react';
 
-import * as alpha from '../helpers/alpha';
+import * as alpha from '../helpers/alpha.js';
 
-import CheckBoard from './CheckBoard';
-import { useOnChange } from './useOnChange';
+import CheckBoard from './CheckBoard.js';
+import { useOnChange } from './useOnChange.js';
 
 const styles = {
   alpha: (borderRadius) => ({

@@ -1,7 +1,7 @@
-import { useAppState } from '../../../app-data/index';
-import { Accordion } from '../../../components/index';
+import { useAppState } from '../../../app-data/index.js';
+import { Accordion } from '../../../components/index.js';
 
-import { MeasurementConfigPanel } from './MeasurementConfigPanel';
+import { MeasurementConfigPanel } from './MeasurementConfigPanel.js';
 
 export function MeasurementConfigPanelAccordion() {
   const appState = useAppState();

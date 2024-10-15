@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import * as RadioGroupRadix from '@radix-ui/react-radio-group';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { InputVariant } from '../styles';
+import type { InputVariant } from '../styles.js';
 
-import { ButtonRadioItem } from './ButtonRadioItem';
+import { ButtonRadioItem } from './ButtonRadioItem.js';
 
 export interface RadioOption {
   value: string;

@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import type { ReactNode } from 'react';
 
-import { Toolbar } from './Toolbar';
+import { Toolbar } from './Toolbar.js';
 
 interface PanelPreferencesToolbarProps {
   title?: ReactNode;

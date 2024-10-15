@@ -2,11 +2,17 @@
 import { Icon, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { CSSProperties, memo, useCallback, useMemo, useState } from 'react';
+import {
+  type CSSProperties,
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 
-import { SelectedTotal } from '../selected-total/SelectedTotal';
-import { createTableColumnHelper, Table } from '../table';
-import * as ValueRenderers from '../value-renderers';
+import { SelectedTotal } from '../selected-total/index.js';
+import { createTableColumnHelper, Table } from '../table/index.js';
+import * as ValueRenderers from '../value-renderers/index.js';
 
 export interface InfoPanelData {
   description: string;

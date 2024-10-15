@@ -1,4 +1,4 @@
-import type { AppData } from './AppData';
+import type { AppData } from './AppData.js';
 
 export function getEmptyAppData(): AppData {
   return {

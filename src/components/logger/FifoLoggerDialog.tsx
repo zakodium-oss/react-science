@@ -4,12 +4,12 @@ import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { LogEntry } from 'fifo-logger';
-import { CSSProperties, useMemo } from 'react';
+import { type CSSProperties, useMemo } from 'react';
 
-import { Button } from '../button';
-import { createTableColumnHelper, Table } from '../table';
+import { Button } from '../button/index.js';
+import { createTableColumnHelper, Table } from '../table/index.js';
 
-import { useFifoLogger } from './useFifoLogger';
+import { useFifoLogger } from './useFifoLogger.js';
 
 const ActionsFooter = styled.div`
   display: flex;

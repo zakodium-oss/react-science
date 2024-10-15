@@ -1,1 +1,1 @@
-export * from './SplitPane';
+export * from './SplitPane.js';

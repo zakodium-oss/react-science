@@ -6,10 +6,10 @@ import {
   getExistingMeasurementKinds,
   kindLabels,
   useAppData,
-} from '../../../app-data/index';
-import { Accordion } from '../../../components/index';
+} from '../../../app-data/index.js';
+import { Accordion } from '../../../components/index.js';
 
-import { MeasurementsPanel } from '.';
+import { MeasurementsPanel } from './index.js';
 
 export function MeasurementsPanelAccordion() {
   const appData = useAppData();

@@ -2,7 +2,10 @@ import styled from '@emotion/styled';
 import { useMemo, useState } from 'react';
 import { FaArrowsAltH, FaExchangeAlt } from 'react-icons/fa';
 
-import { MeasurementPlot, MeasurementPlotProps } from '../helpers';
+import {
+  MeasurementPlot,
+  type MeasurementPlotProps,
+} from '../helpers/index.js';
 
 export type MeasurementExplorerProps = Omit<
   MeasurementPlotProps,

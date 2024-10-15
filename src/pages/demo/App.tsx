@@ -1,14 +1,14 @@
 import { FifoLogger } from 'fifo-logger';
 import { KbsProvider } from 'react-kbs';
 
-import { AppStateProvider } from '../../app-data';
+import { AppStateProvider } from '../../app-data/index.js';
 import {
   FifoLoggerProvider,
   FullScreenProvider,
   RootLayout,
-} from '../../components';
+} from '../../components/index.js';
 
-import MainLayout from './MainLayout';
+import MainLayout from './MainLayout.js';
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';

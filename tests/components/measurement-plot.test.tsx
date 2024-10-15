@@ -1,20 +1,6 @@
-import { test, expect } from '@playwright/experimental-ct-react';
+import { expect, test } from '@playwright/experimental-ct-react';
 
-import { MeasurementPlot } from '../../src/app/helpers/index';
-import type {
-  IrMeasurement,
-  MeasurementAppView,
-} from '../../src/app-data/index';
-import measurement from '../../stories/data/irMeasurement.json';
-
-const irMeasurement = measurement as IrMeasurement;
-const measurementDisplay: MeasurementAppView = {
-  color: {
-    kind: 'fixed',
-    color: 'red',
-  },
-  visible: true,
-};
+import { IrMeasurementPlot } from './measurement-plot.components.js';
 
 const beforeZoom = [
   // horizontal axis default values
@@ -43,12 +29,7 @@ const beforeZoom = [
 ].join('');
 
 test('default props', async ({ mount, page }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot />);
   await expect(component).toBeVisible();
 
   const xAxis = component.locator('_react=Axis >> nth=0');
@@ -132,13 +113,7 @@ test('default props', async ({ mount, page }) => {
 
 test('change variables', async ({ mount }) => {
   const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      xVariableName="y"
-      yVariableName="a"
-      dataIndex={1}
-      measurementDisplay={measurementDisplay}
-    />,
+    <IrMeasurementPlot xVariableName="y" yVariableName="a" dataIndex={1} />,
   );
   await expect(component).toBeVisible();
 
@@ -153,13 +128,7 @@ test('change variables', async ({ mount }) => {
 });
 
 test('flip axis', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      flipHorizontalAxis
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot flipHorizontalAxis />);
   await expect(component).toBeVisible();
 
   const xAxis = component.locator('_react=Axis[flip=true] >> nth=0');
@@ -168,11 +137,7 @@ test('flip axis', async ({ mount }) => {
 
 test('remove horizontal axis', async ({ mount }) => {
   const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      showHorizontalAxis={false}
-      measurementDisplay={measurementDisplay}
-    />,
+    <IrMeasurementPlot showHorizontalAxis={false} />,
   );
   await expect(component).toBeVisible();
 
@@ -181,13 +146,7 @@ test('remove horizontal axis', async ({ mount }) => {
 });
 
 test('remove vertical axis', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      showVerticalAxis={false}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot showVerticalAxis={false} />);
   await expect(component).toBeVisible();
 
   const yAxis = component.locator('_react=Axis >> nth=1');
@@ -195,13 +154,7 @@ test('remove vertical axis', async ({ mount }) => {
 });
 
 test('vertical zoom', async ({ mount, page }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      zoom="vertical"
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot zoom="vertical" />);
   await expect(component).toBeVisible();
 
   await expect(component).toContainText(beforeZoom);
@@ -236,13 +189,7 @@ test('vertical zoom', async ({ mount, page }) => {
 });
 
 test('rectangular zoom', async ({ mount, page }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      zoom="rectangular"
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot zoom="rectangular" />);
   await expect(component).toBeVisible();
 
   await expect(component).toContainText(beforeZoom);
@@ -285,11 +232,7 @@ test('rectangular zoom', async ({ mount, page }) => {
 
 test('remove horizontal grid', async ({ mount }) => {
   const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      showHorizontalGrid={false}
-      measurementDisplay={measurementDisplay}
-    />,
+    <IrMeasurementPlot showHorizontalGrid={false} />,
   );
   await expect(component).toBeVisible();
 
@@ -297,26 +240,14 @@ test('remove horizontal grid', async ({ mount }) => {
 });
 
 test('remove vertical grid', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      showVerticalGrid={false}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot showVerticalGrid={false} />);
   await expect(component).toBeVisible();
 
   await expect(component.locator('_react=line[y2="0"]')).toBeHidden();
 });
 
 test('crossHair', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementPlot
-      measurement={irMeasurement}
-      crossHair={false}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementPlot crossHair={false} />);
   await expect(component).toBeVisible();
 
   await component.hover({ position: { x: 200, y: 200 } });

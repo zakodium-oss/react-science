@@ -1,4 +1,4 @@
-import { InfoPanel, InfoPanelData } from '../../src/components';
+import { InfoPanel, type InfoPanelData } from '../../src/components/index.js';
 
 export default {
   title: 'Components / InfoPanel',

@@ -2,10 +2,14 @@ import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { guessSpectraType, parse } from 'spc-parser';
 
-import { assert } from '../../components/index';
-import type { MeasurementBase, MeasurementKind, Measurements } from '../index';
+import { assert } from '../../components/index.js';
+import type {
+  MeasurementBase,
+  MeasurementKind,
+  Measurements,
+} from '../index.js';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
+import { getMeasurementInfoFromFile } from './utility/index.js';
 
 /**
  *

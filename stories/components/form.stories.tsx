@@ -8,11 +8,11 @@ import {
   TextArea,
 } from '@blueprintjs/core';
 import { HTMLSelect } from '@blueprintjs/core/lib/esnext';
-import { ItemRenderer, Select } from '@blueprintjs/select';
+import { type ItemRenderer, Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { Button } from '../../src/components';
+import { Button } from '../../src/components/index.js';
 
 export default {
   title: 'Forms / Form',

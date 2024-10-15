@@ -8,12 +8,12 @@ import {
   type TableOptions,
   useReactTable,
 } from '@tanstack/react-table';
-import { TableHTMLAttributes } from 'react';
+import type { TableHTMLAttributes } from 'react';
 
-import { TableBody } from './table_body';
-import { TableHeader } from './table_header';
-import type { TableColumnDef, TableRowTrRenderer } from './table_utils';
-import { useTableColumns } from './use_table_columns';
+import { TableBody } from './table_body.js';
+import { TableHeader } from './table_header.js';
+import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
+import { useTableColumns } from './use_table_columns.js';
 
 export interface TableProps<TData extends RowData> {
   data: TData[];

@@ -1,7 +1,7 @@
-import { assert, assertUnreachable } from '../../../../components/index';
-import { getMeasurementOrFail } from '../../../index';
-import { resetZoom } from '../plot-view/helpers/zoom';
-import { AppStateProducer } from '../types';
+import { assert, assertUnreachable } from '../../../../components/index.js';
+import { getMeasurementOrFail } from '../../../index.js';
+import { resetZoom } from '../plot-view/helpers/zoom.js';
+import type { AppStateProducer } from '../types.js';
 
 export const selectOrUnselectAllMeasurements: AppStateProducer<
   'SELECT_ALL_MEASUREMENTS'

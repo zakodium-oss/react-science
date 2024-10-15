@@ -3,9 +3,9 @@ import type { FileCollection, FileCollectionItem } from 'filelist-utils';
 
 import {
   getMeasurementInfoFromFile,
-  MeasurementBase,
-  Measurements,
-} from '../../../index';
+  type MeasurementBase,
+  type Measurements,
+} from '../../../index.js';
 
 export async function cary500Loader(
   fileCollection: FileCollection,

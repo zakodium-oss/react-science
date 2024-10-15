@@ -1,12 +1,17 @@
 import { BlueprintProvider, FocusStyleManager } from '@blueprintjs/core';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { CSSProperties, ReactNode, useCallback, useState } from 'react';
+import {
+  type CSSProperties,
+  type ReactNode,
+  useCallback,
+  useState,
+} from 'react';
 
-import { AccordionProvider } from '../accordion';
+import { AccordionProvider } from '../accordion/index.js';
 
-import { CustomDivPreflight } from './css-reset/customPreflight';
-import { queryClient } from './query_client';
-import { RootLayoutProvider } from './root_layout_context.provider';
+import { CustomDivPreflight } from './css-reset/customPreflight.js';
+import { queryClient } from './query_client.js';
+import { RootLayoutProvider } from './root_layout_context.provider.js';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 

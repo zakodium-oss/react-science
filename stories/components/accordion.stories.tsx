@@ -4,10 +4,10 @@ import {
   Accordion,
   SplitPane,
   Toolbar,
-  ToolbarItemProps,
+  type ToolbarItemProps,
   useToggleAccordion,
-} from '../../src/components';
-import { AccordionDecorator } from '../utils';
+} from '../../src/components/index.js';
+import { AccordionDecorator } from '../utils.js';
 
 export default {
   title: 'Components / Accordion',

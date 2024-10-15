@@ -1,6 +1,6 @@
-import { Placement } from '@popperjs/core';
-import { HTMLAttributes, useState } from 'react';
-import { Modifier, usePopper } from 'react-popper';
+import { type Placement } from '@popperjs/core';
+import { type HTMLAttributes, useState } from 'react';
+import { type Modifier, usePopper } from 'react-popper';
 
 const sameWidthModifier: Modifier<'sameWidth'> = {
   name: 'sameWidth',

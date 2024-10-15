@@ -5,7 +5,7 @@ import type {
   SplitPaneSide,
   SplitPaneSize,
   SplitPaneType,
-} from './SplitPane';
+} from './SplitPane.js';
 
 interface UseSplitPaneSizeOptions {
   controlledSide: SplitPaneSide;

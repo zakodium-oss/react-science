@@ -2,7 +2,7 @@ import {
   Button,
   FullScreenProvider,
   useFullscreen,
-} from '../../src/components/index';
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / Fullscreen',

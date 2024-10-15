@@ -1,1 +1,1 @@
-export * from './SelectedTotal';
+export * from './SelectedTotal.js';

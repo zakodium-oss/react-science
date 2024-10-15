@@ -1,32 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import {
   ButtonGroup,
-  ButtonGroupProps,
+  type ButtonGroupProps,
   Classes,
   Colors,
   Icon,
   Intent,
   Popover,
-  PopoverProps,
-  TooltipProps,
+  type PopoverProps,
+  type TooltipProps,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   cloneElement,
-  MouseEvent,
-  ReactNode,
+  type MouseEvent,
+  type ReactNode,
   useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 
-import { Button, ButtonProps } from '../button';
+import { Button, type ButtonProps } from '../button/index.js';
 
 import {
-  ToolbarContext,
+  type ToolbarContext,
   toolbarContext,
   useToolbarContext,
-} from './toolbarContext';
+} from './toolbarContext.js';
 
 export type PopoverInteractionType =
   | 'click'

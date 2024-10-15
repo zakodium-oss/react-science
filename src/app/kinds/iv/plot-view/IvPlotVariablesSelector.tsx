@@ -2,9 +2,9 @@ import {
   getAllVariableSymbols,
   useAppDispatch,
   useAppState,
-} from '../../../../app-data/index';
-import { assertNotNull } from '../../../../components/index';
-import { MeasurementVariableSelect } from '../../../helpers/index';
+} from '../../../../app-data/index.js';
+import { assertNotNull } from '../../../../components/index.js';
+import { MeasurementVariableSelect } from '../../../helpers/index.js';
 
 export default function IvPlotVariablesSelector() {
   const {

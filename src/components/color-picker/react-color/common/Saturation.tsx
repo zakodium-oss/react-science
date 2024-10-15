@@ -1,9 +1,12 @@
-import lodashThrottle from 'lodash/throttle';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
+import lodashThrottle from 'lodash/throttle.js';
 import { useCallback, useRef } from 'react';
 
-import * as saturation from '../helpers/saturation';
+import * as saturation from '../helpers/saturation.js';
 
-import { useOnChange } from './useOnChange';
+import { useOnChange } from './useOnChange.js';
 
 const styles = {
   color: (hsl) => ({

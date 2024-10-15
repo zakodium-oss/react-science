@@ -1,4 +1,7 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const DEFAULT_ARROW_OFFSET = 1;
 
@@ -22,7 +25,7 @@ const EditableInput = (props) => {
     blurValue: String(props.value).toUpperCase(),
   });
   const inputRef = useRef();
-  const valueRef = useRef(props.value);
+  const valueRef = useRef<number>(props.value);
 
   const inputId = useRef(`rc-editable-input-${idCounter++}`).current;
 
@@ -79,7 +82,7 @@ const EditableInput = (props) => {
       // and update accordingly with a percentage
       // https://github.com/casesandberg/react-color/issues/383
       const value = getNumberValue(e.target.value);
-      const offset = props.arrowOffset || DEFAULT_ARROW_OFFSET;
+      const offset: number = props.arrowOffset || DEFAULT_ARROW_OFFSET;
       if (!Number.isNaN(value) && isValidKeyCode(e.keyCode)) {
         const updatedValue =
           e.keyCode === UP_KEY_CODE ? value + offset : value - offset;
@@ -91,7 +94,7 @@ const EditableInput = (props) => {
   );
 
   const handleDrag = useCallback(
-    (e) => {
+    (e: MouseEvent) => {
       if (props.dragLabel) {
         const newValue = Math.round(valueRef.current + e.movementX);
         if (newValue >= 0 && newValue <= props.dragMax) {
