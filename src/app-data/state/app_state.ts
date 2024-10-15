@@ -1,18 +1,11 @@
 import { produce } from 'immer';
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  useContext,
-  useReducer,
-} from 'react';
+import { createContext, type Dispatch, useContext } from 'react';
 
-import { AppStateAction } from './appStateActions';
-import { AppData, getEmptyAppData } from './data/index';
-import { appStateProducer } from './producers/index';
-import { AppSettings } from './settings/AppSettings';
-import { getEmptyAppSettings } from './settings/getEmptyAppSettings';
-import { getEmptyAppView, AppView } from './view/index';
+import { type AppStateAction } from './app_state.actions.js';
+import { type AppData, getEmptyAppData } from './data/index.js';
+import { appStateProducer } from './producers/index.js';
+import { type AppSettings, getEmptyAppSettings } from './settings/index.js';
+import { type AppView, getEmptyAppView } from './view/index.js';
 
 export interface AppState {
   load: AppLoad;
@@ -25,7 +18,7 @@ export interface AppLoad {
   isLoading: boolean;
 }
 
-function getEmptyAppState(): AppState {
+export function getEmptyAppState(): AppState {
   return {
     load: {
       isLoading: false,
@@ -36,7 +29,7 @@ function getEmptyAppState(): AppState {
   };
 }
 
-const appStateContext = createContext<AppState | null>(null);
+export const appStateContext = createContext<AppState | null>(null);
 
 export function useAppState(): AppState {
   const appState = useContext(appStateContext);
@@ -48,7 +41,7 @@ export function useAppState(): AppState {
 
 export type AppDispatch = Dispatch<AppStateAction>;
 
-const appDispatchContext = createContext<AppDispatch | null>(null);
+export const appDispatchContext = createContext<AppDispatch | null>(null);
 
 export function useAppDispatch(): AppDispatch {
   const appDispatch = useContext(appDispatchContext);
@@ -70,19 +63,4 @@ export function useAppSettings(): AppSettings {
   return useAppState().settings;
 }
 
-const appReducer = produce(appStateProducer);
-
-export function AppStateProvider(props: { children: ReactNode }) {
-  const [appState, appDispatch] = useReducer(
-    appReducer,
-    null,
-    getEmptyAppState,
-  );
-  return (
-    <appDispatchContext.Provider value={appDispatch}>
-      <appStateContext.Provider value={appState}>
-        {props.children}
-      </appStateContext.Provider>
-    </appDispatchContext.Provider>
-  );
-}
+export const appReducer = produce(appStateProducer);

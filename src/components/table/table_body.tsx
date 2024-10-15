@@ -1,11 +1,11 @@
 import type { Row, RowData } from '@tanstack/react-table';
 import { Fragment } from 'react';
 
-import { TableRowCell } from './table_row_cell';
+import { TableRowCell } from './table_row_cell.js';
 import type {
   TableRowTrRenderer,
   TableRowTrRendererProps,
-} from './table_utils';
+} from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {
   rows: Array<Row<TData>>;

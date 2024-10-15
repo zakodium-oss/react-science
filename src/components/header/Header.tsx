@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import type { ReactElement } from 'react';
 
-import type { ToolbarProps } from '../toolbar/Toolbar';
+import type { ToolbarProps } from '../toolbar/Toolbar.js';
 
 type ReactProps = ReactElement<ToolbarProps>;
 

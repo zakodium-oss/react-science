@@ -9,7 +9,6 @@ export default [
       'build',
       'coverage',
       'dist',
-      'lib-esm',
       'lib',
       'node_modules',
       'storybook-static',

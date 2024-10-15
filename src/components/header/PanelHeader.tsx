@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { Button } from '../button/Button';
-import { SelectedTotal } from '../selected-total/SelectedTotal';
+import { Button } from '../button/index.js';
+import { SelectedTotal } from '../selected-total/index.js';
 
 const styles = {
   container: css({

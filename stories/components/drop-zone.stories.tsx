@@ -7,7 +7,7 @@ import {
   DropZone,
   DropZoneContainer,
   Table,
-} from '../../src/components';
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / DropZone',

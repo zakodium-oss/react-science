@@ -1,19 +1,14 @@
 {
-  "extends": ["./tsconfig.json"],
+  "extends": "./tsconfig.json",
   "exclude": [
-    "./.storybook",
-    "./src/pages",
-    "./src/test-utils.ts",
-    "./stories",
-    "./tests",
+    ".storybook",
+    "src/pages",
+    "src/test-utils.ts",
+    "stories",
+    "tests",
     "**/__tests__",
+    "playwright",
     "playwright-*.mts",
-    "./playwright",
     "vite.config.mts"
-  ],
-  "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
-  }
+  ]
 }

@@ -4,20 +4,20 @@ import { useMemo } from 'react';
 
 import {
   getMeasurement,
-  MeasurementBase,
-  MeasurementKind,
+  type MeasurementBase,
+  type MeasurementKind,
   useAppDispatch,
   useAppState,
-} from '../../../app-data';
+} from '../../../app-data/index.js';
 import {
   Button,
   ConfirmDialog,
   InfoPanel,
-  InfoPanelData,
+  type InfoPanelData,
   PanelPreferencesToolbar,
   useOnOff,
-} from '../../../components';
-import { MeasurementConfigPanel } from '../index';
+} from '../../../components/index.js';
+import { MeasurementConfigPanel } from '../index.js';
 
 import {
   MeasurementCheckbox,
@@ -25,7 +25,7 @@ import {
   MeasurementSelectedVisibilityChange,
   MeasurementVisibilityToggle,
   useMeasurementPanel,
-} from '.';
+} from './index.js';
 
 export interface MeasurementsTableProps {
   kind: MeasurementKind;

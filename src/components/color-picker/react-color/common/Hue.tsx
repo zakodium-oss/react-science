@@ -1,8 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { useCallback, useRef } from 'react';
 
-import * as hue from '../helpers/hue';
+import * as hue from '../helpers/hue.js';
 
-import { useOnChange } from './useOnChange';
+import { useOnChange } from './useOnChange.js';
 
 const styles = {
   hue: (borderRadius, boxShadow) => ({

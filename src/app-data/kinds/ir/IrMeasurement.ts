@@ -1,6 +1,6 @@
-import type { MeasurementBase } from '../../index';
+import type { MeasurementBase } from '../../index.js';
 
-import type { IrPeak } from './IrPeak';
+import type { IrPeak } from './IrPeak.js';
 
 /**
  * When we have a simple measurement like uv, ir, etc, data should only contain one element

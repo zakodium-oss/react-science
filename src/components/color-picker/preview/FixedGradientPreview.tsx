@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
 import {
-  GradientScaleName,
   fixedGradientScales,
-} from '../gradient-select/GradientSelect';
+  type GradientScaleName,
+} from '../gradient_select/index.js';
 
 interface FixedGradientPreviewProps {
   gradient: GradientScaleName;

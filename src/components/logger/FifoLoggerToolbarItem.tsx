@@ -2,11 +2,11 @@ import { Intent } from '@blueprintjs/core';
 import type { LogEntry } from 'fifo-logger';
 import { useState } from 'react';
 
-import { useOnOff } from '../hooks';
-import { Toolbar } from '../toolbar';
+import { useOnOff } from '../hooks/index.js';
+import { Toolbar } from '../toolbar/index.js';
 
-import { FifoLoggerDialog } from './FifoLoggerDialog';
-import { useFifoLogs } from './useFifoLogger';
+import { FifoLoggerDialog } from './FifoLoggerDialog.js';
+import { useFifoLogs } from './useFifoLogger.js';
 
 export function FifoLoggerToolbarItem() {
   const [seen, setSeen] = useState(0);

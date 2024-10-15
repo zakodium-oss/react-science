@@ -1,11 +1,11 @@
-import { ComponentType } from 'react';
+import { type ComponentType } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
 import {
   createTableColumnHelper,
   Table,
   ValueRenderers,
-} from '../../src/components/index';
+} from '../../src/components/index.js';
 import data from '../data/table.json';
 
 interface ControlProps {

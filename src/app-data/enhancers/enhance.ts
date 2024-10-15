@@ -1,5 +1,5 @@
-import type { Measurements } from '../index';
-import { MeasurementBase } from '../state/index';
+import type { Measurements } from '../index.js';
+import type { MeasurementBase } from '../state/index.js';
 
 export type Enhancer<T extends MeasurementBase> = (data: T) => void;
 

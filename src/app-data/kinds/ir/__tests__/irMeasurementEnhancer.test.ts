@@ -1,9 +1,9 @@
 import { produce } from 'immer';
 import { expect, test } from 'vitest';
 
-import { irMeasurementEnhancer } from '../irMeasurementEnhancer';
+import { irMeasurementEnhancer } from '../irMeasurementEnhancer.js';
 
-import { getIrMeasurement } from './getIrMeasurement';
+import { getIrMeasurement } from './getIrMeasurement.js';
 
 test('irMeasurementEnhancer', async () => {
   const measurement = await getIrMeasurement();

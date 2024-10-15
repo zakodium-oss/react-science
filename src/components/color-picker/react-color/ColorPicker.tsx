@@ -1,12 +1,18 @@
-import lodashDebounce from 'lodash/debounce';
-import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import lodashDebounce from 'lodash/debounce.js';
+import {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import { defaultColorPalette } from '../palette';
+import { defaultColorPalette } from '../palette.js';
 
-import { Saturation, Hue, Alpha, CheckBoard } from './common';
-import * as colorHelper from './helpers/color';
-import SketchFields from './sketch/SketchFields';
-import SketchPresetColors from './sketch/SketchPresetColors';
+import { Alpha, CheckBoard, Hue, Saturation } from './common/index.js';
+import * as colorHelper from './helpers/color.js';
+import SketchFields from './sketch/SketchFields.js';
+import SketchPresetColors from './sketch/SketchPresetColors.js';
 
 export interface RGB {
   r: number;

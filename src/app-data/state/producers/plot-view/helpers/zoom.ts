@@ -1,15 +1,15 @@
-import { assert } from '../../../../../components/index';
+import { assert } from '../../../../../components/index.js';
 import {
   getPreferredVariable,
   getVariableByLabel,
-} from '../../../../helpers/variables';
+} from '../../../../helpers/index.js';
 import {
-  AppState,
+  type AppState,
   iterateKindMeasurementsAndView,
-  MeasurementBase,
-  MeasurementKind,
-  Plot2DZoom,
-} from '../../../index';
+  type MeasurementBase,
+  type MeasurementKind,
+  type Plot2DZoom,
+} from '../../../index.js';
 
 export function getInitialZoom(): Plot2DZoom {
   return {

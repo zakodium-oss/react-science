@@ -1,7 +1,7 @@
-import { Draft } from 'immer';
+import type { Draft } from 'immer';
 
-import { AppStateAction } from '../appStateActions';
-import { AppState } from '../index';
+import type { AppStateAction } from '../app_state.actions.js';
+import type { AppState } from '../index.js';
 
 export type ActionType = AppStateAction['type'];
 

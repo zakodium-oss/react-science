@@ -1,1 +1,1 @@
-export * from './root_layout';
+export * from './root_layout.js';

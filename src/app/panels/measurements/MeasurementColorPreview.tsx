@@ -2,17 +2,17 @@ import styled from '@emotion/styled';
 import { useRef } from 'react';
 
 import {
-  ColorConfig,
-  MeasurementKind,
+  type ColorConfig,
+  type MeasurementKind,
   useAppDispatch,
-} from '../../../app-data/index';
+} from '../../../app-data/index.js';
 import {
   ColorPicker,
   ColorPreview,
   useModifiedPopper,
   useOnClickOutside,
   useOnOff,
-} from '../../../components/index';
+} from '../../../components/index.js';
 
 interface MeasurementColorPreviewProps {
   measurementId: string;

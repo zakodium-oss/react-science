@@ -1,4 +1,4 @@
-import { useOnOff } from './useOnOff';
+import { useOnOff } from './useOnOff.js';
 
 export function useToggle(
   initialValue = false,

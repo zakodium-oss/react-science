@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import {
-  PointerEvent as ReactPointerEvent,
-  CSSProperties,
-  ReactNode,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useReducer,
   useRef,
   useState,
-  RefObject,
-  useReducer,
-  useEffect,
 } from 'react';
 import useResizeObserver from 'use-resize-observer';
 
-import { useOnOff } from '../hooks/useOnOff';
+import { useOnOff } from '../hooks/useOnOff.js';
 
-import { useSplitPaneSize } from './useSplitPaneSize';
+import { useSplitPaneSize } from './useSplitPaneSize.js';
 
 export type SplitPaneDirection = 'vertical' | 'horizontal';
 export type SplitPaneSide = 'start' | 'end';
@@ -118,6 +118,8 @@ export function SplitPane(props: SplitPaneProps) {
     onResize,
   });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Module exists.
   const rootSize = useResizeObserver<HTMLDivElement>();
 
   let isFinalClosed = isPaneClosed;

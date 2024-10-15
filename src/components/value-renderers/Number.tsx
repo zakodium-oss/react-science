@@ -1,4 +1,4 @@
-import type { ValueRenderersProps } from '.';
+import type { ValueRenderersProps } from './index.js';
 
 interface NumberProps extends ValueRenderersProps {
   value?: number;

@@ -1,6 +1,6 @@
 import type { CellContext, RowData } from '@tanstack/react-table';
 
-import * as ValueRenderers from '../value-renderers';
+import * as ValueRenderers from '../value-renderers/index.js';
 
 // TODO: support Date
 export function defaultTableCell<TData extends RowData, TValue = unknown>(

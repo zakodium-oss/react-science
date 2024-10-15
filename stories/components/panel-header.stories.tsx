@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import {
-  PanelStack2,
   Dialog,
   DialogBody,
   DialogFooter,
-  PanelProps,
+  type PanelProps,
+  PanelStack2,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 
 import {
-  PanelHeader,
   Accordion,
   Button,
-  useOnOff,
-  Toolbar,
+  PanelHeader,
   PanelPreferencesToolbar,
-} from '../../src/components';
+  Toolbar,
+  useOnOff,
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / PanelHeader',

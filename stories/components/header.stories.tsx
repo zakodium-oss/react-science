@@ -1,4 +1,4 @@
-import { Header, Toolbar } from '../../src/components';
+import { Header, Toolbar } from '../../src/components/index.js';
 
 export default {
   title: 'Components / Header',

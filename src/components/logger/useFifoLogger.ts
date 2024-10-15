@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { fifoLoggerContext } from './loggerContext';
+import { fifoLoggerContext } from './loggerContext.js';
 
 export function useFifoLogger() {
   const fifoLogger = useContext(fifoLoggerContext);

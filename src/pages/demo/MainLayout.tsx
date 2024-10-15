@@ -11,12 +11,12 @@ import {
   MeasurementsPanelAccordion,
   useDropFiles,
   useLoadFileCollectionFromHash,
-} from '../../app';
+} from '../../app/index.js';
 import {
   download,
   getExistingMeasurementKinds,
   useAppState,
-} from '../../app-data';
+} from '../../app-data/index.js';
 import {
   Accordion,
   DropZoneContainer,
@@ -25,9 +25,9 @@ import {
   Header,
   SplitPane,
   Toolbar,
-} from '../../components';
+} from '../../components/index.js';
 
-import { loadFiles } from './helpers/loadFiles';
+import { loadFiles } from './helpers/loadFiles.js';
 
 function ErrorFallback({
   error,

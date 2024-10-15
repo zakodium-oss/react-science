@@ -1,7 +1,7 @@
-import { useAppDispatch } from '../../../app-data/index';
-import { Button } from '../../../components/index';
+import { useAppDispatch } from '../../../app-data/index.js';
+import { Button } from '../../../components/index.js';
 
-import { MeasurementsTableProps } from '.';
+import type { MeasurementsTableProps } from './index.js';
 
 interface MeasurementVisibilityToggleProps {
   id: string;

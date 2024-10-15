@@ -1,7 +1,7 @@
-import { assert } from '../../../../components/index';
-import { AppStateProducer } from '../types';
+import { assert } from '../../../../components/index.js';
+import type { AppStateProducer } from '../types.js';
 
-import { resetZoom } from './helpers/zoom';
+import { resetZoom } from './helpers/zoom.js';
 
 export const plotZoom: AppStateProducer<'PLOT_ZOOM'> = (draft, action) => {
   const { kind, zoom } = action.payload;

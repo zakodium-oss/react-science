@@ -1,6 +1,6 @@
-import { Accordion } from '../../../components/index';
+import { Accordion } from '../../../components/index.js';
 
-import { MeasurementInfoPanel } from './MeasurementInfoPanel';
+import { MeasurementInfoPanel } from './MeasurementInfoPanel.js';
 
 export function MeasurementInfoPanelAccordion() {
   return (

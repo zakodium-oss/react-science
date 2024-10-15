@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../test-utils';
-import { loadMeasurements, cdfLoader } from '../index';
+import { getTestFileCollection } from '../../test-utils.js';
+import { cdfLoader, loadMeasurements } from '../index.js';
 
 const fileCollection = await getTestFileCollection('cdf');
 

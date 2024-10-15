@@ -1,1 +1,1 @@
-export * from './SubText';
+export * from './SubText.js';

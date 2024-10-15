@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Dialog, DialogBody, DialogFooter, Tabs, Tab } from '@blueprintjs/core';
+import { Dialog, DialogBody, DialogFooter, Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import {
@@ -23,8 +23,8 @@ import {
   SplitPane,
   Toolbar,
   useOnOff,
-} from '../../src/components';
-import { AccordionDecorator } from '../utils';
+} from '../../src/components/index.js';
+import { AccordionDecorator } from '../utils.js';
 
 export default {
   title: 'Components / Dialog',

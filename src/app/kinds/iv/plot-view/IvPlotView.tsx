@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { PlotController } from 'react-plot';
 
-import { useAppDispatch, useAppState } from '../../../../app-data';
-import { Toolbar } from '../../../../components';
+import { useAppDispatch, useAppState } from '../../../../app-data/index.js';
+import { Toolbar } from '../../../../components/index.js';
 
-import IvMeasurementsPlot from './IvMeasurementsPlot';
-import IvPlotVariablesSelector from './IvPlotVariablesSelector';
+import IvMeasurementsPlot from './IvMeasurementsPlot.js';
+import IvPlotVariablesSelector from './IvPlotVariablesSelector.js';
 
 const IvPlotRoot = styled.div`
   display: flex;

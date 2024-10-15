@@ -1,8 +1,8 @@
 import {
   MeasurementPlot,
-  MeasurementPlotProps,
-} from '../../../src/app/helpers/index';
-import type { IrMeasurement } from '../../../src/app-data/index';
+  type MeasurementPlotProps,
+} from '../../../src/app/helpers/index.js';
+import type { IrMeasurement } from '../../../src/app-data/index.js';
 import measurement from '../../data/irMeasurement.json';
 
 const irMeasurement = measurement as IrMeasurement;

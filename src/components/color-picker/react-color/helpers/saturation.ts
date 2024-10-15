@@ -1,4 +1,7 @@
-export function calculateChange(e, hsl, container) {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
+export function calculateChange(e, hsl, container: Element) {
   const { width: containerWidth, height: containerHeight } =
     container.getBoundingClientRect();
   const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX;

@@ -1,2 +1,2 @@
-export * from './Header';
-export * from './PanelHeader';
+export * from './Header.js';
+export * from './PanelHeader.js';

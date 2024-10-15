@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import {
   FormGroup,
-  FormGroupProps,
+  type FormGroupProps,
   InputGroup,
-  InputGroupProps,
+  type InputGroupProps,
 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import { ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 
 export default {
   title: 'Forms / Input',

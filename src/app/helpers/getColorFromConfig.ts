@@ -1,4 +1,5 @@
-import { ColorConfig } from '../../app-data/index';
+import type { ColorConfig } from '../../app-data/index.js';
+
 // import { fixedGradientScales } from '../../components/index';
 
 export function getColorFromConfig(config: ColorConfig) {

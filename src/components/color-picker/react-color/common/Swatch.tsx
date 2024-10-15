@@ -1,7 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { useCallback } from 'react';
 
-import CheckBoard from './CheckBoard';
-import { handleFocus } from './interaction';
+import CheckBoard from './CheckBoard.js';
+import { handleFocus } from './interaction.js';
 
 // interface SwatchProps {
 //   color: string;
@@ -21,7 +24,7 @@ const styles = {
   outline: 'none',
 };
 
-export const Swatch = ({
+const SwatchWithFocus = handleFocus(function Swatch({
   color,
   style,
   onClick,
@@ -30,7 +33,7 @@ export const Swatch = ({
   children,
   focus,
   focusStyle = {},
-}) => {
+}) {
   const transparent = color === 'transparent';
 
   const handleClick = useCallback((e) => onClick?.(color, e), [color, onClick]);
@@ -72,6 +75,6 @@ export const Swatch = ({
       )}
     </div>
   );
-};
+});
 
-export default handleFocus(Swatch);
+export default SwatchWithFocus;

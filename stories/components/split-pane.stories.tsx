@@ -7,9 +7,9 @@ import {
   Accordion,
   AccordionProvider,
   SplitPane,
-  SplitPaneProps,
-  SplitPaneSize,
-} from '../../src/components/index';
+  type SplitPaneProps,
+  type SplitPaneSize,
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / SplitPane',

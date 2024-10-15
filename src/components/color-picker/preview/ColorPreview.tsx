@@ -1,8 +1,8 @@
-import { ColorConfig } from '../../../app-data/index';
-import { assertUnreachable } from '../../utils/assert';
+import type { ColorConfig } from '../../../app-data/index.js';
+import { assertUnreachable } from '../../utils/assert.js';
 
-import FixedColorPreview from './FixedColorPreview';
-import FixedGradientPreview from './FixedGradientPreview';
+import FixedColorPreview from './FixedColorPreview.js';
+import FixedGradientPreview from './FixedGradientPreview.js';
 
 export interface ColorPreviewProps {
   color: ColorConfig;

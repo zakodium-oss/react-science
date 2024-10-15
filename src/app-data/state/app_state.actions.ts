@@ -1,10 +1,10 @@
-import { AppState } from './appState';
+import { type AppState } from './app_state.js';
 import {
-  MeasurementKind,
-  MeasurementKindAndId,
-  Measurements,
-} from './data/index';
-import { MeasurementAppView, Plot2DZoom } from './view/index';
+  type MeasurementKind,
+  type MeasurementKindAndId,
+  type Measurements,
+} from './data/index.js';
+import type { MeasurementAppView, Plot2DZoom } from './view/index.js';
 
 type ActionType<Action, Payload = void> = Payload extends void
   ? { type: Action }

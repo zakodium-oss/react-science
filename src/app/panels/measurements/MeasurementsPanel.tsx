@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { PanelProps, Tab, Tabs } from '@blueprintjs/core';
+import { type PanelProps, Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import { useMemo } from 'react';
 
 import {
   kindLabels,
-  MeasurementKind,
+  type MeasurementKind,
   measurementKinds,
   useAppDispatch,
   useAppState,
-} from '../../../app-data';
+} from '../../../app-data/index.js';
 
-import { MeasurementPanelProvider, MeasurementsTable } from '.';
+import { MeasurementPanelProvider, MeasurementsTable } from './index.js';
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 export function MeasurementsPanel({ openPanel }: PanelProps<object>) {

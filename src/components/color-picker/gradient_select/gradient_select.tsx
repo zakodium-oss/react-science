@@ -1,30 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { Button, MenuItem } from '@blueprintjs/core';
-import { ItemRenderer, Select } from '@blueprintjs/select';
+import { type ItemRenderer, Select } from '@blueprintjs/select';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import * as scaleChromatic from 'd3-scale-chromatic';
 import { FaChevronDown } from 'react-icons/fa';
 
-import FixedGradientPreview from '../preview/FixedGradientPreview';
+import FixedGradientPreview from '../preview/FixedGradientPreview.js';
 
-export type GradientScaleName =
-  | 'turbo'
-  | 'viridis'
-  | 'inferno'
-  | 'magma'
-  | 'plasma';
-
-export const fixedGradientScales: Record<
-  GradientScaleName,
-  (t: number) => string
-> = {
-  turbo: scaleChromatic.interpolateTurbo,
-  viridis: scaleChromatic.interpolateViridis,
-  inferno: scaleChromatic.interpolateInferno,
-  magma: scaleChromatic.interpolateMagma,
-  plasma: scaleChromatic.interpolatePlasma,
-};
+import {
+  fixedGradientScales,
+  type GradientScaleName,
+} from './gradient_select.utils.js';
 
 const scaleOptions = Object.keys(fixedGradientScales) as GradientScaleName[];
 
@@ -54,6 +40,7 @@ export interface GradientSelectProps {
   value: GradientScaleName;
   onChange: (value: GradientScaleName) => void;
 }
+
 const renderItem: ItemRenderer<GradientScaleName> = (
   option,
   { handleClick, handleFocus, modifiers },
@@ -81,6 +68,7 @@ const renderItem: ItemRenderer<GradientScaleName> = (
     />
   );
 };
+
 export function GradientSelect(props: GradientSelectProps) {
   const { value, onChange } = props;
   return (

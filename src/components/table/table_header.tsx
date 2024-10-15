@@ -1,7 +1,7 @@
 import type { Header, RowData } from '@tanstack/react-table';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
-import { TableHeaderCell } from './table_header_cell';
+import { TableHeaderCell } from './table_header_cell.js';
 
 const headerStyle: CSSProperties = {
   position: 'sticky',

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import { createLogEntry } from '../parserLog';
+import { createLogEntry } from '../parserLog.js';
 
 test('create a parser log object', () => {
   expect(

@@ -1,7 +1,7 @@
 import type { FifoLogger } from 'fifo-logger';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { fifoLoggerContext } from './loggerContext';
+import { fifoLoggerContext } from './loggerContext.js';
 
 export function FifoLoggerProvider(props: {
   logger: FifoLogger;

@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import {
   ColorPicker,
-  GradientScaleName,
+  type GradientScaleName,
   GradientSelect,
-} from '../../src/components/index';
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / Color Pickers',

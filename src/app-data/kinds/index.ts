@@ -1,2 +1,2 @@
-export * from './ir/index';
-export * from './iv/index';
+export * from './ir/index.js';
+export * from './iv/index.js';

@@ -103,7 +103,6 @@ typings/
 .tern-port
 
 # Build output
-lib-esm
 lib
 
 build

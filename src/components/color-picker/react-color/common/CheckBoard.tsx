@@ -1,6 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { cloneElement, isValidElement } from 'react';
 
-import * as checkBoard from '../helpers/checkBoard';
+import * as checkBoard from '../helpers/checkBoard.js';
 
 const styles = {
   grid: (props) => {
