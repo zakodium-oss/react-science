@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.0.0](https://github.com/zakodium-oss/react-science/compare/v7.0.0...v8.0.0) (2024-10-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* the module is now ESM-only
+
+### Features
+
+* make module native ESM ([#769](https://github.com/zakodium-oss/react-science/issues/769)) ([b2aab07](https://github.com/zakodium-oss/react-science/commit/b2aab07fe52f3e74e07dc5f324c763a7cf7185bd))
+
 ## [7.0.0](https://github.com/zakodium-oss/react-science/compare/v6.0.2...v7.0.0) (2024-10-09)
 
 
