@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.0.1](https://github.com/zakodium-oss/react-science/compare/v8.0.0...v8.0.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* ensure unique keys by using index in shortcut list ([bc12268](https://github.com/zakodium-oss/react-science/commit/bc1226867f47d56e1494ba0691ebc53172f48159))
+* use relative position on toolbar popover items ([#774](https://github.com/zakodium-oss/react-science/issues/774)) ([761eb4b](https://github.com/zakodium-oss/react-science/commit/761eb4bdc1b74b52aa37e5cab70bb6303e9193ef))
+
 ## [8.0.0](https://github.com/zakodium-oss/react-science/compare/v7.0.0...v8.0.0) (2024-10-15)
 
 
