@@ -111,6 +111,7 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
+        ref={ref}
         // Reset because of layout effect above
         // TODO: remove once the workaround is no longer needed
         key={String(vertical)}
