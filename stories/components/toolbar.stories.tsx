@@ -21,9 +21,6 @@ export default {
     vertical: false,
     intent: 'none',
     disabled: false,
-    minimal: true,
-    large: false,
-    fill: false,
   },
   argTypes: {
     onClick: { action: 'handle' },
@@ -560,28 +557,3 @@ export function TooltipHelpContentStory({ intent }: ToolbarProps) {
 }
 
 TooltipHelpContentStory.storyName = 'TooltipHelpContent';
-
-export function PanelToolbar() {
-  const [selected, setSelected] = useState<string>();
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100%',
-      }}
-    >
-      <Toolbar vertical large fill>
-        {itemsBlueprintIcons.map((item) => (
-          <Toolbar.Item
-            key={item.id}
-            id={item.id}
-            icon={item.icon}
-            active={selected === item.id}
-            onClick={() => setSelected(item.id)}
-          />
-        ))}
-      </Toolbar>
-      <div>{selected ?? 'Select an item in the toolbar'}</div>
-    </div>
-  );
-}
