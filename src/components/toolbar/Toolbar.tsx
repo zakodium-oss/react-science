@@ -40,10 +40,7 @@ interface ToolbarBaseProps {
 }
 export interface ToolbarProps
   extends ToolbarBaseProps,
-    Pick<
-      ButtonGroupProps,
-      'children' | 'minimal' | 'large' | 'vertical' | 'fill'
-    > {
+    Pick<ButtonGroupProps, 'children' | 'vertical'> {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
@@ -67,26 +64,17 @@ export interface ToolbarPopoverItemProps extends PopoverProps {
 const border = '1px solid rgb(247, 247, 247)';
 
 export function Toolbar(props: ToolbarProps) {
-  const {
-    children,
-    disabled,
-    intent,
-    large,
-    vertical,
-    popoverInteractionKind,
-    minimal,
-    fill,
-  } = props;
+  const { children, disabled, intent, vertical, popoverInteractionKind } =
+    props;
 
   const contextValue = useMemo(
     () => ({
       intent,
-      large,
       vertical,
       disabled,
       popoverInteractionKind,
     }),
-    [intent, large, vertical, disabled, popoverInteractionKind],
+    [intent, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
 
@@ -123,13 +111,11 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
-        fill={fill}
         // Reset because of layout effect above
         // TODO: remove once the workaround is no longer needed
         key={String(vertical)}
         vertical={vertical}
-        large={large}
-        minimal={minimal}
+        minimal
         style={{
           flexWrap: 'wrap',
           borderRight: vertical ? border : undefined,
