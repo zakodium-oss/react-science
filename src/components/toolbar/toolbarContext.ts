@@ -5,7 +5,6 @@ import type { PopoverInteractionType } from './Toolbar.js';
 
 export interface ToolbarContext {
   intent?: Intent;
-  large?: boolean;
   vertical?: boolean;
   disabled?: boolean;
   popoverInteractionKind?: PopoverInteractionType;
