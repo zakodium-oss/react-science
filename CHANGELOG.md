@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/zakodium-oss/react-science/compare/v9.0.0...v9.0.1) (2024-10-18)
+
+
+### Bug Fixes
+
+* ensure popover toolbar item does not grow ([9d8a0b4](https://github.com/zakodium-oss/react-science/commit/9d8a0b459c813295af29cf90200e35540b495840))
+
 ## [9.0.0](https://github.com/zakodium-oss/react-science/compare/v8.0.1...v9.0.0) (2024-10-18)
 
 
