@@ -1,5 +1,23 @@
 # Changelog
 
+## [9.0.0](https://github.com/zakodium-oss/react-science/compare/v8.0.1...v9.0.0) (2024-10-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `fill`, `large` and `minimal` props have been removed from the Toolbar component
+
+### Features
+
+* add ActivityBar component ([a51279a](https://github.com/zakodium-oss/react-science/commit/a51279abde657877bf199f8c0b56e0fc8a4a2506))
+* remove fill, large and minimal props from Toolbar component ([40069b1](https://github.com/zakodium-oss/react-science/commit/40069b1c1a9ec924b96809dd2649ef5c047cc2a1))
+
+
+### Bug Fixes
+
+* correct regression to incorrect layout in Toolbar component ([9eb75ae](https://github.com/zakodium-oss/react-science/commit/9eb75ae416d5ca3b9883464a7009b7a2bb0af142))
+* Toolbar should have a backdrop only with "click" as the interaction kind ([19d5350](https://github.com/zakodium-oss/react-science/commit/19d53503010b72a4996762cb4ee473a411148291))
+
 ## [8.0.1](https://github.com/zakodium-oss/react-science/compare/v8.0.0...v8.0.1) (2024-10-16)
 
 
