@@ -214,6 +214,8 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
   return (
     <div
       style={{
+        display: 'flex',
+        flexDirection: props.vertical ? 'row' : 'column',
         border: '1px solid #f7f7f7',
         width: '100%',
         height: 800,
