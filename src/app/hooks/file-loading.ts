@@ -1,10 +1,10 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { FifoLogger } from 'fifo-logger';
 import { FileCollection, fileCollectionFromWebSource } from 'filelist-utils';
 import { useCallback } from 'react';
 
-import { AppDispatch, useAppDispatch } from '../../app-data';
-import { useFifoLogger, useHashSearchParams } from '../../components';
+import { type AppDispatch, useAppDispatch } from '../../app-data/index.js';
+import { useFifoLogger, useHashSearchParams } from '../../components/index.js';
 
 type LoadFn = (
   files: File[] | FileCollection,

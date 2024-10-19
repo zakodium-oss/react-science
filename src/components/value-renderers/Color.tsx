@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import type { ValueRenderersProps } from '.';
+import type { ValueRenderersProps } from './index.js';
 
 interface ColorProps extends ValueRenderersProps {
   value?: string;

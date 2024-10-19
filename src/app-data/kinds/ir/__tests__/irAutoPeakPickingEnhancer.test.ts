@@ -1,10 +1,10 @@
 import { produce } from 'immer';
 import { expect, test } from 'vitest';
 
-import { irAutoPeakPickingEnhancer } from '../irAutoPeakPickingEnhancer';
-import { irMeasurementEnhancer } from '../irMeasurementEnhancer';
+import { irAutoPeakPickingEnhancer } from '../irAutoPeakPickingEnhancer.js';
+import { irMeasurementEnhancer } from '../irMeasurementEnhancer.js';
 
-import { getIrMeasurement } from './getIrMeasurement';
+import { getIrMeasurement } from './getIrMeasurement.js';
 
 test('irAutoPeakPickingEnhancer', async () => {
   const measurement = await getIrMeasurement();

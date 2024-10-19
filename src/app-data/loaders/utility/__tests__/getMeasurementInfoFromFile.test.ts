@@ -1,8 +1,8 @@
 import type { FileCollectionItem } from 'filelist-utils';
 import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../../../test-utils';
-import { getMeasurementInfoFromFile } from '../getMeasurementInfoFromFile';
+import { getTestFileCollection } from '../../../../test-utils.js';
+import { getMeasurementInfoFromFile } from '../getMeasurementInfoFromFile.js';
 
 test('getMeasurementInfoFromFile', async () => {
   const { files } = await getTestFileCollection('jdx');

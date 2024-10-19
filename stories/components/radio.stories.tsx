@@ -1,11 +1,15 @@
 import {
   RadioGroup as BlueprintjsRadioGroup,
-  RadioGroupProps as BlueprintjsRadioGroupProps,
+  type RadioGroupProps as BlueprintjsRadioGroupProps,
 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { RadioGroup, RadioOption, RadioGroupProps } from '../../src/components';
+import {
+  RadioGroup,
+  type RadioGroupProps,
+  type RadioOption,
+} from '../../src/components/index.js';
 
 export default {
   title: 'Forms / Radio',

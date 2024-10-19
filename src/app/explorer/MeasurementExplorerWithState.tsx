@@ -1,6 +1,9 @@
-import { getCurrentMeasurementData, useAppState } from '../../app-data/index';
+import {
+  getCurrentMeasurementData,
+  useAppState,
+} from '../../app-data/index.js';
 
-import { MeasurementExplorer } from './MeasurementExplorer';
+import { MeasurementExplorer } from './MeasurementExplorer.js';
 
 export default function MeasurementExplorerWithState() {
   const appState = useAppState();

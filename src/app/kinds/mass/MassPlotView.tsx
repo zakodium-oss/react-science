@@ -1,9 +1,9 @@
 import {
   getCurrentMeasurementData,
   useAppState,
-} from '../../../app-data/index';
+} from '../../../app-data/index.js';
 
-import { MeasurementMassPlot } from './MeasurementMassPlot';
+import { MeasurementMassPlot } from './MeasurementMassPlot.js';
 
 export function MassPlotView() {
   const appState = useAppState();

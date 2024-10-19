@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
   Annotations,
@@ -10,11 +10,11 @@ import {
   usePlotEvents,
 } from 'react-plot';
 
-import { useAppDispatch, useAppState } from '../../../../app-data/index';
-import { assert } from '../../../../components/index';
-import { splitEntries } from '../../../helpers/index';
+import { useAppDispatch, useAppState } from '../../../../app-data/index.js';
+import { assert } from '../../../../components/index.js';
+import { splitEntries } from '../../../helpers/index.js';
 
-import IvSeries from './IvSeries';
+import IvSeries from './IvSeries.js';
 
 export default function IvMeasurementsPlot() {
   const appState = useAppState();

@@ -1,25 +1,25 @@
-import { Draft } from 'immer';
+import { type Draft } from 'immer';
 
-import { AppState } from '../appState';
-import { AppStateAction } from '../appStateActions';
+import { type AppStateAction } from '../app_state.actions.js';
+import { type AppState } from '../app_state.js';
 
-import { addMeasurements } from './measurements/addMeasurements';
+import { addMeasurements } from './measurements/addMeasurements.js';
 import {
   changeMeasurementDisplay,
   changeMeasurementsDisplay,
+  removeSelectedMeasurements,
   selectMeasurement,
   selectMeasurementKind,
-  setSelectedMeasurementVisibility,
-  setMeasurementVisibility,
   selectOrUnselectAllMeasurements,
-  removeSelectedMeasurements,
-} from './measurements/measurements';
+  setMeasurementVisibility,
+  setSelectedMeasurementVisibility,
+} from './measurements/measurements.js';
 import {
   ivPlotSelectVariable,
   plotZoom,
   plotZoomOut,
-} from './plot-view/plot-view';
-import { ActionType, AppStateProducer } from './types';
+} from './plot-view/plot-view.js';
+import type { ActionType, AppStateProducer } from './types.js';
 
 export const loadFullState: AppStateProducer<'LOAD_FULL_STATE'> = (
   draft,

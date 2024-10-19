@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../test-utils';
-import { loadMeasurements, biologicLoader } from '../index';
+import { getTestFileCollection } from '../../test-utils.js';
+import { biologicLoader, loadMeasurements } from '../index.js';
 
 test('getIVMeasurement', async () => {
   const result = await getIVMeasurement();

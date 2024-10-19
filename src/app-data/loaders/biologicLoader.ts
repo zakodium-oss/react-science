@@ -3,9 +3,9 @@ import type { MeasurementVariable } from 'cheminfo-types';
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 
-import type { MeasurementBase, Measurements } from '../index';
+import type { MeasurementBase, Measurements } from '../index.js';
 
-import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile';
+import { getMeasurementInfoFromFile } from './utility/getMeasurementInfoFromFile.js';
 
 /* the MeasurementBase has got a data key,
  and inside a variable key, compatible with this type */

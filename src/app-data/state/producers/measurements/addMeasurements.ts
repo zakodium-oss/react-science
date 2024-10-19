@@ -1,13 +1,13 @@
-import { assert, defaultColorPalette } from '../../../../components/index';
-import { getPreferredVariable, mergeMeasurements } from '../../../index';
+import { assert, defaultColorPalette } from '../../../../components/index.js';
+import { getPreferredVariable, mergeMeasurements } from '../../../index.js';
 import {
   getFirstMeasurementOrFail,
   iterateMeasurementEntries,
   kindLabels,
-  MeasurementKind,
-} from '../../index';
-import { resetZoom, updateZoom } from '../plot-view/helpers/zoom';
-import { AppStateProducer } from '../types';
+  type MeasurementKind,
+} from '../../index.js';
+import { resetZoom, updateZoom } from '../plot-view/helpers/zoom.js';
+import type { AppStateProducer } from '../types.js';
 
 export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   draft,

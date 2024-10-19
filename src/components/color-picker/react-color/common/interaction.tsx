@@ -1,6 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { Component } from 'react';
 
-export const handleFocus = (WrappedComponent, Span = 'span') =>
+export const handleFocus = (WrappedComponent: any, Span = 'span'): any =>
   class Focus extends Component {
     state = { focus: false };
     handleFocus = () => this.setState({ focus: true });

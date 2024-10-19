@@ -1,32 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import {
   ButtonGroup,
-  ButtonGroupProps,
+  type ButtonGroupProps,
   Classes,
   Colors,
   Icon,
   Intent,
   Popover,
-  PopoverProps,
-  TooltipProps,
+  type PopoverProps,
+  type TooltipProps,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   cloneElement,
-  MouseEvent,
-  ReactNode,
+  type MouseEvent,
+  type ReactNode,
   useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 
-import { Button, ButtonProps } from '../button';
+import { Button, type ButtonProps } from '../button/index.js';
 
 import {
-  ToolbarContext,
+  type ToolbarContext,
   toolbarContext,
   useToolbarContext,
-} from './toolbarContext';
+} from './toolbarContext.js';
 
 export type PopoverInteractionType =
   | 'click'
@@ -40,10 +40,7 @@ interface ToolbarBaseProps {
 }
 export interface ToolbarProps
   extends ToolbarBaseProps,
-    Pick<
-      ButtonGroupProps,
-      'children' | 'minimal' | 'large' | 'vertical' | 'fill'
-    > {
+    Pick<ButtonGroupProps, 'children' | 'vertical'> {
   popoverInteractionKind?: PopoverInteractionType;
 }
 
@@ -67,26 +64,17 @@ export interface ToolbarPopoverItemProps extends PopoverProps {
 const border = '1px solid rgb(247, 247, 247)';
 
 export function Toolbar(props: ToolbarProps) {
-  const {
-    children,
-    disabled,
-    intent,
-    large,
-    vertical,
-    popoverInteractionKind,
-    minimal,
-    fill,
-  } = props;
+  const { children, disabled, intent, vertical, popoverInteractionKind } =
+    props;
 
   const contextValue = useMemo(
     () => ({
       intent,
-      large,
       vertical,
       disabled,
       popoverInteractionKind,
     }),
-    [intent, large, vertical, disabled, popoverInteractionKind],
+    [intent, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
 
@@ -123,13 +111,12 @@ export function Toolbar(props: ToolbarProps) {
   return (
     <ToolbarProvider value={contextValue}>
       <ButtonGroup
-        fill={fill}
+        ref={ref}
         // Reset because of layout effect above
         // TODO: remove once the workaround is no longer needed
         key={String(vertical)}
         vertical={vertical}
-        large={large}
-        minimal={minimal}
+        minimal
         style={{
           flexWrap: 'wrap',
           borderRight: vertical ? border : undefined,
@@ -157,7 +144,6 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
   const {
     intent: toolbarIntent,
     disabled: toolbarDisabled,
-    large,
     vertical,
   } = useToolbarContext();
   const intent = itemIntent ?? toolbarIntent;
@@ -180,15 +166,15 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
           color: ${Colors.DARK_GRAY3};
         }
         .bp5-icon {
-          width: ${large ? '20px' : '16px'};
-          height: ${large ? '20px' : '16px'};
-          font-size: ${large ? '14px' : '12px'};
+          width: 16px;
+          height: 16px;
+          font-size: 12px;
         }
         .bp5-tag {
-          font-size: ${large ? '12px' : '10px'};
-          line-height: ${large ? '14px' : '12px'};
-          min-width: ${large ? '18px' : '15px'};
-          min-height: ${large ? '18px' : '15px'};
+          font-size: 10px;
+          line-height: 12px;
+          min-width: 12px;
+          min-height: 12px;
         }
       `}
       intent={intent}
@@ -210,18 +196,18 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
             marginRight: 0,
           }}
         >
-          <Icon icon={resizedIcon} size={large ? 20 : 16} />
+          <Icon icon={resizedIcon} size={16} />
           {isPopover && (
             <Icon
               icon="caret-right"
-              size={large ? 14 : 9}
+              size={9}
               style={{
                 transform: 'rotate(45deg)',
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
-                width: large ? 14 : 9,
-                height: large ? 14 : 9,
+                width: 9,
+                height: 9,
               }}
             />
           )}
@@ -237,7 +223,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
               content: tooltip,
               placement: vertical ? 'right' : 'bottom',
               intent,
-              compact: !large,
+              compact: true,
               interactionKind: 'hover',
               ...tooltipProps,
             }
@@ -259,7 +245,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
       interactionKind={popoverInteractionKind}
-      hasBackdrop
+      hasBackdrop={popoverInteractionKind === 'click'}
       hoverCloseDelay={0}
       css={css`
         .${Classes.ICON} {
@@ -268,13 +254,16 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       `}
       targetProps={{
         style: {
-          position: 'relative',
           fontSize: '1.125em',
           width: 'fit-content',
           height: 'fit-content',
         },
       }}
-      renderTarget={() => <Toolbar.Item isPopover {...itemProps} />}
+      renderTarget={({ isOpen, className, ...targetProps }) => (
+        <span {...targetProps} style={{ flex: '0 0 auto' }}>
+          <Toolbar.Item isPopover {...itemProps} />
+        </span>
+      )}
       {...other}
     />
   );

@@ -1,2 +1,2 @@
-export * from './table_root';
-export * from './table_utils';
+export * from './table_root.js';
+export * from './table_utils.js';

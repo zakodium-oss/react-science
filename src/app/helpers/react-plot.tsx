@@ -2,18 +2,18 @@ import styled from '@emotion/styled';
 import { type ReactNode, useMemo } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
-  useRectangularZoom,
-  useAxisZoom,
-  useAxisWheelZoom,
-  useCrossHair,
-  usePan,
-  Plot,
-  Heading,
   Annotations,
   Axis,
+  Heading,
+  Plot,
+  useAxisWheelZoom,
+  useAxisZoom,
+  useCrossHair,
+  usePan,
+  useRectangularZoom,
 } from 'react-plot';
 
-import type { MeasurementPlotProps } from './MeasurementPlot';
+import type { MeasurementPlotProps } from './MeasurementPlot.js';
 
 interface BasicComponentProps extends MeasurementPlotProps {
   children: ReactNode[] | ReactNode;

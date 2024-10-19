@@ -1,6 +1,6 @@
-import { MeasurementVariable } from 'cheminfo-types';
+import type { MeasurementVariable } from 'cheminfo-types';
 
-import { MeasurementBase } from '../state/index';
+import type { MeasurementBase } from '../state/index.js';
 
 export function getAllVariableSymbols(measurement: MeasurementBase): string[] {
   return Object.values(measurement.data[0].variables).map((v) => v.label);

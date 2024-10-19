@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 
-import { getTestFileCollection } from '../../../../../test-utils';
-import { cary500Loader } from '../cary500Loader';
+import { getTestFileCollection } from '../../../../../test-utils.js';
+import { cary500Loader } from '../cary500Loader.js';
 
 test('cary500Loader', async () => {
   const fileCollection = await getTestFileCollection('cary500');

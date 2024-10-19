@@ -5,17 +5,17 @@ import {
   MenuDivider,
   MenuItem,
 } from '@blueprintjs/core';
-import { ItemListRenderer, Select } from '@blueprintjs/select';
+import { type ItemListRenderer, Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import {
-  CSSProperties,
-  Dispatch,
+  type CSSProperties,
+  type Dispatch,
   Fragment,
-  SetStateAction,
+  type SetStateAction,
   useState,
 } from 'react';
 
-import { Button, useOnOff, useSelect } from '../../src/components';
+import { Button, useOnOff, useSelect } from '../../src/components/index.js';
 
 export default {
   title: 'Forms / Select',

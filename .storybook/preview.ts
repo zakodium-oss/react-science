@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react';
-import { RootLayoutDecorator } from '../stories/utils';
+import { RootLayoutDecorator } from '../stories/utils.js';
 
 import '../styles/storybook-globals.css';
 import '../styles/preflight.css';

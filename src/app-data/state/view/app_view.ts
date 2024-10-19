@@ -1,5 +1,5 @@
-import { GradientScaleName } from '../../../components/index';
-import type { MeasurementKind } from '../index';
+import { type GradientScaleName } from '../../../components/index.js';
+import type { MeasurementKind } from '../index.js';
 
 export interface AppView {
   selectedKind?: MeasurementKind;

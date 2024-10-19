@@ -1,6 +1,6 @@
 import { Menu, MenuDivider, MenuItem, Popover } from '@blueprintjs/core';
 
-import { Button } from '../../src/components/index';
+import { Button } from '../../src/components/index.js';
 
 export default {
   title: 'Components / DropdownMenu',

@@ -1,6 +1,6 @@
 import type { Instrument, MeasurementVariable } from 'cheminfo-types';
 
-import type { IrMeasurement, IvMeasurement } from '../../index';
+import type { IrMeasurement, IvMeasurement } from '../../index.js';
 
 export interface AppData {
   measurements: Measurements;

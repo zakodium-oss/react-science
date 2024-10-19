@@ -1,3 +1,3 @@
-export * from './ir/index';
-export * from './iv/index';
-export * from './mass/index';
+export * from './ir/index.js';
+export * from './iv/index.js';
+export * from './mass/index.js';

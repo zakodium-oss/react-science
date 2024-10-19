@@ -1,4 +1,4 @@
-import type { MeasurementKind } from './AppData';
+import type { MeasurementKind } from './AppData.js';
 
 export const kindLabels: Record<MeasurementKind, string> = {
   ir: 'IR',

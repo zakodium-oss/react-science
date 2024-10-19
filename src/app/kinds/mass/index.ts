@@ -1,2 +1,2 @@
-export * from './MassPlotView';
-export * from './MeasurementMassPlot';
+export * from './MassPlotView.js';
+export * from './MeasurementMassPlot.js';

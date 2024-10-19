@@ -1,1 +1,1 @@
-export * from './AboutDialogToolbarButton';
+export * from './AboutDialogToolbarButton.js';

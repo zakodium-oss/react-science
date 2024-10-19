@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 const shortcutBoxSize = 1.5;
 
@@ -137,10 +137,11 @@ function ShortCuts({ shortcuts }: { shortcuts: string[] }) {
         textWrap: 'nowrap',
       }}
     >
-      {shortcuts.map((key) => {
+      {shortcuts.map((shortcut, index) => {
         return (
-          <ShortcutItem key={key}>
-            <span>{key}</span>
+          // eslint-disable-next-line react/no-array-index-key
+          <ShortcutItem key={`${index}`}>
+            <span>{shortcut}</span>
           </ShortcutItem>
         );
       })}

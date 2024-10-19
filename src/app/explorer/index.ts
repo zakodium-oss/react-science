@@ -1,2 +1,2 @@
-export * from './ExplorerPlotView';
-export * from './MeasurementExplorer';
+export * from './ExplorerPlotView.js';
+export * from './MeasurementExplorer.js';

@@ -2,7 +2,6 @@
 /build
 /coverage
 /dist
-/lib-esm
 /lib
 /node_modules
 /playwright/.cache

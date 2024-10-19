@@ -1,5 +1,5 @@
-import { AboutDialogToolbarButton } from '../../src/app';
-import { Toolbar } from '../../src/components';
+import { AboutDialogToolbarButton } from '../../src/app/index.js';
+import { Toolbar } from '../../src/components/index.js';
 
 export default {
   title: 'Components / AboutDialogToolbarButton',

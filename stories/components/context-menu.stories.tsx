@@ -2,13 +2,13 @@
 import { ContextMenu, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 import {
   createTableColumnHelper,
   Table,
   ValueRenderers,
-} from '../../src/components/index';
+} from '../../src/components/index.js';
 import data from '../data/table.json';
 
 export default {

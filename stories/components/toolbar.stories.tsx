@@ -1,5 +1,5 @@
 import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
-import { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { type ReactElement, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
 import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
@@ -7,14 +7,14 @@ import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import {
   Accordion,
-  PopoverInteractionType,
   SplitPane,
   Toolbar,
-  ToolbarItemProps,
-  ToolbarProps,
   TooltipHelpContent,
-  TooltipItem,
-} from '../../src/components';
+  type PopoverInteractionType,
+  type ToolbarItemProps,
+  type ToolbarProps,
+  type TooltipItem,
+} from '../../src/components/index.js';
 
 export default {
   title: 'Components / Toolbar',
@@ -23,9 +23,6 @@ export default {
     vertical: false,
     intent: 'none',
     disabled: false,
-    minimal: true,
-    large: false,
-    fill: false,
   },
   argTypes: {
     onClick: { action: 'handle' },
@@ -219,6 +216,8 @@ export function Control(props: ToolbarProps & { onClick: () => void }) {
   return (
     <div
       style={{
+        display: 'flex',
+        flexDirection: props.vertical ? 'row' : 'column',
         border: '1px solid #f7f7f7',
         width: '100%',
         height: 800,

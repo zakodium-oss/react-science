@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import type {
+  MouseEvent as ReactMouseEvent,
   ReactElement,
   ReactNode,
-  MouseEvent as ReactMouseEvent,
 } from 'react';
 import { useCallback } from 'react';
 
-import { useAccordionContext } from './AccordionContext';
+import { useAccordionContext } from './accordion_context.js';
 
 export interface AccordionProps {
   children?:

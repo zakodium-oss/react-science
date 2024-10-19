@@ -1,2 +1,2 @@
-export * from './MeasurementConfigPanelAccordion';
-export * from './MeasurementConfigPanel';
+export * from './MeasurementConfigPanelAccordion.js';
+export * from './MeasurementConfigPanel.js';

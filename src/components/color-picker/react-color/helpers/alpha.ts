@@ -1,4 +1,13 @@
-export function calculateChange(e, direction, hsl, container) {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
+export function calculateChange(
+  e,
+  hsl,
+  direction,
+  initialA,
+  container: Element,
+) {
   const containerWidth = container.clientWidth;
   const containerHeight = container.clientHeight;
   const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX;
@@ -8,43 +17,41 @@ export function calculateChange(e, direction, hsl, container) {
   const top = y - (container.getBoundingClientRect().top + window.pageYOffset);
 
   if (direction === 'vertical') {
-    let h;
+    let a;
     if (top < 0) {
-      h = 359;
+      a = 0;
     } else if (top > containerHeight) {
-      h = 0;
+      a = 1;
     } else {
-      const percent = -((top * 100) / containerHeight) + 100;
-      h = (360 * percent) / 100;
+      a = Math.round((top * 100) / containerHeight) / 100;
     }
 
-    if (hsl.h !== h) {
+    if (hsl.a !== a) {
       return {
-        h,
+        h: hsl.h,
         s: hsl.s,
         l: hsl.l,
-        a: hsl.a,
-        source: 'hsl',
+        a,
+        source: 'rgb',
       };
     }
   } else {
-    let h;
+    let a;
     if (left < 0) {
-      h = 0;
+      a = 0;
     } else if (left > containerWidth) {
-      h = 359;
+      a = 1;
     } else {
-      const percent = (left * 100) / containerWidth;
-      h = (360 * percent) / 100;
+      a = Math.round((left * 100) / containerWidth) / 100;
     }
 
-    if (hsl.h !== h) {
+    if (initialA !== a) {
       return {
-        h,
+        h: hsl.h,
         s: hsl.s,
         l: hsl.l,
-        a: hsl.a,
-        source: 'hsl',
+        a,
+        source: 'rgb',
       };
     }
   }

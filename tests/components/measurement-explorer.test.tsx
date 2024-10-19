@@ -1,26 +1,9 @@
-import { test, expect } from '@playwright/experimental-ct-react';
+import { expect, test } from '@playwright/experimental-ct-react';
 
-import { MeasurementExplorer } from '../../src/app/index';
-import type { IrMeasurement, MeasurementAppView } from '../../src/app-data';
-import measurement from '../../stories/data/irMeasurement.json';
-
-const irMeasurement = measurement as IrMeasurement;
-
-const measurementDisplay: MeasurementAppView = {
-  color: {
-    kind: 'fixed',
-    color: 'red',
-  },
-  visible: true,
-};
+import { IrMeasurementExplorer } from './measurement-explorer.components.js';
 
 test('initial variables', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementExplorer
-      measurement={irMeasurement}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementExplorer />);
   const dataIndex = component.locator('select >> nth=0');
   const xVariableName = component.locator('select >> nth=1');
   const yVariableName = component.locator('select >> nth=2');
@@ -31,12 +14,7 @@ test('initial variables', async ({ mount }) => {
 });
 
 test('select variables', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementExplorer
-      measurement={irMeasurement}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementExplorer />);
   const dataIndex = component.locator('select >> nth=0');
   const xVariableName = component.locator('select >> nth=1');
   const yVariableName = component.locator('select >> nth=2');
@@ -60,12 +38,7 @@ test('select variables', async ({ mount }) => {
 });
 
 test('reverse btn', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementExplorer
-      measurement={irMeasurement}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementExplorer />);
 
   const reverseBtn = component.locator('_react=FaExchangeAlt');
   const xVariableName = component.locator('select >> nth=1');
@@ -90,12 +63,7 @@ test('reverse btn', async ({ mount }) => {
   ).toBeVisible();
 });
 test('flip btn', async ({ mount }) => {
-  const component = await mount(
-    <MeasurementExplorer
-      measurement={irMeasurement}
-      measurementDisplay={measurementDisplay}
-    />,
-  );
+  const component = await mount(<IrMeasurementExplorer />);
 
   const flipBtn = component.locator('_react=FaArrowsAltH');
   const noFlippedPlot = component.locator(

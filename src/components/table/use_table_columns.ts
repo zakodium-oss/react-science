@@ -1,8 +1,8 @@
 import type { ColumnDef, RowData } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import { defaultTableCell } from './default_table_cell';
-import type { TableColumnDef } from './table_utils';
+import { defaultTableCell } from './default_table_cell.js';
+import type { TableColumnDef } from './table_utils.js';
 
 export function useTableColumns<TData extends RowData>(
   columnDefs: Array<TableColumnDef<TData>>,
