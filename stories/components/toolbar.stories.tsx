@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
+import { Menu, MenuItem, Tooltip, Card } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react';
 import { type ReactElement, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -6,7 +6,9 @@ import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import {
-  Accordion,
+  ActivityBar,
+  ActivityBarItem,
+  Button,
   SplitPane,
   Toolbar,
   TooltipHelpContent,
@@ -562,31 +564,6 @@ export function TooltipHelpContentStory({ intent }: ToolbarProps) {
 
 TooltipHelpContentStory.storyName = 'TooltipHelpContent';
 
-export function PanelToolbar() {
-  const [selected, setSelected] = useState<string>();
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100%',
-      }}
-    >
-      <Toolbar vertical large fill>
-        {itemsBlueprintIcons.map((item) => (
-          <Toolbar.Item
-            key={item.id}
-            id={item.id}
-            icon={item.icon}
-            active={selected === item.id}
-            onClick={() => setSelected(item.id)}
-          />
-        ))}
-      </Toolbar>
-      <div>{selected ?? 'Select an item in the toolbar'}</div>
-    </div>
-  );
-}
-
 const PlaceHolder = () => (
   <div
     style={{
@@ -616,22 +593,57 @@ export function ActivityToolbar() {
       }}
     >
       {selected.length > 0 ? (
-        <SplitPane size="70%">
+        <SplitPane size="30%" controlledSide="end">
           <PlaceHolder />
 
-          <Accordion>
-            <>
-              {itemsBlueprintIcons.map(
-                ({ id }) =>
-                  selected.includes(id) && (
-                    <Accordion.Item key={id} title={id}>
-                      This is the content of {id}
-                    </Accordion.Item>
-                  ),
-              )}
-              {}
-            </>
-          </Accordion>
+          <div
+            style={{
+              flexGrow: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '5px',
+            }}
+          >
+            {itemsBlueprintIcons
+              .filter(({ id }) => selected.includes(id))
+              .map(({ id }) => (
+                <Card
+                  key={id}
+                  style={{
+                    padding: '10px',
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                    borderRadius: 0,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      borderBottom: '1px solid #ddd',
+                      paddingBottom: '8px',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <h4>{id}</h4>
+                    <Button
+                      minimal
+                      icon="cross"
+                      onClick={() =>
+                        setSelected((prev) => prev.filter((i) => i !== id))
+                      }
+                    />
+                  </div>
+
+                  <div style={{ flexGrow: 1 }}>
+                    This is the content of <strong>{id}</strong>.
+                  </div>
+                </Card>
+              ))}
+          </div>
         </SplitPane>
       ) : (
         <PlaceHolder />
@@ -644,9 +656,9 @@ export function ActivityToolbar() {
           padding: 5,
         }}
       >
-        <Toolbar vertical large>
+        <ActivityBar>
           {itemsBlueprintIcons.map((item) => (
-            <Toolbar.Item
+            <ActivityBarItem
               key={item.id}
               id={item.id}
               icon={item.icon}
@@ -660,87 +672,7 @@ export function ActivityToolbar() {
               }}
             />
           ))}
-        </Toolbar>
-      </div>
-    </div>
-  );
-}
-
-const groupIcons: Array<
-  ToolbarItems[0] & {
-    panels: string[];
-  }
-> = [
-  {
-    id: 'g1',
-    icon: 'info-sign',
-    tooltip: 'Info',
-    panels: ['g11', 'g12'],
-  },
-  {
-    id: 'g2',
-    icon: 'edit',
-    tooltip: 'Edit',
-    panels: ['g21', 'g22'],
-  },
-  {
-    id: 'g3',
-    icon: 'trash',
-    tooltip: 'Delete',
-    panels: ['g31', 'g32', 'g33'],
-  },
-];
-
-export function GroupActivityToolbar() {
-  const [selected, setSelected] = useState<string>('g1');
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100%',
-      }}
-    >
-      {selected ? (
-        <SplitPane size="70%">
-          <PlaceHolder />
-
-          <Accordion>
-            <>
-              {groupIcons
-                .find((item) => item.id === selected)
-                ?.panels.map((id) => (
-                  <Accordion.Item key={id} title={id}>
-                    This is the content of {id}
-                  </Accordion.Item>
-                ))}
-            </>
-          </Accordion>
-        </SplitPane>
-      ) : (
-        <PlaceHolder />
-      )}
-      <div
-        style={{
-          height: '100%',
-          boxShadow:
-            'inset 0 0 0 1px rgba(17, 20, 24, 0.2), 0 1px 2px rgba(17, 20, 24, 0.1)',
-          padding: 5,
-        }}
-      >
-        <Toolbar vertical large>
-          {groupIcons.map((item) => (
-            <Toolbar.Item
-              key={item.id}
-              id={item.id}
-              icon={item.icon}
-              active={selected === item.id}
-              onClick={() => {
-                setSelected((prev) => (prev === item.id ? '' : item.id));
-              }}
-            />
-          ))}
-        </Toolbar>
+        </ActivityBar>
       </div>
     </div>
   );
