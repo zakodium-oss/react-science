@@ -1,13 +1,10 @@
-import {
-  RadioGroup as BlueprintjsRadioGroup,
-  type RadioGroupProps as BlueprintjsRadioGroupProps,
-} from '@blueprintjs/core';
+import { RadioGroup, type RadioGroupProps } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import {
-  RadioGroup,
-  type RadioGroupProps,
+  RadioButtonGroup,
+  type RadioButtonGroupProps,
   type RadioOption,
 } from '../../src/components/index.js';
 
@@ -29,15 +26,12 @@ const ExampleGroup = styled.div`
   gap: 20px;
 `;
 export function ControlBlueprint(
-  props: Omit<
-    BlueprintjsRadioGroupProps,
-    'onChange' | 'selectedValue' | 'children'
-  >,
+  props: Omit<RadioGroupProps, 'onChange' | 'selectedValue' | 'children'>,
 ) {
   const [option, setOption] = useState(options[2]);
   return (
     <ExampleGroup>
-      <BlueprintjsRadioGroup
+      <RadioGroup
         onChange={(event) => {
           const value = event.currentTarget.value;
           setOption(
@@ -56,13 +50,17 @@ ControlBlueprint.args = {
   disabled: false,
   inline: false,
 };
+
 export function ControlButton(
-  props: Omit<RadioGroupProps, 'options' | 'selected' | 'onSelect' | 'name'>,
+  props: Omit<
+    RadioButtonGroupProps,
+    'options' | 'selected' | 'onSelect' | 'name'
+  >,
 ) {
   const [option, setOption] = useState(options[2] as RadioOption);
   return (
     <ExampleGroup>
-      <RadioGroup
+      <RadioButtonGroup
         options={options}
         selected={option}
         onSelect={setOption}

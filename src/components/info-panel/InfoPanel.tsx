@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { Icon, InputGroup } from '@blueprintjs/core';
+import { Collapse, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import * as Collapsible from '@radix-ui/react-collapsible';
 import {
   type CSSProperties,
   memo,
@@ -10,6 +9,7 @@ import {
   useState,
 } from 'react';
 
+import { Button } from '../button/Button.js';
 import { SelectedTotal } from '../selected-total/index.js';
 import { createTableColumnHelper, Table } from '../table/index.js';
 import * as ValueRenderers from '../value-renderers/index.js';
@@ -30,24 +30,6 @@ interface InfoPanelProps {
 const style = {
   content: css({
     overflow: 'hidden',
-    "&[data-state='open']": {
-      animation: 'slideDown 300ms ease-out',
-    },
-    '&[data-state="closed"]': {
-      animation: 'slideUp 300ms ease-out',
-    },
-    '@keyframes slideDown': {
-      from: {
-        height: 0,
-      },
-      to: { height: 'var(--radix-collapsible-content-height)' },
-    },
-    '@keyframes slideUp': {
-      from: {
-        height: 'var(--radix-collapsible-content-height)',
-      },
-      to: { height: 0 },
-    },
   }),
   container: css({
     padding: '5px 0 0 0',
@@ -55,28 +37,27 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
   }),
-  chevron: css({
-    transition: 'all 0.3s ease-in-out',
-  }),
-  button: css({
-    zIndex: 10,
-    position: 'sticky',
-    height: 30,
-    top: 0,
-    "&[data-state='open'] > span": {
-      rotate: '90deg',
-    },
-    cursor: 'pointer',
-    borderBottom: '1px solid #f5f5f5',
-    backgroundColor: 'white',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '5px 2px',
-    width: '100%',
-    ':hover': {
-      backgroundColor: '#f5f5f5',
-    },
-  }),
+  button: (open: boolean) =>
+    css({
+      backgroundColor: 'white',
+      zIndex: 10,
+      position: 'sticky',
+      height: 30,
+      top: 0,
+      '& .bp5-icon': {
+        rotate: open ? '90deg' : '',
+        transition: 'all 0.3s ease-in-out',
+      },
+      cursor: 'pointer',
+      borderBottom: '1px solid #f5f5f5',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '5px 2px',
+      width: '100%',
+      ':hover': {
+        backgroundColor: '#f5f5f5',
+      },
+    }),
 };
 
 interface InfoPanelDatum {
@@ -210,6 +191,9 @@ interface InfoPanelContentProps {
 
 const InfoPanelContent = memo((props: InfoPanelContentProps) => {
   const { filteredData } = props;
+  const [isOpen, setIsOpen] = useState<string[]>(
+    filteredData.map(({ description }) => description),
+  );
   return (
     <div
       style={{
@@ -222,19 +206,25 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
       }}
     >
       {filteredData.map(({ description, data }) => {
+        const open = isOpen.includes(description);
         return (
-          <Collapsible.Root
-            key={description}
-            className="CollapsibleRoot"
-            defaultOpen
-          >
-            <Collapsible.Trigger asChild css={style.button}>
-              <div>
-                <Icon icon="chevron-right" css={style.chevron} />
-                {description}
-              </div>
-            </Collapsible.Trigger>
-            <Collapsible.Content css={style.content}>
+          <div key={description}>
+            <Button
+              minimal
+              css={style.button(open)}
+              onClick={() =>
+                setIsOpen((pred) =>
+                  open
+                    ? pred.filter((o) => o !== description)
+                    : [...pred, description],
+                )
+              }
+              alignText="left"
+              icon="chevron-right"
+            >
+              {description}
+            </Button>
+            <Collapse isOpen={open} css={style.content}>
               <Table
                 data={data}
                 columns={columns}
@@ -242,8 +232,8 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
                 tableProps={{ style: { width: '100%' } }}
                 compact
               />
-            </Collapsible.Content>
-          </Collapsible.Root>
+            </Collapse>
+          </div>
         );
       })}
     </div>
