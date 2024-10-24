@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Collapse, Colors, InputGroup } from '@blueprintjs/core';
+import { Collapse, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   type CSSProperties,
@@ -30,24 +30,6 @@ interface InfoPanelProps {
 const style = {
   content: css({
     overflow: 'hidden',
-    "&[data-state='open']": {
-      animation: 'slideDown 300ms ease-out',
-    },
-    '&[data-state="closed"]': {
-      animation: 'slideUp 300ms ease-out',
-    },
-    '@keyframes slideDown': {
-      from: {
-        height: 0,
-      },
-      to: { height: 'var(--radix-collapsible-content-height)' },
-    },
-    '@keyframes slideUp': {
-      from: {
-        height: 'var(--radix-collapsible-content-height)',
-      },
-      to: { height: 0 },
-    },
   }),
   container: css({
     padding: '5px 0 0 0',
@@ -57,7 +39,7 @@ const style = {
   }),
   button: (open: boolean) =>
     css({
-      backgroundColor: `${Colors.LIGHT_GRAY5} !important`,
+      backgroundColor: 'white',
       zIndex: 10,
       position: 'sticky',
       height: 30,
@@ -73,7 +55,7 @@ const style = {
       padding: '5px 2px',
       width: '100%',
       ':hover': {
-        backgroundColor: `${Colors.LIGHT_GRAY4} !important`,
+        backgroundColor: '#f5f5f5',
       },
     }),
 };
@@ -208,8 +190,10 @@ interface InfoPanelContentProps {
 }
 
 const InfoPanelContent = memo((props: InfoPanelContentProps) => {
-  const [isOpen, setIsOpen] = useState<string[]>([]);
   const { filteredData } = props;
+  const [isOpen, setIsOpen] = useState<string[]>(
+    filteredData.map(({ description }) => description),
+  );
   return (
     <div
       style={{
