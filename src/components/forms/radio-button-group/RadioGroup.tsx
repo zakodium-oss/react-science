@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import { RadioGroup as BluePrintRadioGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import * as RadioGroupRadix from '@radix-ui/react-radio-group';
 import type { ReactNode } from 'react';
 
-import type { InputVariant } from '../styles.js';
+import { type InputVariant } from '../styles.js';
 
 import { ButtonRadioItem } from './ButtonRadioItem.js';
 
@@ -12,7 +12,7 @@ export interface RadioOption {
   label: ReactNode;
   disabled?: boolean;
 }
-export interface RadioGroupProps {
+export interface RadioButtonGroupProps {
   selected?: RadioOption;
   options?: RadioOption[];
   onSelect?: (option: RadioOption) => void;
@@ -21,14 +21,13 @@ export interface RadioGroupProps {
   variant?: InputVariant;
   id?: string;
 }
+
 const rootStyles = {
-  basic: css({
-    display: 'flex',
-    flexDirection: 'row',
-    width: 'fit-content',
-  }),
   button: (variant: InputVariant) =>
     css({
+      display: 'flex',
+      flexDirection: 'row',
+      width: 'fit-content',
       ' & > *:first-of-type, & > *:first-of-type span': {
         borderRadius: variant === 'default' ? '6px 0 0 6px' : '4px 0 0 4px',
       },
@@ -38,38 +37,39 @@ const rootStyles = {
       },
     }),
 };
-export function RadioGroup(props: RadioGroupProps) {
+export function RadioButtonGroup(props: RadioButtonGroupProps) {
   const {
-    id,
     selected,
     disabled: groupDisabled = false,
     options = [],
     onSelect,
-    name = '',
+    name = 'radio-group',
     variant = 'default',
   } = props;
   return (
-    <RadioGroupRadix.Root
-      id={id}
-      css={[rootStyles.basic, rootStyles.button(variant)]}
-      style={{
-        gap: 0,
+    <BluePrintRadioGroup
+      onChange={(event) => {
+        const selected = options.find(
+          (o) => o.value === event.currentTarget.value,
+        );
+        if (selected) {
+          onSelect?.(selected);
+        }
       }}
-      value={selected?.value}
+      selectedValue={selected?.value}
       name={name}
-      disabled={groupDisabled}
+      css={rootStyles.button(variant)}
     >
       {options?.map(({ value, label, disabled }) => {
         const childProps = {
           value,
           label,
           disabled: groupDisabled || disabled,
-          onSelect,
           variant,
           name,
         };
         return <ButtonRadioItem key={value} {...childProps} />;
       })}
-    </RadioGroupRadix.Root>
+    </BluePrintRadioGroup>
   );
 }
