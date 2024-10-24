@@ -1,6 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { RadioGroup, Radio, type RadioGroupProps } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import { RadioGroup, type RadioGroupProps } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -52,97 +50,6 @@ ControlBlueprint.args = {
   disabled: false,
   inline: false,
 };
-
-const enabledColor = '#1677ff';
-
-const storyStyles = {
-  radioGroup: css({
-    display: 'flex',
-    flexDirection: 'row',
-    width: 'fit-content',
-    ' & > *:first-of-type, & > *:first-of-type span': {
-      borderRadius: '6px 0 0 6px',
-    },
-    ' & > *:last-of-type, & > *:last-of-type span': {
-      borderRightWidth: 1,
-      borderRadius: '0 6px 6px 0',
-    },
-  }),
-  radio: css({
-    border: '1px solid hsla(0, 0%, 0%, 0.25)',
-    borderRightWidth: 0,
-    position: 'relative',
-    paddingLeft: '0 !important',
-    '.bp5-control-indicator': {
-      display: 'none',
-    },
-    'input[type="radio"]:checked': {
-      '& ~ div': {
-        color: enabledColor,
-      },
-      '& ~ span': {
-        border: `1px solid ${enabledColor} !important`,
-      },
-    },
-    span: {
-      position: 'absolute',
-      top: -1,
-      left: -1,
-      right: -1,
-      bottom: -1,
-      zIndex: 10,
-      borderWidth: '0 !important',
-    },
-  }),
-  item: (disabled?: boolean) =>
-    css({
-      opacity: disabled ? 0.25 : 1,
-      padding: '0px 15px',
-      width: '100%',
-      height: '100%',
-      cursor: 'pointer',
-      ':hover': {
-        '& > label': {
-          color: disabled ? '' : enabledColor,
-        },
-      },
-      fontSize: '1.125em',
-      lineHeight: '30px',
-    }),
-};
-
-export function ButtonRadioBlueprint() {
-  const [option, setOption] = useState(options[2]);
-  return (
-    <ExampleGroup>
-      <RadioGroup
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setOption(
-            (option) => options.find((o) => o.value === value) || option,
-          );
-        }}
-        selectedValue={option.value}
-        name="button-radio"
-        css={storyStyles.radioGroup}
-      >
-        {options.map((o) => (
-          <Radio
-            name="button-radio"
-            value={o.value}
-            disabled={o.disabled}
-            id={o.value}
-            key={o.value}
-            css={storyStyles.radio}
-          >
-            <div css={storyStyles.item(o.disabled)}>{o.label}</div>
-            <span />
-          </Radio>
-        ))}
-      </RadioGroup>
-    </ExampleGroup>
-  );
-}
 
 export function ControlButton(
   props: Omit<
