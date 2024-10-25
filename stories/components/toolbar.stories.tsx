@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Tooltip, Card, Colors } from '@blueprintjs/core';
+import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react';
 import { type ReactElement, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -8,7 +8,7 @@ import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 import {
   ActivityBar,
   ActivityBarItem,
-  Button,
+  ActivityPanel,
   SplitPane,
   Toolbar,
   TooltipHelpContent,
@@ -579,6 +579,7 @@ const PlaceHolder = () => (
     Place Holder
   </div>
 );
+
 export function ActivityToolbar() {
   const [selected, setSelected] = useState<string[]>([
     'phone',
@@ -601,57 +602,23 @@ export function ActivityToolbar() {
         {selected.length > 0 ? (
           <SplitPane size="30%" controlledSide="end">
             <PlaceHolder />
-
-            <div
-              style={{
-                flexGrow: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: Colors.LIGHT_GRAY5,
-                gap: '5px',
-              }}
-            >
+            <ActivityPanel>
               {itemsBlueprintIcons
                 .filter(({ id }) => selected.includes(id))
                 .map(({ id }) => (
-                  <Card
+                  <ActivityPanel.Item
                     key={id}
-                    style={{
-                      padding: '10px',
-                      flexGrow: 1,
-                      display: 'flex',
-                      backgroundColor: Colors.WHITE,
-                      flexDirection: 'column',
-                      borderRadius: 0,
-                    }}
-                    elevation={0}
+                    title={id}
+                    onClose={() =>
+                      setSelected((prev) => prev.filter((i) => i !== id))
+                    }
                   >
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        borderBottom: '1px solid #ddd',
-                        paddingBottom: '8px',
-                        marginBottom: '8px',
-                      }}
-                    >
-                      <h4>{id}</h4>
-                      <Button
-                        minimal
-                        icon="cross"
-                        onClick={() =>
-                          setSelected((prev) => prev.filter((i) => i !== id))
-                        }
-                      />
-                    </div>
-
-                    <div style={{ flexGrow: 1 }}>
+                    <div>
                       This is the content of <strong>{id}</strong>.
                     </div>
-                  </Card>
+                  </ActivityPanel.Item>
                 ))}
-            </div>
+            </ActivityPanel>
           </SplitPane>
         ) : (
           <PlaceHolder />
