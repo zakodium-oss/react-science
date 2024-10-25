@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Tooltip, Card } from '@blueprintjs/core';
+import { Menu, MenuItem, Tooltip, Card, Colors } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react';
 import { type ReactElement, useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';
@@ -590,70 +590,83 @@ export function ActivityToolbar() {
       style={{
         display: 'flex',
         height: '100%',
+        width: '100%',
       }}
     >
-      {selected.length > 0 ? (
-        <SplitPane size="30%" controlledSide="end">
-          <PlaceHolder />
-
-          <div
-            style={{
-              flexGrow: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '5px',
-            }}
-          >
-            {itemsBlueprintIcons
-              .filter(({ id }) => selected.includes(id))
-              .map(({ id }) => (
-                <Card
-                  key={id}
-                  style={{
-                    padding: '10px',
-                    flexGrow: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
-                    borderRadius: 0,
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      borderBottom: '1px solid #ddd',
-                      paddingBottom: '8px',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    <h4>{id}</h4>
-                    <Button
-                      minimal
-                      icon="cross"
-                      onClick={() =>
-                        setSelected((prev) => prev.filter((i) => i !== id))
-                      }
-                    />
-                  </div>
-
-                  <div style={{ flexGrow: 1 }}>
-                    This is the content of <strong>{id}</strong>.
-                  </div>
-                </Card>
-              ))}
-          </div>
-        </SplitPane>
-      ) : (
-        <PlaceHolder />
-      )}
       <div
         style={{
-          height: '100%',
+          flexGrow: 1,
+        }}
+      >
+        {selected.length > 0 ? (
+          <SplitPane size="30%" controlledSide="end">
+            <PlaceHolder />
+
+            <div
+              style={{
+                flexGrow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: Colors.LIGHT_GRAY5,
+                gap: '5px',
+              }}
+            >
+              {itemsBlueprintIcons
+                .filter(({ id }) => selected.includes(id))
+                .map(({ id }) => (
+                  <Card
+                    key={id}
+                    style={{
+                      padding: '10px',
+                      flexGrow: 1,
+                      display: 'flex',
+                      backgroundColor: Colors.WHITE,
+                      flexDirection: 'column',
+                      borderRadius: 0,
+                    }}
+                    elevation={0}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderBottom: '1px solid #ddd',
+                        paddingBottom: '8px',
+                        marginBottom: '8px',
+                      }}
+                    >
+                      <h4>{id}</h4>
+                      <Button
+                        minimal
+                        icon="cross"
+                        onClick={() =>
+                          setSelected((prev) => prev.filter((i) => i !== id))
+                        }
+                      />
+                    </div>
+
+                    <div style={{ flexGrow: 1 }}>
+                      This is the content of <strong>{id}</strong>.
+                    </div>
+                  </Card>
+                ))}
+            </div>
+          </SplitPane>
+        ) : (
+          <PlaceHolder />
+        )}
+      </div>
+      <div
+        style={{
           boxShadow:
             'inset 0 0 0 1px rgba(17, 20, 24, 0.2), 0 1px 2px rgba(17, 20, 24, 0.1)',
           padding: 5,
+          height: '100%',
+          width: 'fit-content',
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          flexShrink: 1,
         }}
       >
         <ActivityBar>

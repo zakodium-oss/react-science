@@ -34,6 +34,7 @@ export function ActivityBar(props: ActivityBarProps) {
       minimal
       style={{
         flexWrap: 'wrap-reverse',
+        height: '100%',
       }}
     >
       {children}
