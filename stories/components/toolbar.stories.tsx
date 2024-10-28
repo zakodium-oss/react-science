@@ -9,12 +9,12 @@ import {
   ActivityBar,
   ActivityBarItem,
   ActivityPanel,
+  type PopoverInteractionType,
   SplitPane,
   Toolbar,
-  TooltipHelpContent,
-  type PopoverInteractionType,
   type ToolbarItemProps,
   type ToolbarProps,
+  TooltipHelpContent,
   type TooltipItem,
 } from '../../src/components/index.js';
 
@@ -626,9 +626,6 @@ export function ActivityToolbar() {
       </div>
       <div
         style={{
-          boxShadow:
-            'inset 0 0 0 1px rgba(17, 20, 24, 0.2), 0 1px 2px rgba(17, 20, 24, 0.1)',
-          padding: 5,
           height: '100%',
           width: 'fit-content',
           display: 'flex',

@@ -35,6 +35,10 @@ export function ActivityBar(props: ActivityBarProps) {
       style={{
         flexWrap: 'wrap-reverse',
         height: '100%',
+        gap: 4,
+        padding: 4,
+        borderLeft: `1px solid ${Colors.LIGHT_GRAY4}`,
+        backgroundColor: Colors.WHITE,
       }}
     >
       {children}
