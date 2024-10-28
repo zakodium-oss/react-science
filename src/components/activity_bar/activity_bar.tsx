@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import {
   ButtonGroup,
   Classes,
@@ -7,7 +5,7 @@ import {
   Icon,
   type TooltipProps,
 } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { cloneElement, type MouseEvent, type ReactNode } from 'react';
 
 import { Button, type ButtonProps } from '../button/index.js';
@@ -24,27 +22,52 @@ export interface ActivityBarItemProps
   disabled?: boolean;
 }
 
+const ActivityButtonGroup = styled(ButtonGroup)`
+  flex-wrap: wrap-reverse;
+  height: 100%;
+  gap: 4px;
+  padding: 4px;
+  border-left: 1px solid ${Colors.LIGHT_GRAY4};
+  background-color: ${Colors.WHITE};
+`;
+
 export function ActivityBar(props: ActivityBarProps) {
   const { children } = props;
 
   return (
-    <ButtonGroup
-      vertical
-      large
-      minimal
-      style={{
-        flexWrap: 'wrap-reverse',
-        height: '100%',
-        gap: 4,
-        padding: 4,
-        borderLeft: `1px solid ${Colors.LIGHT_GRAY4}`,
-        backgroundColor: Colors.WHITE,
-      }}
-    >
+    <ActivityButtonGroup vertical large minimal>
       {children}
-    </ButtonGroup>
+    </ActivityButtonGroup>
   );
 }
+
+const ActivityButton = styled(Button)`
+  font-size: 1.125em;
+  width: fit-content;
+  .${Classes.ICON} {
+    color: ${Colors.DARK_GRAY3};
+  }
+  .bp5-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+  .bp5-tag {
+    font-size: 12px;
+    line-height: 14px;
+    min-width: 18px;
+    min-height: 18px;
+  }
+`;
+
+const ActivityButtonIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0;
+  height: 0;
+  margin-right: 0;
+`;
 
 export function ActivityBarItem(props: ActivityBarItemProps) {
   const {
@@ -66,42 +89,13 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
         });
 
   return (
-    <Button
+    <ActivityButton
       type="button"
-      css={css`
-        .${Classes.ICON} {
-          color: ${Colors.DARK_GRAY3};
-        }
-        .bp5-icon {
-          width: 20px;
-          height: 20px;
-          font-size: 14px;
-        }
-        .bp5-tag {
-          font-size: 12px;
-          line-height: 14px;
-          min-width: 18px;
-          min-height: 18px;
-        }
-      `}
-      style={{
-        fontSize: '1.125em',
-        width: 'fit-content',
-      }}
       active={active}
       icon={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 0,
-            height: 0,
-            marginRight: 0,
-          }}
-        >
+        <ActivityButtonIconContainer>
           <Icon icon={resizedIcon} size={20} />
-        </div>
+        </ActivityButtonIconContainer>
       }
       onClick={onClick}
       tooltipProps={
