@@ -49,11 +49,7 @@ export interface ToolbarItemProps
     Pick<ButtonProps, 'id' | 'icon' | 'active' | 'tag' | 'tagProps'> {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
-  onClick?: (
-    item: ToolbarItemProps & {
-      event: MouseEvent;
-    },
-  ) => void;
+  onClick?: (event: MouseEvent) => void;
 }
 
 interface ToolbarItemInternalProps extends ToolbarItemProps {
@@ -220,9 +216,7 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
           )}
         </div>
       }
-      onClick={(event) => {
-        onClick?.({ event, ...props });
-      }}
+      onClick={onClick}
       tooltipProps={
         !tooltip
           ? undefined
