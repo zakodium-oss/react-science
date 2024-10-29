@@ -41,6 +41,12 @@ interface ToolbarBaseProps {
 export interface ToolbarProps
   extends ToolbarBaseProps,
     Pick<ButtonGroupProps, 'children' | 'vertical'> {
+  /**
+   * The type of interaction which triggers a popover to open.
+   * This prop only affects children which are `Toolbar.PopoverItem`.
+   *
+   * {@link https://blueprintjs.com/docs/#core/components/popover.interactions}
+   */
   popoverInteractionKind?: PopoverInteractionType;
 }
 
