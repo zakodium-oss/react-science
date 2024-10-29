@@ -57,7 +57,7 @@ export function Fixed() {
                   id={item.id}
                   tooltip={item.tooltip}
                   icon={item.icon}
-                  onClick={({ event }) => {
+                  onClick={(event) => {
                     event?.stopPropagation();
                   }}
                 />

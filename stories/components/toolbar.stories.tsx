@@ -9,12 +9,12 @@ import {
   ActivityBar,
   ActivityBarItem,
   ActivityPanel,
+  type PopoverInteractionType,
   SplitPane,
   Toolbar,
-  TooltipHelpContent,
-  type PopoverInteractionType,
   type ToolbarItemProps,
   type ToolbarProps,
+  TooltipHelpContent,
   type TooltipItem,
 } from '../../src/components/index.js';
 
@@ -290,11 +290,9 @@ export function WithTag() {
   );
 }
 export function Vertical() {
-  const [state, setState] = useState(itemsBlueprintIcons[1]);
-  function handleChange({ id, icon, tooltip }: ToolbarItemProps) {
-    setState({ id: id as string, icon, tooltip });
-  }
+  const [selected, setSelected] = useState(itemsBlueprintIcons[1].id);
 
+  const selectedItem = itemsBlueprintIcons.find((item) => item.id === selected);
   return (
     <div
       style={{
@@ -311,28 +309,29 @@ export function Vertical() {
             key={item.id}
             id={item.id}
             tooltip={item.tooltip}
-            active={state.tooltip === item.tooltip}
-            onClick={handleChange}
+            active={selected === item.id}
+            onClick={() => {
+              setSelected(item.id);
+            }}
             icon={item.icon}
           />
         ))}
         <Toolbar.Item tooltip="Inbox" icon="inbox" />
       </Toolbar>
-      <div style={{ padding: 5 }}>
-        <p>Hello, World!</p>
-        <p>Value selected: {state.tooltip}</p>
-      </div>
+      {selectedItem && (
+        <div style={{ padding: 5 }}>
+          <p>Hello, World!</p>
+          <p>Value selected: {selectedItem.tooltip}</p>
+        </div>
+      )}
     </div>
   );
 }
 
 export function Horizontal() {
-  const [state, setState] = useState(itemsBlueprintIcons[1]);
+  const [selected, setSelected] = useState(itemsBlueprintIcons[1].id);
 
-  function handleChange({ id, icon, tooltip }: ToolbarItemProps) {
-    setState({ id: id as string, icon, tooltip });
-  }
-
+  const selectedItem = itemsBlueprintIcons.find((item) => item.id === selected);
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Toolbar intent="primary" disabled={false}>
@@ -341,18 +340,22 @@ export function Horizontal() {
             key={item.id}
             id={item.id}
             tooltip={item.tooltip}
-            active={state.id === item.id}
-            onClick={handleChange}
+            active={selected === item.id}
+            onClick={() => {
+              setSelected(item.id);
+            }}
             icon={item.icon}
             intent={item.id === 'test5' ? 'danger' : undefined}
             disabled={item.disabled ?? undefined}
           />
         ))}
       </Toolbar>
-      <div style={{ padding: 5 }}>
-        <p>Hello, World!</p>
-        <p>Value selected: {state.tooltip}</p>
-      </div>
+      {selectedItem && (
+        <div style={{ padding: 5 }}>
+          <p>Hello, World!</p>
+          <p>Value selected: {selectedItem.tooltip}</p>
+        </div>
+      )}
     </div>
   );
 }
