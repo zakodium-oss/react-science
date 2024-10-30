@@ -44,6 +44,10 @@ export function Button(props: ButtonProps) {
       renderTarget={({ isOpen, ...targetProps }) => (
         <InnerButton
           css={css({
+            // Setting the line-height makes sure regular sized buttons have a
+            // height consistent with the input fields and across variants.
+            // Using the same line height as in the blueprint docs.
+            lineHeight: 1.15,
             position: 'relative',
             '.bp5-icon': !children && {
               marginRight: '0',

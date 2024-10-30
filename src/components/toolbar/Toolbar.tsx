@@ -41,6 +41,12 @@ interface ToolbarBaseProps {
 export interface ToolbarProps
   extends ToolbarBaseProps,
     Pick<ButtonGroupProps, 'children' | 'vertical'> {
+  /**
+   * The type of interaction which triggers a popover to open.
+   * This prop only affects children which are `Toolbar.PopoverItem`.
+   *
+   * {@link https://blueprintjs.com/docs/#core/components/popover.interactions}
+   */
   popoverInteractionKind?: PopoverInteractionType;
 }
 
@@ -49,12 +55,11 @@ export interface ToolbarItemProps
     Pick<ButtonProps, 'id' | 'icon' | 'active' | 'tag' | 'tagProps'> {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
-  onClick?: (
-    item: ToolbarItemProps & {
-      event: MouseEvent;
-    },
-  ) => void;
-  isPopover?: boolean;
+  onClick?: (event: MouseEvent) => void;
+}
+
+interface ToolbarItemInternalProps extends ToolbarItemProps {
+  isPopover: boolean;
 }
 
 export interface ToolbarPopoverItemProps extends PopoverProps {
@@ -128,7 +133,11 @@ export function Toolbar(props: ToolbarProps) {
   );
 }
 
-Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
+function ToolbarItem(props: ToolbarItemProps) {
+  return <ToolbarItemInternal {...props} isPopover={false} />;
+}
+
+function ToolbarItemInternal(props: ToolbarItemInternalProps) {
   const {
     active = false,
     icon,
@@ -213,9 +222,7 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
           )}
         </div>
       }
-      onClick={(event) => {
-        onClick?.({ event, ...props });
-      }}
+      onClick={onClick}
       tooltipProps={
         !tooltip
           ? undefined
@@ -231,7 +238,9 @@ Toolbar.Item = function ToolbarItem(props: ToolbarItemProps) {
       {...other}
     />
   );
-};
+}
+
+Toolbar.Item = ToolbarItem;
 
 Toolbar.PopoverItem = function ToolbarPopoverItem(
   props: ToolbarPopoverItemProps,
@@ -261,7 +270,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       }}
       renderTarget={({ isOpen, className, ...targetProps }) => (
         <span {...targetProps} style={{ flex: '0 0 auto' }}>
-          <Toolbar.Item isPopover {...itemProps} />
+          <ToolbarItemInternal isPopover {...itemProps} />
         </span>
       )}
       {...other}
