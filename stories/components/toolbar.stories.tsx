@@ -6,11 +6,7 @@ import { FaClipboard, FaCreditCard, FaPaperclip } from 'react-icons/fa6';
 import { HiClipboard, HiCreditCard, HiOutlinePaperClip } from 'react-icons/hi2';
 
 import {
-  ActivityBar,
-  ActivityBarItem,
-  ActivityPanel,
   type PopoverInteractionType,
-  SplitPane,
   Toolbar,
   type ToolbarItemProps,
   type ToolbarProps,
@@ -566,97 +562,3 @@ export function TooltipHelpContentStory({ intent }: ToolbarProps) {
 }
 
 TooltipHelpContentStory.storyName = 'TooltipHelpContent';
-
-const PlaceHolder = () => (
-  <div
-    style={{
-      height: '100%',
-      width: '100%',
-      backgroundColor: 'rgba(147, 197, 253)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      fontSize: 24,
-    }}
-  >
-    Place Holder
-  </div>
-);
-
-export function ActivityToolbar() {
-  const [selected, setSelected] = useState<string[]>([
-    'phone',
-    'add-column-left',
-  ]);
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <div
-        style={{
-          flexGrow: 1,
-        }}
-      >
-        {selected.length > 0 ? (
-          <SplitPane size="30%" controlledSide="end">
-            <PlaceHolder />
-            <ActivityPanel>
-              {itemsBlueprintIcons
-                .filter(({ id }) => selected.includes(id))
-                .map(({ id }) => (
-                  <ActivityPanel.Item
-                    key={id}
-                    title={id}
-                    onClose={() =>
-                      setSelected((prev) => prev.filter((i) => i !== id))
-                    }
-                  >
-                    <div>
-                      This is the content of <strong>{id}</strong>.
-                    </div>
-                  </ActivityPanel.Item>
-                ))}
-            </ActivityPanel>
-          </SplitPane>
-        ) : (
-          <PlaceHolder />
-        )}
-      </div>
-      <div
-        style={{
-          boxShadow:
-            'inset 0 0 0 1px rgba(17, 20, 24, 0.2), 0 1px 2px rgba(17, 20, 24, 0.1)',
-          padding: 5,
-          height: '100%',
-          width: 'fit-content',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          flexShrink: 1,
-        }}
-      >
-        <ActivityBar>
-          {itemsBlueprintIcons.map((item) => (
-            <ActivityBarItem
-              key={item.id}
-              id={item.id}
-              icon={item.icon}
-              active={selected.includes(item.id)}
-              onClick={() => {
-                setSelected((prev) =>
-                  prev.includes(item.id)
-                    ? prev.filter((id) => id !== item.id)
-                    : [...prev, item.id],
-                );
-              }}
-            />
-          ))}
-        </ActivityBar>
-      </div>
-    </div>
-  );
-}

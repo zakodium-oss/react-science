@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { Colors } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import {
   type CSSProperties,
@@ -291,7 +292,7 @@ function getSeparatorStyle(direction: SplitPaneDirection, enabled: boolean) {
       cursor: enabled ? 'ns-resize' : 'pointer',
     },
     {
-      backgroundColor: 'rgb(247, 247, 247)',
+      backgroundColor: Colors.LIGHT_GRAY5,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -299,7 +300,7 @@ function getSeparatorStyle(direction: SplitPaneDirection, enabled: boolean) {
       minWidth: 11,
       touchAction: 'none',
       ':hover': {
-        backgroundColor: 'rgb(223, 223, 223)',
+        backgroundColor: Colors.LIGHT_GRAY3,
       },
     },
   ]);
