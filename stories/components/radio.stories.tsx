@@ -5,7 +5,6 @@ import { useState } from 'react';
 import {
   RadioButtonGroup,
   type RadioButtonGroupProps,
-  type RadioOption,
 } from '../../src/components/index.js';
 
 export default {
@@ -28,17 +27,15 @@ const ExampleGroup = styled.div`
 export function ControlBlueprint(
   props: Omit<RadioGroupProps, 'onChange' | 'selectedValue' | 'children'>,
 ) {
-  const [option, setOption] = useState(options[2]);
+  const [option, setOption] = useState(options[2].value);
   return (
     <ExampleGroup>
       <RadioGroup
         onChange={(event) => {
           const value = event.currentTarget.value;
-          setOption(
-            (option) => options.find((o) => o.value === value) || option,
-          );
+          setOption(value);
         }}
-        selectedValue={option.value}
+        selectedValue={option}
         options={options}
         {...props}
       />
@@ -52,18 +49,18 @@ ControlBlueprint.args = {
 };
 
 export function ControlButton(
-  props: Omit<
-    RadioButtonGroupProps,
-    'options' | 'selected' | 'onSelect' | 'name'
-  >,
+  props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
 ) {
-  const [option, setOption] = useState(options[2] as RadioOption);
+  const [option, setOption] = useState(options[2].value);
   return (
     <ExampleGroup>
       <RadioButtonGroup
         options={options}
-        selected={option}
-        onSelect={setOption}
+        selectedValue={option}
+        onChange={(event) => {
+          const value = event.currentTarget.value;
+          setOption(value);
+        }}
         {...props}
       />
     </ExampleGroup>
