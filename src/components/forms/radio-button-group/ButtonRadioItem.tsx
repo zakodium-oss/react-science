@@ -26,6 +26,9 @@ const buttonStyles = {
       '.bp5-control-indicator': {
         display: 'none',
       },
+      '&:hover': {
+        color: enabledColor,
+      },
       'input[type="radio"]:checked': {
         '& ~ div': {
           color: enabledColor,
@@ -52,11 +55,6 @@ const buttonStyles = {
       width: '100%',
       height: '100%',
       cursor: 'pointer',
-      ':hover': {
-        '& > label': {
-          color: disabled ? '' : enabledColor,
-        },
-      },
       fontSize: variant === 'small' ? '1em' : '1.125em',
       lineHeight: variant === 'default' ? '30px' : '22px',
     }),
