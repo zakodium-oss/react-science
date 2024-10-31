@@ -14,6 +14,7 @@ export * from './split-pane/index.js';
 export * from './table/index.js';
 export * from './toolbar/index.js';
 export * from './activity_bar/index.js';
+export * from './activity_panel/index.js';
 export * from './utils/index.js';
 export * from './selected-total/index.js';
 export * as ValueRenderers from './value-renderers/index.js';
