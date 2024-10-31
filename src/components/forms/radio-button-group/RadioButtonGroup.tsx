@@ -1,27 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { RadioGroup as BluePrintRadioGroup } from '@blueprintjs/core';
+import { RadioGroup, type RadioGroupProps } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import type { ReactNode } from 'react';
 
 import { type InputVariant } from '../styles.js';
 
-import { ButtonRadioItem } from './ButtonRadioItem.js';
+import { RadioButtonItem } from './ButtonRadioItem.js';
 
-export interface RadioOption {
-  value: string;
-  label: ReactNode;
-  disabled?: boolean;
-}
-export interface RadioButtonGroupProps {
-  selected?: RadioOption;
-  options?: RadioOption[];
-  onSelect?: (option: RadioOption) => void;
-  name?: string;
-  disabled?: boolean;
+export interface RadioButtonGroupProps extends RadioGroupProps {
   variant?: InputVariant;
-  id?: string;
 }
-
 const rootStyles = {
   button: (variant: InputVariant) =>
     css({
@@ -39,27 +26,14 @@ const rootStyles = {
 };
 export function RadioButtonGroup(props: RadioButtonGroupProps) {
   const {
-    selected,
     disabled: groupDisabled = false,
     options = [],
-    onSelect,
     name = 'radio-group',
     variant = 'default',
+    ...restProps
   } = props;
   return (
-    <BluePrintRadioGroup
-      onChange={(event) => {
-        const selected = options.find(
-          (o) => o.value === event.currentTarget.value,
-        );
-        if (selected) {
-          onSelect?.(selected);
-        }
-      }}
-      selectedValue={selected?.value}
-      name={name}
-      css={rootStyles.button(variant)}
-    >
+    <RadioGroup name={name} css={rootStyles.button(variant)} {...restProps}>
       {options?.map(({ value, label, disabled }) => {
         const childProps = {
           value,
@@ -68,8 +42,8 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
           variant,
           name,
         };
-        return <ButtonRadioItem key={value} {...childProps} />;
+        return <RadioButtonItem key={value} {...childProps} />;
       })}
-    </BluePrintRadioGroup>
+    </RadioGroup>
   );
 }

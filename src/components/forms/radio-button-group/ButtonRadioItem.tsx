@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { Radio } from '@blueprintjs/core';
+import { Radio, type RadioProps } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 
 import { enabledColor, type InputVariant } from '../styles.js';
-
-import type { RadioButtonGroupProps, RadioOption } from './RadioGroup.js';
 
 const buttonStyles = {
   radioGroup: css({
@@ -63,17 +61,18 @@ const buttonStyles = {
       lineHeight: variant === 'default' ? '30px' : '22px',
     }),
 };
-export function ButtonRadioItem(
-  prop: RadioOption & Pick<RadioButtonGroupProps, 'variant' | 'name'>,
-) {
-  const { value, label, disabled = false, variant, name } = prop;
+
+export interface RadioButtonItemProps extends RadioProps {
+  variant?: InputVariant;
+}
+
+export function RadioButtonItem(prop: RadioButtonItemProps) {
+  const { label, variant, disabled = false, ...radioProps } = prop;
   return (
     <Radio
-      name={name}
-      value={value}
       disabled={disabled}
-      key={value}
       css={buttonStyles.container(disabled)}
+      {...radioProps}
     >
       <div css={buttonStyles.item(disabled, variant)}>{label}</div>
       <span />
