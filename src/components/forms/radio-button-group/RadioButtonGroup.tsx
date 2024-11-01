@@ -1,26 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import { RadioGroup, type RadioGroupProps } from '@blueprintjs/core';
 import { css } from '@emotion/react';
+import { Children, cloneElement } from 'react';
 
-import { type InputVariant } from '../styles.js';
-
-import { RadioButtonItem } from './ButtonRadioItem.js';
+import { RadioButton } from './RadioButton.js';
 
 export interface RadioButtonGroupProps extends RadioGroupProps {
-  variant?: InputVariant;
+  large?: boolean;
 }
 const rootStyles = {
-  button: (variant: InputVariant) =>
+  button: (large?: boolean) =>
     css({
       display: 'flex',
       flexDirection: 'row',
       width: 'fit-content',
       ' & > *:first-of-type, & > *:first-of-type span': {
-        borderRadius: variant === 'default' ? '6px 0 0 6px' : '4px 0 0 4px',
+        borderRadius: large ? '6px 0 0 6px' : '4px 0 0 4px',
       },
       ' & > *:last-of-type, & > *:last-of-type span': {
         borderRightWidth: 1,
-        borderRadius: variant === 'default' ? '0 6px 6px 0' : '0 4px 4px 0',
+        borderRadius: large ? '0 6px 6px 0' : '0 4px 4px 0',
       },
     }),
 };
@@ -28,21 +27,49 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
   const {
     disabled: groupDisabled = false,
     options = [],
-    name = 'radio-group',
-    variant = 'default',
+    name,
+    large,
+    selectedValue,
+    onChange,
+    children,
     ...restProps
   } = props;
+
   return (
-    <RadioGroup name={name} css={rootStyles.button(variant)} {...restProps}>
+    <RadioGroup
+      name={name}
+      selectedValue={selectedValue}
+      onChange={onChange}
+      css={rootStyles.button(large)}
+      {...restProps}
+    >
       {options?.map(({ value, label, disabled }) => {
         const childProps = {
           value,
           label,
-          disabled: groupDisabled || disabled,
-          variant,
+          large,
           name,
+          onChange,
+          checked: value === selectedValue,
+          disabled: groupDisabled || disabled,
         };
-        return <RadioButtonItem key={value} {...childProps} />;
+        return <RadioButton key={value} {...childProps} />;
+      })}
+      {Children.map(children, (child) => {
+        if (!child || typeof child !== 'object' || !('type' in child)) {
+          return child;
+        }
+        if (child.type === RadioButton) {
+          return cloneElement(child, {
+            ...child.props,
+            large,
+            name,
+            onChange,
+            checked: child.props.value === selectedValue,
+            disabled: groupDisabled || child.props.disabled,
+          });
+        }
+        return child;
       })}
     </RadioGroup>
   );

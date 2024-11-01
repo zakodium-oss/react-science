@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import {
+  RadioButton,
   RadioButtonGroup,
   type RadioButtonGroupProps,
 } from '../../src/components/index.js';
@@ -48,7 +49,7 @@ ControlBlueprint.args = {
   inline: false,
 };
 
-export function ControlButton(
+export function ControlRadioButton(
   props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
 ) {
   const [option, setOption] = useState(options[2].value);
@@ -66,14 +67,38 @@ export function ControlButton(
     </ExampleGroup>
   );
 }
-ControlButton.args = {
-  variant: 'default',
+ControlRadioButton.args = {
+  large: false,
   disabled: false,
 };
 
-ControlButton.argTypes = {
-  variant: {
-    options: ['default', 'small'],
-    control: { type: 'radio' },
-  },
+export function RadioButtonWithChildren(
+  props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
+) {
+  const [option, setOption] = useState(options[2].value);
+  return (
+    <ExampleGroup>
+      <RadioButtonGroup
+        selectedValue={option}
+        onChange={(event) => {
+          const value = event.currentTarget.value;
+          setOption(value);
+        }}
+        {...props}
+      >
+        {options.map(({ value, label, disabled }) => (
+          <RadioButton
+            key={value}
+            value={value}
+            label={label}
+            disabled={disabled}
+          />
+        ))}
+      </RadioButtonGroup>
+    </ExampleGroup>
+  );
+}
+RadioButtonWithChildren.args = {
+  large: false,
+  disabled: false,
 };
