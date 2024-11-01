@@ -2,7 +2,7 @@
 import { Radio, type RadioProps } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 
-import { enabledColor, type InputVariant } from '../styles.js';
+import { enabledColor } from '../styles.js';
 
 const buttonStyles = {
   radioGroup: css({
@@ -48,31 +48,27 @@ const buttonStyles = {
         borderWidth: '0 !important',
       },
     }),
-  item: (disabled: boolean, variant?: InputVariant) =>
+  item: (disabled: boolean, large?: boolean) =>
     css({
       opacity: disabled ? 0.25 : 1,
-      padding: variant === 'default' ? '0px 15px' : '0px 7px',
+      padding: large ? '0px 15px' : '0px 7px',
       width: '100%',
       height: '100%',
       cursor: 'pointer',
-      fontSize: variant === 'small' ? '1em' : '1.125em',
-      lineHeight: variant === 'default' ? '30px' : '22px',
+      lineHeight: large ? '40px' : '30px',
     }),
 };
 
-export interface RadioButtonItemProps extends RadioProps {
-  variant?: InputVariant;
-}
-
-export function RadioButtonItem(prop: RadioButtonItemProps) {
-  const { label, variant, disabled = false, ...radioProps } = prop;
+export function RadioButton(prop: RadioProps) {
+  const { label, large, disabled = false, ...radioProps } = prop;
   return (
     <Radio
       disabled={disabled}
+      large={large}
       css={buttonStyles.container(disabled)}
       {...radioProps}
     >
-      <div css={buttonStyles.item(disabled, variant)}>{label}</div>
+      <div css={buttonStyles.item(disabled, large)}>{label}</div>
       <span />
     </Radio>
   );
