@@ -17,8 +17,9 @@ const buttonStyles = {
       borderRadius: '0 6px 6px 0',
     },
   }),
-  container: (disabled: boolean) =>
+  container: (disabled: boolean, large?: boolean) =>
     css({
+      height: large ? '40px' : '30px',
       border: '1px solid rgba(0, 0, 0, 0.25)',
       borderRightWidth: 0,
       position: 'relative',
@@ -34,6 +35,7 @@ const buttonStyles = {
           color: enabledColor,
         },
         '& ~ span': {
+          boxSizing: 'border-box',
           border: `1px solid ${enabledColor} !important`,
           opacity: disabled ? 0.25 : 1,
         },
@@ -65,7 +67,7 @@ export function RadioButton(prop: RadioProps) {
     <Radio
       disabled={disabled}
       large={large}
-      css={buttonStyles.container(disabled)}
+      css={buttonStyles.container(disabled, large)}
       {...radioProps}
     >
       <div css={buttonStyles.item(disabled, large)}>{label}</div>
