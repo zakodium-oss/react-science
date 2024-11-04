@@ -39,7 +39,7 @@ const style = {
   }),
   button: (open: boolean) =>
     css({
-      backgroundColor: 'white',
+      backgroundColor: 'white !important',
       zIndex: 10,
       position: 'sticky',
       height: 30,
@@ -55,7 +55,7 @@ const style = {
       padding: '5px 2px',
       width: '100%',
       ':hover': {
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#f5f5f5 !important',
       },
     }),
 };
