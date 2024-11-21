@@ -1,5 +1,24 @@
 # Changelog
 
+## [10.0.0](https://github.com/zakodium-oss/react-science/compare/v9.0.1...v10.0.0) (2024-11-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **toolbar:** the onClick handler of a toolbar item is only passed the mouse event.
+* the `isPopover` was removed from the toolbar item components.
+
+### Features
+
+* add ActivityPanel components ([#768](https://github.com/zakodium-oss/react-science/issues/768)) ([2ad5a18](https://github.com/zakodium-oss/react-science/commit/2ad5a1858e393d762ad9672f90b894adf9b57c29))
+
+
+### Bug Fixes
+
+* **button:** correct default height of buttons ([#785](https://github.com/zakodium-oss/react-science/issues/785)) ([26fa1df](https://github.com/zakodium-oss/react-science/commit/26fa1df0406da00dfdc00b0601a166bafa5d6fd3))
+* do not expose the isPopover prop ([177c0ae](https://github.com/zakodium-oss/react-science/commit/177c0ae556e17b673243944ff906c37926739a2e))
+* **toolbar:** do not pass item props in onClick callback ([29aa9e1](https://github.com/zakodium-oss/react-science/commit/29aa9e10cf98424074668495ec05a24a58990ea9))
+
 ## [9.0.1](https://github.com/zakodium-oss/react-science/compare/v9.0.0...v9.0.1) (2024-10-18)
 
 
