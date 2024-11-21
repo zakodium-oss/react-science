@@ -1,11 +1,6 @@
 import lodashDebounce from 'lodash/debounce.js';
-import {
-  type CSSProperties,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import type { CSSProperties } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { defaultColorPalette } from '../palette.js';
 

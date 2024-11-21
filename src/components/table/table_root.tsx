@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import { HTMLTable } from '@blueprintjs/core';
+import type { RowData, TableOptions } from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getSortedRowModel,
-  type RowData,
-  type TableOptions,
   useReactTable,
 } from '@tanstack/react-table';
 import type { TableHTMLAttributes } from 'react';

@@ -1,5 +1,5 @@
+import type { ColorConfig } from '../../../app-data/index.js';
 import {
-  type ColorConfig,
   getFirstSelectedMeasurementData,
   useAppDispatch,
   useAppState,

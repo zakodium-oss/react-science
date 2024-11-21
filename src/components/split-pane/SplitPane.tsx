@@ -1,16 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { Colors } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import {
-  type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
-  type ReactNode,
-  type RefObject,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
+import type {
+  CSSProperties,
+  PointerEvent as ReactPointerEvent,
+  ReactNode,
+  RefObject,
 } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import useResizeObserver from 'use-resize-observer';
 
 import { useOnOff } from '../hooks/useOnOff.js';

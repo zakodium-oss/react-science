@@ -1,4 +1,5 @@
-import { gsd, type GSDOptions } from 'ml-gsd';
+import type { GSDOptions } from 'ml-gsd';
+import { gsd } from 'ml-gsd';
 import type { Shape1D } from 'ml-peak-shape-generator';
 import { xMinMaxValues } from 'ml-spectra-processing';
 

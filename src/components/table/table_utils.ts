@@ -1,9 +1,5 @@
-import {
-  type ColumnDef,
-  createColumnHelper,
-  type Row,
-  type RowData,
-} from '@tanstack/react-table';
+import type { ColumnDef, Row, RowData } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import type { ReactNode } from 'react';
 
 export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<

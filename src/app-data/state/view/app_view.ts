@@ -1,4 +1,4 @@
-import { type GradientScaleName } from '../../../components/index.js';
+import type { GradientScaleName } from '../../../components/index.js';
 import type { MeasurementKind } from '../index.js';
 
 export interface AppView {

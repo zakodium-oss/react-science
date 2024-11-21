@@ -1,4 +1,4 @@
-import { Intent } from '@blueprintjs/core';
+import type { Intent } from '@blueprintjs/core';
 import { createContext, useContext } from 'react';
 
 import type { PopoverInteractionType } from './Toolbar.js';

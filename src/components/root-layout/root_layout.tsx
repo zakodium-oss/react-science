@@ -1,11 +1,7 @@
 import { BlueprintProvider, FocusStyleManager } from '@blueprintjs/core';
 import { QueryClientProvider } from '@tanstack/react-query';
-import {
-  type CSSProperties,
-  type ReactNode,
-  useCallback,
-  useState,
-} from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import { useCallback, useState } from 'react';
 
 import { AccordionProvider } from '../accordion/index.js';
 

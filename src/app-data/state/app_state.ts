@@ -1,11 +1,15 @@
 import { produce } from 'immer';
-import { createContext, type Dispatch, useContext } from 'react';
+import type { Dispatch } from 'react';
+import { createContext, useContext } from 'react';
 
-import { type AppStateAction } from './app_state.actions.js';
-import { type AppData, getEmptyAppData } from './data/index.js';
+import type { AppStateAction } from './app_state.actions.js';
+import type { AppData } from './data/index.js';
+import { getEmptyAppData } from './data/index.js';
 import { appStateProducer } from './producers/index.js';
-import { type AppSettings, getEmptyAppSettings } from './settings/index.js';
-import { type AppView, getEmptyAppView } from './view/index.js';
+import type { AppSettings } from './settings/index.js';
+import { getEmptyAppSettings } from './settings/index.js';
+import type { AppView } from './view/index.js';
+import { getEmptyAppView } from './view/index.js';
 
 export interface AppState {
   load: AppLoad;

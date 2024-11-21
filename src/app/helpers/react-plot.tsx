@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { type ReactNode, useMemo } from 'react';
+import type { ReactNode } from 'react';
+import { useMemo } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
   Annotations,

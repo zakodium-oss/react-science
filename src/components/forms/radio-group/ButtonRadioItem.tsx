@@ -2,7 +2,8 @@
 import { css } from '@emotion/react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
-import { enabledColor, type InputVariant } from '../styles.js';
+import type { InputVariant } from '../styles.js';
+import { enabledColor } from '../styles.js';
 
 import type { RadioGroupProps, RadioOption } from './RadioGroup.js';
 

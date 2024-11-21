@@ -1,17 +1,20 @@
 /** @jsxImportSource @emotion/react */
+import type {
+  AnchorButtonProps as BlueprintAnchorButtonProps,
+  ButtonProps as BlueprintButtonProps,
+  TagProps,
+  TooltipProps,
+} from '@blueprintjs/core';
 import {
   AnchorButton as BlueprintAnchorButton,
-  type AnchorButtonProps as BlueprintAnchorButtonProps,
   Button as BlueprintButton,
-  type ButtonProps as BlueprintButtonProps,
   Icon,
   Tag,
-  type TagProps,
   Tooltip,
-  type TooltipProps,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { Fragment, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { Fragment } from 'react';
 
 type BlueprintProps = {
   [key in keyof BlueprintButtonProps &

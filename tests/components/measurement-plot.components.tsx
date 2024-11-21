@@ -1,7 +1,5 @@
-import {
-  MeasurementPlot,
-  type MeasurementPlotProps,
-} from '../../src/app/helpers/index.js';
+import type { MeasurementPlotProps } from '../../src/app/helpers/index.js';
+import { MeasurementPlot } from '../../src/app/helpers/index.js';
 import type {
   IrMeasurement,
   MeasurementAppView,

@@ -1,6 +1,7 @@
 import { MenuItem } from '@blueprintjs/core';
-import { type ItemRenderer } from '@blueprintjs/select';
-import { type ReactNode, useState } from 'react';
+import type { ItemRenderer } from '@blueprintjs/select';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 
 type FilterType<SourceType, Type> = Pick<
   SourceType,
