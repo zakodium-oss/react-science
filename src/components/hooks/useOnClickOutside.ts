@@ -1,4 +1,5 @@
-import { type RefObject, useEffect } from 'react';
+import type { RefObject } from 'react';
+import { useEffect } from 'react';
 
 import { useRootLayoutContext } from '../root-layout/root_layout_context.js';
 

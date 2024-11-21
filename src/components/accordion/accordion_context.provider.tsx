@@ -1,6 +1,8 @@
-import { type ReactNode, useMemo, useReducer } from 'react';
+import type { ReactNode } from 'react';
+import { useMemo, useReducer } from 'react';
 
-import { accordionContext, type ContextType } from './accordion_context.js';
+import type { ContextType } from './accordion_context.js';
+import { accordionContext } from './accordion_context.js';
 import { reducer } from './accordion_context.state.js';
 
 export function AccordionProvider(props: { children: ReactNode }) {

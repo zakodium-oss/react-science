@@ -1,7 +1,5 @@
-import {
-  MeasurementExplorer,
-  type MeasurementExplorerProps,
-} from '../../../src/app/index.js';
+import type { MeasurementExplorerProps } from '../../../src/app/index.js';
+import { MeasurementExplorer } from '../../../src/app/index.js';
 import type { IrMeasurement } from '../../../src/app-data/index.js';
 import measurement from '../../data/irMeasurement.json';
 

@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import type { PanelProps } from '@blueprintjs/core';
 import {
   Dialog,
   DialogBody,
   DialogFooter,
-  type PanelProps,
   PanelStack2,
 } from '@blueprintjs/core';
 import { css } from '@emotion/react';

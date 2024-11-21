@@ -1,4 +1,5 @@
-import { type Draft, produce } from 'immer';
+import type { Draft } from 'immer';
+import { produce } from 'immer';
 import type { Reducer } from 'react';
 
 type ActionType<Action, Payload = void> = Payload extends void

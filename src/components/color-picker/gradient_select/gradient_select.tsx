@@ -1,16 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { Button, MenuItem } from '@blueprintjs/core';
-import { type ItemRenderer, Select } from '@blueprintjs/select';
+import type { ItemRenderer } from '@blueprintjs/select';
+import { Select } from '@blueprintjs/select';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { FaChevronDown } from 'react-icons/fa';
 
 import FixedGradientPreview from '../preview/FixedGradientPreview.js';
 
-import {
-  fixedGradientScales,
-  type GradientScaleName,
-} from './gradient_select.utils.js';
+import type { GradientScaleName } from './gradient_select.utils.js';
+import { fixedGradientScales } from './gradient_select.utils.js';
 
 const scaleOptions = Object.keys(fixedGradientScales) as GradientScaleName[];
 

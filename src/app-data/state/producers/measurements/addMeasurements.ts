@@ -1,10 +1,10 @@
 import { assert, defaultColorPalette } from '../../../../components/index.js';
 import { getPreferredVariable, mergeMeasurements } from '../../../index.js';
+import type { MeasurementKind } from '../../index.js';
 import {
   getFirstMeasurementOrFail,
   iterateMeasurementEntries,
   kindLabels,
-  type MeasurementKind,
 } from '../../index.js';
 import { resetZoom, updateZoom } from '../plot-view/helpers/zoom.js';
 import type { AppStateProducer } from '../types.js';

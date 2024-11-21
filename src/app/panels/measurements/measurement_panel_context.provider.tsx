@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react';
 
-import {
-  measurementPanelContext,
-  type MeasurementState,
-} from './measurement_panel_context.js';
+import type { MeasurementState } from './measurement_panel_context.js';
+import { measurementPanelContext } from './measurement_panel_context.js';
 
 export function MeasurementPanelProvider({
   children,

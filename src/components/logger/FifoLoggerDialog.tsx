@@ -4,7 +4,8 @@ import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { LogEntry } from 'fifo-logger';
-import { type CSSProperties, useMemo } from 'react';
+import type { CSSProperties } from 'react';
+import { useMemo } from 'react';
 
 import { Button } from '../button/index.js';
 import { createTableColumnHelper, Table } from '../table/index.js';

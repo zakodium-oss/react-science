@@ -1,7 +1,7 @@
 import { getTestFileCollection } from '../../../../test-utils.js';
+import type { IrMeasurement } from '../../../index.js';
 import {
   getIrAutoPeakPickingEnhancer,
-  type IrMeasurement,
   irMeasurementEnhancer,
   jcampLoader,
   loadMeasurements,

@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
-import { type ReactNode, useEffect, useMemo, useReducer, useRef } from 'react';
+import type { ReactNode } from 'react';
+import { useEffect, useMemo, useReducer, useRef } from 'react';
 
 import { fullscreenContext, useFullscreen } from './fullscreen_context.js';
 

@@ -3,13 +3,13 @@ import {
   getPreferredVariable,
   getVariableByLabel,
 } from '../../../../helpers/index.js';
-import {
-  type AppState,
-  iterateKindMeasurementsAndView,
-  type MeasurementBase,
-  type MeasurementKind,
-  type Plot2DZoom,
+import type {
+  AppState,
+  MeasurementBase,
+  MeasurementKind,
+  Plot2DZoom,
 } from '../../../index.js';
+import { iterateKindMeasurementsAndView } from '../../../index.js';
 
 export function getInitialZoom(): Plot2DZoom {
   return {

@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useMemo } from 'react';
 
-import {
-  type AccordionItemState,
-  type AccordionState,
-  getItem,
+import type {
+  AccordionItemState,
+  AccordionState,
 } from './accordion_context.state.js';
+import { getItem } from './accordion_context.state.js';
 
 export type ContextType = [
   AccordionContext,

@@ -1,4 +1,4 @@
-import { Intent } from '@blueprintjs/core';
+import type { Intent } from '@blueprintjs/core';
 import type { LogEntry } from 'fifo-logger';
 import { useState } from 'react';
 

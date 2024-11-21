@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
+import type { ToolbarItemProps } from '../../src/components/index.js';
 import {
   Accordion,
   SplitPane,
   Toolbar,
-  type ToolbarItemProps,
   useToggleAccordion,
 } from '../../src/components/index.js';
 import { AccordionDecorator } from '../utils.js';
