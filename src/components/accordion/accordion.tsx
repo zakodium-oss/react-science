@@ -21,6 +21,11 @@ export interface AccordionItemProps {
   title: string;
   children: ReactNode;
   defaultOpened?: boolean;
+  /**
+   * When set to true, the item's children will not be rendered if the item is closed.
+   * When not set or set to false, the item's children will be rendered but hidden when the item is closed.
+   */
+  unmountChildren?: boolean;
   toolbar?: ReactNode;
 }
 
@@ -62,8 +67,15 @@ export function Accordion(props: AccordionProps) {
 
 Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const { title, children, defaultOpened, toolbar } = props;
-  const { item, utils } = useAccordionContext(title, defaultOpened);
+  const { item, utils, unmountChildren } = useAccordionContext(
+    title,
+    defaultOpened,
+  );
 
+  const shouldUnmountChildren =
+    props.unmountChildren === undefined
+      ? unmountChildren
+      : props.unmountChildren;
   const onClickHandle = useCallback(
     (event: ReactMouseEvent<HTMLDivElement>) => {
       if (event.shiftKey) {
@@ -105,27 +117,29 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
         </div>
         {toolbar}
       </div>
-      <div
-        style={{
-          display: item?.isOpen ? 'flex' : 'none',
-          flex: item?.isOpen ? '1 1 1px' : 'none',
-          backgroundColor: 'white',
-          maxHeight: '100%',
-          overflow: 'hidden',
-        }}
-      >
+      {!item?.isOpen && shouldUnmountChildren ? null : (
         <div
           style={{
-            height: '100%',
-            width: '100%',
-            overflow: 'auto',
-            display: 'flex',
-            flexDirection: 'column',
+            display: item?.isOpen ? 'flex' : 'none',
+            flex: item?.isOpen ? '1 1 1px' : 'none',
+            backgroundColor: 'white',
+            maxHeight: '100%',
+            overflow: 'hidden',
           }}
         >
-          {children}
+          <div
+            style={{
+              height: '100%',
+              width: '100%',
+              overflow: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

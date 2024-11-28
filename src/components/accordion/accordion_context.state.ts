@@ -20,6 +20,7 @@ export interface AccordionItemState {
 
 export interface AccordionState {
   items: AccordionItemState[];
+  unmountChildren: boolean;
 }
 
 export function getItem(title: string, items: AccordionItemState[]) {
