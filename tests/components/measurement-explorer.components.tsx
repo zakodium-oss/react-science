@@ -3,7 +3,7 @@ import type {
   IrMeasurement,
   MeasurementAppView,
 } from '../../src/app-data/index.js';
-import measurement from '../../stories/data/irMeasurement.json';
+import measurement from '../../stories/data/irMeasurement.json' with { type: 'json' };
 
 const irMeasurement = measurement as IrMeasurement;
 

@@ -2,12 +2,10 @@ import { assertNotNull } from '../../../components/index.js';
 import type { AppState, AppView } from '../index.js';
 
 import type {
-  AppData,
   MeasurementBase,
   MeasurementKind,
   Measurements,
 } from './AppData.js';
-import { measurementKinds } from './kinds.js';
 
 export function getMeasurement(
   measurements: Measurements,
@@ -67,11 +65,10 @@ export function getCurrentMeasurement(state: AppState) {
 export function getCurrentMeasurementData(state: AppState) {
   const selectedMeasurement = getCurrentMeasurement(state);
   if (!selectedMeasurement) return null;
-  const kindAndIds = getMeasurementKindAndIds(state.data, selectedMeasurement);
   const display = selectedMeasurement.map(
     ({ id }) => state.view.measurements[id],
   );
-  return { data: selectedMeasurement, display, kindAndIds };
+  return { data: selectedMeasurement, display };
 }
 
 export function getFirstSelectedMeasurementData(state: AppState) {
@@ -107,32 +104,7 @@ export interface MeasurementKindAndIds {
   kind: MeasurementKind;
   ids: string[];
 }
-export function getMeasurementKindAndId(data: AppData, measurementId: string) {
-  for (const kind of measurementKinds) {
-    const measurement = getMeasurement(data.measurements, kind, measurementId);
-    if (measurement) return { kind, id: measurementId };
-  }
-  throw new Error(`Measurement kind for ${measurementId} not found`);
-}
-export function getMeasurementKindAndIds(
-  data: AppData,
-  measurementId: MeasurementBase[],
-) {
-  let found = false;
-  for (const kind of measurementKinds) {
-    for (const { id } of measurementId) {
-      const measurement = getMeasurement(data.measurements, kind, id);
-      if (measurement) found = true;
-      if (found && !measurement) {
-        throw new Error(
-          `Measurement kind for ${measurementId.join(', ')} not found`,
-        );
-      }
-    }
-    if (found) return { kind, ids: measurementId };
-  }
-  throw new Error(`Measurement kind for ${measurementId.join(', ')} not found`);
-}
+
 export function getSelectedMeasurement(
   view: AppView,
 ): MeasurementKindAndIds | null {

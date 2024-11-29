@@ -9,7 +9,7 @@ import {
   Table,
   ValueRenderers,
 } from '../../src/components/index.js';
-import data from '../data/table.json';
+import data from '../data/table.json' with { type: 'json' };
 
 export default {
   title: 'Components / ContextMenu',

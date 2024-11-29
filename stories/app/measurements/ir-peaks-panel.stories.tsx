@@ -1,7 +1,7 @@
 import type { IrColumnPreferences } from '../../../src/app/index.js';
 import { IrPeaksPanel as IrPeaksPanelComponent } from '../../../src/app/index.js';
 import type { IrPeak } from '../../../src/app-data/index.js';
-import measurement from '../../data/irMeasurement.json';
+import measurement from '../../data/irMeasurement.json' with { type: 'json' };
 
 export default {
   title: 'Measurements / Panels',
