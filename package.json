@@ -91,6 +91,7 @@
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^2.1.6",
+    "biologic-converter": "^0.6.0",
     "cheminfo-font": "^1.13.1",
     "cheminfo-types": "^1.8.1",
     "cross-env": "^7.0.3",
