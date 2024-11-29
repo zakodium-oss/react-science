@@ -70,5 +70,5 @@ Control.args = {
   compact: false,
   interactive: false,
   striped: false,
-  sticky: false,
+  stickyHeader: false,
 };
