@@ -1,5 +1,21 @@
 # Changelog
 
+## [11.0.0](https://github.com/zakodium-oss/react-science/compare/v10.0.0...v11.0.0) (2024-11-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove non-ui exports ([#789](https://github.com/zakodium-oss/react-science/issues/789))
+
+### Features
+
+* add unmountChildren prop to Accordion and Accordion.Item ([#793](https://github.com/zakodium-oss/react-science/issues/793)) ([1f94fc4](https://github.com/zakodium-oss/react-science/commit/1f94fc494840fce85429e526af5b1090ca5b396f))
+
+
+### Code Refactoring
+
+* remove non-ui exports ([#789](https://github.com/zakodium-oss/react-science/issues/789)) ([9217809](https://github.com/zakodium-oss/react-science/commit/9217809473dab8bbf9f5707a411551d75f3cc249))
+
 ## [10.0.0](https://github.com/zakodium-oss/react-science/compare/v9.0.1...v10.0.0) (2024-11-21)
 
 
