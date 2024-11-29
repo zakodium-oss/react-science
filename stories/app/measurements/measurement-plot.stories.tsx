@@ -1,9 +1,6 @@
 import type { MeasurementPlotProps } from '../../../src/app/helpers/index.js';
 import { MeasurementPlot } from '../../../src/app/helpers/index.js';
-import type { IrMeasurement } from '../../../src/app-data/index.js';
-import measurement from '../../data/irMeasurement.json';
-
-const irMeasurement = measurement as IrMeasurement;
+import { irMeasurement } from '../../data/data.js';
 
 export default {
   title: 'Layout/MeasurementPlot',
