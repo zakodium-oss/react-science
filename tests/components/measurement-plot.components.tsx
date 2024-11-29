@@ -1,12 +1,8 @@
 import type { MeasurementPlotProps } from '../../src/app/helpers/index.js';
 import { MeasurementPlot } from '../../src/app/helpers/index.js';
-import type {
-  IrMeasurement,
-  MeasurementAppView,
-} from '../../src/app-data/index.js';
-import measurement from '../../stories/data/irMeasurement.json' with { type: 'json' };
+import type { MeasurementAppView } from '../../src/app-data/index.js';
+import { irMeasurement } from '../../stories/data/data.js';
 
-const irMeasurement = measurement as IrMeasurement;
 const measurementDisplay: MeasurementAppView = {
   color: {
     kind: 'fixed',

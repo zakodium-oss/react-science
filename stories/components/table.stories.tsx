@@ -6,7 +6,7 @@ import {
   Table,
   ValueRenderers,
 } from '../../src/components/index.js';
-import data from '../data/table.json' with { type: 'json' };
+import { table } from '../data/data.js';
 
 interface ControlProps {
   bordered?: boolean;
@@ -27,7 +27,7 @@ export default {
   ],
 };
 
-const columnHelper = createTableColumnHelper<(typeof data)[number]>();
+const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
@@ -61,7 +61,7 @@ export function Control({
       striped={striped}
       stickyHeader={stickyHeader}
       columns={columns}
-      data={data}
+      data={table}
     />
   );
 }

@@ -1,9 +1,6 @@
 import type { MeasurementExplorerProps } from '../../../src/app/index.js';
 import { MeasurementExplorer } from '../../../src/app/index.js';
-import type { IrMeasurement } from '../../../src/app-data/index.js';
-import measurement from '../../data/irMeasurement.json' with { type: 'json' };
-
-const irMeasurement = measurement as IrMeasurement;
+import { irMeasurement } from '../../data/data.js';
 
 export default {
   title: 'Measurements / Measurement explorer',
