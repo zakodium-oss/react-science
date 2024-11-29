@@ -1,10 +1,10 @@
-import type { ColorConfig } from '../../../app-data/index.js';
 import {
   getFirstSelectedMeasurementData,
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index.js';
 import { ColorPickerDropdown } from '../../../components/index.js';
+import type { ColorConfig } from '../../../components/index.js';
 
 export function MeasurementConfigPanel() {
   const dispatch = useAppDispatch();

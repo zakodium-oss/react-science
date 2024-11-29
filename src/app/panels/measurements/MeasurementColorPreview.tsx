@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-import type { ColorConfig, MeasurementKind } from '../../../app-data/index.js';
+import type { MeasurementKind } from '../../../app-data/index.js';
 import { useAppDispatch } from '../../../app-data/index.js';
 import {
   ColorPicker,
@@ -10,6 +10,7 @@ import {
   useOnClickOutside,
   useOnOff,
 } from '../../../components/index.js';
+import type { ColorConfig } from '../../../components/index.js';
 
 interface MeasurementColorPreviewProps {
   measurementId: string;

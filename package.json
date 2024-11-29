@@ -9,7 +9,7 @@
   },
   "files": [
     "lib",
-    "src",
+    "src/components",
     "styles/preflight.css"
   ],
   "scripts": {

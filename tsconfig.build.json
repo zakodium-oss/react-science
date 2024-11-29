@@ -1,14 +1,7 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": [
-    ".storybook",
-    "src/pages",
-    "src/test-utils.ts",
-    "stories",
-    "tests",
-    "**/__tests__",
-    "playwright",
-    "playwright-*.mts",
-    "vite.config.mts"
-  ]
+  "compilerOptions": {
+    "outDir": "lib/components"
+  },
+  "include": ["src/components"]
 }
