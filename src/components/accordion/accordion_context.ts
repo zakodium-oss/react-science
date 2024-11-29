@@ -57,6 +57,7 @@ export function useAccordionContext(title: string, defaultOpened?: boolean) {
   return useMemo(
     () => ({
       item,
+      unmountChildren: state.unmountChildren,
       utils: {
         clear: () => utils.clear(title),
         toggle: () => utils.toggle(title),
@@ -64,6 +65,6 @@ export function useAccordionContext(title: string, defaultOpened?: boolean) {
         create: (defaultOpened?: boolean) => utils.create(title, defaultOpened),
       },
     }),
-    [item, title, utils],
+    [item, title, utils, state.unmountChildren],
   );
 }
