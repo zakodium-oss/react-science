@@ -4,7 +4,7 @@
   "description": "React components to build scientific applications UI",
   "type": "module",
   "exports": {
-    ".": "./lib/components/index.js",
+    "./ui": "./lib/components/index.js",
     "./styles/*.css": "./styles/*.css"
   },
   "files": [
