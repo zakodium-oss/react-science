@@ -3,12 +3,14 @@ import { Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import { useMemo, useState } from 'react';
 
+import type {
+  SplitPaneProps,
+  SplitPaneSize,
+} from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
   SplitPane,
-  type SplitPaneProps,
-  type SplitPaneSize,
 } from '../../src/components/index.js';
 
 export default {

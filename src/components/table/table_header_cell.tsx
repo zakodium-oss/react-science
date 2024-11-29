@@ -1,4 +1,5 @@
-import { flexRender, type Header, type RowData } from '@tanstack/react-table';
+import type { Header, RowData } from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 import type { CSSProperties } from 'react';
 
 interface TableHeaderCellProps<TData extends RowData> {

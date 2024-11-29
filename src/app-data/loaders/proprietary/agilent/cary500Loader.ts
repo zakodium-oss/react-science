@@ -1,11 +1,8 @@
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection, FileCollectionItem } from 'filelist-utils';
 
-import {
-  getMeasurementInfoFromFile,
-  type MeasurementBase,
-  type Measurements,
-} from '../../../index.js';
+import type { MeasurementBase, Measurements } from '../../../index.js';
+import { getMeasurementInfoFromFile } from '../../../index.js';
 
 export async function cary500Loader(
   fileCollection: FileCollection,

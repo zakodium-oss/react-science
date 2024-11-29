@@ -1,4 +1,5 @@
-import { type Cell, flexRender, type RowData } from '@tanstack/react-table';
+import type { Cell, RowData } from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 
 interface TableRowCellProps<TData extends RowData> {
   cell: Cell<TData, unknown>;

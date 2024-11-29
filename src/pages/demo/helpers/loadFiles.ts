@@ -1,13 +1,9 @@
 import type { FifoLogger } from 'fifo-logger';
-import {
-  FileCollection,
-  fileCollectionFromFiles,
-  type FileCollectionItem,
-} from 'filelist-utils';
+import type { FileCollectionItem } from 'filelist-utils';
+import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
 
+import type { AppDispatch, AppState } from '../../../app-data/index.js';
 import {
-  type AppDispatch,
-  type AppState,
   biologicLoader,
   cary500Loader,
   cdfLoader,

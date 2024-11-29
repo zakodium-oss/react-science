@@ -5,15 +5,11 @@ import {
   MenuDivider,
   MenuItem,
 } from '@blueprintjs/core';
-import { type ItemListRenderer, Select } from '@blueprintjs/select';
+import type { ItemListRenderer } from '@blueprintjs/select';
+import { Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
-import {
-  type CSSProperties,
-  type Dispatch,
-  Fragment,
-  type SetStateAction,
-  useState,
-} from 'react';
+import type { CSSProperties, Dispatch, SetStateAction } from 'react';
+import { Fragment, useState } from 'react';
 
 import { Button, useOnOff, useSelect } from '../../src/components/index.js';
 

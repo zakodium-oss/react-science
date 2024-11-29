@@ -1,6 +1,7 @@
 import react from 'eslint-config-zakodium/react';
 import ts from 'eslint-config-zakodium/ts';
 import unicorn from 'eslint-config-zakodium/unicorn';
+import storybook from 'eslint-plugin-storybook';
 
 export default [
   {
@@ -19,6 +20,7 @@ export default [
   ...ts,
   ...react,
   ...unicorn,
+  ...storybook.configs['flat/recommended'],
   {
     rules: {
       'react/no-unknown-property': ['error', { ignore: ['css'] }],

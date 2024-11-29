@@ -2,18 +2,11 @@ import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { xMinMaxValues } from 'ml-spectra-processing';
 
-import {
-  enhance,
-  type Enhancers,
-  type MeasurementBase,
-  type Measurements,
-} from '../index.js';
+import type { Enhancers, MeasurementBase, Measurements } from '../index.js';
+import { enhance } from '../index.js';
 
-import {
-  type MeasurementsLoader,
-  mergeMeasurements,
-  type ParserLog,
-} from './utility/index.js';
+import type { MeasurementsLoader, ParserLog } from './utility/index.js';
+import { mergeMeasurements } from './utility/index.js';
 
 export interface LoadOptions {
   loaders?: MeasurementsLoader[];

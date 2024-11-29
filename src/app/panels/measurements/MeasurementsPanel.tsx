@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { type PanelProps, Tab, Tabs } from '@blueprintjs/core';
+import type { PanelProps } from '@blueprintjs/core';
+import { Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import { useMemo } from 'react';
 
+import type { MeasurementKind } from '../../../app-data/index.js';
 import {
   kindLabels,
-  type MeasurementKind,
   measurementKinds,
   useAppDispatch,
   useAppState,

@@ -1,7 +1,5 @@
-import {
-  type IrColumnPreferences,
-  IrPeaksPanel as IrPeaksPanelComponent,
-} from '../../../src/app/index.js';
+import type { IrColumnPreferences } from '../../../src/app/index.js';
+import { IrPeaksPanel as IrPeaksPanelComponent } from '../../../src/app/index.js';
 import type { IrPeak } from '../../../src/app-data/index.js';
 import measurement from '../../data/irMeasurement.json';
 

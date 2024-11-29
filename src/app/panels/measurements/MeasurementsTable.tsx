@@ -2,18 +2,20 @@ import { Menu, MenuItem, Popover } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
+import type {
+  MeasurementBase,
+  MeasurementKind,
+} from '../../../app-data/index.js';
 import {
   getMeasurement,
-  type MeasurementBase,
-  type MeasurementKind,
   useAppDispatch,
   useAppState,
 } from '../../../app-data/index.js';
+import type { InfoPanelData } from '../../../components/index.js';
 import {
   Button,
   ConfirmDialog,
   InfoPanel,
-  type InfoPanelData,
   PanelPreferencesToolbar,
   useOnOff,
 } from '../../../components/index.js';

@@ -1,6 +1,6 @@
 import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { Button } from '../button/index.js';
 

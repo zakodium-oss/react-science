@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Tab, Tabs } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export default {
   title: 'Components / Tabs',

@@ -1,14 +1,11 @@
-import {
-  ButtonGroup,
-  Classes,
-  Colors,
-  Icon,
-  type TooltipProps,
-} from '@blueprintjs/core';
+import type { TooltipProps } from '@blueprintjs/core';
+import { ButtonGroup, Classes, Colors, Icon } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import { cloneElement, type MouseEvent, type ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
+import { cloneElement } from 'react';
 
-import { Button, type ButtonProps } from '../button/index.js';
+import type { ButtonProps } from '../button/index.js';
+import { Button } from '../button/index.js';
 
 export interface ActivityBarProps {
   children: ReactNode;
