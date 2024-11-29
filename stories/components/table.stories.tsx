@@ -8,6 +8,8 @@ import {
 } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 
+const longTabel = [...table, ...table, ...table, ...table];
+
 interface ControlProps {
   bordered?: boolean;
   compact?: boolean;
@@ -66,6 +68,36 @@ export function Control({
   );
 }
 Control.args = {
+  bordered: false,
+  compact: false,
+  interactive: false,
+  striped: false,
+  stickyHeader: false,
+};
+
+export function Virtualized({
+  bordered,
+  compact,
+  interactive,
+  striped,
+  stickyHeader,
+}: ControlProps) {
+  return (
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+      stickyHeader={stickyHeader}
+      columns={columns}
+      virtualizer={{
+        estimateSize: () => 172,
+      }}
+      data={longTabel}
+    />
+  );
+}
+Virtualized.args = {
   bordered: false,
   compact: false,
   interactive: false,
