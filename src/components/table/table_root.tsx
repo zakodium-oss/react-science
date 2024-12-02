@@ -145,7 +145,10 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
         {...tableProps}
         style={
           virtualizeRows && stickyHeader
-            ? { display: 'contents' }
+            ? // This is necessary for the correct placement of the sticky header when virtualization is on.
+              // The table element's height is only the height of the displayed rows, not the total height,
+              // which is set on a container of the table, not the table itself.
+              { display: 'contents' }
             : tableProps?.style
         }
       >
@@ -161,6 +164,11 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   );
 }
 
+const ScrollRefDiv = styled.div`
+  height: 100%;
+  overflow: auto;
+`;
+
 function Container({
   virtualizeRows,
   totalHeight,
@@ -174,9 +182,9 @@ function Container({
 }) {
   if (virtualizeRows) {
     return (
-      <div ref={scrollRef} style={{ height: '100%', overflow: 'auto' }}>
+      <ScrollRefDiv ref={scrollRef}>
         <div style={{ height: totalHeight }}>{children}</div>
-      </div>
+      </ScrollRefDiv>
     );
   }
   return <>{children}</>;
