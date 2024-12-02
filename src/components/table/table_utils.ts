@@ -26,9 +26,6 @@ export interface TableRowTrProps {
 }
 
 export type TableRowTrRenderer<TData extends RowData> = (
-  /**
-   * Properties to pass on to the <tr> element
-   */
   trProps: TableRowTrProps,
   row: Row<TData>,
 ) => ReactNode;

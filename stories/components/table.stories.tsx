@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import type { ComponentType } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
@@ -34,13 +35,25 @@ export default {
   },
 };
 
+const Truncate = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
     cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
   }),
-  columnHelper.accessor('name', { header: 'Name', enableSorting: true }),
+  columnHelper.accessor('name', {
+    header: 'Name',
+    enableSorting: true,
+    cell: ({ getValue }) => (
+      <Truncate style={{ width: 200 }}>{getValue()}</Truncate>
+    ),
+  }),
   columnHelper.accessor('rn', { header: 'RN' }),
   columnHelper.accessor('mw', {
     header: 'MW',
@@ -91,6 +104,34 @@ export function Virtualized({
       data={table}
       virtualizeRows
       estimatedRowHeight={() => 172}
+    />
+  );
+}
+
+export function CustomTrRender({
+  bordered,
+  compact,
+  interactive,
+  striped,
+  stickyHeader,
+}: ControlProps) {
+  return (
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+      stickyHeader={stickyHeader}
+      columns={columns}
+      data={table}
+      virtualizeRows
+      estimatedRowHeight={() => 172}
+      renderRowTr={(trProps, row) => (
+        <tr
+          {...trProps}
+          style={{ ...trProps.style, backgroundColor: row.original.color }}
+        />
+      )}
     />
   );
 }

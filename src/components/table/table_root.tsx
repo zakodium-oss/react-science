@@ -28,43 +28,65 @@ const CustomHTMLTable = styled(HTMLTable, {
 
 interface TableBaseProps<TData extends RowData> {
   data: TData[];
+  /**
+   * Tanstack table definition of columns in the table.
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: Array<TableColumnDef<TData, any>>;
-
+  /**
+   * Show borders between each cell and row of the table.
+   */
   bordered?: boolean;
+  /**
+   * Reduce the padding around table cells.
+   */
   compact?: boolean;
+  /**
+   * Change the background color of the row when hovering over it.
+   */
   interactive?: boolean;
+  /**
+   * Alternate between gray and white background for each row.
+   */
   striped?: boolean;
+  /**
+   * Set to true to enable sticky header.
+   * When using sticky header with virtualized rows, the `<table>` element will be styled with `display: contents`.
+   * Any style applied through `tableProps.style` will no longer have any effect.
+   */
   stickyHeader?: boolean;
   /**
    * Use virtualized rows to optimize rendering.
    * When virtualizing rows, and in order to prevent layout shifts,
-   * it is recommended to set a fixed width on columns.
+   * it is recommended that all cells have a fixed width.
    */
   virtualizeRows?: boolean;
-
-  /**
-   *
-   * @param index
-   */
-  estimatedRowHeight?: (index: number) => number;
 
   reactTable?: Omit<
     TableOptions<TData>,
     'data' | 'columns' | 'getCoreRowModel' | 'getSortedRowModel'
   >;
   tableProps?: Omit<TableHTMLAttributes<HTMLTableElement>, 'children'>;
+  /**
+   * Override the default row rendering.
+   * Make sure to spread the passed `trProps` onto the rendered `<tr>` element.
+   */
   renderRowTr?: TableRowTrRenderer<TData>;
 }
 
 interface RegularTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
-  virtualizeRows?: false;
+  virtualizeRows?: false | undefined;
 }
 
 interface VirtualizedTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows: true;
+  /**
+   *
+   * @param index The index of the row in the data array.
+   * @return The estimated height of the row at the given index.
+   */
   estimatedRowHeight: (index: number) => number;
 }
 
@@ -88,7 +110,6 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     renderRowTr,
 
     virtualizeRows,
-    estimatedRowHeight,
   } = props;
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
@@ -105,7 +126,8 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     enabled: virtualizeRows,
     count: data.length,
     getScrollElement: () => scrollElementRef.current,
-    estimateSize: estimatedRowHeight ?? (() => 0),
+    estimateSize:
+      (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
   });
 
