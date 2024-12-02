@@ -104,8 +104,9 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
           tableProps={{ style: { width: '100%' } }}
           renderRowTr={(trProps, row) => (
             <tr
+              {...trProps}
               style={{
-                ...trProps,
+                ...trProps.style,
                 backgroundColor: rowBackgroundColor[row.original.levelLabel],
               }}
             />
