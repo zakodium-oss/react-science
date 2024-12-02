@@ -1,14 +1,10 @@
 import type { Row, RowData } from '@tanstack/react-table';
-import type { Virtualizer } from '@tanstack/react-virtual';
+import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
 import { TableRowCell } from './table_row_cell.js';
-import type {
-  RenderRowVirtualItem,
-  TableRowTrProps,
-  TableRowTrRenderer,
-} from './table_utils.js';
+import type { TableRowTrProps, TableRowTrRenderer } from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {
   rows: Array<Row<TData>>;
@@ -73,6 +69,13 @@ function TableRow<TData>({
 const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps) => (
   <tr {...trProps} />
 );
+
+type RenderRowVirtualItem = VirtualItem & {
+  /**
+   * The index of the element within the virtual list being currently rendered.
+   */
+  virtualIndex: number;
+};
 
 function getTrRenderProps<TData extends RowData>(
   row: Row<TData>,
