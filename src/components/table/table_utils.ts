@@ -1,7 +1,7 @@
 import type { ColumnDef, Row, RowData } from '@tanstack/react-table';
 import { createColumnHelper } from '@tanstack/react-table';
 import type { VirtualItem } from '@tanstack/react-virtual';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<
   TData,
@@ -19,11 +19,16 @@ export type RenderRowVirtualItem = VirtualItem & {
   virtualIndex: number;
 };
 
-export interface TableRowTrRendererProps<TData extends RowData> {
-  row: Row<TData>;
+export interface TableRowTrProps {
+  style: CSSProperties;
+  className: string;
   children: ReactNode;
 }
+
 export type TableRowTrRenderer<TData extends RowData> = (
-  props: TableRowTrRendererProps<TData>,
-  virtualItem?: RenderRowVirtualItem,
+  /**
+   * Properties to pass on to the <tr> element
+   */
+  trProps: TableRowTrProps,
+  row: Row<TData>,
 ) => ReactNode;

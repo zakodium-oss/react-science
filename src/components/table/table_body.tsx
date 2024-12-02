@@ -1,30 +1,31 @@
 import type { Row, RowData } from '@tanstack/react-table';
 import type { Virtualizer } from '@tanstack/react-virtual';
+import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
 import { TableRowCell } from './table_row_cell.js';
 import type {
   RenderRowVirtualItem,
+  TableRowTrProps,
   TableRowTrRenderer,
-  TableRowTrRendererProps,
 } from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {
   rows: Array<Row<TData>>;
   renderRowTr: TableRowTrRenderer<TData> | undefined;
+  virtualizeRows?: boolean;
   virtualizer: Virtualizer<HTMLDivElement, Element>;
-  virtualizationEnabled: boolean;
 }
 
 export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
   const {
     rows,
-    renderRowTr = defaultRenderRowTr,
+    renderRowTr = defaultRenderRowTr as TableRowTrRenderer<TData>,
     virtualizer,
-    virtualizationEnabled,
+    virtualizeRows,
   } = props;
 
-  if (virtualizationEnabled) {
+  if (virtualizeRows) {
     const virtualItems = virtualizer.getVirtualItems();
     return (
       <tbody>
@@ -32,9 +33,13 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
           <TableRow
             key={virtualItem.index}
             row={rows[virtualItem.index]}
-            renderRowTr={(row) =>
-              renderRowTr(row, { ...virtualItem, virtualIndex: index })
-            }
+            renderRowTr={(row) => {
+              const trProps = getTrRenderProps<TData>(row, {
+                ...virtualItem,
+                virtualIndex: index,
+              });
+              return renderRowTr(trProps, row);
+            }}
           />
         ))}
       </tbody>
@@ -43,35 +48,37 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
   return (
     <tbody>
       {rows.map((row) => (
-        <TableRow key={row.id} row={row} renderRowTr={renderRowTr} />
+        <TableRow
+          key={row.id}
+          row={row}
+          renderRowTr={(row) => renderRowTr(getTrRenderProps(row), row)}
+        />
       ))}
     </tbody>
   );
 }
+
+type TableRowRenderer<TData extends RowData> = (row: Row<TData>) => ReactNode;
 
 function TableRow<TData>({
   row,
   renderRowTr,
 }: {
   row: Row<TData>;
-  renderRowTr: TableRowTrRenderer<TData>;
+  renderRowTr: TableRowRenderer<TData>;
 }) {
-  return (
-    <Fragment>
-      {renderRowTr({
-        row,
-        children: row
-          .getVisibleCells()
-          .map((cell) => <TableRowCell key={cell.id} cell={cell} />),
-      })}
-    </Fragment>
-  );
+  return <Fragment>{renderRowTr(row)}</Fragment>;
 }
 
-function defaultRenderRowTr<TData extends RowData>(
-  props: TableRowTrRendererProps<TData>,
+const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps) => (
+  <tr {...trProps} />
+);
+
+function getTrRenderProps<TData extends RowData>(
+  row: Row<TData>,
   virtualItem?: RenderRowVirtualItem,
-) {
+): TableRowTrProps {
+  const index = virtualItem ? virtualItem.index : row.index;
   const style = virtualItem
     ? {
         height: virtualItem.size,
@@ -79,6 +86,14 @@ function defaultRenderRowTr<TData extends RowData>(
           virtualItem.start - virtualItem.virtualIndex * virtualItem.size
         }px)`,
       }
-    : undefined;
-  return <tr style={style}>{props.children}</tr>;
+    : {};
+
+  return {
+    style,
+    // index is 0-indexed, so odd rows are even indices
+    className: index % 2 === 0 ? 'odd' : '',
+    children: row
+      .getVisibleCells()
+      .map((cell) => <TableRowCell key={cell.id} cell={cell} />),
+  };
 }

@@ -8,8 +8,6 @@ import {
 } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 
-const longTabel = [...table, ...table, ...table, ...table];
-
 interface ControlProps {
   bordered?: boolean;
   compact?: boolean;
@@ -27,6 +25,13 @@ export default {
       </div>
     ),
   ],
+  args: {
+    bordered: false,
+    compact: false,
+    interactive: false,
+    striped: false,
+    stickyHeader: false,
+  },
 };
 
 const columnHelper = createTableColumnHelper<(typeof table)[number]>();
@@ -67,13 +72,6 @@ export function Control({
     />
   );
 }
-Control.args = {
-  bordered: false,
-  compact: false,
-  interactive: false,
-  striped: false,
-  stickyHeader: false,
-};
 
 export function Virtualized({
   bordered,
@@ -90,17 +88,9 @@ export function Virtualized({
       striped={striped}
       stickyHeader={stickyHeader}
       columns={columns}
-      virtualizer={{
-        estimateSize: () => 172,
-      }}
-      data={longTabel}
+      data={table}
+      virtualizeRows
+      estimatedRowHeight={() => 172}
     />
   );
 }
-Virtualized.args = {
-  bordered: false,
-  compact: false,
-  interactive: false,
-  striped: false,
-  stickyHeader: false,
-};

@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { HTMLTable } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import type { RowData, TableOptions } from '@tanstack/react-table';
 import {
   getCoreRowModel,
@@ -16,7 +17,16 @@ import { TableHeader } from './table_header.js';
 import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 
-export interface TableProps<TData extends RowData> {
+const CustomHTMLTable = styled(HTMLTable, {
+  shouldForwardProp: (prop) => prop !== 'striped',
+})`
+  tbody tr.odd td {
+    background: ${(props) =>
+      props.striped ? 'rgba(143, 153, 168, 0.15)' : 'inherit'};
+  }
+`;
+
+interface TableBaseProps<TData extends RowData> {
   data: TData[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: Array<TableColumnDef<TData, any>>;
@@ -26,6 +36,18 @@ export interface TableProps<TData extends RowData> {
   interactive?: boolean;
   striped?: boolean;
   stickyHeader?: boolean;
+  /**
+   * Use virtualized rows to optimize rendering.
+   * When virtualizing rows, and in order to prevent layout shifts,
+   * it is recommended to set a fixed width on columns.
+   */
+  virtualizeRows?: boolean;
+
+  /**
+   *
+   * @param index
+   */
+  estimatedRowHeight?: (index: number) => number;
 
   reactTable?: Omit<
     TableOptions<TData>,
@@ -33,12 +55,22 @@ export interface TableProps<TData extends RowData> {
   >;
   tableProps?: Omit<TableHTMLAttributes<HTMLTableElement>, 'children'>;
   renderRowTr?: TableRowTrRenderer<TData>;
-  virtualizer?: TableVirtualizer;
 }
 
-export interface TableVirtualizer {
-  estimateSize: (index: number) => number;
+interface RegularTableProps<TData extends RowData>
+  extends TableBaseProps<TData> {
+  virtualizeRows?: false;
 }
+
+interface VirtualizedTableProps<TData extends RowData>
+  extends TableBaseProps<TData> {
+  virtualizeRows: true;
+  estimatedRowHeight: (index: number) => number;
+}
+
+export type TableProps<TData extends RowData> =
+  | RegularTableProps<TData>
+  | VirtualizedTableProps<TData>;
 
 export function Table<TData extends RowData>(props: TableProps<TData>) {
   const {
@@ -54,7 +86,9 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     reactTable,
     tableProps,
     renderRowTr,
-    virtualizer,
+
+    virtualizeRows,
+    estimatedRowHeight,
   } = props;
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
@@ -68,55 +102,56 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   });
 
   const tanstackVirtualizer = useVirtualizer({
+    enabled: virtualizeRows,
     count: data.length,
     getScrollElement: () => scrollElementRef.current,
-    estimateSize: virtualizer ? virtualizer.estimateSize : () => 0,
+    estimateSize: estimatedRowHeight ?? (() => 0),
     overscan: 5,
   });
 
   return (
     <Container
-      virtualizer={virtualizer}
+      virtualizeRows={virtualizeRows}
       totalHeight={tanstackVirtualizer.getTotalSize()}
       scrollRef={scrollElementRef}
     >
-      <HTMLTable
+      <CustomHTMLTable
         bordered={bordered}
         compact={compact}
         interactive={interactive}
         striped={striped}
         {...tableProps}
+        style={stickyHeader ? { display: 'contents' } : tableProps?.style}
       >
         <TableHeader sticky={stickyHeader} headers={table.getFlatHeaders()} />
         <TableBody
           rows={table.getRowModel().rows}
           renderRowTr={renderRowTr}
           virtualizer={tanstackVirtualizer}
-          virtualizationEnabled={!!virtualizer}
+          virtualizeRows={virtualizeRows}
         />
-      </HTMLTable>
+      </CustomHTMLTable>
     </Container>
   );
 }
 
 function Container({
-  virtualizer,
+  virtualizeRows,
   totalHeight,
   scrollRef,
   children,
 }: {
-  virtualizer?: TableVirtualizer;
+  virtualizeRows?: boolean;
   children: ReactNode;
   totalHeight: number;
-  scrollRef: RefObject<any>;
+  scrollRef: RefObject<HTMLDivElement>;
 }) {
-  if (!virtualizer) {
-    return <>{children}</>;
+  if (virtualizeRows) {
+    return (
+      <div ref={scrollRef} style={{ height: '100%', overflow: 'auto' }}>
+        <div style={{ height: totalHeight }}>{children}</div>
+      </div>
+    );
   }
-
-  return (
-    <div ref={scrollRef} style={{ height: '100%', overflow: 'auto' }}>
-      <div style={{ height: totalHeight }}>{children}</div>
-    </div>
-  );
+  return <>{children}</>;
 }
