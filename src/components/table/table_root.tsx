@@ -83,7 +83,7 @@ interface VirtualizedTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows: true;
   /**
-   *
+   * For virtualization of the table rows, provide an estimate of the height of each row.
    * @param index The index of the row in the data array.
    * @return The estimated height of the row at the given index.
    */
@@ -143,7 +143,11 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
         interactive={interactive}
         striped={striped}
         {...tableProps}
-        style={stickyHeader ? { display: 'contents' } : tableProps?.style}
+        style={
+          virtualizeRows && stickyHeader
+            ? { display: 'contents' }
+            : tableProps?.style
+        }
       >
         <TableHeader sticky={stickyHeader} headers={table.getFlatHeaders()} />
         <TableBody
