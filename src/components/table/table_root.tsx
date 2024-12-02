@@ -17,6 +17,8 @@ import { TableHeader } from './table_header.js';
 import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 
+// Blueprint's HTMLTable `striped` prop's implementation is based on nth-child odd / even
+// We cannot use that with virtualization, so we override its implementation here.
 const CustomHTMLTable = styled(HTMLTable, {
   shouldForwardProp: (prop) => prop !== 'striped',
 })`
