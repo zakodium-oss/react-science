@@ -2,6 +2,7 @@
 import type { RadioGroupProps } from '@blueprintjs/core';
 import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import { Children, cloneElement } from 'react';
 
 import { RadioButton } from './RadioButton.js';
 
@@ -30,6 +31,7 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
     large,
     selectedValue,
     onChange,
+    children,
     ...restProps
   } = props;
 
@@ -55,6 +57,22 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
               disabled={groupDisabled || disabled}
             />
           );
+        })}
+        {Children.map(children, (child) => {
+          if (!child || typeof child !== 'object' || !('type' in child)) {
+            return child;
+          }
+          if (child.type === RadioButton) {
+            return cloneElement(child, {
+              ...child.props,
+              large,
+              name,
+              onChange,
+              checked: child.props.value === selectedValue,
+              disabled: groupDisabled || child.props.disabled,
+            });
+          }
+          return child;
         })}
       </RadioButtonContainer>
     </RadioGroup>

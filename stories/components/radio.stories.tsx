@@ -5,7 +5,7 @@ import type { Decorator } from '@storybook/react';
 import { useState } from 'react';
 
 import type { RadioButtonGroupProps } from '../../src/components/index.js';
-import { RadioButtonGroup } from '../../src/components/index.js';
+import { RadioButton, RadioButtonGroup } from '../../src/components/index.js';
 
 const ExampleGroup = styled.div`
   padding: 20px;
@@ -93,3 +93,35 @@ export function RadioButtonGroupOneOption() {
     />
   );
 }
+
+export function RadioButtonGroupWithChildren(
+  props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
+) {
+  const [option, setOption] = useState(options[2].value);
+  return (
+    <ExampleGroup>
+      <RadioButtonGroup
+        selectedValue={option}
+        onChange={(event) => {
+          const value = event.currentTarget.value;
+          setOption(value);
+        }}
+        {...props}
+      >
+        {options.map(({ value, label, disabled }) => (
+          <RadioButton
+            key={value}
+            value={value}
+            label={label}
+            disabled={disabled}
+          />
+        ))}
+      </RadioButtonGroup>
+    </ExampleGroup>
+  );
+}
+
+RadioButtonGroupWithChildren.args = {
+  large: false,
+  disabled: false,
+};
