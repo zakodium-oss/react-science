@@ -1,6 +1,8 @@
-import { FormGroup, TextArea, type TextAreaProps } from '@blueprintjs/core';
+import type { TextAreaProps } from '@blueprintjs/core';
+import { FormGroup, TextArea } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import { type ChangeEvent, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 
 export default {
   title: 'Forms / TextArea',

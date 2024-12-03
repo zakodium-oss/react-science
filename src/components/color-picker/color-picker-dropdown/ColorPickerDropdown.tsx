@@ -1,11 +1,10 @@
-import { Popover, type PopoverProps } from '@blueprintjs/core';
+import type { PopoverProps } from '@blueprintjs/core';
+import { Popover } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
 import FixedColorPreview from '../preview/FixedColorPreview.js';
-import {
-  ColorPicker,
-  type ColorPickerProps,
-} from '../react-color/ColorPicker.js';
+import type { ColorPickerProps } from '../react-color/ColorPicker.js';
+import { ColorPicker } from '../react-color/ColorPicker.js';
 import * as colorHelper from '../react-color/helpers/color.js';
 
 interface ColorPickerDropdownProps

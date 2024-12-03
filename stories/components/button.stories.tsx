@@ -3,7 +3,8 @@ import { ButtonGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { Button, type ButtonProps } from '../../src/components/index.js';
+import type { ButtonProps } from '../../src/components/index.js';
+import { Button } from '../../src/components/index.js';
 
 export default {
   title: 'Components / Button',

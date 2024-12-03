@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { RadioGroup, type RadioGroupProps } from '@blueprintjs/core';
+import { RadioGroup } from '@blueprintjs/core';
+import type { RadioGroupProps } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import { Children, cloneElement } from 'react';
 

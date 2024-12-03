@@ -1,13 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { Collapse, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import {
-  type CSSProperties,
-  memo,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import type { CSSProperties } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
+import { match, P } from 'ts-pattern';
 
 import { Button } from '../button/Button.js';
 import { SelectedTotal } from '../selected-total/index.js';
@@ -246,18 +242,16 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
  * @returns - ValueRenderers component.
  */
 function valueCell(value: number | string | object | boolean) {
-  switch (typeof value) {
-    case 'boolean':
-      return <ValueRenderers.Text value={value ? 'Yes' : 'No'} />;
-    case 'number':
-      return <ValueRenderers.Number value={value} />;
-    case 'object':
-      return <ValueRenderers.Object value={value} />;
-    case 'string':
-      return <ValueRenderers.Text value={value} />;
-    default:
-      return <ValueRenderers.Text value={value} />;
-  }
+  return match(value)
+    .with(P.boolean, (value) => (
+      <ValueRenderers.Text value={value ? 'Yes' : 'No'} />
+    ))
+    .with(P.number, (value) => <ValueRenderers.Number value={value} />)
+    .with(P.string, (value) => <ValueRenderers.Text value={value} />)
+    .with({}, (value) => <ValueRenderers.Object value={value} />)
+    .otherwise((value) => (
+      <ValueRenderers.Text value={String(value as unknown)} />
+    ));
 }
 
 /**
@@ -273,19 +267,13 @@ function valueSearch(
   lowerCase = true,
 ): boolean {
   if (lowerCase) {
-    value = String(value).toLowerCase();
+    value = String(value as unknown).toLowerCase();
     search = search.toLowerCase();
   }
-  switch (typeof value) {
-    case 'number':
-      return String(value).includes(search);
-    case 'boolean':
-      return String(value).includes(search);
-    case 'object':
-      return JSON.stringify(value).includes(search);
-    case 'string':
-      return value.includes(search);
-    default:
-      return true;
-  }
+  return match(value)
+    .with(P.boolean, (value) => String(value).includes(search))
+    .with(P.number, (value) => String(value).includes(search))
+    .with(P.string, (value) => value.includes(search))
+    .with({}, (value) => JSON.stringify(value).includes(search))
+    .otherwise(() => true);
 }

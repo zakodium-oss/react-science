@@ -1,5 +1,6 @@
 import { Checkbox, InputGroup } from '@blueprintjs/core';
-import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export default {
   title: 'Forms / Checkbox',

@@ -1,4 +1,4 @@
-import { type GradientScaleName } from '../../../components/index.js';
+import type { ColorConfig } from '../../../components/index.js';
 import type { MeasurementKind } from '../index.js';
 
 export interface AppView {
@@ -23,7 +23,3 @@ export interface MeasurementAppView {
   color: ColorConfig;
   visible: boolean;
 }
-
-export type ColorConfig =
-  | { kind: 'fixed'; color: string }
-  | { kind: 'fixedGradient'; gradient: GradientScaleName };

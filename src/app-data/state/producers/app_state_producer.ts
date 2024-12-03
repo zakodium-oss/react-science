@@ -1,7 +1,7 @@
-import { type Draft } from 'immer';
+import type { Draft } from 'immer';
 
-import { type AppStateAction } from '../app_state.actions.js';
-import { type AppState } from '../app_state.js';
+import type { AppStateAction } from '../app_state.actions.js';
+import type { AppState } from '../app_state.js';
 
 import { addMeasurements } from './measurements/addMeasurements.js';
 import {

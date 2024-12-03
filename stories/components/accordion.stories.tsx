@@ -1,10 +1,13 @@
+import { Button } from '@blueprintjs/core';
+import type { Meta } from '@storybook/react';
 import { useState } from 'react';
 
+import type { ToolbarItemProps } from '../../src/components/index.js';
 import {
   Accordion,
+  AccordionProvider,
   SplitPane,
   Toolbar,
-  type ToolbarItemProps,
   useToggleAccordion,
 } from '../../src/components/index.js';
 import { AccordionDecorator } from '../utils.js';
@@ -307,5 +310,52 @@ export function WithToggle() {
         </div>
       </div>
     </>
+  );
+}
+
+export const UnmountChildren = {
+  decorators: [],
+  args: {
+    unmountChildren: true,
+  },
+  render: (props) => {
+    return (
+      <AccordionProvider {...props}>
+        <Accordion>
+          <Accordion.Item title="First">
+            <Count />
+          </Accordion.Item>
+          <Accordion.Item title="Second" defaultOpened>
+            <Count />
+          </Accordion.Item>
+        </Accordion>
+      </AccordionProvider>
+    );
+  },
+} satisfies Meta;
+
+export function UnmountSomeChildren() {
+  return (
+    <Accordion>
+      <Accordion.Item title="Always render children" defaultOpened>
+        <Count />
+      </Accordion.Item>
+      <Accordion.Item title="Unmount children" defaultOpened unmountChildren>
+        <Count />
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
+function Count() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <Button
+      onClick={() => setCount((prev) => prev + 1)}
+      style={{ margin: 4, alignSelf: 'start' }}
+    >
+      Click to increment ({count})
+    </Button>
   );
 }

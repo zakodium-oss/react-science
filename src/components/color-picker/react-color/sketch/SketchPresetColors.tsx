@@ -1,4 +1,5 @@
-import { type CSSProperties, type MouseEvent, useCallback } from 'react';
+import type { CSSProperties, MouseEvent } from 'react';
+import { useCallback } from 'react';
 
 import { Swatch } from '../common/index.js';
 

@@ -8,7 +8,8 @@ import {
   TextArea,
 } from '@blueprintjs/core';
 import { HTMLSelect } from '@blueprintjs/core/lib/esnext';
-import { type ItemRenderer, Select } from '@blueprintjs/select';
+import type { ItemRenderer } from '@blueprintjs/select';
+import { Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 

@@ -1,4 +1,3 @@
-import { v4 } from '@lukeed/uuid';
 import type { FileCollectionItem } from 'filelist-utils';
 
 /**
@@ -12,7 +11,7 @@ export function getMeasurementInfoFromFile(
   title: string,
 ) {
   return {
-    id: v4(),
+    id: crypto.randomUUID(),
     info: {
       title,
       file: { name, path: relativePath, lastModified, size },

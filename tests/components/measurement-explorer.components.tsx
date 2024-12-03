@@ -1,11 +1,6 @@
 import { MeasurementExplorer } from '../../src/app/index.js';
-import type {
-  IrMeasurement,
-  MeasurementAppView,
-} from '../../src/app-data/index.js';
-import measurement from '../../stories/data/irMeasurement.json';
-
-const irMeasurement = measurement as IrMeasurement;
+import type { MeasurementAppView } from '../../src/app-data/index.js';
+import { irMeasurement } from '../../stories/data/data.js';
 
 const measurementDisplay: MeasurementAppView = {
   color: {

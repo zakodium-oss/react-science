@@ -1,8 +1,8 @@
-import { type AppState } from './app_state.js';
-import {
-  type MeasurementKind,
-  type MeasurementKindAndId,
-  type Measurements,
+import type { AppState } from './app_state.js';
+import type {
+  MeasurementKind,
+  MeasurementKindAndId,
+  Measurements,
 } from './data/index.js';
 import type { MeasurementAppView, Plot2DZoom } from './view/index.js';
 

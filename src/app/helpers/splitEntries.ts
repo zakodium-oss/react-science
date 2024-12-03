@@ -1,9 +1,9 @@
-import {
-  type AppState,
-  iterateKindMeasurementsAndView,
-  type MeasurementAndView,
-  type MeasurementKind,
+import type {
+  AppState,
+  MeasurementAndView,
+  MeasurementKind,
 } from '../../app-data/index.js';
+import { iterateKindMeasurementsAndView } from '../../app-data/index.js';
 
 export function splitEntries<Kind extends MeasurementKind>(
   appState: AppState,

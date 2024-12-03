@@ -9,7 +9,7 @@ import {
   Table,
   ValueRenderers,
 } from '../../src/components/index.js';
-import data from '../data/table.json';
+import { table } from '../data/data.js';
 
 export default {
   title: 'Components / ContextMenu',
@@ -60,7 +60,7 @@ const content = (
   </Menu>
 );
 
-const columnHelper = createTableColumnHelper<(typeof data)[number]>();
+const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.accessor('id', {
     header: () => <ColumnWithDropdownMenu value="id" content={content} />,
@@ -97,7 +97,7 @@ const columns = [
 ];
 
 export function TableWithHeaderDropDownMenu() {
-  return <Table data={data.slice(0, 10)} columns={columns} />;
+  return <Table data={table.slice(0, 10)} columns={columns} />;
 }
 
 function ColumnWithDropdownMenu({
@@ -154,7 +154,7 @@ export function TableWithContextMenu() {
         </ContextMenu>
       </thead>
       <tbody>
-        {data.slice(0, 2).map(({ id, name, rn, mw, em, isExpensive }) => (
+        {table.slice(0, 2).map(({ id, name, rn, mw, em, isExpensive }) => (
           <ContextMenu key={id} tagName="tr" content={content}>
             <td>{id}</td>
             <td>{name}</td>

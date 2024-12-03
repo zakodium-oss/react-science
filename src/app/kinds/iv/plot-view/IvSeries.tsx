@@ -2,11 +2,9 @@ import { xyToXYObject } from 'ml-spectra-processing';
 import { useMemo } from 'react';
 import { LineSeries } from 'react-plot';
 
-import {
-  type ColorConfig,
-  getVariableByLabel,
-  type IvMeasurement,
-} from '../../../../app-data/index.js';
+import type { IvMeasurement } from '../../../../app-data/index.js';
+import { getVariableByLabel } from '../../../../app-data/index.js';
+import type { ColorConfig } from '../../../../components/index.js';
 import { getColorFromConfig } from '../../../helpers/index.js';
 
 interface IvSeriesProps {

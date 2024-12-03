@@ -1,4 +1,4 @@
-import { type Panel } from '@blueprintjs/core';
+import type { Panel } from '@blueprintjs/core';
 import { createContext, useContext } from 'react';
 
 export interface MeasurementState {

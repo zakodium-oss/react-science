@@ -1,11 +1,18 @@
-import { type ReactNode, useMemo, useReducer } from 'react';
+import type { ReactNode } from 'react';
+import { useMemo, useReducer } from 'react';
 
-import { accordionContext, type ContextType } from './accordion_context.js';
+import type { ContextType } from './accordion_context.js';
+import { accordionContext } from './accordion_context.js';
 import { reducer } from './accordion_context.state.js';
 
-export function AccordionProvider(props: { children: ReactNode }) {
+export function AccordionProvider(props: {
+  children: ReactNode;
+  unmountChildren?: boolean;
+}) {
+  const { unmountChildren = false } = props;
   const [state, dispatch] = useReducer(reducer, {
     items: [],
+    unmountChildren,
   });
 
   const utils = useMemo(
@@ -35,8 +42,8 @@ export function AccordionProvider(props: { children: ReactNode }) {
   );
 
   const value = useMemo<ContextType>(() => {
-    return [{ items: state.items }, utils];
-  }, [state.items, utils]);
+    return [{ items: state.items, unmountChildren }, utils];
+  }, [state.items, utils, unmountChildren]);
 
   return (
     <accordionContext.Provider value={value}>

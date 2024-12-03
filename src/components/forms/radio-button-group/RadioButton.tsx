@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { Radio, type RadioProps } from '@blueprintjs/core';
+import { Radio } from '@blueprintjs/core';
+import type { RadioProps } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 
 import { enabledColor } from '../styles.js';

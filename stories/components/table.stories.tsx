@@ -1,4 +1,5 @@
-import { type ComponentType } from 'react';
+import styled from '@emotion/styled';
+import type { ComponentType } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
 import {
@@ -6,7 +7,7 @@ import {
   Table,
   ValueRenderers,
 } from '../../src/components/index.js';
-import data from '../data/table.json';
+import { table } from '../data/data.js';
 
 interface ControlProps {
   bordered?: boolean;
@@ -25,15 +26,34 @@ export default {
       </div>
     ),
   ],
+  args: {
+    bordered: false,
+    compact: false,
+    interactive: false,
+    striped: false,
+    stickyHeader: false,
+  },
 };
 
-const columnHelper = createTableColumnHelper<(typeof data)[number]>();
+const Truncate = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
     cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
   }),
-  columnHelper.accessor('name', { header: 'Name', enableSorting: true }),
+  columnHelper.accessor('name', {
+    header: 'Name',
+    enableSorting: true,
+    cell: ({ getValue }) => (
+      <Truncate style={{ width: 200 }}>{getValue()}</Truncate>
+    ),
+  }),
   columnHelper.accessor('rn', { header: 'RN' }),
   columnHelper.accessor('mw', {
     header: 'MW',
@@ -41,7 +61,12 @@ const columns = [
       <ValueRenderers.Number value={getValue()} fixed={4} />
     ),
   }),
-  columnHelper.accessor('em', { header: 'EM' }),
+  columnHelper.accessor('em', {
+    header: 'EM',
+    cell: ({ getValue }) => (
+      <ValueRenderers.Number value={getValue()} fixed={4} />
+    ),
+  }),
   columnHelper.accessor('isExpensive', { header: 'Is expensive' }),
   columnHelper.accessor('color', { header: 'Color' }),
 ];
@@ -61,14 +86,54 @@ export function Control({
       striped={striped}
       stickyHeader={stickyHeader}
       columns={columns}
-      data={data}
+      data={table}
     />
   );
 }
-Control.args = {
-  bordered: false,
-  compact: false,
-  interactive: false,
-  striped: false,
-  sticky: false,
-};
+
+export function Virtualized({
+  bordered,
+  compact,
+  interactive,
+  striped,
+  stickyHeader,
+}: ControlProps) {
+  return (
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+      stickyHeader={stickyHeader}
+      columns={columns}
+      data={table}
+      virtualizeRows
+      estimatedRowHeight={() => 172}
+    />
+  );
+}
+
+export function CustomTrRender({
+  bordered,
+  compact,
+  interactive,
+  striped,
+  stickyHeader,
+}: ControlProps) {
+  return (
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+      stickyHeader={stickyHeader}
+      columns={columns}
+      data={table}
+      virtualizeRows
+      estimatedRowHeight={() => 172}
+      renderRowTr={(trProps, row) => (
+        <tr {...trProps} style={{ backgroundColor: row.original.color }} />
+      )}
+    />
+  );
+}
