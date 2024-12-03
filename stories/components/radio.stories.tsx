@@ -1,13 +1,30 @@
 import type { RadioGroupProps } from '@blueprintjs/core';
 import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Decorator } from '@storybook/react';
 import { useState } from 'react';
 
 import type { RadioButtonGroupProps } from '../../src/components/index.js';
 import { RadioButtonGroup } from '../../src/components/index.js';
 
+const ExampleGroup = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const ExampleDecorator: Decorator = (Story) => {
+  return (
+    <ExampleGroup>
+      <Story />
+    </ExampleGroup>
+  );
+};
+
 export default {
   title: 'Forms / Radio',
+  decorators: [ExampleDecorator],
 };
 
 const options = [
@@ -17,36 +34,29 @@ const options = [
   { label: 'Option 4', value: 'option4' },
 ];
 
-const ExampleGroup = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
 export function RadioGroupControl(
   props: Omit<RadioGroupProps, 'onChange' | 'selectedValue' | 'children'>,
 ) {
   const [option, setOption] = useState(options[2].value);
   return (
-    <ExampleGroup>
-      <RadioGroup
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setOption(value);
-        }}
-        selectedValue={option}
-        options={options}
-        {...props}
-      />
-    </ExampleGroup>
+    <RadioGroup
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+      selectedValue={option}
+      options={options}
+      {...props}
+    />
   );
 }
 RadioGroupControl.args = {
   disabled: false,
   inline: false,
+  label: 'Blueprintjs radio group',
 };
 
-export function RadioButtonControl(
+export function RadioButtonGroupControl(
   props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
 ) {
   const [option, setOption] = useState(options[2].value);
@@ -64,7 +74,22 @@ export function RadioButtonControl(
     </ExampleGroup>
   );
 }
-RadioButtonControl.args = {
+RadioButtonGroupControl.args = {
   large: false,
   disabled: false,
+  label: 'Radio button group',
 };
+
+export function RadioButtonGroupOneOption() {
+  const [option, setOption] = useState<string | undefined>();
+  return (
+    <RadioButtonGroup
+      options={[options[0]]}
+      selectedValue={option}
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+    />
+  );
+}

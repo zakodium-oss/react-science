@@ -35,6 +35,7 @@ const Label = styled.label<{ large?: boolean; disabled?: boolean }>`
   border-color: rgba(0, 0, 0, ${(props) => (props.disabled ? 1 : 0.25)});
   border-style: solid;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  white-space: nowrap;
   &:hover {
     color: ${enabledColor};
   }
