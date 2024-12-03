@@ -102,14 +102,13 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
           compact
           bordered
           tableProps={{ style: { width: '100%' } }}
-          renderRowTr={({ row, children }) => (
+          renderRowTr={(trProps, row) => (
             <tr
+              {...trProps}
               style={{
                 backgroundColor: rowBackgroundColor[row.original.levelLabel],
               }}
-            >
-              {children}
-            </tr>
+            />
           )}
         />
       </DialogBody>
