@@ -44,7 +44,8 @@ interface TableBaseProps<TData extends RowData> {
    */
   compact?: boolean;
   /**
-   * Change the background color of the row when hovering over it.
+   * When hovering over a row, change its background color and set the pointer
+   * to be a cursor.
    */
   interactive?: boolean;
   /**
@@ -52,7 +53,7 @@ interface TableBaseProps<TData extends RowData> {
    */
   striped?: boolean;
   /**
-   * Set to true to enable a headers which sticks to the top of the table.
+   * Enable header rows which stick to the top of the table.
    */
   stickyHeader?: boolean;
   /**
