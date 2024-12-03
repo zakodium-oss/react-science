@@ -16,7 +16,7 @@ export const ColorPreview = {
     kind: 'ir',
     color: {
       kind: 'fixed',
-      color: 'red',
+      color: 'blue',
     },
   },
   decorators: (Story) => (
