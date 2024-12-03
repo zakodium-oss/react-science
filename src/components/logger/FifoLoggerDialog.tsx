@@ -106,7 +106,6 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
             <tr
               {...trProps}
               style={{
-                ...trProps.style,
                 backgroundColor: rowBackgroundColor[row.original.levelLabel],
               }}
             />

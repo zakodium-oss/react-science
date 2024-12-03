@@ -52,15 +52,13 @@ interface TableBaseProps<TData extends RowData> {
    */
   striped?: boolean;
   /**
-   * Set to true to enable sticky header.
-   * When using sticky header with virtualized rows, the `<table>` element will be styled with `display: contents`.
-   * Any style applied through `tableProps.style` will no longer have any effect.
+   * Set to true to enable a headers which sticks to the top of the table.
    */
   stickyHeader?: boolean;
   /**
    * Use virtualized rows to optimize rendering.
    * When virtualizing rows, and in order to prevent layout shifts,
-   * it is recommended that all cells have a fixed width.
+   * it is recommended that all columns have a fixed width.
    */
   virtualizeRows?: boolean;
 
@@ -134,25 +132,13 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   });
 
   return (
-    <Container
-      virtualizeRows={virtualizeRows}
-      totalHeight={tanstackVirtualizer.getTotalSize()}
-      scrollRef={scrollElementRef}
-    >
+    <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
       <CustomHTMLTable
         bordered={bordered}
         compact={compact}
         interactive={interactive}
         striped={striped}
         {...tableProps}
-        style={
-          virtualizeRows && stickyHeader
-            ? // This is necessary for the correct placement of the sticky header when virtualization is on.
-              // The table element's height is only the height of the displayed rows, not the total height,
-              // which is set on a container of the table, not the table itself.
-              { display: 'contents' }
-            : tableProps?.style
-        }
       >
         <TableHeader sticky={stickyHeader} headers={table.getFlatHeaders()} />
         <TableBody
@@ -173,21 +159,15 @@ const ScrollRefDiv = styled.div`
 
 function Container({
   virtualizeRows,
-  totalHeight,
   scrollRef,
   children,
 }: {
   virtualizeRows?: boolean;
   children: ReactNode;
-  totalHeight: number;
   scrollRef: RefObject<HTMLDivElement>;
 }) {
   if (virtualizeRows) {
-    return (
-      <ScrollRefDiv ref={scrollRef}>
-        <div style={{ height: totalHeight }}>{children}</div>
-      </ScrollRefDiv>
-    );
+    return <ScrollRefDiv ref={scrollRef}>{children}</ScrollRefDiv>;
   }
   return <>{children}</>;
 }

@@ -1,6 +1,6 @@
 import type { ColumnDef, Row, RowData } from '@tanstack/react-table';
 import { createColumnHelper } from '@tanstack/react-table';
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<
   TData,
@@ -12,7 +12,6 @@ export function createTableColumnHelper<TData extends RowData>() {
 }
 
 export interface TableRowTrProps {
-  style: CSSProperties;
   className: string;
   children: ReactNode;
 }

@@ -1,5 +1,6 @@
 import type { Row, RowData } from '@tanstack/react-table';
 import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
+import { notUndefined } from '@tanstack/react-virtual';
 import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
@@ -23,8 +24,20 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
 
   if (virtualizeRows) {
     const virtualItems = virtualizer.getVirtualItems();
+    const [before, after] =
+      virtualItems.length > 0
+        ? [
+            virtualItems[0].start - virtualizer.options.scrollMargin,
+            virtualizer.getTotalSize() - notUndefined(virtualItems.at(-1)).end,
+          ]
+        : [0, 0];
     return (
       <tbody>
+        {before > 0 && (
+          <tr>
+            <td style={{ height: before }} />
+          </tr>
+        )}
         {virtualItems.map((virtualItem, index) => (
           <TableRow
             key={virtualItem.index}
@@ -38,6 +51,11 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
             }}
           />
         ))}
+        {after > 0 && (
+          <tr>
+            <td style={{ height: after }} />
+          </tr>
+        )}
       </tbody>
     );
   }
@@ -82,17 +100,8 @@ function getTrRenderProps<TData extends RowData>(
   virtualItem?: RenderRowVirtualItem,
 ): TableRowTrProps {
   const index = virtualItem ? virtualItem.index : row.index;
-  const style = virtualItem
-    ? {
-        height: virtualItem.size,
-        transform: `translateY(${
-          virtualItem.start - virtualItem.virtualIndex * virtualItem.size
-        }px)`,
-      }
-    : {};
 
   return {
-    style,
     // index is 0-indexed, so odd rows are even indices
     className: index % 2 === 0 ? 'odd' : '',
     children: row

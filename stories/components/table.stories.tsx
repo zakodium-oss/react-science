@@ -61,7 +61,12 @@ const columns = [
       <ValueRenderers.Number value={getValue()} fixed={4} />
     ),
   }),
-  columnHelper.accessor('em', { header: 'EM' }),
+  columnHelper.accessor('em', {
+    header: 'EM',
+    cell: ({ getValue }) => (
+      <ValueRenderers.Number value={getValue()} fixed={4} />
+    ),
+  }),
   columnHelper.accessor('isExpensive', { header: 'Is expensive' }),
   columnHelper.accessor('color', { header: 'Color' }),
 ];
@@ -127,10 +132,7 @@ export function CustomTrRender({
       virtualizeRows
       estimatedRowHeight={() => 172}
       renderRowTr={(trProps, row) => (
-        <tr
-          {...trProps}
-          style={{ ...trProps.style, backgroundColor: row.original.color }}
-        />
+        <tr {...trProps} style={{ backgroundColor: row.original.color }} />
       )}
     />
   );
