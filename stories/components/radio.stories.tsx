@@ -3,8 +3,8 @@ import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { RadioButton, RadioButtonGroup } from '../../src/components/index.js';
 import type { RadioButtonGroupProps } from '../../src/components/index.js';
+import { RadioButtonGroup } from '../../src/components/index.js';
 
 export default {
   title: 'Forms / Radio',
@@ -23,7 +23,7 @@ const ExampleGroup = styled.div`
   flex-direction: column;
   gap: 20px;
 `;
-export function ControlBlueprint(
+export function RadioGroupControl(
   props: Omit<RadioGroupProps, 'onChange' | 'selectedValue' | 'children'>,
 ) {
   const [option, setOption] = useState(options[2].value);
@@ -41,13 +41,12 @@ export function ControlBlueprint(
     </ExampleGroup>
   );
 }
-ControlBlueprint.args = {
-  label: 'Radio Group label',
+RadioGroupControl.args = {
   disabled: false,
   inline: false,
 };
 
-export function ControlRadioButton(
+export function RadioButtonControl(
   props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
 ) {
   const [option, setOption] = useState(options[2].value);
@@ -65,38 +64,7 @@ export function ControlRadioButton(
     </ExampleGroup>
   );
 }
-ControlRadioButton.args = {
-  large: false,
-  disabled: false,
-};
-
-export function RadioButtonWithChildren(
-  props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
-) {
-  const [option, setOption] = useState(options[2].value);
-  return (
-    <ExampleGroup>
-      <RadioButtonGroup
-        selectedValue={option}
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setOption(value);
-        }}
-        {...props}
-      >
-        {options.map(({ value, label, disabled }) => (
-          <RadioButton
-            key={value}
-            value={value}
-            label={label}
-            disabled={disabled}
-          />
-        ))}
-      </RadioButtonGroup>
-    </ExampleGroup>
-  );
-}
-RadioButtonWithChildren.args = {
+RadioButtonControl.args = {
   large: false,
   disabled: false,
 };

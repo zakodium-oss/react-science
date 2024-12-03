@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { RadioGroup } from '@blueprintjs/core';
 import type { RadioGroupProps } from '@blueprintjs/core';
+import { RadioGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import { Children, cloneElement } from 'react';
 
 import { RadioButton } from './RadioButton.js';
 
@@ -13,12 +12,12 @@ const rootStyles = {
   button: (large?: boolean) =>
     css({
       display: 'flex',
-      flexDirection: 'row',
       width: 'fit-content',
-      ' & > *:first-of-type, & > *:first-of-type span': {
+      height: large ? '40px' : '30px',
+      ' & > *:first-of-type, & > *:first-of-type': {
         borderRadius: large ? '6px 0 0 6px' : '4px 0 0 4px',
       },
-      ' & > *:last-of-type, & > *:last-of-type span': {
+      ' & > *:last-of-type, & > *:last-of-type': {
         borderRightWidth: 1,
         borderRadius: large ? '0 6px 6px 0' : '0 4px 4px 0',
       },
@@ -32,7 +31,6 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
     large,
     selectedValue,
     onChange,
-    children,
     ...restProps
   } = props;
 
@@ -44,33 +42,20 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
       css={rootStyles.button(large)}
       {...restProps}
     >
-      {options?.map(({ value, label, disabled }) => {
-        const childProps = {
-          value,
-          label,
-          large,
-          name,
-          onChange,
-          checked: value === selectedValue,
-          disabled: groupDisabled || disabled,
-        };
-        return <RadioButton key={value} {...childProps} />;
-      })}
-      {Children.map(children, (child) => {
-        if (!child || typeof child !== 'object' || !('type' in child)) {
-          return child;
-        }
-        if (child.type === RadioButton) {
-          return cloneElement(child, {
-            ...child.props,
-            large,
-            name,
-            onChange,
-            checked: child.props.value === selectedValue,
-            disabled: groupDisabled || child.props.disabled,
-          });
-        }
-        return child;
+      {options?.map(({ value, label, disabled }, index) => {
+        return (
+          <RadioButton
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            value={value}
+            label={label}
+            large={large}
+            name={name}
+            onChange={onChange}
+            checked={value === selectedValue}
+            disabled={groupDisabled || disabled}
+          />
+        );
       })}
     </RadioGroup>
   );
