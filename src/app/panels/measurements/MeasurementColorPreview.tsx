@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import {
   autoUpdate,
+  flip,
   FloatingFocusManager,
   FloatingOverlay,
   FloatingPortal,
   offset,
+  shift,
   useDismiss,
   useFloating,
   useFocus,
@@ -45,7 +47,7 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
   const [isOpened, , close, toggle] = useOnOff(false);
 
   const { context, refs, floatingStyles } = useFloating({
-    strategy: 'absolute',
+    strategy: 'fixed',
     placement: 'bottom-start',
     open: isOpened,
     whileElementsMounted: autoUpdate,
@@ -54,7 +56,7 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
         return close();
       }
     },
-    middleware: [offset(6)],
+    middleware: [offset(6), flip(), shift()],
   });
 
   const focus = useFocus(context);

@@ -55,7 +55,7 @@ const style = {
     transition: 'all 0.3s ease-in-out',
   }),
   button: css({
-    zIndex: 10,
+    zIndex: 1,
     position: 'sticky',
     height: 30,
     top: 0,
