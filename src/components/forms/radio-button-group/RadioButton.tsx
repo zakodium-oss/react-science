@@ -6,7 +6,16 @@ import { enabledColor } from '../styles.js';
 import { useInputId } from '../utils/use_input_id.js';
 
 const HiddenInput = styled.input`
-  display: none;
+  // Those styles are taken from the sr-only class in tailwind CSS.
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
   // Label associated with the checked input
   &:checked + label {
     color: ${enabledColor};
@@ -24,6 +33,7 @@ const HiddenInput = styled.input`
 const RadioContent = styled.div<{ large?: boolean }>`
   place-content: center;
   padding: ${(props) => (props.large ? '0px 15px' : '0px 7px')};
+  line-height: 0;
   pointer-events: none;
 `;
 
