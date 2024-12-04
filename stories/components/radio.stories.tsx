@@ -61,17 +61,15 @@ export function RadioButtonGroupControl(
 ) {
   const [option, setOption] = useState(options[2].value);
   return (
-    <ExampleGroup>
-      <RadioButtonGroup
-        options={options}
-        selectedValue={option}
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setOption(value);
-        }}
-        {...props}
-      />
-    </ExampleGroup>
+    <RadioButtonGroup
+      options={options}
+      selectedValue={option}
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+      {...props}
+    />
   );
 }
 RadioButtonGroupControl.args = {
@@ -99,25 +97,23 @@ export function RadioButtonGroupWithChildren(
 ) {
   const [option, setOption] = useState(options[2].value);
   return (
-    <ExampleGroup>
-      <RadioButtonGroup
-        selectedValue={option}
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setOption(value);
-        }}
-        {...props}
-      >
-        {options.map(({ value, label, disabled }) => (
-          <RadioButton
-            key={value}
-            value={value}
-            label={label}
-            disabled={disabled}
-          />
-        ))}
-      </RadioButtonGroup>
-    </ExampleGroup>
+    <RadioButtonGroup
+      selectedValue={option}
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+      {...props}
+    >
+      {options.map(({ value, label, disabled }) => (
+        <RadioButton
+          key={value}
+          value={value}
+          label={label}
+          disabled={disabled}
+        />
+      ))}
+    </RadioButtonGroup>
   );
 }
 
