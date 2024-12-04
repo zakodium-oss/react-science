@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.1.0](https://github.com/zakodium-oss/react-science/compare/v11.0.0...v11.1.0) (2024-12-03)
+
+
+### Features
+
+* add option to table component to virtualize rows ([#796](https://github.com/zakodium-oss/react-science/issues/796)) ([d0b6128](https://github.com/zakodium-oss/react-science/commit/d0b6128d9260d8b39932670228d8a74bd268e484))
+
 ## [11.0.0](https://github.com/zakodium-oss/react-science/compare/v10.0.0...v11.0.0) (2024-11-29)
 
 
