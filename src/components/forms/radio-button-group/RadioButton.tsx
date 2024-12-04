@@ -16,6 +16,7 @@ const HiddenInput = styled.input`
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+
   // Label associated with the checked input
   &:checked + label {
     color: ${enabledColor};
@@ -34,7 +35,6 @@ const RadioContent = styled.div<{ large?: boolean }>`
   place-content: center;
   padding: ${(props) => (props.large ? '0px 15px' : '0px 7px')};
   line-height: 0;
-  pointer-events: none;
 `;
 
 const Label = styled.label<{ large?: boolean; disabled?: boolean }>`
