@@ -2,12 +2,13 @@ import type { Header, RowData } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
-// React type for table th props
-type ThProps = HTMLAttributes<HTMLTableCellElement>;
-type ProvidedThProps = Pick<ThProps, 'style' | 'onClick' | 'children'>;
+type ThProps = Pick<
+  HTMLAttributes<HTMLTableCellElement>,
+  'style' | 'onClick' | 'children'
+>;
 
 export type HeaderCellRenderer<TData extends RowData> = (
-  thProps: ProvidedThProps,
+  thProps: ThProps,
   header: Header<TData, unknown>,
 ) => ReactNode;
 
@@ -32,7 +33,7 @@ export function TableHeaderCell<TData extends RowData>(
 
 function getThProps<TData extends RowData>(
   header: Header<TData, unknown>,
-): ProvidedThProps {
+): ThProps {
   const sorted = header.column.getIsSorted();
   const canSort = header.column.getCanSort();
   const style: CSSProperties = {
@@ -42,7 +43,9 @@ function getThProps<TData extends RowData>(
   const onClick = canSort ? header.column.getToggleSortingHandler() : undefined;
   const children = (
     <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-      {flexRender(header.column.columnDef.header, header.getContext())}
+      <div>
+        {flexRender(header.column.columnDef.header, header.getContext())}
+      </div>
       {sorted
         ? {
             asc: '🔼',
