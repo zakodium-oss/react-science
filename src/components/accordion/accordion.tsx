@@ -93,6 +93,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
         flex: item?.isOpen ? '1 1 1px' : 'none',
         display: 'flex',
         flexDirection: 'column',
+        isolation: 'isolate',
       }}
     >
       <div
