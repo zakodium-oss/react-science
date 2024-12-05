@@ -1,5 +1,17 @@
 # Changelog
 
+## [11.2.0](https://github.com/zakodium-oss/react-science/compare/v11.1.0...v11.2.0) (2024-12-05)
+
+
+### Features
+
+* add renderHeaderCell prop to `Table` component ([#799](https://github.com/zakodium-oss/react-science/issues/799)) ([3050b6f](https://github.com/zakodium-oss/react-science/commit/3050b6fe4dcd936f7ee416b0f028a65831d9b412))
+
+
+### Bug Fixes
+
+* ensure proper spacing between header title and sort indicator in default header renderer ([3050b6f](https://github.com/zakodium-oss/react-science/commit/3050b6fe4dcd936f7ee416b0f028a65831d9b412))
+
 ## [11.1.0](https://github.com/zakodium-oss/react-science/compare/v11.0.0...v11.1.0) (2024-12-03)
 
 
