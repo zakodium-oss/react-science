@@ -46,13 +46,16 @@ const columns = [
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
     cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
+    meta: { color: 'yellow', width: 400 },
   }),
   columnHelper.accessor('name', {
     header: 'Name',
     enableSorting: true,
-    cell: ({ getValue }) => (
-      <Truncate style={{ width: 200 }}>{getValue()}</Truncate>
-    ),
+    cell: ({ getValue }) => <Truncate>{getValue()}</Truncate>,
+    meta: {
+      color: 'lightblue',
+      width: 200,
+    },
   }),
   columnHelper.accessor('rn', { header: 'RN' }),
   columnHelper.accessor('mw', {
@@ -134,6 +137,42 @@ export function CustomTrRender({
       renderRowTr={(trProps, row) => (
         <tr {...trProps} style={{ backgroundColor: row.original.color }} />
       )}
+    />
+  );
+}
+
+export function CustomHeaderCellRender({
+  bordered,
+  compact,
+  interactive,
+  striped,
+  stickyHeader,
+}: ControlProps) {
+  return (
+    <Table
+      bordered={bordered}
+      compact={compact}
+      interactive={interactive}
+      striped={striped}
+      stickyHeader={stickyHeader}
+      columns={columns}
+      data={table}
+      tableProps={{
+        style: {
+          tableLayout: 'fixed',
+          width: '100%',
+        },
+      }}
+      renderHeaderCell={(thProps, header) => {
+        const backgroundColor = header.column.columnDef.meta?.color;
+        const width = header.column.columnDef.meta?.width;
+        return (
+          <th
+            {...thProps}
+            style={{ ...thProps.style, backgroundColor, width }}
+          />
+        );
+      }}
     />
   );
 }
