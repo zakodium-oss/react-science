@@ -14,6 +14,7 @@ import { useRef } from 'react';
 
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
+import type { HeaderCellRenderer } from './table_header_cell.js';
 import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 
@@ -73,6 +74,10 @@ interface TableBaseProps<TData extends RowData> {
    * Make sure to spread the passed `trProps` onto the rendered `<tr>` element.
    */
   renderRowTr?: TableRowTrRenderer<TData>;
+  /**
+   * Override the columns' header cell rendering.
+   */
+  renderHeaderCell?: HeaderCellRenderer<TData>;
 }
 
 interface RegularTableProps<TData extends RowData>
@@ -109,6 +114,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     reactTable,
     tableProps,
     renderRowTr,
+    renderHeaderCell,
 
     virtualizeRows,
   } = props;
@@ -141,7 +147,11 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
         striped={striped}
         {...tableProps}
       >
-        <TableHeader sticky={stickyHeader} headers={table.getFlatHeaders()} />
+        <TableHeader
+          sticky={stickyHeader}
+          headers={table.getFlatHeaders()}
+          renderHeaderCell={renderHeaderCell}
+        />
         <TableBody
           rows={table.getRowModel().rows}
           renderRowTr={renderRowTr}
