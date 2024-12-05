@@ -75,7 +75,7 @@ interface TableBaseProps<TData extends RowData> {
    */
   renderRowTr?: TableRowTrRenderer<TData>;
   /**
-   * Override the default header row rendering.
+   * Override the columns' header cell rendering.
    */
   renderHeaderCell?: HeaderCellRenderer<TData>;
 }

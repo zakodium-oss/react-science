@@ -21,13 +21,11 @@ export function TableHeaderCell<TData extends RowData>(
   props: TableHeaderCellProps<TData>,
 ) {
   const { header, renderHeaderCell } = props;
-
   const thProps = getThProps(header);
 
   if (renderHeaderCell) {
     return renderHeaderCell(thProps, header);
   }
-
   return <th {...thProps} />;
 }
 
