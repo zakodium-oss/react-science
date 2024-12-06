@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Collapse, InputGroup } from '@blueprintjs/core';
+import { Classes, Collapse, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { CSSProperties } from 'react';
@@ -31,7 +31,7 @@ const AccordionButton = styled(Button, {
   position: sticky;
   height: 30px;
   top: 0;
-  .bp5-icon {
+  .${Classes.ICON} {
     rotate: ${(props) => (props.open ? '90deg' : '')};
     transition: all 0.3s ease-in-out;
   }
@@ -41,7 +41,7 @@ const AccordionButton = styled(Button, {
   align-items: center;
   padding: 5px 2px;
   width: 100%;
-  &.bp5-minimal {
+  &.${Classes.MINIMAL} {
     background-color: white;
   }
   :hover {
@@ -59,27 +59,6 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
   }),
-  button: (open: boolean) =>
-    css({
-      backgroundColor: 'white',
-      zIndex: 1,
-      position: 'sticky',
-      height: 30,
-      top: 0,
-      '& .bp5-icon': {
-        rotate: open ? '90deg' : '',
-        transition: 'all 0.3s ease-in-out',
-      },
-      cursor: 'pointer',
-      borderBottom: '1px solid #f5f5f5',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '5px 2px',
-      width: '100%',
-      ':hover': {
-        backgroundColor: '#f5f5f5 !important',
-      },
-    }),
 };
 
 interface InfoPanelDatum {
