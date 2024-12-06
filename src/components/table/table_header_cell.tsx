@@ -65,15 +65,21 @@ function getSortingIcon<TData extends RowData>(
     SortingFnOption<TData> | undefined,
     { asc: IconName; desc: IconName }
   >(type)
-    .with('auto', 'basic', 'datetime', () => ({
-      asc: 'sort-asc',
-      desc: 'sort-desc',
-    }))
+    .with(
+      'auto',
+      'datetime',
+      'alphanumeric',
+      'alphanumericCaseSensitive',
+      () => ({
+        asc: 'sort-asc',
+        desc: 'sort-desc',
+      }),
+    )
     .with('text', 'textCaseSensitive', () => ({
       asc: 'sort-alphabetical',
       desc: 'sort-alphabetical-desc',
     }))
-    .with('alphanumeric', 'alphanumericCaseSensitive', () => ({
+    .with('basic', () => ({
       asc: 'sort-numerical',
       desc: 'sort-numerical-desc',
     }))
