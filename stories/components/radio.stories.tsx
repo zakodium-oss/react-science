@@ -1,16 +1,30 @@
-import type { RadioGroupProps as BlueprintjsRadioGroupProps } from '@blueprintjs/core';
-import { RadioGroup as BlueprintjsRadioGroup } from '@blueprintjs/core';
+import type { RadioGroupProps } from '@blueprintjs/core';
+import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Decorator } from '@storybook/react';
 import { useState } from 'react';
 
-import type {
-  RadioGroupProps,
-  RadioOption,
-} from '../../src/components/index.js';
-import { RadioGroup } from '../../src/components/index.js';
+import type { RadioButtonGroupProps } from '../../src/components/index.js';
+import { RadioButton, RadioButtonGroup } from '../../src/components/index.js';
+
+const ExampleGroup = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const ExampleDecorator: Decorator = (Story) => {
+  return (
+    <ExampleGroup>
+      <Story />
+    </ExampleGroup>
+  );
+};
 
 export default {
   title: 'Forms / Radio',
+  decorators: [ExampleDecorator],
 };
 
 const options = [
@@ -20,63 +34,90 @@ const options = [
   { label: 'Option 4', value: 'option4' },
 ];
 
-const ExampleGroup = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-export function ControlBlueprint(
-  props: Omit<
-    BlueprintjsRadioGroupProps,
-    'onChange' | 'selectedValue' | 'children'
-  >,
+export function RadioGroupControl(
+  props: Omit<RadioGroupProps, 'onChange' | 'selectedValue' | 'children'>,
 ) {
-  const [option, setOption] = useState(options[2]);
+  const [option, setOption] = useState(options[2].value);
   return (
-    <ExampleGroup>
-      <BlueprintjsRadioGroup
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setOption(
-            (option) => options.find((o) => o.value === value) || option,
-          );
-        }}
-        selectedValue={option.value}
-        options={options}
-        {...props}
-      />
-    </ExampleGroup>
+    <RadioGroup
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+      selectedValue={option}
+      options={options}
+      {...props}
+    />
   );
 }
-ControlBlueprint.args = {
-  label: 'Radio Group label',
+RadioGroupControl.args = {
   disabled: false,
   inline: false,
-};
-export function ControlButton(
-  props: Omit<RadioGroupProps, 'options' | 'selected' | 'onSelect' | 'name'>,
-) {
-  const [option, setOption] = useState(options[2] as RadioOption);
-  return (
-    <ExampleGroup>
-      <RadioGroup
-        options={options}
-        selected={option}
-        onSelect={setOption}
-        {...props}
-      />
-    </ExampleGroup>
-  );
-}
-ControlButton.args = {
-  variant: 'default',
-  disabled: false,
+  label: 'Blueprintjs radio group',
 };
 
-ControlButton.argTypes = {
-  variant: {
-    options: ['default', 'small'],
-    control: { type: 'radio' },
-  },
+export function RadioButtonGroupControl(
+  props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
+) {
+  const [option, setOption] = useState(options[2].value);
+  return (
+    <RadioButtonGroup
+      options={options}
+      selectedValue={option}
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+      {...props}
+    />
+  );
+}
+RadioButtonGroupControl.args = {
+  large: false,
+  disabled: false,
+  label: 'Radio button group',
+};
+
+export function RadioButtonGroupOneOption() {
+  const [option, setOption] = useState<string | undefined>();
+  return (
+    <RadioButtonGroup
+      options={[options[0]]}
+      selectedValue={option}
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+    />
+  );
+}
+
+export function RadioButtonGroupWithChildren(
+  props: Omit<RadioButtonGroupProps, 'options' | 'selectedValue' | 'onChange'>,
+) {
+  const [option, setOption] = useState(options[2].value);
+  return (
+    <RadioButtonGroup
+      selectedValue={option}
+      onChange={(event) => {
+        const value = event.currentTarget.value;
+        setOption(value);
+      }}
+      {...props}
+    >
+      {options.map(({ value, label, disabled }) => (
+        <RadioButton
+          key={value}
+          value={value}
+          label={label}
+          disabled={disabled}
+        />
+      ))}
+    </RadioButtonGroup>
+  );
+}
+
+RadioButtonGroupWithChildren.args = {
+  large: false,
+  disabled: false,
 };

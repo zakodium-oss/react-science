@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { Icon, InputGroup } from '@blueprintjs/core';
+import { Classes, Collapse, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
-import * as Collapsible from '@radix-ui/react-collapsible';
+import styled from '@emotion/styled';
 import type { CSSProperties } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { match, P } from 'ts-pattern';
 
+import { Button } from '../button/Button.js';
 import { SelectedTotal } from '../selected-total/index.js';
 import { createTableColumnHelper, Table } from '../table/index.js';
 import * as ValueRenderers from '../value-renderers/index.js';
@@ -23,55 +24,40 @@ interface InfoPanelProps {
   inputStyle?: CSSProperties;
 }
 
+const AccordionButton = styled(Button, {
+  shouldForwardProp: (propName) => propName !== 'open',
+})<{ open?: boolean }>`
+  z-index: 1;
+  position: sticky;
+  height: 30px;
+  top: 0;
+  .${Classes.ICON} {
+    rotate: ${(props) => (props.open ? '90deg' : '')};
+    transition: all 0.3s ease-in-out;
+  }
+  cursor: pointer;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  align-items: center;
+  padding: 5px 2px;
+  width: 100%;
+  &.${Classes.MINIMAL} {
+    background-color: white;
+  }
+  :hover {
+    background-color: #f5f5f5;
+  }
+`;
+
 const style = {
   content: css({
     overflow: 'hidden',
-    "&[data-state='open']": {
-      animation: 'slideDown 300ms ease-out',
-    },
-    '&[data-state="closed"]': {
-      animation: 'slideUp 300ms ease-out',
-    },
-    '@keyframes slideDown': {
-      from: {
-        height: 0,
-      },
-      to: { height: 'var(--radix-collapsible-content-height)' },
-    },
-    '@keyframes slideUp': {
-      from: {
-        height: 'var(--radix-collapsible-content-height)',
-      },
-      to: { height: 0 },
-    },
   }),
   container: css({
     padding: '5px 0 0 0',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-  }),
-  chevron: css({
-    transition: 'all 0.3s ease-in-out',
-  }),
-  button: css({
-    zIndex: 1,
-    position: 'sticky',
-    height: 30,
-    top: 0,
-    "&[data-state='open'] > span": {
-      rotate: '90deg',
-    },
-    cursor: 'pointer',
-    borderBottom: '1px solid #f5f5f5',
-    backgroundColor: 'white',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '5px 2px',
-    width: '100%',
-    ':hover': {
-      backgroundColor: '#f5f5f5',
-    },
   }),
 };
 
@@ -206,6 +192,9 @@ interface InfoPanelContentProps {
 
 const InfoPanelContent = memo((props: InfoPanelContentProps) => {
   const { filteredData } = props;
+  const [isOpen, setIsOpen] = useState<string[]>(
+    filteredData.map(({ description }) => description),
+  );
   return (
     <div
       style={{
@@ -218,19 +207,25 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
       }}
     >
       {filteredData.map(({ description, data }) => {
+        const open = isOpen.includes(description);
         return (
-          <Collapsible.Root
-            key={description}
-            className="CollapsibleRoot"
-            defaultOpen
-          >
-            <Collapsible.Trigger asChild css={style.button}>
-              <div>
-                <Icon icon="chevron-right" css={style.chevron} />
-                {description}
-              </div>
-            </Collapsible.Trigger>
-            <Collapsible.Content css={style.content}>
+          <div key={description}>
+            <AccordionButton
+              open={open}
+              minimal
+              onClick={() =>
+                setIsOpen((pred) =>
+                  open
+                    ? pred.filter((o) => o !== description)
+                    : [...pred, description],
+                )
+              }
+              alignText="left"
+              icon="chevron-right"
+            >
+              {description}
+            </AccordionButton>
+            <Collapse isOpen={open} css={style.content}>
               <Table
                 data={data}
                 columns={columns}
@@ -238,8 +233,8 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
                 tableProps={{ style: { width: '100%' } }}
                 compact
               />
-            </Collapsible.Content>
-          </Collapsible.Root>
+            </Collapse>
+          </div>
         );
       })}
     </div>
