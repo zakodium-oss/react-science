@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Collapse, InputGroup } from '@blueprintjs/core';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { CSSProperties } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { match, P } from 'ts-pattern';
@@ -23,6 +24,31 @@ interface InfoPanelProps {
   inputStyle?: CSSProperties;
 }
 
+const AccordionButton = styled(Button, {
+  shouldForwardProp: (propName) => propName !== 'open',
+})<{ open?: boolean }>`
+  z-index: 1;
+  position: sticky;
+  height: 30px;
+  top: 0;
+  .bp5-icon {
+    rotate: ${(props) => (props.open ? '90deg' : '')};
+    transition: all 0.3s ease-in-out;
+  }
+  cursor: pointer;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  align-items: center;
+  padding: 5px 2px;
+  width: 100%;
+  &.bp5-minimal {
+    background-color: white;
+  }
+  :hover {
+    background-color: #f5f5f5;
+  }
+`;
+
 const style = {
   content: css({
     overflow: 'hidden',
@@ -35,8 +61,8 @@ const style = {
   }),
   button: (open: boolean) =>
     css({
-      backgroundColor: 'white !important',
-      zIndex: 10,
+      backgroundColor: 'white',
+      zIndex: 1,
       position: 'sticky',
       height: 30,
       top: 0,
@@ -205,9 +231,9 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
         const open = isOpen.includes(description);
         return (
           <div key={description}>
-            <Button
+            <AccordionButton
+              open={open}
               minimal
-              css={style.button(open)}
               onClick={() =>
                 setIsOpen((pred) =>
                   open
@@ -219,7 +245,7 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
               icon="chevron-right"
             >
               {description}
-            </Button>
+            </AccordionButton>
             <Collapse isOpen={open} css={style.content}>
               <Table
                 data={data}
