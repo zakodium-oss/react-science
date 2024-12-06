@@ -1,6 +1,9 @@
-import type { Header, RowData } from '@tanstack/react-table';
+import { Icon } from '@blueprintjs/core';
+import type { IconName } from '@blueprintjs/icons';
+import type { Header, RowData, SortingFnOption } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
-import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
+import { match } from 'ts-pattern';
 
 type ThProps = Pick<
   HTMLAttributes<HTMLTableCellElement>,
@@ -32,26 +35,53 @@ export function TableHeaderCell<TData extends RowData>(
 function getThProps<TData extends RowData>(
   header: Header<TData, unknown>,
 ): ThProps {
-  const sorted = header.column.getIsSorted();
-  const canSort = header.column.getCanSort();
-  const style: CSSProperties = {
-    position: 'relative',
-    cursor: canSort ? 'pointer' : undefined,
-  };
-  const onClick = canSort ? header.column.getToggleSortingHandler() : undefined;
-  const children = (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-      <div>
-        {flexRender(header.column.columnDef.header, header.getContext())}
-      </div>
-      {sorted
-        ? {
-            asc: '🔼',
-            desc: '🔽',
-          }[sorted]
-        : null}
-    </div>
-  );
+  const { column } = header;
 
-  return { style, children, onClick };
+  const sorted = column.getIsSorted();
+  const canSort = column.getCanSort();
+  const sortingIcon = getSortingIcon(column.columnDef.sortingFn)[
+    sorted || 'asc'
+  ];
+
+  return {
+    onClick: canSort ? column.getToggleSortingHandler() : undefined,
+    style: {
+      position: 'relative',
+      cursor: canSort ? 'pointer' : undefined,
+    },
+    children: (
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+        <div>{flexRender(column.columnDef.header, header.getContext())}</div>
+        {sorted && <Icon icon={sortingIcon} />}
+      </div>
+    ),
+  };
+}
+
+function getSortingIcon<TData extends RowData>(
+  type: SortingFnOption<TData> | undefined,
+): { asc: IconName; desc: IconName } {
+  return match<
+    SortingFnOption<TData> | undefined,
+    { asc: IconName; desc: IconName }
+  >(type)
+    .with(
+      'auto',
+      'datetime',
+      'alphanumeric',
+      'alphanumericCaseSensitive',
+      () => ({
+        asc: 'sort-asc',
+        desc: 'sort-desc',
+      }),
+    )
+    .with('text', 'textCaseSensitive', () => ({
+      asc: 'sort-alphabetical',
+      desc: 'sort-alphabetical-desc',
+    }))
+    .with('basic', () => ({
+      asc: 'sort-numerical',
+      desc: 'sort-numerical-desc',
+    }))
+    .otherwise(() => ({ asc: 'sort-asc', desc: 'sort-desc' }));
 }
