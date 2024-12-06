@@ -56,8 +56,6 @@
     "@blueprintjs/select": "^5.3.5",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@radix-ui/react-collapsible": "^1.1.1",
-    "@radix-ui/react-radio-group": "^1.2.1",
     "@tanstack/react-query": "^5.61.5",
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/react-virtual": "^3.10.9",
