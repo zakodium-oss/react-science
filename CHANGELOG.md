@@ -1,5 +1,16 @@
 # Changelog
 
+## [12.0.0](https://github.com/zakodium-oss/react-science/compare/v11.2.0...v12.0.0) (2024-12-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* The `RadioGroup` component has been renamed to `RadioButtonGroup`. Its interface is now the same as blueprintjs's `RadioGroup` component, which changes how multiple of its props are named and typed.
+
+### Miscellaneous Chores
+
+* remove radix-ui dependencies ([#780](https://github.com/zakodium-oss/react-science/issues/780)) ([d69d7e0](https://github.com/zakodium-oss/react-science/commit/d69d7e00a7585dd88c04a2c6f7c3936f2f4558d7))
+
 ## [11.2.0](https://github.com/zakodium-oss/react-science/compare/v11.1.0...v11.2.0) (2024-12-05)
 
 
