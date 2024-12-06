@@ -61,24 +61,21 @@ function getThProps<TData extends RowData>(
 function getSortingIcon<TData extends RowData>(
   type: SortingFnOption<TData> | undefined,
 ): { asc: IconName; desc: IconName } {
-  return (
-    match<
-      SortingFnOption<TData> | undefined,
-      { asc: IconName; desc: IconName }
-    >(type)
-      // default when no sortingFn is provided
-      .with('auto', 'basic', 'datetime', () => ({
-        asc: 'sort-asc',
-        desc: 'sort-desc',
-      }))
-      .with('text', 'textCaseSensitive', () => ({
-        asc: 'sort-alphabetical',
-        desc: 'sort-alphabetical-desc',
-      }))
-      .with('alphanumeric', 'alphanumericCaseSensitive', () => ({
-        asc: 'sort-numerical',
-        desc: 'sort-numerical-desc',
-      }))
-      .otherwise(() => ({ asc: 'sort-asc', desc: 'sort-desc' }))
-  );
+  return match<
+    SortingFnOption<TData> | undefined,
+    { asc: IconName; desc: IconName }
+  >(type)
+    .with('auto', 'basic', 'datetime', () => ({
+      asc: 'sort-asc',
+      desc: 'sort-desc',
+    }))
+    .with('text', 'textCaseSensitive', () => ({
+      asc: 'sort-alphabetical',
+      desc: 'sort-alphabetical-desc',
+    }))
+    .with('alphanumeric', 'alphanumericCaseSensitive', () => ({
+      asc: 'sort-numerical',
+      desc: 'sort-numerical-desc',
+    }))
+    .otherwise(() => ({ asc: 'sort-asc', desc: 'sort-desc' }));
 }
