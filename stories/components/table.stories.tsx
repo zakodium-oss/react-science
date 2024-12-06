@@ -45,12 +45,17 @@ const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
+    sortingFn: () => {
+      return Math.random() - 0.5;
+    },
+    enableSorting: true,
     cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
     meta: { color: 'yellow', width: 400 },
   }),
   columnHelper.accessor('name', {
     header: 'Name',
     enableSorting: true,
+    sortingFn: 'textCaseSensitive',
     cell: ({ getValue }) => <Truncate>{getValue()}</Truncate>,
     meta: {
       color: 'lightblue',
@@ -66,6 +71,8 @@ const columns = [
   }),
   columnHelper.accessor('em', {
     header: 'EM',
+    sortingFn: 'alphanumeric',
+    enableSorting: true,
     cell: ({ getValue }) => (
       <ValueRenderers.Number value={getValue()} fixed={4} />
     ),
