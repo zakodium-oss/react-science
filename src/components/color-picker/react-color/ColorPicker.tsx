@@ -1,4 +1,3 @@
-import lodashDebounce from 'lodash/debounce.js';
 import type { CSSProperties } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -155,7 +154,7 @@ export function ColorPicker(props: ColorPickerProps) {
   const [state, setState] = useState(colorHelper.toState(color, 0));
 
   const debounce = useRef(
-    lodashDebounce((fn: any, data: ChangeCallbackProps, event: Event) => {
+    internalDebounce((fn: any, data: ChangeCallbackProps, event: Event) => {
       fn(data, event);
     }, 100),
   ).current;
@@ -234,4 +233,21 @@ export function ColorPicker(props: ColorPickerProps) {
       />
     </div>
   );
+}
+
+function internalDebounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number,
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout | null;
+
+  return (...args: Parameters<T>) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(() => {
+      func.apply({}, args);
+    }, wait);
+  };
 }
