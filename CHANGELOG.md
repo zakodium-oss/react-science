@@ -1,5 +1,27 @@
 # Changelog
 
+## [12.0.0](https://github.com/zakodium-oss/react-science/compare/v11.2.0...v12.0.0) (2024-12-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* `@tanstack/react-query`'s QueryClientProvider was removed from the `RootLayout` component. You'll have to provide your own client if you relied on it to use react-query in your application.
+* The `RadioGroup` component has been renamed to `RadioButtonGroup`. Its interface is now the same as blueprintjs's `RadioGroup` component, which changes how multiple of its props are named and typed.
+
+### Features
+
+* **Table:** change sorting icons to use blueprint ([#804](https://github.com/zakodium-oss/react-science/issues/804)) ([fe7bcee](https://github.com/zakodium-oss/react-science/commit/fe7bcee95f422d44c4c8ce4629665902a9208f41))
+
+
+### Miscellaneous Chores
+
+* remove radix-ui dependencies ([#780](https://github.com/zakodium-oss/react-science/issues/780)) ([d69d7e0](https://github.com/zakodium-oss/react-science/commit/d69d7e00a7585dd88c04a2c6f7c3936f2f4558d7))
+
+
+### Code Refactoring
+
+* remove react-query from root layout ([#807](https://github.com/zakodium-oss/react-science/issues/807)) ([52ba146](https://github.com/zakodium-oss/react-science/commit/52ba146c5611f270415d18a868d8cb9b97292f28))
+
 ## [11.2.0](https://github.com/zakodium-oss/react-science/compare/v11.1.0...v11.2.0) (2024-12-05)
 
 
