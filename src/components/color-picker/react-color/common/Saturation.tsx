@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import lodashThrottle from 'lodash/throttle.js';
 import { useCallback, useRef } from 'react';
 
 import * as saturation from '../helpers/saturation.js';
@@ -56,7 +55,7 @@ const Saturation = (props) => {
   const { onChange, hsl, hsv, pointer } = props;
 
   const throttle = useRef(
-    lodashThrottle((fn, data, e) => {
+    internalThrottle((fn, data, e) => {
       fn(data, e);
     }, 50),
   ).current;
@@ -101,3 +100,23 @@ const Saturation = (props) => {
 };
 
 export default Saturation;
+
+function internalThrottle<T extends (...args: any[]) => void>(
+  func: T,
+  limit: number,
+): T {
+  let inThrottle: boolean;
+
+  const fun = (...args: any[]) => {
+    if (!inThrottle) {
+      func.apply({}, args);
+      inThrottle = true;
+
+      setTimeout(() => {
+        inThrottle = false;
+      }, limit);
+    }
+  };
+
+  return fun as T;
+}
