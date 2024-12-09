@@ -51,6 +51,7 @@ const columns = [
   columnHelper.accessor('name', {
     header: 'Name',
     enableSorting: true,
+    sortingFn: 'textCaseSensitive',
     cell: ({ getValue }) => <Truncate>{getValue()}</Truncate>,
     meta: {
       color: 'lightblue',
@@ -66,11 +67,19 @@ const columns = [
   }),
   columnHelper.accessor('em', {
     header: 'EM',
+    sortingFn: 'basic',
+    enableSorting: true,
     cell: ({ getValue }) => (
       <ValueRenderers.Number value={getValue()} fixed={4} />
     ),
   }),
-  columnHelper.accessor('isExpensive', { header: 'Is expensive' }),
+  columnHelper.accessor('isExpensive', {
+    header: 'Is expensive',
+    sortingFn: (row) => {
+      return row.original.isExpensive ? 1 : -1;
+    },
+    enableSorting: true,
+  }),
   columnHelper.accessor('color', { header: 'Color' }),
 ];
 
