@@ -20,9 +20,32 @@ import { useTableColumns } from './use_table_columns.js';
 
 // Blueprint's HTMLTable `striped` prop's implementation is based on nth-child odd / even
 // We cannot use that with virtualization, so we override its implementation here.
+// We override the box-shadow to use our own implementation for sticky headers.
 const CustomHTMLTable = styled(HTMLTable, {
-  shouldForwardProp: (prop) => prop !== 'striped',
-})`
+  shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
+})<{ stickyHeader: boolean }>`
+  ${(props) => {
+    if (!props.stickyHeader) return '';
+
+    return `
+      thead tr:last-child {
+        box-shadow: inset 0 -1px #11141826;
+      }
+    
+      tbody tr:first-child td {
+        box-shadow: ${
+          props.bordered
+            ? 'inset 1px 0 0 0 #11141826 !important'
+            : 'none !important'
+        };
+      }
+    
+      tbody tr:first-child td:first-child {
+        box-shadow: none !important;
+      }
+    `;
+  }}
+
   tbody tr.odd td {
     background: ${(props) =>
       props.striped ? 'rgba(143, 153, 168, 0.15)' : 'inherit'};
@@ -145,6 +168,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
         compact={compact}
         interactive={interactive}
         striped={striped}
+        stickyHeader={stickyHeader}
         {...tableProps}
       >
         <TableHeader
