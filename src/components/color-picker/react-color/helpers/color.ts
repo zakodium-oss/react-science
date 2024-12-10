@@ -1,14 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import each from 'lodash/each.js';
 import tinycolor from 'tinycolor2';
 
 function simpleCheckForValidColor(data) {
   const keysToCheck = ['r', 'g', 'b', 'a', 'h', 's', 'l', 'v'];
   let checked = 0;
   let passed = 0;
-  each(keysToCheck, (letter) => {
+
+  for (const letter of keysToCheck) {
     if (data[letter]) {
       checked += 1;
       if (!Number.isNaN(Number(data[letter]))) {
@@ -21,7 +21,8 @@ function simpleCheckForValidColor(data) {
         }
       }
     }
-  });
+  }
+
   return checked === passed ? data : false;
 }
 
