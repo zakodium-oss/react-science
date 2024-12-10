@@ -3,6 +3,7 @@
 
 import { useCallback, useRef } from 'react';
 
+import { throttle as internalThrottle } from '../../../utils/index.js';
 import * as saturation from '../helpers/saturation.js';
 
 import { useOnChange } from './useOnChange.js';
@@ -100,23 +101,3 @@ const Saturation = (props) => {
 };
 
 export default Saturation;
-
-function internalThrottle<T extends (...args: any[]) => void>(
-  func: T,
-  limit: number,
-): T {
-  let inThrottle: boolean;
-
-  const fun = (...args: any[]) => {
-    if (!inThrottle) {
-      func.apply({}, args);
-      inThrottle = true;
-
-      setTimeout(() => {
-        inThrottle = false;
-      }, limit);
-    }
-  };
-
-  return fun as T;
-}

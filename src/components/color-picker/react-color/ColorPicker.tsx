@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { debounce as internalDebounce } from '../../utils/index.js';
 import { defaultColorPalette } from '../palette.js';
 
 import { Alpha, CheckBoard, Hue, Saturation } from './common/index.js';
@@ -233,21 +234,4 @@ export function ColorPicker(props: ColorPickerProps) {
       />
     </div>
   );
-}
-
-function internalDebounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number,
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout | null;
-
-  return (...args: Parameters<T>) => {
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-
-    timeout = setTimeout(() => {
-      func.apply({}, args);
-    }, wait);
-  };
 }
