@@ -3,7 +3,7 @@
 
 import { useCallback, useRef } from 'react';
 
-import { throttle as internalThrottle } from '../../../utils/index.js';
+import { throttle } from '../../../utils/index.js';
 import * as saturation from '../helpers/saturation.js';
 
 import { useOnChange } from './useOnChange.js';
@@ -55,25 +55,25 @@ const styles = {
 const Saturation = (props) => {
   const { onChange, hsl, hsv, pointer } = props;
 
-  const throttle = useRef(
-    internalThrottle((fn, data, e) => {
+  const throttleRef = useRef(
+    throttle((fn, data, e) => {
       fn(data, e);
     }, 50),
-  ).current;
+  );
 
   const containerRef = useRef();
 
   const handleChange = useCallback(
     (e) => {
       if (onChange && typeof onChange === 'function') {
-        throttle(
+        throttleRef.current(
           onChange,
           saturation.calculateChange(e, hsl, containerRef.current),
           e,
         );
       }
     },
-    [hsl, onChange, throttle],
+    [hsl, onChange, throttleRef],
   );
 
   const handleMouseDown = useOnChange(handleChange);

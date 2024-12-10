@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { debounce as internalDebounce } from '../../utils/index.js';
+import { debounce } from '../../utils/index.js';
 import { defaultColorPalette } from '../palette.js';
 
 import { Alpha, CheckBoard, Hue, Saturation } from './common/index.js';
@@ -154,11 +154,11 @@ export function ColorPicker(props: ColorPickerProps) {
 
   const [state, setState] = useState(colorHelper.toState(color, 0));
 
-  const debounce = useRef(
-    internalDebounce((fn: any, data: ChangeCallbackProps, event: Event) => {
+  const debounceRef = useRef(
+    debounce((fn: any, data: ChangeCallbackProps, event: Event) => {
       fn(data, event);
     }, 100),
-  ).current;
+  );
 
   useEffect(() => {
     setState((prevState) => colorHelper.toState(color, prevState.oldHue));
@@ -171,14 +171,14 @@ export function ColorPicker(props: ColorPickerProps) {
         const colors = colorHelper.toState(data, data.h || state.oldHue);
         setState(colors);
         if (onChangeComplete) {
-          debounce(onChangeComplete, colors, event);
+          debounceRef.current(onChangeComplete, colors, event);
         }
         if (onChange) {
           onChange(colors, event);
         }
       }
     },
-    [debounce, onChange, onChangeComplete, state.oldHue],
+    [debounceRef, onChange, onChangeComplete, state.oldHue],
   );
 
   const handleSwatchHover = useCallback(
