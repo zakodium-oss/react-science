@@ -196,9 +196,20 @@ export const StyledTable = {
     },
   },
   render: () => {
-    const StyledTableComponent = styled(Table<TableRecord>)`
+    const StyledTableComponent = styled.div`
       border: 1px solid red;
+      & .test-class {
+        border: 1px solid blue;
+      }
     `;
-    return <StyledTableComponent data={table} columns={columns} />;
+    return (
+      <StyledTableComponent>
+        <Table
+          data={table}
+          columns={columns}
+          tableProps={{ className: 'test-class' }}
+        />
+      </StyledTableComponent>
+    );
   },
 } satisfies Meta;

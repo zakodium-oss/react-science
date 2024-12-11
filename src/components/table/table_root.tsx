@@ -177,6 +177,8 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     finalClassName = `${tableProps.className} ${className}`;
   } else if (className) {
     finalClassName = className;
+  } else {
+    finalClassName = tableProps?.className;
   }
 
   return (
