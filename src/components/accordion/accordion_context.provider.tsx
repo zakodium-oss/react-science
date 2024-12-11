@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useReducer } from 'react';
+import { match } from 'ts-pattern';
 
 import type { ContextType } from './accordion_context.js';
 import { accordionContext } from './accordion_context.js';
-import type { AccordionState } from './accordion_context.utils.js';
+import type {
+  AccordionItemState,
+  ActionType,
+} from './accordion_context.utils.js';
 import { getItem } from './accordion_context.utils.js';
 
 interface AccordionProviderProps {
@@ -11,70 +15,96 @@ interface AccordionProviderProps {
   unmountChildren?: boolean;
 }
 
-export function AccordionProvider(props: AccordionProviderProps) {
-  const { unmountChildren = false, children } = props;
-  const [items, setItems] = useState<AccordionState['items']>([]);
+export type AccordionActions =
+  | ActionType<'CHANGE', { title: string; isOpen: boolean }>
+  | ActionType<'CLEAR', string>
+  | ActionType<'TOGGLE', string>
+  | ActionType<'REMOVE', string>
+  | ActionType<'CREATE', AccordionItemState>;
 
-  const change = useCallback(
-    (title: string, isOpen: boolean) => {
-      const item = getItem(title, items);
+function reducer(
+  previous: AccordionItemState[],
+  action: AccordionActions,
+): AccordionItemState[] {
+  return match(action)
+    .with({ type: 'CHANGE' }, ({ payload }) => {
+      const { title, isOpen } = payload;
+      const item = getItem(title, previous);
 
       if (item) {
-        setItems((oldItems) => [
-          ...oldItems.filter((element) => element.title !== title),
-          { ...item, isOpen },
-        ]);
-      }
-    },
-    [items],
-  );
+        const itemsWithoutChangedItem = previous.filter(
+          (element) => element.title !== title,
+        );
 
-  const clear = useCallback(
-    (except: string) => {
-      const item = getItem(except, items);
+        return [...itemsWithoutChangedItem, { ...item, isOpen }];
+      }
+
+      return previous;
+    })
+    .with({ type: 'CLEAR' }, ({ payload: except }) => {
+      const item = getItem(except, previous);
 
       if (!item) {
-        setItems((oldItems) => [...oldItems, { isOpen: true, title: except }]);
-        return;
+        return [...previous, { isOpen: true, title: except }];
       }
 
-      setItems((oldItems) =>
-        oldItems.map((element) => ({
+      return previous.map((element) => {
+        const newItem: AccordionItemState = {
           ...element,
           isOpen: element.title === item.title,
-        })),
-      );
-    },
-    [items],
-  );
+        };
 
-  const toggle = useCallback(
-    (title: string) => {
-      const item = getItem(title, items);
+        return newItem;
+      });
+    })
+    .with({ type: 'TOGGLE' }, ({ payload: title }) => {
+      const item = getItem(title, previous);
 
       if (!item) {
-        setItems((oldItems) => [...oldItems, { isOpen: true, title }]);
-        return;
+        return [...previous, { title, isOpen: true }];
       }
 
-      setItems((oldItems) => [
-        ...oldItems.filter((element) => element.title !== title),
-        { ...item, isOpen: !item.isOpen },
-      ]);
-    },
-    [items],
-  );
+      const itemsWithoutChangedItem = previous.filter(
+        (element) => element.title !== title,
+      );
 
-  const remove = useCallback((title: string) => {
-    setItems((oldItems) =>
-      oldItems.filter((element) => element.title !== title),
-    );
-  }, []);
+      const newItem: AccordionItemState = {
+        ...item,
+        isOpen: !item.isOpen,
+      };
 
-  const create = useCallback((title: string, defaultOpened?: boolean) => {
-    const item = { title, isOpen: defaultOpened || false };
-    setItems((oldItems) => [...oldItems, item]);
-    return item;
+      return [...itemsWithoutChangedItem, newItem];
+    })
+    .with({ type: 'REMOVE' }, ({ payload: title }) => {
+      return previous.filter((element) => element.title !== title);
+    })
+    .with({ type: 'CREATE' }, ({ payload }) => {
+      return [...previous, payload];
+    })
+    .otherwise(() => previous);
+}
+
+export function AccordionProvider(props: AccordionProviderProps) {
+  const { unmountChildren = false, children } = props;
+  const [items, dispatch] = useReducer(reducer, []);
+
+  const utils = useMemo<ContextType[1]>(() => {
+    return {
+      change: (title: string, isOpen: boolean) =>
+        dispatch({ type: 'CHANGE', payload: { title, isOpen } }),
+      clear: (except: string) => dispatch({ type: 'CLEAR', payload: except }),
+      toggle: (title: string) => dispatch({ type: 'TOGGLE', payload: title }),
+      remove: (title: string) => dispatch({ type: 'REMOVE', payload: title }),
+      create: (title: string, defaultOpened?: boolean) => {
+        const item: AccordionItemState = {
+          title,
+          isOpen: defaultOpened || false,
+        };
+
+        dispatch({ type: 'CREATE', payload: item });
+        return item;
+      },
+    };
   }, []);
 
   const contextValue = useMemo<ContextType>(() => {
@@ -83,9 +113,9 @@ export function AccordionProvider(props: AccordionProviderProps) {
         items,
         unmountChildren,
       },
-      { change, clear, toggle, remove, create },
+      utils,
     ];
-  }, [unmountChildren, change, items, clear, toggle, remove, create]);
+  }, [items, unmountChildren, utils]);
 
   return (
     <accordionContext.Provider value={contextValue}>

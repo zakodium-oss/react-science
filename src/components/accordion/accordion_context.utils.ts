@@ -11,3 +11,7 @@ export interface AccordionState {
 export function getItem(title: string, items: AccordionItemState[]) {
   return items.find((element) => element.title === title);
 }
+
+export type ActionType<Action, Payload = void> = Payload extends void
+  ? { type: Action }
+  : { type: Action; payload: Payload };
