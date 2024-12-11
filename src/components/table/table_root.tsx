@@ -8,14 +8,25 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import type { ScrollToOptions as VirtualScrollToOptions } from '@tanstack/react-virtual';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
-import { useRef } from 'react';
+import type {
+  MutableRefObject,
+  ReactNode,
+  RefObject,
+  TableHTMLAttributes,
+} from 'react';
+import { useEffect, useRef } from 'react';
 
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
-import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
+import type {
+  ScrollToRow,
+  TableColumnDef,
+  TableRowTrRenderer,
+  VirtualScrollToRow,
+} from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 
 const CustomHTMLTable = styled(HTMLTable, {
@@ -110,16 +121,28 @@ interface TableBaseProps<TData extends RowData> {
    * Override the columns' header cell rendering.
    */
   renderHeaderCell?: HeaderCellRenderer<TData>;
+
+  /**
+   * A ref which will be set with a callback to scroll to a row in the
+   * table body specified by its index in the data array.
+   */
+  scrollToRowRef?: MutableRefObject<
+    VirtualScrollToRow | ScrollToOptions | undefined
+  >;
+
+  getRowId?: TableOptions<TData>['getRowId'];
 }
 
 interface RegularTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows?: false | undefined;
+  scrollToRowRef?: MutableRefObject<ScrollToRow | undefined>;
 }
 
 interface VirtualizedTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows: true;
+  scrollToRowRef?: MutableRefObject<VirtualScrollToRow | undefined>;
   /**
    * For virtualization of the table rows, provide an estimate of the height of each row.
    * @param index The index of the row in the data array.
@@ -150,9 +173,12 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     renderHeaderCell,
 
     virtualizeRows,
+    getRowId,
+    scrollToRowRef,
   } = props;
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const columnDefs = useTableColumns(columns);
   const table = useReactTable<TData>({
     ...reactTable,
@@ -160,6 +186,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     columns: columnDefs,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getRowId,
   });
 
   const tanstackVirtualizer = useVirtualizer({
@@ -170,6 +197,36 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
       (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
   });
+
+  useEffect(() => {
+    if (scrollToRowRef) {
+      if (virtualizeRows) {
+        scrollToRowRef.current = (
+          id: string,
+          options?: VirtualScrollToOptions,
+        ) => {
+          const sortedRows = table.getRowModel().rows; // Get sorted rows
+          const rowIndex = sortedRows.findIndex((row) => row.id === id); // Find the index of the row by ID
+          if (rowIndex === -1) {
+            // We don't expect this situation, but it's not critical enough to throw an error.
+            // eslint-disable-next-line no-console
+            console.warn(
+              `Could not scroll to row with ID ${id}, the row does not exist`,
+            );
+          }
+          tanstackVirtualizer.scrollToIndex(rowIndex, options);
+        };
+      } else {
+        scrollToRowRef.current = (id: string, options?: ScrollToOptions) => {
+          const element = tableRef.current?.querySelector(
+            `tr[data-row-id="${id}"]`,
+          );
+
+          element?.scrollIntoView(options);
+        };
+      }
+    }
+  }, [scrollToRowRef, tanstackVirtualizer, virtualizeRows, tableRef, table]);
 
   // Make the table component compatible with styled components libraries.
   let finalClassName: string | undefined;
@@ -184,6 +241,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   return (
     <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
       <CustomHTMLTable
+        ref={tableRef}
         bordered={bordered}
         compact={compact}
         interactive={interactive}
