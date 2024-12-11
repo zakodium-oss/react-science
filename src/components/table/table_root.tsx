@@ -18,12 +18,10 @@ import type { HeaderCellRenderer } from './table_header_cell.js';
 import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 
-// Blueprint's HTMLTable `striped` prop's implementation is based on nth-child odd / even
-// We cannot use that with virtualization, so we override its implementation here.
-// We override the box-shadow to use our own implementation for sticky headers.
 const CustomHTMLTable = styled(HTMLTable, {
   shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
 })<{ stickyHeader: boolean }>`
+  // When using a sticky header, ensure that the borders are located below the last header instead of above the first row.
   ${(props) => {
     if (!props.stickyHeader) return '';
 
@@ -46,6 +44,8 @@ const CustomHTMLTable = styled(HTMLTable, {
     `;
   }}
 
+  // Blueprint's HTMLTable \`striped\` prop's implementation is based on nth-child odd / even
+  // We cannot use that with virtualization, so we override its implementation here.
   tbody tr.odd td {
     background: ${(props) =>
       props.striped ? 'rgba(143, 153, 168, 0.15)' : 'inherit'};
@@ -91,7 +91,16 @@ interface TableBaseProps<TData extends RowData> {
     TableOptions<TData>,
     'data' | 'columns' | 'getCoreRowModel' | 'getSortedRowModel'
   >;
+  /**
+   * Props which are forwarded to the underlying HTML table element.
+   */
   tableProps?: Omit<TableHTMLAttributes<HTMLTableElement>, 'children'>;
+  /**
+   * An alias for `tableProps.className`. Exists to ensure the Table component
+   * can be styled with styled components library (e.g. emotion).
+   * If you use both the alias and `tableProps.className`, they will be merged together.
+   */
+  className?: string;
   /**
    * Override the default row rendering.
    * Make sure to spread the passed `trProps` onto the rendered `<tr>` element.
@@ -136,6 +145,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
 
     reactTable,
     tableProps,
+    className,
     renderRowTr,
     renderHeaderCell,
 
@@ -161,6 +171,14 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     overscan: 5,
   });
 
+  // Make the table component compatible with styled components libraries.
+  let finalClassName: string | undefined;
+  if (tableProps?.className && className) {
+    finalClassName = `${tableProps.className} ${className}`;
+  } else if (className) {
+    finalClassName = className;
+  }
+
   return (
     <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
       <CustomHTMLTable
@@ -170,6 +188,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
         striped={striped}
         stickyHeader={stickyHeader}
         {...tableProps}
+        className={finalClassName}
       >
         <TableHeader
           sticky={stickyHeader}

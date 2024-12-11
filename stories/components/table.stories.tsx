@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import type { Meta } from '@storybook/react';
 import type { ComponentType } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
@@ -8,6 +9,8 @@ import {
   ValueRenderers,
 } from '../../src/components/index.js';
 import { table } from '../data/data.js';
+
+type TableRecord = (typeof table)[number];
 
 interface ControlProps {
   bordered?: boolean;
@@ -185,3 +188,17 @@ export function CustomHeaderCellRender({
     />
   );
 }
+
+export const StyledTable = {
+  parameters: {
+    controls: {
+      disable: true,
+    },
+  },
+  render: () => {
+    const StyledTableComponent = styled(Table<TableRecord>)`
+      border: 1px solid red;
+    `;
+    return <StyledTableComponent data={table} columns={columns} />;
+  },
+} satisfies Meta;
