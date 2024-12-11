@@ -25,6 +25,7 @@ export default defineConfig({
     jsx: 'automatic',
   },
   optimizeDeps: {
+    exclude: ['storybook'],
     esbuildOptions: {
       target: 'esnext',
     },
