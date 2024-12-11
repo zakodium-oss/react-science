@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import type { StoryObj } from '@storybook/react';
 import type { ComponentType } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
@@ -18,6 +17,7 @@ interface ControlProps {
   interactive?: boolean;
   striped?: boolean;
   stickyHeader?: boolean;
+  virtualizeRows?: boolean;
 }
 
 export default {
@@ -30,6 +30,7 @@ export default {
     ),
   ],
   args: {
+    virtualizeRows: false,
     bordered: false,
     compact: false,
     interactive: false,
@@ -92,6 +93,7 @@ export function Control({
   interactive,
   striped,
   stickyHeader,
+  virtualizeRows,
 }: ControlProps) {
   return (
     <Table
@@ -101,29 +103,9 @@ export function Control({
       striped={striped}
       stickyHeader={stickyHeader}
       columns={columns}
-      data={table}
-    />
-  );
-}
-
-export function Virtualized({
-  bordered,
-  compact,
-  interactive,
-  striped,
-  stickyHeader,
-}: ControlProps) {
-  return (
-    <Table
-      bordered={bordered}
-      compact={compact}
-      interactive={interactive}
-      striped={striped}
-      stickyHeader={stickyHeader}
-      columns={columns}
-      data={table}
-      virtualizeRows
+      virtualizeRows={virtualizeRows}
       estimatedRowHeight={() => 172}
+      data={table}
     />
   );
 }
@@ -159,6 +141,7 @@ export function CustomHeaderCellRender({
   interactive,
   striped,
   stickyHeader,
+  virtualizeRows,
 }: ControlProps) {
   return (
     <Table
@@ -175,6 +158,8 @@ export function CustomHeaderCellRender({
           width: '100%',
         },
       }}
+      virtualizeRows={virtualizeRows}
+      estimatedRowHeight={() => 172}
       renderHeaderCell={(thProps, header) => {
         const backgroundColor = header.column.columnDef.meta?.color;
         const width = header.column.columnDef.meta?.width;
@@ -189,21 +174,16 @@ export function CustomHeaderCellRender({
   );
 }
 
-export const StyledTable = {
-  parameters: {
-    args: {
-      virtualizeRows: true,
-    },
-  },
-  args: {
-    virtualizeRows: false,
-    striped: true,
-  },
-  render: (args) => {
-    const StyledTableComponent = styled(Table<TableRecord>)`
-      border: 1px solid red;
-    `;
-    const virtualizedProps = args.virtualizeRows ? { virtualizeRows: true, estimatedRowHeight: () => 172 } : {};
-    return <StyledTableComponent {...args} {...virtualizedProps} data={table} columns={columns}  />;
-  },
-} satisfies StoryObj<typeof Table<TableRecord>>;
+export function StyledTable(props: ControlProps) {
+  const StyledTableComponent = styled(Table<TableRecord>)`
+    border: 1px solid red;
+  `;
+  return (
+    <StyledTableComponent
+      {...props}
+      data={table}
+      columns={columns}
+      estimatedRowHeight={() => 172}
+    />
+  );
+}
