@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useMemo } from 'react';
 import type {
   AccordionItemState,
   AccordionState,
-} from './accordion_context.state.js';
-import { getItem } from './accordion_context.state.js';
+} from './accordion_context.utils.js';
+import { getItem } from './accordion_context.utils.js';
 
 export type ContextType = [
   AccordionContext,
