@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import type { Meta } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import type { ComponentType } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
@@ -191,14 +191,19 @@ export function CustomHeaderCellRender({
 
 export const StyledTable = {
   parameters: {
-    controls: {
-      disable: true,
+    args: {
+      virtualizeRows: true,
     },
   },
-  render: () => {
+  args: {
+    virtualizeRows: false,
+    striped: true,
+  },
+  render: (args) => {
     const StyledTableComponent = styled(Table<TableRecord>)`
       border: 1px solid red;
     `;
-    return <StyledTableComponent data={table} columns={columns} />;
+    const virtualizedProps = args.virtualizeRows ? { virtualizeRows: true, estimatedRowHeight: () => 172 } : {};
+    return <StyledTableComponent {...args} {...virtualizedProps} data={table} columns={columns}  />;
   },
-} satisfies Meta;
+} satisfies StoryObj<typeof Table<TableRecord>>;
