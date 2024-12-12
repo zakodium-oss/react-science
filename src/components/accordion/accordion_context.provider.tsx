@@ -81,7 +81,7 @@ function reducer(
     .with({ type: 'CREATE' }, ({ payload }) => {
       return [...previous, payload];
     })
-    .otherwise(() => previous);
+    .exhaustive();
 }
 
 export function AccordionProvider(props: AccordionProviderProps) {
