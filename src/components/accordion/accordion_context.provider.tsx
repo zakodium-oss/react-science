@@ -8,7 +8,12 @@ import type {
   AccordionItemState,
   ActionType,
 } from './accordion_context.utils.js';
-import { getItem } from './accordion_context.utils.js';
+import {
+  changeItem,
+  clearItem,
+  removeItem,
+  toggleItem,
+} from './accordion_context.utils.js';
 
 interface AccordionProviderProps {
   children: ReactNode;
@@ -28,55 +33,16 @@ function reducer(
 ): AccordionItemState[] {
   return match(action)
     .with({ type: 'CHANGE' }, ({ payload }) => {
-      const { title, isOpen } = payload;
-      const item = getItem(title, previous);
-
-      if (item) {
-        const itemsWithoutChangedItem = previous.filter(
-          (element) => element.title !== title,
-        );
-
-        return [...itemsWithoutChangedItem, { ...item, isOpen }];
-      }
-
-      return previous;
+      return changeItem(previous, payload);
     })
-    .with({ type: 'CLEAR' }, ({ payload: except }) => {
-      const item = getItem(except, previous);
-
-      if (!item) {
-        return [...previous, { isOpen: true, title: except }];
-      }
-
-      return previous.map((element) => {
-        const newItem: AccordionItemState = {
-          ...element,
-          isOpen: element.title === item.title,
-        };
-
-        return newItem;
-      });
+    .with({ type: 'CLEAR' }, ({ payload }) => {
+      return clearItem(previous, payload);
     })
-    .with({ type: 'TOGGLE' }, ({ payload: title }) => {
-      const item = getItem(title, previous);
-
-      if (!item) {
-        return [...previous, { title, isOpen: true }];
-      }
-
-      const itemsWithoutChangedItem = previous.filter(
-        (element) => element.title !== title,
-      );
-
-      const newItem: AccordionItemState = {
-        ...item,
-        isOpen: !item.isOpen,
-      };
-
-      return [...itemsWithoutChangedItem, newItem];
+    .with({ type: 'TOGGLE' }, ({ payload }) => {
+      return toggleItem(previous, payload);
     })
-    .with({ type: 'REMOVE' }, ({ payload: title }) => {
-      return previous.filter((element) => element.title !== title);
+    .with({ type: 'REMOVE' }, ({ payload }) => {
+      return removeItem(previous, payload);
     })
     .with({ type: 'CREATE' }, ({ payload }) => {
       return [...previous, payload];
