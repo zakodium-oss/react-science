@@ -8,7 +8,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import type { ScrollToOptions as VirtualScrollToOptions } from '@tanstack/react-virtual';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type {
   MutableRefObject,
@@ -16,7 +15,7 @@ import type {
   RefObject,
   TableHTMLAttributes,
 } from 'react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
@@ -28,6 +27,7 @@ import type {
   VirtualScrollToRow,
 } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
+import { useTableScroll } from './use_table_scroll.js';
 
 const CustomHTMLTable = styled(HTMLTable, {
   shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
@@ -124,7 +124,7 @@ interface TableBaseProps<TData extends RowData> {
 
   /**
    * A ref which will be set with a callback to scroll to a row in the
-   * table body specified by its index in the data array.
+   * table body specified by the row's ID.
    */
   scrollToRowRef?: MutableRefObject<
     VirtualScrollToRow | ScrollToOptions | undefined
@@ -174,11 +174,9 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
 
     virtualizeRows,
     getRowId,
-    scrollToRowRef,
   } = props;
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
-  const tableRef = useRef<HTMLTableElement>(null);
   const columnDefs = useTableColumns(columns);
   const table = useReactTable<TData>({
     ...reactTable,
@@ -198,35 +196,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     overscan: 5,
   });
 
-  useEffect(() => {
-    if (scrollToRowRef) {
-      if (virtualizeRows) {
-        scrollToRowRef.current = (
-          id: string,
-          options?: VirtualScrollToOptions,
-        ) => {
-          const sortedRows = table.getRowModel().rows; // Get sorted rows
-          const rowIndex = sortedRows.findIndex((row) => row.id === id); // Find the index of the row by ID
-          if (rowIndex === -1) {
-            // We don't expect this situation, but it's not critical enough to throw an error.
-            // eslint-disable-next-line no-console
-            console.warn(
-              `Could not scroll to row with ID ${id}, the row does not exist`,
-            );
-          }
-          tanstackVirtualizer.scrollToIndex(rowIndex, options);
-        };
-      } else {
-        scrollToRowRef.current = (id: string, options?: ScrollToOptions) => {
-          const element = tableRef.current?.querySelector(
-            `tr[data-row-id="${id}"]`,
-          );
-
-          element?.scrollIntoView(options);
-        };
-      }
-    }
-  }, [scrollToRowRef, tanstackVirtualizer, virtualizeRows, tableRef, table]);
+  const tableRef = useTableScroll(props, table, tanstackVirtualizer);
 
   // Make the table component compatible with styled components libraries.
   let finalClassName: string | undefined;
