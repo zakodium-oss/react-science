@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Button as BlueprintButton, MenuItem } from '@blueprintjs/core';
+import { Button, MenuItem } from '@blueprintjs/core';
 import type { ItemRenderer } from '@blueprintjs/select';
 import { Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';
@@ -34,7 +34,7 @@ const GradientSelectOption = styled.li`
   cursor: pointer;
 `;
 
-const Button = styled(BlueprintButton)`
+const GradientSelectButton = styled(Button)`
   width: 100%;
   height: 30px;
   padding: 4px;
@@ -87,10 +87,10 @@ export function GradientSelect(props: GradientSelectProps) {
         filterable={false}
         fill
       >
-        <Button>
+        <GradientSelectButton>
           <FixedGradientPreview gradient={value} />
           <GradientSelectChevron />
-        </Button>
+        </GradientSelectButton>
       </Select>
     </GradientSelectListbox>
   );
