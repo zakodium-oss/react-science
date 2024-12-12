@@ -252,7 +252,7 @@ export const ScrollRowIntoView = {
   args: {
     scrollBehavior: 'instant',
     scrollBlock: 'start',
-    stickyHeader: true,
+    stickyHeader: false,
   },
   argTypes: {
     scrollBehavior: {
