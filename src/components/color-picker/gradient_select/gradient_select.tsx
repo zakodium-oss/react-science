@@ -2,7 +2,6 @@
 import { Button, MenuItem } from '@blueprintjs/core';
 import type { ItemRenderer } from '@blueprintjs/select';
 import { Select } from '@blueprintjs/select';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { FaChevronDown } from 'react-icons/fa';
 
@@ -33,6 +32,13 @@ const GradientSelectOption = styled.li`
   flex-direction: column;
   padding-top: 5px;
   cursor: pointer;
+`;
+
+const GradientSelectButton = styled(Button)`
+  width: 100%;
+  height: 30px;
+  padding: 4px;
+  display: block;
 `;
 
 export interface GradientSelectProps {
@@ -81,17 +87,10 @@ export function GradientSelect(props: GradientSelectProps) {
         filterable={false}
         fill
       >
-        <Button
-          css={css`
-            width: 100%;
-            height: 30px;
-            padding: 4px;
-            display: block;
-          `}
-        >
+        <GradientSelectButton>
           <FixedGradientPreview gradient={value} />
           <GradientSelectChevron />
-        </Button>
+        </GradientSelectButton>
       </Select>
     </GradientSelectListbox>
   );
