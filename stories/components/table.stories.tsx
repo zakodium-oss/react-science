@@ -1,4 +1,4 @@
-import { Button } from '@blueprintjs/core';
+import { Button, Callout } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { Meta } from '@storybook/react';
 import type { ComponentType } from 'react';
@@ -197,8 +197,9 @@ export function StyledTable(props: ControlProps) {
 
 export const ScrollToVirtualRow = {
   args: {
-    scrollBehavior: 'smooth',
-    scrollAlign: 'center',
+    scrollBehavior: 'auto',
+    scrollAlign: 'start',
+    stickyHeader: true,
   },
   argTypes: {
     scrollBehavior: {
@@ -249,8 +250,9 @@ export const ScrollToVirtualRow = {
 
 export const ScrollRowIntoView = {
   args: {
-    scrollBehavior: 'smooth',
-    scrollBlock: 'center',
+    scrollBehavior: 'instant',
+    scrollBlock: 'start',
+    stickyHeader: true,
   },
   argTypes: {
     scrollBehavior: {
@@ -284,7 +286,13 @@ export const ScrollRowIntoView = {
     }, [rowIndex, props.scrollBehavior, props.scrollBlock]);
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}
+      >
         {buttons}
         <div style={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
           <Table
@@ -307,18 +315,25 @@ function useScrollButtons() {
   const [rowIndex, setRowIndex] = useState(0);
 
   const buttons = (
-    <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-      <Button
-        onClick={() => setRowIndex(Math.floor(Math.random() * table.length))}
-      >
-        Scroll to random row ({table[rowIndex].name})
-      </Button>
-      <Button onClick={() => setRowIndex(0)}>Scroll to first</Button>
-      <Button onClick={() => setRowIndex(table.length - 1)}>
-        Scroll to last
-      </Button>
-      <div>Use controls to change scroll behavior and alignment</div>
-    </div>
+    <Callout title="Scroll to row">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div>Last: {table[rowIndex].name}</div>
+        <div>Use controls to change scroll behavior and alignment</div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <Button
+            onClick={() =>
+              setRowIndex(Math.floor(Math.random() * table.length))
+            }
+          >
+            Scroll to random row
+          </Button>
+          <Button onClick={() => setRowIndex(0)}>Scroll to first item</Button>
+          <Button onClick={() => setRowIndex(table.length - 1)}>
+            Scroll to last item
+          </Button>
+        </div>
+      </div>
+    </Callout>
   );
   return { rowIndex, buttons };
 }

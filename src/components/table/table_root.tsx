@@ -124,7 +124,7 @@ interface TableBaseProps<TData extends RowData> {
 
   /**
    * A ref which will be set with a callback to scroll to a row in the
-   * table body specified by the row's ID.
+   * table, specified by the row's ID.
    */
   scrollToRowRef?: MutableRefObject<
     VirtualScrollToRow | ScrollToOptions | undefined
