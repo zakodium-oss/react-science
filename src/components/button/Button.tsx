@@ -9,10 +9,10 @@ import {
   AnchorButton as BlueprintAnchorButton,
   Button as BlueprintButton,
   Icon,
-  Tag,
+  Tag as BlueprintTag,
   Tooltip,
 } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
@@ -27,6 +27,40 @@ export type ButtonProps = BlueprintProps & {
   tagProps?: Omit<TagProps, 'children'>;
 };
 
+const Tag = styled(BlueprintTag)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+  font-size: 0.875em;
+  padding: 2px !important;
+  min-height: 15px;
+  min-width: 15px;
+  line-height: 1em;
+  text-align: center;
+  z-index: 20;
+`;
+
+// Setting the line-height makes sure regular sized buttons have a
+// height consistent with the input fields and across variants.
+// Using the same line height as in the blueprint docs.
+const css = (children: ReactNode) => {
+  if (!children) {
+    return `
+      line-height: 1.15;
+      position: relative;
+      .bp5-icon {
+        margin-right: 0;
+      }
+    `;
+  }
+
+  return `
+    line-height: 1.15;
+    position: relative;
+  `;
+};
+
 export function Button(props: ButtonProps) {
   const { tooltipProps = {}, children, tag, tagProps, ...buttonProps } = props;
   const {
@@ -35,9 +69,11 @@ export function Button(props: ButtonProps) {
     disabled = !tooltipProps.content,
     ...otherToolTipProps
   } = tooltipProps;
+
   const InnerButton = buttonProps.disabled
-    ? BlueprintAnchorButton
-    : BlueprintButton;
+    ? styled(BlueprintAnchorButton)(css(children))
+    : styled(BlueprintButton)(css(children));
+
   return (
     <Tooltip
       fill={fill || buttonProps.fill}
@@ -46,40 +82,13 @@ export function Button(props: ButtonProps) {
       {...otherToolTipProps}
       renderTarget={({ isOpen, ...targetProps }) => (
         <InnerButton
-          css={css({
-            // Setting the line-height makes sure regular sized buttons have a
-            // height consistent with the input fields and across variants.
-            // Using the same line height as in the blueprint docs.
-            lineHeight: 1.15,
-            position: 'relative',
-            '.bp5-icon': !children && {
-              marginRight: '0',
-            },
-          })}
           {...targetProps}
           {...buttonProps}
           icon={
             <Fragment>
               <Icon icon={buttonProps.icon} />
               {tag && (
-                <Tag
-                  css={css`
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    cursor: default;
-                    font-size: 0.875em;
-                    padding: 2px !important;
-                    min-height: 15px;
-                    min-width: 15px;
-                    line-height: 1em;
-                    text-align: center;
-                    z-index: 20;
-                  `}
-                  round
-                  intent="success"
-                  {...tagProps}
-                >
+                <Tag round intent="success" {...tagProps}>
                   {tag}
                 </Tag>
               )}
