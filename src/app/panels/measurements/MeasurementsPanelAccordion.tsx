@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { PanelStack2 as BlueprintPanelStack2 } from '@blueprintjs/core';
+import { PanelStack2 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
 import {
@@ -11,7 +11,7 @@ import { Accordion } from '../../../components/index.js';
 
 import { MeasurementsPanel } from './index.js';
 
-const PanelStack2 = styled(BlueprintPanelStack2)`
+const MeasurementsPanelStack = styled(PanelStack2)`
   height: 100%;
 `;
 
@@ -25,7 +25,7 @@ export function MeasurementsPanelAccordion() {
 
   return (
     <Accordion.Item title={title} defaultOpened>
-      <PanelStack2
+      <MeasurementsPanelStack
         initialPanel={{
           renderPanel: MeasurementsPanel,
         }}
