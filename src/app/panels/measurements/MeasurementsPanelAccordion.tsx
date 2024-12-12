@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { PanelStack2 } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import { PanelStack2 as BlueprintPanelStack2 } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 
 import {
   getExistingMeasurementKinds,
@@ -11,6 +11,10 @@ import { Accordion } from '../../../components/index.js';
 
 import { MeasurementsPanel } from './index.js';
 
+const PanelStack2 = styled(BlueprintPanelStack2)`
+  height: 100%;
+`;
+
 export function MeasurementsPanelAccordion() {
   const appData = useAppData();
   const kinds = getExistingMeasurementKinds(appData.measurements);
@@ -18,12 +22,10 @@ export function MeasurementsPanelAccordion() {
     kinds.length === 1
       ? `${kindLabels[kinds[0]]} measurements`
       : 'Measurements';
+
   return (
     <Accordion.Item title={title} defaultOpened>
       <PanelStack2
-        css={css`
-          height: 100%;
-        `}
         initialPanel={{
           renderPanel: MeasurementsPanel,
         }}
