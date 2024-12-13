@@ -9,22 +9,17 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type {
-  MutableRefObject,
-  ReactNode,
-  RefObject,
-  TableHTMLAttributes,
-} from 'react';
+import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
 import { useRef } from 'react';
 
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
 import type {
-  ScrollToRow,
+  Scroller,
   TableColumnDef,
   TableRowTrRenderer,
-  VirtualScrollToRow,
+  VirtualScroller,
 } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 import { useTableScroll } from './use_table_scroll.js';
@@ -126,9 +121,7 @@ interface TableBaseProps<TData extends RowData> {
    * A ref which will be set with a callback to scroll to a row in the
    * table, specified by the row's ID.
    */
-  scrollToRowRef?: MutableRefObject<
-    VirtualScrollToRow | ScrollToOptions | undefined
-  >;
+  scrollToRowRef?: RefObject<VirtualScroller | ScrollToOptions | undefined>;
 
   getRowId?: TableOptions<TData>['getRowId'];
 }
@@ -136,13 +129,13 @@ interface TableBaseProps<TData extends RowData> {
 interface RegularTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows?: false | undefined;
-  scrollToRowRef?: MutableRefObject<ScrollToRow | undefined>;
+  scrollToRowRef?: RefObject<Scroller | undefined>;
 }
 
 interface VirtualizedTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows: true;
-  scrollToRowRef?: MutableRefObject<VirtualScrollToRow | undefined>;
+  scrollToRowRef?: RefObject<VirtualScroller | undefined>;
   /**
    * For virtualization of the table rows, provide an estimate of the height of each row.
    * @param index The index of the row in the data array.

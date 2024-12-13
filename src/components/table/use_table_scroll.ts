@@ -1,9 +1,10 @@
 import type { RowData, Table } from '@tanstack/react-table';
 import type {
+  ScrollToOptions,
   ScrollToOptions as VirtualScrollToOptions,
   Virtualizer,
 } from '@tanstack/react-virtual';
-import { useEffect, useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 
 import type { TableProps } from './table_root.js';
 
@@ -14,13 +15,12 @@ export function useTableScroll<TData extends RowData>(
 ) {
   const tableRef = useRef<HTMLTableElement>(null);
   const { scrollToRowRef, virtualizeRows } = tableProps;
-  useEffect(() => {
-    if (scrollToRowRef) {
-      if (virtualizeRows) {
-        scrollToRowRef.current = (
-          id: string,
-          options?: VirtualScrollToOptions,
-        ) => {
+
+  // @ts-expect-error We cannot call the hook conditionally to satisfy the type checker
+  useImperativeHandle(scrollToRowRef, () => {
+    if (virtualizeRows) {
+      return {
+        scrollIntoView(id: string, options?: VirtualScrollToOptions) {
           const sortedRows = table.getRowModel().rows; // Get sorted rows
           const rowIndex = sortedRows.findIndex((row) => row.id === id); // Find the index of the row by ID
           if (rowIndex === -1) {
@@ -31,9 +31,11 @@ export function useTableScroll<TData extends RowData>(
             );
           }
           virtualizer.scrollToIndex(rowIndex, options);
-        };
-      } else {
-        scrollToRowRef.current = (id: string, options?: ScrollToOptions) => {
+        },
+      };
+    } else {
+      return {
+        scrollIntoView(id: string, options?: ScrollToOptions) {
           const element = tableRef.current?.querySelector(
             `tr[data-row-id="${id}"]`,
           );
@@ -44,10 +46,10 @@ export function useTableScroll<TData extends RowData>(
             );
           }
           element?.scrollIntoView(options);
-        };
-      }
+        },
+      };
     }
-  }, [scrollToRowRef, virtualizer, virtualizeRows, tableRef, table]);
+  }, [virtualizeRows, table, virtualizer]);
 
   return tableRef;
 }

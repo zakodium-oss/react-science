@@ -24,8 +24,10 @@ export type TableRowTrRenderer<TData extends RowData> = (
   row: Row<TData>,
 ) => ReactNode;
 
-export type VirtualScrollToRow = (
-  id: string,
-  options?: ScrollToOptions,
-) => void;
-export type ScrollToRow = (id: string, options?: ScrollIntoViewOptions) => void;
+export interface VirtualScroller {
+  scrollIntoView: (id: string, options?: ScrollToOptions) => void;
+}
+
+export interface Scroller {
+  scrollIntoView: (id: string, options?: ScrollIntoViewOptions) => void;
+}

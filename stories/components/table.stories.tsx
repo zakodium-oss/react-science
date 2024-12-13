@@ -5,10 +5,7 @@ import type { ComponentType } from 'react';
 import { useRef, useState } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
-import type {
-  ScrollToRow,
-  VirtualScrollToRow,
-} from '../../src/components/index.js';
+import type { Scroller, VirtualScroller } from '../../src/components/index.js';
 import {
   createTableColumnHelper,
   Table,
@@ -218,12 +215,12 @@ export const ScrollToVirtualRow = {
   },
   render: (props) => {
     const buttons = useScrollButtons((index) => {
-      scrollToRef.current?.(String(index), {
+      scrollToRef.current?.scrollIntoView(String(index), {
         align: props.scrollAlign,
         behavior: props.scrollBehavior,
       });
     });
-    const scrollToRef = useRef<VirtualScrollToRow>();
+    const scrollToRef = useRef<VirtualScroller>();
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -273,9 +270,9 @@ export const ScrollRowIntoView = {
     },
   },
   render: (props) => {
-    const scrollToRef = useRef<ScrollToRow>();
+    const scrollToRef = useRef<Scroller>();
     const buttons = useScrollButtons((index) =>
-      scrollToRef.current?.(String(index), {
+      scrollToRef.current?.scrollIntoView(String(index), {
         behavior: props.scrollBehavior,
         block: props.scrollBlock,
       }),
