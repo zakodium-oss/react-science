@@ -44,22 +44,32 @@ const Tag = styled(BlueprintTag)`
 // Setting the line-height makes sure regular sized buttons have a
 // height consistent with the input fields and across variants.
 // Using the same line height as in the blueprint docs.
-const css = (children: ReactNode) => {
+function getStyledCss(children: ReactNode) {
+  const base: Record<string, any> = {
+    lineHeight: 1.15,
+    position: 'relative',
+  };
+
   if (!children) {
-    return `
-      line-height: 1.15;
-      position: relative;
-      .bp5-icon {
-        margin-right: 0;
-      }
-    `;
+    base['.bp5-icon'] = {
+      marginRight: 0,
+    };
   }
 
-  return `
-    line-height: 1.15;
-    position: relative;
-  `;
-};
+  return base;
+}
+
+const TooltipAnchorButton = styled(BlueprintAnchorButton)<{
+  children: ReactNode;
+}>((template) => {
+  return getStyledCss(template.children);
+});
+
+const TooltipButton = styled(BlueprintButton)<{ children: ReactNode }>((
+  template,
+) => {
+  return getStyledCss(template.children);
+});
 
 export function Button(props: ButtonProps) {
   const { tooltipProps = {}, children, tag, tagProps, ...buttonProps } = props;
@@ -71,8 +81,8 @@ export function Button(props: ButtonProps) {
   } = tooltipProps;
 
   const InnerButton = buttonProps.disabled
-    ? styled(BlueprintAnchorButton)(css(children))
-    : styled(BlueprintButton)(css(children));
+    ? TooltipAnchorButton
+    : TooltipButton;
 
   return (
     <Tooltip
