@@ -6,10 +6,10 @@ import type {
   TooltipProps,
 } from '@blueprintjs/core';
 import {
-  AnchorButton as BlueprintAnchorButton,
+  AnchorButton,
   Button as BlueprintButton,
   Icon,
-  Tag as BlueprintTag,
+  Tag,
   Tooltip,
 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
@@ -27,7 +27,7 @@ export type ButtonProps = BlueprintProps & {
   tagProps?: Omit<TagProps, 'children'>;
 };
 
-const Tag = styled(BlueprintTag)`
+const ButtonTag = styled(Tag)`
   position: absolute;
   top: 0;
   left: 0;
@@ -59,7 +59,7 @@ function getStyledCss(children: ReactNode) {
   return base;
 }
 
-const TooltipAnchorButton = styled(BlueprintAnchorButton)<{
+const TooltipAnchorButton = styled(AnchorButton)<{
   children: ReactNode;
 }>((template) => {
   return getStyledCss(template.children);
@@ -98,9 +98,9 @@ export function Button(props: ButtonProps) {
             <Fragment>
               <Icon icon={buttonProps.icon} />
               {tag && (
-                <Tag round intent="success" {...tagProps}>
+                <ButtonTag round intent="success" {...tagProps}>
                   {tag}
-                </Tag>
+                </ButtonTag>
               )}
             </Fragment>
           }
