@@ -1,5 +1,17 @@
 # Changelog
 
+## [12.1.0](https://github.com/zakodium-oss/react-science/compare/v12.0.0...v12.1.0) (2024-12-11)
+
+
+### Features
+
+* make Table component compatible with styled components libraries ([#813](https://github.com/zakodium-oss/react-science/issues/813)) ([a76181c](https://github.com/zakodium-oss/react-science/commit/a76181cd0c072345942670026961862409fe9b35))
+
+
+### Bug Fixes
+
+* **table_root:** show border when table is sticky ([#810](https://github.com/zakodium-oss/react-science/issues/810)) ([93fae28](https://github.com/zakodium-oss/react-science/commit/93fae283a43019afed22e395fa5aaec19e6a2bcb))
+
 ## [12.0.0](https://github.com/zakodium-oss/react-science/compare/v11.2.0...v12.0.0) (2024-12-09)
 
 
