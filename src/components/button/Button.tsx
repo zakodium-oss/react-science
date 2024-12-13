@@ -2,7 +2,6 @@
 import type {
   AnchorButtonProps as BlueprintAnchorButtonProps,
   ButtonProps as BlueprintButtonProps,
-  ButtonSharedProps,
   TagProps,
   TooltipProps,
 } from '@blueprintjs/core';
@@ -13,13 +12,9 @@ import {
   Tag,
   Tooltip,
 } from '@blueprintjs/core';
+import type { CSSObject } from '@emotion/styled';
 import styled from '@emotion/styled';
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ReactNode,
-  RefAttributes,
-} from 'react';
+import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
 type BlueprintProps = {
@@ -27,6 +22,7 @@ type BlueprintProps = {
     keyof BlueprintAnchorButtonProps]?: BlueprintButtonProps[key] &
     BlueprintAnchorButtonProps[key];
 };
+
 export type ButtonProps = BlueprintProps & {
   tooltipProps?: Partial<Omit<TooltipProps, 'children'>>;
   tag?: ReactNode;
@@ -47,30 +43,17 @@ const ButtonTag = styled(Tag)`
   z-index: 20;
 `;
 
-type StyledTemplate = ButtonSharedProps &
-  (
-    | (AnchorHTMLAttributes<HTMLAnchorElement> &
-        RefAttributes<HTMLAnchorElement>)
-    | (ButtonHTMLAttributes<HTMLButtonElement> &
-        RefAttributes<HTMLButtonElement>)
-  );
-
 // Setting the line-height makes sure regular sized buttons have a
 // height consistent with the input fields and across variants.
 // Using the same line height as in the blueprint docs.
-function getStyledCss(template: StyledTemplate) {
-  const base: Record<string, any> = {
+function getStyledCss(
+  buttonProps: BlueprintAnchorButtonProps | BlueprintButtonProps,
+): CSSObject {
+  return {
     lineHeight: 1.15,
     position: 'relative',
+    '.bp5-icon': !buttonProps.children && { marginRight: 0 },
   };
-
-  if (!template.children) {
-    base['.bp5-icon'] = {
-      marginRight: 0,
-    };
-  }
-
-  return base;
 }
 
 const TooltipAnchorButton = styled(AnchorButton)<{
