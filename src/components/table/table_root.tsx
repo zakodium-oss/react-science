@@ -15,8 +15,14 @@ import { useRef } from 'react';
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
-import type { TableColumnDef, TableRowTrRenderer } from './table_utils.js';
+import type {
+  Scroller,
+  TableColumnDef,
+  TableRowTrRenderer,
+  VirtualScroller,
+} from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
+import { useTableScroll } from './use_table_scroll.js';
 
 const CustomHTMLTable = styled(HTMLTable, {
   shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
@@ -110,16 +116,26 @@ interface TableBaseProps<TData extends RowData> {
    * Override the columns' header cell rendering.
    */
   renderHeaderCell?: HeaderCellRenderer<TData>;
+
+  /**
+   * A ref which will be set with a callback to scroll to a row in the
+   * table, specified by the row's ID.
+   */
+  scrollToRowRef?: RefObject<VirtualScroller | ScrollToOptions | undefined>;
+
+  getRowId?: TableOptions<TData>['getRowId'];
 }
 
 interface RegularTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows?: false | undefined;
+  scrollToRowRef?: RefObject<Scroller | undefined>;
 }
 
 interface VirtualizedTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows: true;
+  scrollToRowRef?: RefObject<VirtualScroller | undefined>;
   /**
    * For virtualization of the table rows, provide an estimate of the height of each row.
    * @param index The index of the row in the data array.
@@ -150,6 +166,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     renderHeaderCell,
 
     virtualizeRows,
+    getRowId,
   } = props;
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
@@ -160,6 +177,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     columns: columnDefs,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getRowId,
   });
 
   const tanstackVirtualizer = useVirtualizer({
@@ -170,6 +188,8 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
       (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
   });
+
+  const tableRef = useTableScroll(props, table, tanstackVirtualizer);
 
   // Make the table component compatible with styled components libraries.
   let finalClassName: string | undefined;
@@ -184,6 +204,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   return (
     <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
       <CustomHTMLTable
+        ref={tableRef}
         bordered={bordered}
         compact={compact}
         interactive={interactive}

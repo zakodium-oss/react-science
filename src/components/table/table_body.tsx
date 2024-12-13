@@ -107,5 +107,6 @@ function getTrRenderProps<TData extends RowData>(
     children: row
       .getVisibleCells()
       .map((cell) => <TableRowCell key={cell.id} cell={cell} />),
+    'data-row-id': row.id,
   };
 }
