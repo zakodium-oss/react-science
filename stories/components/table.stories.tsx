@@ -307,7 +307,7 @@ export const ScrollRowIntoView = {
   },
 } satisfies Meta;
 
-function useScrollButtons(cb: (index: number) => void) {
+function useScrollButtons(onIndexChanged: (index: number) => void) {
   const [rowIndex, setRowIndex] = useState(0);
 
   const buttons = (
@@ -320,7 +320,7 @@ function useScrollButtons(cb: (index: number) => void) {
             onClick={() => {
               const index = Math.floor(Math.random() * table.length);
               setRowIndex(index);
-              cb(index);
+              onIndexChanged(index);
             }}
           >
             Scroll to random row
@@ -328,7 +328,7 @@ function useScrollButtons(cb: (index: number) => void) {
           <Button
             onClick={() => {
               setRowIndex(0);
-              cb(0);
+              onIndexChanged(0);
             }}
           >
             Scroll to first item
@@ -337,7 +337,7 @@ function useScrollButtons(cb: (index: number) => void) {
             onClick={() => {
               const index = table.length - 1;
               setRowIndex(index);
-              cb(index);
+              onIndexChanged(index);
             }}
           >
             Scroll to last item
