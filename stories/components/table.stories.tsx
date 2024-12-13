@@ -2,7 +2,7 @@ import { Button, Callout } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { Meta } from '@storybook/react';
 import type { ComponentType } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
 import type {
@@ -200,6 +200,7 @@ export const ScrollToVirtualRow = {
     scrollBehavior: 'auto',
     scrollAlign: 'start',
     stickyHeader: true,
+    striped: true,
   },
   argTypes: {
     scrollBehavior: {
@@ -216,16 +217,13 @@ export const ScrollToVirtualRow = {
     },
   },
   render: (props) => {
-    const { rowIndex, buttons } = useScrollButtons();
+    const buttons = useScrollButtons((index) => {
+      scrollToRef.current?.(String(index), {
+        align: props.scrollAlign,
+        behavior: props.scrollBehavior,
+      });
+    });
     const scrollToRef = useRef<VirtualScrollToRow>();
-    useEffect(() => {
-      if (scrollToRef.current) {
-        scrollToRef.current(String(rowIndex), {
-          align: props.scrollAlign,
-          behavior: props.scrollBehavior,
-        });
-      }
-    }, [rowIndex, props.scrollAlign, props.scrollBehavior]);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -253,6 +251,7 @@ export const ScrollRowIntoView = {
     scrollBehavior: 'instant',
     scrollBlock: 'start',
     stickyHeader: false,
+    striped: true,
   },
   argTypes: {
     scrollBehavior: {
@@ -274,16 +273,13 @@ export const ScrollRowIntoView = {
     },
   },
   render: (props) => {
-    const { rowIndex, buttons } = useScrollButtons();
     const scrollToRef = useRef<ScrollToRow>();
-    useEffect(() => {
-      if (scrollToRef.current) {
-        scrollToRef.current(String(rowIndex), {
-          behavior: props.scrollBehavior,
-          block: props.scrollBlock,
-        });
-      }
-    }, [rowIndex, props.scrollBehavior, props.scrollBlock]);
+    const buttons = useScrollButtons((index) =>
+      scrollToRef.current?.(String(index), {
+        behavior: props.scrollBehavior,
+        block: props.scrollBlock,
+      }),
+    );
 
     return (
       <div
@@ -311,7 +307,7 @@ export const ScrollRowIntoView = {
   },
 } satisfies Meta;
 
-function useScrollButtons() {
+function useScrollButtons(cb: (index: number) => void) {
   const [rowIndex, setRowIndex] = useState(0);
 
   const buttons = (
@@ -321,19 +317,34 @@ function useScrollButtons() {
         <div>Use controls to change scroll behavior and alignment</div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <Button
-            onClick={() =>
-              setRowIndex(Math.floor(Math.random() * table.length))
-            }
+            onClick={() => {
+              const index = Math.floor(Math.random() * table.length);
+              setRowIndex(index);
+              cb(index);
+            }}
           >
             Scroll to random row
           </Button>
-          <Button onClick={() => setRowIndex(0)}>Scroll to first item</Button>
-          <Button onClick={() => setRowIndex(table.length - 1)}>
+          <Button
+            onClick={() => {
+              setRowIndex(0);
+              cb(0);
+            }}
+          >
+            Scroll to first item
+          </Button>
+          <Button
+            onClick={() => {
+              const index = table.length - 1;
+              setRowIndex(index);
+              cb(index);
+            }}
+          >
             Scroll to last item
           </Button>
         </div>
       </div>
     </Callout>
   );
-  return { rowIndex, buttons };
+  return buttons;
 }
