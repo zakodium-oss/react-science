@@ -1,11 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
 export default {
   title: 'Components / Menus',
 };
+
+const StyledMenu = styled(Menu)`
+  width: 300px;
+  padding: 0;
+  border: 1px solid black;
+`;
 
 export function WithIcon() {
   const options = [
@@ -13,34 +19,14 @@ export function WithIcon() {
     <MenuItem key="1" text="Exercise" icon="person" />,
   ];
 
-  return (
-    <Menu
-      css={css`
-        width: 300px;
-        padding: 0;
-        border: 1px solid black;
-      `}
-    >
-      {options}
-    </Menu>
-  );
+  return <StyledMenu>{options}</StyledMenu>;
 }
 
 const defaultOptions = <MenuItem text="Default workspace" />;
 export function WithoutIcon() {
   const options = [defaultOptions, <MenuItem key="1" text="Exercise" />];
 
-  return (
-    <Menu
-      css={css`
-        width: 300px;
-        padding: 0;
-        border: 1px solid black;
-      `}
-    >
-      {options}
-    </Menu>
-  );
+  return <StyledMenu>{options}</StyledMenu>;
 }
 
 export function WithDisabled() {
@@ -49,17 +35,7 @@ export function WithDisabled() {
     <MenuItem key="1" text="Exercise" disabled />,
   ];
 
-  return (
-    <Menu
-      css={css`
-        width: 300px;
-        padding: 0;
-        border: 1px solid black;
-      `}
-    >
-      {options}
-    </Menu>
-  );
+  return <StyledMenu>{options}</StyledMenu>;
 }
 
 export function WithDivider() {
@@ -71,28 +47,12 @@ export function WithDivider() {
     ];
   }, []);
 
-  return (
-    <Menu
-      css={css`
-        width: 300px;
-        padding: 0;
-        border: 1px solid black;
-      `}
-    >
-      {options}
-    </Menu>
-  );
+  return <StyledMenu>{options}</StyledMenu>;
 }
 
 export function Complex() {
   return (
-    <Menu
-      css={css`
-        width: 300px;
-        padding: 0;
-        border: 1px solid black;
-      `}
-    >
+    <StyledMenu>
       <MenuItem text="Back" icon="book" />
       <MenuItem text="Forward" icon="step-forward" disabled />
       <MenuItem text="Refresh" icon="refresh" />
@@ -103,6 +63,6 @@ export function Complex() {
       <MenuDivider />
       <MenuItem text="Send page to your devices" icon="add" />
       <MenuItem text="Create QR Code for this page" icon="settings" />
-    </Menu>
+    </StyledMenu>
   );
 }
