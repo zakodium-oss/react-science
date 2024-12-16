@@ -6,7 +6,7 @@ import type {
   TooltipProps,
 } from '@blueprintjs/core';
 import { ButtonGroup, Classes, Colors, Icon, Popover } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { MouseEvent, ReactNode } from 'react';
 import { cloneElement, useLayoutEffect, useMemo, useRef } from 'react';
 
@@ -26,6 +26,7 @@ interface ToolbarBaseProps {
   intent?: Intent;
   disabled?: boolean;
 }
+
 export interface ToolbarProps
   extends ToolbarBaseProps,
     Pick<ButtonGroupProps, 'children' | 'vertical'> {
@@ -55,6 +56,25 @@ export interface ToolbarPopoverItemProps extends PopoverProps {
 }
 
 const border = '1px solid rgb(247, 247, 247)';
+
+const ToolbarButton = styled(Button)`
+  .${Classes.ICON} {
+    color: ${Colors.DARK_GRAY3};
+  }
+
+  .bp5-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+  }
+
+  .bp5-tag {
+    font-size: 10px;
+    line-height: 12px;
+    min-width: 12px;
+    min-height: 12px;
+  }
+`;
 
 export function Toolbar(props: ToolbarProps) {
   const { children, disabled, intent, vertical, popoverInteractionKind } =
@@ -155,33 +175,17 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
         });
 
   return (
-    <Button
+    <ToolbarButton
       alignText={isPopover ? 'left' : undefined}
       disabled={disabled}
-      css={css`
-        .${Classes.ICON} {
-          color: ${Colors.DARK_GRAY3};
-        }
-        .bp5-icon {
-          width: 16px;
-          height: 16px;
-          font-size: 12px;
-        }
-        .bp5-tag {
-          font-size: 10px;
-          line-height: 12px;
-          min-width: 12px;
-          min-height: 12px;
-        }
-      `}
       intent={intent}
+      type="button"
+      active={active}
       style={{
         position: 'relative',
         fontSize: '1.125em',
         width: 'fit-content',
       }}
-      type="button"
-      active={active}
       icon={
         <div
           style={{
@@ -230,6 +234,12 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
 
 Toolbar.Item = ToolbarItem;
 
+const ToolbarPopover = styled(Popover)`
+  .${Classes.ICON} {
+    color: ${Colors.DARK_GRAY3};
+  }
+`;
+
 Toolbar.PopoverItem = function ToolbarPopoverItem(
   props: ToolbarPopoverItemProps,
 ) {
@@ -237,18 +247,13 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
   const { disabled, vertical, popoverInteractionKind } = useToolbarContext();
 
   return (
-    <Popover
+    <ToolbarPopover
       minimal
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
       interactionKind={popoverInteractionKind}
       hasBackdrop={popoverInteractionKind === 'click'}
       hoverCloseDelay={0}
-      css={css`
-        .${Classes.ICON} {
-          color: ${Colors.DARK_GRAY3};
-        }
-      `}
       targetProps={{
         style: {
           fontSize: '1.125em',
