@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Dialog, DialogBody, DialogFooter, Tab, Tabs } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import {
   FaArrowsAlt,
@@ -37,6 +37,11 @@ const actions = {
   onCancel: { action: 'canceled' },
 };
 
+const DialogBodyStyledControl = styled(DialogBody)`
+  padding: 0;
+  background-color: white;
+`;
+
 export function Control(props: { onSave: () => void; onClose: () => void }) {
   const [isOpen, open, close] = useOnOff();
 
@@ -56,12 +61,7 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
         style={{ maxWidth: 500, height: 300 }}
         {...otherProps}
       >
-        <DialogBody
-          css={css`
-            padding: 0;
-            background-color: white;
-          `}
-        >
+        <DialogBodyStyledControl>
           <div
             style={{
               display: 'flex',
@@ -86,7 +86,7 @@ export function Control(props: { onSave: () => void; onClose: () => void }) {
               exercitationem voluptates non.
             </p>
           </div>
-        </DialogBody>
+        </DialogBodyStyledControl>
         <DialogFooter
           actions={<Button intent="primary" text="Save" onClick={onSave} />}
         />
@@ -185,6 +185,19 @@ const tabs = [
   },
 ];
 
+const DialogBodyStyled = styled(DialogBody)`
+  max-height: none;
+  padding: 0;
+  background-color: white;
+`;
+
+const TabsStyled = styled(Tabs)`
+  height: 100%;
+  div[role='tabpanel'] {
+    overflow-y: auto;
+  }
+`;
+
 export function WithComplexContents({
   onSave,
   onClose,
@@ -211,24 +224,8 @@ export function WithComplexContents({
         style={{ width: 800, height: 400 }}
         {...otherProps}
       >
-        <DialogBody
-          css={css({
-            maxHeight: 'none',
-            padding: 0,
-            backgroundColor: 'white',
-          })}
-        >
-          <Tabs
-            selectedTabId={state}
-            onChange={setState}
-            vertical
-            css={css`
-              height: 100%;
-              div[role='tabpanel'] {
-                overflow-y: auto;
-              }
-            `}
-          >
+        <DialogBodyStyled>
+          <TabsStyled selectedTabId={state} onChange={setState} vertical>
             {tabs.map((tab) => (
               <Tab
                 id={tab.id}
@@ -237,8 +234,8 @@ export function WithComplexContents({
                 panel={tab.content}
               />
             ))}
-          </Tabs>
-        </DialogBody>
+          </TabsStyled>
+        </DialogBodyStyled>
         <DialogFooter
           actions={<Button intent="primary" text="Save" onClick={onSave} />}
         />
@@ -269,15 +266,9 @@ export function DynamicallySizedChildren() {
         onClose={close}
         style={{ width: 700 }}
       >
-        <DialogBody
-          css={css({
-            maxHeight: 'none',
-            padding: 1,
-            backgroundColor: 'white',
-          })}
-        >
+        <DialogBodyStyled>
           <StructureEditor width={600} height={400} svgMenu />
-        </DialogBody>
+        </DialogBodyStyled>
       </Dialog>
     </div>
   );
