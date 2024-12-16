@@ -12,7 +12,7 @@ interface PanelHeaderProps {
   children?: ReactNode;
 }
 
-const PanelContainer = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,7 +20,7 @@ const PanelContainer = styled.div`
   border-bottom: 0.55px solid rgb(240, 240, 240);
 `;
 
-const PanelLeftContainer = styled.div`
+const HeaderLeftContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -34,12 +34,12 @@ export function PanelHeader(props: PanelHeaderProps) {
   const { total, current, children, onClickSettings } = props;
 
   return (
-    <PanelContainer>
-      <PanelLeftContainer>{children}</PanelLeftContainer>
+    <HeaderContainer>
+      <HeaderLeftContainer>{children}</HeaderLeftContainer>
       <SelectedTotal count={current} total={total} />
       {onClickSettings && (
         <Button color="black" minimal onClick={onClickSettings} icon="cog" />
       )}
-    </PanelContainer>
+    </HeaderContainer>
   );
 }
