@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { Classes, Collapse, InputGroup } from '@blueprintjs/core';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { CSSProperties } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
@@ -49,17 +48,31 @@ const AccordionButton = styled(Button, {
   }
 `;
 
-const style = {
-  content: css({
-    overflow: 'hidden',
-  }),
-  container: css({
-    padding: '5px 0 0 0',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  }),
-};
+const InfoPanelContainer = styled.div`
+  padding: 5px 0 0 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const InfoPanelCollapse = styled(Collapse)`
+  overflow: hidden;
+`;
+
+const InfoPanelInputGroup = styled(InputGroup)`
+  flex-grow: 1;
+`;
+
+const InfoPanelGroup = styled.div`
+  padding: 0 5px;
+  margin-top: 5px;
+  background-color: white;
+  top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+`;
 
 interface InfoPanelDatum {
   parameter: string;
@@ -137,7 +150,7 @@ export function InfoPanel(props: InfoPanelProps) {
   }, [data, viewData]);
 
   return (
-    <div css={style.container}>
+    <InfoPanelContainer>
       <div
         style={{
           padding: '0 5px',
@@ -146,23 +159,8 @@ export function InfoPanel(props: InfoPanelProps) {
       >
         {title}
       </div>
-      <div
-        tabIndex={0}
-        css={css({
-          padding: '0 5px',
-          marginTop: '5px',
-          backgroundColor: 'white',
-          top: '5px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 6,
-          width: '100%',
-        })}
-      >
-        <InputGroup
-          css={css({
-            flexGrow: 1,
-          })}
+      <InfoPanelGroup tabIndex={0}>
+        <InfoPanelInputGroup
           placeholder="Search for a parameter"
           value={search}
           onChange={({ target }) => {
@@ -176,9 +174,9 @@ export function InfoPanel(props: InfoPanelProps) {
           fill
         />
         <SelectedTotal count={count} total={total} />
-      </div>
+      </InfoPanelGroup>
       <InfoPanelContent filteredData={filteredData} />
-    </div>
+    </InfoPanelContainer>
   );
 }
 
@@ -225,7 +223,7 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
             >
               {description}
             </AccordionButton>
-            <Collapse isOpen={open} css={style.content}>
+            <InfoPanelCollapse isOpen={open}>
               <Table
                 data={data}
                 columns={columns}
@@ -233,7 +231,7 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
                 tableProps={{ style: { width: '100%' } }}
                 compact
               />
-            </Collapse>
+            </InfoPanelCollapse>
           </div>
         );
       })}
