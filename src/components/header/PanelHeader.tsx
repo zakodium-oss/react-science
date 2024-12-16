@@ -1,28 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 import { Button } from '../button/index.js';
 import { SelectedTotal } from '../selected-total/index.js';
-
-const styles = {
-  container: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottom: '0.55px solid rgb(240, 240, 240)',
-  }),
-  leftContainer: css({
-    display: 'flex',
-    flexDirection: 'row',
-    flex: 1,
-    '& > button': {
-      padding: '0 5px',
-      minWidth: 'auto',
-    },
-  }),
-};
 
 interface PanelHeaderProps {
   total?: number;
@@ -31,19 +12,34 @@ interface PanelHeaderProps {
   children?: ReactNode;
 }
 
-export function PanelHeader({
-  total,
-  current,
-  children,
-  onClickSettings,
-}: PanelHeaderProps) {
+const PanelContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.55px solid rgb(240, 240, 240);
+`;
+
+const PanelLeftContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  '& > button:' {
+    padding: 0 5px;
+    min-width: auto;
+  }
+`;
+
+export function PanelHeader(props: PanelHeaderProps) {
+  const { total, current, children, onClickSettings } = props;
+
   return (
-    <div css={styles.container}>
-      <div css={styles.leftContainer}>{children}</div>
+    <PanelContainer>
+      <PanelLeftContainer>{children}</PanelLeftContainer>
       <SelectedTotal count={current} total={total} />
       {onClickSettings && (
         <Button color="black" minimal onClick={onClickSettings} icon="cog" />
       )}
-    </div>
+    </PanelContainer>
   );
 }
