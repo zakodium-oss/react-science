@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { LogEntry } from 'fifo-logger';
 import type { CSSProperties } from 'react';
@@ -76,24 +75,25 @@ function useColumns(unseen: number) {
   );
 }
 
+const LoggerDialog = styled(Dialog)`
+  min-width: 800px;
+  min-height: 500px;
+  max-height: 80vh;
+  max-width: 1000px;
+`;
+
 export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
   const logger = useFifoLogger();
 
   const columns = useColumns(props.unseen);
 
   return (
-    <Dialog
+    <LoggerDialog
       shouldReturnFocusOnClose={false}
       isOpen={props.isOpen}
       onClose={props.onClose}
       title="Logs"
       icon="info-sign"
-      css={css`
-        min-width: 800px;
-        min-height: 500px;
-        max-height: 80vh;
-        max-width: 1000px;
-      `}
     >
       <DialogBody>
         <Table
@@ -131,7 +131,7 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
           </ActionsFooter>
         }
       />
-    </Dialog>
+    </LoggerDialog>
   );
 }
 
