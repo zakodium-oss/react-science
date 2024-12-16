@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import type { PanelProps } from '@blueprintjs/core';
 import { Tab, Tabs } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
 import type { MeasurementKind } from '../../../app-data/index.js';
@@ -13,6 +13,18 @@ import {
 } from '../../../app-data/index.js';
 
 import { MeasurementPanelProvider, MeasurementsTable } from './index.js';
+
+const MeasurementsTabs = styled(Tabs)`
+  div[role='tablist'] {
+    overflow-x: auto;
+    padding: 2px 0 0 1rem;
+    border-bottom: 1px solid gray;
+  }
+
+  div[role='tabpanel'] {
+    margin-top: 4px;
+  }
+`;
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
@@ -49,19 +61,9 @@ export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
   if (items.length > 0) {
     return (
       <MeasurementPanelProvider value={measurementState}>
-        <Tabs
+        <MeasurementsTabs
           selectedTabId={view.selectedKind}
           onChange={handleTabSelection}
-          css={css`
-            div[role='tablist'] {
-              overflow-x: auto;
-              padding: 2px 0 0 1rem;
-              border-bottom: 1px solid gray;
-            }
-            div[role='tabpanel'] {
-              margin-top: 4px;
-            }
-          `}
         >
           {items.map((item) => (
             <Tab
@@ -73,7 +75,7 @@ export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
               tagProps={{ round: true }}
             />
           ))}
-        </Tabs>
+        </MeasurementsTabs>
       </MeasurementPanelProvider>
     );
   }
