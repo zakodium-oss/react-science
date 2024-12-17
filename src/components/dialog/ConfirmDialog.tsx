@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import type { DialogProps } from '@blueprintjs/core';
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import { Button } from '../button/index.js';
 
@@ -12,6 +12,15 @@ interface ConfirmDialogProps extends Omit<DialogProps, 'isCloseButtonShown'> {
   cancelText?: string;
   headerColor: string;
 }
+
+const DialogWithHeaderColor = styled(Dialog, {
+  shouldForwardProp: (prop) => prop !== 'headerColor',
+})<{ headerColor: string }>`
+  .bp5-dialog-header {
+    background-color: ${(props) => props.headerColor};
+    min-height: 0;
+  }
+`;
 
 export function ConfirmDialog(props: ConfirmDialogProps) {
   const {
@@ -26,17 +35,12 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
   } = props;
 
   return (
-    <Dialog
+    <DialogWithHeaderColor
+      headerColor={headerColor}
       onClose={onClose}
       {...otherProps}
       title=" "
       isCloseButtonShown={false}
-      css={css`
-        .bp5-dialog-header {
-          background-color: ${headerColor};
-          min-height: 0px;
-        }
-      `}
     >
       <DialogBody>{children}</DialogBody>
       <DialogFooter
@@ -56,6 +60,6 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
           />,
         ]}
       />
-    </Dialog>
+    </DialogWithHeaderColor>
   );
 }
