@@ -14,7 +14,7 @@ export default {
   title: 'Components / ContextMenu',
 };
 
-const ContextMenuStyled = styled(ContextMenu)`
+const StyledContextMenu = styled(ContextMenu)`
   height: 500px;
   width: 500px;
   border: 1px solid black;
@@ -37,9 +37,9 @@ export function ContextDropdown() {
   );
 
   return (
-    <ContextMenuStyled content={content}>
+    <StyledContextMenu content={content}>
       <p>Hello, World!</p>
-    </ContextMenuStyled>
+    </StyledContextMenu>
   );
 }
 
