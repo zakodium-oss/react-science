@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Tab, Tabs } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 export default {
@@ -36,6 +36,16 @@ function FullHeightContent({ children }: { children: ReactNode }) {
   );
 }
 
+const AllowHorizontalChildToTakeFullHeightTabs = styled(Tabs)`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  div[role='tabpanel'] {
+    flex-grow: 1;
+  }
+`;
+
 export function AllowHorizontalChildToTakeFullHeight() {
   const items = [
     {
@@ -61,16 +71,7 @@ export function AllowHorizontalChildToTakeFullHeight() {
   ];
 
   return (
-    <Tabs
-      css={css`
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        div[role='tabpanel'] {
-          flex-grow: 1;
-        }
-      `}
-    >
+    <AllowHorizontalChildToTakeFullHeightTabs>
       {items.map((item) => (
         <Tab
           id={item.id}
@@ -79,9 +80,22 @@ export function AllowHorizontalChildToTakeFullHeight() {
           panel={item.content}
         />
       ))}
-    </Tabs>
+    </AllowHorizontalChildToTakeFullHeightTabs>
   );
 }
+
+const ManyTabsStyled = styled(Tabs, {
+  shouldForwardProp: (prop) => prop !== 'orientation',
+})<{ orientation: string }>`
+  height: 100%;
+
+  div[role='tablist'] {
+    overflow-x: ${(props) =>
+      props.orientation === 'vertical' ? 'hidden' : 'auto'};
+    overflow-y: ${(props) =>
+      props.orientation === 'vertical' ? 'auto' : 'hidden'};
+  }
+`;
 
 export function ManyTabs({
   orientation,
@@ -108,15 +122,9 @@ export function ManyTabs({
   ];
 
   return (
-    <Tabs
+    <ManyTabsStyled
+      orientation={orientation}
       vertical={orientation === 'vertical'}
-      css={css`
-        height: 100%;
-        div[role='tablist'] {
-          overflow-x: ${orientation === 'vertical' ? 'hidden' : 'auto'};
-          overflow-y: ${orientation === 'vertical' ? 'auto' : 'hidden'};
-        }
-      `}
     >
       {items.map((item) => (
         <Tab
@@ -126,7 +134,7 @@ export function ManyTabs({
           panel={<div>{item.content}</div>}
         />
       ))}
-    </Tabs>
+    </ManyTabsStyled>
   );
 }
 ManyTabs.args = {
