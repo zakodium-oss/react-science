@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 import { Toolbar } from './Toolbar.js';
@@ -10,36 +10,37 @@ interface PanelPreferencesToolbarProps {
   onSave?: () => void;
 }
 
-const styles = {
-  container: css({
-    display: 'flex',
-    justifyContent: 'space-between',
-    borderBottom: '1px solid rgb(240, 240, 240)',
-  }),
-  title: css({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 12,
-    fontWeight: 500,
-  }),
-  toolbar: css({
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    '& > button': {
-      padding: 0,
-      paddingLeft: 9,
-      minWidth: 'auto',
-    },
-  }),
-};
+const PanelPreferencesToolbarContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(240, 240, 240);
+`;
+
+const PanelPreferencesToolbarTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+  font-weight: 500;
+`;
+
+const PanelPreferencesToolbarContent = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+
+  & > button {
+    padding: 0 0 0 9px;
+    min-width: auto;
+  }
+`;
 
 export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
   const { title = '', onClose, onSave } = props;
+
   return (
-    <div css={styles.container}>
-      <div css={styles.title}>{title}</div>
-      <div css={styles.toolbar}>
+    <PanelPreferencesToolbarContainer>
+      <PanelPreferencesToolbarTitle>{title}</PanelPreferencesToolbarTitle>
+      <PanelPreferencesToolbarContent>
         <Toolbar>
           {onClose && (
             <Toolbar.Item onClick={onClose} intent="danger" icon="cross" />
@@ -48,7 +49,7 @@ export function PanelPreferencesToolbar(props: PanelPreferencesToolbarProps) {
             <Toolbar.Item onClick={onSave} intent="success" icon="tick" />
           )}
         </Toolbar>
-      </div>
-    </div>
+      </PanelPreferencesToolbarContent>
+    </PanelPreferencesToolbarContainer>
   );
 }
