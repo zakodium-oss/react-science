@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { ContextMenu, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import type { ReactElement } from 'react';
 
@@ -14,6 +13,15 @@ import { table } from '../data/data.js';
 export default {
   title: 'Components / ContextMenu',
 };
+
+const ContextMenuStyled = styled(ContextMenu)`
+  height: 500px;
+  width: 500px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export function ContextDropdown() {
   const content = (
@@ -29,19 +37,9 @@ export function ContextDropdown() {
   );
 
   return (
-    <ContextMenu
-      content={content}
-      css={css`
-        height: 500px;
-        width: 500px;
-        border: 1px solid black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      `}
-    >
+    <ContextMenuStyled content={content}>
       <p>Hello, World!</p>
-    </ContextMenu>
+    </ContextMenuStyled>
   );
 }
 
