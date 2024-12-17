@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import type { ValueRenderersProps } from './index.js';
 
@@ -7,15 +7,10 @@ export interface TitleProps extends ValueRenderersProps {
   value?: string;
 }
 
-const styles = {
-  title: css({
-    fontWeight: 'bold',
-  }),
-};
+const TitleContainer = styled.div`
+  font-weight: bold;
+`;
+
 export function Title({ value, ...other }: TitleProps) {
-  return (
-    <div {...other} css={styles.title}>
-      {value}
-    </div>
-  );
+  return <TitleContainer {...other}>{value}</TitleContainer>;
 }
