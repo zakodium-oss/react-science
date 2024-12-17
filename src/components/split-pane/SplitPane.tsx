@@ -282,7 +282,7 @@ function getItemStyle(
 }
 
 const Split = styled.div<{
-  direction: 'horizontal' | 'vertical';
+  direction: SplitPaneDirection;
   enabled: boolean;
 }>`
   background-color: ${Colors.LIGHT_GRAY5};
@@ -297,8 +297,8 @@ const Split = styled.div<{
     background-color: ${Colors.LIGHT_GRAY3};
   }
 
-  ${(props) => {
-    return match(props.direction)
+  ${(props) =>
+    match(props.direction)
       .with(
         'horizontal',
         () => `
@@ -313,6 +313,5 @@ const Split = styled.div<{
         cursor: ${props.enabled ? 'ns-resize' : 'pointer'};
       `,
       )
-      .exhaustive();
-  }}
+      .exhaustive()}
 `;
