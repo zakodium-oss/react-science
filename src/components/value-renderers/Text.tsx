@@ -1,21 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import type { ValueRenderersProps } from './index.js';
 
 interface TextProps extends ValueRenderersProps {
   value?: string;
 }
-const styles = {
-  text: css({
-    textOverflow: 'ellipsis',
-  }),
-};
+
+const TextContainer = styled.div`
+  text-overflow: ellipsis;
+`;
 
 export function Text({ value, ...other }: TextProps) {
-  return (
-    <div {...other} css={styles.text}>
-      {value}
-    </div>
-  );
+  return <TextContainer {...other}>{value}</TextContainer>;
 }
