@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Tab, Tabs } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useMemo, useState } from 'react';
 
 import type {
@@ -189,6 +189,13 @@ WithMinimalSize.argTypes = {
   controlledSide: sideArgType,
 };
 
+const StyledTabs = styled(Tabs)`
+  height: 100%;
+  div[role='tablist'] {
+    overflow-x: auto;
+  }
+`;
+
 export function WithMinimalSizeAndEvilChild() {
   const tabItems = useMemo(
     () =>
@@ -206,16 +213,7 @@ export function WithMinimalSizeAndEvilChild() {
     <div style={{ height: '100%' }}>
       <SplitPane direction="horizontal" size="20%" controlledSide="end">
         <div style={{ width: '100%', minWidth: 0 }}>
-          <Tabs
-            selectedTabId={opened}
-            onChange={setOpen}
-            css={css`
-              height: 100%;
-              div[role='tablist'] {
-                overflow-x: auto;
-              }
-            `}
-          >
+          <StyledTabs selectedTabId={opened} onChange={setOpen}>
             {tabItems.map((item) => (
               <Tab
                 id={item.id}
@@ -224,7 +222,7 @@ export function WithMinimalSizeAndEvilChild() {
                 panel={<div>{item.content}</div>}
               />
             ))}
-          </Tabs>
+          </StyledTabs>
         </div>
         <div
           style={{
