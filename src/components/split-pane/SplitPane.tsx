@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Colors } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import type {
   CSSProperties,
   PointerEvent as ReactPointerEvent,
@@ -8,6 +8,7 @@ import type {
   RefObject,
 } from 'react';
 import { useEffect, useReducer, useRef, useState } from 'react';
+import { match } from 'ts-pattern';
 import useResizeObserver from 'use-resize-observer';
 
 import { useOnOff } from '../hooks/useOnOff.js';
@@ -202,17 +203,19 @@ function Splitter(props: SplitterProps) {
     isFinalClosed,
     splitterRef,
   } = props;
+
   return (
-    <div
+    <Split
       onDoubleClick={onDoubleClick}
       onPointerDown={onPointerDown}
-      css={getSeparatorStyle(direction, !isFinalClosed)}
+      enabled={!isFinalClosed}
+      direction={direction}
       ref={splitterRef}
     >
       <div style={{ fontSize: '0.875em' }}>
         {direction === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
       </div>
-    </div>
+    </Split>
   );
 }
 
@@ -278,27 +281,38 @@ function getItemStyle(
   }
 }
 
-function getSeparatorStyle(direction: SplitPaneDirection, enabled: boolean) {
-  return css([
-    direction === 'horizontal' && {
-      cursor: enabled ? 'ew-resize' : 'pointer',
-      width: '10px',
-    },
-    direction === 'vertical' && {
-      height: '10px',
-      cursor: enabled ? 'ns-resize' : 'pointer',
-    },
-    {
-      backgroundColor: Colors.LIGHT_GRAY5,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      userSelect: 'none',
-      minWidth: 11,
-      touchAction: 'none',
-      ':hover': {
-        backgroundColor: Colors.LIGHT_GRAY3,
-      },
-    },
-  ]);
-}
+const Split = styled.div<{
+  direction: 'horizontal' | 'vertical';
+  enabled: boolean;
+}>`
+  background-color: ${Colors.LIGHT_GRAY5};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  min-width: 11px;
+  touch-action: none;
+
+  :hover {
+    background-color: ${Colors.LIGHT_GRAY3};
+  }
+
+  ${(props) => {
+    return match(props.direction)
+      .with(
+        'horizontal',
+        () => `
+        cursor: ${props.enabled ? 'ew-resize' : 'pointer'};
+        width: 10px;
+      `,
+      )
+      .with(
+        'vertical',
+        () => `
+        height: 10px;
+        cursor: ${props.enabled ? 'ns-resize' : 'pointer'};
+      `,
+      )
+      .exhaustive();
+  }}
+`;
