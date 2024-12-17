@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { ButtonGroup } from '@blueprintjs/core';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import type { ButtonProps } from '../../src/components/index.js';
@@ -17,6 +16,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 5px;
 `;
+
 export function Control(props: Omit<ButtonProps, 'children' | 'tooltipProps'>) {
   return (
     <ButtonWrapper>
@@ -103,41 +103,31 @@ export function TooltipOnDisabled(tooltipProps: ButtonProps['tooltipProps']) {
 TooltipOnDisabled.args = Tooltip.args;
 TooltipOnDisabled.argTypes = Tooltip.argTypes;
 
+const ButtonGroupStyled = styled(ButtonGroup)`
+  & > *:first-of-type {
+    border-radius: 6px 0 0 6px;
+  }
+  & > *:last-of-type {
+    border-right-width: 1px;
+    border-radius: 0 6px 6px 0;
+  }
+`;
+
 export function ButtonGroupBasic() {
   return (
     <ButtonWrapper>
-      <ButtonGroup
-        css={css({
-          ' & > *:first-of-type': {
-            borderRadius: '6px 0 0 6px',
-          },
-          ' & > *:last-of-type': {
-            borderRightWidth: 1,
-            borderRadius: '0 6px 6px 0',
-          },
-        })}
-      >
+      <ButtonGroupStyled>
         <Button tag="1" icon="database">
           A
         </Button>
         <Button icon="function">B</Button>
         <Button icon="settings">C</Button>
-      </ButtonGroup>
-      <ButtonGroup
-        css={css({
-          ' & > *:first-of-type': {
-            borderRadius: '6px 0 0 6px',
-          },
-          ' & > *:last-of-type': {
-            borderRightWidth: 1,
-            borderRadius: '0 6px 6px 0',
-          },
-        })}
-      >
+      </ButtonGroupStyled>
+      <ButtonGroupStyled>
         <Button tag="1" icon="database" />
         <Button tag="2" icon="function" />
         <Button icon="settings" />
-      </ButtonGroup>
+      </ButtonGroupStyled>
     </ButtonWrapper>
   );
 }
