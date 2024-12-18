@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { HTMLTable } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { RowData, TableOptions } from '@tanstack/react-table';

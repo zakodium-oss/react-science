@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type {

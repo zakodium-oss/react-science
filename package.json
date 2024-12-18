@@ -54,7 +54,6 @@
   },
   "dependencies": {
     "@blueprintjs/select": "^5.3.5",
-    "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/react-virtual": "^3.10.9",

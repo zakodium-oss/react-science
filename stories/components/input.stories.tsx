@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import type { FormGroupProps, InputGroupProps } from '@blueprintjs/core';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';

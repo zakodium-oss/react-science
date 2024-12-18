@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { ButtonGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
