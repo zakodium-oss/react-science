@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { PanelStack2 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 

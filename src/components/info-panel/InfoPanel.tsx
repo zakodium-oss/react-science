@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Classes, Collapse, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { CSSProperties } from 'react';

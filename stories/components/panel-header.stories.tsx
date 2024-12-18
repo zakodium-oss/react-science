@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import type { PanelProps } from '@blueprintjs/core';
 import {
   Dialog,

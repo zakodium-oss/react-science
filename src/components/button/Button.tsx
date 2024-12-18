@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import type {
   AnchorButtonProps as BlueprintAnchorButtonProps,
   ButtonProps as BlueprintButtonProps,

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import type { RadioProps } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Tab, Tabs } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo, useState } from 'react';

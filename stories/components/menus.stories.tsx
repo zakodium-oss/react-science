@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo } from 'react';

@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { LogEntry } from 'fifo-logger';

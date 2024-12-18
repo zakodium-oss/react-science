@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Button, MenuItem } from '@blueprintjs/core';
 import type { ItemRenderer } from '@blueprintjs/select';
 import { Select } from '@blueprintjs/select';

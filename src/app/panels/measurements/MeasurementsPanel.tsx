@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import type { PanelProps } from '@blueprintjs/core';
 import { Tab, Tabs } from '@blueprintjs/core';
 import styled from '@emotion/styled';

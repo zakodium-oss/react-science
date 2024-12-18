@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { ContextMenu, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactElement } from 'react';

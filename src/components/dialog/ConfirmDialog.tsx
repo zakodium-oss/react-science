@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import type { DialogProps } from '@blueprintjs/core';
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import styled from '@emotion/styled';
