@@ -6,7 +6,7 @@ import {
   DialogFooter,
   PanelStack2,
 } from '@blueprintjs/core';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 import {
   Accordion,
@@ -191,6 +191,10 @@ function PanelContainer({
   );
 }
 
+const Panel = styled(PanelStack2)`
+  height: 100%;
+`;
+
 export function WithAccordionPanelToolbarStackedPanel() {
   return (
     <div
@@ -200,10 +204,7 @@ export function WithAccordionPanelToolbarStackedPanel() {
     >
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
-          <PanelStack2
-            css={css`
-              height: 100%;
-            `}
+          <Panel
             initialPanel={{
               renderPanel: InitialPanel,
             }}
