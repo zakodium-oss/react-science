@@ -5,6 +5,7 @@ import {
   FifoLoggerDialog,
   FifoLoggerProvider,
 } from '../../src/components/index.js';
+import { logEntries } from '../data/logs.js';
 
 export default {
   title: 'Components / Logger',
@@ -29,19 +30,8 @@ export const Control = {
   },
   args: {
     isOpen: true,
-    logs: [
-      {
-        id: 0,
-        level: 10,
-        error: new Error('Cannot fetch data'),
-        levelLabel: 'error',
-        message: 'Something went wrong!',
-        uuids: [],
-        meta: {},
-        time: Date.now(),
-      },
-    ],
-    unseen: 1,
+    logs: logEntries,
+    unseen: 22,
   },
   decorators: [
     (Story) => {
