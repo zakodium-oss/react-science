@@ -191,7 +191,7 @@ function PanelContainer({
   );
 }
 
-const PanelStack2Item = styled(PanelStack2)`
+const Panel = styled(PanelStack2)`
   height: 100%;
 `;
 
@@ -204,7 +204,7 @@ export function WithAccordionPanelToolbarStackedPanel() {
     >
       <Accordion>
         <Accordion.Item title="First Item" defaultOpened>
-          <PanelStack2Item
+          <Panel
             initialPanel={{
               renderPanel: InitialPanel,
             }}
