@@ -1,5 +1,12 @@
 # Changelog
 
+## [12.2.0](https://github.com/zakodium-oss/react-science/compare/v12.1.0...v12.2.0) (2024-12-18)
+
+
+### Features
+
+* **Table:** add scrollToRowRef prop to the Table component ([#816](https://github.com/zakodium-oss/react-science/issues/816)) ([49cd819](https://github.com/zakodium-oss/react-science/commit/49cd819126c7fe1b361c45587c4f259f808cdc82))
+
 ## [12.1.0](https://github.com/zakodium-oss/react-science/compare/v12.0.0...v12.1.0) (2024-12-11)
 
 
