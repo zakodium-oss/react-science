@@ -89,9 +89,7 @@ const ManyTabsStyled = styled(Tabs, {
   height: 100%;
 
   div[role='tablist'] {
-    overflow: ${(props) =>
-        props.orientation === 'vertical' ? 'hidden' : 'auto'}
-      ${(props) => (props.orientation === 'vertical' ? 'auto' : 'hidden')};
+    overflow: ${(props) => props.orientation === 'vertical' ? 'hidden auto' : 'auto hidden'};
   }
 `;
 
