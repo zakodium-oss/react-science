@@ -109,6 +109,7 @@ function ColumnWithDropdownMenu({
 
 const TableWithContext = styled.table`
   border: 0.55px solid gray;
+
   th,
   td {
     border: 0.55px solid gray;

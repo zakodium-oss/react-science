@@ -33,6 +33,7 @@ interface MeasurementColorPreviewProps {
 const ColorPreviewButton = styled.button`
   width: 1em;
   height: 1em;
+
   & > div {
     border-radius: 0.5em;
   }

@@ -106,6 +106,7 @@ const ButtonGroupStyled = styled(ButtonGroup)`
   & > *:first-of-type {
     border-radius: 6px 0 0 6px;
   }
+
   & > *:last-of-type {
     border-right-width: 1px;
     border-radius: 0 6px 6px 0;

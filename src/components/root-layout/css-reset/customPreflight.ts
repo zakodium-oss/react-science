@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 export const CustomDivPreflight = styled.div`
   /* html */
   line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   tab-size: 4;
   font-family:
     ui-sans-serif,
@@ -21,7 +21,6 @@ export const CustomDivPreflight = styled.div`
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     'Noto Color Emoji';
-
   width: 100%;
   height: 100%;
   position: relative;

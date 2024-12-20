@@ -86,7 +86,6 @@ const MeasurementsTableRowData = styled.tr`
   padding-bottom: 10px;
   padding-top: 10px;
   border-bottom-width: 1px;
-
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -95,8 +94,7 @@ const MeasurementsTableRowData = styled.tr`
 const MeasurementsIconsContainer = styled.th`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  justify-items: center;
+  place-items: center center;
   height: 50px;
   flex-direction: row;
   cursor: default;

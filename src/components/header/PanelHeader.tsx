@@ -16,13 +16,14 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.55px solid rgb(240, 240, 240);
+  border-bottom: 0.55px solid rgb(240 240 240);
 `;
 
 const HeaderLeftContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
+
   '& > button:' {
     padding: 0 5px;
     min-width: auto;

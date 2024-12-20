@@ -33,6 +33,7 @@ const AccordionButton = styled(Button, {
     rotate: ${(props) => (props.open ? '90deg' : '')};
     transition: all 0.3s ease-in-out;
   }
+
   cursor: pointer;
   border-bottom: 1px solid #f5f5f5;
   display: flex;
@@ -42,13 +43,14 @@ const AccordionButton = styled(Button, {
   &.${Classes.MINIMAL} {
     background-color: white;
   }
+
   :hover {
     background-color: #f5f5f5;
   }
 `;
 
 const InfoPanelContainer = styled.div`
-  padding: 5px 0 0 0;
+  padding: 5px 0 0;
   height: 100%;
   display: flex;
   flex-direction: column;

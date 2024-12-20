@@ -25,7 +25,7 @@ import { useTableScroll } from './use_table_scroll.js';
 const CustomHTMLTable = styled(HTMLTable, {
   shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
 })<{ stickyHeader: boolean }>`
-  // When using a sticky header, ensure that the borders are located below the last header instead of above the first row.
+  /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
   ${(props) => {
     if (!props.stickyHeader) return '';
 
@@ -48,8 +48,8 @@ const CustomHTMLTable = styled(HTMLTable, {
     `;
   }}
 
-  // Blueprint's HTMLTable \`striped\` prop's implementation is based on nth-child odd / even
-  // We cannot use that with virtualization, so we override its implementation here.
+  /* Blueprint's HTMLTable \`striped\` prop's implementation is based on nth-child odd / even */
+  /* We cannot use that with virtualization, so we override its implementation here. */
   tbody tr.odd td {
     background: ${(props) =>
       props.striped ? 'rgba(143, 153, 168, 0.15)' : 'inherit'};

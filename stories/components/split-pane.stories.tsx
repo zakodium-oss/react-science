@@ -190,6 +190,7 @@ WithMinimalSize.argTypes = {
 
 const StyledTabs = styled(Tabs)`
   height: 100%;
+
   div[role='tablist'] {
     overflow-x: auto;
   }
