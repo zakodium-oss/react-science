@@ -32,16 +32,15 @@ const AccordionItemHeader = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  border-color: rgb(213, 213, 213) currentcolor currentcolor;
+  border-color: rgb(213 213 213) currentcolor currentcolor;
   border-style: solid none none;
-  color: rgb(45, 45, 45);
+  color: rgb(45 45 45);
   font-weight: bold;
   text-decoration: none;
-  text-shadow: rgb(255, 255, 255) 0 1px 0;
-  background: rgb(255, 255, 255)
-    linear-gradient(rgb(240, 240, 240) 5%, rgb(225, 225, 225) 100%) repeat
+  text-shadow: rgb(255 255 255) 0 1px 0;
+  background: rgb(255 255 255)
+    linear-gradient(rgb(240 240 240) 5%, rgb(225 225 225) 100%) repeat
     scroll 0 0;
-
   width: 100%;
   user-select: none;
   justify-content: space-between;
