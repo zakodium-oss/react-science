@@ -26,17 +26,13 @@ interface DropzoneColorProps {
 
 const DropzoneDragActive = styled.div<DropzoneColorProps>`
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgb(255, 255, 255, 0.7);
+  inset: 0;
+  background-color: rgb(255 255 255 / 70%);
   border: 5px dashed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   border-color: ${({ borderColor }) =>
     borderColor ?? tinycolor(borderColor).setAlpha(0.7).toRgbString()};
 `;
@@ -45,12 +41,12 @@ const DropzoneEmpty = styled.div<DropzoneColorProps>`
   :hover .dropzone-button {
     background-color: ${tinycolor(Colors.BLUE3).setAlpha(0.15).toRgbString()};
   }
+
   width: 100%;
   height: 100%;
   padding: 1em;
   border: 5px dashed;
   cursor: pointer;
-
   border-color: ${({ borderColor }) => borderColor};
 `;
 

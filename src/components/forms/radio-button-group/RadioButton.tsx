@@ -5,7 +5,7 @@ import { enabledColor } from '../styles.js';
 import { useInputId } from '../utils/use_input_id.js';
 
 const HiddenInput = styled.input`
-  // Those styles are taken from the sr-only class in tailwind CSS.
+  /* Those styles are taken from the sr-only class in tailwind CSS. */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -16,7 +16,7 @@ const HiddenInput = styled.input`
   white-space: nowrap;
   border-width: 0;
 
-  // Label associated with the checked input
+  /* Label associated with the checked input. */
   &:checked + label {
     color: ${enabledColor};
     border-color: ${enabledColor};
@@ -24,7 +24,7 @@ const HiddenInput = styled.input`
     border-width: 1px;
   }
 
-  // Next label after the one that is checked
+  /* Next label after the one that is checked. */
   &:checked + label + input + label {
     border-left-width: 0;
   }
@@ -45,6 +45,7 @@ const Label = styled.label<{ large?: boolean; disabled?: boolean }>`
   border-style: solid;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   white-space: nowrap;
+
   &:hover {
     color: ${enabledColor};
   }

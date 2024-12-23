@@ -44,11 +44,13 @@ const ActivityButton = styled(Button)`
   .${Classes.ICON} {
     color: ${Colors.DARK_GRAY3};
   }
+
   .bp5-icon {
     width: 20px;
     height: 20px;
     font-size: 14px;
   }
+
   .bp5-tag {
     font-size: 12px;
     line-height: 14px;

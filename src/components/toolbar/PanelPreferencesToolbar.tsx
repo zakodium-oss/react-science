@@ -12,7 +12,7 @@ interface PanelPreferencesToolbarProps {
 const PanelPreferencesToolbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgb(240, 240, 240);
+  border-bottom: 1px solid rgb(240 240 240);
 `;
 
 const PanelPreferencesToolbarTitle = styled.div`
