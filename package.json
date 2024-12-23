@@ -33,7 +33,8 @@
     "prettier-write": "prettier --write .",
     "serve": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "stylelint": "stylelint 'src/**/*.{ts,tsx}' 'stories/**/*.{ts,tsx}'",
+    "stylelint": "stylelint src stories styles",
+    "stylelint-fix": "npm run stylelint -- --fix",
     "test": "npm run playwright && npm run test-only && npm run check-types && npm run stylelint && npm run eslint && npm run prettier",
     "test-only": "vitest run --coverage "
   },
