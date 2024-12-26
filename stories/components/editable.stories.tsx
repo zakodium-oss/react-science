@@ -1,50 +1,14 @@
-import { Icon } from '@blueprintjs/core';
-import styled from '@emotion/styled';
-import type { InputHTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';
+import {
+  SwitchableInput,
+  SwitchableInputRenderer,
+} from '../../src/components/input/SwitchableInput.js';
 
 export default {
   title: 'Components / EditableTableText',
 };
-
-const StyledIcon = styled(Icon)`
-  display: none;
-  margin-right: 5px;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-
-  :focus,
-  :hover {
-    box-shadow: 0 0 1px 1px #595959;
-  }
-`;
-
-const InputContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  :focus,
-  :hover > span {
-    position: absolute;
-    right: 0;
-    display: block;
-    color: #595959;
-  }
-`;
-
-function Input(props: InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <InputContainer>
-      <StyledInput {...props} />
-      <StyledIcon icon="edit" />
-    </InputContainer>
-  );
-}
 
 interface TableData {
   id: number;
@@ -108,10 +72,14 @@ export function InsideTable() {
       helper.accessor('label', {
         header: 'Label',
         cell: ({ getValue, row: { index } }) => (
-          <Input
-            defaultValue={getValue()}
-            onBlur={(event) =>
-              changeValue(index, 'label', event.currentTarget.value)
+          <SwitchableInputRenderer
+            value={getValue()}
+            input={
+              <SwitchableInput
+                onBlur={(event) =>
+                  changeValue(index, 'label', event.currentTarget.value)
+                }
+              />
             }
           />
         ),
@@ -119,10 +87,14 @@ export function InsideTable() {
       helper.accessor('field', {
         header: 'Field',
         cell: ({ getValue, row: { index } }) => (
-          <Input
-            defaultValue={getValue()}
-            onBlur={(event) =>
-              changeValue(index, 'field', event.currentTarget.value)
+          <SwitchableInputRenderer
+            value={getValue()}
+            input={
+              <SwitchableInput
+                onBlur={(event) =>
+                  changeValue(index, 'field', event.currentTarget.value)
+                }
+              />
             }
           />
         ),
@@ -130,10 +102,14 @@ export function InsideTable() {
       helper.accessor('format', {
         header: 'Format',
         cell: ({ getValue, row: { index } }) => (
-          <Input
-            defaultValue={getValue()}
-            onBlur={(event) =>
-              changeValue(index, 'format', event.currentTarget.value)
+          <SwitchableInputRenderer
+            value={getValue()}
+            input={
+              <SwitchableInput
+                onBlur={(event) =>
+                  changeValue(index, 'format', event.currentTarget.value)
+                }
+              />
             }
           />
         ),
