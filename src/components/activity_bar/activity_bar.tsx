@@ -45,13 +45,13 @@ const ActivityButton = styled(Button)`
     color: ${Colors.DARK_GRAY3};
   }
 
-  .bp5-icon {
+  .${Classes.ICON} {
     width: 20px;
     height: 20px;
     font-size: 14px;
   }
 
-  .bp5-tag {
+  .${Classes.TAG} {
     font-size: 12px;
     line-height: 14px;
     min-width: 18px;
@@ -83,8 +83,8 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
       ? icon
       : cloneElement(icon, {
           className: icon.props.className
-            ? `${icon.props.className} bp5-icon`
-            : 'bp5-icon',
+            ? `${icon.props.className} ${Classes.ICON}`
+            : Classes.ICON,
         });
 
   return (
