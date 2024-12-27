@@ -12,6 +12,10 @@ const StyledMenu = styled(Menu)`
   border: 1px solid black;
 `;
 
+const StyledMenuDivider = styled(MenuDivider)`
+  margin: 5px 0;
+`;
+
 export function WithIcon() {
   const options = [
     defaultOptions,
@@ -41,7 +45,7 @@ export function WithDivider() {
   const options = useMemo(() => {
     return [
       defaultOptions,
-      <MenuDivider key="0" />,
+      <StyledMenuDivider key="0" />,
       <MenuItem key="1" text="Exercise" />,
     ];
   }, []);
@@ -55,11 +59,11 @@ export function Complex() {
       <MenuItem text="Back" icon="book" />
       <MenuItem text="Forward" icon="step-forward" disabled />
       <MenuItem text="Refresh" icon="refresh" />
-      <MenuDivider />
+      <StyledMenuDivider />
       <MenuItem text="Save as" icon="saved" />
       <MenuItem text="Print" icon="print" />
       <MenuItem text="Cast media to device" icon="video" />
-      <MenuDivider />
+      <StyledMenuDivider />
       <MenuItem text="Send page to your devices" icon="add" />
       <MenuItem text="Create QR Code for this page" icon="settings" />
     </StyledMenu>
