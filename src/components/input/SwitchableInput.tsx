@@ -3,8 +3,17 @@ import type { ReactElement } from 'react';
 import { cloneElement, useCallback, useState } from 'react';
 
 export const SwitchableInput = styled.input`
-  width: 100%;
+  max-width: 100%;
 
+  box-shadow: 0 0 1px 1px #595959;
+
+  :focus,
+  :hover {
+    box-shadow: 0 0 1px 1px #595959;
+  }
+`;
+
+const Container = styled.div`
   :focus,
   :hover {
     box-shadow: 0 0 1px 1px #595959;
@@ -18,7 +27,7 @@ interface SwitchableInputRendererProps {
 
 export function SwitchableInputRenderer(props: SwitchableInputRendererProps) {
   const { input, value } = props;
-  const [isInputRendered, setIsInputRendered] = useState(false);
+  const [isInputRendered, setIsInputRendered] = useState(true);
 
   const toggle = useCallback(
     (event: any) => {
@@ -46,5 +55,5 @@ export function SwitchableInputRenderer(props: SwitchableInputRendererProps) {
     });
   }
 
-  return <div onClick={toggle}>{value}</div>;
+  return <Container onClick={toggle}>{value}</Container>;
 }

@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';
@@ -44,6 +45,10 @@ const data: TableData[] = [
 
 export function InsideTable() {
   const [state, setState] = useState(data);
+
+  const deleteIndex = useCallback((index: number) => {
+    return setState((prev) => prev.filter((_, i) => i !== index));
+  }, []);
 
   const changeValue = useCallback(
     (rowIndex: number, key: string, value: string) => {
@@ -115,8 +120,20 @@ export function InsideTable() {
         ),
       }),
       helper.accessor('visible', { header: 'Visible' }),
+      helper.display({
+        header: ' ',
+        cell: ({ row: { index } }) => {
+          return (
+            <Button
+              type="button"
+              icon="trash"
+              onClick={() => deleteIndex(index)}
+            />
+          );
+        },
+      }),
     ];
-  }, [changeValue]);
+  }, [changeValue, deleteIndex]);
 
   return (
     <div
