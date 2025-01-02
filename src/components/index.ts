@@ -8,6 +8,7 @@ export * from './fullscreen/index.js';
 export * from './header/index.js';
 export * from './hooks/index.js';
 export * from './info-panel/index.js';
+export * from './input-percent/index.js';
 export * from './logger/index.js';
 export * from './root-layout/index.js';
 export * from './split-pane/index.js';
