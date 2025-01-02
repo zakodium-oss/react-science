@@ -2,7 +2,7 @@ import { InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 
-interface InputPercentProps {
+export interface InputPercentProps {
   /**
    * Between 0 and 1
    */

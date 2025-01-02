@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
+import type { InputPercentProps } from '../../src/components/index.js';
 import { InputPercent } from '../../src/components/index.js';
 
 export default {
@@ -15,7 +16,7 @@ export default {
   },
 } as Meta;
 
-type Story = StoryObj<typeof InputPercent>;
+type Story = StoryObj<InputPercentProps>;
 
 export const Control = {
   argTypes: {
