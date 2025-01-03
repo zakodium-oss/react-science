@@ -12,6 +12,11 @@ const StyledMenu = styled(Menu)`
   border: 1px solid black;
 `;
 
+/*
+ This is a styled version of MenuDivider.
+ By default, Blueprint adds a negative x-axis margin of -5px, which causes the Divider to overflow the Menu on the left and right.
+ We need to override this margin to 0 to prevent it from exceeding the Menu boundaries.
+ */
 const StyledMenuDivider = styled(MenuDivider)`
   margin: 5px 0;
 `;
