@@ -1,12 +1,14 @@
 import type { FormGroupProps, InputGroupProps } from '@blueprintjs/core';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Meta } from '@storybook/react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 export default {
   title: 'Forms / Input',
-};
+  component: InputGroup,
+} as Meta;
 
 const ExampleGroup = styled.div`
   display: flex;
