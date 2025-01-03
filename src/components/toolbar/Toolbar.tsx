@@ -59,15 +59,12 @@ const border = '1px solid rgb(247, 247, 247)';
 const ToolbarButton = styled(Button)`
   .${Classes.ICON} {
     color: ${Colors.DARK_GRAY3};
-  }
-
-  .bp5-icon {
     width: 16px;
     height: 16px;
     font-size: 12px;
   }
 
-  .bp5-tag {
+  .${Classes.TAG} {
     font-size: 10px;
     line-height: 12px;
     min-width: 12px;
@@ -164,13 +161,14 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
   } = useToolbarContext();
   const intent = itemIntent ?? toolbarIntent;
   const disabled = itemDisabled ?? toolbarDisabled;
+
   const resizedIcon =
     !icon || typeof icon === 'string'
       ? icon
       : cloneElement(icon, {
           className: icon.props.className
-            ? `${icon.props.className} bp5-icon`
-            : 'bp5-icon',
+            ? `${icon.props.className} ${Classes.ICON}`
+            : Classes.ICON,
         });
 
   return (
