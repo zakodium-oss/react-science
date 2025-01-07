@@ -8,10 +8,7 @@ interface ColorProps extends ValueRenderersProps {
 
 const ColorContainer = styled.div`
   position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
+  inset: 2px;
 `;
 
 export function Color({ value, style, onClick }: ColorProps) {

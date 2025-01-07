@@ -1,15 +1,16 @@
+import {
+  AnchorButton,
+  Button as BlueprintButton,
+  Classes,
+  Icon,
+  Tag,
+  Tooltip,
+} from '@blueprintjs/core';
 import type {
   AnchorButtonProps as BlueprintAnchorButtonProps,
   ButtonProps as BlueprintButtonProps,
   TagProps,
   TooltipProps,
-} from '@blueprintjs/core';
-import {
-  AnchorButton,
-  Button as BlueprintButton,
-  Icon,
-  Tag,
-  Tooltip,
 } from '@blueprintjs/core';
 import type { CSSObject } from '@emotion/styled';
 import styled from '@emotion/styled';
@@ -51,7 +52,7 @@ function getStyledCss(
   return {
     lineHeight: 1.15,
     position: 'relative',
-    '.bp5-icon': !buttonProps.children && { marginRight: 0 },
+    [`.${Classes.ICON}`]: !buttonProps.children && { marginRight: 0 },
   };
 }
 

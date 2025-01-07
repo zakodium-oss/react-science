@@ -33,6 +33,7 @@ const AccordionButton = styled(Button, {
     rotate: ${(props) => (props.open ? '90deg' : '')};
     transition: all 0.3s ease-in-out;
   }
+
   cursor: pointer;
   border-bottom: 1px solid #f5f5f5;
   display: flex;
@@ -42,13 +43,14 @@ const AccordionButton = styled(Button, {
   &.${Classes.MINIMAL} {
     background-color: white;
   }
+
   :hover {
     background-color: #f5f5f5;
   }
 `;
 
 const InfoPanelContainer = styled.div`
-  padding: 5px 0 0 0;
+  padding: 5px 0 0;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -107,9 +109,9 @@ export function InfoPanel(props: InfoPanelProps) {
       const includes: InfoPanelDatum[] = [];
       const valueContains: InfoPanelDatum[] = [];
 
-      for (const [parameter, value] of Object.entries(data).sort(([a], [b]) =>
-        a.localeCompare(b),
-      )) {
+      for (const [parameter, value] of Object.entries(data).sort(([a], [b]) => {
+        return a.localeCompare(b);
+      })) {
         const lowerKey = parameter.toLowerCase();
         const lowerSearch = search.toLowerCase();
         if (lowerKey === lowerSearch) {
@@ -275,7 +277,12 @@ function valueSearch(
   return match(value)
     .with(P.boolean, (value) => String(value).includes(search))
     .with(P.number, (value) => String(value).includes(search))
-    .with(P.string, (value) => value.includes(search))
+    .with(P.string, (value) => {
+      const newValue =
+        value === 'true' ? 'yes' : value === 'false' ? 'no' : value;
+
+      return newValue.includes(search);
+    })
     .with({}, (value) => JSON.stringify(value).includes(search))
     .otherwise(() => true);
 }

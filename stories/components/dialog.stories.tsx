@@ -192,6 +192,7 @@ const DialogBodyStyled = styled(DialogBody)`
 
 const TabsStyled = styled(Tabs)`
   height: 100%;
+
   div[role='tabpanel'] {
     overflow-y: auto;
   }
