@@ -3,9 +3,10 @@ import type { ReactElement } from 'react';
 import { cloneElement, useCallback, useState } from 'react';
 
 export const SwitchableInput = styled.input`
-  max-width: 100%;
-
+  // 22px is the padding of the container
+  max-width: calc(100% - 22px);
   box-shadow: 0 0 1px 1px #595959;
+  position: absolute;
 
   :focus,
   :hover {
@@ -14,6 +15,11 @@ export const SwitchableInput = styled.input`
 `;
 
 const Container = styled.div`
+  min-width: 100%;
+  height: 21px;
+
+  width: 100%;
+
   :focus,
   :hover {
     box-shadow: 0 0 1px 1px #595959;
@@ -27,7 +33,7 @@ interface SwitchableInputRendererProps {
 
 export function SwitchableInputRenderer(props: SwitchableInputRendererProps) {
   const { input, value } = props;
-  const [isInputRendered, setIsInputRendered] = useState(true);
+  const [isInputRendered, setIsInputRendered] = useState(false);
 
   const toggle = useCallback(
     (event: any) => {
@@ -40,20 +46,37 @@ export function SwitchableInputRenderer(props: SwitchableInputRendererProps) {
     [isInputRendered],
   );
 
-  if (isInputRendered) {
-    return cloneElement(input, {
-      ...input.props,
-      tabIndex: 0,
-      // @ts-expect-error autoFocus is only used for React
-      autoFocus: true,
-      onBlur: (event: any) => {
-        // @ts-expect-error onBlur is only used for React
-        input.props.onBlur?.(event);
-        setIsInputRendered(false);
-      },
-      defaultValue: value,
-    });
-  }
+  const Input = cloneElement(input, {
+    ...input.props,
+    // @ts-expect-error ref is only used for React
+    ref: (node: HTMLInputElement | null) => {
+      if (!node) return;
+      node.focus();
+    },
+    style: {
+      ...input.props.style,
+      visibility: isInputRendered ? 'visible' : 'hidden',
+    },
+    tabIndex: 0,
+    onBlur: (event: any) => {
+      // @ts-expect-error onBlur is only used for React
+      input.props.onBlur?.(event);
+      setIsInputRendered(false);
+    },
+    defaultValue: value,
+  });
 
-  return <Container onClick={toggle}>{value}</Container>;
+  return (
+    <>
+      {Input}
+
+      <Container
+        onClick={(event) => {
+          toggle(event);
+        }}
+      >
+        {value}
+      </Container>
+    </>
+  );
 }

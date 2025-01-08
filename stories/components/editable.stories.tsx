@@ -71,6 +71,13 @@ export function InsideTable() {
     [],
   );
 
+  const addEmptyRow = useCallback(() => {
+    setState((prev) => [
+      ...prev,
+      { id: prev.length, label: '', field: '', format: '', visible: true },
+    ]);
+  }, []);
+
   const columns = useMemo(() => {
     return [
       helper.accessor('id', { header: '#' }),
@@ -138,10 +145,10 @@ export function InsideTable() {
   return (
     <div
       style={{
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         gap: 5,
-        justifyContent: 'space-between',
       }}
     >
       <div>
@@ -149,10 +156,23 @@ export function InsideTable() {
           data={state}
           columns={columns}
           estimatedRowHeight={() => 50}
+          renderFooterRow={() => (
+            <Button style={{ width: '100%' }} onClick={addEmptyRow}>
+              Add a row
+            </Button>
+          )}
         />
       </div>
 
       <pre>{JSON.stringify(state, null, 2)}</pre>
+    </div>
+  );
+}
+
+export function Input() {
+  return (
+    <div style={{ backgroundColor: 'red' }}>
+      <SwitchableInputRenderer value="hello" input={<SwitchableInput />} />
     </div>
   );
 }
