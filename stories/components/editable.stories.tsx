@@ -5,7 +5,7 @@ import { createTableColumnHelper, Table } from '../../src/components/index.js';
 import {
   InlineEditableRenderer,
   SwitchableInput,
-} from '../../src/components/input/inline_editable_renderer.js';
+} from '../../src/components/inline_editable_renderer/index.js';
 
 export default {
   title: 'Components / EditableTableText',
