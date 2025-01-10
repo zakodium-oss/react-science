@@ -13,8 +13,7 @@ export interface InlineEditableRendererProps<T extends HTMLElement> {
 }
 
 export const SwitchableInput = styled.input`
-  // 22px is the padding of the container
-  max-width: calc(100% - 22px);
+  width: 100%;
   box-shadow: 0 0 1px 1px #595959;
   position: absolute;
 

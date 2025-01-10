@@ -2,8 +2,10 @@ import { Button } from '@blueprintjs/core';
 import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';
-import { SwitchableInput } from '../../src/components/input/SwitchableInput.js';
-import { InlineEditableRenderer } from '../../src/components/input/inline_editable_renderer.js';
+import {
+  InlineEditableRenderer,
+  SwitchableInput,
+} from '../../src/components/input/inline_editable_renderer.js';
 
 export default {
   title: 'Components / EditableTableText',
