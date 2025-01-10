@@ -25,8 +25,6 @@ import { useTableScroll } from './use_table_scroll.js';
 const CustomHTMLTable = styled(HTMLTable, {
   shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
 })<{ stickyHeader: boolean }>`
-  // width: 100%;
-
   /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
   ${(props) => {
     if (!props.stickyHeader) return '';
@@ -116,10 +114,6 @@ interface TableBaseProps<TData extends RowData> {
    * Override the columns' header cell rendering.
    */
   renderHeaderCell?: HeaderCellRenderer<TData>;
-  /**
-   * Add a footer to the table.
-   */
-  renderFooterRow?: () => ReactNode;
 
   /**
    * A ref which will be set with a callback to scroll to a row in the
@@ -168,7 +162,6 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     className,
     renderRowTr,
     renderHeaderCell,
-    renderFooterRow,
 
     virtualizeRows,
     getRowId,
@@ -229,14 +222,6 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
           virtualizer={tanstackVirtualizer}
           virtualizeRows={virtualizeRows}
         />
-
-        {renderFooterRow && (
-          <tfoot>
-            <tr>
-              <td colSpan={columnDefs.length}>{renderFooterRow()}</td>
-            </tr>
-          </tfoot>
-        )}
       </CustomHTMLTable>
     </Container>
   );

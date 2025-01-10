@@ -57,7 +57,6 @@ export function SwitchableInputRenderer(props: SwitchableInputRendererProps) {
       ...input.props.style,
       visibility: isInputRendered ? 'visible' : 'hidden',
     },
-    tabIndex: 0,
     onBlur: (event: any) => {
       // @ts-expect-error onBlur is only used for React
       input.props.onBlur?.(event);
@@ -71,9 +70,9 @@ export function SwitchableInputRenderer(props: SwitchableInputRendererProps) {
       {Input}
 
       <Container
-        onClick={(event) => {
-          toggle(event);
-        }}
+        tabIndex={isInputRendered ? -1 : 0}
+        onFocus={() => setIsInputRendered(true)}
+        onClick={toggle}
       >
         {value}
       </Container>

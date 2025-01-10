@@ -2,10 +2,8 @@ import { Button } from '@blueprintjs/core';
 import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';
-import {
-  SwitchableInput,
-  SwitchableInputRenderer,
-} from '../../src/components/input/SwitchableInput.js';
+import { SwitchableInput } from '../../src/components/input/SwitchableInput.js';
+import { InlineEditableRenderer } from '../../src/components/input/inline_editable_renderer.js';
 
 export default {
   title: 'Components / EditableTableText',
@@ -84,46 +82,58 @@ export function InsideTable() {
       helper.accessor('label', {
         header: 'Label',
         cell: ({ getValue, row: { index } }) => (
-          <SwitchableInputRenderer
-            value={getValue()}
-            input={
+          <InlineEditableRenderer
+            renderEditable={({ ref, toggle }) => (
               <SwitchableInput
-                onBlur={(event) =>
-                  changeValue(index, 'label', event.currentTarget.value)
-                }
+                ref={ref}
+                defaultValue={getValue()}
+                onBlur={(event) => {
+                  toggle();
+                  changeValue(index, 'label', event.currentTarget.value);
+                }}
               />
-            }
-          />
+            )}
+          >
+            {getValue()}
+          </InlineEditableRenderer>
         ),
       }),
       helper.accessor('field', {
         header: 'Field',
         cell: ({ getValue, row: { index } }) => (
-          <SwitchableInputRenderer
-            value={getValue()}
-            input={
+          <InlineEditableRenderer
+            renderEditable={({ ref, toggle }) => (
               <SwitchableInput
-                onBlur={(event) =>
-                  changeValue(index, 'field', event.currentTarget.value)
-                }
+                ref={ref}
+                defaultValue={getValue()}
+                onBlur={(event) => {
+                  toggle();
+                  changeValue(index, 'field', event.currentTarget.value);
+                }}
               />
-            }
-          />
+            )}
+          >
+            {getValue()}
+          </InlineEditableRenderer>
         ),
       }),
       helper.accessor('format', {
         header: 'Format',
         cell: ({ getValue, row: { index } }) => (
-          <SwitchableInputRenderer
-            value={getValue()}
-            input={
+          <InlineEditableRenderer
+            renderEditable={({ ref, toggle }) => (
               <SwitchableInput
-                onBlur={(event) =>
-                  changeValue(index, 'format', event.currentTarget.value)
-                }
+                ref={ref}
+                defaultValue={getValue()}
+                onBlur={(event) => {
+                  toggle();
+                  changeValue(index, 'format', event.currentTarget.value);
+                }}
               />
-            }
-          />
+            )}
+          >
+            {getValue()}
+          </InlineEditableRenderer>
         ),
       }),
       helper.accessor('visible', { header: 'Visible' }),
@@ -134,6 +144,7 @@ export function InsideTable() {
             <Button
               type="button"
               icon="trash"
+              tabIndex={-1}
               onClick={() => deleteIndex(index)}
             />
           );
@@ -156,11 +167,6 @@ export function InsideTable() {
           data={state}
           columns={columns}
           estimatedRowHeight={() => 50}
-          renderFooterRow={() => (
-            <Button style={{ width: '100%' }} onClick={addEmptyRow}>
-              Add a row
-            </Button>
-          )}
         />
       </div>
 
@@ -169,10 +175,27 @@ export function InsideTable() {
   );
 }
 
-export function Input() {
+export function InlineEditable() {
+  const [state, setState] = useState('value');
+
   return (
-    <div style={{ backgroundColor: 'red' }}>
-      <SwitchableInputRenderer value="hello" input={<SwitchableInput />} />
+    <div>
+      <span>State: {state}</span>
+      <InlineEditableRenderer
+        renderEditable={({ ref, toggle }) => (
+          <SwitchableInput
+            ref={ref}
+            defaultValue={state}
+            onBlur={(event) => {
+              toggle();
+
+              setState(event.currentTarget.value);
+            }}
+          />
+        )}
+      >
+        {state}
+      </InlineEditableRenderer>
     </div>
   );
 }
