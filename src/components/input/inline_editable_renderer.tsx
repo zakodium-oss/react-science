@@ -14,8 +14,10 @@ export interface InlineEditableRendererProps<T extends HTMLElement> {
 
 export const SwitchableInput = styled.input`
   width: 100%;
+  height: 100%;
   box-shadow: 0 0 1px 1px #595959;
   position: absolute;
+  inset: 0;
 
   :focus,
   :hover {
@@ -25,7 +27,6 @@ export const SwitchableInput = styled.input`
 
 const Container = styled.div`
   min-width: 100%;
-  height: 21px;
   width: 100%;
   :focus,
   :hover {
@@ -55,7 +56,7 @@ export function InlineEditableRenderer<T extends HTMLElement>(
   }, [isInputRendered, toggle]);
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <div style={{ visibility: isInputRendered ? 'visible' : 'hidden' }}>
         {renderEditable(renderEditableProps)}
       </div>
@@ -67,6 +68,6 @@ export function InlineEditableRenderer<T extends HTMLElement>(
       >
         {children}
       </Container>
-    </>
+    </div>
   );
 }

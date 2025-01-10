@@ -178,10 +178,10 @@ export function InsideTable() {
 }
 
 export function InlineEditable() {
-  const [state, setState] = useState('value');
+  const [state, setState] = useState('Hello, World!');
 
   return (
-    <div>
+    <div style={{ width: 100 }}>
       <span>State: {state}</span>
       <InlineEditableRenderer
         renderEditable={({ ref, toggle }) => (
