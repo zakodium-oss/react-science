@@ -28,6 +28,7 @@ export const BorderlessEditableInput = styled.input`
 const Container = styled.div`
   min-width: 100%;
   width: 100%;
+
   :focus,
   :hover {
     box-shadow: 0 0 1px 1px #595959;
