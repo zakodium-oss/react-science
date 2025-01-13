@@ -12,7 +12,7 @@ export interface InlineEditableRendererProps<T extends HTMLElement> {
   children: ReactNode;
 }
 
-export const SwitchableInput = styled.input`
+export const BorderlessEditableInput = styled.input`
   width: 100%;
   height: 100%;
   box-shadow: 0 0 1px 1px #595959;

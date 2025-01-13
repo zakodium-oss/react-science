@@ -1,10 +1,11 @@
 import { Button } from '@blueprintjs/core';
+import type { StoryObj } from '@storybook/react';
 import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';
 import {
+  BorderlessEditableInput,
   InlineEditableRenderer,
-  SwitchableInput,
 } from '../../src/components/inline_editable_renderer/index.js';
 
 export default {
@@ -71,13 +72,6 @@ export function InsideTable() {
     [],
   );
 
-  const addEmptyRow = useCallback(() => {
-    setState((prev) => [
-      ...prev,
-      { id: prev.length, label: '', field: '', format: '', visible: true },
-    ]);
-  }, []);
-
   const columns = useMemo(() => {
     return [
       helper.accessor('id', { header: '#' }),
@@ -86,7 +80,7 @@ export function InsideTable() {
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableRenderer
             renderEditable={({ ref, toggle }) => (
-              <SwitchableInput
+              <BorderlessEditableInput
                 ref={ref}
                 defaultValue={getValue()}
                 onBlur={(event) => {
@@ -105,7 +99,7 @@ export function InsideTable() {
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableRenderer
             renderEditable={({ ref, toggle }) => (
-              <SwitchableInput
+              <BorderlessEditableInput
                 ref={ref}
                 defaultValue={getValue()}
                 onBlur={(event) => {
@@ -124,7 +118,7 @@ export function InsideTable() {
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableRenderer
             renderEditable={({ ref, toggle }) => (
-              <SwitchableInput
+              <BorderlessEditableInput
                 ref={ref}
                 defaultValue={getValue()}
                 onBlur={(event) => {
@@ -177,27 +171,45 @@ export function InsideTable() {
   );
 }
 
-export function InlineEditable() {
-  const [state, setState] = useState('Hello, World!');
-
-  return (
-    <div style={{ width: 100 }}>
-      <span>State: {state}</span>
-      <InlineEditableRenderer
-        renderEditable={({ ref, toggle }) => (
-          <SwitchableInput
-            ref={ref}
-            defaultValue={state}
-            onBlur={(event) => {
-              toggle();
-
-              setState(event.currentTarget.value);
-            }}
-          />
-        )}
-      >
-        {state}
-      </InlineEditableRenderer>
+export const BorderlessEditableInputExample = {
+  render: () => <BorderlessEditableInput defaultValue="Hello, World!" />,
+  decorators: (Story) => (
+    <div
+      style={{
+        backgroundColor: 'lightblue',
+        height: 25,
+        width: 100,
+        position: 'relative',
+      }}
+    >
+      <Story />
     </div>
-  );
-}
+  ),
+} satisfies StoryObj;
+
+export const InlineEditable = {
+  render: () => {
+    const [state, setState] = useState('Hello, World!');
+
+    return (
+      <div style={{ width: 100 }}>
+        <span>State: {state}</span>
+        <InlineEditableRenderer
+          renderEditable={({ ref, toggle }) => (
+            <BorderlessEditableInput
+              ref={ref}
+              defaultValue={state}
+              onBlur={(event) => {
+                toggle();
+
+                setState(event.currentTarget.value);
+              }}
+            />
+          )}
+        >
+          {state}
+        </InlineEditableRenderer>
+      </div>
+    );
+  },
+} satisfies StoryObj;
