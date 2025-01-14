@@ -15,6 +15,7 @@ export interface InlineEditableProps<T extends HTMLElement> {
 export const InlineEditableInput = styled.input`
   width: 100%;
   height: 100%;
+
   box-shadow: 0 0 1px 1px #595959;
   position: absolute;
   inset: 0;
@@ -28,6 +29,9 @@ export const InlineEditableInput = styled.input`
 const Container = styled.div`
   min-width: 100%;
   width: 100%;
+
+  // min height of the input, if input value is empty
+  min-height: 21px;
 
   :focus,
   :hover {
