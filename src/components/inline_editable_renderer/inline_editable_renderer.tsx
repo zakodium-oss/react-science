@@ -7,12 +7,12 @@ export interface InlineRendererEditableProps<T extends HTMLElement> {
   toggle: () => void;
 }
 
-export interface InlineEditableRendererProps<T extends HTMLElement> {
+export interface InlineEditableProps<T extends HTMLElement> {
   renderEditable: (props: InlineRendererEditableProps<T>) => ReactNode;
   children: ReactNode;
 }
 
-export const BorderlessEditableInput = styled.input`
+export const InlineEditableInput = styled.input`
   width: 100%;
   height: 100%;
   box-shadow: 0 0 1px 1px #595959;
@@ -35,8 +35,8 @@ const Container = styled.div`
   }
 `;
 
-export function InlineEditableRenderer<T extends HTMLElement>(
-  props: InlineEditableRendererProps<T>,
+export function InlineEditable<T extends HTMLElement>(
+  props: InlineEditableProps<T>,
 ) {
   const { children, renderEditable } = props;
   const [isInputRendered, setIsInputRendered] = useState(false);

@@ -4,12 +4,12 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';
 import {
-  BorderlessEditableInput,
-  InlineEditableRenderer,
+  InlineEditable as InlineEditableComponent,
+  InlineEditableInput,
 } from '../../src/components/inline_editable_renderer/index.js';
 
 export default {
-  title: 'Components / EditableTableText',
+  title: 'Components / InlineEditableComponent',
 };
 
 interface TableData {
@@ -78,9 +78,9 @@ export function InsideTable() {
       helper.accessor('label', {
         header: 'Label',
         cell: ({ getValue, row: { index } }) => (
-          <InlineEditableRenderer
+          <InlineEditableComponent
             renderEditable={({ ref, toggle }) => (
-              <BorderlessEditableInput
+              <InlineEditableInput
                 ref={ref}
                 defaultValue={getValue()}
                 onBlur={(event) => {
@@ -91,15 +91,15 @@ export function InsideTable() {
             )}
           >
             {getValue()}
-          </InlineEditableRenderer>
+          </InlineEditableComponent>
         ),
       }),
       helper.accessor('field', {
         header: 'Field',
         cell: ({ getValue, row: { index } }) => (
-          <InlineEditableRenderer
+          <InlineEditableComponent
             renderEditable={({ ref, toggle }) => (
-              <BorderlessEditableInput
+              <InlineEditableInput
                 ref={ref}
                 defaultValue={getValue()}
                 onBlur={(event) => {
@@ -110,15 +110,15 @@ export function InsideTable() {
             )}
           >
             {getValue()}
-          </InlineEditableRenderer>
+          </InlineEditableComponent>
         ),
       }),
       helper.accessor('format', {
         header: 'Format',
         cell: ({ getValue, row: { index } }) => (
-          <InlineEditableRenderer
+          <InlineEditableComponent
             renderEditable={({ ref, toggle }) => (
-              <BorderlessEditableInput
+              <InlineEditableInput
                 ref={ref}
                 defaultValue={getValue()}
                 onBlur={(event) => {
@@ -129,7 +129,7 @@ export function InsideTable() {
             )}
           >
             {getValue()}
-          </InlineEditableRenderer>
+          </InlineEditableComponent>
         ),
       }),
       helper.accessor('visible', { header: 'Visible' }),
@@ -172,7 +172,7 @@ export function InsideTable() {
 }
 
 export const BorderlessEditableInputExample = {
-  render: () => <BorderlessEditableInput defaultValue="Hello, World!" />,
+  render: () => <InlineEditableInput defaultValue="Hello, World!" />,
   decorators: (Story) => (
     <div
       style={{
@@ -194,9 +194,9 @@ export const InlineEditable = {
     return (
       <div style={{ width: 100 }}>
         <span>State: {state}</span>
-        <InlineEditableRenderer
+        <InlineEditableComponent
           renderEditable={({ ref, toggle }) => (
-            <BorderlessEditableInput
+            <InlineEditableInput
               ref={ref}
               defaultValue={state}
               onBlur={(event) => {
@@ -208,7 +208,7 @@ export const InlineEditable = {
           )}
         >
           {state}
-        </InlineEditableRenderer>
+        </InlineEditableComponent>
       </div>
     );
   },
