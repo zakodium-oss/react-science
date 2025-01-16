@@ -171,22 +171,6 @@ export function InsideTable() {
   );
 }
 
-export const BorderlessEditableInputExample = {
-  render: () => <InlineEditableInput defaultValue="Hello, World!" />,
-  decorators: (Story) => (
-    <div
-      style={{
-        backgroundColor: 'lightblue',
-        height: 25,
-        width: 100,
-        position: 'relative',
-      }}
-    >
-      <Story />
-    </div>
-  ),
-} satisfies StoryObj;
-
 export const InlineEditable = {
   render: () => {
     const [state, setState] = useState('Hello, World!');

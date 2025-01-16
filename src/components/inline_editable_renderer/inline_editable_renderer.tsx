@@ -1,3 +1,4 @@
+import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
@@ -15,14 +16,9 @@ export interface InlineEditableProps<T extends HTMLElement> {
 export const InlineEditableInput = styled.input`
   width: 100%;
   height: 100%;
-  box-shadow: 0 0 1px 1px #595959;
+  box-shadow: 0 0 1px 1px ${Colors.GRAY1};
   position: absolute;
   inset: 0;
-
-  :focus,
-  :hover {
-    box-shadow: 0 0 1px 1px #595959;
-  }
 `;
 
 const Container = styled.div`
@@ -32,10 +28,15 @@ const Container = styled.div`
 
   :focus,
   :hover {
-    box-shadow: 0 0 1px 1px #595959;
+    box-shadow: 0 0 1px 1px ${Colors.GRAY1};
   }
 `;
 
+/**
+ * The `InlineEditable` component allows for inline editing of its content.
+ * It renders an editable input field when focused or clicked
+ * and toggles back to the original content when the input loses focus.
+ */
 export function InlineEditable<T extends HTMLElement>(
   props: InlineEditableProps<T>,
 ) {
