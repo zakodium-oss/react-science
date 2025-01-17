@@ -34,7 +34,7 @@ const Container = styled.div`
 
 /**
  * The `InlineEditable` component allows for inline editing of its content.
- * It renders an editable input field when focused or clicked
+ * It renders a component with `renderEditable` when focused or clicked
  * and toggles back to the original content when the input loses focus.
  */
 export function InlineEditable<T extends HTMLElement>(
