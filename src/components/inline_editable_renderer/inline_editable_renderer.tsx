@@ -1,11 +1,12 @@
 import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type { ReactNode } from 'react';
+import type { KeyboardEvent, ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
 export interface InlineRendererEditableProps<T extends HTMLElement> {
   ref: (node: T | null) => void;
-  toggle: () => void;
+  stopRendering: () => void;
+  onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export interface InlineEditableProps<T extends HTMLElement> {
@@ -50,13 +51,18 @@ export function InlineEditable<T extends HTMLElement>(
   const renderEditableProps = useMemo<InlineRendererEditableProps<T>>(() => {
     return {
       isRendered: isInputRendered,
+      onKeyDown: (event) => {
+        if (event.key === 'Enter') {
+          setIsInputRendered(false);
+        }
+      },
       ref: (node) => {
         if (!node) return;
         node.focus();
       },
-      toggle,
+      stopRendering: () => setIsInputRendered(false),
     };
-  }, [isInputRendered, toggle]);
+  }, [isInputRendered]);
 
   return (
     <div style={{ position: 'relative' }}>
