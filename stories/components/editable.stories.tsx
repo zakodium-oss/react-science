@@ -79,13 +79,13 @@ export function InsideTable() {
         header: 'Label',
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableComponent
-            renderEditable={({ ref, stopRendering, onKeyDown }) => (
+            renderEditable={({ ref, exit, onKeyDown }) => (
               <InlineEditableInput
                 ref={ref}
                 onKeyDown={onKeyDown}
                 defaultValue={getValue()}
                 onBlur={(event) => {
-                  stopRendering();
+                  exit();
                   changeValue(index, 'label', event.currentTarget.value);
                 }}
               />
@@ -99,13 +99,13 @@ export function InsideTable() {
         header: 'Field',
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableComponent
-            renderEditable={({ ref, stopRendering, onKeyDown }) => (
+            renderEditable={({ ref, exit, onKeyDown }) => (
               <InlineEditableInput
                 ref={ref}
                 onKeyDown={onKeyDown}
                 defaultValue={getValue()}
                 onBlur={(event) => {
-                  stopRendering();
+                  exit();
                   changeValue(index, 'field', event.currentTarget.value);
                 }}
               />
@@ -119,13 +119,13 @@ export function InsideTable() {
         header: 'Format',
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableComponent
-            renderEditable={({ ref, stopRendering, onKeyDown }) => (
+            renderEditable={({ ref, exit, onKeyDown }) => (
               <InlineEditableInput
                 ref={ref}
                 onKeyDown={onKeyDown}
                 defaultValue={getValue()}
                 onBlur={(event) => {
-                  stopRendering();
+                  exit();
                   changeValue(index, 'format', event.currentTarget.value);
                 }}
               />
@@ -182,13 +182,13 @@ export const InlineEditable = {
       <div style={{ width: 100 }}>
         <span>State: {state}</span>
         <InlineEditableComponent
-          renderEditable={({ ref, stopRendering, onKeyDown }) => (
+          renderEditable={({ ref, exit, onKeyDown }) => (
             <InlineEditableInput
               ref={ref}
               onKeyDown={onKeyDown}
               defaultValue={state}
               onBlur={(event) => {
-                stopRendering();
+                exit();
 
                 setState(event.currentTarget.value);
               }}

@@ -5,7 +5,10 @@ import { useCallback, useMemo, useState } from 'react';
 
 export interface InlineRendererEditableProps<T extends HTMLElement> {
   ref: (node: T | null) => void;
-  stopRendering: () => void;
+  /**
+   * Function to exit the editable state and display the children content.
+   */
+  exit: () => void;
   onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
@@ -60,7 +63,7 @@ export function InlineEditable<T extends HTMLElement>(
         if (!node) return;
         node.focus();
       },
-      stopRendering: () => setIsInputRendered(false),
+      exit: () => setIsInputRendered(false),
     };
   }, [isInputRendered]);
 
