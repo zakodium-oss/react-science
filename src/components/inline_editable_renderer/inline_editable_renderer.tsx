@@ -22,6 +22,7 @@ export const InlineEditableInput = styled.input`
   height: 100%;
   box-shadow: 0 0 1px 1px ${Colors.GRAY1};
   position: absolute;
+  outline: none;
   inset: 0;
 `;
 
