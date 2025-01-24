@@ -387,10 +387,12 @@ export function WithCustomStyle() {
   );
 }
 
-const Row = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-});
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+`;
 
 const Tag = styled.div({
   borderRadius: '25px',
@@ -417,7 +419,7 @@ export function WithCustomRenderItem() {
         >
           <span>{label.charAt(0)}</span>
         </Tag>
-        <span style={{ flex: 1, padding: '0 5px' }}>{label}</span>
+        <span style={{ flex: 1 }}>{label}</span>
         <Tag
           style={{
             border: `${color} 1px solid`,
