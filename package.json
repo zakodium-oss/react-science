@@ -50,12 +50,12 @@
   "peerDependencies": {
     "@blueprintjs/core": "^5.16.0",
     "@blueprintjs/icons": "^5.15.0",
+    "@blueprintjs/select": "^5.3.5",
     "fifo-logger": "^1.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@blueprintjs/select": "^5.3.5",
     "@emotion/styled": "^11.13.5",
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/react-virtual": "^3.10.9",
@@ -70,6 +70,7 @@
   "devDependencies": {
     "@blueprintjs/core": "^5.16.0",
     "@blueprintjs/icons": "^5.15.0",
+    "@blueprintjs/select": "^5.3.5",
     "@floating-ui/react": "^0.26.28",
     "@playwright/experimental-ct-react": "^1.49.0",
     "@playwright/test": "^1.49.0",
