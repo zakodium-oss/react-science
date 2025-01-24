@@ -21,11 +21,19 @@ React components to build scientific applications UI.
 
 ### Global css
 
-If you use tailwindcss and already you added `@tailwind base;` to your tailwind stylesheet, you can skip this step.
+Import the preflight css stylesheet, unless you use tailwindcss and you already added `@tailwind base;` to your tailwind stylesheet:
 
-Otherwise, import the global styles in your application:
+```js
+import 'react-science/styles/preflight.css';
+```
 
-`import 'react-science/styles/preflight.css';`
+Then import the blueprint stylesheets:
+
+```js
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/select/lib/css/blueprint-select.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+```
 
 ## Introduction
 
