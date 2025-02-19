@@ -211,8 +211,16 @@ function Splitter(props: SplitterProps) {
       direction={direction}
       ref={splitterRef}
     >
-      <div style={{ fontSize: '0.875em' }}>
-        {direction === 'horizontal' ? <span>⋮</span> : <span>⋯</span>}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          placeContent: 'center',
+          fontSize: '0.875em',
+          maxHeight: '100%',
+        }}
+      >
+        {direction === 'horizontal' ? '⋮' : '⋯'}
       </div>
     </Split>
   );
