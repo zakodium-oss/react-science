@@ -74,6 +74,7 @@
     "@floating-ui/react": "^0.27.3",
     "@playwright/experimental-ct-react": "^1.50.1",
     "@playwright/test": "^1.50.1",
+    "@storybook/addon-actions": "^8.5.8",
     "@storybook/addon-essentials": "^8.5.3",
     "@storybook/addon-storysource": "^8.5.3",
     "@storybook/blocks": "^8.5.3",

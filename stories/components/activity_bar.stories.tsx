@@ -115,7 +115,7 @@ export function ActivityToolbarLayout() {
         }}
       >
         {selected.length > 0 ? (
-          <SplitPane size="30%" controlledSide="end">
+          <SplitPane defaultSize="30%" controlledSide="end">
             <PlaceHolder />
             <ActivityPanel>
               {itemsBlueprintIcons

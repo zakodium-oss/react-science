@@ -1,19 +1,18 @@
 import { Tab, Tabs } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import { action } from '@storybook/addon-actions';
 import { useMemo, useState } from 'react';
 
-import type {
-  SplitPaneProps,
-  SplitPaneSize,
-} from '../../src/components/index.js';
+import type { SplitPaneProps } from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
   SplitPane,
 } from '../../src/components/index.js';
 
-export default {
-  title: 'Components / SplitPane',
+const sideArgType = {
+  options: ['start', 'end'],
+  control: { type: 'radio' },
 };
 
 const directionArgType = {
@@ -21,47 +20,37 @@ const directionArgType = {
   control: { type: 'radio' },
 };
 
-const sideArgType = {
-  options: ['start', 'end'],
-  control: { type: 'radio' },
+type SplitPaneStoryProps = Omit<SplitPaneProps, 'children'>;
+
+export default {
+  title: 'Components / SplitPane',
+  argTypes: {
+    direction: directionArgType,
+    controlledSide: sideArgType,
+  },
+  args: {
+    onOpenChange: action('onOpenChange'),
+    onResize: action('onResize'),
+    defaultOpen: true,
+    defaultSize: '50%',
+  },
 };
 
-export function Control(props: Omit<SplitPaneProps, 'children'>) {
-  const [toggle, setToggle] = useState<boolean | null>(null);
-  const [resize, setResize] = useState<SplitPaneSize | null>(null);
+export function Control(props: SplitPaneStoryProps) {
   return (
     <div style={{ backgroundColor: 'greenyellow', height: 400, width: 600 }}>
-      <SplitPane onToggle={setToggle} onResize={setResize} {...props}>
+      <SplitPane {...props}>
         <div>A</div>
-        <div>
-          <div>
-            {'Last toggle event: '}
-            {toggle === null ? 'none' : toggle ? 'true' : 'false'}
-          </div>
-          <div>
-            {'Last resize event: '}
-            {resize === null ? 'none' : resize}
-          </div>
-        </div>
+        <div>B</div>
       </SplitPane>
     </div>
   );
 }
 
-Control.args = {
-  size: '50%',
-  closed: false,
-};
-
-Control.argTypes = {
-  direction: directionArgType,
-  controlledSide: sideArgType,
-};
-
-export function Vertical() {
+export function Vertical(props: Omit<SplitPaneProps, 'children'>) {
   return (
     <div style={{ backgroundColor: 'rgba(165, 180, 252)', height: 400 }}>
-      <SplitPane direction="vertical" size="200px">
+      <SplitPane direction="vertical" defaultSize="200px" {...props}>
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -69,10 +58,10 @@ export function Vertical() {
   );
 }
 
-export function Horizontal() {
+export function Horizontal(props: SplitPaneStoryProps) {
   return (
     <div style={{ backgroundColor: 'rgba(147, 197, 253)', height: 200 }}>
-      <SplitPane direction="horizontal" size="30%">
+      <SplitPane direction="horizontal" defaultSize="30%" {...props}>
         <div>A</div>
         <div>B</div>
       </SplitPane>
@@ -80,11 +69,11 @@ export function Horizontal() {
   );
 }
 
-export function Inception() {
+export function Inception(props: SplitPaneStoryProps) {
   return (
     <div style={{ backgroundColor: 'rgba(209, 213, 219)', height: 400 }}>
-      <SplitPane direction="horizontal">
-        <SplitPane direction="vertical">
+      <SplitPane direction="horizontal" {...props}>
+        <SplitPane direction="vertical" {...props}>
           <p>A</p>
 
           <AccordionProvider>
@@ -116,9 +105,9 @@ export function Inception() {
             </Accordion>
           </AccordionProvider>
         </SplitPane>
-        <SplitPane direction="vertical">
+        <SplitPane direction="vertical" {...props}>
           <p>C</p>
-          <SplitPane direction="vertical">
+          <SplitPane direction="vertical" {...props}>
             <p>D</p>
             <p>E</p>
           </SplitPane>
@@ -128,7 +117,7 @@ export function Inception() {
   );
 }
 
-export function WithEvilChild() {
+export function WithEvilChild(props: SplitPaneStoryProps) {
   return (
     <div
       style={{
@@ -137,7 +126,7 @@ export function WithEvilChild() {
         height: 300,
       }}
     >
-      <SplitPane direction="horizontal" size="300px">
+      <SplitPane direction="horizontal" defaultSize="300px" {...props}>
         <div>I am a good child. 😊</div>
         <div
           style={{
@@ -154,9 +143,9 @@ export function WithEvilChild() {
   );
 }
 
-export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
-  const { controlledSide, closed } = props;
-  const nbPx = String(closed);
+export function WithMinimalSize(props: SplitPaneStoryProps) {
+  const { controlledSide, minimumSize } = props;
+  const nbPx = String(minimumSize);
   return (
     <div
       style={{
@@ -179,8 +168,8 @@ export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
 }
 
 WithMinimalSize.args = {
-  size: '500px',
-  closed: 600,
+  defaultSize: '500px',
+  minimumSize: 600,
 };
 
 WithMinimalSize.argTypes = {
@@ -196,7 +185,7 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-export function WithMinimalSizeAndEvilChild() {
+export function WithMinimalSizeAndEvilChild(props: SplitPaneStoryProps) {
   const tabItems = useMemo(
     () =>
       new Array(20).fill(0).map((_, i) => ({
@@ -211,7 +200,12 @@ export function WithMinimalSizeAndEvilChild() {
 
   return (
     <div style={{ height: '100%' }}>
-      <SplitPane direction="horizontal" size="20%" controlledSide="end">
+      <SplitPane
+        direction="horizontal"
+        defaultSize="20%"
+        controlledSide="end"
+        {...props}
+      >
         <div style={{ width: '100%', minWidth: 0 }}>
           <StyledTabs selectedTabId={opened} onChange={setOpen}>
             {tabItems.map((item) => (

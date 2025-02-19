@@ -10,8 +10,6 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { match } from 'ts-pattern';
 import useResizeObserver from 'use-resize-observer';
 
-import { useOnOff } from '../hooks/useOnOff.js';
-
 import { useSplitPaneSize } from './useSplitPaneSize.js';
 
 export type SplitPaneDirection = 'vertical' | 'horizontal';
@@ -34,31 +32,34 @@ export interface SplitPaneProps {
    */
   controlledSide?: SplitPaneSide;
   /**
-   * size of the controlled side. Unit can be either '%' or 'px'.
+   * Initial size of the controlled side.
+   * Unit can be either '%' or 'px'.
    * @default '50%'
    */
-  size?: SplitPaneSize;
+  defaultSize?: SplitPaneSize;
   /**
-   * Defines whether the pane is initially closed.
-   * A value of `true` means the pane is always initially closed.
-   * A value of `false` means the pane is always initially open.
-   * A value of type `number` means the pane is initially closed if its total
-   * size is smaller than the specified value. In that case, the pane will
-   * dynamically open or close when the total size changes, until the user
-   * interacts with the splitter. After the first interaction, the pane will
-   * no longer open or close automatically.
-   * @default false
+   * Defines whether the pane is initially open.
+   * A value of `true` means the pane is initially open.
+   * A value of `false` means the pane is initially closed.
+   * @default true
    */
-  closed?: boolean | number;
+  defaultOpen?: boolean;
+  /**
+   * If specified, opens / closes the pane automatically once the available space
+   * for the SplitPane along the axis defined by the `direction` prop becomes
+   * larger / smaller (respectively) than this value.
+   * After the user manually opens or closes the splitter, the pane will
+   * no longer open or close automatically.
+   */
+  minimumSize?: number;
   /**
    * Called whenever the user finishes resizing the pane.
    */
   onResize?: (position: SplitPaneSize) => void;
   /**
-   * Called whenever the user double clicks on the splitter to open or close
-   * the pane.
+   * Called whenever the open state of the pane changes.
    */
-  onToggle?: (isClosed: boolean) => void;
+  onOpenChange?: (isOpen: boolean) => void;
   /**
    * The two React elements to show on both sides of the pane.
    */
@@ -69,39 +70,24 @@ export function SplitPane(props: SplitPaneProps) {
   const {
     direction = 'horizontal',
     controlledSide = 'start',
-    size = '50%',
-    closed = false,
+    defaultSize = '50%',
+    defaultOpen = true,
+    minimumSize = null,
     onResize,
-    onToggle,
+    onOpenChange,
     children,
   } = props;
-
-  const minimumSize = typeof closed === 'number' ? closed : null;
-
   // Whether the pane is explicitly closed. If the value is `false`, the pane
   // may still be currently closed because it is smaller than the minimum size.
-  const [isPaneClosed, closePane, openPane] = useOnOff(
-    typeof closed === 'boolean' ? closed : false,
-  );
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const isOpenRef = useRef<boolean>(defaultOpen);
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
 
-  const [[splitSize, sizeType], setSize] = useState(() => parseSize(size));
-
-  useEffect(() => {
-    setSize(parseSize(size));
-  }, [size]);
-
-  useEffect(() => {
-    if (typeof closed === 'boolean') {
-      if (closed) {
-        closePane();
-      } else {
-        openPane();
-      }
-    }
-  }, [closePane, closed, openPane]);
+  const [[splitSize, sizeType], setSize] = useState(() =>
+    parseSize(defaultSize),
+  );
 
   const splitterRef = useRef<HTMLDivElement>(null);
   const { onPointerDown } = useSplitPaneSize({
@@ -116,43 +102,36 @@ export function SplitPane(props: SplitPaneProps) {
     onResize,
   });
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore Module exists.
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  // @ts-expect-error Module exists.
   const rootSize = useResizeObserver<HTMLDivElement>();
 
-  let isFinalClosed = isPaneClosed;
-  if (
-    !isFinalClosed &&
-    minimumSize !== null &&
-    !hasTouched &&
-    rootSize.width !== undefined &&
-    rootSize.height !== undefined
-  ) {
-    if (direction === 'horizontal') {
-      isFinalClosed = rootSize.width < minimumSize;
-    } else {
-      isFinalClosed = rootSize.height < minimumSize;
+  const mainDirectionSize =
+    direction === 'horizontal' ? rootSize.width : rootSize.height;
+
+  useEffect(() => {
+    if (minimumSize === null || hasTouched) {
+      return;
     }
-  }
+    const shouldBeOpen = mainDirectionSize >= minimumSize;
+    setIsOpen(shouldBeOpen);
+    if (shouldBeOpen !== isOpenRef.current) {
+      onOpenChange?.(shouldBeOpen);
+    }
+  }, [mainDirectionSize, minimumSize, hasTouched, onOpenChange]);
 
   function handleToggle() {
     touch();
-    if (isFinalClosed) {
-      openPane();
-      if (isPaneClosed && onToggle) {
-        onToggle(false);
-      }
-    } else {
-      closePane();
-      if (!isPaneClosed && onToggle) {
-        onToggle(true);
-      }
-    }
+    setIsOpen(!isOpen);
+    onOpenChange?.(!isOpen);
   }
 
   function getSplitSideStyle(side: SplitPaneSide) {
     return getItemStyle(
-      isFinalClosed,
+      isOpen,
       controlledSide === side,
       direction,
       splitSize,
@@ -175,8 +154,8 @@ export function SplitPane(props: SplitPaneProps) {
 
       <Splitter
         onDoubleClick={handleToggle}
-        onPointerDown={isFinalClosed ? undefined : onPointerDown}
-        isFinalClosed={isFinalClosed}
+        onPointerDown={isOpen ? onPointerDown : undefined}
+        isOpen={isOpen}
         direction={direction}
         splitterRef={splitterRef}
       />
@@ -190,24 +169,19 @@ interface SplitterProps {
   onDoubleClick: () => void;
   onPointerDown?: (event: ReactPointerEvent) => void;
   direction: SplitPaneDirection;
-  isFinalClosed: boolean;
+  isOpen: boolean;
   splitterRef: RefObject<HTMLDivElement>;
 }
 
 function Splitter(props: SplitterProps) {
-  const {
-    onDoubleClick,
-    onPointerDown,
-    direction,
-    isFinalClosed,
-    splitterRef,
-  } = props;
+  const { onDoubleClick, onPointerDown, direction, isOpen, splitterRef } =
+    props;
 
   return (
     <Split
       onDoubleClick={onDoubleClick}
       onPointerDown={onPointerDown}
-      enabled={!isFinalClosed}
+      enabled={isOpen}
       direction={direction}
       ref={splitterRef}
     >
@@ -244,14 +218,14 @@ function percentToFlex(percent: number): number {
 }
 
 function getItemStyle(
-  isClosed: boolean,
+  isOpen: boolean,
   isControlledSide: boolean,
   direction: SplitPaneDirection,
   size: number,
   type: SplitPaneType,
 ) {
   const isHorizontal = direction === 'horizontal';
-  if (isClosed) {
+  if (!isOpen) {
     return isControlledSide
       ? { display: 'none' }
       : { flex: '1 1 0%', display: 'flex' };
