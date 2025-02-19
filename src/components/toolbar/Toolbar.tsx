@@ -50,7 +50,8 @@ interface ToolbarItemInternalProps extends ToolbarItemProps {
   isPopover: boolean;
 }
 
-export interface ToolbarPopoverItemProps extends PopoverProps {
+export interface ToolbarPopoverItemProps
+  extends Omit<PopoverProps, 'targetProps'> {
   itemProps: ToolbarItemProps;
 }
 
@@ -251,13 +252,6 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
       interactionKind={popoverInteractionKind}
       hasBackdrop={popoverInteractionKind === 'click'}
       hoverCloseDelay={0}
-      targetProps={{
-        style: {
-          fontSize: '1.125em',
-          width: 'fit-content',
-          height: 'fit-content',
-        },
-      }}
       renderTarget={({ isOpen, className, ...targetProps }) => (
         <span {...targetProps} style={{ flex: '0 0 auto' }}>
           <ToolbarItemInternal isPopover {...itemProps} />

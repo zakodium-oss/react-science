@@ -1,3 +1,9 @@
+import type {
+  AnchorButtonProps as BlueprintAnchorButtonProps,
+  ButtonProps as BlueprintButtonProps,
+  TagProps,
+  TooltipProps,
+} from '@blueprintjs/core';
 import {
   AnchorButton,
   Button as BlueprintButton,
@@ -5,12 +11,6 @@ import {
   Icon,
   Tag,
   Tooltip,
-} from '@blueprintjs/core';
-import type {
-  AnchorButtonProps as BlueprintAnchorButtonProps,
-  ButtonProps as BlueprintButtonProps,
-  TagProps,
-  TooltipProps,
 } from '@blueprintjs/core';
 import type { CSSObject } from '@emotion/styled';
 import styled from '@emotion/styled';
@@ -24,7 +24,7 @@ type BlueprintProps = {
 };
 
 export type ButtonProps = BlueprintProps & {
-  tooltipProps?: Partial<Omit<TooltipProps, 'children'>>;
+  tooltipProps?: Partial<Omit<TooltipProps, 'children' | 'targetProps'>>;
   tag?: ReactNode;
   tagProps?: Omit<TagProps, 'children'>;
 };
