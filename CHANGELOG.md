@@ -1,5 +1,30 @@
 # Changelog
 
+## [13.0.0](https://github.com/zakodium-oss/react-science/compare/v12.1.0...v13.0.0) (2025-02-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **SplitPane:** The `onToggle` prop has been renamed to `onOpenChange` and receives true when the split pane opens (previously received false).  Contrary to the previous onToggle, onOpenChange is called in any circumstance when the split pane state changes, for example also when it automatically closes after it reaches the `closeThreshold` size. The original behavior of the `closed` and `size` props has changed. Their behavior were a mix of a control value prop and default value prop for internally managed state. There is now a clear separation between control props (`open` and `size`) and default value props `defaultOpen` and `defaultSize`. For example for the open state you should either:
+    - Use `open` to control if the SplitPane is open or not, and `onOpenChange` to react to changes. Using `defaultOpen` will have no effect.
+    - Use `defaultOpen` to set the initial value (only affects first render), with state changes being handled internally by the component.
+    If you used `closed` with a number, use the new `closeThreshold` prop instead.
+
+### Features
+
+* create InlineEditable component ([#846](https://github.com/zakodium-oss/react-science/issues/846)) ([4848f70](https://github.com/zakodium-oss/react-science/commit/4848f7073a9913c82eecd47196da8acdfe95a375))
+* **SplitPane:** rework SplitPane API ([4cf816c](https://github.com/zakodium-oss/react-science/commit/4cf816c831faf52dbc70c0572c4fdd01307f06f7))
+* **Table:** add scrollToRowRef prop to the Table component ([#816](https://github.com/zakodium-oss/react-science/issues/816)) ([49cd819](https://github.com/zakodium-oss/react-science/commit/49cd819126c7fe1b361c45587c4f259f808cdc82))
+
+
+### Bug Fixes
+
+* add stylelint and fix CSS errors ([#845](https://github.com/zakodium-oss/react-science/issues/845)) ([238e55a](https://github.com/zakodium-oss/react-science/commit/238e55a18f9a86ed675a8bf4c702d82a7d8c2253))
+* allow to search with `yes` or `no` ([#850](https://github.com/zakodium-oss/react-science/issues/850)) ([dd3cb39](https://github.com/zakodium-oss/react-science/commit/dd3cb3995240d87af4d4ffafa28dd3d5a236e06c))
+* ensure content of split bar does not overflow ([#861](https://github.com/zakodium-oss/react-science/issues/861)) ([8137a37](https://github.com/zakodium-oss/react-science/commit/8137a37128b3581dd46359db2f5a9754c87544a1))
+* **Menus:** do not overflow divider ([#848](https://github.com/zakodium-oss/react-science/issues/848)) ([1c9d33d](https://github.com/zakodium-oss/react-science/commit/1c9d33d36009d4efada5c2d87db2c2d7e9509cc6))
+* remove targetProps where renderTarget is used ([#860](https://github.com/zakodium-oss/react-science/issues/860)) ([729c39f](https://github.com/zakodium-oss/react-science/commit/729c39f7876785ec5ab17fc692b7cf0efda83421))
+
 ## [12.1.0](https://github.com/zakodium-oss/react-science/compare/v12.0.0...v12.1.0) (2024-12-11)
 
 
