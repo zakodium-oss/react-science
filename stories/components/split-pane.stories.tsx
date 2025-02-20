@@ -1,239 +1,117 @@
-import { Tab, Tabs } from '@blueprintjs/core';
-import styled from '@emotion/styled';
-import { useMemo, useState } from 'react';
+import { action } from '@storybook/addon-actions';
 
-import type {
-  SplitPaneProps,
-  SplitPaneSize,
-} from '../../src/components/index.js';
-import {
-  Accordion,
-  AccordionProvider,
-  SplitPane,
-} from '../../src/components/index.js';
+import type { SplitPaneProps } from '../../src/components/index.js';
+import { SplitPane } from '../../src/components/index.js';
+
+import { SplitPanelChildContent } from './split-pane.utils.js';
 
 export default {
   title: 'Components / SplitPane',
+  tags: ['auotodocs'],
+  component: SplitPane,
+  argTypes: {
+    size: {
+      control: { type: 'text' },
+    },
+    defaultSize: { control: { type: 'text' } },
+  },
+  args: {
+    onOpenChange: action('onOpenChange'),
+    onResize: action('onResize'),
+    children: [
+      <SplitPanelChildContent key="A" color="lightpink">
+        A
+      </SplitPanelChildContent>,
+      <SplitPanelChildContent key="B" color="lightblue">
+        B
+      </SplitPanelChildContent>,
+    ],
+  },
 };
 
-const directionArgType = {
-  options: ['horizontal', 'vertical'],
-  control: { type: 'radio' },
-};
-
-const sideArgType = {
-  options: ['start', 'end'],
-  control: { type: 'radio' },
-};
-
-export function Control(props: Omit<SplitPaneProps, 'children'>) {
-  const [toggle, setToggle] = useState<boolean | null>(null);
-  const [resize, setResize] = useState<SplitPaneSize | null>(null);
+export function Control(props: SplitPaneProps) {
   return (
-    <div style={{ backgroundColor: 'greenyellow', height: 400, width: 600 }}>
-      <SplitPane onToggle={setToggle} onResize={setResize} {...props}>
-        <div>A</div>
-        <div>
-          <div>
-            {'Last toggle event: '}
-            {toggle === null ? 'none' : toggle ? 'true' : 'false'}
-          </div>
-          <div>
-            {'Last resize event: '}
-            {resize === null ? 'none' : resize}
-          </div>
-        </div>
-      </SplitPane>
+    <div style={{ height: 400, width: 600 }}>
+      <SplitPane {...props} />
     </div>
   );
 }
 
-Control.args = {
+export function Vertical(props: SplitPaneProps) {
+  return (
+    <div style={{ height: 400 }}>
+      <SplitPane {...props} />
+    </div>
+  );
+}
+
+Vertical.args = {
+  direction: 'vertical',
+  defaultSize: '30%',
+};
+
+export function Horizontal(props: SplitPaneProps) {
+  return (
+    <div style={{ height: 200 }}>
+      <SplitPane {...props} />
+    </div>
+  );
+}
+
+Horizontal.args = {
+  direction: 'horizontal',
+  defaultSize: '30%',
+};
+
+export function EndSideIsControlled(props: SplitPaneProps) {
+  return (
+    <div style={{ height: 400, width: 600 }}>
+      <SplitPane {...props} />
+    </div>
+  );
+}
+
+EndSideIsControlled.args = {
+  controlledSide: 'end',
+  defaultSize: '70%',
+};
+
+export function WithCloseThreshold(props: SplitPaneProps) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div>
+        Resize the window to see how the minimum size affects the SplitPane.
+      </div>
+      <div
+        style={{
+          width: '100%',
+          flex: 1,
+          minHeight: 0,
+        }}
+      >
+        <SplitPane {...props} />
+      </div>
+    </div>
+  );
+}
+
+WithCloseThreshold.args = {
+  defaultSize: '500px',
+  closeThreshold: 600,
+};
+
+export function ControlledProps(props: Omit<SplitPaneProps, 'defaultOpen'>) {
+  return (
+    <div>
+      {`Use story controls to set the "open" and "size" states.`}
+      <div style={{ height: 400, width: 600 }}>
+        <SplitPane {...props} />
+      </div>
+    </div>
+  );
+}
+
+ControlledProps.args = {
+  open: true,
   size: '50%',
-  closed: false,
 };
-
-Control.argTypes = {
-  direction: directionArgType,
-  controlledSide: sideArgType,
-};
-
-export function Vertical() {
-  return (
-    <div style={{ backgroundColor: 'rgba(165, 180, 252)', height: 400 }}>
-      <SplitPane direction="vertical" size="200px">
-        <div>A</div>
-        <div>B</div>
-      </SplitPane>
-    </div>
-  );
-}
-
-export function Horizontal() {
-  return (
-    <div style={{ backgroundColor: 'rgba(147, 197, 253)', height: 200 }}>
-      <SplitPane direction="horizontal" size="30%">
-        <div>A</div>
-        <div>B</div>
-      </SplitPane>
-    </div>
-  );
-}
-
-export function Inception() {
-  return (
-    <div style={{ backgroundColor: 'rgba(209, 213, 219)', height: 400 }}>
-      <SplitPane direction="horizontal">
-        <SplitPane direction="vertical">
-          <p>A</p>
-
-          <AccordionProvider>
-            <Accordion>
-              <Accordion.Item title="A">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis distinctio ducimus beatae iure! Vel, laudantium.
-                  Cum, aliquam officiis numquam rerum voluptatem repellat
-                  quibusdam incidunt enim officia tenetur corrupti qui quia.
-                </p>
-              </Accordion.Item>
-              <Accordion.Item title="B">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis distinctio ducimus beatae iure! Vel, laudantium.
-                  Cum, aliquam officiis numquam rerum voluptatem repellat
-                  quibusdam incidunt enim officia tenetur corrupti qui quia.
-                </p>
-              </Accordion.Item>
-              <Accordion.Item title="C">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis distinctio ducimus beatae iure! Vel, laudantium.
-                  Cum, aliquam officiis numquam rerum voluptatem repellat
-                  quibusdam incidunt enim officia tenetur corrupti qui quia.
-                </p>
-              </Accordion.Item>
-            </Accordion>
-          </AccordionProvider>
-        </SplitPane>
-        <SplitPane direction="vertical">
-          <p>C</p>
-          <SplitPane direction="vertical">
-            <p>D</p>
-            <p>E</p>
-          </SplitPane>
-        </SplitPane>
-      </SplitPane>
-    </div>
-  );
-}
-
-export function WithEvilChild() {
-  return (
-    <div
-      style={{
-        backgroundColor: 'rgba(251, 207, 232)',
-        width: 800,
-        height: 300,
-      }}
-    >
-      <SplitPane direction="horizontal" size="300px">
-        <div>I am a good child. 😊</div>
-        <div
-          style={{
-            backgroundColor: 'rgba(252, 165, 165)',
-            width: 300,
-            whiteSpace: 'nowrap',
-            overflow: 'auto',
-          }}
-        >
-          I am an evil child. My size will stay at 300px 😈
-        </div>
-      </SplitPane>
-    </div>
-  );
-}
-
-export function WithMinimalSize(props: Omit<SplitPaneProps, 'children'>) {
-  const { controlledSide, closed } = props;
-  const nbPx = String(closed);
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: 'calc(100vh - 2.1rem)',
-      }}
-    >
-      <SplitPane {...props}>
-        <div style={{ backgroundColor: 'rgba(252, 165, 165)', width: '100%' }}>
-          {controlledSide === 'start' &&
-            `Close when container size less Than ${nbPx}px`}
-        </div>
-        <div style={{ backgroundColor: 'rgba(147, 197, 253)', width: '100%' }}>
-          {controlledSide === 'end' &&
-            `Close when container size less Than ${nbPx}px`}
-        </div>
-      </SplitPane>
-    </div>
-  );
-}
-
-WithMinimalSize.args = {
-  size: '500px',
-  closed: 600,
-};
-
-WithMinimalSize.argTypes = {
-  direction: directionArgType,
-  controlledSide: sideArgType,
-};
-
-const StyledTabs = styled(Tabs)`
-  height: 100%;
-
-  div[role='tablist'] {
-    overflow-x: auto;
-  }
-`;
-
-export function WithMinimalSizeAndEvilChild() {
-  const tabItems = useMemo(
-    () =>
-      new Array(20).fill(0).map((_, i) => ({
-        id: `tab-${i}`,
-        title: `Tab ${i}`,
-        content: `Tab ${i} content`,
-      })),
-    [],
-  );
-
-  const [opened, setOpen] = useState<string | number>();
-
-  return (
-    <div style={{ height: '100%' }}>
-      <SplitPane direction="horizontal" size="20%" controlledSide="end">
-        <div style={{ width: '100%', minWidth: 0 }}>
-          <StyledTabs selectedTabId={opened} onChange={setOpen}>
-            {tabItems.map((item) => (
-              <Tab
-                id={item.id}
-                key={item.id}
-                title={item.title}
-                panel={<div>{item.content}</div>}
-              />
-            ))}
-          </StyledTabs>
-        </div>
-        <div
-          style={{
-            backgroundColor: 'rgba(147, 197, 253)',
-            width: '100%',
-            minWidth: '300px',
-          }}
-        >
-          I am an evil child. My size will stay at 300px 😈
-        </div>
-      </SplitPane>
-    </div>
-  );
-}

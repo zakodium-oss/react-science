@@ -309,7 +309,7 @@ function DemoPage(props: { openDialog: () => void }) {
             height: '300px',
           }}
         >
-          <SplitPane size="35%">
+          <SplitPane defaultSize="35%">
             <div style={{ padding: 5 }}>
               <Button intent="primary" onClick={props.openDialog}>
                 Open
