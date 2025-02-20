@@ -6,6 +6,7 @@ import { SplitPane } from '../../src/components/index.js';
 
 export default {
   title: 'Components / SplitPane',
+  tags: ['auotodocs'],
   component: SplitPane,
   argTypes: {
     size: {
@@ -45,7 +46,7 @@ export function Vertical(props: SplitPaneProps) {
 
 Vertical.args = {
   direction: 'vertical',
-  defaultSize: '200px',
+  defaultSize: '30%',
 };
 
 export function Horizontal(props: SplitPaneProps) {
@@ -71,7 +72,7 @@ export function EndSideIsControlled(props: SplitPaneProps) {
 
 EndSideIsControlled.args = {
   controlledSide: 'end',
-  defaultSize: '80%',
+  defaultSize: '70%',
 };
 
 export function WithMinimumSize(props: SplitPaneProps) {

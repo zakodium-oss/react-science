@@ -6,16 +6,11 @@ import type {
   ReactNode,
   RefObject,
 } from 'react';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { match } from 'ts-pattern';
 import useResizeObserver from 'use-resize-observer';
+
+import { useControlledOrInternalState } from '../utils/controlled_or_internal_state.js';
 
 import { useSplitPaneSize } from './useSplitPaneSize.js';
 
@@ -31,11 +26,10 @@ export interface SplitPaneProps {
    */
   direction?: SplitPaneDirection;
   /**
-   * Defines which side of the pane is controlled by the split value.
-   * It is also the side that will be closed when the user double-clicks on the
-   * splitter.
-   * 'start' means 'left' if the direction is `horizontal`
-   * and 'top' if the direction is `vertical`.
+   * Defines which side of the pane is controlled by the size value.
+   * It is also the side that can be closed.
+   * 'start' means 'left' if the direction is `horizontal` and 'top' if the
+   * direction is `vertical`.
    * @default 'start'
    */
   controlledSide?: SplitPaneSide;
@@ -102,49 +96,34 @@ export function SplitPane(props: SplitPaneProps) {
     controlledSide = 'start',
     defaultSize = '50%',
     defaultOpen = true,
-    isOpen,
-    size,
+    isOpen: isOpenProp,
+    size: sizeProp,
     onSizeChange,
     minimumSize = null,
     onResize,
     onOpenChange,
     children,
   } = props;
-  // Whether the pane is explicitly closed. If the value is `false`, the pane
-  // may still be currently closed because it is smaller than the minimum size.
-  const [isOpenInternal, setIsOpenInternal] = useState(defaultOpen);
-  const safeSetIsOpenInternal = useCallback(
-    (value: boolean) => {
-      if (isOpen === undefined) {
-        // The component is in uncontrolled mode.
-        setIsOpenInternal(value);
-      }
-    },
-    [isOpen],
+  const [isOpen, setIsOpen] = useControlledOrInternalState(
+    isOpenProp,
+    defaultOpen,
+    'isOpen',
+  );
+  const [size, setSize] = useControlledOrInternalState(
+    sizeProp,
+    defaultSize,
+    'size',
   );
 
-  const [sizeInternal, setSizeInternal] = useState(() =>
-    parseSize(defaultSize),
-  );
-  const safeSetSizeInternal = useCallback(
-    (value: ParsedSplitPaneSize) => {
-      if (size === undefined) {
-        setSizeInternal(value);
-      }
-    },
-    [size],
-  );
+  const [splitSize, sizeType] = parseSize(size);
+
   const isOpenRef = useRef<boolean>(defaultOpen);
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
-
-  const [splitSize, sizeType] = useMemo(() => {
-    if (size) {
-      return parseSize(size);
-    }
-    return sizeInternal;
-  }, [size, sizeInternal]);
 
   const splitterRef = useRef<HTMLDivElement>(null);
   const { onPointerDown } = useSplitPaneSize({
@@ -154,19 +133,12 @@ export function SplitPane(props: SplitPaneProps) {
     sizeType,
     onSizeChange(value) {
       touch();
-      safeSetSizeInternal(value);
-      onSizeChange?.(serializeSize(value));
+      const serialized = serializeSize(value);
+      setSize(serialized);
+      onSizeChange?.(serialized);
     },
     onResize,
   });
-
-  useWarnControlledUncontrolled(isOpen, 'isOpen');
-  useWarnControlledUncontrolled(size, 'size');
-  const finalIsOpen = isOpen === undefined ? isOpenInternal : isOpen;
-
-  useEffect(() => {
-    isOpenRef.current = finalIsOpen;
-  }, [finalIsOpen]);
 
   // @ts-expect-error Module exists.
   const rootSize = useResizeObserver<HTMLDivElement>();
@@ -179,27 +151,21 @@ export function SplitPane(props: SplitPaneProps) {
       return;
     }
     const shouldBeOpen = mainDirectionSize >= minimumSize;
-    safeSetIsOpenInternal(shouldBeOpen);
+    setIsOpen(shouldBeOpen);
     if (shouldBeOpen !== isOpenRef.current) {
       onOpenChange?.(shouldBeOpen);
     }
-  }, [
-    mainDirectionSize,
-    minimumSize,
-    hasTouched,
-    onOpenChange,
-    safeSetIsOpenInternal,
-  ]);
+  }, [mainDirectionSize, minimumSize, hasTouched, onOpenChange, setIsOpen]);
 
   function handleToggle() {
     touch();
-    safeSetIsOpenInternal(!finalIsOpen);
-    onOpenChange?.(!finalIsOpen);
+    setIsOpen(!isOpen);
+    onOpenChange?.(!isOpen);
   }
 
   function getSplitSideStyle(side: SplitPaneSide) {
     return getItemStyle(
-      finalIsOpen,
+      isOpen,
       controlledSide === side,
       direction,
       splitSize,
@@ -222,8 +188,8 @@ export function SplitPane(props: SplitPaneProps) {
 
       <Splitter
         onDoubleClick={handleToggle}
-        onPointerDown={finalIsOpen ? onPointerDown : undefined}
-        isOpen={finalIsOpen}
+        onPointerDown={isOpen ? onPointerDown : undefined}
+        isOpen={isOpen}
         direction={direction}
         splitterRef={splitterRef}
       />
@@ -362,31 +328,3 @@ const Split = styled.div<{
       )
       .exhaustive()}
 `;
-
-function usePrevious<T>(value: T) {
-  const ref = useRef<T>(value);
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
-}
-
-function useWarnControlledUncontrolled(value: unknown, name: string) {
-  const previousValue = usePrevious(value);
-  useEffect(() => {
-    if (value !== undefined && previousValue === undefined) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `SplitPane: "${name}" prop changes from being uncontrolled to being controlled. This may lead to unexpected behavior.`,
-      );
-    }
-    if (value === undefined && previousValue !== undefined) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `SplitPane: "${name}" prop changes from being controlled to being uncontrolled. This may lead to unexpected behavior.`,
-      );
-    }
-  }, [value, previousValue, name]);
-}
