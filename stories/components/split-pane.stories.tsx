@@ -102,7 +102,7 @@ WithCloseThreshold.args = {
 export function ControlledState(props: Omit<SplitPaneProps, 'defaultOpen'>) {
   return (
     <div>
-      {`Use controls to set the "isOpen" and "size" state.`}
+      {`Use controls to set the "open" and "size" state.`}
       <div style={{ height: 400, width: 600 }}>
         <SplitPane {...props} />
       </div>
@@ -111,7 +111,7 @@ export function ControlledState(props: Omit<SplitPaneProps, 'defaultOpen'>) {
 }
 
 ControlledState.args = {
-  isOpen: true,
+  open: true,
   size: '50%',
 };
 

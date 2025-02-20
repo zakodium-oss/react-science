@@ -118,10 +118,10 @@ export function SplitPane(props: SplitPaneProps) {
 
   const [splitSize, sizeType] = parseSize(size);
 
-  const isOpenRef = useRef<boolean>(defaultOpen);
+  const onOpenChangeRef = useRef(onOpenChange);
   useEffect(() => {
-    isOpenRef.current = isOpen;
-  }, [isOpen]);
+    onOpenChangeRef.current = onOpenChange;
+  }, [onOpenChange]);
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
@@ -143,20 +143,23 @@ export function SplitPane(props: SplitPaneProps) {
 
   // @ts-expect-error I do not understand why there is a TS error here.
   const rootSize = useResizeObserver<HTMLDivElement>();
-
   const mainDirectionSize =
     direction === 'horizontal' ? rootSize.width : rootSize.height;
 
   useEffect(() => {
-    if (closeThreshold === null || hasTouched) {
+    if (
+      closeThreshold === null ||
+      hasTouched ||
+      mainDirectionSize === undefined
+    ) {
       return;
     }
     const shouldBeOpen = mainDirectionSize >= closeThreshold;
     setIsOpen(shouldBeOpen);
-    if (shouldBeOpen !== isOpenRef.current) {
-      onOpenChange?.(shouldBeOpen);
+    if (shouldBeOpen !== isOpen) {
+      onOpenChangeRef.current?.(shouldBeOpen);
     }
-  }, [mainDirectionSize, closeThreshold, hasTouched, onOpenChange, setIsOpen]);
+  }, [mainDirectionSize, closeThreshold, hasTouched, setIsOpen, isOpen]);
 
   function handleToggle() {
     touch();
