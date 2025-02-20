@@ -37,8 +37,8 @@ export function useControlledOrInternalState<T>(
   const [value, setValue] = useState(defaultValue);
   const safeSetValue = useCallback(
     (value: T) => {
+      // Ignore setting the value if the value is controlled.
       if (controlled === undefined) {
-        // The component is in uncontrolled mode.
         setValue(value);
       }
     },
