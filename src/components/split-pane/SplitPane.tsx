@@ -211,17 +211,7 @@ function Splitter(props: SplitterProps) {
       direction={direction}
       ref={splitterRef}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          placeContent: 'center',
-          fontSize: '0.875em',
-          maxHeight: '100%',
-        }}
-      >
-        {direction === 'horizontal' ? '⋮' : '⋯'}
-      </div>
+      <SplitContent>{direction === 'horizontal' ? '⋮' : '⋯'}</SplitContent>
     </Split>
   );
 }
@@ -321,4 +311,12 @@ const Split = styled.div<{
       `,
       )
       .exhaustive()}
+`;
+
+const SplitContent = styled.div`
+  display: flex;
+  align-items: center;
+  place-content: center;
+  font-size: 0.875em;
+  max-height: 100%;
 `;
