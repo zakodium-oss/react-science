@@ -1,5 +1,6 @@
 import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type {
   CSSProperties,
   PointerEvent as ReactPointerEvent,
@@ -9,8 +10,6 @@ import type {
 import { useEffect, useReducer, useRef } from 'react';
 import { match } from 'ts-pattern';
 import useResizeObserver from 'use-resize-observer';
-
-import { useControlledOrInternalState } from '../utils/controlled_or_internal_state.js';
 
 import { useSplitPaneSize } from './useSplitPaneSize.js';
 
@@ -105,23 +104,19 @@ export function SplitPane(props: SplitPaneProps) {
     onOpenChange,
     children,
   } = props;
-  const [isOpen, setIsOpen] = useControlledOrInternalState(
-    openProp,
-    defaultOpen,
-    'isOpen',
-  );
-  const [size, setSize] = useControlledOrInternalState(
-    sizeProp,
-    defaultSize,
-    'size',
-  );
 
-  const [splitSize, sizeType] = parseSize(size);
+  const [isOpen, setIsOpen] = useControllableState({
+    prop: openProp,
+    defaultProp: defaultOpen,
+    onChange: onOpenChange,
+  });
+  const [size, setSize] = useControllableState<SplitPaneSize>({
+    prop: sizeProp,
+    defaultProp: defaultSize,
+    onChange: onSizeChange,
+  });
 
-  const onOpenChangeRef = useRef(onOpenChange);
-  useEffect(() => {
-    onOpenChangeRef.current = onOpenChange;
-  }, [onOpenChange]);
+  const [splitSize, sizeType] = parseSize(size ?? defaultSize);
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
@@ -136,7 +131,6 @@ export function SplitPane(props: SplitPaneProps) {
       touch();
       const serialized = serializeSize(value);
       setSize(serialized);
-      onSizeChange?.(serialized);
     },
     onResize,
   });
@@ -157,20 +151,16 @@ export function SplitPane(props: SplitPaneProps) {
     }
     const shouldBeOpen = mainDirectionSize >= closeThreshold;
     setIsOpen(shouldBeOpen);
-    if (shouldBeOpen !== isOpen) {
-      onOpenChangeRef.current?.(shouldBeOpen);
-    }
   }, [mainDirectionSize, closeThreshold, hasTouched, setIsOpen, isOpen]);
 
   function handleToggle() {
     touch();
     setIsOpen(!isOpen);
-    onOpenChange?.(!isOpen);
   }
 
   function getSplitSideStyle(side: SplitPaneSide) {
     return getItemStyle(
-      isOpen,
+      isOpen ?? defaultOpen,
       controlledSide === side,
       direction,
       splitSize,
@@ -194,7 +184,7 @@ export function SplitPane(props: SplitPaneProps) {
       <Splitter
         onDoubleClick={handleToggle}
         onPointerDown={isOpen ? onPointerDown : undefined}
-        isOpen={isOpen}
+        isOpen={isOpen ?? defaultOpen}
         direction={direction}
         splitterRef={splitterRef}
       />

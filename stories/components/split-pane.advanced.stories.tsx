@@ -2,11 +2,14 @@ import { Tab, Tabs } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo, useState } from 'react';
 
+import type { SplitPaneSize } from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
   SplitPane,
 } from '../../src/components/index.js';
+
+import { SplitPanelChildContent } from './split-pane.utils.js';
 
 export default {
   title: 'Components / SplitPane / Advanced',
@@ -131,6 +134,31 @@ export function WithMinimalSizeAndEvilChild() {
         >
           I am an evil child. My size will stay at 300px 😈
         </div>
+      </SplitPane>
+    </div>
+  );
+}
+
+export function ControlledState() {
+  const [size, setSize] = useState<SplitPaneSize>('50%');
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div style={{ height: 400, width: '100%' }}>
+      <SplitPane
+        size={size}
+        onSizeChange={setSize}
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        direction="horizontal"
+        closeThreshold={500}
+      >
+        <SplitPanelChildContent key="A" color="lightpink">
+          A
+        </SplitPanelChildContent>
+        <SplitPanelChildContent key="B" color="lightblue">
+          B
+        </SplitPanelChildContent>
       </SplitPane>
     </div>
   );

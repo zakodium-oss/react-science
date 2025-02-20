@@ -1,8 +1,9 @@
 import { action } from '@storybook/addon-actions';
-import type { CSSProperties, ReactNode } from 'react';
 
 import type { SplitPaneProps } from '../../src/components/index.js';
 import { SplitPane } from '../../src/components/index.js';
+
+import { SplitPanelChildContent } from './split-pane.utils.js';
 
 export default {
   title: 'Components / SplitPane',
@@ -18,12 +19,12 @@ export default {
     onOpenChange: action('onOpenChange'),
     onResize: action('onResize'),
     children: [
-      <PanelChild key="A" color="lightpink">
+      <SplitPanelChildContent key="A" color="lightpink">
         A
-      </PanelChild>,
-      <PanelChild key="B" color="lightblue">
+      </SplitPanelChildContent>,
+      <SplitPanelChildContent key="B" color="lightblue">
         B
-      </PanelChild>,
+      </SplitPanelChildContent>,
     ],
   },
 };
@@ -99,10 +100,10 @@ WithCloseThreshold.args = {
   closeThreshold: 600,
 };
 
-export function ControlledState(props: Omit<SplitPaneProps, 'defaultOpen'>) {
+export function ControlledProps(props: Omit<SplitPaneProps, 'defaultOpen'>) {
   return (
     <div>
-      {`Use controls to set the "open" and "size" state.`}
+      {`Use story controls to set the "open" and "size" states.`}
       <div style={{ height: 400, width: 600 }}>
         <SplitPane {...props} />
       </div>
@@ -110,26 +111,7 @@ export function ControlledState(props: Omit<SplitPaneProps, 'defaultOpen'>) {
   );
 }
 
-ControlledState.args = {
+ControlledProps.args = {
   open: true,
   size: '50%',
 };
-
-function PanelChild(props: {
-  color: CSSProperties['backgroundColor'];
-  children: ReactNode;
-}) {
-  return (
-    <div
-      style={{
-        backgroundColor: props.color,
-        width: '100%',
-        height: '100%',
-        display: 'grid',
-        placeContent: 'center',
-      }}
-    >
-      {props.children}
-    </div>
-  );
-}
