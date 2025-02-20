@@ -53,7 +53,7 @@ export interface SplitPaneProps {
   /**
    * Controls the open state of the pane.
    */
-  isOpen?: boolean;
+  open?: boolean;
 
   /**
    * Called whenever the open state of the pane changes.
@@ -61,13 +61,13 @@ export interface SplitPaneProps {
   onOpenChange?: (isOpen: boolean) => void;
 
   /**
-   * If specified, opens / closes the pane automatically once the available space
+   * If specified, closes / opens the pane automatically once the available space
    * for the SplitPane along the axis defined by the `direction` prop becomes
-   * larger / smaller (respectively) than this value.
+   * smaller / larger (respectively) than this value. The value is in pixels.
    * After the user manually opens or closes the splitter, the pane will
    * no longer open or close automatically.
    */
-  minimumSize?: number;
+  closeThreshold?: number;
 
   /**
    * Called whenever the user finishes resizing the pane.
@@ -96,16 +96,16 @@ export function SplitPane(props: SplitPaneProps) {
     controlledSide = 'start',
     defaultSize = '50%',
     defaultOpen = true,
-    isOpen: isOpenProp,
+    open: openProp,
     size: sizeProp,
     onSizeChange,
-    minimumSize = null,
+    closeThreshold = null,
     onResize,
     onOpenChange,
     children,
   } = props;
   const [isOpen, setIsOpen] = useControlledOrInternalState(
-    isOpenProp,
+    openProp,
     defaultOpen,
     'isOpen',
   );
@@ -147,15 +147,15 @@ export function SplitPane(props: SplitPaneProps) {
     direction === 'horizontal' ? rootSize.width : rootSize.height;
 
   useEffect(() => {
-    if (minimumSize === null || hasTouched) {
+    if (closeThreshold === null || hasTouched) {
       return;
     }
-    const shouldBeOpen = mainDirectionSize >= minimumSize;
+    const shouldBeOpen = mainDirectionSize >= closeThreshold;
     setIsOpen(shouldBeOpen);
     if (shouldBeOpen !== isOpenRef.current) {
       onOpenChange?.(shouldBeOpen);
     }
-  }, [mainDirectionSize, minimumSize, hasTouched, onOpenChange, setIsOpen]);
+  }, [mainDirectionSize, closeThreshold, hasTouched, onOpenChange, setIsOpen]);
 
   function handleToggle() {
     touch();

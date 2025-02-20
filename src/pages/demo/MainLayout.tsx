@@ -110,7 +110,11 @@ export default function MainLayout() {
           flex: 1,
         }}
       >
-        <SplitPane defaultSize="400px" minimumSize={500} controlledSide="end">
+        <SplitPane
+          defaultSize="400px"
+          closeThreshold={500}
+          controlledSide="end"
+        >
           <ErrorBoundary
             FallbackComponent={ErrorFallback}
             onReset={() => {

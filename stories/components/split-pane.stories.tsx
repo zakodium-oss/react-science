@@ -75,7 +75,7 @@ EndSideIsControlled.args = {
   defaultSize: '70%',
 };
 
-export function WithMinimumSize(props: SplitPaneProps) {
+export function WithCloseThreshold(props: SplitPaneProps) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div>
@@ -94,9 +94,9 @@ export function WithMinimumSize(props: SplitPaneProps) {
   );
 }
 
-WithMinimumSize.args = {
+WithCloseThreshold.args = {
   defaultSize: '500px',
-  minimumSize: 600,
+  closeThreshold: 600,
 };
 
 export function ControlledState(props: Omit<SplitPaneProps, 'defaultOpen'>) {
