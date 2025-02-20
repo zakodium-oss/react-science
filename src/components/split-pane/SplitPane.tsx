@@ -35,7 +35,8 @@ export interface SplitPaneProps {
   controlledSide?: SplitPaneSide;
 
   /**
-   * Initial size of the controlled side, when used in uncontrolled mode.
+   * Initial size of the controlled side.
+   * This prop has no effect if the `size` prop is used.
    * Unit can be either '%' or 'px'.
    * @default '50%'
    */
@@ -43,7 +44,7 @@ export interface SplitPaneProps {
 
   /**
    * Defines whether the pane is initially open.
-   * This prop has no effect when used in controlled mode (see `isOpen`).
+   * This prop has no effect if the `open` prop is used.
    * A value of `true` means the pane is initially open.
    * A value of `false` means the pane is initially closed.
    * @default true
@@ -140,7 +141,7 @@ export function SplitPane(props: SplitPaneProps) {
     onResize,
   });
 
-  // @ts-expect-error Module exists.
+  // @ts-expect-error I do not understand why there is a TS error here.
   const rootSize = useResizeObserver<HTMLDivElement>();
 
   const mainDirectionSize =
