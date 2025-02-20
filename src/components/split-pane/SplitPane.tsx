@@ -141,7 +141,8 @@ export function SplitPane(props: SplitPaneProps) {
     onResize,
   });
 
-  // @ts-expect-error I do not understand why there is a TS error here.
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Module exists.
   const rootSize = useResizeObserver<HTMLDivElement>();
   const mainDirectionSize =
     direction === 'horizontal' ? rootSize.width : rootSize.height;
