@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.0.1](https://github.com/zakodium-oss/react-science/compare/v13.0.0...v13.0.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* accordion color ([5ed3107](https://github.com/zakodium-oss/react-science/commit/5ed3107c5445a48630fccf6d9dcef6c372c4c0d8))
+* resolve React warning about `first-child` selector ([02fc3b9](https://github.com/zakodium-oss/react-science/commit/02fc3b99cd416b2a96a3ed041f767ce40e050c2d))
+
 ## [13.0.0](https://github.com/zakodium-oss/react-science/compare/v12.1.0...v13.0.0) (2025-02-20)
 
 
