@@ -70,10 +70,6 @@ const SubTitleItem = styled.div`
   &:last-child::after {
     height: ${shortcutBoxSize / 2}rem;
   }
-
-  &:first-child {
-    margin: 0;
-  }
 `;
 
 export interface TooltipItem {
