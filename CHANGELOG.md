@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.0.2](https://github.com/zakodium-oss/react-science/compare/v13.0.1...v13.0.2) (2025-02-25)
+
+
+### Bug Fixes
+
+* update dependencies ([#866](https://github.com/zakodium-oss/react-science/issues/866)) ([4a1411d](https://github.com/zakodium-oss/react-science/commit/4a1411de45797b8c7559aee55cda8ceed62a010c))
+
 ## [13.0.1](https://github.com/zakodium-oss/react-science/compare/v13.0.0...v13.0.1) (2025-02-21)
 
 
