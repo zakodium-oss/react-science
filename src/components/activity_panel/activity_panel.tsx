@@ -64,7 +64,7 @@ export function ActivityPanelItem(props: ActivityPanelItemProps) {
     <PanelItemContainer>
       <PanelItemHeader>
         <PanelItemTitle>{title}</PanelItemTitle>
-        <Button minimal icon="cross" onClick={onClose} />
+        <Button variant="minimal" icon="cross" onClick={onClose} />
       </PanelItemHeader>
 
       <PanelItemContent>{children}</PanelItemContent>

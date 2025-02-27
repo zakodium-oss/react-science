@@ -32,7 +32,7 @@ export function ActivityBar(props: ActivityBarProps) {
   const { children } = props;
 
   return (
-    <ActivityButtonGroup vertical large minimal>
+    <ActivityButtonGroup vertical size="large" variant="minimal">
       {children}
     </ActivityButtonGroup>
   );

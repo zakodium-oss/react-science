@@ -134,7 +134,7 @@ export function OnlyOptions() {
       >
         <Button
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -155,7 +155,7 @@ export function FiltrableOptions() {
       >
         <Button
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -184,7 +184,7 @@ export function OnlyCategories() {
       >
         <Button
           text={value?.label ?? 'Select'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -212,7 +212,7 @@ export function FilteredCategories() {
       >
         <Button
           text={value?.label ?? 'Select'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -244,7 +244,7 @@ export function OptionsWithCategories() {
       >
         <Button
           text={value?.label ?? 'Select'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -276,7 +276,7 @@ export function CategoriesNested() {
       >
         <Button
           text={value?.label ?? 'Select'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -299,7 +299,7 @@ export function DisabledOptions() {
       >
         <Button
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -332,7 +332,7 @@ export function DisabledInCategories() {
       >
         <Button
           text={value?.label ?? 'Select'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -356,7 +356,7 @@ export function Disabled() {
         <Button
           disabled
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -379,7 +379,7 @@ export function WithCustomStyle() {
         <Button
           style={{ width: '500px' }}
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -446,7 +446,7 @@ export function WithCustomRenderItem() {
         <Button
           style={{ width: '500px' }}
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -468,7 +468,7 @@ export function FixedValueNoopHandle() {
       >
         <Button
           text={value.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value.label}.</p>
@@ -490,7 +490,7 @@ export function NullValueNoopHandle() {
       >
         <Button
           text={value ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value}.</p>
@@ -512,7 +512,7 @@ export function ResetButton() {
       >
         <Button
           text={value?.label ?? 'Select a status'}
-          rightIcon="double-caret-vertical"
+          endIcon="double-caret-vertical"
         />
       </Select>
       <p>Value outside component is {value?.label}.</p>
@@ -552,7 +552,7 @@ export function InDialog() {
             >
               <Button
                 text={value?.label ?? 'Select a status'}
-                rightIcon="double-caret-vertical"
+                endIcon="double-caret-vertical"
               />
             </Select>
           </div>

@@ -28,20 +28,26 @@ Control.args = {
   active: false,
   disabled: false,
   loading: false,
-  minimal: false,
+  variant: 'solid',
   fill: false,
-  outlined: false,
-  large: false,
-  small: false,
+  size: 'medium',
   alignText: 'center',
   intent: 'none',
   icon: 'plus',
-  rightIcon: 'minus',
+  endIcon: 'minus',
 };
 Control.argTypes = {
+  variant: {
+    control: { type: 'radio' },
+    options: ['solid', 'minimal', 'outlined'],
+  },
+  size: {
+    control: { type: 'radio' },
+    options: ['small', 'medium', 'large'],
+  },
   alignText: {
     control: { type: 'radio' },
-    options: ['left', 'center', 'right'],
+    options: ['start', 'center', 'end'],
   },
   intent: {
     control: { type: 'radio' },

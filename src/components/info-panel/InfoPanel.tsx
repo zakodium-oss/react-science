@@ -211,7 +211,7 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
           <div key={description}>
             <AccordionButton
               open={open}
-              minimal
+              variant="minimal"
               onClick={() =>
                 setIsOpen((pred) =>
                   open
@@ -219,7 +219,7 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
                     : [...pred, description],
                 )
               }
-              alignText="left"
+              alignText="start"
               icon="chevron-right"
             >
               {description}

@@ -30,15 +30,15 @@ const HiddenInput = styled.input`
   }
 `;
 
-const RadioContent = styled.div<{ large?: boolean }>`
+const RadioContent = styled.div<{ size?: RadioProps['size'] }>`
   place-content: center;
-  padding: ${(props) => (props.large ? '0px 15px' : '0px 7px')};
+  padding: ${(props) => (props.size === 'large' ? '0px 15px' : '0px 7px')};
   line-height: 0;
 `;
 
-const Label = styled.label<{ large?: boolean; disabled?: boolean }>`
+const Label = styled.label<{ size?: RadioProps['size']; disabled?: boolean }>`
   display: flex;
-  height: ${(props) => (props.large ? '40px' : '30px')};
+  height: ${(props) => (props.size === 'large' ? '40px' : '30px')};
   opacity: ${(props) => (props.disabled ? 0.25 : 1)};
   border-width: 1px 0 1px 1px;
   border-color: rgba(0, 0, 0, ${(props) => (props.disabled ? 1 : 0.25)});
@@ -52,7 +52,7 @@ const Label = styled.label<{ large?: boolean; disabled?: boolean }>`
 `;
 
 export function RadioButton(props: RadioProps) {
-  const { large, disabled, label, name, value, id, checked, onChange } = props;
+  const { size, disabled, label, name, value, id, checked, onChange } = props;
   const uniqId = useInputId(id, name);
   return (
     <>
@@ -65,8 +65,8 @@ export function RadioButton(props: RadioProps) {
         disabled={disabled}
         onChange={onChange}
       />
-      <Label large={large} disabled={disabled} htmlFor={uniqId}>
-        <RadioContent large={large}>{label}</RadioContent>
+      <Label size={size} disabled={disabled} htmlFor={uniqId}>
+        <RadioContent size={size}>{label}</RadioContent>
       </Label>
     </>
   );

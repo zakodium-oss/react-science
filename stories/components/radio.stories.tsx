@@ -14,6 +14,11 @@ const ExampleGroup = styled.div`
   gap: 20px;
 `;
 
+const sizeOptions = {
+  control: { type: 'radio' },
+  options: ['medium', 'large'],
+};
+
 const ExampleDecorator: Decorator = (Story) => {
   return (
     <ExampleGroup>
@@ -73,9 +78,12 @@ export function RadioButtonGroupControl(
   );
 }
 RadioButtonGroupControl.args = {
-  large: false,
+  size: 'medium',
   disabled: false,
   label: 'Radio button group',
+};
+RadioButtonGroupControl.argTypes = {
+  size: sizeOptions,
 };
 
 export function RadioButtonGroupOneOption() {
@@ -118,6 +126,9 @@ export function RadioButtonGroupWithChildren(
 }
 
 RadioButtonGroupWithChildren.args = {
-  large: false,
+  size: 'medium',
   disabled: false,
+};
+RadioButtonGroupWithChildren.argTypes = {
+  size: sizeOptions,
 };

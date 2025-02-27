@@ -90,7 +90,7 @@ export function Control() {
         >
           <Button
             text={country ?? 'Select a country'}
-            rightIcon="double-caret-vertical"
+            endIcon="double-caret-vertical"
           />
         </Select>
       </FormGroup>

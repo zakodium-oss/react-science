@@ -21,11 +21,7 @@ export function Dropdown() {
 
   return (
     <Popover content={content}>
-      <Button
-        alignText="left"
-        rightIcon="caret-down"
-        text="Default workspace"
-      />
+      <Button alignText="start" endIcon="caret-down" text="Default workspace" />
     </Popover>
   );
 }

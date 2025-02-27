@@ -18,12 +18,12 @@ const Title = styled.span<TitleProps>`
   font-size: ${({ size }) => size};
   flex: 1;
   padding: 5px 0;
-  text-align: left;
+  text-align: start;
 `;
 const Description = styled.p`
   padding-top: 1rem;
   font-size: 0.7rem;
-  text-align: left;
+  text-align: start;
 `;
 
 const ShortcutItem = styled.div`
