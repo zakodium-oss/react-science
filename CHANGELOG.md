@@ -1,5 +1,16 @@
 # Changelog
 
+## [14.0.0](https://github.com/zakodium-oss/react-science/compare/v13.0.2...v14.0.0) (2025-02-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* Blueprint has been updated and includes new deprecation warnings. See https://github.com/palantir/blueprint/wiki/5.x-Changelog#february-26-2025
+
+### Features
+
+* update Blueprint ([#869](https://github.com/zakodium-oss/react-science/issues/869)) ([69bba55](https://github.com/zakodium-oss/react-science/commit/69bba55c1754853091a3d70ca6638e3a92a39157))
+
 ## [13.0.2](https://github.com/zakodium-oss/react-science/compare/v13.0.1...v13.0.2) (2025-02-25)
 
 
