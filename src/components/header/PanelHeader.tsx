@@ -38,7 +38,12 @@ export function PanelHeader(props: PanelHeaderProps) {
       <HeaderLeftContainer>{children}</HeaderLeftContainer>
       <SelectedTotal count={current} total={total} />
       {onClickSettings && (
-        <Button color="black" minimal onClick={onClickSettings} icon="cog" />
+        <Button
+          color="black"
+          variant="minimal"
+          onClick={onClickSettings}
+          icon="cog"
+        />
       )}
     </HeaderContainer>
   );

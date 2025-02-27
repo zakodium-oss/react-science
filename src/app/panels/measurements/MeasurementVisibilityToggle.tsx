@@ -22,13 +22,17 @@ export function MeasurementVisibilityToggle(
   }
 
   return isVisible ? (
-    <Button icon="eye-on" onClick={() => setVisibility(false)} minimal />
+    <Button
+      icon="eye-on"
+      onClick={() => setVisibility(false)}
+      variant="minimal"
+    />
   ) : (
     <Button
       icon="eye-off"
       onClick={() => setVisibility(true)}
       style={{ opacity: 0.6 }}
-      minimal
+      variant="minimal"
     />
   );
 }
@@ -48,13 +52,17 @@ export function MeasurementSelectedVisibilityChange(props: {
   }
 
   return isVisible ? (
-    <Button icon="eye-on" onClick={() => setVisibility(true)} minimal />
+    <Button
+      icon="eye-on"
+      onClick={() => setVisibility(true)}
+      variant="minimal"
+    />
   ) : (
     <Button
       icon="eye-off"
       onClick={() => setVisibility(false)}
       style={{ opacity: 0.6 }}
-      minimal
+      variant="minimal"
     />
   );
 }

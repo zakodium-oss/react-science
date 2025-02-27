@@ -109,7 +109,7 @@ function DropZoneContent(
             action={
               <Button
                 className="dropzone-button"
-                outlined
+                variant="outlined"
                 text={emptyButtonText}
                 icon={emptyButtonIcon}
                 intent="primary"

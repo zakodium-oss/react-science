@@ -33,8 +33,7 @@ export function Control(props: Omit<InputGroupProps, 'value'>) {
 
 Control.args = {
   placeholder: 'Placeholder',
-  small: false,
-  large: false,
+  size: 'medium',
   disabled: false,
   leftIcon: undefined,
   type: 'text',
@@ -46,6 +45,10 @@ Control.argTypes = {
   leftIcon: {
     control: { type: 'inline-radio' },
     options: [undefined, 'person', 'shield', 'add', 'lightning'],
+  },
+  size: {
+    control: { type: 'radio' },
+    options: ['small', 'medium', 'large'],
   },
   type: { control: { type: 'inline-radio' }, options: ['text', 'search'] },
   intent: {

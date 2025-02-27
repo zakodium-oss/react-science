@@ -5,3 +5,7 @@ reject:
   - react-dom
   - '@types/react'
   - '@types/react-dom'
+  # Blueprint is a peerDependency. Updating it is usually breaking change.
+  - '@blueprintjs/core'
+  - '@blueprintjs/icons'
+  - '@blueprintjs/select'

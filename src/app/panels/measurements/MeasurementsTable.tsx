@@ -53,7 +53,7 @@ const MeasurementsTableRoot = styled.table`
 const MeasurementsTableHeaderStyled = styled.tr`
   border-bottom-width: 1px;
   font-weight: 500;
-  text-align: left;
+  text-align: start;
   padding-bottom: 10px;
   padding-top: 10px;
   padding-left: 2rem;
@@ -124,7 +124,7 @@ export function MeasurementsTable(props: MeasurementsTableProps) {
       <MeasurementsHeaderColumn>
         <MeasurementsHeaderGroup>
           <Button
-            minimal
+            variant="minimal"
             icon="trash"
             intent="danger"
             style={{ opacity: hasSelectedMeasurements ? 1 : 0.6 }}
@@ -317,12 +317,12 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
       <MeasurementsIconsContainer>
         <Popover content={content} position="bottom-left">
           <Button
-            minimal
+            variant="minimal"
             icon="more"
             style={{
               transform: 'rotate(90deg)',
             }}
-            small
+            size="small"
           />
         </Popover>
         <MeasurementCheckbox

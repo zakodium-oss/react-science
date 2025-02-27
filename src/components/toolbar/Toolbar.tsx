@@ -126,7 +126,7 @@ export function Toolbar(props: ToolbarProps) {
         // TODO: remove once the workaround is no longer needed
         key={String(vertical)}
         vertical={vertical}
-        minimal
+        variant="minimal"
         style={{
           flexWrap: 'wrap',
           borderRight: vertical ? border : undefined,
@@ -174,7 +174,7 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
 
   return (
     <ToolbarButton
-      alignText={isPopover ? 'left' : undefined}
+      alignText={isPopover ? 'start' : undefined}
       disabled={disabled}
       intent={intent}
       type="button"

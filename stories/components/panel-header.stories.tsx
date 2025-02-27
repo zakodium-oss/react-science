@@ -95,7 +95,7 @@ export function WithAccordion() {
         </Accordion.Item>
         <Accordion.Item title="Second Item">
           <PanelHeader current={2} total={3} onClickSettings={() => void 0}>
-            <Button minimal icon="filter" />
+            <Button variant="minimal" icon="filter" />
           </PanelHeader>
           This is the content of the second item
         </Accordion.Item>
@@ -213,7 +213,7 @@ export function WithAccordionPanelToolbarStackedPanel() {
         </Accordion.Item>
         <Accordion.Item title="Second Item">
           <PanelHeader current={2} total={3} onClickSettings={() => void 0}>
-            <Button minimal icon="filter" />
+            <Button variant="minimal" icon="filter" />
           </PanelHeader>
           This is the content of the second item
         </Accordion.Item>

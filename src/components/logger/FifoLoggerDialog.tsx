@@ -114,14 +114,14 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
         actions={
           <ActionsFooter>
             <Button
-              outlined
+              variant="outlined"
               intent="danger"
               icon="trash"
               text="Clear logs"
               onClick={() => logger.clear()}
             />
             <Button
-              outlined
+              variant="outlined"
               intent="none"
               text="Close"
               onClick={props.onClose}

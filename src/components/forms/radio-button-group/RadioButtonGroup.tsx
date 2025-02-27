@@ -1,4 +1,4 @@
-import type { RadioGroupProps } from '@blueprintjs/core';
+import type { RadioGroupProps, RadioProps } from '@blueprintjs/core';
 import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { Children, cloneElement } from 'react';
@@ -6,21 +6,25 @@ import { Children, cloneElement } from 'react';
 import { RadioButton } from './RadioButton.js';
 
 export interface RadioButtonGroupProps extends RadioGroupProps {
-  large?: boolean;
+  size?: RadioProps['size'];
 }
 
-const RadioButtonContainer = styled.div<{ large?: boolean }>`
+const RadioButtonContainer = styled.div<{ size?: RadioProps['size'] }>`
   display: flex;
 
   & label:first-of-type {
-    border-bottom-left-radius: ${(props) => (props.large ? '6px' : '4px')};
-    border-top-left-radius: ${(props) => (props.large ? '6px' : '4px')};
+    border-bottom-left-radius: ${(props) =>
+      props.size === 'large' ? '6px' : '4px'};
+    border-top-left-radius: ${(props) =>
+      props.size === 'large' ? '6px' : '4px'};
   }
 
   & label:last-of-type {
     border-right-width: 1px;
-    border-bottom-right-radius: ${(props) => (props.large ? '6px' : '4px')};
-    border-top-right-radius: ${(props) => (props.large ? '6px' : '4px')};
+    border-bottom-right-radius: ${(props) =>
+      props.size === 'large' ? '6px' : '4px'};
+    border-top-right-radius: ${(props) =>
+      props.size === 'large' ? '6px' : '4px'};
   }
 `;
 
@@ -29,7 +33,7 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
     disabled: groupDisabled = false,
     options = [],
     name,
-    large,
+    size,
     selectedValue,
     onChange,
     children,
@@ -43,7 +47,7 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
       onChange={onChange}
       {...restProps}
     >
-      <RadioButtonContainer large={large}>
+      <RadioButtonContainer size={size}>
         {options?.map(({ value, label, disabled }, index) => {
           return (
             <RadioButton
@@ -51,7 +55,7 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
               key={index}
               value={value}
               label={label}
-              large={large}
+              size={size}
               name={name}
               onChange={onChange}
               checked={value === selectedValue}
@@ -66,7 +70,7 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
           if (child.type === RadioButton) {
             return cloneElement(child, {
               ...child.props,
-              large,
+              size,
               name,
               onChange,
               checked: child.props.value === selectedValue,

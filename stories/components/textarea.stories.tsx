@@ -32,14 +32,17 @@ export function Control(prop: Omit<TextAreaProps, 'value'>) {
 }
 Control.args = {
   placeholder: 'Control example',
-  small: false,
-  large: false,
+  size: 'medium',
   help: '',
   error: '',
   valid: false,
 };
 Control.argTypes = {
   onChange: { action: 'onChange' },
+  size: {
+    control: { type: 'radio' },
+    options: ['small', 'medium', 'large'],
+  },
   valid: {
     control: { type: 'inline-radio' },
     options: [true, false, 'valid message'],
