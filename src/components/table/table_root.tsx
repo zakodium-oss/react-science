@@ -34,7 +34,7 @@ const CustomHTMLTable = styled(HTMLTable, {
         box-shadow: inset 0 -1px #11141826;
       }
     
-      tbody tr:first-child td {
+      tbody tr:first-of-type td {
         box-shadow: ${
           props.bordered
             ? 'inset 1px 0 0 0 #11141826 !important'
@@ -42,7 +42,7 @@ const CustomHTMLTable = styled(HTMLTable, {
         };
       }
     
-      tbody tr:first-child td:first-child {
+      tbody tr:first-of-type td:first-of-type {
         box-shadow: none !important;
       }
     `;
