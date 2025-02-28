@@ -12,7 +12,7 @@ export function TableRowCell<TData extends RowData>(
   const { cell, className } = props;
 
   return (
-    <td style={{ position: 'relative' }} className={className}>
+    <td className={className}>
       {flexRender(cell.column.columnDef.cell, cell.getContext())}
     </td>
   );

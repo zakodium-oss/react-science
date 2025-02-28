@@ -1,3 +1,8 @@
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import type { ElementDragPayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-scroll/element';
+import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { HTMLTable } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { RowData, TableOptions } from '@tanstack/react-table';
@@ -8,8 +13,13 @@ import {
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
+import { assert } from '../utils/index.js';
+
+import { useListContext } from './reorder/list_context.js';
+import { ListContextProvider } from './reorder/list_context_provider.js';
+import { isItemData } from './reorder/list_item.js';
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
@@ -122,6 +132,8 @@ interface TableBaseProps<TData extends RowData> {
   scrollToRowRef?: RefObject<VirtualScroller | ScrollToOptions | undefined>;
 
   getRowId?: TableOptions<TData>['getRowId'];
+
+  onRowOrderChanged?: (rows: TData[]) => void;
 }
 
 interface RegularTableProps<TData extends RowData>
@@ -165,6 +177,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
 
     virtualizeRows,
     getRowId,
+    onRowOrderChanged,
   } = props;
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
@@ -200,30 +213,37 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   }
 
   return (
-    <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
-      <CustomHTMLTable
-        ref={tableRef}
-        bordered={bordered}
-        compact={compact}
-        interactive={interactive}
-        striped={striped}
-        stickyHeader={stickyHeader}
-        {...tableProps}
-        className={finalClassName}
-      >
-        <TableHeader
-          sticky={stickyHeader}
-          headers={table.getFlatHeaders()}
-          renderHeaderCell={renderHeaderCell}
-        />
-        <TableBody
-          rows={table.getRowModel().rows}
-          renderRowTr={renderRowTr}
-          virtualizer={tanstackVirtualizer}
-          virtualizeRows={virtualizeRows}
-        />
-      </CustomHTMLTable>
-    </Container>
+    <ListContextProvider<TData>
+      items={table.getRowModel().rows}
+      setItems={(items) => {
+        onRowOrderChanged?.(items.map((item) => item.original));
+      }}
+    >
+      <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
+        <CustomHTMLTable
+          ref={tableRef}
+          bordered={bordered}
+          compact={compact}
+          interactive={interactive}
+          striped={striped}
+          stickyHeader={stickyHeader}
+          {...tableProps}
+          className={finalClassName}
+        >
+          <TableHeader
+            sticky={stickyHeader}
+            headers={table.getFlatHeaders()}
+            renderHeaderCell={renderHeaderCell}
+          />
+          <TableBody
+            rows={table.getRowModel().rows}
+            renderRowTr={renderRowTr}
+            virtualizer={tanstackVirtualizer}
+            virtualizeRows={virtualizeRows}
+          />
+        </CustomHTMLTable>
+      </Container>
+    </ListContextProvider>
   );
 }
 
@@ -242,7 +262,69 @@ function Container({
   scrollRef: RefObject<HTMLDivElement>;
 }) {
   if (virtualizeRows) {
-    return <ScrollRefDiv ref={scrollRef}>{children}</ScrollRefDiv>;
+    return (
+      <ContainerWithReordering scrollElementRef={scrollRef}>
+        {children}
+      </ContainerWithReordering>
+    );
   }
   return <>{children}</>;
+}
+
+interface ContainerWithReorderingProps {
+  scrollElementRef: RefObject<HTMLDivElement>;
+  children: ReactNode;
+}
+
+function ContainerWithReordering<TData extends { id: string }>(
+  props: ContainerWithReorderingProps,
+) {
+  const { scrollElementRef, children } = props;
+  const { reorderItem, items } = useListContext();
+  useEffect(() => {
+    const scrollContainer = scrollElementRef.current;
+    assert(scrollContainer, 'Missing scroll container ref');
+
+    function canRespond({ source }: { source: ElementDragPayload }) {
+      return isItemData(source.data);
+    }
+
+    return combine(
+      monitorForElements({
+        // TODO: check this
+        canMonitor: () => true,
+        onDrop({ location, source }) {
+          const target = location.current.dropTargets[0];
+          if (!target) {
+            return;
+          }
+
+          const sourceData = source.data;
+          const targetData = target.data;
+          // TODO: check if isItemData?
+
+          const indexOfTarget = items.findIndex(
+            (item) => item.original.id === targetData.item.id,
+          );
+          if (indexOfTarget === -1) {
+            return;
+          }
+
+          const closestEdgeOfTarget = extractClosestEdge(targetData);
+
+          reorderItem({
+            startIndex: sourceData.index,
+            indexOfTarget,
+            closestEdgeOfTarget,
+          });
+        },
+      }),
+      autoScrollForElements({
+        canScroll: canRespond,
+        element: scrollContainer,
+      }),
+    );
+  }, [items, reorderItem, scrollElementRef]);
+
+  return <ScrollRefDiv ref={scrollElementRef}>{children}</ScrollRefDiv>;
 }

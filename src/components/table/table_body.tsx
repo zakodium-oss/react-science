@@ -104,6 +104,7 @@ function getTrRenderProps<TData extends RowData>(
   return {
     // index is 0-indexed, so odd rows are even indices
     className: index % 2 === 0 ? 'odd' : '',
+    style: { position: 'relative' },
     children: row
       .getVisibleCells()
       .map((cell) => <TableRowCell key={cell.id} cell={cell} />),
