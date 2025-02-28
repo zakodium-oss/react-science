@@ -5,7 +5,12 @@ import type { ComponentType } from 'react';
 import { useRef, useState } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
-import type { Scroller, VirtualScroller } from '../../src/components/index.js';
+import type {
+  GetTdProps,
+  Scroller,
+  TableProps,
+  VirtualScroller,
+} from '../../src/components/index.js';
 import {
   createTableColumnHelper,
   Table,
@@ -15,17 +20,26 @@ import { table } from '../data/data.js';
 
 type TableRecord = (typeof table)[number];
 
-interface ControlProps {
-  bordered?: boolean;
-  compact?: boolean;
-  interactive?: boolean;
-  striped?: boolean;
-  stickyHeader?: boolean;
-  virtualizeRows?: boolean;
-}
+const getTdProps: GetTdProps<TableRecord> = () => ({
+  style: {
+    verticalAlign: 'middle',
+  },
+});
+
+type ControlProps = Pick<
+  TableProps<TableRecord>,
+  | 'bordered'
+  | 'compact'
+  | 'interactive'
+  | 'striped'
+  | 'stickyHeader'
+  | 'virtualizeRows'
+  | 'getTdProps'
+>;
 
 export default {
   title: 'Components / Table',
+  component: Table,
   decorators: [
     (Story: ComponentType) => (
       <div style={{ margin: 12, height: '100%', overflowY: 'auto' }}>
@@ -40,6 +54,7 @@ export default {
     interactive: false,
     striped: false,
     stickyHeader: false,
+    getTdProps,
   },
 };
 
@@ -91,43 +106,21 @@ const columns = [
   columnHelper.accessor('color', { header: 'Color' }),
 ];
 
-export function Control({
-  bordered,
-  compact,
-  interactive,
-  striped,
-  stickyHeader,
-  virtualizeRows,
-}: ControlProps) {
+export function Control(props: ControlProps) {
   return (
     <Table
-      bordered={bordered}
-      compact={compact}
-      interactive={interactive}
-      striped={striped}
-      stickyHeader={stickyHeader}
+      {...props}
       columns={columns}
-      virtualizeRows={virtualizeRows}
       estimatedRowHeight={() => 172}
       data={table}
     />
   );
 }
 
-export function CustomTrRender({
-  bordered,
-  compact,
-  interactive,
-  striped,
-  stickyHeader,
-}: ControlProps) {
+export function CustomTrRender(props: ControlProps) {
   return (
     <Table
-      bordered={bordered}
-      compact={compact}
-      interactive={interactive}
-      striped={striped}
-      stickyHeader={stickyHeader}
+      {...props}
       columns={columns}
       data={table}
       virtualizeRows
@@ -139,21 +132,10 @@ export function CustomTrRender({
   );
 }
 
-export function CustomHeaderCellRender({
-  bordered,
-  compact,
-  interactive,
-  striped,
-  stickyHeader,
-  virtualizeRows,
-}: ControlProps) {
+export function CustomHeaderCellRender(props: ControlProps) {
   return (
     <Table
-      bordered={bordered}
-      compact={compact}
-      interactive={interactive}
-      striped={striped}
-      stickyHeader={stickyHeader}
+      {...props}
       columns={columns}
       data={table}
       tableProps={{
@@ -162,7 +144,6 @@ export function CustomHeaderCellRender({
           width: '100%',
         },
       }}
-      virtualizeRows={virtualizeRows}
       estimatedRowHeight={() => 172}
       renderHeaderCell={(thProps, header) => {
         const backgroundColor = header.column.columnDef.meta?.color;
@@ -307,7 +288,7 @@ export const ScrollRowIntoView = {
 function useScrollButtons(onIndexChanged: (index: number) => void) {
   const [rowIndex, setRowIndex] = useState(0);
 
-  const buttons = (
+  return (
     <Callout title="Scroll to row">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <div>Last: {table[rowIndex].name}</div>
@@ -343,5 +324,4 @@ function useScrollButtons(onIndexChanged: (index: number) => void) {
       </div>
     </Callout>
   );
-  return buttons;
 }

@@ -1,6 +1,6 @@
 import { HTMLTable } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type { RowData, TableOptions } from '@tanstack/react-table';
+import type { Header, RowData, TableOptions } from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getSortedRowModel,
@@ -8,14 +8,19 @@ import {
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
+import { DroppedItemProvider } from './reorder_rows/dropped_item_provider.js';
+import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
+import { useDropMonitor } from './reorder_rows/use_drop_monitor.js';
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
 import type {
+  GetTdProps,
   Scroller,
   TableColumnDef,
+  TableRowPreviewRenderer,
   TableRowTrRenderer,
   VirtualScroller,
 } from './table_utils.js';
@@ -57,6 +62,9 @@ const CustomHTMLTable = styled(HTMLTable, {
 `;
 
 interface TableBaseProps<TData extends RowData> {
+  /**
+   * The original data to display in the table.
+   */
   data: TData[];
   /**
    * Tanstack table definition of columns in the table.
@@ -116,18 +124,47 @@ interface TableBaseProps<TData extends RowData> {
   renderHeaderCell?: HeaderCellRenderer<TData>;
 
   /**
+   * Create custom props for cells in the table.
+   * The callback is called for each cell and contains the row's data.
+   */
+  getTdProps?: GetTdProps<TData>;
+
+  /**
    * A ref which will be set with a callback to scroll to a row in the
    * table, specified by the row's ID.
    */
   scrollToRowRef?: RefObject<VirtualScroller | ScrollToOptions | undefined>;
 
+  /**
+   * An accessor which should a unique identifier for the row.
+   * Required when reordering rows is enabled via `onRowOrderChanged` prop.
+   */
   getRowId?: TableOptions<TData>['getRowId'];
+
+  /**
+   * Called when the user changed the order of the rows.
+   * @param rows The rows in their new order.
+   */
+  onRowOrderChanged?: (rows: TData[]) => void;
+
+  /**
+   * Customize the preview of the row being dragged when reordering.
+   * Ignored when using custom row rendering with `renderRowTr`.
+   * @param row The row being dragged.
+   */
+  renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
 
 interface RegularTableProps<TData extends RowData>
   extends TableBaseProps<TData> {
   virtualizeRows?: false | undefined;
   scrollToRowRef?: RefObject<Scroller | undefined>;
+  /**
+   * Specify a custom scrollable reference, which will be used to automatically
+   * scroll the table when reordering elements.
+   * By default, the table itself is used as the scrollable element.
+   */
+  scrollableElementRef?: RefObject<Element>;
 }
 
 interface VirtualizedTableProps<TData extends RowData>
@@ -162,11 +199,14 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     className,
     renderRowTr,
     renderHeaderCell,
+    getTdProps,
 
     virtualizeRows,
     getRowId,
+    onRowOrderChanged,
+    renderRowPreview,
   } = props;
-
+  const isReorderingEnabled = !!onRowOrderChanged;
   const scrollElementRef = useRef<HTMLDivElement>(null);
   const columnDefs = useTableColumns(columns);
   const table = useReactTable<TData>({
@@ -199,31 +239,56 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     finalClassName = tableProps?.className;
   }
 
+  const tableHeaders = table.getFlatHeaders();
+  useCheckProps(
+    props as TableProps<unknown>,
+    tableHeaders as Array<Header<unknown, unknown>>,
+  );
   return (
-    <Container virtualizeRows={virtualizeRows} scrollRef={scrollElementRef}>
-      <CustomHTMLTable
-        ref={tableRef}
-        bordered={bordered}
-        compact={compact}
-        interactive={interactive}
-        striped={striped}
-        stickyHeader={stickyHeader}
-        {...tableProps}
-        className={finalClassName}
+    <DroppedItemProvider>
+      <ItemOrderProvider
+        items={table.getRowModel().rows}
+        onOrderChanged={(items) => {
+          onRowOrderChanged?.(items.map((item) => item.original));
+        }}
       >
-        <TableHeader
-          sticky={stickyHeader}
-          headers={table.getFlatHeaders()}
-          renderHeaderCell={renderHeaderCell}
-        />
-        <TableBody
-          rows={table.getRowModel().rows}
-          renderRowTr={renderRowTr}
-          virtualizer={tanstackVirtualizer}
+        <Container
           virtualizeRows={virtualizeRows}
-        />
-      </CustomHTMLTable>
-    </Container>
+          scrollRef={
+            virtualizeRows
+              ? scrollElementRef
+              : props.scrollableElementRef || tableRef
+          }
+          isReorderingEnabled={isReorderingEnabled}
+        >
+          <CustomHTMLTable
+            ref={tableRef}
+            bordered={bordered}
+            compact={compact}
+            interactive={interactive}
+            striped={striped}
+            stickyHeader={stickyHeader}
+            {...tableProps}
+            className={finalClassName}
+          >
+            <TableHeader
+              sticky={stickyHeader}
+              headers={tableHeaders}
+              renderHeaderCell={renderHeaderCell}
+            />
+            <TableBody
+              rows={table.getRowModel().rows}
+              renderRowTr={renderRowTr}
+              getTdProps={getTdProps}
+              virtualizer={tanstackVirtualizer}
+              virtualizeRows={virtualizeRows}
+              renderRowPreview={renderRowPreview}
+              isReorderingEnabled={isReorderingEnabled}
+            />
+          </CustomHTMLTable>
+        </Container>
+      </ItemOrderProvider>
+    </DroppedItemProvider>
   );
 }
 
@@ -232,17 +297,77 @@ const ScrollRefDiv = styled.div`
   overflow: auto;
 `;
 
-function Container({
-  virtualizeRows,
-  scrollRef,
-  children,
-}: {
+interface ContainerProps {
   virtualizeRows?: boolean;
   children: ReactNode;
-  scrollRef: RefObject<HTMLDivElement>;
-}) {
+  scrollRef: RefObject<Element>;
+  isReorderingEnabled: boolean;
+}
+
+function Container(props: ContainerProps) {
+  const { virtualizeRows, scrollRef, isReorderingEnabled, children } = props;
   if (virtualizeRows) {
-    return <ScrollRefDiv ref={scrollRef}>{children}</ScrollRefDiv>;
+    return (
+      <ContainerVirtual
+        scrollElementRef={scrollRef}
+        enabled={isReorderingEnabled}
+      >
+        {children}
+      </ContainerVirtual>
+    );
   }
+  return (
+    <ContainerTable scrollElementRef={scrollRef} enabled={isReorderingEnabled}>
+      {children}
+    </ContainerTable>
+  );
+}
+
+interface ContainerWithReorderingProps {
+  scrollElementRef: RefObject<Element>;
+  enabled: boolean;
+  children: ReactNode;
+}
+
+function ContainerVirtual(props: ContainerWithReorderingProps) {
+  const { scrollElementRef, enabled, children } = props;
+  useDropMonitor(scrollElementRef, enabled);
+
+  return (
+    <ScrollRefDiv ref={scrollElementRef as RefObject<HTMLDivElement>}>
+      {children}
+    </ScrollRefDiv>
+  );
+}
+
+interface ContainerTableProps {
+  scrollElementRef: RefObject<Element>;
+  enabled: boolean;
+  children: ReactNode;
+}
+function ContainerTable(props: ContainerTableProps) {
+  const { scrollElementRef, enabled, children } = props;
+  useDropMonitor(scrollElementRef, enabled);
   return <>{children}</>;
+}
+
+function useCheckProps(
+  props: TableProps<unknown>,
+  headers: Array<Header<unknown, unknown>>,
+) {
+  const { onRowOrderChanged, getRowId } = props;
+  useEffect(() => {
+    if (onRowOrderChanged && !getRowId) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'When reordering rows is enabled via the `onRowOrderChanged` prop, the `getRowId` prop must be provided to identify each row unambiguously.',
+      );
+    }
+    if (headers.some((header) => header.column.getCanSort())) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'When reordering rows is enabled via the `onRowOrderChanged` prop, none of the columns should be sortable as data order will be overriden by internal sorting.',
+      );
+    }
+  }, [onRowOrderChanged, getRowId, headers]);
 }

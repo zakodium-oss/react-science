@@ -1,23 +1,37 @@
+import { Tag } from '@blueprintjs/core';
 import type { Row, RowData } from '@tanstack/react-table';
 import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import { notUndefined } from '@tanstack/react-virtual';
 import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
+import { TableDraggableRowTr } from './reorder_rows/index.js';
 import { TableRowCell } from './table_row_cell.js';
-import type { TableRowTrProps, TableRowTrRenderer } from './table_utils.js';
+import type {
+  GetTdProps,
+  TableRowPreviewRenderer,
+  TableRowTrProps,
+  TableRowTrRenderer,
+} from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {
   rows: Array<Row<TData>>;
+  getTdProps?: GetTdProps<TData>;
   renderRowTr: TableRowTrRenderer<TData> | undefined;
   virtualizeRows?: boolean;
   virtualizer: Virtualizer<HTMLDivElement, Element>;
+  isReorderingEnabled: boolean;
+  renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
 
 export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
   const {
     rows,
-    renderRowTr = defaultRenderRowTr as TableRowTrRenderer<TData>,
+    getTdProps,
+    renderRowTr = getDefaultRenderRowTr(
+      props.isReorderingEnabled,
+      props.renderRowPreview as TableRowPreviewRenderer<unknown>,
+    ) as TableRowTrRenderer<TData>,
     virtualizer,
     virtualizeRows,
   } = props;
@@ -43,7 +57,7 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
             key={virtualItem.index}
             row={rows[virtualItem.index]}
             renderRowTr={(row) => {
-              const trProps = getTrRenderProps<TData>(row, {
+              const trProps = getTrRenderProps<TData>(row, getTdProps, {
                 ...virtualItem,
                 virtualIndex: index,
               });
@@ -65,7 +79,9 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
         <TableRow
           key={row.id}
           row={row}
-          renderRowTr={(row) => renderRowTr(getTrRenderProps(row), row)}
+          renderRowTr={(row) =>
+            renderRowTr(getTrRenderProps(row, getTdProps), row)
+          }
         />
       ))}
     </tbody>
@@ -84,10 +100,6 @@ function TableRow<TData>({
   return <Fragment>{renderRowTr(row)}</Fragment>;
 }
 
-const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps) => (
-  <tr {...trProps} />
-);
-
 type RenderRowVirtualItem = VirtualItem & {
   /**
    * The index of the element within the virtual list being currently rendered.
@@ -97,6 +109,7 @@ type RenderRowVirtualItem = VirtualItem & {
 
 function getTrRenderProps<TData extends RowData>(
   row: Row<TData>,
+  getTdProps: GetTdProps<TData> | undefined,
   virtualItem?: RenderRowVirtualItem,
 ): TableRowTrProps {
   const index = virtualItem ? virtualItem.index : row.index;
@@ -104,9 +117,45 @@ function getTrRenderProps<TData extends RowData>(
   return {
     // index is 0-indexed, so odd rows are even indices
     className: index % 2 === 0 ? 'odd' : '',
+    style: { position: 'relative' },
     children: row
       .getVisibleCells()
-      .map((cell) => <TableRowCell key={cell.id} cell={cell} />),
+      .map((cell) => (
+        <TableRowCell<TData>
+          key={cell.id}
+          cell={cell}
+          getTdProps={getTdProps}
+        />
+      )),
     'data-row-id': row.id,
   };
+}
+
+function getDefaultRenderRowTr(
+  isReorderingEnabled: boolean,
+  renderRowPreview: TableRowPreviewRenderer<unknown> | undefined,
+): TableRowTrRenderer<unknown> {
+  if (isReorderingEnabled) {
+    return getDefaultRenderDraggableRowTr(renderRowPreview);
+  } else {
+    return defaultRenderRowTr;
+  }
+}
+
+const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps) => (
+  <tr {...trProps} />
+);
+
+function getDefaultRenderDraggableRowTr(
+  renderRowPreview: TableRowPreviewRenderer<unknown> | undefined,
+): TableRowTrRenderer<unknown> {
+  return (trProps, row) => (
+    <TableDraggableRowTr
+      trProps={trProps}
+      row={row}
+      renderRowPreview={
+        renderRowPreview ?? ((row) => <Tag>Row {row.index + 1}</Tag>)
+      }
+    />
+  );
 }
