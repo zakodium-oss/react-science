@@ -124,8 +124,9 @@ interface TableBaseProps<TData extends RowData> {
   renderHeaderCell?: HeaderCellRenderer<TData>;
 
   /**
-   * Create custom props for cells in the table.
-   * The callback is called for each cell and contains the row's data.
+   * Pass custom props to the `<td>`.
+   * The callback is called for each cell and receives the row's data.
+   * The returned properties are spread onto the `<td>` element.
    */
   getTdProps?: GetTdProps<TData>;
 
@@ -136,21 +137,26 @@ interface TableBaseProps<TData extends RowData> {
   scrollToRowRef?: RefObject<VirtualScroller | ScrollToOptions | undefined>;
 
   /**
-   * An accessor which should a unique identifier for the row.
-   * Required when reordering rows is enabled via `onRowOrderChanged` prop.
+   * An accessor which should return a unique identifier for the row.
    */
   getRowId?: TableOptions<TData>['getRowId'];
 
   /**
    * Called when the user changed the order of the rows.
+   * Specifying this callback enables row reordering by drag and drop.
+   * Make sure to specify `getRowId` and not to use column sorting when you
+   * enable row reordering.
+   * Use the `TableDragRowHandler` component within table cells to provide the
+   * drag and drop interface for reordering rows.
    * @param rows The rows in their new order.
    */
   onRowOrderChanged?: (rows: TData[]) => void;
 
   /**
-   * Customize the preview of the row being dragged when reordering.
+   * Render function to customize the preview of the row being dragged
+   * when reordering.
+   * It receives the row being dragged.
    * Ignored when using custom row rendering with `renderRowTr`.
-   * @param row The row being dragged.
    */
   renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
@@ -160,9 +166,10 @@ interface RegularTableProps<TData extends RowData>
   virtualizeRows?: false | undefined;
   scrollToRowRef?: RefObject<Scroller | undefined>;
   /**
-   * Specify a custom scrollable reference, which will be used to automatically
-   * scroll the table when reordering elements.
-   * By default, the table itself is used as the scrollable element.
+   * Specify a custom scrollable reference, which will be used to
+   * automatically scroll the table when reordering elements.
+   * By default, the table itself is used as the scrollable element, but
+   * you must style it to make it scrollable.
    */
   scrollableElementRef?: RefObject<Element>;
 }

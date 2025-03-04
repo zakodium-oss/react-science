@@ -12,12 +12,14 @@ import {
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { Colors } from '@blueprintjs/core';
 import type { Row, RowData } from '@tanstack/react-table';
-import type { ReactNode } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { assert } from '../../utils/index.js';
-import type { TableRowTrProps } from '../table_utils.js';
+import type {
+  TableRowPreviewRenderer,
+  TableRowTrProps,
+} from '../table_utils.js';
 
 import type { DraggableRowContext } from './draggable_row_context.js';
 import { draggableRowContext } from './draggable_row_context.js';
@@ -27,9 +29,18 @@ import { getItemData, isItemData } from './item_data.js';
 import { useItemOrder } from './item_order_context.js';
 
 export interface TableDraggableRowTrProps<TData extends RowData> {
+  /**
+   * Props to be spread on the `tr` element.
+   */
   trProps: TableRowTrProps;
+  /**
+   * Row data.
+   */
   row: Row<TData>;
-  renderRowPreview: (row: Row<TData>) => ReactNode;
+  /**
+   * Preview of the row being dragged.
+   */
+  renderRowPreview: TableRowPreviewRenderer<TData>;
 }
 
 export function TableDraggableRowTr<TData extends RowData>(

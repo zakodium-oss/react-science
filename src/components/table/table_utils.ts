@@ -32,6 +32,9 @@ export type TableRowTrRenderer<TData extends RowData> = (
 ) => ReactNode;
 
 export type TableRowPreviewRenderer<TData extends RowData> = (
+  /**
+   * The row being dragged, for which to render a preview.
+   */
   row: Row<TData>,
 ) => ReactNode;
 
