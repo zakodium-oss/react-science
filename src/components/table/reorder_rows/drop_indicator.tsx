@@ -20,9 +20,7 @@ export const TableDropIndicator = styled.div<TableDropIndicatorProps>`
   z-index: 1;
   background-color: ${Colors.BLUE3};
   height: 2px;
-  left: 0;
-  right: 0;
+  inset: ${(props) =>
+    `${props.edge === 'top' ? '-1px' : 'initial'} 0 ${props.edge === 'bottom' ? '-1px' : 'initial'} 0`};
   pointer-events: none;
-  bottom: ${(props) => (props.edge === 'bottom' ? '-1px' : 'inherit')};
-  top: ${(props) => (props.edge === 'top' ? '-1px' : 'inherit')};
 `;
