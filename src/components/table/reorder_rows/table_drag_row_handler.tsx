@@ -17,7 +17,6 @@ export function TableDragRowHandler() {
       {state?.type === 'is-over' && state.closestEdge && (
         <TableDropIndicator edge={state.closestEdge} />
       )}
-      <TableDropIndicator edge="bottom" />
     </>
   );
 }
