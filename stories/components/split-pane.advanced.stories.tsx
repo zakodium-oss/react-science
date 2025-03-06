@@ -139,6 +139,17 @@ export function WithMinimalSizeAndEvilChild() {
   );
 }
 
+export function WithInitialSizeZero() {
+  return (
+    <div style={{ width: 600, height: 400 }}>
+      <SplitPane direction="vertical" defaultSize="0px" controlledSide="end">
+        <SplitPanelChildContent color="lightblue">A</SplitPanelChildContent>
+        <SplitPanelChildContent color="lightpink">B</SplitPanelChildContent>
+      </SplitPane>
+    </div>
+  );
+}
+
 export function ControlledState() {
   const [size, setSize] = useState<SplitPaneSize>('50%');
   const [isOpen, setIsOpen] = useState(true);
