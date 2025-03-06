@@ -2,19 +2,20 @@ import type { CSSProperties, ReactNode } from 'react';
 
 export function SplitPanelChildContent(props: {
   color: CSSProperties['backgroundColor'];
-  children: ReactNode;
+  children?: ReactNode;
 }) {
+  const { color, children = null } = props;
   return (
     <div
       style={{
-        backgroundColor: props.color,
+        backgroundColor: color,
         width: '100%',
         height: '100%',
         display: 'grid',
         placeContent: 'center',
       }}
     >
-      {props.children}
+      {children}
     </div>
   );
 }
