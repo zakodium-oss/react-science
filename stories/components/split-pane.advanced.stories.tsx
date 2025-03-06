@@ -1,4 +1,4 @@
-import { Tab, Tabs } from '@blueprintjs/core';
+import { Button, Tab, Tabs } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo, useState } from 'react';
 
@@ -21,7 +21,6 @@ export function Inception() {
       <SplitPane direction="horizontal">
         <SplitPane direction="vertical">
           <p>A</p>
-
           <AccordionProvider>
             <Accordion>
               <Accordion.Item title="A">
@@ -135,6 +134,46 @@ export function WithMinimalSizeAndEvilChild() {
           I am an evil child. My size will stay at 300px 😈
         </div>
       </SplitPane>
+    </div>
+  );
+}
+
+export function WithConditionalChild() {
+  const [hasChild1, sethasChild1] = useState(true);
+  const [hasChild2, sethasChild2] = useState(true);
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'start',
+        flexDirection: 'column',
+        gap: 4,
+      }}
+    >
+      <Button onClick={() => sethasChild1((val) => !val)}>
+        {hasChild1
+          ? 'Set first child to be null'
+          : 'Set first child to be contentful'}
+      </Button>
+      <Button onClick={() => sethasChild2((val) => !val)}>
+        {hasChild2
+          ? 'Set second child to be null'
+          : 'Set second child to be contentful'}
+      </Button>
+      <div style={{ width: 600, height: 400 }}>
+        <SplitPane direction="vertical" controlledSide="start">
+          {hasChild1 ? (
+            <SplitPanelChildContent color="lightpink">
+              First child
+            </SplitPanelChildContent>
+          ) : null}
+          {hasChild2 ? (
+            <SplitPanelChildContent color="lightblue">
+              Second child
+            </SplitPanelChildContent>
+          ) : null}
+        </SplitPane>
+      </div>
     </div>
   );
 }
