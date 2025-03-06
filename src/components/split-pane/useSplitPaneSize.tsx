@@ -1,18 +1,19 @@
 import type { RefObject } from 'react';
 
+import type { SplitPaneDirection, SplitPaneSide } from './SplitPane.js';
+import { serializeSize } from './split_pane_helpers.js';
 import type {
-  SplitPaneDirection,
-  SplitPaneSide,
+  ParsedSplitPaneSize,
   SplitPaneSize,
   SplitPaneType,
-} from './SplitPane.js';
+} from './split_pane_helpers.js';
 
 interface UseSplitPaneSizeOptions {
   controlledSide: SplitPaneSide;
   direction: SplitPaneDirection;
   splitterRef: RefObject<HTMLDivElement>;
   sizeType: SplitPaneType;
-  onSizeChange: (newSize: [number, SplitPaneType]) => void;
+  onSizeChange: (newSize: ParsedSplitPaneSize) => void;
   onResize?: (newSize: SplitPaneSize) => void;
 }
 
@@ -27,7 +28,7 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
   } = options;
 
   function downCallback() {
-    let lastSize: [number, SplitPaneType] | null = null;
+    let lastSize: ParsedSplitPaneSize | null = null;
     function moveCallback(event: PointerEvent) {
       if (!splitterRef.current) return;
       const { clientX, clientY } = event;
@@ -53,18 +54,18 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
 
       if (sizeType === 'px') {
         const newSize = getValueFromSplitter(value - centralizingValue, {
-          min: 50,
-          max: parentDimension - 50,
+          min: 0,
+          max: parentDimension,
         });
-        lastSize = [newSize, sizeType];
+        lastSize = { value: newSize, type: sizeType };
         onSizeChange(lastSize);
       } else if (sizeType === '%') {
         const valueDiff = (value / parentDimension) * 100;
         const newSize = getValueFromSplitter(valueDiff, {
-          min: 5,
-          max: 95,
+          min: 0,
+          max: 100,
         });
-        lastSize = [newSize, sizeType];
+        lastSize = { value: newSize, type: sizeType };
         onSizeChange(lastSize);
       }
     }
@@ -73,7 +74,7 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
       window.removeEventListener('pointermove', moveCallback);
       window.removeEventListener('pointerup', upCallback);
       if (lastSize && onResize) {
-        onResize(`${lastSize[0]}${lastSize[1]}`);
+        onResize(serializeSize(lastSize));
       }
     }
 

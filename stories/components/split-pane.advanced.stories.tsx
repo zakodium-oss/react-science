@@ -6,6 +6,7 @@ import type { SplitPaneSize } from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
+  parseSize,
   SplitPane,
 } from '../../src/components/index.js';
 
@@ -175,6 +176,70 @@ export function WithConditionalChild() {
         </SplitPane>
       </div>
     </div>
+  );
+}
+
+export function WithMinMaxAbsoluteValues() {
+  const [size, setSize] = useState<SplitPaneSize>('200px');
+  return (
+    <>
+      <span>Second child is constrained to [50px, 300px]</span>
+      <div style={{ width: 600, height: 400 }}>
+        <SplitPane
+          direction="vertical"
+          size={size}
+          onSizeChange={(newSize) => {
+            const parsed = parseSize(newSize);
+            if (parsed.type === 'px') {
+              const size = Math.max(50, Math.min(300, parsed.value));
+              setSize(`${size}px`);
+            } else {
+              setSize(newSize);
+            }
+          }}
+          controlledSide="end"
+        >
+          <SplitPanelChildContent color="lightblue">
+            First child
+          </SplitPanelChildContent>
+          <SplitPanelChildContent color="lightpink">
+            Second child
+          </SplitPanelChildContent>
+        </SplitPane>
+      </div>
+    </>
+  );
+}
+
+export function WithMinMaxRelativeValues() {
+  const [size, setSize] = useState<SplitPaneSize>('50%');
+  return (
+    <>
+      <span>Second child is constrained to [10%, 80%]</span>
+      <div style={{ width: 600, height: 400 }}>
+        <SplitPane
+          direction="vertical"
+          size={size}
+          onSizeChange={(newSize) => {
+            const parsed = parseSize(newSize);
+            if (parsed.type === '%') {
+              const size = Math.max(10, Math.min(80, parsed.value));
+              setSize(`${size}%`);
+            } else {
+              setSize(newSize);
+            }
+          }}
+          controlledSide="end"
+        >
+          <SplitPanelChildContent color="lightblue">
+            First child
+          </SplitPanelChildContent>
+          <SplitPanelChildContent color="lightpink">
+            Second child
+          </SplitPanelChildContent>
+        </SplitPane>
+      </div>
+    </>
   );
 }
 
