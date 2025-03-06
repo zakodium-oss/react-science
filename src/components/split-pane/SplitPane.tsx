@@ -169,18 +169,8 @@ export function SplitPane(props: SplitPaneProps) {
   }
 
   return (
-    <div
-      ref={rootSize.ref}
-      style={{
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-        [direction === 'horizontal' ? 'minWidth' : 'minHeight']: 0,
-        flexDirection: direction === 'horizontal' ? 'row' : 'column',
-      }}
-    >
+    <SplitPaneContainer direction={direction} ref={rootSize.ref}>
       <SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>
-
       <Splitter
         onDoubleClick={handleToggle}
         onPointerDown={isOpen ? onPointerDown : undefined}
@@ -190,7 +180,7 @@ export function SplitPane(props: SplitPaneProps) {
       />
 
       <SplitSide style={getSplitSideStyle('end')}>{children[1]}</SplitSide>
-    </div>
+    </SplitPaneContainer>
   );
 }
 
@@ -320,6 +310,16 @@ const Split = styled.div<{
       `,
       )
       .exhaustive()}
+`;
+
+const SplitPaneContainer = styled.div<{ direction: SplitPaneDirection }>`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  ${(props) =>
+    props.direction === 'horizontal' ? 'min-width: 0;' : 'min-height: 0;'}
+  flex-direction: ${(props) =>
+    props.direction === 'horizontal' ? 'row' : 'column'};
 `;
 
 const SplitContent = styled.div`
