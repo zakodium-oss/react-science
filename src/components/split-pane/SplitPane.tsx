@@ -173,7 +173,9 @@ export function SplitPane(props: SplitPaneProps) {
 
   return (
     <SplitPaneContainer direction={direction} ref={rootSize.ref}>
-      {children[0] !== null && (<SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>)}
+      {children[0] !== null && (
+        <SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>
+      )}
       {children[0] !== null && children[1] !== null && (
         <Splitter
           onDoubleClick={handleToggle}
