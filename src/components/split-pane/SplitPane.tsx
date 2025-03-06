@@ -241,32 +241,31 @@ function getItemStyle(
   direction: SplitPaneDirection,
   size: number,
   type: SplitPaneType,
-) {
+): CSSProperties {
   const isHorizontal = direction === 'horizontal';
+  const base: CSSProperties = { display: 'flex', overflow: 'hidden' };
   if (!isOpen) {
-    return isControlledSide
-      ? { display: 'none' }
-      : { flex: '1 1 0%', display: 'flex' };
+    return isControlledSide ? { display: 'none' } : { flex: '1 1 0%', ...base };
   } else if (type === '%') {
     return isControlledSide
       ? {
+          ...base,
           flex: '100 0 0%',
-          display: 'flex',
         }
       : {
+          ...base,
           flex: `${percentToFlex(size)} 0 0%`,
-          display: 'flex',
           [isHorizontal ? 'minWidth' : 'minHeight']: 0,
         };
   } else {
     return isControlledSide
       ? {
+          ...base,
           [isHorizontal ? 'width' : 'height']: size,
-          display: 'flex',
         }
       : {
+          ...base,
           flex: '1 1 0%',
-          display: 'flex',
           [isHorizontal ? 'minWidth' : 'minHeight']: 0,
         };
   }
@@ -311,6 +310,7 @@ const SplitPaneContainer = styled.div<{ direction: SplitPaneDirection }>`
   display: flex;
   height: 100%;
   width: 100%;
+  overflow: hidden;
   ${(props) =>
     props.direction === 'horizontal' ? 'min-width: 0;' : 'min-height: 0;'}
   flex-direction: ${(props) =>
