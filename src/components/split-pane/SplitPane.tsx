@@ -64,8 +64,8 @@ export interface SplitPaneProps {
    * If specified, closes / opens the pane automatically once the available space
    * for the SplitPane along the axis defined by the `direction` prop becomes
    * smaller / larger (respectively) than this value. The value is in pixels.
-   * After the user manually opens or closes the splitter, the pane will
-   * no longer open or close automatically.
+   * After the user interacts with the splitter, the pane will no longer open
+   * or close automatically.
    */
   closeThreshold?: number;
 

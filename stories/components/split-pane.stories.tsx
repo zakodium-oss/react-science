@@ -80,7 +80,11 @@ export function WithCloseThreshold(props: SplitPaneProps) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div>
-        Resize the window to see how the minimum size affects the SplitPane.
+        Resize the window until the close threshold is reached which will close
+        the split pane.
+        <br />
+        Once you have interacted with the splitter (dragged or double clicked
+        it), the close threshold is ignored.
       </div>
       <div
         style={{
