@@ -11,12 +11,12 @@ import { useEffect, useReducer, useRef } from 'react';
 import { match } from 'ts-pattern';
 import useResizeObserver from 'use-resize-observer';
 
+import type { SplitPaneSize, SplitPaneType } from './split_pane_helpers.js';
+import { parseSize, serializeSize } from './split_pane_helpers.js';
 import { useSplitPaneSize } from './useSplitPaneSize.js';
 
 export type SplitPaneDirection = 'vertical' | 'horizontal';
 export type SplitPaneSide = 'start' | 'end';
-export type SplitPaneSize = `${number}%` | `${number}px`;
-export type SplitPaneType = '%' | 'px';
 
 export interface SplitPaneProps {
   /**
@@ -119,7 +119,7 @@ export function SplitPane(props: SplitPaneProps) {
     onChange: onSizeChange,
   });
 
-  const [splitSize, sizeType] = parseSize(size ?? defaultSize);
+  const { type: sizeType, value: splitSize } = parseSize(size ?? defaultSize);
 
   // Whether the user has already interacted with the pane.
   const [hasTouched, touch] = useReducer(() => true, false);
@@ -227,20 +227,6 @@ function SplitSide(props: SplitSideProps) {
   const { style, children } = props;
 
   return <div style={style}>{children}</div>;
-}
-
-type ParsedSplitPaneSize = [number, SplitPaneType];
-
-function parseSize(size: string): ParsedSplitPaneSize {
-  const value = Number.parseFloat(size);
-  // remove numbers and dots from the string
-  const type = size.replaceAll(/[\d .]/g, '') as SplitPaneType;
-
-  return [value, type];
-}
-
-function serializeSize(size: [number, SplitPaneType]): SplitPaneSize {
-  return `${size[0]}${size[1]}`;
 }
 
 const flexBase = 100;
