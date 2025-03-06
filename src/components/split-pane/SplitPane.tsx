@@ -86,6 +86,9 @@ export interface SplitPaneProps {
 
   /**
    * The two React elements to show on both sides of the pane.
+   * If one of the elements is `null`, the splitter will disappear and the
+   * other element will take the full space.
+   * If both elements are `null`, only a container will be rendered.
    */
   children: [ReactNode, ReactNode];
 }
@@ -179,17 +182,22 @@ export function SplitPane(props: SplitPaneProps) {
         flexDirection: direction === 'horizontal' ? 'row' : 'column',
       }}
     >
-      <SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>
+      {children[0] !== null && (
+        <SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>
+      )}
+      {children[0] !== null && children[1] !== null && (
+        <Splitter
+          onDoubleClick={handleToggle}
+          onPointerDown={isOpen ? onPointerDown : undefined}
+          isOpen={isOpen ?? defaultOpen}
+          direction={direction}
+          splitterRef={splitterRef}
+        />
+      )}
 
-      <Splitter
-        onDoubleClick={handleToggle}
-        onPointerDown={isOpen ? onPointerDown : undefined}
-        isOpen={isOpen ?? defaultOpen}
-        direction={direction}
-        splitterRef={splitterRef}
-      />
-
-      <SplitSide style={getSplitSideStyle('end')}>{children[1]}</SplitSide>
+      {children[1] !== null && (
+        <SplitSide style={getSplitSideStyle('end')}>{children[1]}</SplitSide>
+      )}
     </div>
   );
 }
