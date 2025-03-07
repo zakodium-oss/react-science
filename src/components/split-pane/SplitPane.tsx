@@ -125,7 +125,7 @@ export function SplitPane(props: SplitPaneProps) {
   const [hasTouched, touch] = useReducer(() => true, false);
 
   const splitterRef = useRef<HTMLDivElement>(null);
-  const { onPointerDown } = useSplitPaneSize({
+  const { onPointerDown, isResizing } = useSplitPaneSize({
     controlledSide,
     direction,
     splitterRef,
@@ -181,6 +181,7 @@ export function SplitPane(props: SplitPaneProps) {
           onDoubleClick={handleToggle}
           onPointerDown={isOpen ? onPointerDown : undefined}
           isOpen={isOpen ?? defaultOpen}
+          isResizing={isResizing}
           direction={direction}
           splitterRef={splitterRef}
         />
@@ -198,12 +199,19 @@ interface SplitterProps {
   onPointerDown?: (event: ReactPointerEvent) => void;
   direction: SplitPaneDirection;
   isOpen: boolean;
+  isResizing: boolean;
   splitterRef: RefObject<HTMLDivElement>;
 }
 
 function Splitter(props: SplitterProps) {
-  const { onDoubleClick, onPointerDown, direction, isOpen, splitterRef } =
-    props;
+  const {
+    onDoubleClick,
+    onPointerDown,
+    direction,
+    isOpen,
+    isResizing,
+    splitterRef,
+  } = props;
 
   return (
     <Split
@@ -211,6 +219,7 @@ function Splitter(props: SplitterProps) {
       onPointerDown={onPointerDown}
       enabled={isOpen}
       direction={direction}
+      isResizing={isResizing}
       ref={splitterRef}
     >
       <SplitContent>{direction === 'horizontal' ? '⋮' : '⋯'}</SplitContent>
@@ -274,8 +283,10 @@ function getItemStyle(
 const Split = styled.div<{
   direction: SplitPaneDirection;
   enabled: boolean;
+  isResizing: boolean;
 }>`
-  background-color: ${Colors.LIGHT_GRAY5};
+  background-color: ${(props) =>
+    props.isResizing ? Colors.LIGHT_GRAY3 : Colors.LIGHT_GRAY5};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -284,7 +295,8 @@ const Split = styled.div<{
   touch-action: none;
 
   :hover {
-    background-color: ${Colors.LIGHT_GRAY3};
+    background-color: ${(props) =>
+      props.isResizing ? Colors.LIGHT_GRAY3 : Colors.LIGHT_GRAY4};
   }
 
   ${(props) =>
