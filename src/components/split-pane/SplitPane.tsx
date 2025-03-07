@@ -255,7 +255,7 @@ function getItemStyle(
   const base: CSSProperties = { display: 'flex', overflow: 'hidden' };
   if (!isOpen) {
     return isControlledSide ? { display: 'none' } : { flex: '1 1 0%', ...base };
-  } else if (type === '%') {
+  } else if (type === '%' && size !== 0) {
     return isControlledSide
       ? {
           ...base,
