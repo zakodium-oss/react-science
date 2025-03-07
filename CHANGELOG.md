@@ -1,5 +1,25 @@
 # Changelog
 
+## [15.0.0](https://github.com/zakodium-oss/react-science/compare/v14.0.0...v15.0.0) (2025-03-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Table:** td cells no longer have `position: relative;` by default but this can be overridden using `getTdProps`.
+
+### Features
+
+* **SplitPane:** provide visual feedback while resizing ([7748892](https://github.com/zakodium-oss/react-science/commit/774889253a083efe6e3bef87a481966674ab8a52))
+* **SplitPane:** remove hardcoded minimal and maximal sizes ([5fdbc75](https://github.com/zakodium-oss/react-science/commit/5fdbc75dc56d0b8e71dc793c083658bbd0bd9c91))
+* **SplitPane:** remove splitter when one of the children is null ([#881](https://github.com/zakodium-oss/react-science/issues/881)) ([d7790fd](https://github.com/zakodium-oss/react-science/commit/d7790fdc7eddc0b950807bb17a37f7bc731c55eb))
+* **Table:** allow to pass custom td attributes and reorder rows ([#872](https://github.com/zakodium-oss/react-science/issues/872)) ([3caa82c](https://github.com/zakodium-oss/react-science/commit/3caa82c73f353944119cd0028f53ea4f14bee44c))
+
+
+### Bug Fixes
+
+* **SplitPane:** correct 0% size ([4069f49](https://github.com/zakodium-oss/react-science/commit/4069f49ff1d674cc559d8e4ebdd518b69c57df38))
+* **SplitPane:** hide content overflowing from split pane container ([5ac2798](https://github.com/zakodium-oss/react-science/commit/5ac2798af3ff8f2cceab83e8359f1996edc78079))
+
 ## [14.0.0](https://github.com/zakodium-oss/react-science/compare/v13.0.2...v14.0.0) (2025-02-27)
 
 
