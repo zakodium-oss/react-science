@@ -10,7 +10,7 @@ import {
   SplitPane,
 } from '../../src/components/index.js';
 
-import { SplitPanelChildContent } from './split-pane.utils.js';
+import { SplitPanelChildContent } from './split_pane.utils.js';
 
 export default {
   title: 'Components / SplitPane / Advanced',
