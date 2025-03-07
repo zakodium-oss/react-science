@@ -13,7 +13,7 @@ import useResizeObserver from 'use-resize-observer';
 
 import type { SplitPaneSize, SplitPaneType } from './split_pane_helpers.js';
 import { parseSize, serializeSize } from './split_pane_helpers.js';
-import { useSplitPaneSize } from './useSplitPaneSize.js';
+import { useSplitPaneSize } from './use_split_pane_size.js';
 
 export type SplitPaneDirection = 'vertical' | 'horizontal';
 export type SplitPaneSide = 'start' | 'end';

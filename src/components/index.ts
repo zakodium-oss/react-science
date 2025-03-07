@@ -10,7 +10,7 @@ export * from './hooks/index.js';
 export * from './info-panel/index.js';
 export * from './logger/index.js';
 export * from './root-layout/index.js';
-export * from './split-pane/index.js';
+export * from './split_pane/index.js';
 export * from './table/index.js';
 export * from './toolbar/index.js';
 export * from './activity_bar/index.js';

@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { SplitPaneDirection, SplitPaneSide } from './SplitPane.js';
+import type { SplitPaneDirection, SplitPaneSide } from './split_pane.js';
 import type {
   ParsedSplitPaneSize,
   SplitPaneSize,
