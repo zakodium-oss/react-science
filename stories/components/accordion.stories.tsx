@@ -347,6 +347,26 @@ export function UnmountSomeChildren() {
   );
 }
 
+export function WithToolbar() {
+  return (
+    <Accordion>
+      <Accordion.Item
+        title="First"
+        toolbar={<Button icon="minus" variant="minimal" />}
+      >
+        First content
+      </Accordion.Item>
+      <Accordion.Item
+        title="Second"
+        defaultOpened
+        toolbar={<Button icon="minus" variant="minimal" />}
+      >
+        Second content
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
 function Count() {
   const [count, setCount] = useState(0);
 

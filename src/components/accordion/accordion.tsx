@@ -42,7 +42,7 @@ const AccordionItemHeader = styled.div`
   width: 100%;
   user-select: none;
   justify-content: space-between;
-  padding: 0 12px;
+  padding-left: 12px;
 `;
 
 const AccordionContainer = styled.div`
