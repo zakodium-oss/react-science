@@ -1,8 +1,12 @@
 import { Button } from '@blueprintjs/core';
+import { action } from '@storybook/addon-actions';
 import type { Meta } from '@storybook/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import type { ToolbarItemProps } from '../../src/components/index.js';
+import type {
+  AccordionItemProps,
+  ToolbarItemProps,
+} from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
@@ -14,7 +18,11 @@ import { AccordionDecorator } from '../utils.js';
 
 export default {
   title: 'Components / Accordion',
+  component: Accordion.Item,
   decorators: [AccordionDecorator],
+  args: {
+    onOpenChange: action('onOpenChange'),
+  },
 };
 const items: Array<
   Pick<ToolbarItemProps, 'tooltip' | 'icon' | 'disabled'> & {
@@ -41,17 +49,18 @@ const items: Array<
   },
 ];
 
-export function Fixed() {
+export function Control(props: AccordionItemProps) {
   return (
     <div
       style={{
-        height: 300,
+        height: '100%',
       }}
     >
       <Accordion>
         <Accordion.Item
+          {...props}
           title="First Item"
-          defaultOpened
+          defaultOpen
           toolbar={
             <Toolbar>
               {items.map((item) => (
@@ -70,7 +79,7 @@ export function Fixed() {
         >
           This is the first content
         </Accordion.Item>
-        <Accordion.Item title="Second Item">
+        <Accordion.Item {...props} title="Second Item">
           This is the content of the second item Lorem ipsum, dolor sit amet
           consectetur adipisicing elit. Error provident illum quidem quod dicta
           sed aperiam ex iusto nesciunt culpa esse, quibusdam quam ea
@@ -146,7 +155,7 @@ export function Fixed() {
           dolor sit amet consectetur adipisicing elit. Ad ipsam enim quis iusto
           sit veniam esse id accusantium quos minima facilis commodi quibus
         </Accordion.Item>
-        <Accordion.Item title="With Toolbar">
+        <Accordion.Item {...props} title="With Toolbar">
           <Toolbar>
             <Toolbar.Item tooltip="Test A" icon="lab-test" />
             <Toolbar.Item tooltip="Test B" icon="airplane" />
@@ -161,12 +170,12 @@ export function WithDynamicItems() {
   const [state, setState] = useState([
     {
       title: 'first',
-      defaultOpened: true,
+      defaultOpen: true,
       content: 'This is the content of the first item',
     },
     {
       title: 'Second',
-      defaultOpened: false,
+      defaultOpen: false,
       content: 'This is the content of the second item',
     },
   ]);
@@ -177,7 +186,7 @@ export function WithDynamicItems() {
       {
         title: `${state.length + 1}`,
         content: 'Element added',
-        defaultOpened: false,
+        defaultOpen: false,
       },
     ]);
   }
@@ -234,16 +243,10 @@ export function WithDynamicItems() {
   );
 }
 
-export function WithToggle() {
-  const utils = useToggleAccordion();
+type WithToggleTitle = 'Spectra' | 'Integral';
 
-  function onCallback(title: string, action: 'open' | 'close') {
-    if (action === 'open') {
-      utils.open(title);
-    } else {
-      utils.close(title);
-    }
-  }
+export function WithToggle() {
+  const utils = useToggleAccordion<WithToggleTitle>();
 
   return (
     <>
@@ -266,29 +269,27 @@ export function WithToggle() {
           }}
         >
           <SplitPane defaultSize="35%">
-            <div style={{ padding: 5, display: 'flex', gap: 5, height: 40 }}>
-              <button
-                type="button"
-                onClick={() => onCallback('Spectra', 'open')}
-                style={{
-                  backgroundColor: 'rgba(252, 165, 165)',
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                }}
-              >
+            <div
+              style={{
+                padding: 5,
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gridTemplateRows: '30px 30px',
+                gap: 5,
+              }}
+            >
+              <Button onClick={() => utils.open('Spectra')}>
                 Open Spectra
-              </button>
-              <button
-                type="button"
-                onClick={() => onCallback('Spectra', 'close')}
-                style={{
-                  backgroundColor: 'rgba(110, 231, 183)',
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                }}
-              >
+              </Button>
+              <Button onClick={() => utils.close('Spectra')}>
                 Close Spectra
-              </button>
+              </Button>
+              <Button onClick={() => utils.open('Integral')}>
+                Open Integral
+              </Button>
+              <Button onClick={() => utils.close('Integral')}>
+                Close Integral
+              </Button>
             </div>
             <div
               style={{
@@ -298,7 +299,7 @@ export function WithToggle() {
               }}
             >
               <Accordion>
-                <Accordion.Item title="Spectra" defaultOpened>
+                <Accordion.Item title="Spectra" defaultOpen>
                   <p style={{ padding: 5 }}>Spectra lorem</p>
                 </Accordion.Item>
                 <Accordion.Item title="Integral">
@@ -313,6 +314,8 @@ export function WithToggle() {
   );
 }
 
+WithToggle.storyName = 'With the useToggleAccordion hook';
+
 export const UnmountChildren = {
   decorators: [],
   args: {
@@ -325,7 +328,7 @@ export const UnmountChildren = {
           <Accordion.Item title="First">
             <Count />
           </Accordion.Item>
-          <Accordion.Item title="Second" defaultOpened>
+          <Accordion.Item title="Second" defaultOpen>
             <Count />
           </Accordion.Item>
         </Accordion>
@@ -337,10 +340,10 @@ export const UnmountChildren = {
 export function UnmountSomeChildren() {
   return (
     <Accordion>
-      <Accordion.Item title="Always render children" defaultOpened>
+      <Accordion.Item title="Always render children" defaultOpen>
         <Count />
       </Accordion.Item>
-      <Accordion.Item title="Unmount children" defaultOpened unmountChildren>
+      <Accordion.Item title="Unmount children" defaultOpen unmountChildren>
         <Count />
       </Accordion.Item>
     </Accordion>
@@ -358,12 +361,67 @@ export function WithToolbar() {
       </Accordion.Item>
       <Accordion.Item
         title="Second"
-        defaultOpened
+        defaultOpen
         toolbar={<Button icon="minus" variant="minimal" />}
       >
         Second content
       </Accordion.Item>
     </Accordion>
+  );
+}
+
+type ControlledTitle = 'First' | 'Second';
+
+export function ControlledState() {
+  const [openItems, setOpenItems] = useState<ControlledTitle[]>(['First']);
+
+  const addItem = useCallback(
+    (title: ControlledTitle) => {
+      setOpenItems((openItems) => Array.from(new Set([...openItems, title])));
+    },
+    [setOpenItems],
+  );
+
+  const removeItem = useCallback(
+    (title: ControlledTitle) => {
+      setOpenItems((openItems) => openItems.filter((item) => item !== title));
+    },
+    [setOpenItems],
+  );
+
+  return (
+    <Accordion>
+      <Accordion.Item<ControlledTitle>
+        title="First"
+        open={openItems.includes('First')}
+        onOpenChange={(isOpen) =>
+          isOpen ? addItem('First') : removeItem('First')
+        }
+      >
+        First content
+      </Accordion.Item>
+      <Accordion.Item<ControlledTitle>
+        title="Second"
+        open={openItems.includes('Second')}
+        onOpenChange={(isOpen) =>
+          isOpen ? addItem('Second') : removeItem('Second')
+        }
+      >
+        Second content
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
+export function BadWithIdenticalTitle() {
+  return (
+    <>
+      <div>Open the console to view the error message</div>
+      <Accordion>
+        <Accordion.Item title="Accordion item">Item 1</Accordion.Item>
+        <Accordion.Item title="Accordion item">Item 2</Accordion.Item>
+      </Accordion>
+    </>
   );
 }
 

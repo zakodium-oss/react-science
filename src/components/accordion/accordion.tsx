@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type {
   MouseEvent as ReactMouseEvent,
   ReactElement,
@@ -8,18 +9,37 @@ import { useCallback } from 'react';
 
 import { useAccordionContext } from './accordion_context.js';
 
-export interface AccordionProps {
+export interface AccordionProps<T extends string = string> {
   children?:
-    | Array<ReactElement<AccordionItemProps>>
-    | ReactElement<AccordionItemProps>
+    | Array<ReactElement<AccordionItemProps<T>>>
+    | ReactElement<AccordionItemProps<T>>
     | boolean
     | null;
 }
 
-export interface AccordionItemProps {
-  title: string;
+export interface AccordionItemProps<T extends string = string> {
+  /**
+   * The tile of the accordion item.
+   * The title also acts as an identifier and should be unique within an accordion provider.
+   */
+  title: T;
   children: ReactNode;
-  defaultOpened?: boolean;
+  /**
+   * Defines whether the accordion item is initially open.
+   * This prop has no effect if the `open` prop is used.
+   * A value of `true` means the accordion item is initially open.
+   * A value of `false` means the accordion item is initially closed.
+   * @default false
+   */
+  defaultOpen?: boolean;
+  /**
+   * Controls the open state of the accordion item.
+   */
+  open?: boolean;
+  /**
+   * Called whenever the open state of the pane changes.
+   */
+  onOpenChange?: (isOpen: boolean) => void;
   /**
    * When set to true, the item's children will not be rendered if the item is closed.
    * When not set or set to false, the item's children will be rendered but hidden when the item is closed.
@@ -52,16 +72,28 @@ const AccordionContainer = styled.div`
   width: 100%;
 `;
 
-export function Accordion(props: AccordionProps) {
+export function Accordion<T extends string = string>(props: AccordionProps<T>) {
   return <AccordionContainer>{props.children}</AccordionContainer>;
 }
 
-Accordion.Item = function AccordionItem(props: AccordionItemProps) {
-  const { title, children, defaultOpened, toolbar } = props;
-  const { item, utils, unmountChildren } = useAccordionContext(
+Accordion.Item = function AccordionItem<T extends string = string>(
+  props: AccordionItemProps<T>,
+) {
+  const {
     title,
-    defaultOpened,
-  );
+    children,
+    defaultOpen = false,
+    open,
+    toolbar,
+    onOpenChange,
+  } = props;
+
+  const [isOpen, setIsOpen] = useControllableState({
+    prop: open,
+    defaultProp: defaultOpen,
+    onChange: onOpenChange,
+  });
+  const { utils, unmountChildren } = useAccordionContext(title, setIsOpen);
 
   const shouldUnmountChildren =
     props.unmountChildren === undefined
@@ -71,7 +103,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   const onClickHandle = useCallback(
     (event: ReactMouseEvent<HTMLDivElement>) => {
       if (event.shiftKey) {
-        utils.clear();
+        utils.closeOthers();
       } else {
         utils.toggle();
       }
@@ -82,7 +114,7 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
   return (
     <div
       style={{
-        flex: item?.isOpen ? '1 1 1px' : 'none',
+        flex: isOpen ? '1 1 1px' : 'none',
         display: 'flex',
         flexDirection: 'column',
         isolation: 'isolate',
@@ -98,11 +130,11 @@ Accordion.Item = function AccordionItem(props: AccordionItemProps) {
         </div>
         {toolbar}
       </AccordionItemHeader>
-      {!item?.isOpen && shouldUnmountChildren ? null : (
+      {!isOpen && shouldUnmountChildren ? null : (
         <div
           style={{
-            display: item?.isOpen ? 'flex' : 'none',
-            flex: item?.isOpen ? '1 1 1px' : 'none',
+            display: isOpen ? 'flex' : 'none',
+            flex: isOpen ? '1 1 1px' : 'none',
             backgroundColor: 'white',
             maxHeight: '100%',
             overflow: 'hidden',

@@ -83,7 +83,7 @@ export function WithAccordion() {
       }}
     >
       <Accordion>
-        <Accordion.Item title="First Item" defaultOpened>
+        <Accordion.Item title="First Item" defaultOpen>
           <PanelHeader total={20} onClickSettings={() => void 0}>
             <Toolbar>
               <Toolbar.Item intent="danger" icon="trash" />
@@ -202,7 +202,7 @@ export function WithAccordionPanelToolbarStackedPanel() {
       }}
     >
       <Accordion>
-        <Accordion.Item title="First Item" defaultOpened>
+        <Accordion.Item title="First Item" defaultOpen>
           <Panel
             initialPanel={{
               renderPanel: InitialPanel,

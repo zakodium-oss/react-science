@@ -18,7 +18,7 @@ export function MeasurementConfigPanelAccordion() {
   return (
     <Accordion.Item
       title={`Measurement${size > 1 ? 's' : ''} config`}
-      defaultOpened
+      defaultOpen
     >
       <MeasurementConfigPanel />
     </Accordion.Item>
