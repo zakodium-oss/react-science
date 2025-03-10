@@ -41,7 +41,7 @@ export function WithAccordion() {
       }}
     >
       <Accordion>
-        <Accordion.Item title="First Item" defaultOpened>
+        <Accordion.Item title="First Item" defaultOpen>
           {isOpen ? (
             <div>
               <PanelPreferencesToolbar onSave={close} onClose={close} />
