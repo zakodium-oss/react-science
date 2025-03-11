@@ -50,9 +50,8 @@ export function AccordionProvider(props: AccordionProviderProps) {
       register: (title: string, setIsOpen: AccordionItemSetIsOpen) => {
         assert(registerRef.current);
         const item = registerRef.current.get(title);
-        if (item) {
-          // eslint-disable-next-line no-console
-          console.error(
+        if (item !== undefined) {
+          throw new Error(
             `Accordion item with title "${title}" already exists. Using non-unique titles can lead to unexpected behavior.`,
           );
         }
