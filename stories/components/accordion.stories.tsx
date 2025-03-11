@@ -389,9 +389,11 @@ export function ControlledState() {
     [setOpenItems],
   );
 
+  const TypedAccordionItem = Accordion.Item<ControlledTitle>;
+
   return (
     <Accordion>
-      <Accordion.Item<ControlledTitle>
+      <TypedAccordionItem
         title="First"
         open={openItems.includes('First')}
         onOpenChange={(isOpen) =>
@@ -399,8 +401,8 @@ export function ControlledState() {
         }
       >
         First content
-      </Accordion.Item>
-      <Accordion.Item<ControlledTitle>
+      </TypedAccordionItem>
+      <TypedAccordionItem
         title="Second"
         open={openItems.includes('Second')}
         onOpenChange={(isOpen) =>
@@ -408,7 +410,7 @@ export function ControlledState() {
         }
       >
         Second content
-      </Accordion.Item>
+      </TypedAccordionItem>
     </Accordion>
   );
 }
