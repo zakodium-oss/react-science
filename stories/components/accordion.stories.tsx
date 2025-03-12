@@ -434,7 +434,10 @@ export function ControlledState() {
 export function BadWithIdenticalTitle() {
   return (
     <>
-      <div>Open the console to view the error message</div>
+      <div>
+        This story should throw a global exception and thus not be displayed
+        properly
+      </div>
       <Accordion>
         <Accordion.Item id="item" title="Accordion item">
           Item 1
