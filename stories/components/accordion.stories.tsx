@@ -59,6 +59,7 @@ export function Control(props: AccordionItemProps) {
       <Accordion>
         <Accordion.Item
           {...props}
+          id="first"
           title="First Item"
           defaultOpen
           toolbar={
@@ -79,7 +80,7 @@ export function Control(props: AccordionItemProps) {
         >
           This is the first content
         </Accordion.Item>
-        <Accordion.Item {...props} title="Second Item">
+        <Accordion.Item {...props} id="second" title="Second Item">
           This is the content of the second item Lorem ipsum, dolor sit amet
           consectetur adipisicing elit. Error provident illum quidem quod dicta
           sed aperiam ex iusto nesciunt culpa esse, quibusdam quam ea
@@ -273,7 +274,7 @@ export function WithToggle() {
               style={{
                 padding: 5,
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                gridTemplateColumns: '1fr 1fr 1fr',
                 gridTemplateRows: '30px 30px',
                 gap: 5,
               }}
@@ -284,11 +285,17 @@ export function WithToggle() {
               <Button onClick={() => utils.close('spectra')}>
                 Close Spectra
               </Button>
+              <Button onClick={() => utils.toggle('spectra')}>
+                Toggle Spectra
+              </Button>
               <Button onClick={() => utils.open('integral')}>
                 Open Integral
               </Button>
               <Button onClick={() => utils.close('integral')}>
                 Close Integral
+              </Button>
+              <Button onClick={() => utils.toggle('integral')}>
+                Toggle Integral
               </Button>
             </div>
             <div

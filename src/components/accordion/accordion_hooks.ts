@@ -3,8 +3,9 @@ import { useContext, useMemo } from 'react';
 import { accordionContext } from './accordion_context.js';
 
 export interface UseToggleAccordionResult<T extends string = string> {
-  open: (title: T) => void;
-  close: (title: T) => void;
+  open: (id: T) => void;
+  close: (id: T) => void;
+  toggle: (id: T) => void;
   closeAllExcept: (except: T) => void;
 }
 
@@ -21,8 +22,9 @@ export function useToggleAccordion<
 
   return useMemo(
     () => ({
-      open: (title: T) => utils.change(title, true),
-      close: (title: T) => utils.change(title, false),
+      open: (id: T) => utils.change(id, true),
+      close: (id: T) => utils.change(id, false),
+      toggle: (id: T) => utils.toggle(id),
       closeAllExcept: (except: T) => utils.closeAllExcept(except),
     }),
     [utils],
