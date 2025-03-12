@@ -12,7 +12,7 @@ import {
   AccordionProvider,
   SplitPane,
   Toolbar,
-  useToggleAccordion,
+  useAccordionControls,
 } from '../../src/components/index.js';
 import { AccordionDecorator } from '../utils.js';
 
@@ -247,7 +247,7 @@ export function WithDynamicItems() {
 type WithToggleTitle = 'spectra' | 'integral';
 
 export function WithToggle() {
-  const utils = useToggleAccordion<WithToggleTitle>();
+  const utils = useAccordionControls<WithToggleTitle>();
   const TypedAccordionItem = Accordion.Item<WithToggleTitle>;
   return (
     <>
