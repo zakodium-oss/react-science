@@ -62,7 +62,7 @@ export function Control(props: AccordionItemProps) {
           id="first"
           title="First Item"
           defaultOpen
-          toolbar={
+          renderToolbar={() => (
             <Toolbar>
               {items.map((item) => (
                 <Toolbar.Item
@@ -76,7 +76,7 @@ export function Control(props: AccordionItemProps) {
                 />
               ))}
             </Toolbar>
-          }
+          )}
         >
           This is the first content
         </Accordion.Item>
@@ -363,20 +363,19 @@ export function UnmountSomeChildren() {
 }
 
 export function WithToolbar() {
+  function renderToolbar(isOpen: boolean) {
+    return <Button icon={isOpen ? 'minus' : 'plus'} variant="minimal" />;
+  }
   return (
     <Accordion>
-      <Accordion.Item
-        id="first"
-        title="First"
-        toolbar={<Button icon="minus" variant="minimal" />}
-      >
+      <Accordion.Item id="first" title="First" renderToolbar={renderToolbar}>
         First content
       </Accordion.Item>
       <Accordion.Item
         id="second"
         title="Second"
         defaultOpen
-        toolbar={<Button icon="minus" variant="minimal" />}
+        renderToolbar={renderToolbar}
       >
         Second content
       </Accordion.Item>

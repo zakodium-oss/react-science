@@ -48,7 +48,7 @@ export interface AccordionItemProps<T extends string = string> {
    * When not set or set to false, the item's children will be rendered but hidden when the item is closed.
    */
   unmountChildren?: boolean;
-  toolbar?: ReactNode;
+  renderToolbar?: (isOpen: boolean) => ReactNode;
 }
 
 const AccordionItemHeader = styled.div`
@@ -88,7 +88,7 @@ Accordion.Item = function AccordionItem<T extends string = string>(
     children,
     defaultOpen = false,
     open,
-    toolbar,
+    renderToolbar,
     onOpenChange,
   } = props;
 
@@ -132,7 +132,7 @@ Accordion.Item = function AccordionItem<T extends string = string>(
         >
           {title}
         </div>
-        {toolbar}
+        {renderToolbar?.(isOpen ?? false)}
       </AccordionItemHeader>
       {!isOpen && shouldUnmountChildren ? null : (
         <div
