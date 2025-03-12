@@ -17,6 +17,7 @@ export function MeasurementConfigPanelAccordion() {
   const size = (selectedMeasurements[selectedKind] || []).length;
   return (
     <Accordion.Item
+      id="measurement-config"
       title={`Measurement${size > 1 ? 's' : ''} config`}
       defaultOpen
     >

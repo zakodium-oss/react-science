@@ -24,7 +24,7 @@ export function Inception() {
           <p>A</p>
           <AccordionProvider>
             <Accordion>
-              <Accordion.Item title="A">
+              <Accordion.Item id="A" title="A">
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Perferendis distinctio ducimus beatae iure! Vel, laudantium.
@@ -32,7 +32,7 @@ export function Inception() {
                   quibusdam incidunt enim officia tenetur corrupti qui quia.
                 </p>
               </Accordion.Item>
-              <Accordion.Item title="B">
+              <Accordion.Item id="B" title="B">
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Perferendis distinctio ducimus beatae iure! Vel, laudantium.
@@ -40,7 +40,7 @@ export function Inception() {
                   quibusdam incidunt enim officia tenetur corrupti qui quia.
                 </p>
               </Accordion.Item>
-              <Accordion.Item title="C">
+              <Accordion.Item id="C" title="C">
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Perferendis distinctio ducimus beatae iure! Vel, laudantium.

@@ -19,10 +19,13 @@ export interface AccordionProps<T extends string = string> {
 
 export interface AccordionItemProps<T extends string = string> {
   /**
-   * The tile of the accordion item.
-   * The title also acts as an identifier and should be unique within an accordion provider.
+   * A value uniquely identifying the accordion item.
    */
-  title: T;
+  id: T;
+  /**
+   * The title of the accordion item.
+   */
+  title: string;
   children: ReactNode;
   /**
    * Defines whether the accordion item is initially open.
@@ -80,6 +83,7 @@ Accordion.Item = function AccordionItem<T extends string = string>(
   props: AccordionItemProps<T>,
 ) {
   const {
+    id,
     title,
     children,
     defaultOpen = false,
@@ -93,7 +97,7 @@ Accordion.Item = function AccordionItem<T extends string = string>(
     defaultProp: defaultOpen,
     onChange: onOpenChange,
   });
-  const { utils, unmountChildren } = useAccordionContext(title, setIsOpen);
+  const { utils, unmountChildren } = useAccordionContext(id, setIsOpen);
 
   const shouldUnmountChildren =
     props.unmountChildren === undefined

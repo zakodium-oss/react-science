@@ -19,43 +19,43 @@ export function AccordionProvider(props: AccordionProviderProps) {
 
   const utils = useMemo<ContextType[1]>(() => {
     return {
-      change: (title: string, isOpen: boolean) => {
+      change: (id: string, isOpen: boolean) => {
         assert(registerRef.current);
-        const item = registerRef.current.get(title);
+        const item = registerRef.current.get(id);
         if (item) {
           item.setIsOpen(isOpen);
         }
       },
-      closeAllExcept: (title: string) => {
+      closeAllExcept: (id: string) => {
         assert(registerRef.current);
         for (const [key, item] of registerRef.current.entries()) {
-          if (key === title) {
+          if (key === id) {
             item.setIsOpen(true);
           } else {
             item.setIsOpen(false);
           }
         }
       },
-      toggle: (title: string) => {
+      toggle: (id: string) => {
         assert(registerRef.current);
-        const item = registerRef.current.get(title);
+        const item = registerRef.current.get(id);
         if (item) {
           item.setIsOpen((prevState) => !prevState);
         }
       },
-      unregister: (title: string) => {
+      unregister: (id: string) => {
         assert(registerRef.current);
-        registerRef.current.delete(title);
+        registerRef.current.delete(id);
       },
-      register: (title: string, setIsOpen: AccordionItemSetIsOpen) => {
+      register: (id: string, setIsOpen: AccordionItemSetIsOpen) => {
         assert(registerRef.current);
-        const item = registerRef.current.get(title);
+        const item = registerRef.current.get(id);
         if (item !== undefined) {
           throw new Error(
-            `Accordion item with title "${title}" already exists. Using non-unique titles can lead to unexpected behavior.`,
+            `Accordion item with title "${id}" already exists. Using non-unique titles can lead to unexpected behavior.`,
           );
         }
-        registerRef.current.set(title, {
+        registerRef.current.set(id, {
           setIsOpen,
         });
       },

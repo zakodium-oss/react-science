@@ -233,7 +233,7 @@ export function WithDynamicItems() {
       >
         <Accordion>
           {state.map(({ content, ...element }) => (
-            <Accordion.Item key={element.title} {...element}>
+            <Accordion.Item id={element.title} key={element.title} {...element}>
               {content}
             </Accordion.Item>
           ))}
@@ -243,11 +243,11 @@ export function WithDynamicItems() {
   );
 }
 
-type WithToggleTitle = 'Spectra' | 'Integral';
+type WithToggleTitle = 'spectra' | 'integral';
 
 export function WithToggle() {
   const utils = useToggleAccordion<WithToggleTitle>();
-
+  const TypedAccordionItem = Accordion.Item<WithToggleTitle>;
   return (
     <>
       <div
@@ -278,16 +278,16 @@ export function WithToggle() {
                 gap: 5,
               }}
             >
-              <Button onClick={() => utils.open('Spectra')}>
+              <Button onClick={() => utils.open('spectra')}>
                 Open Spectra
               </Button>
-              <Button onClick={() => utils.close('Spectra')}>
+              <Button onClick={() => utils.close('spectra')}>
                 Close Spectra
               </Button>
-              <Button onClick={() => utils.open('Integral')}>
+              <Button onClick={() => utils.open('integral')}>
                 Open Integral
               </Button>
-              <Button onClick={() => utils.close('Integral')}>
+              <Button onClick={() => utils.close('integral')}>
                 Close Integral
               </Button>
             </div>
@@ -299,12 +299,12 @@ export function WithToggle() {
               }}
             >
               <Accordion>
-                <Accordion.Item title="Spectra" defaultOpen>
+                <TypedAccordionItem id="spectra" title="Spectra" defaultOpen>
                   <p style={{ padding: 5 }}>Spectra lorem</p>
-                </Accordion.Item>
-                <Accordion.Item title="Integral">
+                </TypedAccordionItem>
+                <TypedAccordionItem id="integral" title="Integral">
                   <p style={{ padding: 5 }}>Integral lorem</p>
-                </Accordion.Item>
+                </TypedAccordionItem>
               </Accordion>
             </div>
           </SplitPane>
@@ -325,10 +325,10 @@ export const UnmountChildren = {
     return (
       <AccordionProvider {...props}>
         <Accordion>
-          <Accordion.Item title="First">
+          <Accordion.Item id="first" title="First">
             <Count />
           </Accordion.Item>
-          <Accordion.Item title="Second" defaultOpen>
+          <Accordion.Item id="second" title="Second" defaultOpen>
             <Count />
           </Accordion.Item>
         </Accordion>
@@ -340,10 +340,15 @@ export const UnmountChildren = {
 export function UnmountSomeChildren() {
   return (
     <Accordion>
-      <Accordion.Item title="Always render children" defaultOpen>
+      <Accordion.Item id="1" title="Always render children" defaultOpen>
         <Count />
       </Accordion.Item>
-      <Accordion.Item title="Unmount children" defaultOpen unmountChildren>
+      <Accordion.Item
+        id="2"
+        title="Unmount children"
+        defaultOpen
+        unmountChildren
+      >
         <Count />
       </Accordion.Item>
     </Accordion>
@@ -354,12 +359,14 @@ export function WithToolbar() {
   return (
     <Accordion>
       <Accordion.Item
+        id="first"
         title="First"
         toolbar={<Button icon="minus" variant="minimal" />}
       >
         First content
       </Accordion.Item>
       <Accordion.Item
+        id="second"
         title="Second"
         defaultOpen
         toolbar={<Button icon="minus" variant="minimal" />}
@@ -370,10 +377,10 @@ export function WithToolbar() {
   );
 }
 
-type ControlledTitle = 'First' | 'Second';
+type ControlledTitle = 'first' | 'second';
 
 export function ControlledState() {
-  const [openItems, setOpenItems] = useState<ControlledTitle[]>(['First']);
+  const [openItems, setOpenItems] = useState<ControlledTitle[]>(['first']);
 
   const addItem = useCallback(
     (title: ControlledTitle) => {
@@ -394,19 +401,21 @@ export function ControlledState() {
   return (
     <Accordion>
       <TypedAccordionItem
+        id="first"
         title="First"
-        open={openItems.includes('First')}
+        open={openItems.includes('first')}
         onOpenChange={(isOpen) =>
-          isOpen ? addItem('First') : removeItem('First')
+          isOpen ? addItem('first') : removeItem('first')
         }
       >
         First content
       </TypedAccordionItem>
       <TypedAccordionItem
+        id="second"
         title="Second"
-        open={openItems.includes('Second')}
+        open={openItems.includes('second')}
         onOpenChange={(isOpen) =>
-          isOpen ? addItem('Second') : removeItem('Second')
+          isOpen ? addItem('second') : removeItem('second')
         }
       >
         Second content
@@ -420,8 +429,12 @@ export function BadWithIdenticalTitle() {
     <>
       <div>Open the console to view the error message</div>
       <Accordion>
-        <Accordion.Item title="Accordion item">Item 1</Accordion.Item>
-        <Accordion.Item title="Accordion item">Item 2</Accordion.Item>
+        <Accordion.Item id="item" title="Accordion item">
+          Item 1
+        </Accordion.Item>
+        <Accordion.Item id="item" title="Accordion item">
+          Item 2
+        </Accordion.Item>
       </Accordion>
     </>
   );

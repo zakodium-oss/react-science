@@ -9,10 +9,10 @@ export type ContextType = [
   AccordionContext,
   {
     closeAllExcept: (except: string) => void;
-    toggle: (title: string) => void;
-    unregister: (title: string) => void;
-    register: (title: string, setIsOpen: AccordionItemSetIsOpen) => void;
-    change: (title: string, isOpen: boolean) => void;
+    toggle: (id: string) => void;
+    unregister: (id: string) => void;
+    register: (id: string, setIsOpen: AccordionItemSetIsOpen) => void;
+    change: (id: string, isOpen: boolean) => void;
   },
 ];
 
@@ -21,7 +21,7 @@ type AccordionContext = AccordionState;
 export const accordionContext = createContext<ContextType | null>(null);
 
 export function useAccordionContext(
-  title: string,
+  id: string,
   setIsOpen: AccordionItemSetIsOpen,
 ) {
   const context = useContext(accordionContext);
@@ -33,18 +33,18 @@ export function useAccordionContext(
   const [state, utils] = context;
 
   useEffect(() => {
-    utils.register(title, setIsOpen);
-    return () => utils.unregister(title);
-  }, [title, utils, setIsOpen]);
+    utils.register(id, setIsOpen);
+    return () => utils.unregister(id);
+  }, [id, utils, setIsOpen]);
 
   return useMemo(
     () => ({
       unmountChildren: state.unmountChildren,
       utils: {
-        closeOthers: () => utils.closeAllExcept(title),
-        toggle: () => utils.toggle(title),
+        closeOthers: () => utils.closeAllExcept(id),
+        toggle: () => utils.toggle(id),
       },
     }),
-    [title, utils, state.unmountChildren],
+    [id, utils, state.unmountChildren],
   );
 }
