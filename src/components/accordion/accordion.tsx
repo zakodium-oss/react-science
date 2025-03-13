@@ -71,10 +71,8 @@ const AccordionItemHeader = styled.div`
   padding-left: 12px;
 
   &:hover {
-    background: linear-gradient(
-        ${Colors.LIGHT_GRAY2} 0%,
-        ${Colors.LIGHT_GRAY4} 100%
-      )
+    background: white
+      linear-gradient(${Colors.LIGHT_GRAY4} 5%, ${Colors.LIGHT_GRAY2} 100%)
       repeat scroll 0 0;
   }
 `;
