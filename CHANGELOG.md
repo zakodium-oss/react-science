@@ -1,5 +1,17 @@
 # Changelog
 
+## [16.0.0](https://github.com/zakodium-oss/react-science/compare/v15.0.0...v16.0.0) (2025-03-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* The `useAccordionContext` hook has been removed from the API. It should only be used internally. The `defaultOpened` prop of `Accordion.Item` has been renamed to `defaultOpen`. The `title` prop no longer acts as an identifier, and an additional `id` props has been added to that effect. The `useToggleAccordion` hook has been renamed to `useAccordionControls`. Using the same identifier twice now throws a global JS error (not a render error). The `toolbar` prop has been changed to `renderToolbar` to allow customization of render base on open state.
+
+### Features
+
+* **Accordion:** highlight interactivity by changing the header's color on hover ([#890](https://github.com/zakodium-oss/react-science/issues/890)) ([35f56bb](https://github.com/zakodium-oss/react-science/commit/35f56bb3c7a33fce1b82fa827cb72302f1ec89cd))
+* rework Accordion API with new features ([#887](https://github.com/zakodium-oss/react-science/issues/887)) ([2bf1dff](https://github.com/zakodium-oss/react-science/commit/2bf1dffc232e377f2aa61f3ae3baaaa773f5d126))
+
 ## [15.0.0](https://github.com/zakodium-oss/react-science/compare/v14.0.0...v15.0.0) (2025-03-07)
 
 
