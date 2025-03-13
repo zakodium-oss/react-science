@@ -323,10 +323,10 @@ function DemoPage(props: { openDialog: () => void }) {
               }}
             >
               <Accordion>
-                <Accordion.Item title="Spectra" defaultOpened>
+                <Accordion.Item id="spectra" title="Spectra" defaultOpen>
                   <p style={{ padding: 5 }}>Spectra lorem</p>
                 </Accordion.Item>
-                <Accordion.Item title="Integral">
+                <Accordion.Item id="integral" title="Integral">
                   <p style={{ padding: 5 }}>Integral lorem</p>
                 </Accordion.Item>
               </Accordion>

@@ -23,7 +23,7 @@ export function MeasurementsPanelAccordion() {
       : 'Measurements';
 
   return (
-    <Accordion.Item title={title} defaultOpened>
+    <Accordion.Item id="measurement-list" title={title} defaultOpen>
       <MeasurementsPanelStack
         initialPanel={{
           renderPanel: MeasurementsPanel,

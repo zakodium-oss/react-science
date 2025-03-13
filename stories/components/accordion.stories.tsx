@@ -1,20 +1,33 @@
 import { Button } from '@blueprintjs/core';
+import { action } from '@storybook/addon-actions';
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
 
-import type { ToolbarItemProps } from '../../src/components/index.js';
+import type {
+  AccordionItemProps,
+  ToolbarItemProps,
+} from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
   SplitPane,
   Toolbar,
-  useToggleAccordion,
+  useAccordionControls,
 } from '../../src/components/index.js';
 import { AccordionDecorator } from '../utils.js';
 
+import {
+  AccordionStoryItem,
+  AccordionStoryProvider,
+} from './accordion_story_helpers.js';
+
 export default {
   title: 'Components / Accordion',
+  component: Accordion.Item,
   decorators: [AccordionDecorator],
+  args: {
+    onOpenChange: action('onOpenChange'),
+  },
 };
 const items: Array<
   Pick<ToolbarItemProps, 'tooltip' | 'icon' | 'disabled'> & {
@@ -41,18 +54,20 @@ const items: Array<
   },
 ];
 
-export function Fixed() {
+export function Control(props: AccordionItemProps) {
   return (
     <div
       style={{
-        height: 300,
+        height: '100%',
       }}
     >
       <Accordion>
         <Accordion.Item
+          {...props}
+          id="first"
           title="First Item"
-          defaultOpened
-          toolbar={
+          defaultOpen
+          renderToolbar={() => (
             <Toolbar>
               {items.map((item) => (
                 <Toolbar.Item
@@ -66,11 +81,11 @@ export function Fixed() {
                 />
               ))}
             </Toolbar>
-          }
+          )}
         >
           This is the first content
         </Accordion.Item>
-        <Accordion.Item title="Second Item">
+        <Accordion.Item {...props} id="second" title="Second Item">
           This is the content of the second item Lorem ipsum, dolor sit amet
           consectetur adipisicing elit. Error provident illum quidem quod dicta
           sed aperiam ex iusto nesciunt culpa esse, quibusdam quam ea
@@ -146,7 +161,7 @@ export function Fixed() {
           dolor sit amet consectetur adipisicing elit. Ad ipsam enim quis iusto
           sit veniam esse id accusantium quos minima facilis commodi quibus
         </Accordion.Item>
-        <Accordion.Item title="With Toolbar">
+        <Accordion.Item {...props} title="With Toolbar">
           <Toolbar>
             <Toolbar.Item tooltip="Test A" icon="lab-test" />
             <Toolbar.Item tooltip="Test B" icon="airplane" />
@@ -161,12 +176,12 @@ export function WithDynamicItems() {
   const [state, setState] = useState([
     {
       title: 'first',
-      defaultOpened: true,
+      defaultOpen: true,
       content: 'This is the content of the first item',
     },
     {
       title: 'Second',
-      defaultOpened: false,
+      defaultOpen: false,
       content: 'This is the content of the second item',
     },
   ]);
@@ -177,7 +192,7 @@ export function WithDynamicItems() {
       {
         title: `${state.length + 1}`,
         content: 'Element added',
-        defaultOpened: false,
+        defaultOpen: false,
       },
     ]);
   }
@@ -224,7 +239,7 @@ export function WithDynamicItems() {
       >
         <Accordion>
           {state.map(({ content, ...element }) => (
-            <Accordion.Item key={element.title} {...element}>
+            <Accordion.Item id={element.title} key={element.title} {...element}>
               {content}
             </Accordion.Item>
           ))}
@@ -234,17 +249,11 @@ export function WithDynamicItems() {
   );
 }
 
+type WithToggleTitle = 'spectra' | 'integral';
+
 export function WithToggle() {
-  const utils = useToggleAccordion();
-
-  function onCallback(title: string, action: 'open' | 'close') {
-    if (action === 'open') {
-      utils.open(title);
-    } else {
-      utils.close(title);
-    }
-  }
-
+  const utils = useAccordionControls<WithToggleTitle>();
+  const TypedAccordionItem = Accordion.Item<WithToggleTitle>;
   return (
     <>
       <div
@@ -266,29 +275,33 @@ export function WithToggle() {
           }}
         >
           <SplitPane defaultSize="35%">
-            <div style={{ padding: 5, display: 'flex', gap: 5, height: 40 }}>
-              <button
-                type="button"
-                onClick={() => onCallback('Spectra', 'open')}
-                style={{
-                  backgroundColor: 'rgba(252, 165, 165)',
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                }}
-              >
+            <div
+              style={{
+                padding: 5,
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gridTemplateRows: '30px 30px',
+                gap: 5,
+              }}
+            >
+              <Button onClick={() => utils.open('spectra')}>
                 Open Spectra
-              </button>
-              <button
-                type="button"
-                onClick={() => onCallback('Spectra', 'close')}
-                style={{
-                  backgroundColor: 'rgba(110, 231, 183)',
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                }}
-              >
+              </Button>
+              <Button onClick={() => utils.close('spectra')}>
                 Close Spectra
-              </button>
+              </Button>
+              <Button onClick={() => utils.toggle('spectra')}>
+                Toggle Spectra
+              </Button>
+              <Button onClick={() => utils.open('integral')}>
+                Open Integral
+              </Button>
+              <Button onClick={() => utils.close('integral')}>
+                Close Integral
+              </Button>
+              <Button onClick={() => utils.toggle('integral')}>
+                Toggle Integral
+              </Button>
             </div>
             <div
               style={{
@@ -298,12 +311,12 @@ export function WithToggle() {
               }}
             >
               <Accordion>
-                <Accordion.Item title="Spectra" defaultOpened>
+                <TypedAccordionItem id="spectra" title="Spectra" defaultOpen>
                   <p style={{ padding: 5 }}>Spectra lorem</p>
-                </Accordion.Item>
-                <Accordion.Item title="Integral">
+                </TypedAccordionItem>
+                <TypedAccordionItem id="integral" title="Integral">
                   <p style={{ padding: 5 }}>Integral lorem</p>
-                </Accordion.Item>
+                </TypedAccordionItem>
               </Accordion>
             </div>
           </SplitPane>
@@ -312,6 +325,8 @@ export function WithToggle() {
     </>
   );
 }
+
+WithToggle.storyName = 'With the useToggleAccordion hook';
 
 export const UnmountChildren = {
   decorators: [],
@@ -322,10 +337,10 @@ export const UnmountChildren = {
     return (
       <AccordionProvider {...props}>
         <Accordion>
-          <Accordion.Item title="First">
+          <Accordion.Item id="first" title="First">
             <Count />
           </Accordion.Item>
-          <Accordion.Item title="Second" defaultOpened>
+          <Accordion.Item id="second" title="Second" defaultOpen>
             <Count />
           </Accordion.Item>
         </Accordion>
@@ -337,13 +352,76 @@ export const UnmountChildren = {
 export function UnmountSomeChildren() {
   return (
     <Accordion>
-      <Accordion.Item title="Always render children" defaultOpened>
+      <Accordion.Item id="1" title="Always render children" defaultOpen>
         <Count />
       </Accordion.Item>
-      <Accordion.Item title="Unmount children" defaultOpened unmountChildren>
+      <Accordion.Item
+        id="2"
+        title="Unmount children"
+        defaultOpen
+        unmountChildren
+      >
         <Count />
       </Accordion.Item>
     </Accordion>
+  );
+}
+
+export function WithToolbar() {
+  function renderToolbar(isOpen: boolean) {
+    return <Button icon={isOpen ? 'minus' : 'plus'} variant="minimal" />;
+  }
+  return (
+    <Accordion>
+      <Accordion.Item id="first" title="First" renderToolbar={renderToolbar}>
+        First content
+      </Accordion.Item>
+      <Accordion.Item
+        id="second"
+        title="Second"
+        defaultOpen
+        renderToolbar={renderToolbar}
+      >
+        Second content
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
+export function ControlledState() {
+  return (
+    <AccordionStoryProvider>
+      <Accordion>
+        <AccordionStoryItem id="first" title="First">
+          First content
+        </AccordionStoryItem>
+        <AccordionStoryItem id="second" title="Second">
+          Second content
+        </AccordionStoryItem>
+        <AccordionStoryItem id="third" title="Third">
+          Third content
+        </AccordionStoryItem>
+      </Accordion>
+    </AccordionStoryProvider>
+  );
+}
+
+export function BadWithIdenticalTitle() {
+  return (
+    <>
+      <div>
+        This story should throw a global exception and thus not be displayed
+        properly
+      </div>
+      <Accordion>
+        <Accordion.Item id="item" title="Accordion item">
+          Item 1
+        </Accordion.Item>
+        <Accordion.Item id="item" title="Accordion item">
+          Item 2
+        </Accordion.Item>
+      </Accordion>
+    </>
   );
 }
 
