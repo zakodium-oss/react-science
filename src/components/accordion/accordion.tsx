@@ -1,3 +1,4 @@
+import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type {
@@ -61,11 +62,21 @@ const AccordionItemHeader = styled.div`
   font-weight: bold;
   text-decoration: none;
   text-shadow: white 0 1px 0;
-  background: white linear-gradient(#f0f0f0 5%, #e1e1e1 100%) repeat scroll 0 0;
+  background: white
+    linear-gradient(${Colors.LIGHT_GRAY5} 5%, ${Colors.LIGHT_GRAY3} 100%) repeat
+    scroll 0 0;
   width: 100%;
   user-select: none;
   justify-content: space-between;
   padding-left: 12px;
+
+  &:hover {
+    background: linear-gradient(
+        ${Colors.LIGHT_GRAY2} 0%,
+        ${Colors.LIGHT_GRAY4} 100%
+      )
+      repeat scroll 0 0;
+  }
 `;
 
 const AccordionContainer = styled.div`
