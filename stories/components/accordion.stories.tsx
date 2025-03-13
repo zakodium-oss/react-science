@@ -1,7 +1,7 @@
 import { Button } from '@blueprintjs/core';
 import { action } from '@storybook/addon-actions';
 import type { Meta } from '@storybook/react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import type {
   AccordionItemProps,
@@ -15,6 +15,11 @@ import {
   useAccordionControls,
 } from '../../src/components/index.js';
 import { AccordionDecorator } from '../utils.js';
+
+import {
+  AccordionStoryItem,
+  AccordionStoryProvider,
+} from './accordion_story_helpers.js';
 
 export default {
   title: 'Components / Accordion',
@@ -383,50 +388,21 @@ export function WithToolbar() {
   );
 }
 
-type ControlledTitle = 'first' | 'second';
-
 export function ControlledState() {
-  const [openItems, setOpenItems] = useState<ControlledTitle[]>(['first']);
-
-  const addItem = useCallback(
-    (title: ControlledTitle) => {
-      setOpenItems((openItems) => Array.from(new Set([...openItems, title])));
-    },
-    [setOpenItems],
-  );
-
-  const removeItem = useCallback(
-    (title: ControlledTitle) => {
-      setOpenItems((openItems) => openItems.filter((item) => item !== title));
-    },
-    [setOpenItems],
-  );
-
-  const TypedAccordionItem = Accordion.Item<ControlledTitle>;
-
   return (
-    <Accordion>
-      <TypedAccordionItem
-        id="first"
-        title="First"
-        open={openItems.includes('first')}
-        onOpenChange={(isOpen) =>
-          isOpen ? addItem('first') : removeItem('first')
-        }
-      >
-        First content
-      </TypedAccordionItem>
-      <TypedAccordionItem
-        id="second"
-        title="Second"
-        open={openItems.includes('second')}
-        onOpenChange={(isOpen) =>
-          isOpen ? addItem('second') : removeItem('second')
-        }
-      >
-        Second content
-      </TypedAccordionItem>
-    </Accordion>
+    <AccordionStoryProvider>
+      <Accordion>
+        <AccordionStoryItem id="first" title="First">
+          First content
+        </AccordionStoryItem>
+        <AccordionStoryItem id="second" title="Second">
+          Second content
+        </AccordionStoryItem>
+        <AccordionStoryItem id="third" title="Third">
+          Third content
+        </AccordionStoryItem>
+      </Accordion>
+    </AccordionStoryProvider>
   );
 }
 
