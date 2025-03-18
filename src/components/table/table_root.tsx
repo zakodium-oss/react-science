@@ -10,7 +10,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
 import { useEffect, useRef } from 'react';
 
-import { DroppedItemProvider } from './reorder_rows/dropped_item_provider.js';
+import { FlashedRowProvider } from './flash_row/flashed_row_provider.js';
 import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
 import { useDropMonitor } from './reorder_rows/use_drop_monitor.js';
 import { TableBody } from './table_body.js';
@@ -252,7 +252,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     tableHeaders as Array<Header<unknown, unknown>>,
   );
   return (
-    <DroppedItemProvider>
+    <FlashedRowProvider>
       <ItemOrderProvider
         items={table.getRowModel().rows}
         onOrderChanged={(items) => {
@@ -295,7 +295,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
           </CustomHTMLTable>
         </Container>
       </ItemOrderProvider>
-    </DroppedItemProvider>
+    </FlashedRowProvider>
   );
 }
 
