@@ -36,7 +36,7 @@ export function useTableScroll<TData extends RowData>(options: {
             );
           } else {
             virtualizer.scrollToIndex(rowIndex, options);
-            if (options?.flashRow) {
+            if (options?.flashRow && options.behavior !== 'smooth') {
               setFlashedRow(sortedRows[rowIndex].id);
             }
           }
@@ -58,6 +58,9 @@ export function useTableScroll<TData extends RowData>(options: {
             );
           }
           element?.scrollIntoView(options);
+          if (options?.flashRow && options.behavior !== 'smooth') {
+            setFlashedRow(id);
+          }
         },
       };
     }

@@ -39,6 +39,10 @@ export type TableRowPreviewRenderer<TData extends RowData> = (
 ) => ReactNode;
 
 interface FlashRowOptions {
+  /**
+   * Whether to flash the row when scrolling into view.
+   * The option is only supported when there is no scroll animation, i.e. `behavior` is not `smooth`.
+   */
   flashRow?: boolean;
 }
 
