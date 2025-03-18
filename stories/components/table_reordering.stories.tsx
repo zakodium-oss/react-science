@@ -52,7 +52,7 @@ const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.display({
     header: 'Drag',
-    cell: () => <TableDragRowHandler />,
+    cell: () => <TableDragRowHandler size="large" />,
   }),
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
