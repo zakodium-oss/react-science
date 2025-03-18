@@ -30,9 +30,14 @@ import type {
 import { useTableColumns } from './use_table_columns.js';
 import { useTableScroll } from './use_table_scroll.js';
 
+const nonForwardedProps = new Set<keyof TableProps<unknown>>([
+  'striped',
+  'stickyHeader',
+  'noHeader',
+]) as Set<string>;
+
 const CustomHTMLTable = styled(HTMLTable, {
-  shouldForwardProp: (prop) =>
-    prop !== 'striped' && prop !== 'stickyHeader' && prop !== 'noHeader',
+  shouldForwardProp: (prop) => !nonForwardedProps.has(prop),
 })<{ stickyHeader: boolean; noHeader: boolean }>`
   /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
   ${(props) =>
@@ -294,13 +299,15 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
             isReorderingEnabled={isReorderingEnabled}
           >
             <CustomHTMLTable
+              // Props which are not forwarded to the HTMLTable component
+              striped={striped}
+              noHeader={noHeader}
+              stickyHeader={stickyHeader}
+              // Props which are forwarded to the HTMLTable component
               ref={tableRef}
               bordered={bordered}
               compact={compact}
               interactive={interactive}
-              striped={striped}
-              noHeader={noHeader}
-              stickyHeader={stickyHeader}
               {...tableProps}
               className={finalClassName}
             >
