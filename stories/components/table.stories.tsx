@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import type { ComponentType } from 'react';
 
+import { Table, TableRowTr } from '../../src/components/index.js';
 import type { GetTdProps, TableProps } from '../../src/components/index.js';
-import { Table } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 
 import { columns } from './table_columns.js';
@@ -73,7 +73,10 @@ export const Control = {} satisfies Story;
 export const CustomTrRender = {
   args: {
     renderRowTr: (trProps, row) => (
-      <tr {...trProps} style={{ backgroundColor: row.original.color }} />
+      <TableRowTr
+        row={row}
+        trProps={{ ...trProps, style: { backgroundColor: row.original.color } }}
+      />
     ),
   },
 } satisfies Story;
