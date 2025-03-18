@@ -6,12 +6,13 @@ import type { ReactNode } from 'react';
 import { Fragment } from 'react';
 
 import { TableDraggableRowTr } from './reorder_rows/index.js';
+import { TableRowTr } from './table_row.js';
 import { TableRowCell } from './table_row_cell.js';
 import type {
   GetTdProps,
   TableRowPreviewRenderer,
-  TableRowTrProps,
   TableRowTrRenderer,
+  TableRowTrRenderProps,
 } from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {
@@ -111,7 +112,7 @@ function getTrRenderProps<TData extends RowData>(
   row: Row<TData>,
   getTdProps: GetTdProps<TData> | undefined,
   virtualItem?: RenderRowVirtualItem,
-): TableRowTrProps {
+): TableRowTrRenderProps {
   const index = virtualItem ? virtualItem.index : row.index;
 
   return {
@@ -142,8 +143,8 @@ function getDefaultRenderRowTr(
   }
 }
 
-const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps) => (
-  <tr {...trProps} />
+const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps, row) => (
+  <TableRowTr trProps={trProps} row={row} />
 );
 
 function getDefaultRenderDraggableRowTr(

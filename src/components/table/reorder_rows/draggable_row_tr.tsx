@@ -18,7 +18,7 @@ import { assert } from '../../utils/index.js';
 import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
 import type {
   TableRowPreviewRenderer,
-  TableRowTrProps,
+  TableRowTrRenderProps,
 } from '../table_utils.js';
 
 import type { DraggableRowContext } from './draggable_row_context.js';
@@ -31,7 +31,7 @@ export interface TableDraggableRowTrProps<TData extends RowData> {
   /**
    * Props to be spread on the `tr` element.
    */
-  trProps: TableRowTrProps;
+  trProps: TableRowTrRenderProps;
   /**
    * Row data.
    */

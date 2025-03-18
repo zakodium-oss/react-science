@@ -18,7 +18,7 @@ export function createTableColumnHelper<TData extends RowData>() {
   return createColumnHelper<TData>();
 }
 
-export interface TableRowTrProps {
+export interface TableRowTrRenderProps {
   className: string;
   style: CSSProperties;
   children: ReactNode;
@@ -27,7 +27,7 @@ export interface TableRowTrProps {
 }
 
 export type TableRowTrRenderer<TData extends RowData> = (
-  trProps: TableRowTrProps,
+  trProps: TableRowTrRenderProps,
   row: Row<TData>,
 ) => ReactNode;
 
@@ -38,10 +38,22 @@ export type TableRowPreviewRenderer<TData extends RowData> = (
   row: Row<TData>,
 ) => ReactNode;
 
+interface FlashRowOptions {
+  flashRow?: boolean;
+}
+
+export type TableScrollIntoViewOptions = ScrollIntoViewOptions &
+  FlashRowOptions;
+export type TableVirtualScrollIntoViewOptions = ScrollToOptions &
+  FlashRowOptions;
+
 export interface VirtualScroller {
-  scrollIntoView: (id: string, options?: ScrollToOptions) => void;
+  scrollIntoView: (
+    id: string,
+    options?: TableVirtualScrollIntoViewOptions,
+  ) => void;
 }
 
 export interface Scroller {
-  scrollIntoView: (id: string, options?: ScrollIntoViewOptions) => void;
+  scrollIntoView: (id: string, options?: TableScrollIntoViewOptions) => void;
 }
