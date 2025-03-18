@@ -131,7 +131,6 @@ export function WithCustomRowRendering(props: ControlProps) {
               style: { ...trProps.style, backgroundColor: row.original.color },
             }}
             row={row}
-            renderRowPreview={(row) => <Tag>{row.original.name}</Tag>}
           />
         )}
         scrollableElementRef={scrollableRef}
