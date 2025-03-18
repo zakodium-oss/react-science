@@ -52,7 +52,7 @@ const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 const columns = [
   columnHelper.display({
     header: 'Drag',
-    cell: () => <TableDragRowHandler />,
+    cell: () => <TableDragRowHandler size="large" />,
   }),
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
@@ -131,7 +131,6 @@ export function WithCustomRowRendering(props: ControlProps) {
               style: { ...trProps.style, backgroundColor: row.original.color },
             }}
             row={row}
-            renderRowPreview={(row) => <Tag>{row.original.name}</Tag>}
           />
         )}
         scrollableElementRef={scrollableRef}

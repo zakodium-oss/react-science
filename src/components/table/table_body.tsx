@@ -1,4 +1,3 @@
-import { Tag } from '@blueprintjs/core';
 import type { Row, RowData } from '@tanstack/react-table';
 import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import { notUndefined } from '@tanstack/react-virtual';
@@ -154,9 +153,7 @@ function getDefaultRenderDraggableRowTr(
     <TableDraggableRowTr
       trProps={trProps}
       row={row}
-      renderRowPreview={
-        renderRowPreview ?? ((row) => <Tag>Row {row.index + 1}</Tag>)
-      }
+      renderRowPreview={renderRowPreview}
     />
   );
 }

@@ -16,6 +16,8 @@ import { createPortal } from 'react-dom';
 
 import { assert } from '../../utils/index.js';
 import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
+import { PreviewTable } from '../preview_table.js';
+import { useIsPreviewTable } from '../preview_table_context.js';
 import type {
   TableRowPreviewRenderer,
   TableRowTrRenderProps,
@@ -39,19 +41,28 @@ export interface TableDraggableRowTrProps<TData extends RowData> {
   /**
    * Preview of the row being dragged.
    */
-  renderRowPreview: TableRowPreviewRenderer<TData>;
+  renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
 
 export function TableDraggableRowTr<TData extends RowData>(
   props: TableDraggableRowTrProps<TData>,
 ) {
-  const { trProps, row, renderRowPreview } = props;
+  const {
+    trProps,
+    row,
+    renderRowPreview = (row) => <PreviewTable row={row} />,
+  } = props;
   const { instanceId } = useItemOrder();
+  const isPreview = useIsPreviewTable();
   const tableRowRef = useRef<HTMLTableRowElement>(null);
   const [state, setState] = useState<DraggableItemState>(idleState);
 
   const dragHandleRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
+    if (isPreview) {
+      // No drag and drop in preview
+      return;
+    }
     const trElement = tableRowRef.current;
     assert(trElement, 'tr ref is null');
     assert(dragHandleRef.current, 'dragHandleRef is null');
@@ -123,7 +134,7 @@ export function TableDraggableRowTr<TData extends RowData>(
         },
       }),
     );
-  }, [row, instanceId]);
+  }, [row, instanceId, isPreview]);
 
   useFlashRowEffect(row.id, tableRowRef);
 

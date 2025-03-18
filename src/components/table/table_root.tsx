@@ -14,9 +14,12 @@ import {
 import type { Virtualizer } from '@tanstack/react-virtual';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { match } from 'ts-pattern';
 
 import { FlashedRowProvider } from './flash_row/flashed_row_provider.js';
+import type { PreviewTablePropsContextValue } from './preview_table_context.js';
+import { PreviewTablePropsContextProvider } from './preview_table_context.js';
 import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
 import { useDropMonitor } from './reorder_rows/use_drop_monitor.js';
 import { TableBody } from './table_body.js';
@@ -33,31 +36,39 @@ import type {
 import { useTableColumns } from './use_table_columns.js';
 import { useTableScroll } from './use_table_scroll.js';
 
-const CustomHTMLTable = styled(HTMLTable, {
-  shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
-})<{ stickyHeader: boolean }>`
-  /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
-  ${(props) => {
-    if (!props.stickyHeader) return '';
+const nonForwardedProps = new Set<keyof TableProps<unknown>>([
+  'striped',
+  'stickyHeader',
+  'noHeader',
+]) as Set<string>;
 
-    return `
+const CustomHTMLTable = styled(HTMLTable, {
+  shouldForwardProp: (prop) => !nonForwardedProps.has(prop),
+})<{ stickyHeader: boolean; noHeader: boolean }>`
+  /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
+  ${(props) =>
+    match(props)
+      .with({ stickyHeader: false, noHeader: false }, () => '')
+      .otherwise(
+        (props) => `
       thead tr:last-child {
         box-shadow: inset 0 -1px #11141826;
       }
     
       tbody tr:first-of-type td {
-        box-shadow: ${
-          props.bordered
-            ? 'inset 1px 0 0 0 #11141826 !important'
-            : 'none !important'
-        };
+        box-shadow: ${match(props)
+          .with(
+            { bordered: true },
+            () => 'inset 1px 0 0 0 #11141826 !important',
+          )
+          .otherwise(() => 'none !important')};
       }
     
       tbody tr:first-of-type td:first-of-type {
         box-shadow: none !important;
       }
-    `;
-  }}
+    `,
+      )}
 
   /* Blueprint's HTMLTable \`striped\` prop's implementation is based on nth-child odd / even */
   /* We cannot use that with virtualization, so we override its implementation here. */
@@ -94,6 +105,10 @@ interface TableBaseProps<TData extends RowData> {
    * Alternate between gray and white background for each row.
    */
   striped?: boolean;
+  /**
+   * Do not render the table header.
+   */
+  noHeader?: boolean;
   /**
    * Enable header rows which stick to the top of the table.
    */
@@ -205,6 +220,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     compact = false,
     interactive = false,
     striped = false,
+    noHeader = false,
     stickyHeader = false,
 
     reactTable,
@@ -259,53 +275,73 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     props as TableProps<unknown>,
     tableHeaders as Array<Header<unknown, unknown>>,
   );
+
+  const tablePreviewProps = useMemo<PreviewTablePropsContextValue<TData>>(
+    () => ({
+      className,
+      getTdProps,
+      renderRowTr,
+      columns,
+      compact,
+    }),
+    [className, getTdProps, renderRowTr, columns, compact],
+  );
   return (
     <FlashedRowProvider>
-      <ItemOrderProvider
-        items={table.getRowModel().rows}
-        onOrderChanged={(items) => {
-          onRowOrderChanged?.(items.map((item) => item.original));
-        }}
+      <PreviewTablePropsContextProvider
+        value={tablePreviewProps as PreviewTablePropsContextValue<unknown>}
       >
-        <Container
-          virtualizeRows={virtualizeRows}
-          tanstackVirtualizer={tanstackVirtualizer}
-          tanstackTable={table as TanstackTable<unknown>}
-          scrollRef={
-            virtualizeRows
-              ? scrollElementRef
-              : props.scrollableElementRef || tableRef
-          }
-          scrollToRowRef={scrollToRowRef}
-          isReorderingEnabled={isReorderingEnabled}
+        <ItemOrderProvider
+          items={table.getRowModel().rows}
+          onOrderChanged={(items) => {
+            onRowOrderChanged?.(items.map((item) => item.original));
+          }}
         >
-          <CustomHTMLTable
-            ref={tableRef}
-            bordered={bordered}
-            compact={compact}
-            interactive={interactive}
-            striped={striped}
-            stickyHeader={stickyHeader}
-            {...tableProps}
-            className={finalClassName}
+          <Container
+            virtualizeRows={virtualizeRows}
+            tanstackVirtualizer={tanstackVirtualizer}
+            tanstackTable={table as TanstackTable<unknown>}
+            scrollRef={
+              virtualizeRows
+                ? scrollElementRef
+                : props.scrollableElementRef || tableRef
+            }
+            scrollToRowRef={scrollToRowRef}
+            isReorderingEnabled={isReorderingEnabled}
           >
-            <TableHeader
-              sticky={stickyHeader}
-              headers={tableHeaders}
-              renderHeaderCell={renderHeaderCell}
-            />
-            <TableBody
-              rows={table.getRowModel().rows}
-              renderRowTr={renderRowTr}
-              getTdProps={getTdProps}
-              virtualizer={tanstackVirtualizer}
-              virtualizeRows={virtualizeRows}
-              renderRowPreview={renderRowPreview}
-              isReorderingEnabled={isReorderingEnabled}
-            />
-          </CustomHTMLTable>
-        </Container>
-      </ItemOrderProvider>
+            <CustomHTMLTable
+              // Props which are not forwarded to the HTMLTable component
+              striped={striped}
+              noHeader={noHeader}
+              stickyHeader={stickyHeader}
+              // Props which are forwarded to the HTMLTable component
+              ref={tableRef}
+              bordered={bordered}
+              compact={compact}
+              interactive={interactive}
+              {...tableProps}
+              className={finalClassName}
+            >
+              {!noHeader && (
+                <TableHeader
+                  sticky={stickyHeader}
+                  headers={tableHeaders}
+                  renderHeaderCell={renderHeaderCell}
+                />
+              )}
+              <TableBody
+                rows={table.getRowModel().rows}
+                renderRowTr={renderRowTr}
+                getTdProps={getTdProps}
+                virtualizer={tanstackVirtualizer}
+                virtualizeRows={virtualizeRows}
+                renderRowPreview={renderRowPreview}
+                isReorderingEnabled={isReorderingEnabled}
+              />
+            </CustomHTMLTable>
+          </Container>
+        </ItemOrderProvider>
+      </PreviewTablePropsContextProvider>
     </FlashedRowProvider>
   );
 }
