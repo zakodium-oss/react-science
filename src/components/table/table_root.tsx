@@ -9,6 +9,7 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
 import { useEffect, useRef } from 'react';
+import { match } from 'ts-pattern';
 
 import { DroppedItemProvider } from './reorder_rows/dropped_item_provider.js';
 import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
@@ -28,30 +29,33 @@ import { useTableColumns } from './use_table_columns.js';
 import { useTableScroll } from './use_table_scroll.js';
 
 const CustomHTMLTable = styled(HTMLTable, {
-  shouldForwardProp: (prop) => prop !== 'striped' && prop !== 'stickyHeader',
-})<{ stickyHeader: boolean }>`
+  shouldForwardProp: (prop) =>
+    prop !== 'striped' && prop !== 'stickyHeader' && prop !== 'noHeader',
+})<{ stickyHeader: boolean; noHeader: boolean }>`
   /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
-  ${(props) => {
-    if (!props.stickyHeader) return '';
-
-    return `
+  ${(props) =>
+    match(props)
+      .with({ stickyHeader: false, noHeader: false }, () => '')
+      .otherwise(
+        (props) => `
       thead tr:last-child {
         box-shadow: inset 0 -1px #11141826;
       }
     
       tbody tr:first-of-type td {
-        box-shadow: ${
-          props.bordered
-            ? 'inset 1px 0 0 0 #11141826 !important'
-            : 'none !important'
-        };
+        box-shadow: ${match(props)
+          .with(
+            { bordered: true },
+            () => 'inset 1px 0 0 0 #11141826 !important',
+          )
+          .otherwise(() => 'none !important')};
       }
     
       tbody tr:first-of-type td:first-of-type {
         box-shadow: none !important;
       }
-    `;
-  }}
+    `,
+      )}
 
   /* Blueprint's HTMLTable \`striped\` prop's implementation is based on nth-child odd / even */
   /* We cannot use that with virtualization, so we override its implementation here. */
@@ -88,6 +92,10 @@ interface TableBaseProps<TData extends RowData> {
    * Alternate between gray and white background for each row.
    */
   striped?: boolean;
+  /**
+   * Do not render the table header.
+   */
+  noHeader?: boolean;
   /**
    * Enable header rows which stick to the top of the table.
    */
@@ -199,6 +207,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     compact = false,
     interactive = false,
     striped = false,
+    noHeader = false,
     stickyHeader = false,
 
     reactTable,
@@ -274,15 +283,18 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
             compact={compact}
             interactive={interactive}
             striped={striped}
+            noHeader={noHeader}
             stickyHeader={stickyHeader}
             {...tableProps}
             className={finalClassName}
           >
-            <TableHeader
-              sticky={stickyHeader}
-              headers={tableHeaders}
-              renderHeaderCell={renderHeaderCell}
-            />
+            {!noHeader && (
+              <TableHeader
+                sticky={stickyHeader}
+                headers={tableHeaders}
+                renderHeaderCell={renderHeaderCell}
+              />
+            )}
             <TableBody
               rows={table.getRowModel().rows}
               renderRowTr={renderRowTr}
