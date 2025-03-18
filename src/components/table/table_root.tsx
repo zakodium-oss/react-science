@@ -8,9 +8,11 @@ import {
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { match } from 'ts-pattern';
 
+import type { PreviewTablePropsContextValue } from './preview_table_context.js';
+import { PreviewTablePropsContextProvider } from './preview_table_context.js';
 import { DroppedItemProvider } from './reorder_rows/dropped_item_provider.js';
 import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
 import { useDropMonitor } from './reorder_rows/use_drop_monitor.js';
@@ -260,54 +262,69 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     props as TableProps<unknown>,
     tableHeaders as Array<Header<unknown, unknown>>,
   );
+
+  const tablePreviewProps = useMemo<PreviewTablePropsContextValue<TData>>(
+    () => ({
+      className,
+      getTdProps,
+      renderRowTr,
+      columns,
+      compact,
+    }),
+    [className, getTdProps, renderRowTr, columns, compact],
+  );
   return (
-    <DroppedItemProvider>
-      <ItemOrderProvider
-        items={table.getRowModel().rows}
-        onOrderChanged={(items) => {
-          onRowOrderChanged?.(items.map((item) => item.original));
-        }}
-      >
-        <Container
-          virtualizeRows={virtualizeRows}
-          scrollRef={
-            virtualizeRows
-              ? scrollElementRef
-              : props.scrollableElementRef || tableRef
-          }
-          isReorderingEnabled={isReorderingEnabled}
+    <PreviewTablePropsContextProvider
+      value={tablePreviewProps as PreviewTablePropsContextValue<unknown>}
+    >
+      <DroppedItemProvider>
+        <ItemOrderProvider
+          items={table.getRowModel().rows}
+          onOrderChanged={(items) => {
+            onRowOrderChanged?.(items.map((item) => item.original));
+          }}
         >
-          <CustomHTMLTable
-            ref={tableRef}
-            bordered={bordered}
-            compact={compact}
-            interactive={interactive}
-            striped={striped}
-            noHeader={noHeader}
-            stickyHeader={stickyHeader}
-            {...tableProps}
-            className={finalClassName}
+          <Container
+            virtualizeRows={virtualizeRows}
+            scrollRef={
+              virtualizeRows
+                ? scrollElementRef
+                : props.scrollableElementRef || tableRef
+            }
+            isReorderingEnabled={isReorderingEnabled}
           >
-            {!noHeader && (
-              <TableHeader
-                sticky={stickyHeader}
-                headers={tableHeaders}
-                renderHeaderCell={renderHeaderCell}
+            <CustomHTMLTable
+              ref={tableRef}
+              bordered={bordered}
+              compact={compact}
+              interactive={interactive}
+              striped={striped}
+              noHeader={noHeader}
+              stickyHeader={stickyHeader}
+              {...tableProps}
+              className={finalClassName}
+            >
+              {!noHeader && (
+                <TableHeader
+                  sticky={stickyHeader}
+                  headers={tableHeaders}
+                  renderHeaderCell={renderHeaderCell}
+                />
+              )}
+              <TableBody
+                rows={table.getRowModel().rows}
+                renderRowTr={renderRowTr}
+                getTdProps={getTdProps}
+                virtualizer={tanstackVirtualizer}
+                virtualizeRows={virtualizeRows}
+                renderRowPreview={renderRowPreview}
+                isReorderingEnabled={isReorderingEnabled}
               />
-            )}
-            <TableBody
-              rows={table.getRowModel().rows}
-              renderRowTr={renderRowTr}
-              getTdProps={getTdProps}
-              virtualizer={tanstackVirtualizer}
-              virtualizeRows={virtualizeRows}
-              renderRowPreview={renderRowPreview}
-              isReorderingEnabled={isReorderingEnabled}
-            />
-          </CustomHTMLTable>
-        </Container>
-      </ItemOrderProvider>
-    </DroppedItemProvider>
+            </CustomHTMLTable>
+          </Container>
+        </ItemOrderProvider>
+      </DroppedItemProvider>
+    </PreviewTablePropsContextProvider>
   );
 }
 

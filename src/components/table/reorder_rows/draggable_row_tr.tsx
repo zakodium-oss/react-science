@@ -16,6 +16,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { assert } from '../../utils/index.js';
+import { PreviewTable } from '../preview_table.js';
+import { useIsPreviewTable } from '../preview_table_context.js';
 import type {
   TableRowPreviewRenderer,
   TableRowTrProps,
@@ -40,20 +42,29 @@ export interface TableDraggableRowTrProps<TData extends RowData> {
   /**
    * Preview of the row being dragged.
    */
-  renderRowPreview: TableRowPreviewRenderer<TData>;
+  renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
 
 export function TableDraggableRowTr<TData extends RowData>(
   props: TableDraggableRowTrProps<TData>,
 ) {
-  const { trProps, row, renderRowPreview } = props;
+  const {
+    trProps,
+    row,
+    renderRowPreview = (row) => <PreviewTable row={row} />,
+  } = props;
   const { instanceId } = useItemOrder();
+  const isPreview = useIsPreviewTable();
   const innerRef = useRef<HTMLTableRowElement>(null);
   const [state, setState] = useState<DraggableItemState>(idleState);
   const [droppedItemId, setDroppedItemId] = useDroppedItemContext();
 
   const dragHandleRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
+    if (isPreview) {
+      // No drag and drop in preview
+      return;
+    }
     const trElement = innerRef.current;
     assert(trElement, 'tr ref is null');
     assert(dragHandleRef.current, 'dragHandleRef is null');
@@ -125,7 +136,7 @@ export function TableDraggableRowTr<TData extends RowData>(
         },
       }),
     );
-  }, [row, instanceId]);
+  }, [row, instanceId, isPreview]);
 
   useEffect(() => {
     if (droppedItemId === row.id && innerRef.current) {
