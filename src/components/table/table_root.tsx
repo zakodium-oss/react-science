@@ -236,7 +236,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     scrollToRowRef,
   } = props;
   const isReorderingEnabled = !!onRowOrderChanged;
-  const scrollElementRef = useRef<HTMLDivElement>(null);
+  const virtualScrollElementRef = useRef<HTMLDivElement>(null);
   const columnDefs = useTableColumns(columns);
   const table = useReactTable<TData>({
     ...reactTable,
@@ -250,7 +250,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   const tanstackVirtualizer = useVirtualizer({
     enabled: virtualizeRows,
     count: data.length,
-    getScrollElement: () => scrollElementRef.current,
+    getScrollElement: () => virtualScrollElementRef.current,
     estimateSize:
       (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
@@ -302,7 +302,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
             scrollRef={
               virtualizeRows
                 ? // When virtualized, ScrollContainer will render a scrollable element associated to this ref.
-                  scrollElementRef
+                  virtualScrollElementRef
                 : // When not virtualized, ScrollContainer does not render a container, only its children,
                   // And the scrollable element is provided by the user or by default, the <table> element.
                   props.scrollableElementRef || tableRef
