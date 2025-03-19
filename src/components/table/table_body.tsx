@@ -143,7 +143,7 @@ function getDefaultRenderRowTr(
 }
 
 const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps, row) => (
-  <TableRowTr trProps={trProps} row={row} />
+  <TableRowTr trProps={{ ...trProps }} row={row} />
 );
 
 function getDefaultRenderDraggableRowTr(
