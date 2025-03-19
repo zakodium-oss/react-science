@@ -25,7 +25,7 @@ type StoryWithVirtualizedScroll = StoryObj<VirtualizedScrollTableProps>;
 type StoryWithScroll = StoryObj<ScrollTableProps>;
 
 export default {
-  title: 'Components / Table / Auto-scroll',
+  title: 'Components / Table / Scroll into view',
   args: {
     stickyHeader: false,
   },
@@ -94,6 +94,12 @@ export const ScrollRowIntoView = {
         type: 'select',
       },
       options: ['nearest', 'center', 'start', 'end'],
+    },
+    behavior: {
+      control: {
+        type: 'select',
+      },
+      options: ['auto', 'instant', 'smooth'],
     },
   },
   render: (props: ScrollTableProps) => {
