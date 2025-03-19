@@ -8,10 +8,25 @@ import type { TableProps } from './table_root.js';
 import type { TableVirtualScrollIntoViewOptions } from './table_utils.js';
 
 export function useTableScroll<TData extends RowData>(options: {
+  /**
+   * The user provided ref to attach the scroll callbacks to.
+   */
   scrollToRowRef: TableProps<TData>['scrollToRowRef'];
+  /**
+   * Whether the table rows are virtualized.
+   */
   virtualizeRows: TableProps<TData>['virtualizeRows'];
+  /**
+   * A ref to the effective scroll container.
+   */
   scrollRef: RefObject<Element>;
+  /*
+  Tanstack table instance.
+   */
   table: Table<TData>;
+  /**
+   * Tanstack virtualizer instance.
+   */
   virtualizer: Virtualizer<HTMLDivElement, Element>;
 }) {
   const [, setFlashedRow] = useFlashedRowContext();

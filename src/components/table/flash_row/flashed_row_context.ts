@@ -2,7 +2,7 @@ import type { useState } from 'react';
 import { createContext, useContext } from 'react';
 
 /**
- * ID of the item to flash.
+ * An editable state containing the ID of the next item to flash.
  */
 type FlashedRowContextValue = ReturnType<typeof useState<string>>;
 
