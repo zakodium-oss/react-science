@@ -3,11 +3,7 @@ import { FifoLogger } from 'fifo-logger';
 import { KbsProvider } from 'react-kbs';
 
 import { AppStateProvider } from '../../app-data/index.js';
-import {
-  FifoLoggerProvider,
-  FullScreenProvider,
-  RootLayout,
-} from '../../components/index.js';
+import { FifoLoggerProvider, RootLayout } from '../../components/index.js';
 
 import MainLayout from './MainLayout.js';
 import { queryClient } from './query_client.js';
@@ -21,17 +17,15 @@ const fifoLogger = new FifoLogger({ level: 'debug' });
 export default function App() {
   return (
     <FifoLoggerProvider logger={fifoLogger}>
-      <FullScreenProvider>
-        <RootLayout>
-          <QueryClientProvider client={queryClient}>
-            <KbsProvider>
-              <AppStateProvider>
-                <MainLayout />
-              </AppStateProvider>
-            </KbsProvider>
-          </QueryClientProvider>
-        </RootLayout>
-      </FullScreenProvider>
+      <RootLayout>
+        <QueryClientProvider client={queryClient}>
+          <KbsProvider>
+            <AppStateProvider>
+              <MainLayout />
+            </AppStateProvider>
+          </KbsProvider>
+        </QueryClientProvider>
+      </RootLayout>
     </FifoLoggerProvider>
   );
 }
