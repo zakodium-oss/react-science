@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import { useEffect, useMemo, useReducer, useRef } from 'react';
 
 import { fullscreenContext, useFullscreen } from './fullscreen_context.js';
@@ -13,7 +13,11 @@ type DocumentType = Document & {
   webkitFullscreenElement: Element | null;
 };
 interface FullscreenProps {
-  children: ReactNode;
+  /**
+   * Callback providing the ref which should be passed to the element that can be displayed fullscreen.
+   * @param ref
+   */
+  children: (ref: RefObject<HTMLDivElement>) => ReactNode;
 }
 
 export function FullScreenProvider(props: FullscreenProps) {
@@ -78,16 +82,5 @@ function FullscreenInner(props: FullscreenProps) {
       }
     }
   }, [isFullScreen]);
-  return (
-    <div
-      ref={ref}
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'white',
-      }}
-    >
-      {children}
-    </div>
-  );
+  return children(ref);
 }

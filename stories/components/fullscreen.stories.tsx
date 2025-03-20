@@ -1,3 +1,6 @@
+import styled from '@emotion/styled';
+import type { CSSProperties, ReactNode } from 'react';
+
 import {
   Button,
   FullScreenProvider,
@@ -10,42 +13,52 @@ export default {
 
 export function Basic() {
   return (
-    <div>
-      <FullScreenProvider>
-        <div
-          style={{ border: 'solid 1px black', padding: '10px', margin: '10px' }}
-        >
-          Page 1
-          <FullScreenProvider>
-            <div
-              style={{
-                border: 'solid 1px red',
-                padding: '10px',
-                margin: '10px',
-              }}
-            >
-              Page 2
-              <FullScreenProvider>
-                <div
-                  style={{
-                    border: 'solid 1px blue',
-                    padding: '10px',
-                    margin: '10px',
-                  }}
-                >
-                  Page 3
-                  <Content i="3" />
-                </div>
-              </FullScreenProvider>
-              <Content i="2" />
-            </div>
-          </FullScreenProvider>
-          <Content i="1" />
-        </div>
-      </FullScreenProvider>
-    </div>
+    <FullScreenProvider>
+      {(page1) => (
+        <FullPageRoot ref={page1} color="green">
+          <FullPageContent i="1">
+            <FullScreenProvider>
+              {(page2) => (
+                <FullPageRoot ref={page2} color="red">
+                  <FullPageContent i="2">
+                    <FullScreenProvider>
+                      {(page3) => (
+                        <FullPageRoot color="blue" ref={page3}>
+                          <FullPageContent i="3" />
+                        </FullPageRoot>
+                      )}
+                    </FullScreenProvider>
+                  </FullPageContent>
+                </FullPageRoot>
+              )}
+            </FullScreenProvider>
+          </FullPageContent>
+        </FullPageRoot>
+      )}
+    </FullScreenProvider>
   );
 }
+
+const FullPageRoot = styled.div<{ color: CSSProperties['borderColor'] }>`
+  border: 2px solid ${(props) => props.color};
+`;
+
+function FullPageContent({ i, children }: { i: string; children?: ReactNode }) {
+  return (
+    <FullPageInner>
+      Page {i}
+      {children}
+      <Content i={i} />
+    </FullPageInner>
+  );
+}
+
+const FullPageInner = styled.div`
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
 function Content({ i }: { i: string }) {
   const { toggle } = useFullscreen();
