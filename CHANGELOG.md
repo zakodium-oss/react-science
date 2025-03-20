@@ -1,5 +1,15 @@
 # Changelog
 
+## [16.1.0](https://github.com/zakodium-oss/react-science/compare/v16.0.0...v16.1.0) (2025-03-20)
+
+
+### Features
+
+* add flashing effect option when scrolling to table row ([#895](https://github.com/zakodium-oss/react-science/issues/895)) ([e06cc32](https://github.com/zakodium-oss/react-science/commit/e06cc327afa7710732396367440d3fd2717c8a85))
+* **Table:** add noHeader prop ([0f3cc51](https://github.com/zakodium-oss/react-science/commit/0f3cc51c30f7fbcc066e29786d68cb1736ded21d))
+* **Table:** allow customization of TableDragRowHandler's appearance ([3a7788b](https://github.com/zakodium-oss/react-science/commit/3a7788b730f584c163449915c584e397bd2c4794))
+* **Table:** render dragged row as the preview by default ([0b9c15f](https://github.com/zakodium-oss/react-science/commit/0b9c15fb7b34240c1b089ded088b58637ba012cb))
+
 ## [16.0.0](https://github.com/zakodium-oss/react-science/compare/v15.0.0...v16.0.0) (2025-03-13)
 
 
