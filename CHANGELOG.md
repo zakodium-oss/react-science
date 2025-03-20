@@ -1,5 +1,16 @@
 # Changelog
 
+## [17.0.0](https://github.com/zakodium-oss/react-science/compare/v16.1.0...v17.0.0) (2025-03-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* FullScreenProvider now takes a render callback with the ref to attach to the element which can be displayed fullscreen. It no longer renders an additional styled div. The RootLayout is now a fullscreenable element. It is no longer needed to wrap it in a FullScreenProvider around it. A global CSS change makes the backdrop of fullscreen elements white.
+
+### Features
+
+* change FullScreenProvider API to not create additional div ([#897](https://github.com/zakodium-oss/react-science/issues/897)) ([de39f66](https://github.com/zakodium-oss/react-science/commit/de39f66c53564bc1251de991a650d5b3e388098a))
+
 ## [16.1.0](https://github.com/zakodium-oss/react-science/compare/v16.0.0...v16.1.0) (2025-03-20)
 
 
