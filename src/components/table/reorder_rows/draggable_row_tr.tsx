@@ -10,22 +10,21 @@ import {
   attachClosestEdge,
   extractClosestEdge,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
-import { Colors } from '@blueprintjs/core';
 import type { Row, RowData } from '@tanstack/react-table';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { assert } from '../../utils/index.js';
+import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
 import { PreviewTable } from '../preview_table.js';
 import { useIsPreviewTable } from '../preview_table_context.js';
 import type {
   TableRowPreviewRenderer,
-  TableRowTrProps,
+  TableRowTrRenderProps,
 } from '../table_utils.js';
 
 import type { DraggableRowContext } from './draggable_row_context.js';
 import { draggableRowContext } from './draggable_row_context.js';
-import { useDroppedItemContext } from './dropped_item_context.js';
 import type { DraggableItemState } from './item_data.js';
 import { getItemData, isItemData } from './item_data.js';
 import { useItemOrder } from './item_order_context.js';
@@ -34,7 +33,7 @@ export interface TableDraggableRowTrProps<TData extends RowData> {
   /**
    * Props to be spread on the `tr` element.
    */
-  trProps: TableRowTrProps;
+  trProps: TableRowTrRenderProps;
   /**
    * Row data.
    */
@@ -55,9 +54,8 @@ export function TableDraggableRowTr<TData extends RowData>(
   } = props;
   const { instanceId } = useItemOrder();
   const isPreview = useIsPreviewTable();
-  const innerRef = useRef<HTMLTableRowElement>(null);
+  const tableRowRef = useRef<HTMLTableRowElement>(null);
   const [state, setState] = useState<DraggableItemState>(idleState);
-  const [droppedItemId, setDroppedItemId] = useDroppedItemContext();
 
   const dragHandleRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -65,7 +63,7 @@ export function TableDraggableRowTr<TData extends RowData>(
       // No drag and drop in preview
       return;
     }
-    const trElement = innerRef.current;
+    const trElement = tableRowRef.current;
     assert(trElement, 'tr ref is null');
     assert(dragHandleRef.current, 'dragHandleRef is null');
 
@@ -138,12 +136,7 @@ export function TableDraggableRowTr<TData extends RowData>(
     );
   }, [row, instanceId, isPreview]);
 
-  useEffect(() => {
-    if (droppedItemId === row.id && innerRef.current) {
-      triggerPostFlash(innerRef.current);
-      setDroppedItemId(undefined);
-    }
-  }, [droppedItemId, row.id, setDroppedItemId]);
+  useFlashRowEffect(row.id, tableRowRef);
 
   const value = useMemo<DraggableRowContext>(() => {
     return {
@@ -155,7 +148,7 @@ export function TableDraggableRowTr<TData extends RowData>(
   return (
     <>
       <draggableRowContext.Provider value={value}>
-        <tr {...trProps} ref={innerRef} />
+        <tr {...trProps} ref={tableRowRef} />
       </draggableRowContext.Provider>
       {state.type === 'preview' &&
         createPortal(renderRowPreview(row), state.container)}
@@ -165,13 +158,3 @@ export function TableDraggableRowTr<TData extends RowData>(
 
 const idleState: DraggableItemState = { type: 'idle' };
 const draggingState: DraggableItemState = { type: 'dragging' };
-
-function triggerPostFlash(element: HTMLElement) {
-  element.animate(
-    [{ backgroundColor: Colors.BLUE5, opacity: 0.5 }, { opacity: 0.5 }],
-    {
-      duration: 250,
-      iterations: 1,
-    },
-  );
-}

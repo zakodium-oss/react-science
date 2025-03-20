@@ -34,7 +34,7 @@ const getTdProps: GetTdProps<TableRecord> = () => ({
 const getRowId: TableProps<TableRecord>['getRowId'] = (row) => row.id;
 
 export default {
-  title: 'Components / Table / Reordering rows',
+  title: 'Components / Table / Reorder rows',
   component: Table,
   args: {
     bordered: true,

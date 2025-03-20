@@ -7,8 +7,8 @@ import type { RefObject } from 'react';
 import { useEffect } from 'react';
 
 import { assert } from '../../utils/index.js';
+import { useFlashedRowContext } from '../flash_row/flashed_row_context.js';
 
-import { useDroppedItemContext } from './dropped_item_context.js';
 import { isItemData } from './item_data.js';
 import { useItemOrder } from './item_order_context.js';
 
@@ -23,7 +23,7 @@ export function useDropMonitor(
   enabled: boolean,
 ) {
   const { reorderItem, items } = useItemOrder();
-  const [, setDroppedItem] = useDroppedItemContext();
+  const [, setFlashedRow] = useFlashedRowContext();
   useEffect(() => {
     const scrollContainer = scrollElementRef.current;
     assert(scrollContainer, 'Missing scroll container ref');
@@ -61,7 +61,7 @@ export function useDropMonitor(
               indexOfTarget,
               closestEdgeOfTarget,
             });
-            setDroppedItem(sourceData.id);
+            setFlashedRow(sourceData.id);
           },
         }),
         autoScrollForElements({
@@ -70,5 +70,5 @@ export function useDropMonitor(
         }),
       );
     }
-  }, [items, reorderItem, scrollElementRef, setDroppedItem, enabled]);
+  }, [items, reorderItem, scrollElementRef, setFlashedRow, enabled]);
 }

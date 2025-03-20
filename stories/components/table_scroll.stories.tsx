@@ -1,11 +1,12 @@
 import { Button, Callout } from '@blueprintjs/core';
 import type { Meta, StoryObj } from '@storybook/react';
-import type { ScrollToOptions } from '@tanstack/react-virtual';
 import { useRef, useState } from 'react';
 
 import type {
   Scroller,
   TableProps,
+  TableScrollIntoViewOptions,
+  TableVirtualScrollIntoViewOptions,
   VirtualScroller,
 } from '../../src/components/index.js';
 import { Table } from '../../src/components/index.js';
@@ -16,15 +17,17 @@ import { columns } from './table_columns.js';
 type TableRecord = (typeof table)[number];
 type StoryTableProps = Pick<TableProps<TableRecord>, 'stickyHeader'>;
 
-type StoryWithScrollTo = StoryObj<StoryTableProps & ScrollToOptions>;
-type StoryWithScrollIntoView = StoryObj<
-  StoryTableProps & ScrollIntoViewOptions
->;
+type VirtualizedScrollTableProps = StoryTableProps &
+  TableVirtualScrollIntoViewOptions;
+type ScrollTableProps = StoryTableProps & TableScrollIntoViewOptions;
+
+type StoryWithVirtualizedScroll = StoryObj<VirtualizedScrollTableProps>;
+type StoryWithScroll = StoryObj<ScrollTableProps>;
 
 export default {
-  title: 'Components / Table / Auto-scroll',
+  title: 'Components / Table / Scroll into view',
   args: {
-    stickyHeader: true,
+    stickyHeader: false,
   },
 } satisfies Meta<StoryTableProps>;
 
@@ -32,6 +35,7 @@ export const ScrollToVirtualRow = {
   args: {
     behavior: 'auto',
     align: 'start',
+    flashRow: true,
   },
   argTypes: {
     behavior: {
@@ -47,11 +51,12 @@ export const ScrollToVirtualRow = {
       options: ['auto', 'center', 'start', 'end'],
     },
   },
-  render: (props: StoryTableProps & ScrollToOptions) => {
+  render: (props: VirtualizedScrollTableProps) => {
     const buttons = useScrollButtons((index) => {
       scrollToRef.current?.scrollIntoView(String(index), {
         align: props.align,
         behavior: props.behavior,
+        flashRow: props.flashRow,
       });
     });
     const scrollToRef = useRef<VirtualScroller>();
@@ -64,7 +69,6 @@ export const ScrollToVirtualRow = {
             {...props}
             columns={columns}
             data={table}
-            striped
             virtualizeRows
             tableProps={{
               style: { height: '100%' },
@@ -76,12 +80,13 @@ export const ScrollToVirtualRow = {
       </div>
     );
   },
-} satisfies StoryWithScrollTo;
+} satisfies StoryWithVirtualizedScroll;
 
 export const ScrollRowIntoView = {
   args: {
     behavior: 'instant',
     block: 'start',
+    flashRow: true,
   },
   argTypes: {
     block: {
@@ -90,13 +95,20 @@ export const ScrollRowIntoView = {
       },
       options: ['nearest', 'center', 'start', 'end'],
     },
+    behavior: {
+      control: {
+        type: 'select',
+      },
+      options: ['auto', 'instant', 'smooth'],
+    },
   },
-  render: (props: StoryTableProps & ScrollIntoViewOptions) => {
+  render: (props: ScrollTableProps) => {
     const scrollToRef = useRef<Scroller>();
     const buttons = useScrollButtons((index) =>
       scrollToRef.current?.scrollIntoView(String(index), {
         behavior: props.behavior,
         block: props.block,
+        flashRow: props.flashRow,
       }),
     );
 
@@ -114,7 +126,6 @@ export const ScrollRowIntoView = {
             {...props}
             columns={columns}
             data={table}
-            striped
             virtualizeRows={false}
             tableProps={{
               style: { height: '100%' },
@@ -125,7 +136,7 @@ export const ScrollRowIntoView = {
       </div>
     );
   },
-} satisfies StoryWithScrollIntoView;
+} satisfies StoryWithScroll;
 
 function useScrollButtons(onIndexChanged: (index: number) => void) {
   const [rowIndex, setRowIndex] = useState(0);

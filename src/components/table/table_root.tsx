@@ -1,24 +1,29 @@
 import { HTMLTable } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type { Header, RowData, TableOptions } from '@tanstack/react-table';
+import type {
+  Header,
+  RowData,
+  Table as TanstackTable,
+  TableOptions,
+} from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type { ReactNode, RefObject, TableHTMLAttributes } from 'react';
+import type { RefObject, TableHTMLAttributes } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { match } from 'ts-pattern';
 
+import { FlashedRowProvider } from './flash_row/flashed_row_provider.js';
 import type { PreviewTablePropsContextValue } from './preview_table_context.js';
 import { PreviewTablePropsContextProvider } from './preview_table_context.js';
-import { DroppedItemProvider } from './reorder_rows/dropped_item_provider.js';
 import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
-import { useDropMonitor } from './reorder_rows/use_drop_monitor.js';
 import { TableBody } from './table_body.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
+import { ScrollContainer } from './table_scroll_container.js';
 import type {
   GetTdProps,
   Scroller,
@@ -28,7 +33,6 @@ import type {
   VirtualScroller,
 } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
-import { useTableScroll } from './use_table_scroll.js';
 
 const nonForwardedProps = new Set<keyof TableProps<unknown>>([
   'striped',
@@ -149,7 +153,7 @@ interface TableBaseProps<TData extends RowData> {
    * A ref which will be set with a callback to scroll to a row in the
    * table, specified by the row's ID.
    */
-  scrollToRowRef?: RefObject<VirtualScroller | ScrollToOptions | undefined>;
+  scrollToRowRef?: RefObject<VirtualScroller | Scroller | undefined>;
 
   /**
    * An accessor which should return a unique identifier for the row.
@@ -228,9 +232,11 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     getRowId,
     onRowOrderChanged,
     renderRowPreview,
+
+    scrollToRowRef,
   } = props;
   const isReorderingEnabled = !!onRowOrderChanged;
-  const scrollElementRef = useRef<HTMLDivElement>(null);
+  const virtualScrollElementRef = useRef<HTMLDivElement>(null);
   const columnDefs = useTableColumns(columns);
   const table = useReactTable<TData>({
     ...reactTable,
@@ -244,13 +250,13 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   const tanstackVirtualizer = useVirtualizer({
     enabled: virtualizeRows,
     count: data.length,
-    getScrollElement: () => scrollElementRef.current,
+    getScrollElement: () => virtualScrollElementRef.current,
     estimateSize:
       (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
   });
 
-  const tableRef = useTableScroll(props, table, tanstackVirtualizer);
+  const tableRef = useRef<HTMLTableElement>(null);
 
   // Make the table component compatible with styled components libraries.
   let finalClassName: string | undefined;
@@ -279,23 +285,29 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     [className, getTdProps, renderRowTr, columns, compact],
   );
   return (
-    <PreviewTablePropsContextProvider
-      value={tablePreviewProps as PreviewTablePropsContextValue<unknown>}
-    >
-      <DroppedItemProvider>
+    <FlashedRowProvider>
+      <PreviewTablePropsContextProvider
+        value={tablePreviewProps as PreviewTablePropsContextValue<unknown>}
+      >
         <ItemOrderProvider
           items={table.getRowModel().rows}
           onOrderChanged={(items) => {
             onRowOrderChanged?.(items.map((item) => item.original));
           }}
         >
-          <Container
+          <ScrollContainer
             virtualizeRows={virtualizeRows}
+            virtualizer={tanstackVirtualizer}
+            table={table as TanstackTable<unknown>}
             scrollRef={
               virtualizeRows
-                ? scrollElementRef
-                : props.scrollableElementRef || tableRef
+                ? // When virtualized, ScrollContainer will render a scrollable element associated to this ref.
+                  virtualScrollElementRef
+                : // When not virtualized, ScrollContainer does not render a container, only its children,
+                  // And the scrollable element is provided by the user or by default, the <table> element.
+                  props.scrollableElementRef || tableRef
             }
+            scrollToRowRef={scrollToRowRef}
             isReorderingEnabled={isReorderingEnabled}
           >
             <CustomHTMLTable
@@ -328,70 +340,11 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
                 isReorderingEnabled={isReorderingEnabled}
               />
             </CustomHTMLTable>
-          </Container>
+          </ScrollContainer>
         </ItemOrderProvider>
-      </DroppedItemProvider>
-    </PreviewTablePropsContextProvider>
+      </PreviewTablePropsContextProvider>
+    </FlashedRowProvider>
   );
-}
-
-const ScrollRefDiv = styled.div`
-  height: 100%;
-  overflow: auto;
-`;
-
-interface ContainerProps {
-  virtualizeRows?: boolean;
-  children: ReactNode;
-  scrollRef: RefObject<Element>;
-  isReorderingEnabled: boolean;
-}
-
-function Container(props: ContainerProps) {
-  const { virtualizeRows, scrollRef, isReorderingEnabled, children } = props;
-  if (virtualizeRows) {
-    return (
-      <ContainerVirtual
-        scrollElementRef={scrollRef}
-        enabled={isReorderingEnabled}
-      >
-        {children}
-      </ContainerVirtual>
-    );
-  }
-  return (
-    <ContainerTable scrollElementRef={scrollRef} enabled={isReorderingEnabled}>
-      {children}
-    </ContainerTable>
-  );
-}
-
-interface ContainerWithReorderingProps {
-  scrollElementRef: RefObject<Element>;
-  enabled: boolean;
-  children: ReactNode;
-}
-
-function ContainerVirtual(props: ContainerWithReorderingProps) {
-  const { scrollElementRef, enabled, children } = props;
-  useDropMonitor(scrollElementRef, enabled);
-
-  return (
-    <ScrollRefDiv ref={scrollElementRef as RefObject<HTMLDivElement>}>
-      {children}
-    </ScrollRefDiv>
-  );
-}
-
-interface ContainerTableProps {
-  scrollElementRef: RefObject<Element>;
-  enabled: boolean;
-  children: ReactNode;
-}
-function ContainerTable(props: ContainerTableProps) {
-  const { scrollElementRef, enabled, children } = props;
-  useDropMonitor(scrollElementRef, enabled);
-  return <>{children}</>;
 }
 
 function useCheckProps(
