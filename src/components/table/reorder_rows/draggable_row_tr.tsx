@@ -1,19 +1,17 @@
-import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import type { ElementDragPayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import {
-  draggable,
-  dropTargetForElements,
-} from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { pointerOutsideOfPreview } from '@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview';
-import { setCustomNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview';
-import {
-  attachClosestEdge,
-  extractClosestEdge,
-} from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import type { Row, RowData } from '@tanstack/react-table';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import {
+  attachClosestEdge,
+  combine,
+  draggable,
+  dropTargetForElements,
+  extractClosestEdge,
+  pointerOutsideOfPreview,
+  setCustomNativeDragPreview,
+} from '../../pdnd.cjs';
 import { assert } from '../../utils/index.js';
 import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
 import { PreviewTable } from '../preview_table.js';

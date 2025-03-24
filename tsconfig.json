@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
+//    "verbatimModuleSyntax": true,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true
