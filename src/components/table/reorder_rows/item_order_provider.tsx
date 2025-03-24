@@ -1,8 +1,8 @@
-import { reorder } from '@atlaskit/pragmatic-drag-and-drop/reorder';
-import { getReorderDestinationIndex } from '@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index';
 import type { Row } from '@tanstack/react-table';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
+
+import { getReorderDestinationIndex, reorder } from '../../pdnd.cjs';
 
 import type { ReorderItemCallback } from './item_order_context.js';
 import { itemOrderContext } from './item_order_context.js';
