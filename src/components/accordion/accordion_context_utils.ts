@@ -1,12 +1,15 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-export interface AccordionItemState {
-  title: string;
-  onChange: AccordionItemSetIsOpen;
+export interface AccordionItemControls {
+  closeOthers: () => void;
+  toggle: () => void;
+  open: () => void;
+  close: () => void;
 }
 
-export interface AccordionState {
+export interface AccordionItemContextValue {
   unmountChildren: boolean;
+  controls: AccordionItemControls;
 }
 
 export type AccordionItemSetIsOpen = Dispatch<
