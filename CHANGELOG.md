@@ -1,5 +1,17 @@
 # Changelog
 
+## [18.0.0](https://github.com/zakodium-oss/react-science/compare/v17.0.0...v18.0.0) (2025-03-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Accordion:** The render callback parameter has changed to contain multiple properties instead of just the `isOpen` state. It can now be used to control the state of the item in which it is rendered. Click events in the toolbar no longer propagate to the header in order to prevent it from toggling if it is not wanted.
+
+### Features
+
+* **Accordion:** improve renderToolbar API ([#902](https://github.com/zakodium-oss/react-science/issues/902)) ([eafb6b6](https://github.com/zakodium-oss/react-science/commit/eafb6b633e992050b0871ae1d2629653e4e27d9a))
+* improve fullscreen error handling ([#903](https://github.com/zakodium-oss/react-science/issues/903)) ([48b7c02](https://github.com/zakodium-oss/react-science/commit/48b7c02a2cb3637a9b7937f0dc55ae55fe4712fd))
+
 ## [17.0.0](https://github.com/zakodium-oss/react-science/compare/v16.1.0...v17.0.0) (2025-03-24)
 
 
