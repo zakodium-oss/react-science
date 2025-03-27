@@ -14,10 +14,14 @@ export default {
 export function Basic() {
   return (
     <FullScreenProvider
-      onToggleError={(error, step) =>
+      onToggleError={(error, step) => {
+        // eslint-disable-next-line no-console
+        console.error(error, step);
         // eslint-disable-next-line no-alert
-        window.alert(`Fullscreen error during "${step}"`)
-      }
+        window.alert(
+          `Fullscreen error during "${step}". See the browser console for details.`,
+        );
+      }}
     >
       {(page1) => (
         <FullPageRoot ref={page1} color="green">
