@@ -6,9 +6,10 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
-import { useAccordionContext } from './accordion_context.js';
+import { useAccordionItemContext } from './accordion_context.js';
+import type { AccordionItemControls } from './accordion_context_utils.js';
 
 export interface AccordionProps<T extends string = string> {
   children?:
@@ -16,6 +17,12 @@ export interface AccordionProps<T extends string = string> {
     | ReactElement<AccordionItemProps<T>>
     | boolean
     | null;
+}
+
+export interface AccordionRenderToolbarProps<T extends string = string> {
+  id: T;
+  isOpen: boolean;
+  controls: AccordionItemControls;
 }
 
 export interface AccordionItemProps<T extends string = string> {
@@ -49,7 +56,12 @@ export interface AccordionItemProps<T extends string = string> {
    * When not set or set to false, the item's children will be rendered but hidden when the item is closed.
    */
   unmountChildren?: boolean;
-  renderToolbar?: (isOpen: boolean) => ReactNode;
+  /**
+   * A custom render function to display in the toolbar on the right of the accordion item.
+   * Click events will not be propagated down to the accordion item to prevent it from opening/closing.
+   * @param data
+   */
+  renderToolbar?: (renderProps: AccordionRenderToolbarProps<T>) => ReactNode;
 }
 
 const AccordionItemHeader = styled.div`
@@ -106,7 +118,9 @@ Accordion.Item = function AccordionItem<T extends string = string>(
     defaultProp: defaultOpen,
     onChange: onOpenChange,
   });
-  const { utils, unmountChildren } = useAccordionContext(id, setIsOpen);
+  const { controls, unmountChildren } = useAccordionItemContext(id, setIsOpen);
+
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const shouldUnmountChildren =
     props.unmountChildren === undefined
@@ -116,12 +130,12 @@ Accordion.Item = function AccordionItem<T extends string = string>(
   const onClickHandle = useCallback(
     (event: ReactMouseEvent<HTMLDivElement>) => {
       if (event.shiftKey) {
-        utils.closeOthers();
+        controls.closeOthers();
       } else {
-        utils.toggle();
+        controls.toggle();
       }
     },
-    [utils],
+    [controls],
   );
 
   return (
@@ -133,7 +147,11 @@ Accordion.Item = function AccordionItem<T extends string = string>(
         isolation: 'isolate',
       }}
     >
-      <AccordionItemHeader onClick={onClickHandle} role="button">
+      <AccordionItemHeader
+        onClick={onClickHandle}
+        role="button"
+        ref={headerRef}
+      >
         <div
           style={{
             padding: '5px 0px',
@@ -141,7 +159,9 @@ Accordion.Item = function AccordionItem<T extends string = string>(
         >
           {title}
         </div>
-        {renderToolbar?.(isOpen ?? false)}
+        <ToolbarContainer onClick={(event) => event.stopPropagation()}>
+          {renderToolbar?.({ id, isOpen: isOpen ?? false, controls })}
+        </ToolbarContainer>
       </AccordionItemHeader>
       {!isOpen && shouldUnmountChildren ? null : (
         <div
@@ -169,3 +189,7 @@ Accordion.Item = function AccordionItem<T extends string = string>(
     </div>
   );
 };
+
+const ToolbarContainer = styled.div`
+  display: flex;
+`;

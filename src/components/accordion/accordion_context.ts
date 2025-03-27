@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useMemo } from 'react';
 
 import type {
+  AccordionItemContextValue,
   AccordionItemSetIsOpen,
-  AccordionState,
 } from './accordion_context_utils.js';
 
-export type ContextType = [
-  AccordionContext,
+export type AccordionContextValue = [
+  {
+    unmountChildren: boolean;
+  },
   {
     closeAllExcept: (except: string) => void;
     toggle: (id: string) => void;
@@ -15,15 +17,14 @@ export type ContextType = [
     change: (id: string, isOpen: boolean) => void;
   },
 ];
+export const accordionContext = createContext<AccordionContextValue | null>(
+  null,
+);
 
-type AccordionContext = AccordionState;
-
-export const accordionContext = createContext<ContextType | null>(null);
-
-export function useAccordionContext(
+export function useAccordionItemContext(
   id: string,
   setIsOpen: AccordionItemSetIsOpen,
-) {
+): AccordionItemContextValue {
   const context = useContext(accordionContext);
 
   if (!context) {
@@ -40,9 +41,11 @@ export function useAccordionContext(
   return useMemo(
     () => ({
       unmountChildren: state.unmountChildren,
-      utils: {
+      controls: {
         closeOthers: () => utils.closeAllExcept(id),
         toggle: () => utils.toggle(id),
+        open: () => utils.change(id, true),
+        close: () => utils.change(id, false),
       },
     }),
     [id, utils, state.unmountChildren],

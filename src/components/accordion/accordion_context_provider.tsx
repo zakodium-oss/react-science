@@ -3,7 +3,7 @@ import { useMemo, useRef } from 'react';
 
 import { assert } from '../utils/index.js';
 
-import type { ContextType } from './accordion_context.js';
+import type { AccordionContextValue } from './accordion_context.js';
 import { accordionContext } from './accordion_context.js';
 import type { AccordionItemSetIsOpen } from './accordion_context_utils.js';
 import { getAccordionRegister } from './accordion_context_utils.js';
@@ -17,7 +17,7 @@ export function AccordionProvider(props: AccordionProviderProps) {
   const { unmountChildren = false, children } = props;
   const registerRef = useRef(getAccordionRegister());
 
-  const utils = useMemo<ContextType[1]>(() => {
+  const utils = useMemo<AccordionContextValue[1]>(() => {
     return {
       change: (id: string, isOpen: boolean) => {
         assert(registerRef.current);
@@ -62,7 +62,7 @@ export function AccordionProvider(props: AccordionProviderProps) {
     };
   }, [registerRef]);
 
-  const contextValue = useMemo<ContextType>(() => {
+  const contextValue = useMemo<AccordionContextValue>(() => {
     return [
       {
         unmountChildren,

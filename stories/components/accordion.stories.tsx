@@ -1,10 +1,11 @@
-import { Button } from '@blueprintjs/core';
+import { Button, Icon } from '@blueprintjs/core';
 import { action } from '@storybook/addon-actions';
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
 
 import type {
   AccordionItemProps,
+  AccordionRenderToolbarProps,
   ToolbarItemProps,
 } from '../../src/components/index.js';
 import {
@@ -252,7 +253,7 @@ export function WithDynamicItems() {
 type WithToggleTitle = 'spectra' | 'integral';
 
 export function WithToggle() {
-  const utils = useAccordionControls<WithToggleTitle>();
+  const controls = useAccordionControls<WithToggleTitle>();
   const TypedAccordionItem = Accordion.Item<WithToggleTitle>;
   return (
     <>
@@ -284,22 +285,22 @@ export function WithToggle() {
                 gap: 5,
               }}
             >
-              <Button onClick={() => utils.open('spectra')}>
+              <Button onClick={() => controls.open('spectra')}>
                 Open Spectra
               </Button>
-              <Button onClick={() => utils.close('spectra')}>
+              <Button onClick={() => controls.close('spectra')}>
                 Close Spectra
               </Button>
-              <Button onClick={() => utils.toggle('spectra')}>
+              <Button onClick={() => controls.toggle('spectra')}>
                 Toggle Spectra
               </Button>
-              <Button onClick={() => utils.open('integral')}>
+              <Button onClick={() => controls.open('integral')}>
                 Open Integral
               </Button>
-              <Button onClick={() => utils.close('integral')}>
+              <Button onClick={() => controls.close('integral')}>
                 Close Integral
               </Button>
-              <Button onClick={() => utils.toggle('integral')}>
+              <Button onClick={() => controls.toggle('integral')}>
                 Toggle Integral
               </Button>
             </div>
@@ -368,19 +369,51 @@ export function UnmountSomeChildren() {
 }
 
 export function WithToolbar() {
-  function renderToolbar(isOpen: boolean) {
-    return <Button icon={isOpen ? 'minus' : 'plus'} variant="minimal" />;
+  const [bellCount, setBellCount] = useState(0);
+  function renderToolbarToggle({
+    isOpen,
+    controls,
+  }: AccordionRenderToolbarProps) {
+    return (
+      <Button
+        icon={isOpen ? 'minus' : 'plus'}
+        variant="minimal"
+        onClick={() => {
+          controls.toggle();
+        }}
+      />
+    );
   }
   return (
     <Accordion>
-      <Accordion.Item id="first" title="First" renderToolbar={renderToolbar}>
+      <Accordion.Item
+        id="first"
+        title="First"
+        renderToolbar={(data) => (
+          <>
+            <Button
+              icon="notifications-add"
+              variant="minimal"
+              onClick={() => {
+                data.controls.open();
+                setBellCount((prev) => prev + 1);
+              }}
+            />
+            {renderToolbarToggle(data)}
+          </>
+        )}
+      >
         First content
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <Icon icon="notifications" />
+          {bellCount}
+        </div>
       </Accordion.Item>
       <Accordion.Item
         id="second"
         title="Second"
         defaultOpen
-        renderToolbar={renderToolbar}
+        renderToolbar={renderToolbarToggle}
       >
         Second content
       </Accordion.Item>
@@ -388,19 +421,22 @@ export function WithToolbar() {
   );
 }
 
+type AccordionStoryItemId = 'first' | 'second' | 'third';
+
 export function ControlledState() {
+  const Item = AccordionStoryItem<AccordionStoryItemId>;
   return (
-    <AccordionStoryProvider>
+    <AccordionStoryProvider<AccordionStoryItemId> initialOpenItems={['first']}>
       <Accordion>
-        <AccordionStoryItem id="first" title="First">
+        <Item id="first" title="First">
           First content
-        </AccordionStoryItem>
-        <AccordionStoryItem id="second" title="Second">
+        </Item>
+        <Item id="second" title="Second">
           Second content
-        </AccordionStoryItem>
-        <AccordionStoryItem id="third" title="Third">
+        </Item>
+        <Item id="third" title="Third">
           Third content
-        </AccordionStoryItem>
+        </Item>
       </Accordion>
     </AccordionStoryProvider>
   );

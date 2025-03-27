@@ -2,21 +2,20 @@ import type { Dispatch, ReactNode } from 'react';
 import { createContext, useContext, useMemo, useReducer } from 'react';
 import { match } from 'ts-pattern';
 
+import type { AccordionItemProps } from '../../src/components/index.js';
 import { Accordion, assert } from '../../src/components/index.js';
 
-type AccordionStoryItemId = 'first' | 'second' | 'third';
-
-interface AccordionStoryState {
-  openItems: AccordionStoryItemId[];
+interface AccordionStoryState<T extends string> {
+  openItems: T[];
 }
 
-type AccordionStoryAction =
-  | { type: 'add'; id: AccordionStoryItemId }
-  | { type: 'remove'; id: AccordionStoryItemId };
+type AccordionStoryAction<T extends string> =
+  | { type: 'add'; id: T }
+  | { type: 'remove'; id: T };
 
-function accordionStoryReducer(
-  state: AccordionStoryState,
-  action: AccordionStoryAction,
+function accordionStoryReducer<T extends string>(
+  state: AccordionStoryState<T>,
+  action: AccordionStoryAction<T>,
 ) {
   return match(action)
     .with({ type: 'add' }, ({ id }) => {
@@ -33,13 +32,16 @@ function accordionStoryReducer(
 }
 
 const accordionStoryContext = createContext<{
-  state: AccordionStoryState;
-  dispatch: Dispatch<AccordionStoryAction>;
+  state: AccordionStoryState<string>;
+  dispatch: Dispatch<AccordionStoryAction<string>>;
 } | null>(null);
 
-export function AccordionStoryProvider(props: { children: ReactNode }) {
+export function AccordionStoryProvider<T extends string>(props: {
+  children: ReactNode;
+  initialOpenItems: T[];
+}) {
   const [state, dispatch] = useReducer(accordionStoryReducer, {
-    openItems: ['first'],
+    openItems: props.initialOpenItems as string[],
   });
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (
@@ -49,14 +51,17 @@ export function AccordionStoryProvider(props: { children: ReactNode }) {
   );
 }
 
-interface AccordionStoryItemProps {
-  id: AccordionStoryItemId;
-  title: string;
-  children: ReactNode;
-}
+type AccordionStoryItemProps<T extends string = string> = Pick<
+  AccordionItemProps,
+  'title' | 'children' | 'renderToolbar'
+> & {
+  id: T;
+};
 
-export function AccordionStoryItem(props: AccordionStoryItemProps) {
-  const { id, title, children } = props;
+export function AccordionStoryItem<T extends string = string>(
+  props: AccordionStoryItemProps<T>,
+) {
+  const { id, ...otherProps } = props;
   const contextValue = useContext(accordionStoryContext);
   assert(contextValue, 'AccordionStoryItem must be used within AccordionStory');
   const { state, dispatch } = contextValue;
@@ -65,17 +70,15 @@ export function AccordionStoryItem(props: AccordionStoryItemProps) {
   }
 
   return (
-    <Accordion.Item<AccordionStoryItemId>
+    <Accordion.Item<T>
       id={id}
-      title={title}
       open={state.openItems.includes(id)}
       onOpenChange={(isOpen) =>
         isOpen
           ? dispatch({ type: 'add', id })
           : dispatch({ type: 'remove', id })
       }
-    >
-      {children}
-    </Accordion.Item>
+      {...otherProps}
+    />
   );
 }

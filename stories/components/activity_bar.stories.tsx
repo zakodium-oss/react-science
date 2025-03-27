@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
@@ -8,11 +9,17 @@ import type {
   ToolbarProps,
 } from '../../src/components/index.js';
 import {
+  Accordion,
   ActivityBar,
   ActivityBarItem,
   ActivityPanel,
   SplitPane,
 } from '../../src/components/index.js';
+
+import {
+  AccordionStoryItem,
+  AccordionStoryProvider,
+} from './accordion_story_helpers.js';
 
 export default {
   title: 'Components / Activity bar and panel',
@@ -134,6 +141,94 @@ export function ActivityToolbarLayout() {
                   </ActivityPanel.Item>
                 ))}
             </ActivityPanel>
+          </SplitPane>
+        ) : (
+          <PlaceHolder />
+        )}
+      </div>
+      <div
+        style={{
+          height: '100%',
+          width: 'fit-content',
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          flexShrink: 1,
+        }}
+      >
+        <ActivityBar>
+          {itemsBlueprintIcons.map((item) => (
+            <ActivityBarItem
+              key={item.id}
+              id={item.id}
+              icon={item.icon}
+              active={selected.includes(item.id)}
+              onClick={() => {
+                setSelected((prev) =>
+                  prev.includes(item.id)
+                    ? prev.filter((id) => id !== item.id)
+                    : [...prev, item.id],
+                );
+              }}
+            />
+          ))}
+        </ActivityBar>
+      </div>
+    </div>
+  );
+}
+
+export function ActivityToolbarLayoutWithAccordions() {
+  const [selected, setSelected] = useState<string[]>([
+    'phone',
+    'add-column-left',
+  ]);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+        width: '100%',
+      }}
+    >
+      <div
+        style={{
+          flexGrow: 1,
+        }}
+      >
+        {selected.length > 0 ? (
+          <SplitPane defaultSize="30%" controlledSide="end">
+            <PlaceHolder />
+            <AccordionStoryProvider
+              initialOpenItems={itemsBlueprintIcons.map((item) => item.id)}
+            >
+              <Accordion>
+                {itemsBlueprintIcons
+                  .filter((item) => selected.includes(item.id))
+                  .map(({ id }) => (
+                    <AccordionStoryItem
+                      key={id}
+                      id={id}
+                      title={id}
+                      renderToolbar={({ id }) => (
+                        <Button
+                          onClick={() => {
+                            setSelected((prev) =>
+                              prev.filter((listId) => listId !== id),
+                            );
+                          }}
+                          icon="cross"
+                          variant="minimal"
+                        />
+                      )}
+                    >
+                      <div>
+                        This is the content of <strong>{id}</strong>.
+                      </div>
+                    </AccordionStoryItem>
+                  ))}
+              </Accordion>
+            </AccordionStoryProvider>
           </SplitPane>
         ) : (
           <PlaceHolder />
