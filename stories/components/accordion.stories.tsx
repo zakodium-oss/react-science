@@ -421,19 +421,22 @@ export function WithToolbar() {
   );
 }
 
+type AccordionStoryItemId = 'first' | 'second' | 'third';
+
 export function ControlledState() {
+  const Item = AccordionStoryItem<AccordionStoryItemId>;
   return (
-    <AccordionStoryProvider>
+    <AccordionStoryProvider<AccordionStoryItemId> initialOpenItems={['first']}>
       <Accordion>
-        <AccordionStoryItem id="first" title="First">
+        <Item id="first" title="First">
           First content
-        </AccordionStoryItem>
-        <AccordionStoryItem id="second" title="Second">
+        </Item>
+        <Item id="second" title="Second">
           Second content
-        </AccordionStoryItem>
-        <AccordionStoryItem id="third" title="Third">
+        </Item>
+        <Item id="third" title="Third">
           Third content
-        </AccordionStoryItem>
+        </Item>
       </Accordion>
     </AccordionStoryProvider>
   );
