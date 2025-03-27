@@ -3,6 +3,7 @@ import type { CSSProperties, MutableRefObject, ReactNode } from 'react';
 import { useCallback, useState } from 'react';
 
 import { AccordionProvider } from '../accordion/index.js';
+import type { FullscreenProviderProps } from '../fullscreen/index.js';
 import { FullScreenProvider } from '../fullscreen/index.js';
 
 import { CustomDivPreflight } from './css-reset/customPreflight.js';
@@ -11,8 +12,9 @@ import { RootLayoutProvider } from './root_layout_context.provider.js';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 interface RootLayoutProps {
-  style?: CSSProperties;
   children: ReactNode;
+  style?: CSSProperties;
+  onFullscreenToggleError?: FullscreenProviderProps['onToggleError'];
 }
 
 const style: CSSProperties = {
@@ -35,13 +37,14 @@ export function RootLayout(props: RootLayoutProps) {
   }, []);
 
   return (
-    <FullScreenProvider>
-      {(ref) => (
+    <FullScreenProvider onToggleError={props.onFullscreenToggleError}>
+      {(fullscreenRef) => (
         <CustomDivPreflight
           id="root-layout"
           ref={(node) => {
             if (node) {
-              const mutableRef = ref as MutableRefObject<HTMLDivElement>;
+              const mutableRef =
+                fullscreenRef as MutableRefObject<HTMLDivElement>;
               mutableRef.current = node;
               refCallback(node);
             }
