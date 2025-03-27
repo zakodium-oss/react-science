@@ -1,7 +1,8 @@
 import { Button } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react';
 import type { ReactElement } from 'react';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 import type {
   ActivityBarItemProps,
@@ -141,6 +142,89 @@ export function ActivityToolbarLayout() {
                   </ActivityPanel.Item>
                 ))}
             </ActivityPanel>
+          </SplitPane>
+        ) : (
+          <PlaceHolder />
+        )}
+      </div>
+      <div
+        style={{
+          height: '100%',
+          width: 'fit-content',
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          flexShrink: 1,
+        }}
+      >
+        <ActivityBar>
+          {itemsBlueprintIcons.map((item) => (
+            <ActivityBarItem
+              key={item.id}
+              id={item.id}
+              icon={item.icon}
+              active={selected.includes(item.id)}
+              onClick={() => {
+                setSelected((prev) =>
+                  prev.includes(item.id)
+                    ? prev.filter((id) => id !== item.id)
+                    : [...prev, item.id],
+                );
+              }}
+            />
+          ))}
+        </ActivityBar>
+      </div>
+    </div>
+  );
+}
+
+export function ActivityToolbarLayoutResizable() {
+  const [selected, setSelected] = useState<string[]>([
+    'phone',
+    'add-column-left',
+  ]);
+
+  const displayedPanels = itemsBlueprintIcons.filter((item) =>
+    selected.includes(item.id),
+  );
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+        width: '100%',
+      }}
+    >
+      <div
+        style={{
+          flexGrow: 1,
+        }}
+      >
+        {selected.length > 0 ? (
+          <SplitPane defaultSize="30%" controlledSide="end">
+            <PlaceHolder />
+            <PanelGroup direction="vertical" autoSaveId="activity-bar-panels">
+              {displayedPanels.map(({ id }, idx) => (
+                <Fragment key={id}>
+                  <Panel id={id} minSize={10}>
+                    <ActivityPanel.Item
+                      title={id}
+                      onClose={() =>
+                        setSelected((prev) => prev.filter((i) => i !== id))
+                      }
+                    >
+                      <div>
+                        This is the content of <strong>{id}</strong>.
+                      </div>
+                    </ActivityPanel.Item>
+                  </Panel>
+                  {idx === displayedPanels.length - 1 ? null : (
+                    <PanelResizeHandle />
+                  )}
+                </Fragment>
+              ))}
+            </PanelGroup>
           </SplitPane>
         ) : (
           <PlaceHolder />
