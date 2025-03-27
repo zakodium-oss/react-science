@@ -353,17 +353,19 @@ function useCheckProps(
 ) {
   const { onRowOrderChanged, getRowId } = props;
   useEffect(() => {
-    if (onRowOrderChanged && !getRowId) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        'When reordering rows is enabled via the `onRowOrderChanged` prop, the `getRowId` prop must be provided to identify each row unambiguously.',
-      );
-    }
-    if (headers.some((header) => header.column.getCanSort())) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        'When reordering rows is enabled via the `onRowOrderChanged` prop, none of the columns should be sortable as data order will be overriden by internal sorting.',
-      );
+    if (onRowOrderChanged) {
+      if (!getRowId) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'When reordering rows is enabled via the `onRowOrderChanged` prop, the `getRowId` prop must be provided to identify each row unambiguously.',
+        );
+      }
+      if (headers.some((header) => header.column.getCanSort())) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'When reordering rows is enabled via the `onRowOrderChanged` prop, none of the columns should be sortable as data order will be overriden by internal sorting.',
+        );
+      }
     }
   }, [onRowOrderChanged, getRowId, headers]);
 }
