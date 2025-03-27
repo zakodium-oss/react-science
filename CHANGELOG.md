@@ -1,5 +1,12 @@
 # Changelog
 
+## [18.0.1](https://github.com/zakodium-oss/react-science/compare/v18.0.0...v18.0.1) (2025-03-27)
+
+
+### Bug Fixes
+
+* **Table:** remove false positive warning about conflicting props ([#906](https://github.com/zakodium-oss/react-science/issues/906)) ([ed0e3fa](https://github.com/zakodium-oss/react-science/commit/ed0e3fa932b1a7a568a224ccf26de59ed9122ef3))
+
 ## [18.0.0](https://github.com/zakodium-oss/react-science/compare/v17.0.0...v18.0.0) (2025-03-27)
 
 
