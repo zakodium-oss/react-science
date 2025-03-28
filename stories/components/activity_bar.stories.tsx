@@ -147,33 +147,23 @@ export function ActivityToolbarLayout() {
           <PlaceHolder />
         )}
       </div>
-      <div
-        style={{
-          height: '100%',
-          width: 'fit-content',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          flexShrink: 1,
-        }}
-      >
-        <ActivityBar>
-          {itemsBlueprintIcons.map((item) => (
-            <ActivityBarItem
-              key={item.id}
-              id={item.id}
-              icon={item.icon}
-              active={selected.includes(item.id)}
-              onClick={() => {
-                setSelected((prev) =>
-                  prev.includes(item.id)
-                    ? prev.filter((id) => id !== item.id)
-                    : [...prev, item.id],
-                );
-              }}
-            />
-          ))}
-        </ActivityBar>
-      </div>
+      <ActivityBar>
+        {itemsBlueprintIcons.map((item) => (
+          <ActivityBarItem
+            key={item.id}
+            id={item.id}
+            icon={item.icon}
+            active={selected.includes(item.id)}
+            onClick={() => {
+              setSelected((prev) =>
+                prev.includes(item.id)
+                  ? prev.filter((id) => id !== item.id)
+                  : [...prev, item.id],
+              );
+            }}
+          />
+        ))}
+      </ActivityBar>
     </div>
   );
 }
@@ -230,33 +220,23 @@ export function ActivityToolbarLayoutResizable() {
           <PlaceHolder />
         )}
       </div>
-      <div
-        style={{
-          height: '100%',
-          width: 'fit-content',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          flexShrink: 1,
-        }}
-      >
-        <ActivityBar>
-          {itemsBlueprintIcons.map((item) => (
-            <ActivityBarItem
-              key={item.id}
-              id={item.id}
-              icon={item.icon}
-              active={selected.includes(item.id)}
-              onClick={() => {
-                setSelected((prev) =>
-                  prev.includes(item.id)
-                    ? prev.filter((id) => id !== item.id)
-                    : [...prev, item.id],
-                );
-              }}
-            />
-          ))}
-        </ActivityBar>
-      </div>
+      <ActivityBar>
+        {itemsBlueprintIcons.map((item) => (
+          <ActivityBarItem
+            key={item.id}
+            id={item.id}
+            icon={item.icon}
+            active={selected.includes(item.id)}
+            onClick={() => {
+              setSelected((prev) =>
+                prev.includes(item.id)
+                  ? prev.filter((id) => id !== item.id)
+                  : [...prev, item.id],
+              );
+            }}
+          />
+        ))}
+      </ActivityBar>
     </div>
   );
 }
@@ -318,33 +298,23 @@ export function ActivityToolbarLayoutWithAccordions() {
           <PlaceHolder />
         )}
       </div>
-      <div
-        style={{
-          height: '100%',
-          width: 'fit-content',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          flexShrink: 1,
-        }}
-      >
-        <ActivityBar>
-          {itemsBlueprintIcons.map((item) => (
-            <ActivityBarItem
-              key={item.id}
-              id={item.id}
-              icon={item.icon}
-              active={selected.includes(item.id)}
-              onClick={() => {
-                setSelected((prev) =>
-                  prev.includes(item.id)
-                    ? prev.filter((id) => id !== item.id)
-                    : [...prev, item.id],
-                );
-              }}
-            />
-          ))}
-        </ActivityBar>
-      </div>
+      <ActivityBar>
+        {itemsBlueprintIcons.map((item) => (
+          <ActivityBarItem
+            key={item.id}
+            id={item.id}
+            icon={item.icon}
+            active={selected.includes(item.id)}
+            onClick={() => {
+              setSelected((prev) =>
+                prev.includes(item.id)
+                  ? prev.filter((id) => id !== item.id)
+                  : [...prev, item.id],
+              );
+            }}
+          />
+        ))}
+      </ActivityBar>
     </div>
   );
 }
