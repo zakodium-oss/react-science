@@ -120,6 +120,7 @@
     "react-kbs": "^2.1.1",
     "react-ocl": "^7.0.2",
     "react-plot": "^3.0.0",
+    "react-resizable-panels": "^2.1.7",
     "rimraf": "^6.0.1",
     "spc-parser": "^1.0.0",
     "storybook": "^8.6.2",
