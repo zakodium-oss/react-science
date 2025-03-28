@@ -182,6 +182,8 @@ export function ActivityToolbarLayoutResizable() {
   const [selected, setSelected] = useState<string[]>([
     'phone',
     'add-column-left',
+    'redo',
+    'paperclip',
   ]);
 
   const displayedPanels = itemsBlueprintIcons.filter((item) =>
@@ -204,10 +206,10 @@ export function ActivityToolbarLayoutResizable() {
         {selected.length > 0 ? (
           <SplitPane defaultSize="30%" controlledSide="end">
             <PlaceHolder />
-            <PanelGroup direction="vertical" autoSaveId="activity-bar-panels">
+            <PanelGroup direction="vertical">
               {displayedPanels.map(({ id }, idx) => (
                 <Fragment key={id}>
-                  <Panel id={id} minSize={10}>
+                  <Panel key={id} id={id} minSize={10} order={idx}>
                     <ActivityPanel.Item
                       title={id}
                       onClose={() =>
@@ -219,9 +221,7 @@ export function ActivityToolbarLayoutResizable() {
                       </div>
                     </ActivityPanel.Item>
                   </Panel>
-                  {idx === displayedPanels.length - 1 ? null : (
-                    <PanelResizeHandle />
-                  )}
+                  <PanelResizeHandle id={id} />
                 </Fragment>
               ))}
             </PanelGroup>
