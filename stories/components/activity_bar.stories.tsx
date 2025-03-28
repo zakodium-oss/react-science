@@ -173,6 +173,7 @@ const ACTIVITY_PANEL_HEADER_HEIGHT = 38;
 const StyledPanelHandle = styled(PanelResizeHandle)`
   height: 2px;
   background-color: ${Colors.LIGHT_GRAY3};
+
   &:hover {
     background-color: ${Colors.LIGHT_GRAY1};
   }
