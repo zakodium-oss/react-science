@@ -59,15 +59,6 @@ const ActivityButton = styled(Button)`
   }
 `;
 
-const ActivityButtonIconContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 0;
-  height: 0;
-  margin-right: 0;
-`;
-
 export function ActivityBarItem(props: ActivityBarItemProps) {
   const {
     active = false,
@@ -91,11 +82,6 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
     <ActivityButton
       type="button"
       active={active}
-      icon={
-        <ActivityButtonIconContainer>
-          <Icon icon={resizedIcon} size={20} />
-        </ActivityButtonIconContainer>
-      }
       onClick={onClick}
       tooltipProps={
         !tooltip
@@ -109,7 +95,13 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
             }
       }
       {...otherProps}
-    />
+    >
+      {typeof resizedIcon === 'string' ? (
+        <Icon icon={resizedIcon} size={20} />
+      ) : (
+        resizedIcon
+      )}
+    </ActivityButton>
   );
 }
 
