@@ -7,7 +7,6 @@ import type {
 import {
   AnchorButton,
   Button as BlueprintButton,
-  Classes,
   Icon,
   Tag,
   Tooltip,
@@ -15,7 +14,6 @@ import {
 import type { CSSObject } from '@emotion/styled';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
-import { Fragment } from 'react';
 
 type BlueprintProps = {
   [key in keyof BlueprintButtonProps &
@@ -46,22 +44,17 @@ const ButtonTag = styled(Tag)`
 // Setting the line-height makes sure regular sized buttons have a
 // height consistent with the input fields and across variants.
 // Using the same line height as in the blueprint docs.
-function getStyledCss(
-  buttonProps: BlueprintAnchorButtonProps | BlueprintButtonProps,
-): CSSObject {
-  return {
-    lineHeight: 1.15,
-    position: 'relative',
-    [`.${Classes.ICON}`]: !buttonProps.children && { marginRight: 0 },
-  };
-}
+const buttonStyles: CSSObject = {
+  lineHeight: 1.15,
+  position: 'relative',
+};
 
 const TooltipAnchorButton = styled(AnchorButton)<{
   children: ReactNode;
-}>(getStyledCss);
+}>(buttonStyles);
 
 const TooltipButton = styled(BlueprintButton)<{ children: ReactNode }>(
-  getStyledCss,
+  buttonStyles,
 );
 
 export function Button(props: ButtonProps) {
@@ -88,14 +81,31 @@ export function Button(props: ButtonProps) {
           {...targetProps}
           {...buttonProps}
           icon={
-            <Fragment>
-              <Icon icon={buttonProps.icon} />
-              {tag && (
+            /*
+             icon and children will be children of the same node.
+             Blueprintjs' stylesheet treats the presence of multiple child elements
+             as there being icon and text, styling the icon with a right margin
+             so that the text is not right next to it.
+             In blueprint alone, this only happens when the button has children.
+             Here, we need to handle the case when the button has a tag, which
+             adds a sibling but should not affect the margin on its own.
+            */
+            tag ? (
+              <>
+                {children ? (
+                  <Icon icon={buttonProps.icon} />
+                ) : (
+                  <div style={{ display: 'contents' }}>
+                    <Icon icon={buttonProps.icon} />
+                  </div>
+                )}
                 <ButtonTag round intent="success" {...tagProps}>
                   {tag}
                 </ButtonTag>
-              )}
-            </Fragment>
+              </>
+            ) : (
+              buttonProps.icon
+            )
           }
         >
           {children}
