@@ -7,10 +7,11 @@ import type {
 import { ButtonGroup, Classes, Colors, Icon, Popover } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { MouseEvent, ReactNode } from 'react';
-import { cloneElement, useLayoutEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 
 import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
+import { normalizeIcon } from '../icon.js';
 
 import type { ToolbarContext } from './toolbarContext.js';
 import { toolbarContext, useToolbarContext } from './toolbarContext.js';
@@ -163,18 +164,10 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
   const intent = itemIntent ?? toolbarIntent;
   const disabled = itemDisabled ?? toolbarDisabled;
 
-  const resizedIcon =
-    !icon || typeof icon === 'string'
-      ? icon
-      : cloneElement(icon, {
-          className: icon.props.className
-            ? `${icon.props.className} ${Classes.ICON}`
-            : Classes.ICON,
-        });
+  const normalizedIcon = normalizeIcon(icon, 16);
 
   return (
     <ToolbarButton
-      alignText={isPopover ? 'start' : undefined}
       disabled={disabled}
       intent={intent}
       type="button"
@@ -185,32 +178,28 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
         width: 'fit-content',
       }}
       icon={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 0,
-            height: 0,
-            marginRight: 0,
-          }}
-        >
-          <Icon icon={resizedIcon} size={16} />
-          {isPopover && (
-            <Icon
-              icon="caret-right"
-              size={9}
-              style={{
-                transform: 'rotate(45deg)',
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                width: 9,
-                height: 9,
-              }}
-            />
+        <>
+          {isPopover ? (
+            <>
+              {/*For the icon to be properly styled, it should not have any siblings*/}
+              <div style={{ display: 'contents' }}>{normalizedIcon}</div>
+              <Icon
+                icon="caret-right"
+                size={9}
+                style={{
+                  transform: 'rotate(45deg)',
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                  width: 9,
+                  height: 9,
+                }}
+              />
+            </>
+          ) : (
+            normalizedIcon
           )}
-        </div>
+        </>
       }
       onClick={onClick}
       tooltipProps={

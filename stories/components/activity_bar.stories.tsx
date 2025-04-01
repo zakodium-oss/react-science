@@ -2,6 +2,8 @@ import { Button } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
+import { BiCreditCard } from 'react-icons/bi';
+import { HiCreditCard } from 'react-icons/hi2';
 
 import type {
   ActivityBarItemProps,
@@ -46,11 +48,24 @@ const itemsBlueprintIcons: ActivityBarStoryItem[] = [
     icon: 'redo',
     tooltip: 'Redo',
   },
-  { id: 'undo', icon: 'undo', tooltip: 'Undo' },
-  { id: 'paperclip', icon: 'paperclip', tooltip: 'Attachment' },
   { id: 'help', icon: 'help', tooltip: 'Help' },
   { id: 'lab-test', icon: 'lab-test', tooltip: 'Lab', disabled: true },
   { id: 'trash', icon: 'trash', tooltip: 'Trash' },
+  {
+    id: 'credit-card-hi2',
+    icon: <HiCreditCard />,
+    tooltip: 'Heroicons credit card icon',
+  },
+  {
+    id: 'credit-card-bi',
+    icon: <BiCreditCard />,
+    tooltip: 'Box icons credit card icon',
+    disabled: true,
+  },
+  {
+    id: 'custom-text',
+    icon: <span>IC</span>,
+  },
 ];
 
 export function ActivityBarControl(
