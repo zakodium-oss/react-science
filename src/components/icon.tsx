@@ -14,6 +14,8 @@ export function normalizeIcon(icon: ButtonProps['icon'], size: number) {
       style: {
         width: size,
         height: size,
+        // In a toolbar, icon size is 16 and font size 12
+        // In an activity toolbar, icon size is 20 and font size 16
         fontSize: size - 4,
         textAlign: 'center',
       },
