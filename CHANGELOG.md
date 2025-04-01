@@ -1,5 +1,12 @@
 # Changelog
 
+## [18.0.2](https://github.com/zakodium-oss/react-science/compare/v18.0.1...v18.0.2) (2025-04-01)
+
+
+### Bug Fixes
+
+* correct incompatibilities when blueprint stylesheet is in a css layer ([#909](https://github.com/zakodium-oss/react-science/issues/909)) ([3671980](https://github.com/zakodium-oss/react-science/commit/3671980c98b920f6ede1ca77f48be48124d44105))
+
 ## [18.0.1](https://github.com/zakodium-oss/react-science/compare/v18.0.0...v18.0.1) (2025-03-27)
 
 
