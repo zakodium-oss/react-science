@@ -1,11 +1,11 @@
 import type { TooltipProps } from '@blueprintjs/core';
-import { ButtonGroup, Classes, Colors, Icon } from '@blueprintjs/core';
+import { ButtonGroup, Classes, Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { MouseEvent, ReactNode } from 'react';
-import { cloneElement } from 'react';
 
 import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
+import { normalizeIcon } from '../icon.js';
 
 export interface ActivityBarProps {
   children: ReactNode;
@@ -45,12 +45,6 @@ const ActivityButton = styled(Button)`
     color: ${Colors.DARK_GRAY3};
   }
 
-  .${Classes.ICON} {
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-  }
-
   .${Classes.TAG} {
     font-size: 12px;
     line-height: 14px;
@@ -69,14 +63,7 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
     ...otherProps
   } = props;
 
-  const resizedIcon =
-    !icon || typeof icon === 'string'
-      ? icon
-      : cloneElement(icon, {
-          className: icon.props.className
-            ? `${icon.props.className} ${Classes.ICON}`
-            : Classes.ICON,
-        });
+  const resizedIcon = normalizeIcon(icon, 20);
 
   return (
     <ActivityButton
@@ -96,11 +83,7 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
       }
       {...otherProps}
     >
-      {typeof resizedIcon === 'string' ? (
-        <Icon icon={resizedIcon} size={20} />
-      ) : (
-        resizedIcon
-      )}
+      {resizedIcon}
     </ActivityButton>
   );
 }

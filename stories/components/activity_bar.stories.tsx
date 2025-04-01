@@ -62,6 +62,10 @@ const itemsBlueprintIcons: ActivityBarStoryItem[] = [
     tooltip: 'Box icons credit card icon',
     disabled: true,
   },
+  {
+    id: 'custom-text',
+    icon: <span>IC</span>,
+  },
 ];
 
 export function ActivityBarControl(
