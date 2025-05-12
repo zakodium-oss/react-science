@@ -16,6 +16,8 @@ import type { RefObject, TableHTMLAttributes } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { match } from 'ts-pattern';
 
+import { shouldForwardPropExcept } from '../utils/shouldForwardPropExcept.js';
+
 import { FlashedRowProvider } from './flash_row/flashed_row_provider.js';
 import type { PreviewTablePropsContextValue } from './preview_table_context.js';
 import { PreviewTablePropsContextProvider } from './preview_table_context.js';
@@ -34,14 +36,12 @@ import type {
 } from './table_utils.js';
 import { useTableColumns } from './use_table_columns.js';
 
-const nonForwardedProps = new Set<keyof TableProps<unknown>>([
-  'striped',
-  'stickyHeader',
-  'noHeader',
-]) as Set<string>;
-
 const CustomHTMLTable = styled(HTMLTable, {
-  shouldForwardProp: (prop) => !nonForwardedProps.has(prop),
+  shouldForwardProp: shouldForwardPropExcept([
+    'striped',
+    'stickyHeader',
+    'noHeader',
+  ]),
 })<{ stickyHeader: boolean; noHeader: boolean }>`
   /* When using a sticky header, ensure that the borders are located below the last header instead of above the first row. */
   ${(props) =>
