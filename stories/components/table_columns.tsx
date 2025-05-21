@@ -53,5 +53,15 @@ export const columns = [
     },
     enableSorting: true,
   }),
-  columnHelper.accessor('color', { header: 'Color' }),
+  columnHelper.accessor('color', {
+    header: 'Color',
+    meta: {
+      thStyle: {
+        color: 'transparent',
+        backgroundImage:
+          'linear-gradient(to left, violet, indigo, blue, green, orange, red)',
+        backgroundClip: 'text',
+      },
+    },
+  }),
 ];

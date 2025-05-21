@@ -48,6 +48,7 @@ function getThProps<TData extends RowData>(
     style: {
       position: 'relative',
       cursor: canSort ? 'pointer' : undefined,
+      ...column.columnDef.meta?.thStyle,
     },
     children: (
       <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
