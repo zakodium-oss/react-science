@@ -12,7 +12,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type { RefObject, TableHTMLAttributes } from 'react';
+import type { CSSProperties, RefObject, TableHTMLAttributes } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { match } from 'ts-pattern';
 
@@ -143,9 +143,16 @@ interface TableBaseProps<TData extends RowData> {
   renderHeaderCell?: HeaderCellRenderer<TData>;
 
   /**
-   * Pass custom props to the `<td>`.
+   * Pass custom default style to the `<td>` elements.
+   * If `getTdProps` returns a `style` object, it will be merged with `tdStyle`.
+   */
+  tdStyle?: CSSProperties;
+
+  /**
+   * Pass custom props to the `<td>` elements.
    * The callback is called for each cell and receives the row's data.
    * The returned properties are spread onto the `<td>` element.
+   * If `style` is returned, it will be merged with `tdStyle`.
    */
   getTdProps?: GetTdProps<TData>;
 
@@ -226,6 +233,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     className,
     renderRowTr,
     renderHeaderCell,
+    tdStyle,
     getTdProps,
 
     virtualizeRows,
@@ -333,6 +341,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
               <TableBody
                 rows={table.getRowModel().rows}
                 renderRowTr={renderRowTr}
+                tdStyle={tdStyle}
                 getTdProps={getTdProps}
                 virtualizer={tanstackVirtualizer}
                 virtualizeRows={virtualizeRows}

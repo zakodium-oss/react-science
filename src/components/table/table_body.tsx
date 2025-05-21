@@ -1,7 +1,7 @@
 import type { Row, RowData } from '@tanstack/react-table';
 import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import { notUndefined } from '@tanstack/react-virtual';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Fragment } from 'react';
 
 import { TableDraggableRowTr } from './reorder_rows/index.js';
@@ -16,6 +16,7 @@ import type {
 
 interface TableBodyProps<TData extends RowData> {
   rows: Array<Row<TData>>;
+  tdStyle?: CSSProperties;
   getTdProps?: GetTdProps<TData>;
   renderRowTr: TableRowTrRenderer<TData> | undefined;
   virtualizeRows?: boolean;
@@ -27,6 +28,7 @@ interface TableBodyProps<TData extends RowData> {
 export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
   const {
     rows,
+    tdStyle,
     getTdProps,
     renderRowTr = getDefaultRenderRowTr(
       props.isReorderingEnabled,
@@ -57,10 +59,15 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
             key={virtualItem.index}
             row={rows[virtualItem.index]}
             renderRowTr={(row) => {
-              const trProps = getTrRenderProps<TData>(row, getTdProps, {
-                ...virtualItem,
-                virtualIndex: index,
-              });
+              const trProps = getTrRenderProps<TData>(
+                row,
+                tdStyle,
+                getTdProps,
+                {
+                  ...virtualItem,
+                  virtualIndex: index,
+                },
+              );
               return renderRowTr(trProps, row);
             }}
           />
@@ -80,7 +87,7 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
           key={row.id}
           row={row}
           renderRowTr={(row) =>
-            renderRowTr(getTrRenderProps(row, getTdProps), row)
+            renderRowTr(getTrRenderProps(row, tdStyle, getTdProps), row)
           }
         />
       ))}
@@ -109,6 +116,7 @@ type RenderRowVirtualItem = VirtualItem & {
 
 function getTrRenderProps<TData extends RowData>(
   row: Row<TData>,
+  tdStyle: CSSProperties | undefined,
   getTdProps: GetTdProps<TData> | undefined,
   virtualItem?: RenderRowVirtualItem,
 ): TableRowTrRenderProps {
@@ -124,6 +132,7 @@ function getTrRenderProps<TData extends RowData>(
         <TableRowCell<TData>
           key={cell.id}
           cell={cell}
+          tdStyle={tdStyle}
           getTdProps={getTdProps}
         />
       )),
