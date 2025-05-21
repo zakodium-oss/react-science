@@ -1,19 +1,16 @@
 import styled from '@emotion/styled';
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import type { ComponentType } from 'react';
 
-import { Table, TableRowTr } from '../../src/components/index.js';
 import type { GetTdProps, TableProps } from '../../src/components/index.js';
+import { Table, TableRowTr } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 
 import { columns } from './table_columns.js';
 
 type TableRecord = (typeof table)[number];
 
-type StoryTableProps = TableProps<TableRecord>;
-type Story = StoryObj<StoryTableProps>;
-
-type StoryFunction = StoryFn<StoryTableProps>;
+type Story = StoryObj<TableProps<TableRecord>>;
 
 const getTdProps: GetTdProps<TableRecord> = () => ({
   style: {
@@ -33,7 +30,7 @@ export default {
   ],
   args: {
     noHeader: false,
-    virtualizeRows: true,
+    virtualizeRows: false,
     bordered: false,
     compact: false,
     interactive: false,
@@ -42,7 +39,6 @@ export default {
     getTdProps,
     data: table,
     columns,
-    estimatedRowHeight: () => 172,
   },
   argTypes: {
     estimatedRowHeight: {
@@ -99,9 +95,19 @@ export const CustomHeaderCellRender = {
   },
 } satisfies Story;
 
-export const StyledTable: StoryFunction = (props) => {
-  const StyledTableComponent = styled(Table<TableRecord>)`
-    border: 1px solid red;
-  `;
-  return <StyledTableComponent {...props} />;
-};
+export const StyledTable = {
+  render: (props: TableProps<TableRecord>) => {
+    const StyledTableComponent = styled(Table<TableRecord>)`
+      border: 1px solid red;
+    `;
+    return <StyledTableComponent {...props} />;
+  },
+} satisfies Story;
+
+export const WithTdStyle = {
+  args: { tdStyle: { backgroundColor: '#eee' } },
+} satisfies Story;
+
+export const Virtualized: Story = {
+  args: { virtualizeRows: true, estimatedRowHeight: () => 172 },
+} satisfies Story;
