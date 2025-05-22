@@ -1,5 +1,13 @@
 # Changelog
 
+## [18.1.0](https://github.com/zakodium-oss/react-science/compare/v18.0.2...v18.1.0) (2025-05-22)
+
+
+### Features
+
+* **Table:** add `tdStyle` prop ([9d2b68f](https://github.com/zakodium-oss/react-science/commit/9d2b68f20add619da2df9a126e8773bf080e0c5f))
+* **Table:** add support for `thStyle` in column meta ([8ccdc9e](https://github.com/zakodium-oss/react-science/commit/8ccdc9e519052a01d8822d8edeac7ed98b3f1f38))
+
 ## [18.0.2](https://github.com/zakodium-oss/react-science/compare/v18.0.1...v18.0.2) (2025-04-01)
 
 
