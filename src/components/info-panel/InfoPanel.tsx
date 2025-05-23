@@ -7,6 +7,7 @@ import { match, P } from 'ts-pattern';
 import { Button } from '../button/Button.js';
 import { SelectedTotal } from '../selected-total/index.js';
 import { createTableColumnHelper, Table } from '../table/index.js';
+import { shouldForwardPropExcept } from '../utils/shouldForwardPropExcept.js';
 import * as ValueRenderers from '../value-renderers/index.js';
 
 export interface InfoPanelData {
@@ -23,7 +24,7 @@ interface InfoPanelProps {
 }
 
 const AccordionButton = styled(Button, {
-  shouldForwardProp: (propName) => propName !== 'open',
+  shouldForwardProp: shouldForwardPropExcept(['open']),
 })<{ open?: boolean }>`
   z-index: 1;
   position: sticky;
