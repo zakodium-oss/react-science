@@ -1,9 +1,9 @@
-import { StructureEditor } from 'react-ocl/full';
+import { CanvasMoleculeEditor } from 'react-ocl';
 
 export default {
   title: 'Debug',
 };
 
 export function ReactOCL() {
-  return <StructureEditor width={600} height={400} svgMenu fragment />;
+  return <CanvasMoleculeEditor width={600} height={400} fragment />;
 }

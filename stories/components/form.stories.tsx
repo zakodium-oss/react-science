@@ -1,13 +1,13 @@
 import {
   Checkbox,
   FormGroup,
+  HTMLSelect,
   InputGroup,
   MenuItem,
   Radio,
   RadioGroup,
   TextArea,
 } from '@blueprintjs/core';
-import { HTMLSelect } from '@blueprintjs/core/lib/esnext';
 import type { ItemRenderer } from '@blueprintjs/select';
 import { Select } from '@blueprintjs/select';
 import styled from '@emotion/styled';

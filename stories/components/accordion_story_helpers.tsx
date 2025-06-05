@@ -36,12 +36,12 @@ const accordionStoryContext = createContext<{
   dispatch: Dispatch<AccordionStoryAction<string>>;
 } | null>(null);
 
-export function AccordionStoryProvider<T extends string>(props: {
+export function AccordionStoryProvider(props: {
   children: ReactNode;
-  initialOpenItems: T[];
+  initialOpenItems: string[];
 }) {
   const [state, dispatch] = useReducer(accordionStoryReducer, {
-    openItems: props.initialOpenItems as string[],
+    openItems: props.initialOpenItems,
   });
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (
