@@ -36,12 +36,13 @@ const accordionStoryContext = createContext<{
   dispatch: Dispatch<AccordionStoryAction<string>>;
 } | null>(null);
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function AccordionStoryProvider<T extends string>(props: {
   children: ReactNode;
   initialOpenItems: T[];
 }) {
   const [state, dispatch] = useReducer(accordionStoryReducer, {
-    openItems: props.initialOpenItems as string[],
+    openItems: props.initialOpenItems,
   });
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (

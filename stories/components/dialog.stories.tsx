@@ -12,7 +12,7 @@ import {
   FaReact,
   FaTabletAlt,
 } from 'react-icons/fa';
-import { StructureEditor } from 'react-ocl/full';
+import { CanvasMoleculeEditor } from 'react-ocl';
 
 import {
   Accordion,
@@ -267,7 +267,7 @@ export function DynamicallySizedChildren() {
         style={{ width: 700 }}
       >
         <DialogBodyStyled>
-          <StructureEditor width={600} height={400} svgMenu />
+          <CanvasMoleculeEditor width={600} height={400} />
         </DialogBodyStyled>
       </Dialog>
     </div>

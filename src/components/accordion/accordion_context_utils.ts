@@ -12,9 +12,7 @@ export interface AccordionItemContextValue {
   controls: AccordionItemControls;
 }
 
-export type AccordionItemSetIsOpen = Dispatch<
-  SetStateAction<boolean | undefined>
->;
+export type AccordionItemSetIsOpen = Dispatch<SetStateAction<boolean>>;
 
 interface AccordionRegisteredItem {
   setIsOpen: AccordionItemSetIsOpen;

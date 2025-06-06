@@ -421,9 +421,8 @@ export function WithToolbar() {
   );
 }
 
-type AccordionStoryItemId = 'first' | 'second' | 'third';
-
 export function ControlledState() {
+  type AccordionStoryItemId = 'first' | 'second' | 'third';
   const Item = AccordionStoryItem<AccordionStoryItemId>;
   return (
     <AccordionStoryProvider<AccordionStoryItemId> initialOpenItems={['first']}>
