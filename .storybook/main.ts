@@ -11,7 +11,7 @@ const config: StorybookConfig = {
     },
   },
 
-  addons: ['@storybook/addon-docs']
+  addons: ['@storybook/addon-docs'],
 };
 
 export default config;
