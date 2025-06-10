@@ -6,7 +6,7 @@ import { normalizeDOI } from './utils.js';
 
 type DOISize = 'small' | 'medium' | 'large';
 
-interface DOIProps {
+export interface DOIProps {
   value: string;
   size?: DOISize;
 }
