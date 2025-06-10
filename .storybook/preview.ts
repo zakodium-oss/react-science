@@ -10,6 +10,9 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 const preview: Preview = {
   decorators: [RootLayoutDecorator],
   parameters: {
+    docs: {
+      codePanel: true,
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

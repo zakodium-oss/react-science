@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { MeasurementColorPreview } from '../../../src/app/index.js';
 import { AppStateProvider } from '../../../src/app-data/index.js';

@@ -1,5 +1,5 @@
 import { Menu, MenuItem, Tooltip } from '@blueprintjs/core';
-import type { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react-vite';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { BiClipboard, BiCreditCard, BiPaperclip } from 'react-icons/bi';

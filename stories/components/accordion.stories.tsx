@@ -1,7 +1,7 @@
 import { Button, Icon } from '@blueprintjs/core';
-import { action } from '@storybook/addon-actions';
-import type { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react-vite';
 import { useState } from 'react';
+import { action } from 'storybook/actions';
 
 import type {
   AccordionItemProps,

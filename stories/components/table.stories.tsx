@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentType } from 'react';
 
 import type { GetTdProps, TableProps } from '../../src/components/index.js';
