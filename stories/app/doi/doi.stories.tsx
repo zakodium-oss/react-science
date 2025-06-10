@@ -7,7 +7,7 @@ export default {
   component: DOI,
 } as Meta;
 
-export const Default = {
+export const Control = {
   args: {
     value: '10.3762/bjoc.20.4',
     size: 'small',
