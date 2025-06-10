@@ -1,5 +1,5 @@
 import { Button } from '@blueprintjs/core';
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-vite';
 import { useCallback, useMemo, useState } from 'react';
 
 import { createTableColumnHelper, Table } from '../../src/components/index.js';

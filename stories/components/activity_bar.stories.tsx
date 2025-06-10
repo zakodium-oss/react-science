@@ -1,5 +1,5 @@
 import { Button } from '@blueprintjs/core';
-import type { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react-vite';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { BiCreditCard } from 'react-icons/bi';

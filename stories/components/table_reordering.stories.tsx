@@ -1,7 +1,7 @@
 import { Tag } from '@blueprintjs/core';
-import { action } from '@storybook/addon-actions';
 import { useRef, useState } from 'react';
 import { IdcodeSvgRenderer } from 'react-ocl';
+import { action } from 'storybook/actions';
 
 import type { GetTdProps, TableProps } from '../../src/components/index.js';
 import {

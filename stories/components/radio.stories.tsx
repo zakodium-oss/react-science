@@ -1,7 +1,7 @@
 import type { RadioGroupProps } from '@blueprintjs/core';
 import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type { Decorator } from '@storybook/react';
+import type { Decorator } from '@storybook/react-vite';
 import { useState } from 'react';
 
 import type { RadioButtonGroupProps } from '../../src/components/index.js';
