@@ -59,7 +59,7 @@ export const ScrollToVirtualRow = {
         flashRow: props.flashRow,
       });
     });
-    const scrollToRef = useRef<VirtualScroller>();
+    const scrollToRef = useRef<VirtualScroller>(undefined);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -103,7 +103,7 @@ export const ScrollRowIntoView = {
     },
   },
   render: (props: ScrollTableProps) => {
-    const scrollToRef = useRef<Scroller>();
+    const scrollToRef = useRef<Scroller>(undefined);
     const buttons = useScrollButtons((index) =>
       scrollToRef.current?.scrollIntoView(String(index), {
         behavior: props.behavior,
