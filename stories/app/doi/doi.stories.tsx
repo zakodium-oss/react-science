@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react-vite';
 
-import type { DOIProps } from '../../../src/app/doi/doi.js';
-import { DOI } from '../../../src/app/doi/doi.js';
+import type { DOIProps } from '../../../src/components/doi/doi.js';
+import { DOI } from '../../../src/components/doi/doi.js';
 
 export default {
   title: 'Components / Doi',
