@@ -1,7 +1,7 @@
-import type { Meta } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import type { DOIProps } from '../../../src/components/doi/doi.js';
-import { DOI } from '../../../src/components/doi/doi.js';
+import type { DOIProps } from '../../../src/components/index.js';
+import { DOI } from '../../../src/components/index.js';
 
 export default {
   title: 'Components / Doi',
@@ -20,10 +20,14 @@ export default {
   },
 } as Meta;
 
-export function Control(props: DOIProps) {
-  return (
+export const Control = {
+  args: {
+    value: '10.3762/bjoc.20.4',
+    size: 'small',
+  },
+  render: (props: DOIProps) => (
     <p>
       Check this DOI for more information: <DOI {...props} />
     </p>
-  );
-}
+  ),
+} satisfies StoryObj<typeof DOI>;

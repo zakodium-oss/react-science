@@ -2,6 +2,7 @@ export * from './accordion/index.js';
 export * from './button/index.js';
 export * from './color-picker/index.js';
 export * from './dialog/index.js';
+export * from './doi/index.js';
 export * from './drop-zone/index.js';
 export * from './forms/index.js';
 export * from './fullscreen/index.js';
