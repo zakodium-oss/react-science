@@ -1,7 +1,6 @@
-import styled from '@emotion/styled';
 import { match } from 'ts-pattern';
 
-import doiSvg from './svg/doi.svg';
+import { Logo } from './Logo.js';
 import { normalizeDOI } from './utils.js';
 
 type DOISize = 'small' | 'medium' | 'large';
@@ -10,12 +9,6 @@ export interface DOIProps {
   value: string;
   size?: DOISize;
 }
-
-const StyledSvg = styled.img<{ size: DOISize }>`
-  height: ${(props) => getDOISize(props.size)};
-  width: ${(props) => getDOISize(props.size)};
-  display: inline-block;
-`;
 
 export function DOI(props: DOIProps) {
   const { value, size = 'small' } = props;
@@ -28,7 +21,7 @@ export function DOI(props: DOIProps) {
       target="_blank"
       rel="noreferrer"
     >
-      <StyledSvg size={size} src={doiSvg} />
+      <Logo size={getDOISize(size)} />
     </a>
   );
 }
