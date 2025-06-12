@@ -8,8 +8,8 @@ import type {
   RefObject,
 } from 'react';
 import { useEffect, useReducer, useRef } from 'react';
+import { useResizeObserver } from 'react-d3-utils';
 import { match } from 'ts-pattern';
-import useResizeObserver from 'use-resize-observer';
 
 import type { SplitPaneSize, SplitPaneType } from './split_pane_helpers.js';
 import { parseSize, serializeSize } from './split_pane_helpers.js';
@@ -138,11 +138,9 @@ export function SplitPane(props: SplitPaneProps) {
     onResize,
   });
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore Module exists.
-  const rootSize = useResizeObserver<HTMLDivElement>();
+  const [rootRef, rootSize] = useResizeObserver();
   const mainDirectionSize =
-    direction === 'horizontal' ? rootSize.width : rootSize.height;
+    direction === 'horizontal' ? rootSize?.width : rootSize?.height;
 
   useEffect(() => {
     if (
@@ -172,7 +170,7 @@ export function SplitPane(props: SplitPaneProps) {
   }
 
   return (
-    <SplitPaneContainer direction={direction} ref={rootSize.ref}>
+    <SplitPaneContainer direction={direction} ref={rootRef}>
       {children[0] !== null && (
         <SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>
       )}
@@ -200,7 +198,7 @@ interface SplitterProps {
   direction: SplitPaneDirection;
   isOpen: boolean;
   isResizing: boolean;
-  splitterRef: RefObject<HTMLDivElement>;
+  splitterRef: RefObject<HTMLDivElement | null>;
 }
 
 function Splitter(props: SplitterProps) {

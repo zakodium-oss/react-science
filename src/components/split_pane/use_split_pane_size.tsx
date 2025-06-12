@@ -12,7 +12,7 @@ import { serializeSize } from './split_pane_helpers.js';
 interface UseSplitPaneSizeOptions {
   controlledSide: SplitPaneSide;
   direction: SplitPaneDirection;
-  splitterRef: RefObject<HTMLDivElement>;
+  splitterRef: RefObject<HTMLDivElement | null>;
   sizeType: SplitPaneType;
   onSizeChange: (newSize: ParsedSplitPaneSize) => void;
   onResize?: (newSize: SplitPaneSize) => void;
