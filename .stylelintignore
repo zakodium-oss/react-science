@@ -1,3 +1,4 @@
 *.json
 LICENSE
 styles/preflight.css
+*.svg
