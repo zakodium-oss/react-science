@@ -1,5 +1,13 @@
 # Changelog
 
+## [18.2.0](https://github.com/zakodium-oss/react-science/compare/v18.1.0...v18.2.0) (2025-06-15)
+
+
+### Features
+
+* add DOI component ([#921](https://github.com/zakodium-oss/react-science/issues/921)) ([f2b3d5b](https://github.com/zakodium-oss/react-science/commit/f2b3d5b89de2ccb728b557efd85bea33d63284bd))
+* create shouldForwardPropExcept utils ([#911](https://github.com/zakodium-oss/react-science/issues/911)) ([1f2a989](https://github.com/zakodium-oss/react-science/commit/1f2a9890ce83c2c760d8eff47a83904beb13bc31))
+
 ## [18.1.0](https://github.com/zakodium-oss/react-science/compare/v18.0.2...v18.1.0) (2025-05-22)
 
 
