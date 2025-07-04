@@ -3,7 +3,7 @@ import {
   Dialog,
   DialogBody,
   DialogFooter,
-  PanelStack2,
+  PanelStack,
 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
@@ -190,7 +190,7 @@ function PanelContainer({
   );
 }
 
-const Panel = styled(PanelStack2)`
+const Panel = styled(PanelStack)`
   height: 100%;
 `;
 

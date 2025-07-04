@@ -1,4 +1,4 @@
-import { PanelStack2 } from '@blueprintjs/core';
+import { PanelStack } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
 import {
@@ -10,7 +10,7 @@ import { Accordion } from '../../../components/index.js';
 
 import { MeasurementsPanel } from './index.js';
 
-const MeasurementsPanelStack = styled(PanelStack2)`
+const MeasurementsPanelStack = styled(PanelStack)`
   height: 100%;
 `;
 
