@@ -1,5 +1,18 @@
 # Changelog
 
+## [19.0.0](https://github.com/zakodium-oss/react-science/compare/v18.1.0...v19.0.0) (2025-07-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* update blueprintjs to version 6.0.0 ([#925](https://github.com/zakodium-oss/react-science/issues/925))
+
+### Features
+
+* add DOI component ([#921](https://github.com/zakodium-oss/react-science/issues/921)) ([f2b3d5b](https://github.com/zakodium-oss/react-science/commit/f2b3d5b89de2ccb728b557efd85bea33d63284bd))
+* create shouldForwardPropExcept utils ([#911](https://github.com/zakodium-oss/react-science/issues/911)) ([1f2a989](https://github.com/zakodium-oss/react-science/commit/1f2a9890ce83c2c760d8eff47a83904beb13bc31))
+* update blueprintjs to version 6.0.0 ([#925](https://github.com/zakodium-oss/react-science/issues/925)) ([ef8f777](https://github.com/zakodium-oss/react-science/commit/ef8f777459e31eff49cf0e4242b639f1e7579e94))
+
 ## [18.1.0](https://github.com/zakodium-oss/react-science/compare/v18.0.2...v18.1.0) (2025-05-22)
 
 
