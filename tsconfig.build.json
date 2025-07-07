@@ -3,5 +3,6 @@
   "compilerOptions": {
     "outDir": "lib/components"
   },
-  "include": ["src/components"]
+  "include": ["src/components"],
+  "exclude": ["**/__tests__"]
 }
