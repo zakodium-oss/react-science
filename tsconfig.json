@@ -23,6 +23,5 @@
     "playwright",
     "playwright-*.mts",
     "vite.config.mts"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }
