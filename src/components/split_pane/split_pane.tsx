@@ -85,6 +85,12 @@ export interface SplitPaneProps {
   onSizeChange?: (size: SplitPaneSize) => void;
 
   /**
+   * When set to true, only visible children will be rendered. If a side is closed or has a size of 0, it will not be rendered at all.
+   * When not set or set to false, closed or otherwise 0-sized sides will still be rendered.
+   */
+  unmountChildren?: boolean;
+
+  /**
    * The two React elements to show on both sides of the pane.
    * If one of the elements is `null`, the splitter will disappear and the
    * other element will take the full space.
@@ -105,6 +111,7 @@ export function SplitPane(props: SplitPaneProps) {
     closeThreshold = null,
     onResize,
     onOpenChange,
+    unmountChildren = false,
     children,
   } = props;
 
@@ -113,6 +120,7 @@ export function SplitPane(props: SplitPaneProps) {
     defaultProp: defaultOpen,
     onChange: onOpenChange,
   });
+
   const [size, setSize] = useControllableState<SplitPaneSize>({
     prop: sizeProp,
     defaultProp: defaultSize,
@@ -169,9 +177,26 @@ export function SplitPane(props: SplitPaneProps) {
     );
   }
 
+  function shouldMountSide(side: SplitPaneSide) {
+    if (!unmountChildren) {
+      return true;
+    }
+    return isSideVisible(
+      isOpen ?? defaultOpen,
+      controlledSide === side,
+      splitSize,
+      sizeType,
+      rootSize
+        ? direction === 'horizontal'
+          ? rootSize.width
+          : rootSize.height
+        : 0,
+    );
+  }
+
   return (
     <SplitPaneContainer direction={direction} ref={rootRef}>
-      {children[0] !== null && (
+      {children[0] !== null && shouldMountSide('start') && (
         <SplitSide style={getSplitSideStyle('start')}>{children[0]}</SplitSide>
       )}
       {children[0] !== null && children[1] !== null && (
@@ -185,7 +210,7 @@ export function SplitPane(props: SplitPaneProps) {
         />
       )}
 
-      {children[1] !== null && (
+      {children[1] !== null && shouldMountSide('end') && (
         <SplitSide style={getSplitSideStyle('end')}>{children[1]}</SplitSide>
       )}
     </SplitPaneContainer>
@@ -240,6 +265,22 @@ const flexBase = 100;
 function percentToFlex(percent: number): number {
   percent /= 100;
   return (flexBase - percent * flexBase) / percent;
+}
+
+function isSideVisible(
+  isOpen: boolean,
+  isControlledSide: boolean,
+  size: number,
+  type: SplitPaneType,
+  parentSize: number,
+) {
+  if (!isOpen) {
+    return !isControlledSide;
+  } else if (type === '%') {
+    return isControlledSide ? size !== 0 : size !== 100;
+  } else {
+    return isControlledSide ? size !== 0 : size !== parentSize;
+  }
 }
 
 function getItemStyle(
