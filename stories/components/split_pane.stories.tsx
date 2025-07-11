@@ -63,6 +63,17 @@ Horizontal.args = {
   defaultSize: '30%',
 };
 
+export const SizeInPixels = {
+  render: (props: SplitPaneProps) => (
+    <div style={{ height: 400, width: 600 }}>
+      <SplitPane {...props} />
+    </div>
+  ),
+  args: {
+    defaultSize: '200px',
+  },
+};
+
 export function EndSideIsControlled(props: SplitPaneProps) {
   return (
     <div style={{ height: 400, width: 600 }}>
