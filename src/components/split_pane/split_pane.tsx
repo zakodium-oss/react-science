@@ -86,7 +86,7 @@ export interface SplitPaneProps {
 
   /**
    * When set to true, only visible children will be rendered. If a side is closed or has a size of 0, it will not be rendered at all.
-   * When not set or set to false, closed sides will be hidden, and open sides with a size of 0 will still render their children.
+   * When not set or set to false, closed or otherwise 0-sized sides will still be rendered.
    */
   unmountChildren?: boolean;
 
