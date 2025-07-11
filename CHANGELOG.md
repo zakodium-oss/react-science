@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.1.0](https://github.com/zakodium-oss/react-science/compare/v19.0.0...v19.1.0) (2025-07-11)
+
+
+### Features
+
+* **SplitPane:** add unmountChildren option ([#928](https://github.com/zakodium-oss/react-science/issues/928)) ([caf0052](https://github.com/zakodium-oss/react-science/commit/caf00526914dc7bee63785fdd55ad771afa2b547))
+
 ## [19.0.0](https://github.com/zakodium-oss/react-science/compare/v18.1.0...v19.0.0) (2025-07-04)
 
 
