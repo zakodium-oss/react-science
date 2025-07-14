@@ -91,10 +91,10 @@ const red = {
 };
 
 export {
-  red,
-  isvalidColorString,
   getContrastingColor,
   isValidHex,
+  isvalidColorString,
+  red,
   simpleCheckForValidColor,
   toState,
 };

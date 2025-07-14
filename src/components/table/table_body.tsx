@@ -10,8 +10,8 @@ import { TableRowCell } from './table_row_cell.js';
 import type {
   GetTdProps,
   TableRowPreviewRenderer,
-  TableRowTrRenderer,
   TableRowTrRenderProps,
+  TableRowTrRenderer,
 } from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import {
-  autoUpdate,
-  flip,
   FloatingFocusManager,
   FloatingOverlay,
   FloatingPortal,
+  autoUpdate,
+  flip,
   offset,
   shift,
   useDismiss,
@@ -18,9 +18,9 @@ import type { MeasurementKind } from '../../../app-data/index.js';
 import { useAppDispatch } from '../../../app-data/index.js';
 import type { ColorConfig } from '../../../components/index.js';
 import {
-  assert,
   ColorPicker,
   ColorPreview,
+  assert,
   useOnOff,
 } from '../../../components/index.js';
 

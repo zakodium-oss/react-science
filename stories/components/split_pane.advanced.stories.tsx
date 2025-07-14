@@ -6,8 +6,8 @@ import type { SplitPaneSize } from '../../src/components/index.js';
 import {
   Accordion,
   AccordionProvider,
-  parseSize,
   SplitPane,
+  parseSize,
 } from '../../src/components/index.js';
 
 import { SplitPanelChildContent } from './split_pane.utils.js';

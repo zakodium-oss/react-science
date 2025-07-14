@@ -1,10 +1,10 @@
 import type { FilterXYType } from 'ml-signal-processing';
-import filterXY from 'ml-signal-processing/FilterXYSchema.js';
+import filterXY from 'ml-signal-processing/FilterXYSchema.json' with { type: 'json' };
 
 import {
   Button,
-  createTableColumnHelper,
   Table,
+  createTableColumnHelper,
 } from '../../components/index.js';
 
 export interface Filter<OptionsType = string | number> {
