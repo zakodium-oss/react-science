@@ -3,10 +3,10 @@ import { useState } from 'react';
 import type { FileWithPath } from 'react-dropzone';
 
 import {
-  createTableColumnHelper,
   DropZone,
   DropZoneContainer,
   Table,
+  createTableColumnHelper,
 } from '../../src/components/index.js';
 
 export default {

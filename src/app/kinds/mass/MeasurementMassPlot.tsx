@@ -1,5 +1,5 @@
 import { xyToXYObject } from 'ml-spectra-processing';
-import { getBestPeaks, Spectrum } from 'ms-spectrum';
+import { Spectrum, getBestPeaks } from 'ms-spectrum';
 import { useMemo } from 'react';
 import {
   Annotation,

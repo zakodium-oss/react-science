@@ -5,10 +5,10 @@ import { action } from 'storybook/actions';
 
 import type { GetTdProps, TableProps } from '../../src/components/index.js';
 import {
-  createTableColumnHelper,
   Table,
-  TableDraggableRowTr,
   TableDragRowHandler,
+  TableDraggableRowTr,
+  createTableColumnHelper,
 } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 

@@ -14,7 +14,7 @@ export {
 export { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 export { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-scroll/element';
 export {
-  extractClosestEdge,
   attachClosestEdge,
+  extractClosestEdge,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 export { getReorderDestinationIndex } from '@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index';

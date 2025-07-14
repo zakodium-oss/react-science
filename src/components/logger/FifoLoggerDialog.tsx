@@ -5,7 +5,7 @@ import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 
 import { Button } from '../button/index.js';
-import { createTableColumnHelper, Table } from '../table/index.js';
+import { Table, createTableColumnHelper } from '../table/index.js';
 
 import { useFifoLogger } from './useFifoLogger.js';
 

@@ -2,11 +2,11 @@ import { Classes, Collapse, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { CSSProperties } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
-import { match, P } from 'ts-pattern';
+import { P, match } from 'ts-pattern';
 
 import { Button } from '../button/Button.js';
 import { SelectedTotal } from '../selected-total/index.js';
-import { createTableColumnHelper, Table } from '../table/index.js';
+import { Table, createTableColumnHelper } from '../table/index.js';
 import { shouldForwardPropExcept } from '../utils/shouldForwardPropExcept.js';
 import * as ValueRenderers from '../value-renderers/index.js';
 

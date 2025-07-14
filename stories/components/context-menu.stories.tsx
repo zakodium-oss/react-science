@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import type { ReactElement } from 'react';
 
 import {
-  createTableColumnHelper,
   Table,
   ValueRenderers,
+  createTableColumnHelper,
 } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 
