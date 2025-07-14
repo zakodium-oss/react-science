@@ -51,7 +51,7 @@
     "@blueprintjs/core": "^6.0.0",
     "@blueprintjs/icons": "^6.0.0",
     "@blueprintjs/select": "^6.0.0",
-    "fifo-logger": "^1.0.0",
+    "fifo-logger": "^1.0.0 || ^2.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
@@ -97,7 +97,7 @@
     "eslint": "^9.28.0",
     "eslint-config-zakodium": "^15.0.1",
     "eslint-plugin-storybook": "^9.0.8",
-    "fifo-logger": "^1.0.0",
+    "fifo-logger": "^2.0.0",
     "filelist-utils": "^1.11.3",
     "immer": "^10.1.1",
     "jcampconverter": "^11.0.3",
@@ -126,7 +126,7 @@
     "wdf-parser": "^0.3.0"
   },
   "volta": {
-    "node": "22.16.0"
+    "node": "22.17.0"
   },
   "overrides": {
     "storybook": "$storybook"
