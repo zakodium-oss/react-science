@@ -1,5 +1,17 @@
 # Changelog
 
+## [19.1.0](https://github.com/zakodium-oss/react-science/compare/v19.0.0...v19.1.0) (2025-07-15)
+
+
+### Features
+
+* **SplitPane:** add unmountChildren option ([#928](https://github.com/zakodium-oss/react-science/issues/928)) ([caf0052](https://github.com/zakodium-oss/react-science/commit/caf00526914dc7bee63785fdd55ad771afa2b547))
+
+
+### Bug Fixes
+
+* allow fifo-logger v2 in peer dependencies ([0e4a9a7](https://github.com/zakodium-oss/react-science/commit/0e4a9a721e247ca9262cc062678c3051484b3fa6))
+
 ## [19.0.0](https://github.com/zakodium-oss/react-science/compare/v18.1.0...v19.0.0) (2025-07-04)
 
 
