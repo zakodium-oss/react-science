@@ -1,5 +1,5 @@
 import type { InputGroupProps } from '@blueprintjs/core';
-import { Classes, InputGroup } from '@blueprintjs/core';
+import { Classes, FormGroup, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 import { useCallback, useMemo } from 'react';
@@ -7,10 +7,6 @@ import { useCallback, useMemo } from 'react';
 import { useFieldContext } from './context/use_ts_form.js';
 
 type TSInputProps = Omit<InputGroupProps, 'defaultValue' | 'name'>;
-
-const Error = styled.p`
-  color: red;
-`;
 
 const Input = styled(InputGroup)<{ error: boolean }>`
   .${Classes.INPUT} {
@@ -34,7 +30,7 @@ export function TSInput(props: TSInputProps) {
   }, [field.name, field.state.meta.errors]);
 
   return (
-    <>
+    <FormGroup color="red" helperText={error}>
       <Input
         {...props}
         name={field.name}
@@ -42,8 +38,6 @@ export function TSInput(props: TSInputProps) {
         onChange={onChange}
         error={error !== undefined}
       />
-
-      {error && <Error>{error}</Error>}
-    </>
+    </FormGroup>
   );
 }

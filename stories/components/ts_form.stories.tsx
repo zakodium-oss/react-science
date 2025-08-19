@@ -15,7 +15,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin: 2rem 1.25rem 2rem 1.25rem;
+  margin: 2rem 1.25rem;
 `;
 
 const FormWrapper = styled.div`
