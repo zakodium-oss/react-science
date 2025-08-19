@@ -28,6 +28,12 @@ const FormActions = styled.div`
   }
 `;
 
+const Alert = styled.div`
+  background-color: #d3d6da;
+  border-left: 5px solid #6d6d6e;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+`;
+
 const formSchema = z.object({
   text: z.string().min(1, 'Text is required'),
 });
@@ -65,6 +71,12 @@ export function ProofOfConcept() {
           </FormGroup>
         )}
       </form.AppField>
+
+      <form.Subscribe selector={(state) => state.isDirty}>
+        {(isDirty) => (
+          <Alert>Your form {isDirty ? 'is' : "isn't"} dirty.</Alert>
+        )}
+      </form.Subscribe>
 
       <form.AppForm>
         <FormActions>
