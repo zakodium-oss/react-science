@@ -1,6 +1,7 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 import { TSInput } from '../ts_input.js';
+import { TSResetButton } from '../ts_reset_button.js';
 import { TSSubmitButton } from '../ts_submit_button.js';
 
 export const { fieldContext, formContext, useFieldContext, useFormContext } =
@@ -11,6 +12,7 @@ const { useAppForm } = createFormHook({
   formContext,
   formComponents: {
     TSSubmitButton,
+    TSResetButton,
   },
   fieldComponents: {
     TSInput,

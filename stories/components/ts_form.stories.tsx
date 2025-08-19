@@ -18,6 +18,16 @@ const Form = styled.form`
   margin: 2rem 1.25rem 2rem 1.25rem;
 `;
 
+const FormActions = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  & > * {
+    flex: 1 1 0;
+  }
+`;
+
 const formSchema = z.object({
   text: z.string().min(1, 'Text is required'),
 });
@@ -57,7 +67,10 @@ export function ProofOfConcept() {
       </form.AppField>
 
       <form.AppForm>
-        <form.TSSubmitButton>Submit</form.TSSubmitButton>
+        <FormActions>
+          <form.TSSubmitButton>Submit</form.TSSubmitButton>
+          <form.TSResetButton>Reset</form.TSResetButton>
+        </FormActions>
       </form.AppForm>
     </Form>
   );
