@@ -9,8 +9,19 @@ export function TSSubmitButton(props: TSSubmitButtonProps) {
   const form = useFormContext();
 
   return (
-    <form.Subscribe>
-      <Button {...props} type="submit" />
+    <form.Subscribe
+      selector={(state) => ({
+        isSubmitting: state.isSubmitting,
+        errors: state.errors,
+      })}
+    >
+      {({ isSubmitting, errors }) => (
+        <Button
+          {...props}
+          type="submit"
+          disabled={isSubmitting || errors.length > 0}
+        />
+      )}
     </form.Subscribe>
   );
 }
