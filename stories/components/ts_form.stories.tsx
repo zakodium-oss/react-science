@@ -104,3 +104,95 @@ export function ProofOfConcept() {
     </Form>
   );
 }
+
+const nameSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+});
+
+const emailSchema = z.object({
+  email: z.string(),
+});
+
+export function MultipleForm() {
+  const nameForm = useTSForm({
+    onSubmit: ({ value, formApi: { state } }) =>
+      action('onSubmit')(value, state),
+    validators: {
+      onChange: nameSchema,
+    },
+    defaultValues: {
+      name: 'John',
+    },
+  });
+
+  const emailForm = useTSForm({
+    onSubmit: ({ value, formApi: { state } }) =>
+      action('onSubmit')(value, state),
+    validators: {
+      onChange: emailSchema,
+    },
+    defaultValues: {
+      email: 'employee@zakodium.com',
+    },
+  });
+
+  return (
+    <>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+          void nameForm.handleSubmit();
+        }}
+      >
+        <FormWrapper>
+          <nameForm.AppField name="name">
+            {(field) => (
+              <FormGroup
+                label="Name"
+                labelFor="name"
+                labelInfo={<span style={{ color: 'red' }}>*</span>}
+                intent="danger"
+              >
+                <field.TSInput id="name" />
+              </FormGroup>
+            )}
+          </nameForm.AppField>
+        </FormWrapper>
+
+        <nameForm.AppForm>
+          <FormWrapper>
+            <nameForm.TSSubmitButton>Submit</nameForm.TSSubmitButton>
+          </FormWrapper>
+        </nameForm.AppForm>
+      </Form>
+
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+          void emailForm.handleSubmit();
+        }}
+      >
+        <FormWrapper>
+          <emailForm.AppField name="email">
+            {(field) => (
+              <FormGroup
+                label="Email"
+                labelFor="email"
+                labelInfo={<span style={{ color: 'red' }}>*</span>}
+                intent="danger"
+              >
+                <field.TSInput id="email" />
+              </FormGroup>
+            )}
+          </emailForm.AppField>
+        </FormWrapper>
+
+        <emailForm.AppForm>
+          <FormWrapper>
+            <emailForm.TSSubmitButton>Submit</emailForm.TSSubmitButton>
+          </FormWrapper>
+        </emailForm.AppForm>
+      </Form>
+    </>
+  );
+}
