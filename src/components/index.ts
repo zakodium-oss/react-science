@@ -14,6 +14,7 @@ export * from './root-layout/index.js';
 export * from './split_pane/index.js';
 export * from './table/index.js';
 export * from './toolbar/index.js';
+export * from './ts_form/context/use_ts_form.js';
 export * from './activity_bar/index.js';
 export * from './activity_panel/index.js';
 export * from './utils/index.js';
