@@ -18,7 +18,7 @@ const Form = styled.form`
   margin: 2rem 1.25rem 2rem 1.25rem;
 `;
 
-const FormActions = styled.div`
+const FormWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 5px;
@@ -35,7 +35,8 @@ const Alert = styled.div`
 `;
 
 const formSchema = z.object({
-  text: z.string().min(1, 'Text is required'),
+  firstName: z.string().min(1, 'first name is required'),
+  lastName: z.string().min(1, 'last name is required'),
 });
 
 export function ProofOfConcept() {
@@ -45,7 +46,8 @@ export function ProofOfConcept() {
       onChange: formSchema,
     },
     defaultValues: {
-      text: 'Hello, World!',
+      firstName: 'John',
+      lastName: 'Doe',
     },
   });
 
@@ -59,18 +61,33 @@ export function ProofOfConcept() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <form.AppField name="text">
-        {(field) => (
-          <FormGroup
-            label="Text"
-            labelFor="name"
-            labelInfo={<span style={{ color: 'red' }}>*</span>}
-            intent="danger"
-          >
-            <field.TSInput id="name" />
-          </FormGroup>
-        )}
-      </form.AppField>
+      <FormWrapper>
+        <form.AppField name="firstName">
+          {(field) => (
+            <FormGroup
+              label="First name"
+              labelFor="firstName"
+              labelInfo={<span style={{ color: 'red' }}>*</span>}
+              intent="danger"
+            >
+              <field.TSInput id="firstName" />
+            </FormGroup>
+          )}
+        </form.AppField>
+
+        <form.AppField name="lastName">
+          {(field) => (
+            <FormGroup
+              label="Last name"
+              labelFor="lastName"
+              labelInfo={<span style={{ color: 'red' }}>*</span>}
+              intent="danger"
+            >
+              <field.TSInput id="lastName" />
+            </FormGroup>
+          )}
+        </form.AppField>
+      </FormWrapper>
 
       <form.Subscribe selector={(state) => state.isDirty}>
         {(isDirty) => (
@@ -79,10 +96,10 @@ export function ProofOfConcept() {
       </form.Subscribe>
 
       <form.AppForm>
-        <FormActions>
+        <FormWrapper>
           <form.TSSubmitButton>Submit</form.TSSubmitButton>
           <form.TSResetButton>Reset</form.TSResetButton>
-        </FormActions>
+        </FormWrapper>
       </form.AppForm>
     </Form>
   );
