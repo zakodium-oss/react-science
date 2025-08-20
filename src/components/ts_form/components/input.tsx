@@ -4,17 +4,17 @@ import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 import { useCallback, useMemo } from 'react';
 
-import { useFieldContext } from './context/use_ts_form.js';
+import { useFieldContext } from '../context/use_ts_form.js';
 
-type TSInputProps = Omit<InputGroupProps, 'defaultValue' | 'name'>;
+type InputProps = Omit<InputGroupProps, 'defaultValue' | 'name'>;
 
-const Input = styled(InputGroup)<{ error: boolean }>`
+const StyledInput = styled(InputGroup)<{ error: boolean }>`
   .${Classes.INPUT} {
     border: 1px solid ${(props) => (props.error ? 'red' : 'inherit')};
   }
 `;
 
-export function TSInput(props: TSInputProps) {
+export function Input(props: InputProps) {
   const field = useFieldContext<string>();
 
   const onChange = useCallback(
@@ -31,7 +31,7 @@ export function TSInput(props: TSInputProps) {
 
   return (
     <FormGroup color="red" helperText={error}>
-      <Input
+      <StyledInput
         {...props}
         name={field.name}
         value={field.state.value}

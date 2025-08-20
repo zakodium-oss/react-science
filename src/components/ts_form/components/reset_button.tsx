@@ -2,20 +2,19 @@ import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 import { useCallback } from 'react';
 
-import { Button } from '../button/index.js';
-
-import { useFormContext } from './context/use_ts_form.js';
+import { Button } from '../../button/index.js';
+import { useFormContext } from '../context/use_ts_form.js';
 
 interface ResetButtonProps {
   children: ReactNode;
 }
 
-const ResetButton = styled(Button)`
+const StyledResetButton = styled(Button)`
   background-color: #dd3f3f !important;
   color: white !important;
 `;
 
-export function TSResetButton(props: ResetButtonProps) {
+export function ResetButton(props: ResetButtonProps) {
   const { children } = props;
   const form = useFormContext();
 
@@ -25,9 +24,9 @@ export function TSResetButton(props: ResetButtonProps) {
 
   return (
     <form.Subscribe>
-      <ResetButton type="reset" onClick={handleOnClick}>
+      <StyledResetButton type="reset" onClick={handleOnClick}>
         {children}
-      </ResetButton>
+      </StyledResetButton>
     </form.Subscribe>
   );
 }
