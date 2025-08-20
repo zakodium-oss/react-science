@@ -4,7 +4,7 @@ import { Input } from '../components/input.js';
 import { ResetButton } from '../components/reset_button.js';
 import { SubmitButton } from '../components/submit_button.js';
 
-export const { fieldContext, formContext, useFieldContext, useFormContext } =
+const { useFormContext, useFieldContext, formContext, fieldContext } =
   createFormHookContexts();
 
 const { useAppForm } = createFormHook({
@@ -20,3 +20,4 @@ const { useAppForm } = createFormHook({
 });
 
 export const useTSForm = useAppForm;
+export { useFieldContext, useFormContext };
