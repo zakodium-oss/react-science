@@ -1,6 +1,5 @@
 import type { InputGroupProps } from '@blueprintjs/core';
-import { Classes, FormGroup, InputGroup } from '@blueprintjs/core';
-import styled from '@emotion/styled';
+import { FormGroup, InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 import { useId, useMemo } from 'react';
 
@@ -9,12 +8,6 @@ import { useFieldContext } from '../context/use_ts_form.js';
 interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
   label?: string;
 }
-
-const StyledInput = styled(InputGroup)<{ error: boolean }>`
-  .${Classes.INPUT} {
-    border: 1px solid ${(props) => (props.error ? 'red' : 'inherit')};
-  }
-`;
 
 export function Input(props: InputProps) {
   const { label, required, ...rest } = props;
@@ -30,20 +23,24 @@ export function Input(props: InputProps) {
     return error?.message || undefined;
   }, [field.name, field.state.meta.errors]);
 
+  const intent = useMemo(() => {
+    return error !== undefined ? 'danger' : undefined;
+  }, [error]);
+
   return (
     <FormGroup
       helperText={error}
       label={label}
       labelInfo={required && <span style={{ color: 'red' }}>*</span>}
       labelFor={`input-${field.name}-${id}`}
-      intent={error !== undefined ? 'danger' : undefined}
+      intent={intent}
     >
-      <StyledInput
+      <InputGroup
         {...rest}
         name={field.name}
         value={field.state.value}
         onChange={onChange}
-        error={error !== undefined}
+        intent={intent}
         required={required}
         id={`input-${field.name}-${id}`}
       />
