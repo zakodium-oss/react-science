@@ -1,5 +1,6 @@
 import { FormGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
 import { useCallback } from 'react';
 import { action } from 'storybook/actions';
@@ -42,6 +43,10 @@ const formSchema = z.object({
 export function ProofOfConcept() {
   const form = useTSForm({
     onSubmit: ({ value }) => action('onSubmit')(value),
+    validationLogic: revalidateLogic({
+      mode: 'submit',
+      modeAfterSubmission: 'blur',
+    }),
     validators: {
       onChange: formSchema,
     },
