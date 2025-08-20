@@ -36,10 +36,20 @@ const Alert = styled.div`
 const formSchema = z.object({
   firstName: z.string().min(1, 'first name is required'),
   lastName: z.string().min(1, 'last name is required'),
+  city: z.string().optional(),
 });
+
+type Schema = z.infer<typeof formSchema>;
+
+const defaultValues: Partial<Schema> = {
+  firstName: '',
+  lastName: '',
+  city: undefined,
+};
 
 export function ProofOfConcept() {
   const form = useTSForm({
+    defaultValues,
     onSubmit: ({ value }) => action('onSubmit')(value),
     validationLogic: revalidateLogic({
       mode: 'submit',
@@ -47,10 +57,6 @@ export function ProofOfConcept() {
     }),
     validators: {
       onChange: formSchema,
-    },
-    defaultValues: {
-      firstName: 'John',
-      lastName: 'Doe',
     },
   });
 
@@ -68,6 +74,64 @@ export function ProofOfConcept() {
 
         <form.AppField name="lastName">
           {(field) => <field.Input label="Last name" required />}
+        </form.AppField>
+
+        <form.AppField name="city">
+          {(field) => <field.Input label="City" />}
+        </form.AppField>
+      </FormWrapper>
+
+      <form.Subscribe selector={(state) => state.isDirty}>
+        {(isDirty) => (
+          <Alert>Your form {isDirty ? 'is' : "isn't"} dirty.</Alert>
+        )}
+      </form.Subscribe>
+
+      <form.AppForm>
+        <FormWrapper>
+          <form.SubmitButton>Submit</form.SubmitButton>
+          <form.ResetButton>Reset</form.ResetButton>
+        </FormWrapper>
+      </form.AppForm>
+    </Form>
+  );
+}
+
+const testSchema = z.object({
+  firstName: z.string().min(1, 'first name is required'),
+  test: z.boolean(),
+});
+
+export function Test() {
+  const form = useTSForm({
+    onSubmit: ({ value }) => action('onSubmit')(value),
+    validationLogic: revalidateLogic({
+      mode: 'submit',
+      modeAfterSubmission: 'blur',
+    }),
+    validators: {
+      onChange: testSchema,
+    },
+    defaultValues: {
+      firstName: 'John',
+      test: false,
+    },
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormWrapper>
+        <form.AppField name="firstName">
+          {(field) => <field.Input label="First name" required />}
+        </form.AppField>
+
+        <form.AppField name="test">
+          {(field) => <field.Input label="A boolean is needed" required />}
         </form.AppField>
       </FormWrapper>
 
