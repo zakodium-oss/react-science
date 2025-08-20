@@ -6,7 +6,9 @@ import { useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 
-type InputProps = Omit<InputGroupProps, 'defaultValue' | 'name'>;
+interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
+  label?: string;
+}
 
 const StyledInput = styled(InputGroup)<{ error: boolean }>`
   .${Classes.INPUT} {
@@ -15,6 +17,7 @@ const StyledInput = styled(InputGroup)<{ error: boolean }>`
 `;
 
 export function Input(props: InputProps) {
+  const { label, required, ...rest } = props;
   const field = useFieldContext<string>();
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -27,13 +30,19 @@ export function Input(props: InputProps) {
   }, [field.name, field.state.meta.errors]);
 
   return (
-    <FormGroup color="red" helperText={error}>
+    <FormGroup
+      helperText={error}
+      label={label}
+      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
+      intent={error !== undefined ? 'danger' : undefined}
+    >
       <StyledInput
-        {...props}
+        {...rest}
         name={field.name}
         value={field.state.value}
         onChange={onChange}
         error={error !== undefined}
+        required={required}
       />
     </FormGroup>
   );

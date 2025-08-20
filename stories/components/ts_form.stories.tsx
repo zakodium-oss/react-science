@@ -1,4 +1,3 @@
-import { FormGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
@@ -64,29 +63,11 @@ export function ProofOfConcept() {
     <Form onSubmit={handleSubmit}>
       <FormWrapper>
         <form.AppField name="firstName">
-          {(field) => (
-            <FormGroup
-              label="First name"
-              labelFor="firstName"
-              labelInfo={<span style={{ color: 'red' }}>*</span>}
-              intent="danger"
-            >
-              <field.Input id="firstName" />
-            </FormGroup>
-          )}
+          {(field) => <field.Input label="First name" required />}
         </form.AppField>
 
         <form.AppField name="lastName">
-          {(field) => (
-            <FormGroup
-              label="Last name"
-              labelFor="lastName"
-              labelInfo={<span style={{ color: 'red' }}>*</span>}
-              intent="danger"
-            >
-              <field.Input id="lastName" />
-            </FormGroup>
-          )}
+          {(field) => <field.Input label="Last name" required />}
         </form.AppField>
       </FormWrapper>
 
