@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
-import { useCallback } from 'react';
 
 import { Button } from '../../button/index.js';
 import { useFormContext } from '../context/use_ts_form.js';
@@ -18,12 +17,8 @@ export function ResetButton(props: ResetButtonProps) {
   const { children } = props;
   const form = useFormContext();
 
-  const handleOnClick = useCallback(() => {
-    form.reset();
-  }, [form]);
-
   return (
-    <StyledResetButton type="reset" onClick={handleOnClick}>
+    <StyledResetButton type="reset" onClick={() => form.reset()}>
       {children}
     </StyledResetButton>
   );

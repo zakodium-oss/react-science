@@ -2,7 +2,7 @@ import type { InputGroupProps } from '@blueprintjs/core';
 import { Classes, FormGroup, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 
@@ -17,12 +17,9 @@ const StyledInput = styled(InputGroup)<{ error: boolean }>`
 export function Input(props: InputProps) {
   const field = useFieldContext<string>();
 
-  const onChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      return field.handleChange(event.target.value);
-    },
-    [field],
-  );
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    return field.handleChange(event.target.value);
+  }
 
   const error = useMemo<string | undefined>(() => {
     const error = field.state.meta.errors.find((e) => e.path[0] === field.name);

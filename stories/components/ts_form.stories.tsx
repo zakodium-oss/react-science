@@ -2,7 +2,6 @@ import { FormGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
-import { useCallback } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
@@ -56,13 +55,10 @@ export function ProofOfConcept() {
     },
   });
 
-  const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      void form.handleSubmit();
-    },
-    [form],
-  );
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
