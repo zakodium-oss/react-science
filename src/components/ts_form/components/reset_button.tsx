@@ -23,10 +23,8 @@ export function ResetButton(props: ResetButtonProps) {
   }, [form]);
 
   return (
-    <form.Subscribe>
-      <StyledResetButton type="reset" onClick={handleOnClick}>
-        {children}
-      </StyledResetButton>
-    </form.Subscribe>
+    <StyledResetButton type="reset" onClick={handleOnClick}>
+      {children}
+    </StyledResetButton>
   );
 }
