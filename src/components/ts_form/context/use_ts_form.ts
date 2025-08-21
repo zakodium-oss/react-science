@@ -19,5 +19,5 @@ const { useAppForm } = createFormHook({
   },
 });
 
-export const useTSForm = useAppForm;
+export const useForm = useAppForm;
 export { useFieldContext, useFormContext };
