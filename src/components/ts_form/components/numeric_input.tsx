@@ -13,7 +13,7 @@ interface NumericInputProps
 export function NumericInput(props: NumericInputProps) {
   const { label, required, ...rest } = props;
   const field = useFieldContext<number>();
-  const id = useId();
+  const id = `input-${field.name}-${useId()}`;
 
   function onChange(value: number) {
     return field.handleChange(value);
