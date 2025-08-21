@@ -1,21 +1,22 @@
-import type { InputGroupProps } from '@blueprintjs/core';
-import { FormGroup, InputGroup } from '@blueprintjs/core';
-import type { ChangeEvent } from 'react';
+import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core';
+import { FormGroup, NumericInput as BPNumericInput } from '@blueprintjs/core';
 import { useId, useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 
-interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
+interface NumericInputProps
+  extends Omit<BPNumericInputProps, 'defaultValue' | 'name'> {
   label?: string;
+  required?: boolean;
 }
 
-export function Input(props: InputProps) {
+export function NumericInput(props: NumericInputProps) {
   const { label, required, ...rest } = props;
-  const field = useFieldContext<string>();
-  const id = `input-${field.name}-${useId()}`;
+  const field = useFieldContext<number>();
+  const id = useId();
 
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
-    return field.handleChange(event.target.value);
+  function onChange(value: number) {
+    return field.handleChange(value);
   }
 
   const error = useMemo<string | undefined>(() => {
@@ -35,12 +36,12 @@ export function Input(props: InputProps) {
       labelFor={id}
       intent={intent}
     >
-      <InputGroup
+      <BPNumericInput
         {...rest}
         onBlur={field.handleBlur}
         name={field.name}
         value={field.state.value}
-        onChange={onChange}
+        onValueChange={onChange}
         intent={intent}
         required={required}
         id={id}

@@ -1,6 +1,7 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 import { Input } from '../components/input.js';
+import { NumericInput } from '../components/numeric_input.js';
 import { ResetButton } from '../components/reset_button.js';
 import { SubmitButton } from '../components/submit_button.js';
 
@@ -16,6 +17,7 @@ const { useAppForm } = createFormHook({
   },
   fieldComponents: {
     Input,
+    NumericInput,
   },
 });
 

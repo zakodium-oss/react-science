@@ -37,6 +37,10 @@ const formSchema = z.object({
   firstName: z.string().min(1, 'first name is required'),
   lastName: z.string().min(1, 'last name is required'),
   city: z.string().optional(),
+  age: z
+    .number()
+    .min(18, 'age must be between 18 and 100')
+    .max(100, 'age must be between 18 and 100'),
 });
 
 type Schema = z.input<typeof formSchema>;
@@ -45,9 +49,9 @@ const defaultValues: Schema = {
   firstName: '',
   lastName: '',
   city: undefined,
+  age: 18,
 };
 
-// TODO: Add example with number NumericInput
 // TODO: Add example with select, (checkbox ?)
 export function ProofOfConcept() {
   const form = useForm({
@@ -75,6 +79,12 @@ export function ProofOfConcept() {
 
         <form.AppField name="lastName">
           {(field) => <field.Input label="Last name" required />}
+        </form.AppField>
+
+        <form.AppField name="age">
+          {(field) => (
+            <field.NumericInput label="Age" required min={18} max={100} />
+          )}
         </form.AppField>
 
         <form.AppField name="city">
