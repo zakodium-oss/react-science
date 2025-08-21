@@ -4,6 +4,7 @@ import { useId, useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 import { Label } from '../utils/Label.js';
+import { useErrors } from '../utils/use_errors.js';
 
 interface NumericInputProps
   extends Omit<BPNumericInputProps, 'defaultValue' | 'name'> {
@@ -15,15 +16,11 @@ export function NumericInput(props: NumericInputProps) {
   const { label, required, ...rest } = props;
   const field = useFieldContext<number>();
   const id = `input-${field.name}-${useId()}`;
+  const error = useErrors(field);
 
   function onChange(value: number) {
     return field.handleChange(value);
   }
-
-  const error = useMemo<string | undefined>(() => {
-    const error = field.state.meta.errors.find((e) => e.path[0] === field.name);
-    return error?.message || undefined;
-  }, [field.name, field.state.meta.errors]);
 
   const intent = useMemo(() => {
     return error !== undefined ? 'danger' : undefined;

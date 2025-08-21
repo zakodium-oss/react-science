@@ -5,6 +5,7 @@ import { useId, useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 import { Label } from '../utils/Label.js';
+import { useErrors } from '../utils/use_errors.js';
 
 interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
   label?: string;
@@ -14,15 +15,11 @@ export function Input(props: InputProps) {
   const { label, required, ...rest } = props;
   const field = useFieldContext<string>();
   const id = `input-${field.name}-${useId()}`;
+  const error = useErrors(field);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     return field.handleChange(event.target.value);
   }
-
-  const error = useMemo<string | undefined>(() => {
-    const error = field.state.meta.errors.find((e) => e.path[0] === field.name);
-    return error?.message || undefined;
-  }, [field.name, field.state.meta.errors]);
 
   const intent = useMemo(() => {
     return error !== undefined ? 'danger' : undefined;
