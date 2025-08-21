@@ -1,11 +1,12 @@
 import type { InputGroupProps } from '@blueprintjs/core';
 import { InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
-import { useId, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 import { Label } from '../utils/Label.js';
 import { useErrors } from '../utils/use_errors.js';
+import { useFieldId } from '../utils/use_field_id.js';
 
 interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
   label?: string;
@@ -14,7 +15,7 @@ interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
 export function Input(props: InputProps) {
   const { label, required, ...rest } = props;
   const field = useFieldContext<string>();
-  const id = `input-${field.name}-${useId()}`;
+  const id = useFieldId(field.name);
   const error = useErrors(field);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
