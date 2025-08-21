@@ -1,8 +1,9 @@
 import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core';
-import { FormGroup, NumericInput as BPNumericInput } from '@blueprintjs/core';
+import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 import { useId, useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
+import { Label } from '../utils/Label.js';
 
 interface NumericInputProps
   extends Omit<BPNumericInputProps, 'defaultValue' | 'name'> {
@@ -29,12 +30,12 @@ export function NumericInput(props: NumericInputProps) {
   }, [error]);
 
   return (
-    <FormGroup
-      helperText={error}
+    <Label
+      error={error}
       label={label}
-      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
       labelFor={id}
       intent={intent}
+      required={required}
     >
       <BPNumericInput
         {...rest}
@@ -46,6 +47,6 @@ export function NumericInput(props: NumericInputProps) {
         required={required}
         id={id}
       />
-    </FormGroup>
+    </Label>
   );
 }

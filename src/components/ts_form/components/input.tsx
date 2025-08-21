@@ -1,9 +1,10 @@
 import type { InputGroupProps } from '@blueprintjs/core';
-import { FormGroup, InputGroup } from '@blueprintjs/core';
+import { InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 import { useId, useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
+import { Label } from '../utils/Label.js';
 
 interface InputProps extends Omit<InputGroupProps, 'defaultValue' | 'name'> {
   label?: string;
@@ -28,12 +29,12 @@ export function Input(props: InputProps) {
   }, [error]);
 
   return (
-    <FormGroup
-      helperText={error}
+    <Label
+      error={error}
       label={label}
-      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
       labelFor={id}
       intent={intent}
+      required={required}
     >
       <InputGroup
         {...rest}
@@ -45,6 +46,6 @@ export function Input(props: InputProps) {
         required={required}
         id={id}
       />
-    </FormGroup>
+    </Label>
   );
 }
