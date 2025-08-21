@@ -37,6 +37,7 @@ export function Input(props: InputProps) {
     >
       <InputGroup
         {...rest}
+        onBlur={field.handleBlur}
         name={field.name}
         value={field.state.value}
         onChange={onChange}

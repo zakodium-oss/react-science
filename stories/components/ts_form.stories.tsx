@@ -4,7 +4,7 @@ import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { useTSForm } from '../../src/components/index.js';
+import { useForm } from '../../src/components/index.js';
 
 export default {
   title: 'Forms / Form / Tanstack',
@@ -39,7 +39,7 @@ const formSchema = z.object({
   city: z.string().optional(),
 });
 
-type Schema = z.infer<typeof formSchema>;
+type Schema = z.input<typeof formSchema>;
 
 const defaultValues: Schema = {
   firstName: '',
@@ -47,16 +47,17 @@ const defaultValues: Schema = {
   city: undefined,
 };
 
+// TODO: Add example with number NumericInput
+// TODO: Add example with select, (checkbox ?)
 export function ProofOfConcept() {
-  const form = useTSForm({
+  const form = useForm({
     defaultValues,
     onSubmit: ({ value }) => action('onSubmit')(value),
     validationLogic: revalidateLogic({
-      mode: 'submit',
       modeAfterSubmission: 'blur',
     }),
     validators: {
-      onChange: formSchema,
+      onDynamic: formSchema,
     },
   });
 
@@ -66,7 +67,7 @@ export function ProofOfConcept() {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} noValidate>
       <FormWrapper>
         <form.AppField name="firstName">
           {(field) => <field.Input label="First name" required />}
