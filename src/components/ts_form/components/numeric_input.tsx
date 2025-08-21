@@ -1,11 +1,11 @@
 import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core';
 import { NumericInput as BPNumericInput } from '@blueprintjs/core';
-import { useMemo } from 'react';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 import { Label } from '../utils/Label.js';
 import { useErrors } from '../utils/use_errors.js';
 import { useFieldId } from '../utils/use_field_id.js';
+import { useIntent } from '../utils/use_intent.js';
 
 interface NumericInputProps
   extends Omit<BPNumericInputProps, 'defaultValue' | 'name'> {
@@ -18,14 +18,11 @@ export function NumericInput(props: NumericInputProps) {
   const field = useFieldContext<number>();
   const id = useFieldId(field.name);
   const error = useErrors(field);
+  const intent = useIntent(error);
 
   function onChange(value: number) {
     return field.handleChange(value);
   }
-
-  const intent = useMemo(() => {
-    return error !== undefined ? 'danger' : undefined;
-  }, [error]);
 
   return (
     <Label
