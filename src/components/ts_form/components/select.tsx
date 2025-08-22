@@ -1,6 +1,8 @@
 import type { SelectProps as BPSelectProps } from '@blueprintjs/select';
 import { Select as BPSelect } from '@blueprintjs/select';
+import { useState } from 'react';
 
+import { Button } from '../../button/index.js';
 import { useFieldContext } from '../context/use_ts_form.js';
 import { Label } from '../utils/Label.js';
 import { useErrors } from '../utils/use_errors.js';
@@ -16,16 +18,17 @@ interface SelectProps<T>
 
 export function Select<T>(props: SelectProps<T>) {
   const { label, required, getValue, ...rest } = props;
+
+  const [isOpen, setIsOpen] = useState(false);
   const field = useFieldContext<T>();
   const id = useFieldId(field.name);
   const error = useErrors(field);
   const intent = useIntent(error);
 
   function onItemSelect(item: T) {
-    return field.handleChange(item);
+    field.handleChange(item);
+    return setIsOpen(false);
   }
-
-  console.log(field.state.value);
 
   return (
     <Label
@@ -34,19 +37,24 @@ export function Select<T>(props: SelectProps<T>) {
       labelFor={id}
       intent={intent}
       required={required}
+      onClick={() => setIsOpen((old) => !old)}
     >
       <BPSelect
         {...rest}
         onItemSelect={onItemSelect}
+        popoverProps={{ isOpen }}
         inputProps={{
-          id,
-          onBlur: field.handleBlur,
+          onBlur: () => {
+            field.handleBlur();
+            setIsOpen(false);
+          },
           intent,
-          required,
           name: field.name,
         }}
       >
-        {field.state.value ? getValue(field.state.value) : 'Select...'}
+        <Button onClick={() => setIsOpen((old) => !old)}>
+          {field.state.value ? getValue(field.state.value) : 'Select...'}
+        </Button>
       </BPSelect>
     </Label>
   );

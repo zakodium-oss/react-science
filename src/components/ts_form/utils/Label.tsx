@@ -9,15 +9,16 @@ interface LabelProps {
   label?: string;
   intent?: Intent;
   labelFor?: string;
+  onClick?: () => void;
 }
 
 export function Label(props: LabelProps) {
-  const { children, required, label, error, intent, labelFor } = props;
+  const { children, required, label, error, intent, labelFor, onClick } = props;
 
   return (
     <FormGroup
       helperText={error}
-      label={label}
+      label={<span onClick={onClick}>{label}</span>}
       labelInfo={required && <span style={{ color: 'red' }}>*</span>}
       intent={intent}
       labelFor={labelFor}

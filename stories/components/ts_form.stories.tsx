@@ -63,7 +63,6 @@ const defaultValues: Schema = {
   favorite: undefined,
 };
 
-// TODO: Add example with select
 export function ProofOfConcept() {
   const form = useForm({
     defaultValues,
@@ -109,6 +108,7 @@ export function ProofOfConcept() {
               required
               {...otherSelectProps}
               getValue={(item) => item.label}
+              itemsEqual="label"
               items={[
                 { label: 'Apple' },
                 { label: 'Banana' },
