@@ -52,7 +52,7 @@ export function Select<T>(props: SelectProps<T>) {
           name: field.name,
         }}
       >
-        <Button onClick={() => setIsOpen((old) => !old)}>
+        <Button intent={intent} onClick={() => setIsOpen((old) => !old)}>
           {field.state.value ? getValue(field.state.value) : 'Select...'}
         </Button>
       </BPSelect>
