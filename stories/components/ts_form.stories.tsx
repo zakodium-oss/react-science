@@ -41,6 +41,9 @@ const formSchema = z.object({
     .number()
     .min(18, 'age must be between 18 and 100')
     .max(100, 'age must be between 18 and 100'),
+  agree: z.boolean().refine((value) => value, {
+    message: 'You must agree to the terms and conditions',
+  }),
 });
 
 type Schema = z.input<typeof formSchema>;
@@ -50,9 +53,11 @@ const defaultValues: Schema = {
   lastName: '',
   city: undefined,
   age: 18,
+  agree: false,
 };
 
-// TODO: Add example with select, (checkbox ?)
+// TODO: Add example with select
+// TODO: Add example with checkbox
 export function ProofOfConcept() {
   const form = useForm({
     defaultValues,
@@ -81,16 +86,22 @@ export function ProofOfConcept() {
           {(field) => <field.Input label="Last name" required />}
         </form.AppField>
 
+        <form.AppField name="city">
+          {(field) => <field.Input label="City" />}
+        </form.AppField>
+      </FormWrapper>
+
+      <FormWrapper>
         <form.AppField name="age">
           {(field) => (
             <field.NumericInput label="Age" required min={18} max={100} />
           )}
         </form.AppField>
-
-        <form.AppField name="city">
-          {(field) => <field.Input label="City" />}
-        </form.AppField>
       </FormWrapper>
+
+      <form.AppField name="agree">
+        {(field) => <field.Checkbox label="Agree term of service" />}
+      </form.AppField>
 
       <form.Subscribe selector={(state) => state.isDirty}>
         {(isDirty) => (
