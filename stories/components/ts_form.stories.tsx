@@ -57,7 +57,6 @@ const defaultValues: Schema = {
 };
 
 // TODO: Add example with select
-// TODO: Add example with checkbox
 export function ProofOfConcept() {
   const form = useForm({
     defaultValues,
