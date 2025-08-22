@@ -4,7 +4,7 @@ import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { useForm } from '../../src/components/index.js';
+import { useForm, useSelect } from '../../src/components/index.js';
 
 export default {
   title: 'Forms / Form / Tanstack',
@@ -44,6 +44,12 @@ const formSchema = z.object({
   agree: z.boolean().refine((value) => value, {
     message: 'You must agree to the terms and conditions',
   }),
+  favorite: z
+    .object({
+      label: z.string(),
+    })
+    .optional()
+    .refine((value) => value !== undefined, 'favorite food is required'),
 });
 
 type Schema = z.input<typeof formSchema>;
@@ -54,6 +60,7 @@ const defaultValues: Schema = {
   city: undefined,
   age: 18,
   agree: false,
+  favorite: undefined,
 };
 
 // TODO: Add example with select
@@ -67,6 +74,10 @@ export function ProofOfConcept() {
     validators: {
       onDynamic: formSchema,
     },
+  });
+
+  const { value, ...otherSelectProps } = useSelect<{ label: string }>({
+    itemTextKey: 'label',
   });
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -91,6 +102,25 @@ export function ProofOfConcept() {
       </FormWrapper>
 
       <FormWrapper>
+        <form.AppField name="favorite">
+          {(field) => (
+            <field.Select
+              label="Favorite food"
+              required
+              {...otherSelectProps}
+              getValue={(item) => item.label}
+              items={[
+                { label: 'Apple' },
+                { label: 'Banana' },
+                { label: 'Orange' },
+                { label: 'Carrot' },
+                { label: 'Potato' },
+                { label: 'Tomato' },
+              ]}
+            />
+          )}
+        </form.AppField>
+
         <form.AppField name="age">
           {(field) => (
             <field.NumericInput label="Age" required min={18} max={100} />

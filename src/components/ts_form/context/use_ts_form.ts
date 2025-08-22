@@ -4,6 +4,7 @@ import { Checkbox } from '../components/checkbox.js';
 import { Input } from '../components/input.js';
 import { NumericInput } from '../components/numeric_input.js';
 import { ResetButton } from '../components/reset_button.js';
+import { Select } from '../components/select.js';
 import { SubmitButton } from '../components/submit_button.js';
 
 const { useFormContext, useFieldContext, formContext, fieldContext } =
@@ -20,6 +21,7 @@ const { useAppForm } = createFormHook({
     Input,
     NumericInput,
     Checkbox,
+    Select,
   },
 });
 
