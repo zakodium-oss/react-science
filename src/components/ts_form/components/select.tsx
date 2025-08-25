@@ -1,67 +1,41 @@
-import type { SelectProps as BPSelectProps } from '@blueprintjs/select';
-import { Select as BPSelect } from '@blueprintjs/select';
-import { useState } from 'react';
-
-import { Button } from '../../button/index.js';
 import { useFieldContext } from '../context/use_ts_form.js';
-import { Label } from '../utils/Label.js';
 import { useErrors } from '../utils/use_errors.js';
-import { useFieldId } from '../utils/use_field_id.js';
 import { useIntent } from '../utils/use_intent.js';
 
-interface SelectValue {
+import type { SelectProps as FCSelectProps } from './form_components/select.js';
+import { Select as FCSelect } from './form_components/select.js';
+
+interface SelectOptionType {
   label: string;
   value: string;
 }
 
-interface SelectProps
-  extends Omit<BPSelectProps<SelectValue>, 'onItemSelect' | 'inputProps'> {
-  label?: string;
-  required?: boolean;
-}
+type SelectProps = Omit<
+  FCSelectProps<SelectOptionType, string>,
+  'getLabel' | 'getValue'
+>;
 
 export function Select(props: SelectProps) {
-  const { label, required, ...rest } = props;
+  const { label, items, required, ...rest } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const field = useFieldContext<SelectValue>();
-  const id = useFieldId(field.name);
+  const field = useFieldContext<SelectOptionType['value']>();
   const error = useErrors(field);
   const intent = useIntent(error);
 
-  function onItemSelect(item: SelectValue) {
-    field.handleChange(item);
-    return setIsOpen(false);
+  function onItemSelect(item: SelectOptionType['value'] | undefined) {
+    if (!item) return;
+    return field.handleChange(item);
   }
 
   return (
-    <Label
-      error={error}
+    <FCSelect
+      {...rest}
       label={label}
-      labelFor={id}
+      items={items}
+      selected={field.state.value}
+      onChange={onItemSelect}
       intent={intent}
       required={required}
-      onClick={() => setIsOpen((old) => !old)}
-    >
-      <BPSelect
-        {...rest}
-        onItemSelect={onItemSelect}
-        popoverProps={{
-          isOpen,
-          onClose: () => {
-            setIsOpen(false);
-            field.handleBlur();
-          },
-        }}
-        inputProps={{
-          intent,
-          name: field.name,
-        }}
-      >
-        <Button intent={intent} onClick={() => setIsOpen((old) => !old)}>
-          {field.state.value ? field.state.value.label : 'Select...'}
-        </Button>
-      </BPSelect>
-    </Label>
+    />
   );
 }

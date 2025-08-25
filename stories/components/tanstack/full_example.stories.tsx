@@ -82,11 +82,7 @@ enum AdvancedIonizationsMode {
 }
 
 const formSchema = z.object({
-  advancedIonizationsMode: z
-    .object({
-      value: z.enum(AdvancedIonizationsMode),
-    })
-    .optional(),
+  advancedIonizationsMode: z.enum(AdvancedIonizationsMode).optional(),
   advancedIonizationsAdvanced: z.object({
     ionizations: z.string(),
   }),
@@ -144,9 +140,9 @@ export function FullExample() {
               <field.Select
                 {...otherSelectProps}
                 label="Mode"
-                required
                 items={modes}
-                itemsEqual="value"
+                required
+                inline
               />
             )}
           </form.AppField>
