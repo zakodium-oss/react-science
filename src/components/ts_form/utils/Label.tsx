@@ -19,7 +19,7 @@ export function Label(props: LabelProps) {
     <FormGroup
       helperText={error}
       label={<span onClick={onClick}>{label}</span>}
-      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
+      labelInfo={label && required && <span style={{ color: 'red' }}>*</span>}
       intent={intent}
       labelFor={labelFor}
     >
