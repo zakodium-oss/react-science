@@ -75,7 +75,10 @@ export function ProofOfConcept() {
     },
   });
 
-  const { value, ...otherSelectProps } = useSelect<{ label: string }>({
+  const { value, ...otherSelectProps } = useSelect<{
+    label: string;
+    value: string;
+  }>({
     itemTextKey: 'label',
   });
 
@@ -107,15 +110,14 @@ export function ProofOfConcept() {
               label="Favorite food"
               required
               {...otherSelectProps}
-              getValue={(item) => item.label}
               itemsEqual="label"
               items={[
-                { label: 'Apple' },
-                { label: 'Banana' },
-                { label: 'Orange' },
-                { label: 'Carrot' },
-                { label: 'Potato' },
-                { label: 'Tomato' },
+                { label: 'Apple', value: 'apple' },
+                { label: 'Banana', value: 'banana' },
+                { label: 'Orange', value: 'orange' },
+                { label: 'Carrot', value: 'carrot' },
+                { label: 'Potato', value: 'potato' },
+                { label: 'Tomato', value: 'tomato' },
               ]}
             />
           )}

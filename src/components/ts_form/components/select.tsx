@@ -9,23 +9,27 @@ import { useErrors } from '../utils/use_errors.js';
 import { useFieldId } from '../utils/use_field_id.js';
 import { useIntent } from '../utils/use_intent.js';
 
-interface SelectProps<T>
-  extends Omit<BPSelectProps<T>, 'onItemSelect' | 'inputProps'> {
-  label?: string;
-  required?: boolean;
-  getValue: (item: T) => string;
+interface SelectValue {
+  label: string;
+  value: string;
 }
 
-export function Select<T>(props: SelectProps<T>) {
-  const { label, required, getValue, ...rest } = props;
+interface SelectProps
+  extends Omit<BPSelectProps<SelectValue>, 'onItemSelect' | 'inputProps'> {
+  label?: string;
+  required?: boolean;
+}
+
+export function Select(props: SelectProps) {
+  const { label, required, ...rest } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const field = useFieldContext<T>();
+  const field = useFieldContext<SelectValue>();
   const id = useFieldId(field.name);
   const error = useErrors(field);
   const intent = useIntent(error);
 
-  function onItemSelect(item: T) {
+  function onItemSelect(item: SelectValue) {
     field.handleChange(item);
     return setIsOpen(false);
   }
@@ -42,18 +46,20 @@ export function Select<T>(props: SelectProps<T>) {
       <BPSelect
         {...rest}
         onItemSelect={onItemSelect}
-        popoverProps={{ isOpen }}
-        inputProps={{
-          onBlur: () => {
-            field.handleBlur();
+        popoverProps={{
+          isOpen,
+          onClose: () => {
             setIsOpen(false);
+            field.handleBlur();
           },
+        }}
+        inputProps={{
           intent,
           name: field.name,
         }}
       >
         <Button intent={intent} onClick={() => setIsOpen((old) => !old)}>
-          {field.state.value ? getValue(field.state.value) : 'Select...'}
+          {field.state.value ? field.state.value.label : 'Select...'}
         </Button>
       </BPSelect>
     </Label>
