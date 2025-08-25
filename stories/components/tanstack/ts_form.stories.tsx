@@ -4,7 +4,7 @@ import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { useForm, useSelect } from '../../src/components/index.js';
+import { useForm, useSelect } from '../../../src/components/index.js';
 
 export default {
   title: 'Forms / Form / Tanstack',
