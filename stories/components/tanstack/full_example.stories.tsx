@@ -2,6 +2,7 @@ import { Classes } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
+import { action } from 'storybook/actions';
 import { z } from 'zod';
 
 import { useForm, useSelect } from '../../../src/components/index.js';
@@ -81,7 +82,14 @@ enum AdvancedIonizationsMode {
 }
 
 const formSchema = z.object({
-  advancedIonizationsMode: z.enum(AdvancedIonizationsMode),
+  advancedIonizationsMode: z
+    .object({
+      value: z.enum(AdvancedIonizationsMode),
+    })
+    .optional(),
+  advancedIonizationsAdvanced: z.object({
+    ionizations: z.string(),
+  }),
 });
 
 const modes: Array<{ label: string; value: AdvancedIonizationsMode }> = [
@@ -91,10 +99,20 @@ const modes: Array<{ label: string; value: AdvancedIonizationsMode }> = [
   { value: AdvancedIonizationsMode.Advanced, label: 'Advanced' },
 ];
 
+type FormValues = z.input<typeof formSchema>;
+
+const defaultValues: Partial<FormValues> = {
+  advancedIonizationsMode: undefined,
+  advancedIonizationsAdvanced: {
+    ionizations: '',
+  },
+};
+
 export function FullExample() {
   const form = useForm({
-    defaultValues: {
-      advancedIonizationsMode: 'neutral',
+    defaultValues,
+    onSubmit: ({ value }) => {
+      action('onSubmit')(value);
     },
     validationLogic: revalidateLogic({
       modeAfterSubmission: 'blur',
@@ -106,7 +124,7 @@ export function FullExample() {
 
   const { value, ...otherSelectProps } = useSelect<{
     label: string;
-    value: AdvancedIonizationsMode;
+    value: string;
   }>({
     itemTextKey: 'label',
   });
@@ -129,12 +147,22 @@ export function FullExample() {
                 required
                 items={modes}
                 itemsEqual="value"
-                getValue={(item) => item.value}
               />
             )}
           </form.AppField>
-          <p>BBB</p>
-          <p>CCC</p>
+          <form.AppField name="advancedIonizationsAdvanced.ionizations">
+            {(field) => (
+              <field.Input
+                label="Ionizations"
+                required
+                placeholder="E.g. H+, (H+)2, (H+)-2"
+              />
+            )}
+          </form.AppField>
+
+          <form.AppForm>
+            <form.SubmitButton>Submit</form.SubmitButton>
+          </form.AppForm>
         </GridGroup>
       </Fieldset>
     </form>
