@@ -82,9 +82,9 @@ enum AdvancedIonizationsMode {
 }
 
 const formSchema = z.object({
-  advancedIonizationsMode: z.enum(AdvancedIonizationsMode).optional(),
+  advancedIonizationsMode: z.enum(AdvancedIonizationsMode),
   advancedIonizationsAdvanced: z.object({
-    ionizations: z.string(),
+    ionizations: z.string().min(1, 'ionizations is required'),
   }),
 });
 
@@ -95,18 +95,14 @@ const modes: Array<{ label: string; value: AdvancedIonizationsMode }> = [
   { value: AdvancedIonizationsMode.Advanced, label: 'Advanced' },
 ];
 
-type FormValues = z.input<typeof formSchema>;
-
-const defaultValues: Partial<FormValues> = {
-  advancedIonizationsMode: undefined,
-  advancedIonizationsAdvanced: {
-    ionizations: '',
-  },
-};
-
 export function FullExample() {
   const form = useForm({
-    defaultValues,
+    defaultValues: {
+      advancedIonizationsAdvanced: {
+        ionizations: '',
+      },
+      advancedIonizationsMode: AdvancedIonizationsMode.Neutral,
+    },
     onSubmit: ({ value }) => {
       action('onSubmit')(value);
     },
@@ -131,7 +127,7 @@ export function FullExample() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} noValidate>
       <Fieldset>
         <legend>Ionization</legend>
         <GridGroup>
@@ -152,6 +148,7 @@ export function FullExample() {
                 label="Ionizations"
                 required
                 placeholder="E.g. H+, (H+)2, (H+)-2"
+                inline
               />
             )}
           </form.AppField>

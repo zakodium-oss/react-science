@@ -110,7 +110,6 @@ export function ProofOfConcept() {
               label="Favorite food"
               required
               {...otherSelectProps}
-              itemsEqual="label"
               items={[
                 { label: 'Apple', value: 'apple' },
                 { label: 'Banana', value: 'banana' },

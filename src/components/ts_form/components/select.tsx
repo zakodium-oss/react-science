@@ -36,6 +36,7 @@ export function Select(props: SelectProps) {
       onChange={onItemSelect}
       intent={intent}
       required={required}
+      helperText={error ?? undefined}
     />
   );
 }
