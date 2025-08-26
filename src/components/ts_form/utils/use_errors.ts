@@ -2,8 +2,17 @@ import type { AnyFieldApi } from '@tanstack/react-form';
 import { useMemo } from 'react';
 
 export function useErrors(field: AnyFieldApi): string | undefined {
+  const fieldName = field.name;
+  const errors = field.state.meta.errors.map((error) => {
+    if (Array.isArray(error.path)) {
+      return { ...error, path: error.path.join('.') };
+    }
+
+    return error;
+  });
+
   return useMemo(() => {
-    const error = field.state.meta.errors.find((e) => e.path[0] === field.name);
+    const error = errors.find((error) => error.path === fieldName);
     return error?.message || undefined;
-  }, [field.name, field.state.meta.errors]);
+  }, [errors, fieldName]);
 }
