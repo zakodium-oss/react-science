@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
+import { match } from 'ts-pattern';
 import { z } from 'zod';
 
-import { useForm, useSelect } from '../../../src/components/index.js';
+import { useForm, useSelect, withForm } from '../../../src/components/index.js';
 
 export default {
   title: 'Forms / Form / Tanstack',
@@ -83,9 +84,25 @@ enum AdvancedIonizationsMode {
 
 const formSchema = z.object({
   advancedIonizationsMode: z.enum(AdvancedIonizationsMode),
-  advancedIonizationsAdvanced: z.object({
-    ionizations: z.string().min(1, 'ionizations is required'),
-  }),
+  advancedIonizationsPositive: z
+    .object({
+      ion: z.string(),
+      from: z.string(),
+      to: z.string(),
+    })
+    .optional(),
+  advancedIonizationsNegative: z
+    .object({
+      ion: z.string(),
+      from: z.string(),
+      to: z.string(),
+    })
+    .optional(),
+  advancedIonizationsAdvanced: z
+    .object({
+      ionizations: z.string(),
+    })
+    .optional(),
 });
 
 const modes: Array<{ label: string; value: AdvancedIonizationsMode }> = [
@@ -95,14 +112,26 @@ const modes: Array<{ label: string; value: AdvancedIonizationsMode }> = [
   { value: AdvancedIonizationsMode.Advanced, label: 'Advanced' },
 ];
 
+const defaultValues: z.input<typeof formSchema> = {
+  advancedIonizationsMode: AdvancedIonizationsMode.Neutral,
+  advancedIonizationsNegative: {
+    ion: '',
+    from: '',
+    to: '',
+  },
+  advancedIonizationsPositive: {
+    ion: '',
+    from: '',
+    to: '',
+  },
+  advancedIonizationsAdvanced: {
+    ionizations: '',
+  },
+};
+
 export function FullExample() {
   const form = useForm({
-    defaultValues: {
-      advancedIonizationsAdvanced: {
-        ionizations: '',
-      },
-      advancedIonizationsMode: AdvancedIonizationsMode.Neutral,
-    },
+    defaultValues,
     onSubmit: ({ value }) => {
       action('onSubmit')(value);
     },
@@ -142,16 +171,25 @@ export function FullExample() {
               />
             )}
           </form.AppField>
-          <form.AppField name="advancedIonizationsAdvanced.ionizations">
-            {(field) => (
-              <field.Input
-                label="Ionizations"
-                required
-                placeholder="E.g. H+, (H+)2, (H+)-2"
-                inline
-              />
-            )}
-          </form.AppField>
+
+          <form.Subscribe
+            selector={(state) => state.values.advancedIonizationsMode}
+          >
+            {(mode) =>
+              match(mode)
+                .with(AdvancedIonizationsMode.Neutral, () => null)
+                .with(AdvancedIonizationsMode.Positive, () => (
+                  <PositiveIonizationFields form={form} />
+                ))
+                .with(AdvancedIonizationsMode.Negative, () => (
+                  <NegativeIonizationFields form={form} />
+                ))
+                .with(AdvancedIonizationsMode.Advanced, () => (
+                  <AdvancedIonizationFields form={form} />
+                ))
+                .exhaustive()
+            }
+          </form.Subscribe>
 
           <form.AppForm>
             <form.SubmitButton>Submit</form.SubmitButton>
@@ -161,3 +199,96 @@ export function FullExample() {
     </form>
   );
 }
+
+const positiveOptions = [
+  { label: 'Append H+', value: 'H+' },
+  { label: 'Append Na+', value: 'Na+' },
+  { label: 'Append K+', value: 'K+' },
+  { label: 'Append Cs+', value: 'Cs+' },
+  { label: 'Remove electron', value: '-' },
+];
+
+const PositiveIonizationFields = withForm({
+  defaultValues,
+  render: ({ form }) => {
+    const { value, ...otherSelectProps } = useSelect<{
+      label: string;
+      value: string;
+    }>({ itemTextKey: 'label' });
+
+    return (
+      <>
+        <form.AppField name="advancedIonizationsPositive.ion">
+          {(field) => (
+            <field.Select
+              label="Ion"
+              inline
+              items={positiveOptions}
+              {...otherSelectProps}
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="advancedIonizationsPositive.from">
+          {(field) => <field.Input label="From" inline />}
+        </form.AppField>
+
+        <form.AppField name="advancedIonizationsPositive.to">
+          {(field) => <field.Input label="To" inline />}
+        </form.AppField>
+      </>
+    );
+  },
+});
+
+const negativeOptions = [
+  { label: 'Append H+', value: 'H+' },
+  { label: 'Append Na+', value: 'Na+' },
+  { label: 'Append K+', value: 'K+' },
+  { label: 'Append Cs+', value: 'Cs+' },
+  { label: 'Remove electron', value: '-' },
+];
+
+const NegativeIonizationFields = withForm({
+  defaultValues,
+  render: ({ form }) => {
+    const { value, ...otherSelectProps } = useSelect<{
+      label: string;
+      value: string;
+    }>({ itemTextKey: 'label' });
+
+    return (
+      <>
+        <form.AppField name="advancedIonizationsNegative.ion">
+          {(field) => (
+            <field.Select
+              label="Ion"
+              inline
+              items={negativeOptions}
+              {...otherSelectProps}
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="advancedIonizationsNegative.from">
+          {(field) => <field.Input label="From" inline />}
+        </form.AppField>
+
+        <form.AppField name="advancedIonizationsNegative.to">
+          {(field) => <field.Input label="To" inline />}
+        </form.AppField>
+      </>
+    );
+  },
+});
+
+const AdvancedIonizationFields = withForm({
+  defaultValues,
+  render: ({ form }) => {
+    return (
+      <form.AppField name="advancedIonizationsAdvanced.ionizations">
+        {(field) => <field.Input placeholder="E.g. H+, (H+)2, (H+)-2" inline />}
+      </form.AppField>
+    );
+  },
+});

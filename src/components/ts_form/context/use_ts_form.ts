@@ -10,7 +10,7 @@ import { SubmitButton } from '../components/submit_button.js';
 const { useFormContext, useFieldContext, formContext, fieldContext } =
   createFormHookContexts();
 
-const { useAppForm } = createFormHook({
+const { useAppForm, withForm } = createFormHook({
   fieldContext,
   formContext,
   formComponents: {
@@ -26,4 +26,4 @@ const { useAppForm } = createFormHook({
 });
 
 export const useForm = useAppForm;
-export { useFieldContext, useFormContext };
+export { useFieldContext, useFormContext, withForm };
