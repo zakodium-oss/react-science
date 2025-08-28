@@ -2,41 +2,42 @@ import { useFieldContext } from '../context/use_ts_form.js';
 import { useErrors } from '../utils/use_errors.js';
 import { useIntent } from '../utils/use_intent.js';
 
-import type { SelectProps as FCSelectProps } from './form_components/select.js';
 import { Select as FCSelect } from './form_components/select.js';
+import type { SelectId } from './util/select.js';
 
 interface SelectOptionType {
   label: string;
   value: string;
 }
 
-type SelectProps = Omit<
-  FCSelectProps<SelectOptionType, string>,
-  'getLabel' | 'getValue'
->;
+interface SelectProps {
+  label?: string;
+  items: SelectOptionType[];
+  required?: boolean;
+}
 
 export function Select(props: SelectProps) {
-  const { label, items, required, ...rest } = props;
+  const { label, items, required } = props;
 
   const field = useFieldContext<SelectOptionType['value']>();
   const error = useErrors(field);
   const intent = useIntent(error);
 
-  function onItemSelect(item: SelectOptionType['value'] | undefined) {
-    if (!item) return;
-    return field.handleChange(item);
+  function onItemSelect(selected: SelectId | undefined, option: unknown) {
+    if (!option) return;
+    return field.handleChange(option as SelectOptionType['value']);
   }
 
   return (
     <FCSelect
-      {...rest}
-      label={label}
-      items={items}
+      formGroupProps={{
+        required,
+        label,
+        intent,
+        helperText: error ?? undefined,
+      }}
+      selectProps={{ items, onChange: onItemSelect }}
       selected={field.state.value}
-      onChange={onItemSelect}
-      intent={intent}
-      required={required}
-      helperText={error ?? undefined}
     />
   );
 }

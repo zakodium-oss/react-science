@@ -90,27 +90,43 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
  * @param props
  * @constructor
  */
-export function Select<OptionType, ID extends SelectId>(
-  props: SelectProps<OptionType, ID>,
-): ReactElement {
+
+interface RealSelectProps<OptionType, ID extends SelectId> {
+  id?: string;
+  renderButton?: (state: SelectPropsRenderButtonState<OptionType>) => ReactNode;
+  disabled?: boolean;
+  selected?: ID;
+  formGroupProps: Pick<
+    ComponentProps<typeof FormGroup>,
+    'helperText' | 'intent' | 'label' | 'className' | 'inline'
+  > & {
+    required?: boolean;
+  };
+  selectProps: Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> & {
+    onChange?: (
+      selected: ID | undefined,
+      option: OptionType | undefined,
+    ) => void;
+  };
+  buttonProps?: {
+    getLabel: GetOptionLabel<OptionType>;
+    getValue: GetOptionValue<OptionType, ID>;
+  };
+}
+
+export function Select<
+  OptionType extends SelectOption<ID>,
+  ID extends SelectId,
+>(props: RealSelectProps<OptionType, ID>): ReactElement {
   const {
-    selected,
     renderButton,
-    onChange,
-    getValue: _getValue,
-    getLabel: _getLabel,
-    className,
-    label,
-    inline,
-    items,
     id,
     disabled,
-    helperText,
-    intent,
+    selected,
+    buttonProps: { getLabel: _getLabel, getValue: _getValue } = {},
+    formGroupProps: { className, helperText, inline, intent, label, required },
     // Weirdly, setting the filterable prop on BP's Select component activates the filter input
-    filterable = false,
-    required,
-    ...selectProps
+    selectProps: { filterable = false, items, onChange },
   } = props;
 
   const getValue: GetOptionValue<OptionType, ID> = _getValue ?? getSelectValue;
@@ -139,6 +155,7 @@ export function Select<OptionType, ID extends SelectId>(
   );
 
   const inputId = useInputId(id, null);
+
   return (
     <FormGroup
       label={label}
@@ -152,7 +169,6 @@ export function Select<OptionType, ID extends SelectId>(
       labelInfo={required && <span style={{ color: 'red' }}>*</span>}
     >
       <BPSelect<OptionType>
-        {...selectProps}
         filterable={filterable}
         items={items}
         onItemSelect={onItemSelect}
@@ -165,8 +181,8 @@ export function Select<OptionType, ID extends SelectId>(
           <Button
             id={inputId}
             text={getLabel(selectedOption)}
-            rightIcon="double-caret-vertical"
-            outlined
+            endIcon="double-caret-vertical"
+            variant="outlined"
             intent="none"
             disabled={disabled}
           />

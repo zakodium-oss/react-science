@@ -167,7 +167,6 @@ export function FullExample() {
                 label="Mode"
                 items={modes}
                 required
-                inline
               />
             )}
           </form.AppField>
@@ -222,7 +221,6 @@ const PositiveIonizationFields = withForm({
           {(field) => (
             <field.Select
               label="Ion"
-              inline
               items={positiveOptions}
               {...otherSelectProps}
             />
@@ -263,7 +261,6 @@ const NegativeIonizationFields = withForm({
           {(field) => (
             <field.Select
               label="Ion"
-              inline
               items={negativeOptions}
               {...otherSelectProps}
             />
