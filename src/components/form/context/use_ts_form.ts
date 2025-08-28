@@ -6,6 +6,7 @@ import { NumericInput } from '../components/numeric_input.js';
 import { ResetButton } from '../components/reset_button.js';
 import { Select } from '../components/select.js';
 import { SubmitButton } from '../components/submit_button.js';
+import { Switch } from '../components/switch.js';
 
 const { useFormContext, useFieldContext, formContext, fieldContext } =
   createFormHookContexts();
@@ -22,6 +23,7 @@ const { useAppForm, withForm } = createFormHook({
     NumericInput,
     Checkbox,
     Select,
+    Switch,
   },
 });
 

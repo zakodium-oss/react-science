@@ -45,6 +45,7 @@ const formSchema = z.object({
     message: 'You must agree to the terms and conditions',
   }),
   favorite: z.string({ error: 'favorite food is required' }),
+  developerMode: z.boolean(),
 });
 
 type Schema = z.input<typeof formSchema>;
@@ -56,6 +57,7 @@ const defaultValues: Partial<Schema> = {
   age: 18,
   agree: false,
   favorite: undefined,
+  developerMode: false,
 };
 
 export function ProofOfConcept() {
@@ -126,6 +128,10 @@ export function ProofOfConcept() {
 
       <form.AppField name="agree">
         {(field) => <field.Checkbox label="Agree term of service" />}
+      </form.AppField>
+
+      <form.AppField name="developerMode">
+        {(field) => <field.Switch label="In developer mode" />}
       </form.AppField>
 
       <form.Subscribe selector={(state) => state.isDirty}>
