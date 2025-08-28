@@ -180,11 +180,12 @@ export function Select<
         ) : (
           <Button
             id={inputId}
-            text={getLabel(selectedOption)}
+            text={getLabel(selectedOption) || 'Select ...'}
             endIcon="double-caret-vertical"
             variant="outlined"
             intent="none"
             disabled={disabled}
+            style={{ minWidth: 180 }}
           />
         )}
       </BPSelect>
