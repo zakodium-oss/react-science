@@ -7,13 +7,12 @@ import { useErrors } from '../utils/use_errors.js';
 import { useInputId } from './hooks/use_input_id.js';
 
 interface SwitchProps {
-  defaultChecked?: boolean;
   id?: string;
   label?: string;
 }
 
 export function Switch(props: SwitchProps) {
-  const { label, id, defaultChecked = false } = props;
+  const { label, id } = props;
 
   const field = useFieldContext<boolean>();
   const finalId = useInputId(id, field.name);
