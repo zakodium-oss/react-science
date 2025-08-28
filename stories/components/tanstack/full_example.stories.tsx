@@ -133,7 +133,7 @@ export function FullExample() {
   const form = useForm({
     defaultValues,
     onSubmit: ({ value }) => {
-      action('onSubmit')(value);
+      action('onSubmit')(formSchema.parse(value));
     },
     validationLogic: revalidateLogic({
       modeAfterSubmission: 'blur',

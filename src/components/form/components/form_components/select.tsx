@@ -148,7 +148,6 @@ export function Select<
   const onItemSelect = useCallback(
     (option: OptionType | undefined) => {
       const value = getValue(option);
-
       onChange?.(value, option);
     },
     [getValue, onChange],

@@ -19,13 +19,13 @@ interface SelectProps {
 export function Select(props: SelectProps) {
   const { label, items, required } = props;
 
-  const field = useFieldContext<SelectOptionType['value']>();
+  const field = useFieldContext<SelectId>();
   const error = useErrors(field);
   const intent = useIntent(error);
 
   function onItemSelect(selected: SelectId | undefined, option: unknown) {
-    if (!option) return;
-    return field.handleChange(option as SelectOptionType['value']);
+    if (!selected) return;
+    return field.handleChange(selected);
   }
 
   return (

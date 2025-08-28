@@ -44,17 +44,12 @@ const formSchema = z.object({
   agree: z.boolean().refine((value) => value, {
     message: 'You must agree to the terms and conditions',
   }),
-  favorite: z
-    .object({
-      label: z.string(),
-    })
-    .optional()
-    .refine((value) => value !== undefined, 'favorite food is required'),
+  favorite: z.string({ error: 'favorite food is required' }),
 });
 
 type Schema = z.input<typeof formSchema>;
 
-const defaultValues: Schema = {
+const defaultValues: Partial<Schema> = {
   firstName: '',
   lastName: '',
   city: undefined,
@@ -66,7 +61,7 @@ const defaultValues: Schema = {
 export function ProofOfConcept() {
   const form = useForm({
     defaultValues,
-    onSubmit: ({ value }) => action('onSubmit')(value),
+    onSubmit: ({ value }) => action('onSubmit')(formSchema.parse(value)),
     validationLogic: revalidateLogic({
       modeAfterSubmission: 'blur',
     }),
