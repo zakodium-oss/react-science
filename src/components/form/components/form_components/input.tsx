@@ -1,30 +1,42 @@
-import type { InputGroupProps } from '@blueprintjs/core';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
+import type { ChangeEvent } from 'react';
 
 import { useInputId } from '../hooks/use_input_id.js';
 
-interface InputProps extends InputGroupProps {
+interface InputProps {
   error?: string;
-  label?: string;
-  inline?: boolean;
   required?: boolean;
+  id?: string;
+
+  inputGroupProps: {
+    name: string;
+    type?: string;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    onBlur: () => void;
+    value: string;
+    placeholder?: string;
+  };
+  formGroupProps: {
+    label?: string;
+    className?: string;
+    inline?: boolean;
+  };
 }
 
 export function Input(props: InputProps) {
   const {
-    defaultValue,
-    required,
-    error,
-    onChange,
-    onBlur,
-    className,
     id,
-    name,
-    label,
-    inline,
-    type,
-    inputClassName,
-    ...otherProps
+    required = false,
+    error,
+    formGroupProps: { className, inline = false, label },
+    inputGroupProps: {
+      name,
+      onBlur,
+      onChange,
+      type = 'text',
+      value,
+      placeholder,
+    },
   } = props;
 
   const finalId = useInputId(id, name);
@@ -41,7 +53,6 @@ export function Input(props: InputProps) {
       labelInfo={required && <span style={{ color: 'red' }}>*</span>}
     >
       <InputGroup
-        {...otherProps}
         id={finalId}
         name={name}
         required={required}
@@ -49,6 +60,8 @@ export function Input(props: InputProps) {
         onChange={onChange}
         onBlur={onBlur}
         intent={error ? 'danger' : 'none'}
+        value={value}
+        placeholder={placeholder}
       />
     </FormGroup>
   );
