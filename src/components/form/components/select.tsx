@@ -23,7 +23,7 @@ export function Select(props: SelectProps) {
   const error = useErrors(field);
   const intent = useIntent(error);
 
-  function onItemSelect(selected: SelectId | undefined, option: unknown) {
+  function onItemSelect(selected: SelectId | undefined) {
     if (!selected) return;
     return field.handleChange(selected);
   }
