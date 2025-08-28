@@ -31,11 +31,7 @@ export function Switch(props: SwitchProps) {
       intent="danger"
       style={{ margin: 0, position: 'relative' }}
     >
-      <BPSwitch
-        checked={field.state.value}
-        defaultChecked={defaultChecked}
-        onChange={onChange}
-      />
+      <BPSwitch checked={field.state.value} onChange={onChange} />
     </FormGroup>
   );
 }
