@@ -60,7 +60,7 @@ const defaultValues: Partial<Schema> = {
   developerMode: false,
 };
 
-export function ProofOfConcept() {
+export function CompleteExample() {
   const form = useForm({
     defaultValues,
     onSubmit: ({ value }) => action('onSubmit')(formSchema.parse(value)),

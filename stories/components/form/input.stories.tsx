@@ -1,0 +1,86 @@
+import { revalidateLogic } from '@tanstack/react-form';
+import type { FormEvent } from 'react';
+import { action } from 'storybook/actions';
+import { z } from 'zod';
+
+import { useForm } from '../../../src/components/index.js';
+
+export default {
+  title: 'Forms / Form / Inputs',
+};
+
+const numericInputSchema = z.object({
+  numeric: z
+    .number()
+    .min(0, 'Value must be at least 0')
+    .max(100, 'Value must be at most 100'),
+});
+
+export function NumericInput() {
+  const form = useForm({
+    onSubmit: ({ value }) =>
+      action('onSubmit')(numericInputSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validators: { onDynamic: numericInputSchema },
+    defaultValues: {
+      numeric: 0,
+    },
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="numeric">
+        {(field) => (
+          <field.NumericInput
+            label="Numeric"
+            required
+            placeholder="Value must be between 0 and 100"
+          />
+        )}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
+
+const inputSchema = z.object({
+  input: z.string().min(1, 'Value must be at least 1 character'),
+});
+
+export function Input() {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(inputSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validators: { onDynamic: inputSchema },
+    defaultValues: {
+      input: '',
+    },
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="input">
+        {(field) => (
+          <field.Input label="Input" required placeholder="a string" />
+        )}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
