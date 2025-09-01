@@ -163,3 +163,35 @@ export function Checkbox() {
     </form>
   );
 }
+
+const switchSchema = z.object({
+  switch: z.boolean(),
+});
+
+export function Switch() {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(switchSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validators: { onDynamic: switchSchema },
+    defaultValues: {
+      switch: false,
+    },
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="switch">
+        {(field) => <field.Switch label="Switch this element" />}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
