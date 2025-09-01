@@ -129,3 +129,37 @@ export function Select() {
     </form>
   );
 }
+
+const checkboxSchema = z.object({
+  box: z.boolean().refine((value) => value, {
+    message: 'You must check the box',
+  }),
+});
+
+export function Checkbox() {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(checkboxSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validators: { onDynamic: checkboxSchema },
+    defaultValues: {
+      box: false,
+    },
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="box">
+        {(field) => <field.Checkbox label="Check this box" />}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
