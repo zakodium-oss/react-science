@@ -1,6 +1,6 @@
 import { useFieldContext } from '../context/use_ts_form.js';
 import { useErrors } from '../utils/use_errors.js';
-import { useIntent } from '../utils/use_intent.js';
+import { getIntent } from '../utils/use_intent.js';
 
 import { Select as FCSelect } from './input_groups/select.js';
 import type { SelectId } from './util/select.js';
@@ -21,7 +21,7 @@ export function Select(props: SelectProps) {
 
   const field = useFieldContext<SelectId>();
   const error = useErrors(field);
-  const intent = useIntent(error);
+  const intent = getIntent(error);
 
   function onItemSelect(selected: SelectId | undefined) {
     if (!selected) return;

@@ -3,7 +3,7 @@ import { Checkbox as BPCheckbox, FormGroup } from '@blueprintjs/core';
 
 import { useFieldContext } from '../context/use_ts_form.js';
 import { useErrors } from '../utils/use_errors.js';
-import { useIntent } from '../utils/use_intent.js';
+import { getIntent } from '../utils/use_intent.js';
 
 type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'>;
 
@@ -11,7 +11,7 @@ export function Checkbox(props: CheckboxProps) {
   const { ...rest } = props;
   const field = useFieldContext<boolean>();
   const error = useErrors(field);
-  const intent = useIntent(error);
+  const intent = getIntent(error);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     const checked = event.target.checked;
