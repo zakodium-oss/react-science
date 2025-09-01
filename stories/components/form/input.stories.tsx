@@ -84,3 +84,48 @@ export function Input() {
     </form>
   );
 }
+
+const selectSchema = z.object({
+  select: z.string({ error: 'At least one element is required' }),
+});
+
+export function Select() {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(selectSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validators: { onDynamic: selectSchema },
+    defaultValues: {
+      select: undefined,
+    } as Partial<z.input<typeof selectSchema>>,
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="select">
+        {(field) => (
+          <field.Select
+            label="Favorite food"
+            required
+            items={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Carrot', value: 'carrot' },
+              { label: 'Potato', value: 'potato' },
+              { label: 'Tomato', value: 'tomato' },
+            ]}
+          />
+        )}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
