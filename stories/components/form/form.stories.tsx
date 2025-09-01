@@ -4,7 +4,7 @@ import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { useForm, useSelect } from '../../../src/components/index.js';
+import { useForm } from '../../../src/components/index.js';
 
 export default {
   title: 'Forms / Form',
@@ -72,13 +72,6 @@ export function CompleteExample() {
     },
   });
 
-  const { value, ...otherSelectProps } = useSelect<{
-    label: string;
-    value: string;
-  }>({
-    itemTextKey: 'label',
-  });
-
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
@@ -106,7 +99,6 @@ export function CompleteExample() {
             <field.Select
               label="Favorite food"
               required
-              {...otherSelectProps}
               items={[
                 { label: 'Apple', value: 'apple' },
                 { label: 'Banana', value: 'banana' },
