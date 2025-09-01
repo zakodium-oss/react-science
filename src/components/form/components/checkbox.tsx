@@ -1,5 +1,3 @@
-// <Checkbox checked={false} />
-
 import type { CheckboxProps as BPCheckboxProps } from '@blueprintjs/core';
 import { Checkbox as BPCheckbox } from '@blueprintjs/core';
 

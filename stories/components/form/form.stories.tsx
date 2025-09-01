@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { useForm, useSelect } from '../../../src/components/index.js';
 
 export default {
-  title: 'Forms / Form / Tanstack',
+  title: 'Forms / Form',
 };
 
 const Form = styled.form`
