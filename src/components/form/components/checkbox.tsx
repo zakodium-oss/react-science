@@ -1,8 +1,7 @@
 import type { CheckboxProps as BPCheckboxProps } from '@blueprintjs/core';
-import { Checkbox as BPCheckbox } from '@blueprintjs/core';
+import { Checkbox as BPCheckbox, FormGroup } from '@blueprintjs/core';
 
 import { useFieldContext } from '../context/use_ts_form.js';
-import { Error } from '../utils/Error.js';
 import { useErrors } from '../utils/use_errors.js';
 import { useIntent } from '../utils/use_intent.js';
 
@@ -20,7 +19,7 @@ export function Checkbox(props: CheckboxProps) {
   }
 
   return (
-    <Error intent={intent} error={error}>
+    <FormGroup intent={intent} helperText={error}>
       <BPCheckbox
         {...rest}
         onBlur={field.handleBlur}
@@ -28,6 +27,6 @@ export function Checkbox(props: CheckboxProps) {
         value={String(field.state.value)}
         onChange={onChange}
       />
-    </Error>
+    </FormGroup>
   );
 }
