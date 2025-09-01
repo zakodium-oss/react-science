@@ -1,8 +1,9 @@
 import type { ChangeEvent } from 'react';
 
-import { Input as FCInput } from '../components/form_components/input.js';
 import { useFieldContext } from '../context/use_ts_form.js';
 import { useErrors } from '../utils/use_errors.js';
+
+import { Input as FCInput } from './input_groups/input.js';
 
 interface InputProps {
   label?: string;
