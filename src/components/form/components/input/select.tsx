@@ -35,7 +35,8 @@ export function Select(props: SelectProps) {
         intent,
         helperText: error ?? undefined,
       }}
-      selectProps={{ items, onChange: onItemSelect }}
+      items={items}
+      onChange={onItemSelect}
       selected={field.state.value}
     />
   );

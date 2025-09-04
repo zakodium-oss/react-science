@@ -91,26 +91,20 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
  * @constructor
  */
 
-interface RealSelectProps<OptionType, ID extends SelectId> {
+interface RealSelectProps<OptionType, ID extends SelectId>
+  extends Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> {
   id?: string;
   renderButton?: (state: SelectPropsRenderButtonState<OptionType>) => ReactNode;
   disabled?: boolean;
   selected?: ID;
+  onChange?: (selected: ID | undefined, option: OptionType | undefined) => void;
+  getLabel?: GetOptionLabel<OptionType>;
+  getValue?: GetOptionValue<OptionType, ID>;
   formGroupProps: Pick<
     ComponentProps<typeof FormGroup>,
     'helperText' | 'intent' | 'label' | 'className' | 'inline'
   > & {
     required?: boolean;
-  };
-  selectProps: Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> & {
-    onChange?: (
-      selected: ID | undefined,
-      option: OptionType | undefined,
-    ) => void;
-  };
-  buttonProps?: {
-    getLabel: GetOptionLabel<OptionType>;
-    getValue: GetOptionValue<OptionType, ID>;
   };
 }
 
@@ -123,10 +117,13 @@ export function Select<
     id,
     disabled,
     selected,
-    buttonProps: { getLabel: _getLabel, getValue: _getValue } = {},
+    getLabel: _getLabel,
+    getValue: _getValue,
     formGroupProps: { className, helperText, inline, intent, label, required },
     // Weirdly, setting the filterable prop on BP's Select component activates the filter input
-    selectProps: { filterable = false, items, onChange },
+    filterable = false,
+    items,
+    onChange,
   } = props;
 
   const getValue: GetOptionValue<OptionType, ID> = _getValue ?? getSelectValue;

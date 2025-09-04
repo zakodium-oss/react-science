@@ -7,15 +7,12 @@ interface InputProps {
   error?: string;
   required?: boolean;
   id?: string;
-
-  inputGroupProps: {
-    name: string;
-    type?: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    onBlur: () => void;
-    value: string;
-    placeholder?: string;
-  };
+  name: string;
+  type?: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur: () => void;
+  value: string;
+  placeholder?: string;
   formGroupProps: {
     label?: string;
     className?: string;
@@ -29,14 +26,12 @@ export function Input(props: InputProps) {
     required = false,
     error,
     formGroupProps: { className, inline = false, label },
-    inputGroupProps: {
-      name,
-      onBlur,
-      onChange,
-      type = 'text',
-      value,
-      placeholder,
-    },
+    name,
+    onBlur,
+    onChange,
+    type = 'text',
+    value,
+    placeholder,
   } = props;
 
   const finalId = useInputId(id, name);

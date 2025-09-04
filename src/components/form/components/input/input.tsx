@@ -25,13 +25,11 @@ export function Input(props: InputProps) {
       required={required}
       error={error}
       formGroupProps={{ label, inline }}
-      inputGroupProps={{
-        value: field.state.value,
-        onChange,
-        onBlur: field.handleBlur,
-        name: field.name,
-        placeholder,
-      }}
+      value={field.state.value}
+      onChange={onChange}
+      onBlur={field.handleBlur}
+      name={field.name}
+      placeholder={placeholder}
     />
   );
 }
