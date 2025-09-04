@@ -1,9 +1,8 @@
 import type { ChangeEvent } from 'react';
 
-import { useFieldContext } from '../context/use_ts_form.js';
-import { useErrors } from '../utils/use_errors.js';
-
-import { Input as FormGroupInput } from './input_groups/input.js';
+import { useFieldContext } from '../../context/use_ts_form.js';
+import { useErrors } from '../../utils/use_errors.js';
+import { Input as FormGroupInput } from '../input_groups/input.js';
 
 interface InputProps {
   label?: string;

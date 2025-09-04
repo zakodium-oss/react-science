@@ -1,10 +1,9 @@
 import { FormGroup, Switch as BPSwitch } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 
-import { useFieldContext } from '../context/use_ts_form.js';
-import { useErrors } from '../utils/use_errors.js';
-
-import { useInputId } from './hooks/use_input_id.js';
+import { useFieldContext } from '../../context/use_ts_form.js';
+import { useErrors } from '../../utils/use_errors.js';
+import { useInputId } from '../hooks/use_input_id.js';
 
 interface SwitchProps {
   id?: string;

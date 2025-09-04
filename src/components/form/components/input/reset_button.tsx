@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
-import { Button } from '../../button/index.js';
-import { useFormContext } from '../context/use_ts_form.js';
+import { Button } from '../../../button/index.js';
+import { useFormContext } from '../../context/use_ts_form.js';
 
 interface ResetButtonProps {
   children: ReactNode;

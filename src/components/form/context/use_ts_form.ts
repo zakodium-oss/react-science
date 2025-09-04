@@ -1,12 +1,12 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
-import { Checkbox } from '../components/checkbox.js';
-import { Input } from '../components/input.js';
-import { NumericInput } from '../components/numeric_input.js';
-import { ResetButton } from '../components/reset_button.js';
-import { Select } from '../components/select.js';
-import { SubmitButton } from '../components/submit_button.js';
-import { Switch } from '../components/switch.js';
+import { Checkbox } from '../components/input/checkbox.js';
+import { Input } from '../components/input/input.js';
+import { NumericInput } from '../components/input/numeric_input.js';
+import { ResetButton } from '../components/input/reset_button.js';
+import { Select } from '../components/input/select.js';
+import { SubmitButton } from '../components/input/submit_button.js';
+import { Switch } from '../components/input/switch.js';
 
 const { useFormContext, useFieldContext, formContext, fieldContext } =
   createFormHookContexts();
