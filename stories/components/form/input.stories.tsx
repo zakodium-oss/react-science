@@ -23,8 +23,8 @@ export function NumericInput() {
     validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
     validators: { onDynamic: numericInputSchema },
     defaultValues: {
-      numeric: 0,
-    },
+      numeric: undefined,
+    } as Partial<z.input<typeof numericInputSchema>>,
   });
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

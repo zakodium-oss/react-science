@@ -14,12 +14,16 @@ interface NumericInputProps
 
 export function NumericInput(props: NumericInputProps) {
   const { label, required, ...rest } = props;
-  const field = useFieldContext<number>();
+  const field = useFieldContext<number | undefined>();
   const id = useFieldId(field.name);
   const error = useErrors(field);
   const intent = getIntent(error);
 
-  function onChange(value: number) {
+  function onChange(value: number, valueAsString: string) {
+    if (valueAsString === '') {
+      return field.handleChange(undefined);
+    }
+
     return field.handleChange(value);
   }
 
@@ -35,7 +39,7 @@ export function NumericInput(props: NumericInputProps) {
         {...rest}
         onBlur={field.handleBlur}
         name={field.name}
-        value={field.state.value}
+        value={field.state.value ?? ''}
         onValueChange={onChange}
         intent={intent}
         required={required}
