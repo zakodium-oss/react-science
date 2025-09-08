@@ -11,7 +11,7 @@ export default {
 
 const numericInputSchema = z.object({
   numeric: z
-    .number()
+    .number({ error: 'This field is required and must be a number' })
     .min(0, 'Value must be at least 0')
     .max(100, 'Value must be at most 100'),
 });
@@ -23,7 +23,7 @@ export function NumericInput() {
     validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
     validators: { onDynamic: numericInputSchema },
     defaultValues: {
-      numeric: undefined,
+      numeric: 18,
     } as Partial<z.input<typeof numericInputSchema>>,
   });
 
@@ -165,7 +165,7 @@ export function Checkbox() {
 }
 
 const switchSchema = z.object({
-  switch: z.boolean(),
+  switch: z.literal(true, { error: 'You must turn on the switch' }),
 });
 
 export function Switch() {
