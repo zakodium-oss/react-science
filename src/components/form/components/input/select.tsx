@@ -24,7 +24,9 @@ export function Select(props: SelectProps) {
 
   function onItemSelect(selected: SelectId | undefined) {
     if (!selected) return;
-    return field.handleChange(selected);
+    field.handleChange(selected);
+
+    return field.handleBlur();
   }
 
   return (
