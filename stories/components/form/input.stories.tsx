@@ -10,7 +10,7 @@ export default {
 };
 
 const numericInputSchema = z.object({
-  numeric: z
+  numeric: z.coerce
     .number({ error: 'This field is required and must be a number' })
     .min(0, 'Value must be at least 0')
     .max(100, 'Value must be at most 100'),
@@ -23,7 +23,7 @@ export function NumericInput() {
     validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
     validators: { onDynamic: numericInputSchema },
     defaultValues: {
-      numeric: 18,
+      numeric: '18',
     } as Partial<z.input<typeof numericInputSchema>>,
   });
 
