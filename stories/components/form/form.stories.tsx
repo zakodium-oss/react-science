@@ -45,7 +45,9 @@ const formSchema = z.object({
     message: 'You must agree to the terms and conditions',
   }),
   favorite: z.string({ error: 'favorite food is required' }),
-  developerMode: z.boolean(),
+  developerMode: z
+    .boolean()
+    .refine((value) => value, { error: 'This field should be true' }),
 });
 
 type Schema = z.input<typeof formSchema>;
