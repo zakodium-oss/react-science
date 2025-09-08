@@ -19,6 +19,8 @@ export function Switch(props: SwitchProps) {
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     field.handleChange(event.target.checked);
+
+    return field.handleBlur();
   }
 
   return (

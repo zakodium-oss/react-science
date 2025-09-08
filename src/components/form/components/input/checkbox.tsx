@@ -16,6 +16,8 @@ export function Checkbox(props: CheckboxProps) {
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     const checked = event.target.checked;
     field.handleChange(checked);
+
+    return field.handleBlur();
   }
 
   return (
