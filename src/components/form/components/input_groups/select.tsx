@@ -93,6 +93,7 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
 
 interface RealSelectProps<OptionType, ID extends SelectId>
   extends Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> {
+  onBlur: () => void;
   id?: string;
   renderButton?: (state: SelectPropsRenderButtonState<OptionType>) => ReactNode;
   disabled?: boolean;
@@ -124,6 +125,7 @@ export function Select<
     filterable = false,
     items,
     onChange,
+    onBlur,
   } = props;
 
   const getValue: GetOptionValue<OptionType, ID> = _getValue ?? getSelectValue;
@@ -170,6 +172,9 @@ export function Select<
         onItemSelect={onItemSelect}
         itemRenderer={itemRenderer}
         disabled={disabled}
+        popoverContentProps={{
+          onBlur,
+        }}
       >
         {renderButton ? (
           renderButton({ selectedOption, error: undefined })

@@ -27,9 +27,9 @@ export function Input(props: InputProps) {
       formGroupProps={{ label, inline }}
       value={field.state.value}
       onChange={onChange}
-      onBlur={field.handleBlur}
       name={field.name}
       placeholder={placeholder}
+      onBlur={field.handleBlur}
     />
   );
 }

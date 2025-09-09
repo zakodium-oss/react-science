@@ -37,13 +37,13 @@ export function NumericInput(props: NumericInputProps) {
     >
       <BPNumericInput
         {...rest}
-        onBlur={field.handleBlur}
         name={field.name}
         value={field.state.value ?? ''}
         onValueChange={onChange}
         intent={intent}
         required={required}
         id={id}
+        onBlur={field.handleBlur}
       />
     </FormGroup>
   );

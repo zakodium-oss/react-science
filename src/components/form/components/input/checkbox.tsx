@@ -15,19 +15,17 @@ export function Checkbox(props: CheckboxProps) {
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     const checked = event.target.checked;
-    field.handleChange(checked);
-
-    return field.handleBlur();
+    return field.handleChange(checked);
   }
 
   return (
     <FormGroup intent={intent} helperText={error}>
       <BPCheckbox
         {...rest}
-        onBlur={field.handleBlur}
         name={field.name}
         value={String(field.state.value)}
         onChange={onChange}
+        onBlur={field.handleBlur}
       />
     </FormGroup>
   );

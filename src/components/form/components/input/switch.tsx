@@ -18,9 +18,7 @@ export function Switch(props: SwitchProps) {
   const error = useErrors(field);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    field.handleChange(event.target.checked);
-
-    return field.handleBlur();
+    return field.handleChange(event.target.checked);
   }
 
   return (
