@@ -36,7 +36,7 @@ const Alert = styled.div`
 const formSchema = z.object({
   firstName: z.string().min(1, 'first name is required'),
   lastName: z.string().min(1, 'last name is required'),
-  city: z.string().optional(),
+  city: z.string().optional().nullable(),
   age: z.coerce
     .number()
     .min(18, 'age must be between 18 and 100')
@@ -55,7 +55,7 @@ type Schema = z.input<typeof formSchema>;
 const defaultValues: Partial<Schema> = {
   firstName: '',
   lastName: '',
-  city: undefined,
+  city: '',
   age: 18,
   agree: false,
   favorite: undefined,
