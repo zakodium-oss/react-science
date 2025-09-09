@@ -37,7 +37,7 @@ const formSchema = z.object({
   firstName: z.string().min(1, 'first name is required'),
   lastName: z.string().min(1, 'last name is required'),
   city: z.string().optional(),
-  age: z
+  age: z.coerce
     .number()
     .min(18, 'age must be between 18 and 100')
     .max(100, 'age must be between 18 and 100'),
@@ -62,7 +62,7 @@ const defaultValues: Partial<Schema> = {
   developerMode: false,
 };
 
-export function CompleteExample() {
+export function Example() {
   const form = useForm({
     defaultValues,
     onSubmit: ({ value }) => action('onSubmit')(formSchema.parse(value)),

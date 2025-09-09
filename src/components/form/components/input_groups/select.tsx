@@ -95,7 +95,10 @@ interface RealSelectProps<OptionType, ID extends SelectId>
   extends Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> {
   onBlur: () => void;
   id?: string;
-  renderButton?: (state: SelectPropsRenderButtonState<OptionType>) => ReactNode;
+  renderButton?: (
+    state: SelectPropsRenderButtonState<OptionType>,
+    onBlur: () => void,
+  ) => ReactNode;
   disabled?: boolean;
   selected?: ID;
   onChange?: (selected: ID | undefined, option: OptionType | undefined) => void;
@@ -172,12 +175,9 @@ export function Select<
         onItemSelect={onItemSelect}
         itemRenderer={itemRenderer}
         disabled={disabled}
-        popoverContentProps={{
-          onBlur,
-        }}
       >
         {renderButton ? (
-          renderButton({ selectedOption, error: undefined })
+          renderButton({ selectedOption, error: undefined }, onBlur)
         ) : (
           <Button
             id={inputId}
@@ -187,6 +187,7 @@ export function Select<
             intent="none"
             disabled={disabled}
             style={{ minWidth: 180 }}
+            onBlur={onBlur}
           />
         )}
       </BPSelect>
