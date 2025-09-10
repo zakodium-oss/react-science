@@ -36,11 +36,23 @@ const Alert = styled.div`
 const formSchema = z.object({
   firstName: z.string().min(1, 'first name is required'),
   lastName: z.string().min(1, 'last name is required'),
-  city: z.string().optional().nullable(),
-  age: z.coerce
-    .number()
-    .min(18, 'age must be between 18 and 100')
-    .max(100, 'age must be between 18 and 100'),
+  city: z
+    .string()
+    .optional()
+    .transform((value) => {
+      if (value === '') return undefined;
+      return value;
+    }),
+  age: z
+    .string()
+    .transform((value) => {
+      if (value === '') return undefined;
+      return Number(value);
+    })
+    .refine((value) => value !== undefined, { error: 'age is required' })
+    .refine((value) => value && value >= 18 && value <= 100, {
+      error: 'age must be between 18 and 100',
+    }),
   agree: z.boolean().refine((value) => value, {
     message: 'You must agree to the terms and conditions',
   }),
@@ -56,18 +68,22 @@ const defaultValues: Partial<Schema> = {
   firstName: '',
   lastName: '',
   city: '',
-  age: 18,
+  age: '18',
   agree: false,
   favorite: undefined,
   developerMode: false,
 };
 
+// TODO : add example with 1/2 champs for onBlur
 export function Example() {
   const form = useForm({
     defaultValues,
+    onSubmitInvalid: ({ value }) => {
+      action('onSubmitInvalid')(formSchema.parse(value));
+    },
     onSubmit: ({ value }) => action('onSubmit')(formSchema.parse(value)),
     validationLogic: revalidateLogic({
-      modeAfterSubmission: 'blur',
+      modeAfterSubmission: 'change',
     }),
     validators: {
       onDynamic: formSchema,

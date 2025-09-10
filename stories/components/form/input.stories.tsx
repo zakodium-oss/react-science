@@ -9,6 +9,11 @@ export default {
   title: 'Forms / Form / Inputs',
 };
 
+/*
+Faire un transform string -> number et des test puis transform
+ */
+const a = z.object({});
+
 const numericInputSchema = z.object({
   numeric: z.coerce
     .number({ error: 'This field is required and must be a number' })
@@ -20,7 +25,7 @@ export function NumericInput() {
   const form = useForm({
     onSubmit: ({ value }) =>
       action('onSubmit')(numericInputSchema.parse(value)),
-    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: numericInputSchema },
     defaultValues: {
       numeric: '18',
@@ -58,7 +63,7 @@ const inputSchema = z.object({
 export function Input() {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(inputSchema.parse(value)),
-    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: inputSchema },
     defaultValues: {
       input: '',
@@ -92,7 +97,7 @@ const selectSchema = z.object({
 export function Select() {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(selectSchema.parse(value)),
-    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: selectSchema },
     defaultValues: {
       select: undefined,
@@ -139,7 +144,7 @@ const checkboxSchema = z.object({
 export function Checkbox() {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(checkboxSchema.parse(value)),
-    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: checkboxSchema },
     defaultValues: {
       box: false,
@@ -171,7 +176,7 @@ const switchSchema = z.object({
 export function Switch() {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(switchSchema.parse(value)),
-    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: switchSchema },
     defaultValues: {
       switch: false,

@@ -10,7 +10,7 @@ export function SubmitButton(props: SubmitButtonProps) {
   const { intent, ...otherProps } = props;
 
   const form = useFormContext();
-  const [isSubmitting] = useStore(form.store, (state) => [state.isSubmitting]);
+  const isSubmitting = useStore(form.store, (state) => state.isSubmitting);
 
   return (
     <Button

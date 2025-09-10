@@ -1,5 +1,6 @@
 import type { CheckboxProps as BPCheckboxProps } from '@blueprintjs/core';
 import { Checkbox as BPCheckbox, FormGroup } from '@blueprintjs/core';
+import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { useErrors } from '../../utils/use_errors.js';
@@ -13,7 +14,7 @@ export function Checkbox(props: CheckboxProps) {
   const error = useErrors(field);
   const intent = getIntent(error);
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
     const checked = event.target.checked;
     return field.handleChange(checked);
   }
@@ -25,7 +26,7 @@ export function Checkbox(props: CheckboxProps) {
         name={field.name}
         value={String(field.state.value)}
         onChange={onChange}
-        onBlur={field.handleBlur}
+        onBlurCapture={field.handleBlur}
       />
     </FormGroup>
   );

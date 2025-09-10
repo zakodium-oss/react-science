@@ -27,7 +27,6 @@ export function Switch(props: SwitchProps) {
       label={label}
       labelFor={finalId}
       intent="danger"
-      style={{ margin: 0, position: 'relative' }}
     >
       <BPSwitch
         checked={field.state.value}
