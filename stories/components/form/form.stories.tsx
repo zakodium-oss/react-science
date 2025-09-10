@@ -74,7 +74,6 @@ const defaultValues: Partial<Schema> = {
   developerMode: false,
 };
 
-// TODO : add example with 1/2 champs for onBlur
 export function Example() {
   const form = useForm({
     defaultValues,
