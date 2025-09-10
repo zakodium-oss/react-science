@@ -9,16 +9,16 @@ export default {
   title: 'Forms / Form / Inputs',
 };
 
-/*
-Faire un transform string -> number et des test puis transform
- */
-const a = z.object({});
-
 const numericInputSchema = z.object({
-  numeric: z.coerce
-    .number({ error: 'This field is required and must be a number' })
-    .min(0, 'Value must be at least 0')
-    .max(100, 'Value must be at most 100'),
+  numeric: z
+    .string()
+    .transform((value) => {
+      if (value === '') return undefined;
+      return Number(value);
+    })
+    .refine((value) => value && value >= 0 && value <= 100, {
+      error: 'Value must be between 0 and 100',
+    }),
 });
 
 export function NumericInput() {
