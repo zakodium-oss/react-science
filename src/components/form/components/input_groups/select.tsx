@@ -184,7 +184,7 @@ export function Select<
             text={getLabel(selectedOption) || 'Select ...'}
             endIcon="double-caret-vertical"
             variant="outlined"
-            intent="none"
+            intent={intent}
             disabled={disabled}
             style={{ minWidth: 180 }}
             onBlur={onBlur}
