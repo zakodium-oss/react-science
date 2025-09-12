@@ -20,8 +20,6 @@ export function NumericInput(props: NumericInputProps) {
     .errors.map((e) => e.message)
     .at(0);
 
-  console.log(error);
-
   const intent = getIntent(error);
 
   function onChange(_: number, valueAsString: string) {

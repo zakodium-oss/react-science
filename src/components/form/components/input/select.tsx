@@ -25,8 +25,6 @@ export function Select(props: SelectProps) {
 
   const intent = getIntent(error);
 
-  console.log(intent);
-
   function onItemSelect(selected: SelectId | undefined) {
     if (!selected) return;
     return field.handleChange(selected);
