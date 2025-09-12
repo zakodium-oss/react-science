@@ -1,5 +1,4 @@
 import { useFieldContext } from '../../context/use_ts_form.js';
-import { useErrors } from '../../utils/use_errors.js';
 import { getIntent } from '../../utils/use_intent.js';
 import { Select as FormGroupSelect } from '../input_groups/select.js';
 import type { SelectId } from '../util/select.js';
@@ -19,8 +18,14 @@ export function Select(props: SelectProps) {
   const { label, items, required } = props;
 
   const field = useFieldContext<SelectId>();
-  const error = useErrors(field);
+  const error = field
+    .getMeta()
+    .errors.map((e) => e.message)
+    .at(0);
+
   const intent = getIntent(error);
+
+  console.log(intent);
 
   function onItemSelect(selected: SelectId | undefined) {
     if (!selected) return;

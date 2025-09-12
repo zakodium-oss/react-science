@@ -2,7 +2,6 @@ import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core
 import { FormGroup, NumericInput as BPNumericInput } from '@blueprintjs/core';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
-import { useErrors } from '../../utils/use_errors.js';
 import { useFieldId } from '../../utils/use_field_id.js';
 import { getIntent } from '../../utils/use_intent.js';
 
@@ -16,7 +15,13 @@ export function NumericInput(props: NumericInputProps) {
   const { label, required, ...rest } = props;
   const field = useFieldContext<string>();
   const id = useFieldId(field.name);
-  const error = useErrors(field);
+  const error = field
+    .getMeta()
+    .errors.map((e) => e.message)
+    .at(0);
+
+  console.log(error);
+
   const intent = getIntent(error);
 
   function onChange(_: number, valueAsString: string) {

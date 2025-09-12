@@ -1,7 +1,6 @@
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
-import { useErrors } from '../../utils/use_errors.js';
 import { Input as FormGroupInput } from '../input_groups/input.js';
 
 interface InputProps {
@@ -14,7 +13,10 @@ interface InputProps {
 export function Input(props: InputProps) {
   const { label, required, inline, placeholder } = props;
   const field = useFieldContext<string>();
-  const error = useErrors(field);
+  const error = field
+    .getMeta()
+    .errors.map((e) => e.message)
+    .at(0);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     return field.handleChange(event.target.value);
