@@ -197,6 +197,7 @@ export function GeneralSettings() {
               {(field) => (
                 <field.Select
                   label="Spectra Rendering"
+                  inline
                   items={[
                     { label: 'Auto', value: 'auto' },
                     { label: 'Optimize speed', value: 'optimize-speed' },
@@ -215,6 +216,7 @@ export function GeneralSettings() {
               {(field) => (
                 <field.Select
                   label="Level"
+                  inline
                   items={[
                     { label: 'Fatal', value: 'fatal' },
                     { label: 'Error', value: 'error' },
@@ -232,6 +234,7 @@ export function GeneralSettings() {
               {(field) => (
                 <field.Select
                   label="Popup logging level"
+                  inline
                   items={[
                     { label: 'Fatal', value: 'fatal' },
                     { label: 'Error', value: 'error' },
