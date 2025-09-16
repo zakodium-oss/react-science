@@ -178,16 +178,18 @@ export function GeneralSettings() {
             </form.AppField>
 
             <form.AppField name="general.invertActions">
-              {(field) => <field.Switch label="Invert actions" />}
+              {(field) => <field.Switch label="Invert actions" fill />}
             </form.AppField>
 
             <form.AppField name="general.invertScroll">
-              {(field) => <field.Switch label="Invert scroll" />}
+              {(field) => <field.Switch label="Invert scroll" fill />}
             </form.AppField>
 
             <SectionTitle>Experimental features</SectionTitle>
             <form.AppField name="experimentalFeatures.enableExperimentalFeatures">
-              {(field) => <field.Switch label="Enable experimental features" />}
+              {(field) => (
+                <field.Switch label="Enable experimental features" fill />
+              )}
             </form.AppField>
 
             <SectionTitle>Rendering</SectionTitle>
