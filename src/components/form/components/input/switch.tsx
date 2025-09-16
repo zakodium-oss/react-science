@@ -27,6 +27,7 @@ export function Switch(props: SwitchProps) {
         onChange={onChange}
         onBlur={field.handleBlur}
         labelElement={label}
+        alignIndicator="end"
       />
     </FormGroup>
   );
