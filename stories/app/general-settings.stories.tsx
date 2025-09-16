@@ -170,7 +170,10 @@ export function GeneralSettings() {
 
             <form.AppField name="general.opacityDimmedSpectra">
               {(field) => (
-                <field.NumericInput label="Opacity of dimmed spectra [0-1]" />
+                <field.NumericInput
+                  label="Opacity of dimmed spectra [0-1]"
+                  inline
+                />
               )}
             </form.AppField>
 
@@ -242,7 +245,7 @@ export function GeneralSettings() {
 
             <SectionTitle>Peaks label</SectionTitle>
             <form.AppField name="peaksLabel.marginTop">
-              {(field) => <field.NumericInput label="Margin top" />}
+              {(field) => <field.NumericInput label="Margin top" inline />}
             </form.AppField>
           </Content>
         </SplitContainer>
