@@ -2,6 +2,7 @@ import { Button } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
+import { action } from 'storybook/actions';
 import { z } from 'zod';
 
 import { useForm } from '../../src/components/index.js';
@@ -12,7 +13,6 @@ export default {
 
 const SplitContainer = styled.div`
   display: flex;
-  padding: 15px;
 `;
 
 const Tabs = styled.div`
@@ -50,6 +50,7 @@ const SectionTitle = styled.p`
   margin-bottom: 10px;
   border-bottom: 0.55px solid rgb(249, 249, 249);
   padding: 6px 2px;
+  margin-top: 2rem;
 `;
 
 const Container = styled.div``;
@@ -68,6 +69,12 @@ const ContainerFooterContent = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  gap: 10px;
+`;
+
+const Section = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 `;
 
@@ -139,9 +146,7 @@ export function GeneralSettings() {
     defaultValues,
     validators: { onDynamic: formSchema },
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
-    onSubmit: ({ value }) => {
-      console.log(formSchema.parse(value));
-    },
+    onSubmit: ({ value }) => action('onSubmit')(formSchema.parse(value)),
   });
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -166,100 +171,115 @@ export function GeneralSettings() {
             <Tab>Export</Tab>
           </Tabs>
           <Content>
-            <SectionTitle>General</SectionTitle>
+            <Section>
+              <SectionTitle>General</SectionTitle>
 
-            <form.AppField name="general.opacityDimmedSpectra">
-              {(field) => (
-                <field.NumericInput
-                  label="Opacity of dimmed spectra [0-1]"
-                  inline
-                />
-              )}
-            </form.AppField>
+              <form.AppField name="general.opacityDimmedSpectra">
+                {(field) => (
+                  <field.NumericInput
+                    label="Opacity of dimmed spectra [0-1]"
+                    inline
+                  />
+                )}
+              </form.AppField>
 
-            <form.AppField name="general.invertActions">
-              {(field) => <field.Switch label="Invert actions" fill />}
-            </form.AppField>
+              <form.AppField name="general.invertActions">
+                {(field) => <field.Switch label="Invert actions" fill />}
+              </form.AppField>
 
-            <form.AppField name="general.invertScroll">
-              {(field) => <field.Switch label="Invert scroll" fill />}
-            </form.AppField>
+              <form.AppField name="general.invertScroll">
+                {(field) => <field.Switch label="Invert scroll" fill />}
+              </form.AppField>
+            </Section>
 
-            <SectionTitle>Experimental features</SectionTitle>
-            <form.AppField name="experimentalFeatures.enableExperimentalFeatures">
-              {(field) => (
-                <field.Switch label="Enable experimental features" fill />
-              )}
-            </form.AppField>
+            <Section>
+              <SectionTitle>Experimental features</SectionTitle>
+              <form.AppField name="experimentalFeatures.enableExperimentalFeatures">
+                {(field) => (
+                  <field.Switch label="Enable experimental features" fill />
+                )}
+              </form.AppField>
+            </Section>
 
-            <SectionTitle>Rendering</SectionTitle>
-            <form.AppField name="rendering.spectraRendering">
-              {(field) => (
-                <field.Select
-                  label="Spectra Rendering"
-                  inline
-                  items={[
-                    { label: 'Auto', value: 'auto' },
-                    { label: 'Optimize speed', value: 'optimize-speed' },
-                    { label: 'Crisp edges', value: 'crisp-edges' },
-                    {
-                      label: 'Geometric precision',
-                      value: 'geometric-precision',
-                    },
-                  ]}
-                />
-              )}
-            </form.AppField>
+            <Section>
+              <SectionTitle>Rendering</SectionTitle>
+              <form.AppField name="rendering.spectraRendering">
+                {(field) => (
+                  <field.Select
+                    label="Spectra Rendering"
+                    inline
+                    items={[
+                      { label: 'Auto', value: 'auto' },
+                      { label: 'Optimize speed', value: 'optimize-speed' },
+                      { label: 'Crisp edges', value: 'crisp-edges' },
+                      {
+                        label: 'Geometric precision',
+                        value: 'geometric-precision',
+                      },
+                    ]}
+                  />
+                )}
+              </form.AppField>
+            </Section>
 
-            <SectionTitle>Logging settings</SectionTitle>
-            <form.AppField name="loggingSettings.level">
-              {(field) => (
-                <field.Select
-                  label="Level"
-                  inline
-                  items={[
-                    { label: 'Fatal', value: 'fatal' },
-                    { label: 'Error', value: 'error' },
-                    { label: 'Warn', value: 'warn' },
-                    { label: 'Info', value: 'info' },
-                    { label: 'Debug', value: 'debug' },
-                    { label: 'Trace', value: 'trace' },
-                    { label: 'Silent', value: 'silent' },
-                  ]}
-                />
-              )}
-            </form.AppField>
+            <Section>
+              <SectionTitle>Logging settings</SectionTitle>
+              <form.AppField name="loggingSettings.level">
+                {(field) => (
+                  <field.Select
+                    label="Level"
+                    inline
+                    items={[
+                      { label: 'Fatal', value: 'fatal' },
+                      { label: 'Error', value: 'error' },
+                      { label: 'Warn', value: 'warn' },
+                      { label: 'Info', value: 'info' },
+                      { label: 'Debug', value: 'debug' },
+                      { label: 'Trace', value: 'trace' },
+                      { label: 'Silent', value: 'silent' },
+                    ]}
+                  />
+                )}
+              </form.AppField>
 
-            <form.AppField name="loggingSettings.popupLoggingLevel">
-              {(field) => (
-                <field.Select
-                  label="Popup logging level"
-                  inline
-                  items={[
-                    { label: 'Fatal', value: 'fatal' },
-                    { label: 'Error', value: 'error' },
-                    { label: 'Warn', value: 'warn' },
-                    { label: 'Info', value: 'info' },
-                    { label: 'Debug', value: 'debug' },
-                    { label: 'Trace', value: 'trace' },
-                    { label: 'Silent', value: 'silent' },
-                  ]}
-                />
-              )}
-            </form.AppField>
+              <form.AppField name="loggingSettings.popupLoggingLevel">
+                {(field) => (
+                  <field.Select
+                    label="Popup logging level"
+                    inline
+                    items={[
+                      { label: 'Fatal', value: 'fatal' },
+                      { label: 'Error', value: 'error' },
+                      { label: 'Warn', value: 'warn' },
+                      { label: 'Info', value: 'info' },
+                      { label: 'Debug', value: 'debug' },
+                      { label: 'Trace', value: 'trace' },
+                      { label: 'Silent', value: 'silent' },
+                    ]}
+                  />
+                )}
+              </form.AppField>
+            </Section>
 
-            <SectionTitle>Peaks label</SectionTitle>
-            <form.AppField name="peaksLabel.marginTop">
-              {(field) => <field.NumericInput label="Margin top" inline />}
-            </form.AppField>
+            <Section>
+              <SectionTitle>Peaks label</SectionTitle>
+              <form.AppField name="peaksLabel.marginTop">
+                {(field) => <field.NumericInput label="Margin top" inline />}
+              </form.AppField>
+            </Section>
           </Content>
         </SplitContainer>
 
         <ContainerFooter>
           <ContainerFooterContent>
             <Button intent="danger">Cancel</Button>
-            <Button intent="success">Apply and Save</Button>
-            <Button intent="primary">Apply</Button>
+            <form.AppForm>
+              <form.SubmitButton intent="success">
+                Apply and Save
+              </form.SubmitButton>
+
+              <form.SubmitButton intent="primary">Apply</form.SubmitButton>
+            </form.AppForm>
           </ContainerFooterContent>
         </ContainerFooter>
       </Container>
