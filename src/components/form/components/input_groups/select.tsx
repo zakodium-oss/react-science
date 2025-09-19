@@ -2,6 +2,7 @@ import type { FormGroupProps } from '@blueprintjs/core';
 import { FormGroup } from '@blueprintjs/core';
 import type { SelectProps as BPSelectProps } from '@blueprintjs/select';
 import { Select as BPSelect } from '@blueprintjs/select';
+import styled from '@emotion/styled';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
 import { useCallback, useMemo } from 'react';
 
@@ -112,6 +113,17 @@ interface RealSelectProps<OptionType, ID extends SelectId>
   };
 }
 
+const FormGroupStyled = styled<any>(FormGroup)`
+  ${(props) =>
+    props.inline &&
+    `
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+  `}
+`;
+
 export function Select<
   OptionType extends SelectOption<ID>,
   ID extends SelectId,
@@ -158,7 +170,7 @@ export function Select<
   const inputId = useInputId(id, null);
 
   return (
-    <FormGroup
+    <FormGroupStyled
       label={label}
       labelFor={inputId}
       helperText={helperText}
@@ -191,6 +203,6 @@ export function Select<
           />
         )}
       </BPSelect>
-    </FormGroup>
+    </FormGroupStyled>
   );
 }

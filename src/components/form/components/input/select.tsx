@@ -12,10 +12,11 @@ interface SelectProps {
   label?: string;
   items: SelectOptionType[];
   required?: boolean;
+  inline?: boolean;
 }
 
 export function Select(props: SelectProps) {
-  const { label, items, required } = props;
+  const { label, items, required, inline = false } = props;
 
   const field = useFieldContext<SelectId>();
   const error = field
@@ -37,6 +38,7 @@ export function Select(props: SelectProps) {
         label,
         intent,
         helperText: error ?? undefined,
+        inline,
       }}
       items={items}
       onChange={onItemSelect}

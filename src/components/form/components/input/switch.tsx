@@ -5,10 +5,11 @@ import { useFieldContext } from '../../context/use_ts_form.js';
 
 interface SwitchProps {
   label?: string;
+  fill?: boolean;
 }
 
 export function Switch(props: SwitchProps) {
-  const { label } = props;
+  const { label, fill = false } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -21,12 +22,17 @@ export function Switch(props: SwitchProps) {
   }
 
   return (
-    <FormGroup helperText={error ?? undefined} intent="danger">
+    <FormGroup
+      helperText={error ?? undefined}
+      intent="danger"
+      style={{ margin: 0 }}
+    >
       <BPSwitch
         checked={field.state.value}
         onChange={onChange}
         onBlur={field.handleBlur}
         labelElement={label}
+        alignIndicator={fill ? 'end' : 'start'}
       />
     </FormGroup>
   );

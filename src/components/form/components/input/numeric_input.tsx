@@ -34,16 +34,18 @@ export function NumericInput(props: NumericInputProps) {
       intent={intent}
       labelInfo={label && required && <span style={{ color: 'red' }}>*</span>}
     >
-      <BPNumericInput
-        {...rest}
-        name={field.name}
-        value={field.state.value ?? ''}
-        onValueChange={onChange}
-        intent={intent}
-        required={required}
-        id={id}
-        onBlur={field.handleBlur}
-      />
+      <div style={{ display: 'flex' }}>
+        <BPNumericInput
+          {...rest}
+          name={field.name}
+          value={field.state.value ?? ''}
+          onValueChange={onChange}
+          intent={intent}
+          required={required}
+          id={id}
+          onBlur={field.handleBlur}
+        />
+      </div>
     </FormGroup>
   );
 }
