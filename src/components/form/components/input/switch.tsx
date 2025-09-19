@@ -22,7 +22,11 @@ export function Switch(props: SwitchProps) {
   }
 
   return (
-    <FormGroup helperText={error ?? undefined} intent="danger">
+    <FormGroup
+      helperText={error ?? undefined}
+      intent="danger"
+      style={{ margin: 0 }}
+    >
       <BPSwitch
         checked={field.state.value}
         onChange={onChange}

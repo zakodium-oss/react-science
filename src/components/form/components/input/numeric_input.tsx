@@ -1,6 +1,5 @@
 import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core';
 import { FormGroup, NumericInput as BPNumericInput } from '@blueprintjs/core';
-import styled from '@emotion/styled';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { useFieldId } from '../../utils/use_field_id.js';
@@ -10,22 +9,10 @@ interface NumericInputProps
   extends Omit<BPNumericInputProps, 'defaultValue' | 'name'> {
   label?: string;
   required?: boolean;
-  inline?: boolean;
 }
 
-const FormGroupStyled = styled<any>(FormGroup)`
-  ${(props) =>
-    props.inline &&
-    `
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row;
-      align-items: center;
-    `}
-`;
-
 export function NumericInput(props: NumericInputProps) {
-  const { label, required, inline = false, ...rest } = props;
+  const { label, required, ...rest } = props;
   const field = useFieldContext<string>();
   const id = useFieldId(field.name);
   const error = field
@@ -40,13 +27,11 @@ export function NumericInput(props: NumericInputProps) {
   }
 
   return (
-    <FormGroupStyled
+    <FormGroup
       helperText={error}
       label={label}
       labelFor={id}
       intent={intent}
-      fill={inline}
-      inline={inline}
       labelInfo={label && required && <span style={{ color: 'red' }}>*</span>}
     >
       <div style={{ display: 'flex' }}>
@@ -61,6 +46,6 @@ export function NumericInput(props: NumericInputProps) {
           onBlur={field.handleBlur}
         />
       </div>
-    </FormGroupStyled>
+    </FormGroup>
   );
 }
