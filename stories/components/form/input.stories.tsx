@@ -7,6 +7,12 @@ import { useForm } from '../../../src/components/index.js';
 
 export default {
   title: 'Forms / Form / Inputs',
+  argTypes: {
+    fill: {
+      control: 'boolean',
+      defaultValue: false,
+    },
+  },
 };
 
 const numericInputSchema = z.object({
@@ -17,11 +23,11 @@ const numericInputSchema = z.object({
       return Number(value);
     })
     .refine((value) => value && value >= 0 && value <= 100, {
-      error: 'Value must be between 0 and 100',
+      error: 'Value cannot be less than 0 or greater than 100',
     }),
 });
 
-export function NumericInput() {
+export function NumericInput(props: { fill: boolean }) {
   const form = useForm({
     onSubmit: ({ value }) =>
       action('onSubmit')(numericInputSchema.parse(value)),
@@ -42,9 +48,11 @@ export function NumericInput() {
       <form.AppField name="numeric">
         {(field) => (
           <field.NumericInput
+            fill={props.fill}
             label="Numeric"
             required
-            placeholder="Value must be between 0 and 100"
+            placeholder="18"
+            helpText="Value must be between 0 and 100"
           />
         )}
       </form.AppField>
@@ -60,7 +68,7 @@ const inputSchema = z.object({
   input: z.string().min(1, 'Value must be at least 1 character'),
 });
 
-export function Input() {
+export function Input(props: { fill: boolean }) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(inputSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -79,7 +87,13 @@ export function Input() {
     <form noValidate onSubmit={handleSubmit}>
       <form.AppField name="input">
         {(field) => (
-          <field.Input label="Input" required placeholder="a string" />
+          <field.Input
+            label="Input"
+            required
+            placeholder="Hello, World!"
+            fill={props.fill}
+            helpText="a string"
+          />
         )}
       </form.AppField>
 
@@ -94,7 +108,7 @@ const selectSchema = z.object({
   select: z.string({ error: 'At least one element is required' }),
 });
 
-export function Select() {
+export function Select(props: { fill: boolean }) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(selectSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -114,7 +128,9 @@ export function Select() {
       <form.AppField name="select">
         {(field) => (
           <field.Select
+            fill={props.fill}
             label="Favorite food"
+            helperText="Whats your favorite food ?"
             required
             items={[
               { label: 'Apple', value: 'apple' },

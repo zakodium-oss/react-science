@@ -29,7 +29,15 @@ const Form = styled.form`
 
 const formSchema = z.object({
   general: z.object({
-    opacityDimmedSpectra: z.number().min(0).max(1),
+    opacityDimmedSpectra: z
+      .string()
+      .transform((value) => {
+        if (value === '') return undefined;
+        return Number(value);
+      })
+      .refine((value) => value && value >= 0 && value <= 1, {
+        error: 'Value cannot be less than 0 or greater than 1',
+      }),
     invertActions: z.boolean(),
     invertScroll: z.boolean(),
   }),
@@ -65,13 +73,16 @@ const formSchema = z.object({
     ]),
   }),
   peaksLabel: z.object({
-    marginTop: z.number(),
+    marginTop: z.string().transform((value) => {
+      if (value === '') return undefined;
+      return Number(value);
+    }),
   }),
 });
 
 const defaultValues: z.input<typeof formSchema> = {
   general: {
-    opacityDimmedSpectra: 0.4,
+    opacityDimmedSpectra: '0.4',
     invertActions: false,
     invertScroll: false,
   },
@@ -86,7 +97,7 @@ const defaultValues: z.input<typeof formSchema> = {
     popupLoggingLevel: 'error',
   },
   peaksLabel: {
-    marginTop: 0.5,
+    marginTop: '0.5',
   },
 };
 
@@ -110,10 +121,14 @@ export function GeneralSettings() {
         title="General"
         description="These settings affect the entire application."
       >
-        // HELP : [0 - 1]
         <form.AppField name="general.opacityDimmedSpectra">
           {(field) => (
-            <field.NumericInput fill label="Opacity of dimmed spectra" />
+            <field.NumericInput
+              fill
+              label="Opacity of dimmed spectra"
+              helpText="Value should be between 0 and 1"
+              step={0.1}
+            />
           )}
         </form.AppField>
         <form.AppField name="general.invertActions">
@@ -141,7 +156,7 @@ export function GeneralSettings() {
           {(field) => (
             <field.Select
               label="Spectra Rendering"
-              inline
+              fill
               items={[
                 { label: 'Auto', value: 'auto' },
                 { label: 'Optimize speed', value: 'optimize-speed' },
@@ -164,7 +179,7 @@ export function GeneralSettings() {
           {(field) => (
             <field.Select
               label="Level"
-              inline
+              fill
               items={[
                 { label: 'Fatal', value: 'fatal' },
                 { label: 'Error', value: 'error' },
@@ -182,7 +197,7 @@ export function GeneralSettings() {
           {(field) => (
             <field.Select
               label="Popup logging level"
-              inline
+              fill
               items={[
                 { label: 'Fatal', value: 'fatal' },
                 { label: 'Error', value: 'error' },

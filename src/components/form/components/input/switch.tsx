@@ -1,7 +1,8 @@
-import { FormGroup, Switch as BPSwitch } from '@blueprintjs/core';
+import { Switch as BPSwitch } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
+import { FormGroup } from '../input_groups/form-group.js';
 
 interface SwitchProps {
   label?: string;
@@ -22,11 +23,7 @@ export function Switch(props: SwitchProps) {
   }
 
   return (
-    <FormGroup
-      helperText={error ?? undefined}
-      intent="danger"
-      style={{ margin: 0 }}
-    >
+    <FormGroup name={field.name} error={error} intent={'danger'}>
       <BPSwitch
         checked={field.state.value}
         onChange={onChange}

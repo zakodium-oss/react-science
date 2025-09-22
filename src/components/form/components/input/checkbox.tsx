@@ -1,9 +1,10 @@
 import type { CheckboxProps as BPCheckboxProps } from '@blueprintjs/core';
-import { Checkbox as BPCheckbox, FormGroup } from '@blueprintjs/core';
+import { Checkbox as BPCheckbox } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
+import { FormGroup } from '../input_groups/form-group.js';
 
 type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'>;
 
@@ -23,7 +24,7 @@ export function Checkbox(props: CheckboxProps) {
   }
 
   return (
-    <FormGroup intent={intent} helperText={error}>
+    <FormGroup name={field.name} intent={intent} error={error}>
       <BPCheckbox
         {...rest}
         name={field.name}

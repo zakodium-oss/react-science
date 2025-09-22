@@ -1,18 +1,20 @@
-import { FormGroup, InputGroup } from '@blueprintjs/core';
+import { InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
+import { FormGroup } from '../input_groups/form-group.js';
 
 interface InputProps {
   label?: string;
-  inline?: boolean;
   required?: boolean;
   placeholder?: string;
   type?: string;
+  helpText?: string;
+  fill?: boolean;
 }
 
 export function Input(props: InputProps) {
-  const { label, required, inline, placeholder, type = 'text' } = props;
+  const { label, required, placeholder, type = 'text', helpText, fill } = props;
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
@@ -25,12 +27,13 @@ export function Input(props: InputProps) {
 
   return (
     <FormGroup
-      helperText={error ?? undefined}
+      name={field.name}
       label={label}
-      intent="danger"
-      style={{ margin: 0, position: 'relative' }}
-      inline={inline}
-      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
+      intent={error ? 'danger' : 'none'}
+      required={required}
+      error={error}
+      helpText={helpText}
+      fill={fill}
     >
       <InputGroup
         name={field.name}

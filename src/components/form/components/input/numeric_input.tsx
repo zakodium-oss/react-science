@@ -1,20 +1,21 @@
-import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core';
-import { FormGroup, NumericInput as BPNumericInput } from '@blueprintjs/core';
+import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
-import { useFieldId } from '../../utils/use_field_id.js';
 import { getIntent } from '../../utils/use_intent.js';
+import { FormGroup } from '../input_groups/form-group.js';
 
-interface NumericInputProps
-  extends Omit<BPNumericInputProps, 'defaultValue' | 'name'> {
+interface NumericInputProps {
   label?: string;
   required?: boolean;
+  helpText?: string;
+  fill?: boolean;
+  placeholder?: string;
+  step?: number;
 }
 
 export function NumericInput(props: NumericInputProps) {
-  const { label, required, ...rest } = props;
+  const { label, required, helpText, fill, placeholder, step } = props;
   const field = useFieldContext<string>();
-  const id = useFieldId(field.name);
   const error = field
     .getMeta()
     .errors.map((e) => e.message)
@@ -28,25 +29,24 @@ export function NumericInput(props: NumericInputProps) {
 
   return (
     <FormGroup
-      helperText={error}
+      name={field.name}
       label={label}
-      labelFor={id}
       intent={intent}
-      labelInfo={label && required && <span style={{ color: 'red' }}>*</span>}
-      inline
+      required={required}
+      helpText={helpText}
+      fill={fill}
+      error={error}
     >
-      <div style={{ display: 'flex' }}>
-        <BPNumericInput
-          {...rest}
-          name={field.name}
-          value={field.state.value ?? ''}
-          onValueChange={onChange}
-          intent={intent}
-          required={required}
-          id={id}
-          onBlur={field.handleBlur}
-        />
-      </div>
+      <BPNumericInput
+        id={field.name}
+        name={field.name}
+        stepSize={step}
+        value={field.state.value ?? ''}
+        onValueChange={onChange}
+        intent={intent}
+        placeholder={placeholder}
+        required={required}
+      />
     </FormGroup>
   );
 }

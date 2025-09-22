@@ -1,6 +1,7 @@
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
-import { Select as FormGroupSelect } from '../input_groups/select.js';
+import { FormGroup } from '../input_groups/form-group.js';
+import { Select as SelectInput } from '../input_groups/select.js';
 import type { SelectId } from '../util/select.js';
 
 interface SelectOptionType {
@@ -12,11 +13,12 @@ interface SelectProps {
   label?: string;
   items: SelectOptionType[];
   required?: boolean;
-  inline?: boolean;
+  helperText?: string;
+  fill?: boolean;
 }
 
 export function Select(props: SelectProps) {
-  const { label, items, required, inline = false } = props;
+  const { label, items, required, helperText, fill } = props;
 
   const field = useFieldContext<SelectId>();
   const error = field
@@ -32,18 +34,22 @@ export function Select(props: SelectProps) {
   }
 
   return (
-    <FormGroupSelect
-      formGroupProps={{
-        required,
-        label,
-        intent,
-        helperText: error ?? undefined,
-        inline,
-      }}
-      items={items}
-      onChange={onItemSelect}
-      selected={field.state.value}
-      onBlur={field.handleBlur}
-    />
+    <FormGroup
+      name={field.name}
+      required={required}
+      label={label}
+      intent={intent}
+      helpText={helperText}
+      fill={fill}
+      error={error}
+    >
+      <SelectInput
+        onBlur={field.handleBlur}
+        items={items}
+        selected={field.state.value}
+        onChange={onItemSelect}
+        intent={intent}
+      />
+    </FormGroup>
   );
 }
