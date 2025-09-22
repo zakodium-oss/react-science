@@ -2,14 +2,10 @@ import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
+import type { FormGroupInputProps } from '../input_groups/form-group.js';
 import { FormGroup } from '../input_groups/form-group.js';
 
-interface NumericInputProps {
-  label?: string;
-  required?: boolean;
-  helpText?: string;
-  fill?: boolean;
-  placeholder?: string;
+interface NumericInputProps extends FormGroupInputProps {
   step?: number;
 }
 

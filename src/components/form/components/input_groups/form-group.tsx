@@ -23,6 +23,14 @@ const RequiredSpan = styled.span`
   color: red;
 `;
 
+export interface FormGroupInputProps {
+  label?: string;
+  required?: boolean;
+  placeholder?: string;
+  helpText?: string;
+  fill?: boolean;
+}
+
 interface FormGroupProps {
   label?: string;
   intent?: Intent;

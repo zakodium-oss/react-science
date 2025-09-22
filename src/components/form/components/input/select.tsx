@@ -1,5 +1,6 @@
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
+import type { FormGroupInputProps } from '../input_groups/form-group.js';
 import { FormGroup } from '../input_groups/form-group.js';
 import { Select as SelectInput } from '../input_groups/select.js';
 import type { SelectId } from '../util/select.js';
@@ -9,16 +10,12 @@ interface SelectOptionType {
   value: string;
 }
 
-interface SelectProps {
-  label?: string;
+interface SelectProps extends Omit<FormGroupInputProps, 'placeholder'> {
   items: SelectOptionType[];
-  required?: boolean;
-  helperText?: string;
-  fill?: boolean;
 }
 
 export function Select(props: SelectProps) {
-  const { label, items, required, helperText, fill } = props;
+  const { label, items, required, helpText, fill } = props;
 
   const field = useFieldContext<SelectId>();
   const error = field
@@ -39,7 +36,7 @@ export function Select(props: SelectProps) {
       required={required}
       label={label}
       intent={intent}
-      helpText={helperText}
+      helpText={helpText}
       fill={fill}
       error={error}
     >
