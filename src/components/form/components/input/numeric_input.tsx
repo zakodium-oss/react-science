@@ -33,6 +33,7 @@ export function NumericInput(props: NumericInputProps) {
       labelFor={id}
       intent={intent}
       labelInfo={label && required && <span style={{ color: 'red' }}>*</span>}
+      inline
     >
       <div style={{ display: 'flex' }}>
         <BPNumericInput

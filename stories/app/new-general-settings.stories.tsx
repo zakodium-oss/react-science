@@ -110,19 +110,15 @@ export function GeneralSettings() {
         title="General"
         description="These settings affect the entire application."
       >
+        // HELP : [0 - 1]
         <form.AppField name="general.opacityDimmedSpectra">
           {(field) => (
-            <field.NumericInput
-              label="Opacity of dimmed spectra [0 - 1]"
-              fill
-            />
+            <field.NumericInput fill label="Opacity of dimmed spectra" />
           )}
         </form.AppField>
-
         <form.AppField name="general.invertActions">
           {(field) => <field.Switch label="Invert Actions" />}
         </form.AppField>
-
         <form.AppField name="general.invertScroll">
           {(field) => <field.Switch label="Invert Scroll" />}
         </form.AppField>
@@ -201,7 +197,10 @@ export function GeneralSettings() {
         </form.AppField>
       </Section>
 
-      <Section title="Peaks label" description="Settings for peaks label.">
+      <Section
+        title="Peaks label"
+        description="Settings for peaks label. Exprimed in pixel."
+      >
         <form.AppField name="peaksLabel.marginTop">
           {(field) => <field.NumericInput label="Margin top" fill />}
         </form.AppField>
