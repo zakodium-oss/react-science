@@ -1,5 +1,17 @@
 # Changelog
 
+## [19.2.0](https://github.com/zakodium-oss/react-science/compare/v19.1.0...v19.2.0) (2025-09-23)
+
+
+### Features
+
+* integration of tanstack form with our form element components ([#932](https://github.com/zakodium-oss/react-science/issues/932)) ([d14a5b7](https://github.com/zakodium-oss/react-science/commit/d14a5b7875ee12a4e25c313e7415f510a0d6b931))
+
+
+### Bug Fixes
+
+* **Toolbar:** icon button color with recent Blueprint version ([#936](https://github.com/zakodium-oss/react-science/issues/936)) ([539bf13](https://github.com/zakodium-oss/react-science/commit/539bf130376ea4d10084fa04044130e4ca7e4293))
+
 ## [19.1.0](https://github.com/zakodium-oss/react-science/compare/v19.0.0...v19.1.0) (2025-07-15)
 
 
