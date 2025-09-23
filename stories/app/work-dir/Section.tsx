@@ -14,7 +14,7 @@ const ContainerInformations = styled.div`
   }
 
   & > h3 {
-    color: oklch(44.6% 0.03 256.802);
+    color: #737373; // oklch(44.6% 0.03 256.802);
     font-size: 0.875rem;
     line-height: 1.5rem;
   }
