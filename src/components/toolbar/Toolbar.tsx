@@ -60,7 +60,8 @@ const border = '1px solid rgb(247, 247, 247)';
 
 const ToolbarButton = styled(Button)`
   .${Classes.ICON} {
-    color: ${Colors.DARK_GRAY3};
+    /* Color of icon in button is lighter in Blueprintjs. We want a better contrast in the toolbars */
+    color: ${Colors.DARK_GRAY3} !important;
     width: 16px;
     height: 16px;
     font-size: 12px;
