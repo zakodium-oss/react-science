@@ -22,14 +22,11 @@ const ContainerInformations = styled.div`
 
 const Container = styled.div`
   display: grid;
-
   padding-block: 0.5rem 2rem;
   padding-inline: 1.5rem;
-
-  row-gap: 2rem;
-  column-gap: calc(0.25rem * 8);
-
+  gap: 2rem calc(0.25rem * 8);
   grid-template-columns: repeat(1, minmax(0, 1fr));
+
   @media (width >= 48rem) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -37,14 +34,11 @@ const Container = styled.div`
 
 const ContainerContent = styled.div`
   background-color: white;
-
-  outline: 1px solid rgba(17, 24, 39, 0.05);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-
+  outline: 1px solid rgb(17 24 39 / 5%);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   border-radius: 0.75rem;
   box-sizing: border-box;
   border: 0 solid;
@@ -56,8 +50,8 @@ const ContainerContent = styled.div`
 `;
 
 const Separator = styled.hr`
-  color: rgba(17, 24, 39, 0.05);
-  margin: 0.5rem 0 0.5rem 0;
+  color: rgb(17 24 39 / 5%);
+  margin: 0.5rem 0;
   width: 80%;
   align-self: center;
 `;

@@ -22,8 +22,6 @@ const Actions = styled.div`
 
 const Form = styled.form`
   background-color: white;
-
-  // Value from the current design
   max-width: 762px;
 `;
 

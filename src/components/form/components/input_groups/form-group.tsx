@@ -13,10 +13,8 @@ const FormContainer = styled.div<{ fill?: boolean }>`
   @media (width > 48rem) {
     flex-direction: row;
     gap: 20px;
-
     justify-content: ${(props) =>
       props.fill ? 'space-between' : 'flex-start'};
-
     align-items: center;
   }
 `;
