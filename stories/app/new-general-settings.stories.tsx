@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { useForm } from '../../src/components/index.js';
 
-import { Section } from './work-dir/Section.js';
+import { Section } from './components/Section.js';
 
 export default {
   title: 'Forms/Example/GeneralSettings/Proposal',

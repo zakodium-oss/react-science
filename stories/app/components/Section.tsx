@@ -7,13 +7,13 @@ const ContainerInformations = styled.div`
   flex-direction: column;
   gap: 0.25rem;
 
-  & > h2 {
+  > h2 {
     font-weight: 600;
     font-size: 1rem;
     line-height: calc(0.25rem * 7);
   }
 
-  & > h3 {
+  > h3 {
     color: #737373;
     font-size: 0.875rem;
     line-height: 1.5rem;
