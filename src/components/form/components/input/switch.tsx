@@ -23,13 +23,19 @@ export function Switch(props: SwitchProps) {
   }
 
   return (
-    <FormGroup name={field.name} error={error} intent={'danger'}>
+    <FormGroup
+      name={field.name}
+      error={error}
+      intent="danger"
+      label={label}
+      fill={fill}
+    >
       <BPSwitch
+        name={field.name}
+        id={field.name}
         checked={field.state.value}
         onChange={onChange}
         onBlur={field.handleBlur}
-        labelElement={label}
-        alignIndicator={fill ? 'end' : 'start'}
       />
     </FormGroup>
   );

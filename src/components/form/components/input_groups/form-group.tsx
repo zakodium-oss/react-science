@@ -5,8 +5,10 @@ import { clsx } from 'clsx';
 import type { ReactNode } from 'react';
 
 const FormContainer = styled.div<{ fill?: boolean }>`
+  width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0;
 
   @media (width > 48rem) {
     flex-direction: row;

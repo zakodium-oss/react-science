@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
+import { Children } from 'react';
 
 const ContainerInformations = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const ContainerInformations = styled.div`
 const Container = styled.div`
   display: grid;
 
-  padding-block: 2rem;
+  padding-block: 0.5rem 2rem;
   padding-inline: 1.5rem;
 
   row-gap: 2rem;
@@ -54,6 +55,13 @@ const ContainerContent = styled.div`
   }
 `;
 
+const Separator = styled.hr`
+  color: rgba(17, 24, 39, 0.05);
+  margin: 0.5rem 0 0.5rem 0;
+  width: 80%;
+  align-self: center;
+`;
+
 interface SectionProps {
   title: string;
   description?: string;
@@ -63,6 +71,8 @@ interface SectionProps {
 export function Section(props: SectionProps) {
   const { title, description, children } = props;
 
+  const sectionElements = Children.toArray(children);
+
   return (
     <Container>
       <ContainerInformations>
@@ -70,7 +80,14 @@ export function Section(props: SectionProps) {
         <h3>{description}</h3>
       </ContainerInformations>
 
-      <ContainerContent>{children}</ContainerContent>
+      <ContainerContent>
+        {sectionElements.map((element, index) => (
+          <>
+            {element}
+            {index < sectionElements.length - 1 && <Separator />}
+          </>
+        ))}
+      </ContainerContent>
     </Container>
   );
 }
