@@ -130,7 +130,7 @@ export function Select(props: { fill: boolean }) {
           <field.Select
             fill={props.fill}
             label="Favorite food"
-            helperText="Whats your favorite food ?"
+            helpText="Whats your favorite food ?"
             required
             items={[
               { label: 'Apple', value: 'apple' },

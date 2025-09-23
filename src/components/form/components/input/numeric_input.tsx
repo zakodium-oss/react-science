@@ -7,10 +7,13 @@ import { FormGroup } from '../input_groups/form-group.js';
 
 interface NumericInputProps extends FormGroupInputProps {
   step?: number;
+  min?: number;
+  max?: number;
 }
 
 export function NumericInput(props: NumericInputProps) {
-  const { label, required, helpText, fill, placeholder, step } = props;
+  const { label, required, helpText, fill, placeholder, step, min, max } =
+    props;
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
@@ -37,6 +40,8 @@ export function NumericInput(props: NumericInputProps) {
         id={field.name}
         name={field.name}
         stepSize={step}
+        min={min}
+        max={max}
         value={field.state.value ?? ''}
         onValueChange={onChange}
         intent={intent}
