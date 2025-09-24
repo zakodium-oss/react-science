@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
-import { Children } from 'react';
 
-const ContainerInformations = styled.div`
+const ContainerInformation = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.05rem;
 
   > h2 {
     font-weight: 600;
@@ -22,9 +21,9 @@ const ContainerInformations = styled.div`
 
 const Container = styled.div`
   display: grid;
-  padding-block: 0.5rem 2rem;
+  padding-block: 0.5rem 0.05rem;
   padding-inline: 1.5rem;
-  gap: 2rem calc(0.25rem * 8);
+  gap: 2rem;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 
   @media (width >= 48rem) {
@@ -38,7 +37,7 @@ const ContainerContent = styled.div`
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   border-radius: 0.75rem;
   box-sizing: border-box;
   border: 0 solid;
@@ -47,13 +46,6 @@ const ContainerContent = styled.div`
   @media (width >= 48rem) {
     grid-column: span 2 / span 2;
   }
-`;
-
-const Separator = styled.hr`
-  color: rgb(17 24 39 / 5%);
-  margin: 0.5rem 0;
-  width: 80%;
-  align-self: center;
 `;
 
 interface SectionProps {
@@ -65,23 +57,14 @@ interface SectionProps {
 export function Section(props: SectionProps) {
   const { title, description, children } = props;
 
-  const sectionElements = Children.toArray(children);
-
   return (
     <Container>
-      <ContainerInformations>
+      <ContainerInformation>
         <h2>{title}</h2>
         <h3>{description}</h3>
-      </ContainerInformations>
+      </ContainerInformation>
 
-      <ContainerContent>
-        {sectionElements.map((element, index) => (
-          <>
-            {element}
-            {index < sectionElements.length - 1 && <Separator />}
-          </>
-        ))}
-      </ContainerContent>
+      <ContainerContent>{children}</ContainerContent>
     </Container>
   );
 }

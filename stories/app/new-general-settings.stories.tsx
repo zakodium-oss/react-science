@@ -139,7 +139,7 @@ export function GeneralSettings() {
 
       <Section
         title="Experimental features"
-        description="These features are experimental and may change in future releases."
+        description="These features are experimental."
       >
         <form.AppField name="experimentalFeatures.enableExperimentalFeatures">
           {(field) => (
