@@ -31,6 +31,7 @@ export function Checkbox(props: CheckboxProps) {
         value={String(field.state.value)}
         onChange={onChange}
         onBlur={field.handleBlur}
+        defaultChecked={field.state.value}
       />
     </FormGroup>
   );

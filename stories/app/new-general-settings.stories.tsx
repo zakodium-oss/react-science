@@ -41,6 +41,7 @@ const formSchema = z.object({
   }),
   experimentalFeatures: z.object({
     enableExperimentalFeatures: z.boolean(),
+    checkbox: z.boolean(),
   }),
   rendering: z.object({
     spectraRendering: z.enum([
@@ -86,6 +87,7 @@ const defaultValues: z.input<typeof formSchema> = {
   },
   experimentalFeatures: {
     enableExperimentalFeatures: false,
+    checkbox: true,
   },
   rendering: {
     spectraRendering: 'auto',
@@ -104,7 +106,12 @@ export function GeneralSettings() {
     defaultValues,
     validators: { onDynamic: formSchema },
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
-    onSubmit: ({ value }) => action('onSubmit')(formSchema.parse(value)),
+    onSubmit: ({ value }) => {
+      const parsedValue = formSchema.parse(value);
+
+      action('onSubmit')(parsedValue);
+      console.log(parsedValue);
+    },
   });
 
   return (
@@ -144,6 +151,12 @@ export function GeneralSettings() {
         <form.AppField name="experimentalFeatures.enableExperimentalFeatures">
           {(field) => (
             <field.Switch label="Enable experimental features" fill />
+          )}
+        </form.AppField>
+
+        <form.AppField name="experimentalFeatures.checkbox">
+          {(field) => (
+            <field.Checkbox label="Allow drag and drop of files onto the app (may cause issues on some browsers)" />
           )}
         </form.AppField>
       </Section>
