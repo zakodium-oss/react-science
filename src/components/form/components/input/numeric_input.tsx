@@ -12,8 +12,18 @@ interface NumericInputProps extends FormGroupInputProps {
 }
 
 export function NumericInput(props: NumericInputProps) {
-  const { label, required, helpText, fill, placeholder, step, min, max } =
-    props;
+  const {
+    label,
+    required,
+    helpText,
+    fill,
+    placeholder,
+    step,
+    min,
+    max,
+    inline,
+  } = props;
+
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
@@ -34,6 +44,7 @@ export function NumericInput(props: NumericInputProps) {
       required={required}
       helpText={helpText}
       fill={fill}
+      inline={inline}
       error={error}
     >
       <BPNumericInput

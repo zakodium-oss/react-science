@@ -7,10 +7,11 @@ import { FormGroup } from '../input_groups/form-group.js';
 interface SwitchProps {
   label?: string;
   fill?: boolean;
+  inline?: boolean;
 }
 
 export function Switch(props: SwitchProps) {
-  const { label, fill = false } = props;
+  const { label, fill = false, inline } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -29,6 +30,7 @@ export function Switch(props: SwitchProps) {
       intent="danger"
       label={label}
       fill={fill}
+      inline={inline}
     >
       <BPSwitch
         name={field.name}

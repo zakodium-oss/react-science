@@ -10,7 +10,16 @@ interface InputProps extends FormGroupInputProps {
 }
 
 export function Input(props: InputProps) {
-  const { label, required, placeholder, type = 'text', helpText, fill } = props;
+  const {
+    label,
+    required,
+    placeholder,
+    type = 'text',
+    helpText,
+    fill,
+    inline,
+  } = props;
+
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
@@ -30,6 +39,7 @@ export function Input(props: InputProps) {
       error={error}
       helpText={helpText}
       fill={fill}
+      inline={inline}
     >
       <InputGroup
         name={field.name}

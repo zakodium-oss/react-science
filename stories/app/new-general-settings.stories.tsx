@@ -1,10 +1,10 @@
-import { Button } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
+import { Form } from '../../src/components/form/components/input_groups/form.js';
 import { useForm } from '../../src/components/index.js';
 
 import { Section } from './components/Section.js';
@@ -13,15 +13,7 @@ export default {
   title: 'Forms/Example/GeneralSettings/Proposal',
 } as Meta;
 
-const Actions = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: end;
-`;
-
-const Form = styled.form`
-  background-color: white;
+const StyledForm = styled(Form)`
   max-width: 762px;
 `;
 
@@ -108,15 +100,14 @@ export function GeneralSettings() {
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     onSubmit: ({ value }) => {
       const parsedValue = formSchema.parse(value);
-
       action('onSubmit')(parsedValue);
-      console.log(parsedValue);
     },
   });
 
   return (
-    <Form
+    <StyledForm
       noValidate
+      inline
       onSubmit={(event) => {
         event.preventDefault();
         void form.handleSubmit();
@@ -235,12 +226,8 @@ export function GeneralSettings() {
       </Section>
 
       <form.AppForm>
-        <Actions>
-          <Button intent="danger">Cancel</Button>
-          <form.SubmitButton intent="success">Apply and Save</form.SubmitButton>
-          <form.SubmitButton>Apply</form.SubmitButton>
-        </Actions>
+        <form.SubmitButton>Apply</form.SubmitButton>
       </form.AppForm>
-    </Form>
+    </StyledForm>
   );
 }

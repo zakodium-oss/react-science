@@ -15,7 +15,7 @@ interface SelectProps extends Omit<FormGroupInputProps, 'placeholder'> {
 }
 
 export function Select(props: SelectProps) {
-  const { label, items, required, helpText, fill } = props;
+  const { label, items, required, helpText, fill, inline } = props;
 
   const field = useFieldContext<SelectId>();
   const error = field
@@ -39,6 +39,7 @@ export function Select(props: SelectProps) {
       helpText={helpText}
       fill={fill}
       error={error}
+      inline={inline}
     >
       <SelectInput
         onBlur={field.handleBlur}

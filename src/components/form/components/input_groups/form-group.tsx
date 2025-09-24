@@ -4,9 +4,11 @@ import styled from '@emotion/styled';
 import { clsx } from 'clsx';
 import type { ReactNode } from 'react';
 
-const FormContainer = styled.div<{ fill?: boolean }>`
+import { useFormContext } from './form.js';
+
+const FormContainer = styled.div<{ fill?: boolean; inline?: boolean }>`
   width: 100%;
-  display: flex;
+  display: ${(props) => (props.inline ? 'flex' : 'block')};
   flex-direction: column;
   margin: 0;
 
@@ -35,6 +37,7 @@ export interface FormGroupInputProps {
   placeholder?: string;
   helpText?: string;
   fill?: boolean;
+  inline?: boolean;
 }
 
 interface FormGroupProps {
@@ -46,6 +49,7 @@ interface FormGroupProps {
   children?: ReactNode;
   fill?: boolean;
   error?: string;
+  inline?: boolean;
 }
 
 export function FormGroup(props: FormGroupProps) {
@@ -58,10 +62,14 @@ export function FormGroup(props: FormGroupProps) {
     helpText,
     fill = false,
     error,
+    inline,
   } = props;
+
+  const { inline: formInline } = useFormContext();
 
   return (
     <FormContainer
+      inline={inline || formInline}
       fill={fill}
       className={clsx(Classes.FORM_GROUP, Classes.intentClass(intent))}
     >
@@ -73,7 +81,6 @@ export function FormGroup(props: FormGroupProps) {
           )}
         </label>
       )}
-
       <ContainerElement height={helpText || error ? 'auto' : 30}>
         {children}
 
