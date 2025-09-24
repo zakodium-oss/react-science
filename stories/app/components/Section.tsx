@@ -9,7 +9,7 @@ const ContainerInformation = styled.div`
   > h2 {
     font-weight: 600;
     font-size: 1rem;
-    line-height: calc(0.25rem * 7);
+    line-height: 1.75rem;
   }
 
   > h3 {
