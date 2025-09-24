@@ -23,6 +23,12 @@ const RequiredSpan = styled.span`
   color: red;
 `;
 
+const ContainerElement = styled.div<{ height?: number | 'auto' }>`
+  display: inline-block;
+  height: ${(props) =>
+    props.height === 'auto' ? props.height : `${props.height}px`};
+`;
+
 export interface FormGroupInputProps {
   label?: string;
   required?: boolean;
@@ -68,13 +74,13 @@ export function FormGroup(props: FormGroupProps) {
         </label>
       )}
 
-      <div>
+      <ContainerElement height={helpText || error ? 'auto' : 30}>
         {children}
 
         {(helpText || error) && (
           <span className={Classes.FORM_HELPER_TEXT}>{error || helpText}</span>
         )}
-      </div>
+      </ContainerElement>
     </FormContainer>
   );
 }
