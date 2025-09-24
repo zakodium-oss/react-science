@@ -17,7 +17,6 @@ const FormContainer = styled.div<{ fill?: boolean; inline?: boolean }>`
     gap: 20px;
     justify-content: ${(props) =>
       props.fill ? 'space-between' : 'flex-start'};
-    align-items: center;
   }
 `;
 
@@ -29,6 +28,14 @@ const ContainerElement = styled.div<{ height?: number | 'auto' }>`
   display: inline-block;
   height: ${(props) =>
     props.height === 'auto' ? props.height : `${props.height}px`};
+`;
+
+const Label = styled.label`
+  padding-top: calc(30px - 26px);
+
+  @media (width < 48rem) {
+    padding: 0;
+  }
 `;
 
 export interface FormGroupInputProps {
@@ -74,12 +81,12 @@ export function FormGroup(props: FormGroupProps) {
       className={clsx(Classes.FORM_GROUP, Classes.intentClass(intent))}
     >
       {label && (
-        <label className={Classes.LABEL} htmlFor={name}>
+        <Label className={Classes.LABEL} htmlFor={name}>
           {label}{' '}
           {required && (
             <RequiredSpan className={Classes.TEXT_MUTED}>*</RequiredSpan>
           )}
-        </label>
+        </Label>
       )}
       <ContainerElement height={helpText || error ? 'auto' : 30}>
         {children}

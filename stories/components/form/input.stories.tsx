@@ -49,6 +49,7 @@ export function NumericInput(props: { fill: boolean }) {
         {(field) => (
           <field.NumericInput
             fill={props.fill}
+            inline
             label="Numeric"
             required
             placeholder="18"

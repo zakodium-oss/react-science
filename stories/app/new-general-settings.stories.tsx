@@ -15,6 +15,7 @@ export default {
 
 const StyledForm = styled(Form)`
   max-width: 762px;
+  container-type: inline-size;
 `;
 
 const formSchema = z.object({
