@@ -148,7 +148,7 @@ export function GeneralSettings() {
 
         <form.AppField name="experimentalFeatures.checkbox">
           {(field) => (
-            <field.Checkbox label="Allow drag and drop of files onto the app (may cause issues on some browsers)" />
+            <field.Checkbox label="Allow drag and drop of files onto the app" />
           )}
         </form.AppField>
       </Section>

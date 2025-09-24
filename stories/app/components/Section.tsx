@@ -41,7 +41,7 @@ const ContainerContent = styled.div`
   border-radius: 0.75rem;
   box-sizing: border-box;
   border: 0 solid;
-  padding: 2rem;
+  padding: 1.5rem;
 
   @media (width >= 48rem) {
     grid-column: span 2 / span 2;

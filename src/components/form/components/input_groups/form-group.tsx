@@ -31,7 +31,7 @@ const ContainerElement = styled.div<{ height?: number | 'auto' }>`
 `;
 
 const Label = styled.label`
-  padding-top: calc(30px - 26px);
+  // padding-top: calc(30px - 26px);
 
   @media (width < 48rem) {
     padding: 0;
