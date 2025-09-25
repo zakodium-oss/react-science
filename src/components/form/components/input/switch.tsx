@@ -1,14 +1,22 @@
-import { FormGroup, Switch as BPSwitch } from '@blueprintjs/core';
+import { Switch as BPSwitch } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
+import { FormGroup } from '../input_groups/form-group.js';
 
 interface SwitchProps {
   label?: string;
+  fill?: boolean;
+  inline?: boolean;
 }
 
+const StyledSwitch = styled(BPSwitch)`
+  margin: 0;
+`;
+
 export function Switch(props: SwitchProps) {
-  const { label } = props;
+  const { label, fill = false, inline } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -21,12 +29,20 @@ export function Switch(props: SwitchProps) {
   }
 
   return (
-    <FormGroup helperText={error ?? undefined} intent="danger">
-      <BPSwitch
+    <FormGroup
+      name={field.name}
+      error={error}
+      intent="danger"
+      label={label}
+      fill={fill}
+      inline={inline}
+    >
+      <StyledSwitch
+        name={field.name}
+        id={field.name}
         checked={field.state.value}
         onChange={onChange}
         onBlur={field.handleBlur}
-        labelElement={label}
       />
     </FormGroup>
   );

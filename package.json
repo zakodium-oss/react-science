@@ -64,6 +64,7 @@
     "@tanstack/react-form": "^1.19.2",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.12",
+    "clsx": "^2.1.1",
     "d3-scale-chromatic": "^3.1.0",
     "react-d3-utils": "^3.1.1",
     "react-dropzone": "^14.3.8",
