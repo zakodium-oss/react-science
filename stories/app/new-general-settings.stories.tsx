@@ -123,7 +123,7 @@ export function GeneralSettings() {
             <field.NumericInput
               fill
               label="Opacity of dimmed spectra"
-              helpText="Value should be between 0 and 1"
+              helpText="Value should be between 0 and 1."
               step={0.1}
             />
           )}
@@ -185,6 +185,7 @@ export function GeneralSettings() {
             <field.Select
               label="Level"
               fill
+              helpText="Set the minimum level of messages to log."
               items={[
                 { label: 'Fatal', value: 'fatal' },
                 { label: 'Error', value: 'error' },

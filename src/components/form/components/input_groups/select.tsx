@@ -169,26 +169,10 @@ export function Select<
           variant="outlined"
           intent={intent}
           disabled={disabled}
-          style={{ minWidth: 180 }}
+          style={{ minWidth: 180, width: '100%' }}
           onBlur={onBlur}
         />
       )}
     </BPSelect>
   );
 }
-
-/*
-<FormGroupStyled
-      label={label}
-      labelFor={inputId}
-      helperText={helperText}
-      intent={intent}
-      style={{ margin: 0, position: 'relative' }}
-      className={className}
-      inline={inline}
-      disabled={disabled}
-      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
-    >
-
-    </FormGroupStyled>
- */
