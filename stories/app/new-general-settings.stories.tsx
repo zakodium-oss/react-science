@@ -148,7 +148,7 @@ export function GeneralSettings() {
 
         <form.AppField name="experimentalFeatures.checkbox">
           {(field) => (
-            <field.Checkbox label="Allow drag and drop of files onto the app" />
+            <field.Checkbox label="Allow drag and drop of files onto the app. This is a way longer text that should be on multiple lines" />
           )}
         </form.AppField>
       </Section>

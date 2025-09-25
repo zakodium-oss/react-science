@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { useFormContext } from './form.js';
 
 const FormContainer = styled.div<{ fill?: boolean; inline?: boolean }>`
+  min-height: 30px;
   width: 100%;
   display: ${(props) => (props.inline ? 'flex' : 'block')};
   flex-direction: column;
@@ -31,7 +32,7 @@ const ContainerElement = styled.div<{ height?: number | 'auto' }>`
 `;
 
 const Label = styled.label`
-  // padding-top: calc(30px - 26px);
+  padding-top: calc(30px - 26px);
 
   @media (width < 48rem) {
     padding: 0;
@@ -88,7 +89,7 @@ export function FormGroup(props: FormGroupProps) {
           )}
         </Label>
       )}
-      <ContainerElement height={helpText || error ? 'auto' : 30}>
+      <ContainerElement>
         {children}
 
         {(helpText || error) && (

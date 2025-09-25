@@ -1,4 +1,5 @@
 import { Switch as BPSwitch } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
@@ -9,6 +10,10 @@ interface SwitchProps {
   fill?: boolean;
   inline?: boolean;
 }
+
+const StyledSwitch = styled(BPSwitch)`
+  margin: 0;
+`;
 
 export function Switch(props: SwitchProps) {
   const { label, fill = false, inline } = props;
@@ -32,7 +37,7 @@ export function Switch(props: SwitchProps) {
       fill={fill}
       inline={inline}
     >
-      <BPSwitch
+      <StyledSwitch
         name={field.name}
         id={field.name}
         checked={field.state.value}
