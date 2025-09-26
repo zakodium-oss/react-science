@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
-import { FormGroup } from '../input_groups/form-group.js';
+import { FormGroup } from '../input_groups/form_group.js';
 
 type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'>;
 

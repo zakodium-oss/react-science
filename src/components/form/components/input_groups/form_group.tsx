@@ -6,8 +6,10 @@ import type { ReactNode } from 'react';
 
 import { useFormContext } from './form.js';
 
+const INPUT_HEIGHT = 30;
+
 const FormContainer = styled.div<{ fill?: boolean; inline?: boolean }>`
-  min-height: 30px;
+  min-height: ${INPUT_HEIGHT}px;
   width: 100%;
   display: ${(props) => (props.inline ? 'flex' : 'block')};
   flex-direction: column;
@@ -32,7 +34,7 @@ const ContainerElement = styled.div<{ height?: number | 'auto' }>`
 `;
 
 const Label = styled.label`
-  padding-top: calc(30px - 26px);
+  padding-top: calc(${INPUT_HEIGHT}px - 26px);
 
   @media (width < 48rem) {
     padding: 0;

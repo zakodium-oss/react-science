@@ -2,8 +2,8 @@ import { InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
-import type { FormGroupInputProps } from '../input_groups/form-group.js';
-import { FormGroup } from '../input_groups/form-group.js';
+import type { FormGroupInputProps } from '../input_groups/form_group.js';
+import { FormGroup } from '../input_groups/form_group.js';
 
 interface InputProps extends FormGroupInputProps {
   type?: string;

@@ -1,7 +1,7 @@
 import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
-import type { FormGroupInputProps } from '../input_groups/form-group.js';
-import { FormGroup } from '../input_groups/form-group.js';
+import type { FormGroupInputProps } from '../input_groups/form_group.js';
+import { FormGroup } from '../input_groups/form_group.js';
 import { Select as SelectInput } from '../input_groups/select.js';
 import type { SelectId } from '../util/select.js';
 

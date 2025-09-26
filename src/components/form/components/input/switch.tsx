@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
-import { FormGroup } from '../input_groups/form-group.js';
+import { FormGroup } from '../input_groups/form_group.js';
 
 interface SwitchProps {
   label?: string;
