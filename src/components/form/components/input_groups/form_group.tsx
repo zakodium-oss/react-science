@@ -13,7 +13,6 @@ const FormContainer = styled.div<{ fill?: boolean; inline?: boolean }>`
   width: 100%;
   display: grid;
   grid-template-columns: [label] 30% [input] 70%;
-
   margin: 0;
 
   @media (width > 48rem) {
@@ -33,7 +32,6 @@ const ContainerElement = styled.div<{
 }>`
   display: inline-block;
   grid-column: ${(props) => (props.fullWidth ? '1 / -1' : 'input')};
-
   height: ${(props) =>
     props.height === 'auto' ? props.height : `${props.height}px`};
 `;
@@ -41,7 +39,6 @@ const ContainerElement = styled.div<{
 const Label = styled.label`
   padding-top: calc(${INPUT_HEIGHT}px - 26px);
   grid-column: label;
-
   height: 30px;
 
   @media (width < 48rem) {

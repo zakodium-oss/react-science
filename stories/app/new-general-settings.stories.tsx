@@ -15,7 +15,6 @@ export default {
 
 const StyledForm = styled(Form)`
   max-width: 762px;
-
   display: flex;
   flex-direction: column;
 `;
