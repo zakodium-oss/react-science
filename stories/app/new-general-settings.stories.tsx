@@ -15,7 +15,9 @@ export default {
 
 const StyledForm = styled(Form)`
   max-width: 762px;
-  container-type: inline-size;
+
+  display: flex;
+  flex-direction: column;
 `;
 
 const formSchema = z.object({
@@ -129,10 +131,15 @@ export function GeneralSettings() {
           )}
         </form.AppField>
         <form.AppField name="general.invertActions">
-          {(field) => <field.Switch label="Invert Actions" fill />}
+          {(field) => (
+            <field.Checkbox
+              label="Invert Actions"
+              helpText="Invert each action you do"
+            />
+          )}
         </form.AppField>
         <form.AppField name="general.invertScroll">
-          {(field) => <field.Switch label="Invert Scroll" fill />}
+          {(field) => <field.Checkbox label="Invert Scroll" />}
         </form.AppField>
       </Section>
 
@@ -141,14 +148,15 @@ export function GeneralSettings() {
         description="These features are experimental."
       >
         <form.AppField name="experimentalFeatures.enableExperimentalFeatures">
-          {(field) => (
-            <field.Switch label="Enable experimental features" fill />
-          )}
+          {(field) => <field.Checkbox label="Enable experimental features" />}
         </form.AppField>
 
         <form.AppField name="experimentalFeatures.checkbox">
           {(field) => (
-            <field.Checkbox label="Allow drag and drop of files onto the app. This is a way longer text that should be on multiple lines" />
+            <field.Checkbox
+              helpText="You should no click this checkbox"
+              label="Allow drag and drop of files onto the app. This is a way longer text that should be on multiple lines"
+            />
           )}
         </form.AppField>
       </Section>

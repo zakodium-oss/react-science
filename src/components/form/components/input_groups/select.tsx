@@ -169,7 +169,7 @@ export function Select<
           variant="outlined"
           intent={intent}
           disabled={disabled}
-          style={{ minWidth: 180, width: '100%' }}
+          style={{ minWidth: 180 }}
           onBlur={onBlur}
         />
       )}

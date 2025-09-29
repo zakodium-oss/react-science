@@ -11,13 +11,13 @@ const INPUT_HEIGHT = 30;
 const FormContainer = styled.div<{ fill?: boolean; inline?: boolean }>`
   min-height: ${INPUT_HEIGHT}px;
   width: 100%;
-  display: ${(props) => (props.inline ? 'flex' : 'block')};
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: [label] 30% [input] 70%;
+
   margin: 0;
 
   @media (width > 48rem) {
     flex-direction: row;
-    gap: 20px;
     justify-content: ${(props) =>
       props.fill ? 'space-between' : 'flex-start'};
   }
@@ -27,14 +27,22 @@ const RequiredSpan = styled.span`
   color: red;
 `;
 
-const ContainerElement = styled.div<{ height?: number | 'auto' }>`
+const ContainerElement = styled.div<{
+  height?: number | 'auto';
+  fullWidth?: boolean;
+}>`
   display: inline-block;
+  grid-column: ${(props) => (props.fullWidth ? '1 / -1' : 'input')};
+
   height: ${(props) =>
     props.height === 'auto' ? props.height : `${props.height}px`};
 `;
 
 const Label = styled.label`
   padding-top: calc(${INPUT_HEIGHT}px - 26px);
+  grid-column: label;
+
+  height: 30px;
 
   @media (width < 48rem) {
     padding: 0;
@@ -60,6 +68,7 @@ interface FormGroupProps {
   fill?: boolean;
   error?: string;
   inline?: boolean;
+  fullWidth?: boolean;
 }
 
 export function FormGroup(props: FormGroupProps) {
@@ -73,6 +82,7 @@ export function FormGroup(props: FormGroupProps) {
     fill = false,
     error,
     inline,
+    fullWidth = false,
   } = props;
 
   const { inline: formInline } = useFormContext();
@@ -91,7 +101,7 @@ export function FormGroup(props: FormGroupProps) {
           )}
         </Label>
       )}
-      <ContainerElement>
+      <ContainerElement fullWidth={fullWidth}>
         {children}
 
         {(helpText || error) && (

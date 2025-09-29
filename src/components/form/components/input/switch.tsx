@@ -9,14 +9,18 @@ interface SwitchProps {
   label?: string;
   fill?: boolean;
   inline?: boolean;
+  helpText?: string;
 }
 
 const StyledSwitch = styled(BPSwitch)`
-  margin: 0;
+  margin: 0 !important;
+  height: 30px;
+  display: flex;
+  align-items: center;
 `;
 
 export function Switch(props: SwitchProps) {
-  const { label, fill = false, inline } = props;
+  const { label, fill = false, inline, helpText } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -32,10 +36,11 @@ export function Switch(props: SwitchProps) {
     <FormGroup
       name={field.name}
       error={error}
-      intent="danger"
+      intent={error ? 'danger' : undefined}
       label={label}
       fill={fill}
       inline={inline}
+      helpText={helpText}
     >
       <StyledSwitch
         name={field.name}

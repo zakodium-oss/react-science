@@ -6,10 +6,12 @@ import { useFieldContext } from '../../context/use_ts_form.js';
 import { getIntent } from '../../utils/use_intent.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
-type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'>;
+type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'> & {
+  helpText?: string;
+};
 
 export function Checkbox(props: CheckboxProps) {
-  const { ...rest } = props;
+  const { helpText, ...rest } = props;
   const field = useFieldContext<boolean>();
   const error = field
     .getMeta()
@@ -24,7 +26,13 @@ export function Checkbox(props: CheckboxProps) {
   }
 
   return (
-    <FormGroup name={field.name} intent={intent} error={error}>
+    <FormGroup
+      name={field.name}
+      intent={intent}
+      error={error}
+      fullWidth
+      helpText={helpText}
+    >
       <BPCheckbox
         {...rest}
         name={field.name}
