@@ -1,5 +1,6 @@
 import type { CheckboxProps as BPCheckboxProps } from '@blueprintjs/core';
 import { Checkbox as BPCheckbox } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
@@ -9,6 +10,11 @@ import { FormGroup } from '../input_groups/form_group.js';
 type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'> & {
   helpText?: string;
 };
+
+// Keep the margin top for space between inputs. But remove the margin bottom for helperText
+const StyledCheckbox = styled(BPCheckbox)<CheckboxProps>`
+  margin-bottom: 0 !important;
+`;
 
 export function Checkbox(props: CheckboxProps) {
   const { helpText, ...rest } = props;
@@ -33,7 +39,7 @@ export function Checkbox(props: CheckboxProps) {
       fullWidth
       helpText={helpText}
     >
-      <BPCheckbox
+      <StyledCheckbox
         {...rest}
         name={field.name}
         value={String(field.state.value)}
