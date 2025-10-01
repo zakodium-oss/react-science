@@ -32,10 +32,17 @@ const formSchema = z.object({
       }),
     invertActions: z.boolean(),
     invertScroll: z.boolean(),
+    autoSaveInterval: z
+      .string()
+      .transform((value) => (value === '' ? undefined : Number(value)))
+      .refine((value) => value !== undefined && value >= 1 && value <= 60, {
+        error: 'Interval must be between 1 and 60 minutes',
+      }),
   }),
   experimentalFeatures: z.object({
     enableExperimentalFeatures: z.boolean(),
     checkbox: z.boolean(),
+    betaUI: z.boolean(),
   }),
   rendering: z.object({
     spectraRendering: z.enum([
@@ -44,6 +51,7 @@ const formSchema = z.object({
       'crisp-edges',
       'geometric-precision',
     ]),
+    resolution: z.enum(['low', 'medium', 'high']),
   }),
   loggingSettings: z.object({
     level: z.enum([
@@ -64,12 +72,19 @@ const formSchema = z.object({
       'trace',
       'silent',
     ]),
+    fileLogging: z.boolean(),
   }),
   peaksLabel: z.object({
     marginTop: z.string().transform((value) => {
       if (value === '') return undefined;
       return Number(value);
     }),
+    fontSize: z
+      .string()
+      .transform((value) => (value === '' ? undefined : Number(value)))
+      .refine((value) => value !== undefined && value >= 8 && value <= 32, {
+        error: 'Font size must be between 8 and 32',
+      }),
   }),
 });
 
@@ -78,20 +93,25 @@ const defaultValues: z.input<typeof formSchema> = {
     opacityDimmedSpectra: '0.4',
     invertActions: false,
     invertScroll: false,
+    autoSaveInterval: '5',
   },
   experimentalFeatures: {
     enableExperimentalFeatures: false,
     checkbox: true,
+    betaUI: false,
   },
   rendering: {
     spectraRendering: 'auto',
+    resolution: 'high',
   },
   loggingSettings: {
     level: 'info',
     popupLoggingLevel: 'error',
+    fileLogging: true,
   },
   peaksLabel: {
     marginTop: '0.5',
+    fontSize: '14',
   },
 };
 
@@ -140,6 +160,16 @@ export function GeneralSettings() {
         <form.AppField name="general.invertScroll">
           {(field) => <field.Checkbox label="Invert Scroll" />}
         </form.AppField>
+
+        <form.AppField name="general.autoSaveInterval">
+          {(field) => (
+            <field.NumericInput
+              label="Auto-save interval (minutes)"
+              helpText="Between 1 and 60"
+              step={1}
+            />
+          )}
+        </form.AppField>
       </Section>
 
       <Section
@@ -155,6 +185,15 @@ export function GeneralSettings() {
             <field.Checkbox
               helpText="You should no click this checkbox"
               label="Allow drag and drop of files onto the app. This is a way longer text that should be on multiple lines"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="experimentalFeatures.betaUI">
+          {(field) => (
+            <field.Checkbox
+              label="Enable new Beta UI"
+              helpText="Try new UI design"
             />
           )}
         </form.AppField>
@@ -177,6 +216,20 @@ export function GeneralSettings() {
                   label: 'Geometric precision',
                   value: 'geometric-precision',
                 },
+              ]}
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="rendering.resolution">
+          {(field) => (
+            <field.Select
+              label="Resolution"
+              fill
+              items={[
+                { label: 'Low', value: 'low' },
+                { label: 'Medium', value: 'medium' },
+                { label: 'High', value: 'high' },
               ]}
             />
           )}
@@ -223,6 +276,15 @@ export function GeneralSettings() {
             />
           )}
         </form.AppField>
+
+        <form.AppField name="loggingSettings.fileLogging">
+          {(field) => (
+            <field.Checkbox
+              label="Enable file logging"
+              helpText="Save logs to file"
+            />
+          )}
+        </form.AppField>
       </Section>
 
       <Section
@@ -231,6 +293,16 @@ export function GeneralSettings() {
       >
         <form.AppField name="peaksLabel.marginTop">
           {(field) => <field.NumericInput label="Margin top" fill />}
+        </form.AppField>
+
+        <form.AppField name="peaksLabel.fontSize">
+          {(field) => (
+            <field.NumericInput
+              label="Font size"
+              helpText="Between 8 and 32"
+              fill
+            />
+          )}
         </form.AppField>
       </Section>
 

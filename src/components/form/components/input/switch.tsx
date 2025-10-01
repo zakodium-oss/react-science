@@ -10,6 +10,7 @@ interface SwitchProps {
   fill?: boolean;
   inline?: boolean;
   helpText?: string;
+  fullWidth?: boolean;
 }
 
 const StyledSwitch = styled(BPSwitch)`
@@ -20,7 +21,7 @@ const StyledSwitch = styled(BPSwitch)`
 `;
 
 export function Switch(props: SwitchProps) {
-  const { label, fill = false, inline, helpText } = props;
+  const { label, fill = false, inline, helpText, fullWidth } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -41,6 +42,7 @@ export function Switch(props: SwitchProps) {
       fill={fill}
       inline={inline}
       helpText={helpText}
+      fullWidth={fullWidth}
     >
       <StyledSwitch
         name={field.name}

@@ -54,6 +54,7 @@ export function NumericInput(props: { fill: boolean }) {
             required
             placeholder="18"
             helpText="Value must be between 0 and 100"
+            fullWidth
           />
         )}
       </form.AppField>
@@ -94,6 +95,7 @@ export function Input(props: { fill: boolean }) {
             placeholder="Hello, World!"
             fill={props.fill}
             helpText="a string"
+            fullWidth
           />
         )}
       </form.AppField>
@@ -130,6 +132,7 @@ export function Select(props: { fill: boolean }) {
         {(field) => (
           <field.Select
             fill={props.fill}
+            fullWidth
             label="Favorite food"
             helpText="Whats your favorite food ?"
             required
@@ -208,7 +211,7 @@ export function Switch() {
   return (
     <form noValidate onSubmit={handleSubmit}>
       <form.AppField name="switch">
-        {(field) => <field.Switch label="Switch this element" />}
+        {(field) => <field.Switch label="Switch this element" fullWidth />}
       </form.AppField>
 
       <form.AppForm>

@@ -30,7 +30,7 @@ const ContainerContent = styled.div`
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   border-radius: 0.75rem;
   padding: 10px;
 `;

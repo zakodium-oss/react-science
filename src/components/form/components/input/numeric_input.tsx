@@ -22,6 +22,7 @@ export function NumericInput(props: NumericInputProps) {
     min,
     max,
     inline,
+    fullWidth,
   } = props;
 
   const field = useFieldContext<string>();
@@ -46,6 +47,7 @@ export function NumericInput(props: NumericInputProps) {
       fill={fill}
       inline={inline}
       error={error}
+      fullWidth={fullWidth}
     >
       <BPNumericInput
         id={field.name}

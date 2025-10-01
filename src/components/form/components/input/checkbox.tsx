@@ -14,10 +14,11 @@ type CheckboxProps = Omit<BPCheckboxProps, 'defaultChecked' | 'name'> & {
 // Keep the margin top for space between inputs. But remove the margin bottom for helperText
 const StyledCheckbox = styled(BPCheckbox)<CheckboxProps>`
   margin-bottom: 0 !important;
+  width: fit-content;
 `;
 
 export function Checkbox(props: CheckboxProps) {
-  const { helpText, ...rest } = props;
+  const { helpText, label } = props;
   const field = useFieldContext<boolean>();
   const error = field
     .getMeta()
@@ -40,7 +41,7 @@ export function Checkbox(props: CheckboxProps) {
       helpText={helpText}
     >
       <StyledCheckbox
-        {...rest}
+        label={label}
         name={field.name}
         value={String(field.state.value)}
         onChange={onChange}

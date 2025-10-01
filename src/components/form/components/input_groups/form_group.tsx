@@ -53,6 +53,7 @@ export interface FormGroupInputProps {
   helpText?: string;
   fill?: boolean;
   inline?: boolean;
+  fullWidth?: boolean;
 }
 
 interface FormGroupProps {

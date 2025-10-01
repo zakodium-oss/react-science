@@ -18,6 +18,7 @@ export function Input(props: InputProps) {
     helpText,
     fill,
     inline,
+    fullWidth,
   } = props;
 
   const field = useFieldContext<string>();
@@ -40,6 +41,7 @@ export function Input(props: InputProps) {
       helpText={helpText}
       fill={fill}
       inline={inline}
+      fullWidth={fullWidth}
     >
       <InputGroup
         name={field.name}
