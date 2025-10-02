@@ -98,6 +98,7 @@ export function Toolbar(props: ToolbarProps) {
     if (!vertical) {
       return;
     }
+
     function update() {
       const lastElement = ref.current?.lastElementChild;
       if (!lastElement) {
@@ -113,11 +114,13 @@ export function Toolbar(props: ToolbarProps) {
     }
 
     const element = ref.current;
-    if (element) {
-      const observer = new ResizeObserver(update);
-      observer.observe(element);
-      return () => observer.unobserve(element);
+    if (!element) {
+      return;
     }
+
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    return () => observer.unobserve(element);
   }, [vertical]);
 
   return (

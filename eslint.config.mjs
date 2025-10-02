@@ -28,7 +28,7 @@ export default [
     },
   },
   {
-    files: ['stories/**', 'tests/**'],
+    files: ['**/*.stories.*', 'tests/**'],
     rules: {
       '@typescript-eslint/unbound-method': 'off',
     },

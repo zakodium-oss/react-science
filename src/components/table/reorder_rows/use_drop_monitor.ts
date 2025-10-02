@@ -27,50 +27,53 @@ export function useDropMonitor(
   const { reorderItem, items } = useItemOrder();
   const [, setFlashedRow] = useFlashedRowContext();
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     const scrollContainer = scrollElementRef.current;
     assert(scrollContainer, 'Missing scroll container ref');
 
-    if (enabled) {
-      function canRespond({ source }: { source: ElementDragPayload }) {
-        return isItemData(source.data);
-      }
-      return combine(
-        monitorForElements({
-          canMonitor: canRespond,
-          onDrop({ location, source }) {
-            const target = location.current.dropTargets[0];
-            if (!target) {
-              return;
-            }
-
-            const sourceData = source.data;
-            const targetData = target.data;
-            if (!isItemData(sourceData) || !isItemData(targetData)) {
-              return;
-            }
-
-            const indexOfTarget = items.findIndex(
-              (item) => item.id === targetData.id,
-            );
-            if (indexOfTarget === -1) {
-              return;
-            }
-
-            const closestEdgeOfTarget = extractClosestEdge(targetData);
-
-            reorderItem({
-              startIndex: sourceData.index,
-              indexOfTarget,
-              closestEdgeOfTarget,
-            });
-            setFlashedRow(sourceData.id);
-          },
-        }),
-        autoScrollForElements({
-          canScroll: canRespond,
-          element: scrollContainer,
-        }),
-      );
+    function canRespond({ source }: { source: ElementDragPayload }) {
+      return isItemData(source.data);
     }
+
+    return combine(
+      monitorForElements({
+        canMonitor: canRespond,
+        onDrop({ location, source }) {
+          const target = location.current.dropTargets[0];
+          if (!target) {
+            return;
+          }
+
+          const sourceData = source.data;
+          const targetData = target.data;
+          if (!isItemData(sourceData) || !isItemData(targetData)) {
+            return;
+          }
+
+          const indexOfTarget = items.findIndex(
+            (item) => item.id === targetData.id,
+          );
+          if (indexOfTarget === -1) {
+            return;
+          }
+
+          const closestEdgeOfTarget = extractClosestEdge(targetData);
+
+          reorderItem({
+            startIndex: sourceData.index,
+            indexOfTarget,
+            closestEdgeOfTarget,
+          });
+          setFlashedRow(sourceData.id);
+        },
+      }),
+      autoScrollForElements({
+        canScroll: canRespond,
+        element: scrollContainer,
+      }),
+    );
   }, [items, reorderItem, scrollElementRef, setFlashedRow, enabled]);
 }

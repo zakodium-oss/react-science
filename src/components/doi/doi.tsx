@@ -1,6 +1,6 @@
 import { match } from 'ts-pattern';
 
-import { Logo } from './Logo.js';
+import { DoiLogo } from './doi_logo.js';
 import { normalizeDOI } from './utils.js';
 
 type DOISize = 'small' | 'medium' | 'large';
@@ -21,7 +21,7 @@ export function DOI(props: DOIProps) {
       target="_blank"
       rel="noreferrer"
     >
-      <Logo size={getDOISize(size)} />
+      <DoiLogo size={getDOISize(size)} />
     </a>
   );
 }
