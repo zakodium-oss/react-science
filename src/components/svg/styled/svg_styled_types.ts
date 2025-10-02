@@ -35,3 +35,33 @@ export interface SVGStyledLineUserConfig {
    */
   strokeDasharray?: SVGStyledLineStrokePattern;
 }
+
+/**
+ * SVG text styles that can be controlled by the user.
+ */
+export interface SVGStyledTextUserConfig {
+  /**
+   * Font color.
+   * @default inherit
+   */
+  fill?: string;
+
+  /**
+   * Font size.
+   * Range: [0, ∞)
+   * @default inherit
+   */
+  fontSize?: number;
+
+  /**
+   * Font weight.
+   * @default 'normal'
+   */
+  fontWeight?: 'normal' | 'bold';
+
+  /**
+   * Font style.
+   * @default 'normal'
+   */
+  fontStyle?: 'normal' | 'italic';
+}
