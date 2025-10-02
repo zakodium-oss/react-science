@@ -15,7 +15,7 @@ const preview: Preview = {
     },
     controls: {
       matchers: {
-        color: /(color|color$|stroke)/i,
+        color: /(fill|color|color$|stroke)/i,
         date: /Date$/i,
       },
     },
