@@ -1,4 +1,5 @@
 __tests__
+*.stories.*
 .npmignore
 .DS_Store
 pages

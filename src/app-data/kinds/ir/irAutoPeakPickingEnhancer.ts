@@ -20,11 +20,10 @@ export interface AutoPeakPickingOptions extends GSDOptions {
   minPeakWidth?: number;
 }
 
-/** Based on a x value we will return a peak*/
 export function irAutoPeakPickingEnhancer(
   measurement: IrMeasurement,
   options: AutoPeakPickingOptions = {},
-) {
+): void {
   const { xVariable = 'x', yVariable = 'y', minPeakWidth } = options;
 
   // we throw if there are more than one spectrum
@@ -33,13 +32,17 @@ export function irAutoPeakPickingEnhancer(
       'autoPeakPickingEnhancer can only be applied if there is only on measurement data',
     );
   }
-  if (measurement.data.length === 0) return;
+  if (measurement.data.length === 0) {
+    return;
+  }
 
   const datum = measurement.data[0];
 
   const x = datum.variables[xVariable]?.data;
   const y = datum.variables[yVariable]?.data;
-  if (!x || !y) return [];
+  if (!x || !y) {
+    return;
+  }
 
   const { from, to } = options;
 

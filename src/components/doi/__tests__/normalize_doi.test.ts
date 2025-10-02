@@ -13,9 +13,6 @@ const dois = [
   'https://doi.org//10.3762/bjoc.20.4',
 ];
 
-test('normalize doi', async () => {
-  for (const doi of dois) {
-    const result = normalizeDOI(doi);
-    expect(result).toBe('10.3762/bjoc.20.4');
-  }
+test.each(dois)('normalize DOI %s', async (doi) => {
+  expect(normalizeDOI(doi)).toBe('10.3762/bjoc.20.4');
 });
