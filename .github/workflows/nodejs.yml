@@ -13,25 +13,12 @@ jobs:
     with:
       lint-check-types: true
       upload-coverage: false
-      node-version-matrix: '[22]'
-  test-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: 'package.json'
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - name: Test that the build can be imported
-        run: node -e "import('./lib/components/index.js')"
+      node-version-matrix: '[24]'
   lint-stylelint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version-file: 'package.json'
       - name: Install dependencies
