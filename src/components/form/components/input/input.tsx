@@ -16,7 +16,6 @@ export function Input(props: InputProps) {
     placeholder,
     type = 'text',
     helpText,
-    fill,
     layout,
     fullWidth,
   } = props;
@@ -39,7 +38,6 @@ export function Input(props: InputProps) {
       required={required}
       error={error}
       helpText={helpText}
-      fill={fill}
       layout={layout}
       fullWidth={fullWidth}
     >

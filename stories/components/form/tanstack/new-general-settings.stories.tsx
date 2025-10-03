@@ -156,7 +156,6 @@ export function GeneralSettings(props: GeneralSettingsProps) {
         <form.AppField name="general.opacityDimmedSpectra">
           {(field) => (
             <field.NumericInput
-              fill
               label="Opacity of dimmed spectra"
               helpText="Value should be between 0 and 1."
               step={0.1}
@@ -221,7 +220,6 @@ export function GeneralSettings(props: GeneralSettingsProps) {
           {(field) => (
             <field.Select
               label="Spectra Rendering"
-              fill
               items={[
                 { label: 'Auto', value: 'auto' },
                 { label: 'Optimize speed', value: 'optimize-speed' },
@@ -239,7 +237,6 @@ export function GeneralSettings(props: GeneralSettingsProps) {
           {(field) => (
             <field.Select
               label="Resolution"
-              fill
               items={[
                 { label: 'Low', value: 'low' },
                 { label: 'Medium', value: 'medium' },
@@ -258,7 +255,6 @@ export function GeneralSettings(props: GeneralSettingsProps) {
           {(field) => (
             <field.Select
               label="Level"
-              fill
               helpText="Set the minimum level of messages to log."
               items={[
                 { label: 'Fatal', value: 'fatal' },
@@ -277,7 +273,6 @@ export function GeneralSettings(props: GeneralSettingsProps) {
           {(field) => (
             <field.Select
               label="Popup logging level"
-              fill
               items={[
                 { label: 'Fatal', value: 'fatal' },
                 { label: 'Error', value: 'error' },
@@ -306,16 +301,12 @@ export function GeneralSettings(props: GeneralSettingsProps) {
         description="Settings for peaks label. Exprimed in pixel."
       >
         <form.AppField name="peaksLabel.marginTop">
-          {(field) => <field.NumericInput label="Margin top" fill />}
+          {(field) => <field.NumericInput label="Margin top" />}
         </form.AppField>
 
         <form.AppField name="peaksLabel.fontSize">
           {(field) => (
-            <field.NumericInput
-              label="Font size"
-              helpText="Between 8 and 32"
-              fill
-            />
+            <field.NumericInput label="Font size" helpText="Between 8 and 32" />
           )}
         </form.AppField>
       </form.Section>

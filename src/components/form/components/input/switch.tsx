@@ -8,7 +8,6 @@ import { FormGroup } from '../input_groups/form_group.js';
 
 interface SwitchProps {
   label?: string;
-  fill?: boolean;
   helpText?: string;
   fullWidth?: boolean;
   layout?: Layout;
@@ -22,7 +21,7 @@ const StyledSwitch = styled(BPSwitch)`
 `;
 
 export function Switch(props: SwitchProps) {
-  const { label, fill = false, layout, helpText, fullWidth } = props;
+  const { label, layout, helpText, fullWidth } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -40,7 +39,6 @@ export function Switch(props: SwitchProps) {
       error={error}
       intent={error ? 'danger' : undefined}
       label={label}
-      fill={fill}
       layout={layout}
       helpText={helpText}
       fullWidth={fullWidth}

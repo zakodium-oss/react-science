@@ -15,10 +15,8 @@ const FormContainer = styled.div<{
   width: 100%;
   display: grid;
   margin: 0;
-
   grid-template-columns: ${(props) =>
     props.layout === 'inline' ? '[label] 30% [input] 70%' : '1fr'};
-
   grid-template-rows: ${(props) =>
     props.layout === 'inline' ? 'auto auto' : 'auto'};
 `;
@@ -33,17 +31,14 @@ const ContainerElement = styled.div<{
   layout?: Layout;
 }>`
   display: inline-block;
-
   grid-column: ${(props) =>
     props.fullWidth
       ? '1 / -1'
       : props.layout === 'inline'
         ? 'input'
         : '1 / -1'};
-
   height: ${(props) =>
     props.height === 'auto' ? props.height : `${props.height}px`};
-
   width: fit-content;
 `;
 
@@ -67,7 +62,6 @@ export interface FormGroupInputProps {
   required?: boolean;
   placeholder?: string;
   helpText?: string;
-  fill?: boolean;
   layout?: Layout;
   fullWidth?: boolean;
 }

@@ -15,7 +15,7 @@ interface SelectProps extends Omit<FormGroupInputProps, 'placeholder'> {
 }
 
 export function Select(props: SelectProps) {
-  const { label, items, required, helpText, fill, layout, fullWidth } = props;
+  const { label, items, required, helpText, layout, fullWidth } = props;
 
   const field = useFieldContext<SelectId>();
   const error = field
@@ -37,7 +37,6 @@ export function Select(props: SelectProps) {
       label={label}
       intent={intent}
       helpText={helpText}
-      fill={fill}
       error={error}
       layout={layout}
       fullWidth={fullWidth}

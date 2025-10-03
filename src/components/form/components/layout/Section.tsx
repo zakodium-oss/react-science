@@ -32,7 +32,7 @@ const ContainerContent = styled.div`
   flex-direction: column;
   gap: 2px;
   border-radius: 0.75rem;
-  padding: 7px 10px 2px 10px;
+  padding: 7px 10px 2px;
 `;
 
 interface SectionProps {

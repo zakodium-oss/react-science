@@ -16,7 +16,6 @@ export function NumericInput(props: NumericInputProps) {
     label,
     required,
     helpText,
-    fill,
     placeholder,
     step,
     min,
@@ -44,7 +43,6 @@ export function NumericInput(props: NumericInputProps) {
       intent={intent}
       required={required}
       helpText={helpText}
-      fill={fill}
       layout={layout}
       error={error}
       fullWidth={fullWidth}
