@@ -10,7 +10,7 @@ export const AccordionDecorator: Decorator = (Story) => (
 );
 
 const excludeDecorator = new Set([
-  'forms-example-generalsettings-proposal--general-settings',
+  'forms-form-tanstack-generalsettings--general-settings',
 ]);
 
 export const RootLayoutDecorator: Decorator = (Story, ctx) => {

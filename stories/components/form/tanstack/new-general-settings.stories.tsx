@@ -4,14 +4,12 @@ import { revalidateLogic } from '@tanstack/react-form';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import {
-  Form,
-  Layout,
-} from '../../src/components/form/components/input_groups/form.js';
-import { useForm } from '../../src/components/index.js';
+import type { Layout } from '../../../../src/components/form/components/input_groups/form.js';
+import { Form } from '../../../../src/components/form/components/input_groups/form.js';
+import { useForm } from '../../../../src/components/index.js';
 
 export default {
-  title: 'Forms/Example/GeneralSettings/Proposal',
+  title: 'Forms/Form/Tanstack/GeneralSettings',
   argTypes: {
     layout: {
       control: 'select',
