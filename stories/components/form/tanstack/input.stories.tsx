@@ -1,13 +1,36 @@
+import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { useForm } from '../../../src/components/index.js';
+import type { Layout } from '../../../../src/components/form/components/input_groups/form.js';
+import { Section } from '../../../../src/components/form/components/layout/Section.js';
+import { useForm } from '../../../../src/components/index.js';
 
 export default {
-  title: 'Forms / Form / Inputs',
-};
+  title: 'Forms / Form / Tanstack / Inputs',
+  args: {
+    layout: 'stacked',
+  },
+  decorators: [
+    (Story) => (
+      <Section title="Form Inputs">
+        <Story />
+      </Section>
+    ),
+  ],
+  argTypes: {
+    layout: {
+      control: 'select',
+      options: ['inline', 'stacked'],
+    },
+  },
+} as Meta;
+
+interface InputProps {
+  layout: Layout;
+}
 
 const numericInputSchema = z.object({
   numeric: z
@@ -17,11 +40,11 @@ const numericInputSchema = z.object({
       return Number(value);
     })
     .refine((value) => value && value >= 0 && value <= 100, {
-      error: 'Value must be between 0 and 100',
+      error: 'Value cannot be less than 0 or greater than 100',
     }),
 });
 
-export function NumericInput() {
+export function NumericInput(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) =>
       action('onSubmit')(numericInputSchema.parse(value)),
@@ -42,9 +65,11 @@ export function NumericInput() {
       <form.AppField name="numeric">
         {(field) => (
           <field.NumericInput
+            layout={props.layout}
             label="Numeric"
             required
-            placeholder="Value must be between 0 and 100"
+            placeholder="18"
+            helpText="Value must be between 0 and 100"
           />
         )}
       </form.AppField>
@@ -60,7 +85,7 @@ const inputSchema = z.object({
   input: z.string().min(1, 'Value must be at least 1 character'),
 });
 
-export function Input() {
+export function Input(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(inputSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -79,7 +104,13 @@ export function Input() {
     <form noValidate onSubmit={handleSubmit}>
       <form.AppField name="input">
         {(field) => (
-          <field.Input label="Input" required placeholder="a string" />
+          <field.Input
+            layout={props.layout}
+            label="Input"
+            required
+            placeholder="Hello, World!"
+            helpText="a string"
+          />
         )}
       </form.AppField>
 
@@ -94,7 +125,7 @@ const selectSchema = z.object({
   select: z.string({ error: 'At least one element is required' }),
 });
 
-export function Select() {
+export function Select(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(selectSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -114,7 +145,9 @@ export function Select() {
       <form.AppField name="select">
         {(field) => (
           <field.Select
+            layout={props.layout}
             label="Favorite food"
+            helpText="Whats your favorite food ?"
             required
             items={[
               { label: 'Apple', value: 'apple' },
@@ -169,11 +202,20 @@ export function Checkbox() {
   );
 }
 
+// We disable layout control for Checkbox as it doesn't support it
+Checkbox.argTypes = {
+  layout: {
+    table: {
+      disable: true,
+    },
+  },
+};
+
 const switchSchema = z.object({
   switch: z.literal(true, { error: 'You must turn on the switch' }),
 });
 
-export function Switch() {
+export function Switch(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(switchSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -191,7 +233,9 @@ export function Switch() {
   return (
     <form noValidate onSubmit={handleSubmit}>
       <form.AppField name="switch">
-        {(field) => <field.Switch label="Switch this element" />}
+        {(field) => (
+          <field.Switch layout={props.layout} label="Switch this element" />
+        )}
       </form.AppField>
 
       <form.AppForm>

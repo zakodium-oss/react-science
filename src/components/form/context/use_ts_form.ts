@@ -7,6 +7,7 @@ import { ResetButton } from '../components/input/reset_button.js';
 import { Select } from '../components/input/select.js';
 import { SubmitButton } from '../components/input/submit_button.js';
 import { Switch } from '../components/input/switch.js';
+import { Section } from '../components/layout/Section.js';
 
 const { useFormContext, useFieldContext, formContext, fieldContext } =
   createFormHookContexts();
@@ -17,6 +18,7 @@ const { useAppForm, withForm } = createFormHook({
   formComponents: {
     SubmitButton,
     ResetButton,
+    Section,
   },
   fieldComponents: {
     Input,
