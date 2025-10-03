@@ -1,8 +1,8 @@
-export type SVGStyledLineStrokePattern =
-  | 'solid'
-  | 'dashed'
-  | 'dotted'
-  | 'dashed-dot';
+import type {
+  SVGStyledFontStyle,
+  SVGStyledFontWeight,
+  SVGStyledLineStrokePattern,
+} from './svg_styled_utils.js';
 
 /**
  * SVG line styles that can be controlled by the user.
@@ -57,11 +57,11 @@ export interface SVGStyledTextUserConfig {
    * Font weight.
    * @default 'normal'
    */
-  fontWeight?: 'normal' | 'bold';
+  fontWeight?: SVGStyledFontWeight;
 
   /**
    * Font style.
    * @default 'normal'
    */
-  fontStyle?: 'normal' | 'italic';
+  fontStyle?: SVGStyledFontStyle;
 }

@@ -1,6 +1,18 @@
 import { match } from 'ts-pattern';
 
-import type { SVGStyledLineStrokePattern } from './svg_styled_types.js';
+export const validStrokePatterns = [
+  'solid',
+  'dashed',
+  'dotted',
+  'dashed-dot',
+] as const;
+export type SVGStyledLineStrokePattern = (typeof validStrokePatterns)[number];
+
+export const validFontWeights = ['normal', 'bold'] as const;
+export type SVGStyledFontWeight = (typeof validFontWeights)[number];
+
+export const validFontStyles = ['normal', 'italic'] as const;
+export type SVGStyledFontStyle = (typeof validFontStyles)[number];
 
 export function computeStrokeDasharray(
   pattern: SVGStyledLineStrokePattern,
