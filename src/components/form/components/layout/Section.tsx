@@ -30,9 +30,9 @@ const ContainerContent = styled.div`
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
   border-radius: 0.75rem;
-  padding: 10px;
+  padding: 7px 10px 2px 10px;
 `;
 
 interface SectionProps {

@@ -1,12 +1,16 @@
 import type { FormHTMLAttributes, ReactNode } from 'react';
 import { createContext, useContext, useMemo } from 'react';
 
+export type Layout = 'inline' | 'stacked';
+
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
-  inline?: boolean;
+  layout?: Layout;
 }
 
-const formContext = createContext<{ inline: boolean }>({ inline: false });
+const formContext = createContext<{ layout: Layout }>({
+  layout: 'stacked',
+});
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useFormContext() {
@@ -14,11 +18,11 @@ export function useFormContext() {
 }
 
 export function Form(props: FormProps) {
-  const { children, inline = false, ...otherProps } = props;
+  const { children, layout = 'stacked', ...otherProps } = props;
 
   const contextValue = useMemo(() => {
-    return { inline };
-  }, [inline]);
+    return { layout };
+  }, [layout]);
 
   return (
     <formContext.Provider value={contextValue}>

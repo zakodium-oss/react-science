@@ -5,7 +5,6 @@ import type { ComponentProps, ReactElement, ReactNode } from 'react';
 import { useCallback, useMemo } from 'react';
 
 import { Button } from '../../../button/index.js';
-import { useInputId } from '../hooks/use_input_id.js';
 import type {
   GetOptionLabel,
   GetOptionValue,
@@ -93,7 +92,6 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
 interface RealSelectProps<OptionType, ID extends SelectId>
   extends Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> {
   onBlur: () => void;
-  id?: string;
   renderButton?: (
     state: SelectPropsRenderButtonState<OptionType>,
     onBlur: () => void,
@@ -104,6 +102,7 @@ interface RealSelectProps<OptionType, ID extends SelectId>
   getLabel?: GetOptionLabel<OptionType>;
   getValue?: GetOptionValue<OptionType, ID>;
   intent?: FormGroupProps['intent'];
+  name?: string;
 }
 
 export function Select<
@@ -112,7 +111,6 @@ export function Select<
 >(props: RealSelectProps<OptionType, ID>): ReactElement {
   const {
     renderButton,
-    id,
     disabled,
     selected,
     getLabel: _getLabel,
@@ -123,6 +121,7 @@ export function Select<
     items,
     onChange,
     onBlur,
+    name = null,
   } = props;
 
   const getValue: GetOptionValue<OptionType, ID> = _getValue ?? getSelectValue;
@@ -149,8 +148,6 @@ export function Select<
     [getValue, onChange],
   );
 
-  const inputId = useInputId(id, null);
-
   return (
     <BPSelect<OptionType>
       filterable={filterable}
@@ -163,7 +160,7 @@ export function Select<
         renderButton({ selectedOption, error: undefined }, onBlur)
       ) : (
         <Button
-          id={inputId}
+          id={name || undefined}
           text={getLabel(selectedOption) || 'Select ...'}
           endIcon="double-caret-vertical"
           variant="outlined"

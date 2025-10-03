@@ -17,7 +17,7 @@ export function Input(props: InputProps) {
     type = 'text',
     helpText,
     fill,
-    inline,
+    layout,
     fullWidth,
   } = props;
 
@@ -40,10 +40,11 @@ export function Input(props: InputProps) {
       error={error}
       helpText={helpText}
       fill={fill}
-      inline={inline}
+      layout={layout}
       fullWidth={fullWidth}
     >
       <InputGroup
+        id={field.name}
         name={field.name}
         required={required}
         type={type}

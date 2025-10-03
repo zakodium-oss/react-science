@@ -3,14 +3,15 @@ import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
+import type { Layout } from '../input_groups/form.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
 interface SwitchProps {
   label?: string;
   fill?: boolean;
-  inline?: boolean;
   helpText?: string;
   fullWidth?: boolean;
+  layout?: Layout;
 }
 
 const StyledSwitch = styled(BPSwitch)`
@@ -21,7 +22,7 @@ const StyledSwitch = styled(BPSwitch)`
 `;
 
 export function Switch(props: SwitchProps) {
-  const { label, fill = false, inline, helpText, fullWidth } = props;
+  const { label, fill = false, layout, helpText, fullWidth } = props;
 
   const field = useFieldContext<boolean>();
   const error = field
@@ -40,7 +41,7 @@ export function Switch(props: SwitchProps) {
       intent={error ? 'danger' : undefined}
       label={label}
       fill={fill}
-      inline={inline}
+      layout={layout}
       helpText={helpText}
       fullWidth={fullWidth}
     >

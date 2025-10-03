@@ -1,19 +1,36 @@
+import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
+import type { Layout } from '../../../src/components/form/components/input_groups/form.js';
+import { Section } from '../../../src/components/form/components/layout/Section.js';
 import { useForm } from '../../../src/components/index.js';
 
 export default {
   title: 'Forms / Form / Inputs',
+  args: {
+    layout: 'stacked',
+  },
+  decorators: [
+    (Story) => (
+      <Section title="Form Inputs">
+        <Story />
+      </Section>
+    ),
+  ],
   argTypes: {
-    fill: {
-      control: 'boolean',
-      defaultValue: false,
+    layout: {
+      control: 'select',
+      options: ['inline', 'stacked'],
     },
   },
-};
+} as Meta;
+
+interface InputProps {
+  layout: Layout;
+}
 
 const numericInputSchema = z.object({
   numeric: z
@@ -27,7 +44,7 @@ const numericInputSchema = z.object({
     }),
 });
 
-export function NumericInput(props: { fill: boolean }) {
+export function NumericInput(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) =>
       action('onSubmit')(numericInputSchema.parse(value)),
@@ -48,13 +65,11 @@ export function NumericInput(props: { fill: boolean }) {
       <form.AppField name="numeric">
         {(field) => (
           <field.NumericInput
-            fill={props.fill}
-            inline
+            layout={props.layout}
             label="Numeric"
             required
             placeholder="18"
             helpText="Value must be between 0 and 100"
-            fullWidth
           />
         )}
       </form.AppField>
@@ -70,7 +85,7 @@ const inputSchema = z.object({
   input: z.string().min(1, 'Value must be at least 1 character'),
 });
 
-export function Input(props: { fill: boolean }) {
+export function Input(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(inputSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -90,12 +105,11 @@ export function Input(props: { fill: boolean }) {
       <form.AppField name="input">
         {(field) => (
           <field.Input
+            layout={props.layout}
             label="Input"
             required
             placeholder="Hello, World!"
-            fill={props.fill}
             helpText="a string"
-            fullWidth
           />
         )}
       </form.AppField>
@@ -111,7 +125,7 @@ const selectSchema = z.object({
   select: z.string({ error: 'At least one element is required' }),
 });
 
-export function Select(props: { fill: boolean }) {
+export function Select(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(selectSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -131,8 +145,7 @@ export function Select(props: { fill: boolean }) {
       <form.AppField name="select">
         {(field) => (
           <field.Select
-            fill={props.fill}
-            fullWidth
+            layout={props.layout}
             label="Favorite food"
             helpText="Whats your favorite food ?"
             required
@@ -189,11 +202,20 @@ export function Checkbox() {
   );
 }
 
+// We disable layout control for Checkbox as it doesn't support it
+Checkbox.argTypes = {
+  layout: {
+    table: {
+      disable: true,
+    },
+  },
+};
+
 const switchSchema = z.object({
   switch: z.literal(true, { error: 'You must turn on the switch' }),
 });
 
-export function Switch() {
+export function Switch(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(switchSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -211,7 +233,9 @@ export function Switch() {
   return (
     <form noValidate onSubmit={handleSubmit}>
       <form.AppField name="switch">
-        {(field) => <field.Switch label="Switch this element" fullWidth />}
+        {(field) => (
+          <field.Switch layout={props.layout} label="Switch this element" />
+        )}
       </form.AppField>
 
       <form.AppForm>

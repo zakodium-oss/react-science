@@ -21,7 +21,7 @@ export function NumericInput(props: NumericInputProps) {
     step,
     min,
     max,
-    inline,
+    layout,
     fullWidth,
   } = props;
 
@@ -45,7 +45,7 @@ export function NumericInput(props: NumericInputProps) {
       required={required}
       helpText={helpText}
       fill={fill}
-      inline={inline}
+      layout={layout}
       error={error}
       fullWidth={fullWidth}
     >

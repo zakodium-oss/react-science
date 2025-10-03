@@ -4,13 +4,23 @@ import { revalidateLogic } from '@tanstack/react-form';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { Form } from '../../src/components/form/components/input_groups/form.js';
+import {
+  Form,
+  Layout,
+} from '../../src/components/form/components/input_groups/form.js';
 import { useForm } from '../../src/components/index.js';
-
-import { Section } from './components/Section.js';
 
 export default {
   title: 'Forms/Example/GeneralSettings/Proposal',
+  argTypes: {
+    layout: {
+      control: 'select',
+      options: ['inline', 'stacked'],
+    },
+  },
+  args: {
+    layout: 'inline',
+  },
 } as Meta;
 
 const StyledForm = styled(Form)`
@@ -115,7 +125,13 @@ const defaultValues: z.input<typeof formSchema> = {
   },
 };
 
-export function GeneralSettings() {
+interface GeneralSettingsProps {
+  layout?: Layout;
+}
+
+export function GeneralSettings(props: GeneralSettingsProps) {
+  const { layout = 'inline' } = props;
+
   const form = useForm({
     defaultValues,
     validators: { onDynamic: formSchema },
@@ -129,13 +145,13 @@ export function GeneralSettings() {
   return (
     <StyledForm
       noValidate
-      inline
+      layout={layout}
       onSubmit={(event) => {
         event.preventDefault();
         void form.handleSubmit();
       }}
     >
-      <Section
+      <form.Section
         title="General"
         description="These settings affect the entire application."
       >
@@ -170,9 +186,9 @@ export function GeneralSettings() {
             />
           )}
         </form.AppField>
-      </Section>
+      </form.Section>
 
-      <Section
+      <form.Section
         title="Experimental features"
         description="These features are experimental."
       >
@@ -197,9 +213,9 @@ export function GeneralSettings() {
             />
           )}
         </form.AppField>
-      </Section>
+      </form.Section>
 
-      <Section
+      <form.Section
         title="Rendering"
         description="Settings related to how spectra are rendered."
       >
@@ -234,9 +250,9 @@ export function GeneralSettings() {
             />
           )}
         </form.AppField>
-      </Section>
+      </form.Section>
 
-      <Section
+      <form.Section
         title="Logging settings"
         description="Settings related to application logging."
       >
@@ -285,9 +301,9 @@ export function GeneralSettings() {
             />
           )}
         </form.AppField>
-      </Section>
+      </form.Section>
 
-      <Section
+      <form.Section
         title="Peaks label"
         description="Settings for peaks label. Exprimed in pixel."
       >
@@ -304,7 +320,7 @@ export function GeneralSettings() {
             />
           )}
         </form.AppField>
-      </Section>
+      </form.Section>
 
       <form.AppForm>
         <form.SubmitButton>Apply</form.SubmitButton>
