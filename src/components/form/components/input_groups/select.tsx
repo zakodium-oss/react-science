@@ -1,5 +1,4 @@
-import type { FormGroupProps } from '@blueprintjs/core';
-import { FormGroup } from '@blueprintjs/core';
+import type { FormGroup, FormGroupProps } from '@blueprintjs/core';
 import type { SelectProps as BPSelectProps } from '@blueprintjs/select';
 import { Select as BPSelect } from '@blueprintjs/select';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
@@ -104,12 +103,7 @@ interface RealSelectProps<OptionType, ID extends SelectId>
   onChange?: (selected: ID | undefined, option: OptionType | undefined) => void;
   getLabel?: GetOptionLabel<OptionType>;
   getValue?: GetOptionValue<OptionType, ID>;
-  formGroupProps: Pick<
-    ComponentProps<typeof FormGroup>,
-    'helperText' | 'intent' | 'label' | 'className' | 'inline'
-  > & {
-    required?: boolean;
-  };
+  intent?: FormGroupProps['intent'];
 }
 
 export function Select<
@@ -123,7 +117,7 @@ export function Select<
     selected,
     getLabel: _getLabel,
     getValue: _getValue,
-    formGroupProps: { className, helperText, inline, intent, label, required },
+    intent,
     // Weirdly, setting the filterable prop on BP's Select component activates the filter input
     filterable = false,
     items,
@@ -158,39 +152,27 @@ export function Select<
   const inputId = useInputId(id, null);
 
   return (
-    <FormGroup
-      label={label}
-      labelFor={inputId}
-      helperText={helperText}
-      intent={intent}
-      style={{ margin: 0, position: 'relative' }}
-      className={className}
-      inline={inline}
+    <BPSelect<OptionType>
+      filterable={filterable}
+      items={items}
+      onItemSelect={onItemSelect}
+      itemRenderer={itemRenderer}
       disabled={disabled}
-      labelInfo={required && <span style={{ color: 'red' }}>*</span>}
     >
-      <BPSelect<OptionType>
-        filterable={filterable}
-        items={items}
-        onItemSelect={onItemSelect}
-        itemRenderer={itemRenderer}
-        disabled={disabled}
-      >
-        {renderButton ? (
-          renderButton({ selectedOption, error: undefined }, onBlur)
-        ) : (
-          <Button
-            id={inputId}
-            text={getLabel(selectedOption) || 'Select ...'}
-            endIcon="double-caret-vertical"
-            variant="outlined"
-            intent={intent}
-            disabled={disabled}
-            style={{ minWidth: 180 }}
-            onBlur={onBlur}
-          />
-        )}
-      </BPSelect>
-    </FormGroup>
+      {renderButton ? (
+        renderButton({ selectedOption, error: undefined }, onBlur)
+      ) : (
+        <Button
+          id={inputId}
+          text={getLabel(selectedOption) || 'Select ...'}
+          endIcon="double-caret-vertical"
+          variant="outlined"
+          intent={intent}
+          disabled={disabled}
+          style={{ minWidth: 180 }}
+          onBlur={onBlur}
+        />
+      )}
+    </BPSelect>
   );
 }
