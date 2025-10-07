@@ -45,7 +45,7 @@ const SubTitleItem = styled.div`
   padding-left: 15px;
   box-sizing: border-box;
 
-  &::before {
+  ::before {
     position: absolute;
     top: ${shortcutBoxSize / 2}rem;
     left: 0;
@@ -56,7 +56,7 @@ const SubTitleItem = styled.div`
     border-bottom: 1px solid;
   }
 
-  &::after {
+  ::after {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -67,7 +67,7 @@ const SubTitleItem = styled.div`
     border-left: 1px solid;
   }
 
-  &:last-child::after {
+  :last-child::after {
     height: ${shortcutBoxSize / 2}rem;
   }
 `;

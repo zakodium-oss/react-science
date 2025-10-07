@@ -25,7 +25,7 @@ export const CustomDivPreflight = styled.div`
   height: 100%;
   position: relative;
 
-  &:fullscreen::backdrop,
+  :fullscreen::backdrop,
   *:fullscreen::backdrop {
     /* Override user agent default */
     background-color: white;

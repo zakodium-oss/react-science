@@ -110,9 +110,10 @@ export function InfoPanel(props: InfoPanelProps) {
       const includes: InfoPanelDatum[] = [];
       const valueContains: InfoPanelDatum[] = [];
 
-      for (const [parameter, value] of Object.entries(data).sort(([a], [b]) => {
-        return a.localeCompare(b);
-      })) {
+      const sortedDataEntries = Object.entries(data);
+      sortedDataEntries.sort(([a], [b]) => a.localeCompare(b));
+
+      for (const [parameter, value] of sortedDataEntries) {
         const lowerKey = parameter.toLowerCase();
         const lowerSearch = search.toLowerCase();
         if (lowerKey === lowerSearch) {

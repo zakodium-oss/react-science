@@ -12,12 +12,12 @@ const HiddenInput = styled.input`
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
 
   /* Label associated with the checked input. */
-  &:checked + label {
+  :checked + label {
     color: ${enabledColor};
     border-color: ${enabledColor};
     opacity: ${(props) => (props.disabled ? 0.25 : 1)};
@@ -25,7 +25,7 @@ const HiddenInput = styled.input`
   }
 
   /* Next label after the one that is checked. */
-  &:checked + label + input + label {
+  :checked + label + input + label {
     border-left-width: 0;
   }
 `;
@@ -46,7 +46,7 @@ const Label = styled.label<{ size?: RadioProps['size']; disabled?: boolean }>`
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   white-space: nowrap;
 
-  &:hover {
+  :hover {
     color: ${enabledColor};
   }
 `;

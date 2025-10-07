@@ -27,7 +27,7 @@ const PanelPreferencesToolbarContent = styled.div`
   display: flex;
   flex-direction: row-reverse;
 
-  & > button {
+  > button {
     padding: 0 0 0 9px;
     min-width: auto;
   }

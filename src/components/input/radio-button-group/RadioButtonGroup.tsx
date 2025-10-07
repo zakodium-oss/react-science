@@ -12,14 +12,14 @@ export interface RadioButtonGroupProps extends RadioGroupProps {
 const RadioButtonContainer = styled.div<{ size?: RadioProps['size'] }>`
   display: flex;
 
-  & label:first-of-type {
+  label:first-of-type {
     border-bottom-left-radius: ${(props) =>
       props.size === 'large' ? '6px' : '4px'};
     border-top-left-radius: ${(props) =>
       props.size === 'large' ? '6px' : '4px'};
   }
 
-  & label:last-of-type {
+  label:last-of-type {
     border-right-width: 1px;
     border-bottom-right-radius: ${(props) =>
       props.size === 'large' ? '6px' : '4px'};

@@ -82,7 +82,7 @@ const AccordionItemHeader = styled.div`
   justify-content: space-between;
   padding-left: 12px;
 
-  &:hover {
+  :hover {
     background: white
       linear-gradient(${Colors.LIGHT_GRAY4} 5%, ${Colors.LIGHT_GRAY2} 100%)
       repeat scroll 0 0;
