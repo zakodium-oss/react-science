@@ -152,17 +152,18 @@ export function ColorPicker(props: ColorPickerProps) {
     style = {},
   } = props;
 
-  const [state, setState] = useState(() => colorHelper.toState(color, 0));
-
   const debounceRef = useRef(
     debounce((fn: any, data: ChangeCallbackProps, event: Event) => {
       fn(data, event);
     }, 100),
   );
 
-  const colorFromState = colorHelper.toState(color, state.oldHue);
-  if (colorFromState.hex !== state.hex) {
-    setState(colorFromState);
+  const [state, setState] = useState(() => colorHelper.toState(color, 0));
+
+  const [previousColor, setPreviousColor] = useState(color);
+  if (color !== previousColor) {
+    setPreviousColor(color);
+    setState(colorHelper.toState(color, 0));
   }
 
   const handleChange = useCallback(
