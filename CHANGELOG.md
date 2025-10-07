@@ -1,5 +1,14 @@
 # Changelog
 
+## [19.3.0](https://github.com/zakodium-oss/react-science/compare/v19.2.0...v19.3.0) (2025-10-07)
+
+
+### Features
+
+* add Section to form and create a base for forms ([#934](https://github.com/zakodium-oss/react-science/issues/934)) ([d7921bc](https://github.com/zakodium-oss/react-science/commit/d7921bc91583dfeabdfd80e24b885ea9f47b3a44))
+* styled SVG lines and paths ([4ab1c22](https://github.com/zakodium-oss/react-science/commit/4ab1c22651bb39e8a19edb1c7f175cea16807a57))
+* styled SVG text ([f1d605f](https://github.com/zakodium-oss/react-science/commit/f1d605faf7ab78b17f785d80f5ed6c44ff88ebf6))
+
 ## [19.2.0](https://github.com/zakodium-oss/react-science/compare/v19.1.0...v19.2.0) (2025-09-23)
 
 
