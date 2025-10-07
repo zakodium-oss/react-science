@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { debounce } from '../../utils/index.js';
 import { defaultColorPalette } from '../palette.js';
@@ -152,17 +152,19 @@ export function ColorPicker(props: ColorPickerProps) {
     style = {},
   } = props;
 
-  const [state, setState] = useState(colorHelper.toState(color, 0));
-
   const debounceRef = useRef(
     debounce((fn: any, data: ChangeCallbackProps, event: Event) => {
       fn(data, event);
     }, 100),
   );
 
-  useEffect(() => {
-    setState((prevState) => colorHelper.toState(color, prevState.oldHue));
-  }, [color]);
+  const [state, setState] = useState(() => colorHelper.toState(color, 0));
+
+  const [previousColor, setPreviousColor] = useState(color);
+  if (color !== previousColor) {
+    setPreviousColor(color);
+    setState(colorHelper.toState(color, 0));
+  }
 
   const handleChange = useCallback(
     (data: any, event: any) => {

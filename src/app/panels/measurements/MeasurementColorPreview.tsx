@@ -34,7 +34,7 @@ const ColorPreviewButton = styled.button`
   width: 1em;
   height: 1em;
 
-  & > div {
+  > div {
     border-radius: 0.5em;
   }
 `;
@@ -86,6 +86,8 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
             <FloatingFocusManager context={context}>
               <div
                 style={floatingStyles}
+                // We are not accessing the ref's value here.
+                // eslint-disable-next-line react-hooks/refs
                 ref={refs.setFloating}
                 {...getFloatingProps()}
               >
