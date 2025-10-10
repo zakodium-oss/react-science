@@ -3,8 +3,8 @@ import { Classes } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
-import type { Layout } from './form.js';
-import { useFormContext } from './form.js';
+import type { Layout } from './form_context.js';
+import { useFormContext } from './form_context.js';
 
 const INPUT_HEIGHT = 30;
 

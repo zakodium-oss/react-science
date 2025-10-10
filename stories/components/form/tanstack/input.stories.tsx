@@ -4,7 +4,7 @@ import type { FormEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import type { Layout } from '../../../../src/components/form/components/input_groups/form.js';
+import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
 import { useForm } from '../../../../src/components/index.js';
 

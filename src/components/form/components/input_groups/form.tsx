@@ -1,20 +1,12 @@
 import type { FormHTMLAttributes, ReactNode } from 'react';
-import { createContext, useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-export type Layout = 'inline' | 'stacked';
+import type { Layout } from './form_context.js';
+import { formContext } from './form_context.js';
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
   layout?: Layout;
-}
-
-const formContext = createContext<{ layout: Layout }>({
-  layout: 'stacked',
-});
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function useFormContext() {
-  return useContext(formContext);
 }
 
 export function Form(props: FormProps) {
