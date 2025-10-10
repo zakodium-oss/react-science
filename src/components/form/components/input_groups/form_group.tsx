@@ -81,7 +81,7 @@ interface FormGroupProps {
 export function FormGroup(props: FormGroupProps) {
   const {
     label,
-    intent,
+    intent = 'none',
     name,
     required,
     children,
@@ -93,10 +93,13 @@ export function FormGroup(props: FormGroupProps) {
 
   const { layout: formLayout } = useFormContext();
 
+  // If intent is undefined or none intentClass will return undefined
+  const intentClass = Classes.intentClass(intent) ?? '';
+
   return (
     <FormContainer
       layout={layout || formLayout}
-      className={`${Classes.FORM_GROUP} ${Classes.intentClass(intent)}`}
+      className={`${Classes.FORM_GROUP} ${intentClass}`}
     >
       {label && (
         <Label
