@@ -1,8 +1,5 @@
 import type { ElementDragPayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import type { Row, RowData } from '@tanstack/react-table';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-
 import {
   attachClosestEdge,
   combine,
@@ -11,7 +8,10 @@ import {
   extractClosestEdge,
   pointerOutsideOfPreview,
   setCustomNativeDragPreview,
-} from '../../pdnd.cjs';
+} from '@zakodium/pdnd-esm';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+
 import { assert } from '../../utils/index.js';
 import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
 import { PreviewTable } from '../preview_table.js';

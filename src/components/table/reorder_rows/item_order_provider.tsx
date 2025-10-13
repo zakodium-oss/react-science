@@ -1,8 +1,7 @@
 import type { Row } from '@tanstack/react-table';
+import { getReorderDestinationIndex, reorder } from '@zakodium/pdnd-esm';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-
-import { getReorderDestinationIndex, reorder } from '../../pdnd.cjs';
 
 import type { ReorderItemCallback } from './item_order_context.js';
 import { itemOrderContext } from './item_order_context.js';

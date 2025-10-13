@@ -1,13 +1,13 @@
 import type { ElementDragPayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import type { RefObject } from 'react';
-import { useEffect } from 'react';
-
 import {
   autoScrollForElements,
   combine,
   extractClosestEdge,
   monitorForElements,
-} from '../../pdnd.cjs';
+} from '@zakodium/pdnd-esm';
+import type { RefObject } from 'react';
+import { useEffect } from 'react';
+
 import { assert } from '../../utils/index.js';
 import { useFlashedRowContext } from '../flash_row/flashed_row_context.js';
 
