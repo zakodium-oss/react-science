@@ -1,5 +1,14 @@
 # Changelog
 
+## [19.3.1](https://github.com/zakodium-oss/react-science/compare/v19.3.0...v19.3.1) (2025-10-13)
+
+
+### Bug Fixes
+
+* export form context in a new file ([#948](https://github.com/zakodium-oss/react-science/issues/948)) ([0f89f4c](https://github.com/zakodium-oss/react-science/commit/0f89f4c42deca37fd855b8b0a86443449e261bf9))
+* remove undefined in className on form group ([#949](https://github.com/zakodium-oss/react-science/issues/949)) ([85356ca](https://github.com/zakodium-oss/react-science/commit/85356ca5ed9f68020b942c6232e55db4d6b05da8))
+* use package wrapper for native ESM support in pdnd ([#951](https://github.com/zakodium-oss/react-science/issues/951)) ([4985be0](https://github.com/zakodium-oss/react-science/commit/4985be05e7810a66051228f6e40ed3931e19977d))
+
 ## [19.3.0](https://github.com/zakodium-oss/react-science/compare/v19.2.0...v19.3.0) (2025-10-07)
 
 
