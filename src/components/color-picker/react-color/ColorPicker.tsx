@@ -28,7 +28,7 @@ export interface HSV {
   a: number;
 }
 
-interface ChangeCallbackProps {
+export interface ChangeCallbackProps {
   hex: string;
   hsl: HSL;
   hsv: HSV;

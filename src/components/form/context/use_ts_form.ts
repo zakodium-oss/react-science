@@ -1,6 +1,7 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 import { Checkbox } from '../components/input/checkbox.js';
+import { ColorPicker } from '../components/input/color_picker.tsx';
 import { Input } from '../components/input/input.js';
 import { NumericInput } from '../components/input/numeric_input.js';
 import { ResetButton } from '../components/input/reset_button.js';
@@ -26,6 +27,7 @@ const { useAppForm, withForm } = createFormHook({
     Checkbox,
     Select,
     Switch,
+    ColorPicker,
   },
 });
 
