@@ -251,7 +251,7 @@ const colorPickerSchema = z.object({
 
 type ColorPickerSchema = z.input<typeof colorPickerSchema>;
 
-export function ColorPicker() {
+export function ColorPicker(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(colorPickerSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -271,6 +271,7 @@ export function ColorPicker() {
       <form.AppField name="color">
         {(field) => (
           <field.ColorPicker
+            layout={props.layout}
             label="Choose a color that you want"
             helpText="This can be usefull to render your color"
           />
