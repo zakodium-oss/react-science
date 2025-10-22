@@ -1,8 +1,8 @@
+import { ColorPickerDropdown } from '../../../color-picker/index.js';
 import type { ChangeCallbackProps as ChangeCallbackComponentProps } from '../../../color-picker/react-color/ColorPicker.js';
 import { useFieldContext } from '../../context/use_ts_form.js';
 import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
-import { ColorPickerDropdown } from '../../../color-picker/index.js';
 
 type ColorPickerProps = Omit<FormGroupInputProps, 'placeholder'>;
 
