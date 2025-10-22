@@ -13,7 +13,7 @@ import { Section } from '../components/layout/Section.js';
 const { useFormContext, useFieldContext, formContext, fieldContext } =
   createFormHookContexts();
 
-const { useAppForm, withForm } = createFormHook({
+const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldContext,
   formContext,
   formComponents: {
@@ -32,4 +32,4 @@ const { useAppForm, withForm } = createFormHook({
 });
 
 export const useForm = useAppForm;
-export { useFieldContext, useFormContext, withForm };
+export { useFieldContext, useFormContext, withFieldGroup, withForm };

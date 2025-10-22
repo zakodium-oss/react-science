@@ -6,7 +6,10 @@ import { z } from 'zod';
 
 import { Form } from '../../../../src/components/form/components/input_groups/form.js';
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
-import { useForm } from '../../../../src/components/index.js';
+import {
+  FieldGroupSVGTextStyleFields,
+  useForm,
+} from '../../../../src/components/index.js';
 
 export default {
   title: 'Forms/Form/Tanstack/GeneralSettings',
@@ -26,6 +29,8 @@ const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
 `;
+
+const svgTextStyleSchema = z.any();
 
 const formSchema = z.object({
   general: z.object({
@@ -94,6 +99,7 @@ const formSchema = z.object({
       .refine((value) => value !== undefined && value >= 8 && value <= 32, {
         error: 'Font size must be between 8 and 32',
       }),
+    textStyle: svgTextStyleSchema,
   }),
 });
 
@@ -121,6 +127,10 @@ const defaultValues: z.input<typeof formSchema> = {
   peaksLabel: {
     marginTop: '0.5',
     fontSize: '14',
+    textStyle: {
+      fill: '#000000',
+      fontSize: '14',
+    },
   },
 };
 
@@ -314,6 +324,12 @@ export function GeneralSettings(props: GeneralSettingsProps) {
             <field.NumericInput label="Font size" helpText="Between 8 and 32" />
           )}
         </form.AppField>
+
+        <FieldGroupSVGTextStyleFields
+          form={form}
+          fields="peaksLabel.textStyle"
+          label="TEST"
+        />
       </form.Section>
 
       <form.AppForm>
