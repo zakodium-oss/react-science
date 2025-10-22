@@ -42,8 +42,8 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
       minimal
       {...popoverProps}
     >
-      <ColorPickerRoot type="button">
-        <ColorPickerPreview>
+      <ColorPickerRoot type="button" style={{ width: '100%' }}>
+        <ColorPickerPreview style={{ width: '100%' }}>
           <FixedColorPreview color={hex} />
         </ColorPickerPreview>
       </ColorPickerRoot>

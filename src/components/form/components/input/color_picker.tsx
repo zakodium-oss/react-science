@@ -1,8 +1,8 @@
 import type { ChangeCallbackProps as ChangeCallbackComponentProps } from '../../../color-picker/react-color/ColorPicker.js';
-import { ColorPicker as ColorPickerComponent } from '../../../color-picker/react-color/ColorPicker.js';
 import { useFieldContext } from '../../context/use_ts_form.js';
 import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
+import { ColorPickerDropdown } from '../../../color-picker/index.js';
 
 type ColorPickerProps = Omit<FormGroupInputProps, 'placeholder'>;
 
@@ -29,9 +29,9 @@ export function ColorPicker(props: ColorPickerProps) {
       required={required}
       intent={error ? 'danger' : 'none'}
     >
-      <ColorPickerComponent
-        onChange={onChange}
+      <ColorPickerDropdown
         color={{ hex: field.state.value }}
+        onChange={onChange}
       />
     </FormGroup>
   );
