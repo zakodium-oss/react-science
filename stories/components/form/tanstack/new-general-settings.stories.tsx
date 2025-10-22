@@ -8,6 +8,7 @@ import { Form } from '../../../../src/components/form/components/input_groups/fo
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import {
   FieldGroupSVGTextStyleFields,
+  svgTextStyleFieldsSchema,
   useForm,
 } from '../../../../src/components/index.js';
 
@@ -29,8 +30,6 @@ const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
 `;
-
-const svgTextStyleSchema = z.any();
 
 const formSchema = z.object({
   general: z.object({
@@ -99,7 +98,7 @@ const formSchema = z.object({
       .refine((value) => value !== undefined && value >= 8 && value <= 32, {
         error: 'Font size must be between 8 and 32',
       }),
-    textStyle: svgTextStyleSchema,
+    textStyle: svgTextStyleFieldsSchema,
   }),
 });
 
@@ -129,7 +128,9 @@ const defaultValues: z.input<typeof formSchema> = {
     fontSize: '14',
     textStyle: {
       fill: '#000000',
-      fontSize: '14',
+      fontSize: '16',
+      fontStyle: 'normal',
+      fontWeight: 'normal',
     },
   },
 };
