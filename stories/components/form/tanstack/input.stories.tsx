@@ -244,3 +244,43 @@ export function Switch(props: InputProps) {
     </form>
   );
 }
+
+const colorPickerSchema = z.object({
+  color: z.string().optional(),
+});
+
+type ColorPickerSchema = z.input<typeof colorPickerSchema>;
+
+export function ColorPicker(props: InputProps) {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(colorPickerSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+    validators: { onDynamic: colorPickerSchema },
+    defaultValues: {
+      color: undefined,
+    } as ColorPickerSchema,
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="color">
+        {(field) => (
+          <field.ColorPicker
+            layout={props.layout}
+            label="Choose a color that you want"
+            helpText="This can be usefull to render your color"
+          />
+        )}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}

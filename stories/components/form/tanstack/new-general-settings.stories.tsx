@@ -53,6 +53,7 @@ const formSchema = z.object({
     betaUI: z.boolean(),
   }),
   rendering: z.object({
+    spectraColor: z.string().optional(),
     spectraRendering: z.enum([
       'auto',
       'optimize-speed',
@@ -216,6 +217,10 @@ export function GeneralSettings(props: GeneralSettingsProps) {
         title="Rendering"
         description="Settings related to how spectra are rendered."
       >
+        <form.AppField name="rendering.spectraColor">
+          {(field) => <field.ColorPicker label="Color of mass spectra" />}
+        </form.AppField>
+
         <form.AppField name="rendering.spectraRendering">
           {(field) => (
             <field.Select

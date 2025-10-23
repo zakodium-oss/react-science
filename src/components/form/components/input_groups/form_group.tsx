@@ -40,6 +40,7 @@ const ContainerElement = styled.div<{
   height: ${(props) =>
     props.height === 'auto' ? props.height : `${props.height}px`};
   width: fit-content;
+  min-width: 180px;
 `;
 
 const Label = styled.label<{ layout: Layout }>`
