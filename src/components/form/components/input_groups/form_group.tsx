@@ -43,8 +43,11 @@ const ContainerElement = styled.div<{
   min-width: 180px;
 `;
 
+// Keep 26 px for inline layout to align with input height
 const Label = styled.label<{ layout: Layout }>`
-  padding-top: calc(${INPUT_HEIGHT}px - 26px);
+  padding-top: calc(
+    ${INPUT_HEIGHT}px - ${(props) => (props.layout === 'inline' ? 26 : 20)}px
+  );
   grid-column: ${(props) => (props.layout === 'inline' ? 'label' : '1 / -1')};
   height: 30px;
 
@@ -78,6 +81,10 @@ interface FormGroupProps {
   layout?: Layout;
   fullWidth?: boolean;
 }
+
+const InfoText = styled.span`
+  margin-bottom: 5px;
+`;
 
 export function FormGroup(props: FormGroupProps) {
   const {
@@ -119,10 +126,12 @@ export function FormGroup(props: FormGroupProps) {
 
         <ErrorAndHelpText>
           {helpText && (
-            <span className={Classes.FORM_HELPER_TEXT}>{helpText}</span>
+            <InfoText className={Classes.FORM_HELPER_TEXT}>{helpText}</InfoText>
           )}
 
-          {error && <span className={Classes.FORM_HELPER_TEXT}>{error}</span>}
+          {error && (
+            <InfoText className={Classes.FORM_HELPER_TEXT}>{error}</InfoText>
+          )}
         </ErrorAndHelpText>
       </ContainerElement>
     </FormContainer>
