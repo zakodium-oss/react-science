@@ -48,12 +48,9 @@ const Label = styled.label<{ layout: Layout }>`
   padding-top: calc(
     ${INPUT_HEIGHT}px - ${(props) => (props.layout === 'inline' ? 26 : 20)}px
   );
+
   grid-column: ${(props) => (props.layout === 'inline' ? 'label' : '1 / -1')};
   height: 30px;
-
-  @media (width < 48rem) {
-    padding: 0;
-  }
 `;
 
 const ErrorAndHelpText = styled.div`
