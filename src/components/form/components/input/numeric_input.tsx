@@ -1,3 +1,4 @@
+import type { NumericInputProps as BPNumericInputProps } from '@blueprintjs/core';
 import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 
 import { useFieldContext } from '../../context/use_ts_form.js';
@@ -5,7 +6,7 @@ import { getIntent } from '../../utils/use_intent.js';
 import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
-interface NumericInputProps extends FormGroupInputProps {
+interface NumericInputProps extends FormGroupInputProps, BPNumericInputProps {
   step?: number;
   min?: number;
   max?: number;
@@ -22,6 +23,7 @@ export function NumericInput(props: NumericInputProps) {
     max,
     layout,
     fullWidth,
+    ...otherProps
   } = props;
 
   const field = useFieldContext<string>();
@@ -48,6 +50,7 @@ export function NumericInput(props: NumericInputProps) {
       fullWidth={fullWidth}
     >
       <BPNumericInput
+        {...otherProps}
         id={field.name}
         name={field.name}
         stepSize={step}

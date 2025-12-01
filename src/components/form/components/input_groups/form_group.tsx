@@ -57,6 +57,15 @@ const ErrorAndHelpText = styled.div`
   flex-direction: column;
 `;
 
+const InfoText = styled.span`
+  margin-bottom: 5px;
+`;
+
+// Enforce that the help text will be only gray
+const HelpText = styled(InfoText)`
+  color: #5f6b7c !important;
+`;
+
 export interface FormGroupInputProps {
   label?: string;
   required?: boolean;
@@ -77,10 +86,6 @@ interface FormGroupProps {
   layout?: Layout;
   fullWidth?: boolean;
 }
-
-const InfoText = styled.span`
-  margin-bottom: 5px;
-`;
 
 export function FormGroup(props: FormGroupProps) {
   const {
@@ -122,7 +127,7 @@ export function FormGroup(props: FormGroupProps) {
 
         <ErrorAndHelpText>
           {helpText && (
-            <InfoText className={Classes.FORM_HELPER_TEXT}>{helpText}</InfoText>
+            <HelpText className={Classes.FORM_HELPER_TEXT}>{helpText}</HelpText>
           )}
 
           {error && (

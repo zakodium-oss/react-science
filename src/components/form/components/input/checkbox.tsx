@@ -18,7 +18,7 @@ const StyledCheckbox = styled(BPCheckbox)<CheckboxProps>`
 `;
 
 export function Checkbox(props: CheckboxProps) {
-  const { helpText, label } = props;
+  const { helpText, label, ...otherProps } = props;
   const field = useFieldContext<boolean>();
   const error = field
     .getMeta()
@@ -41,6 +41,7 @@ export function Checkbox(props: CheckboxProps) {
       helpText={helpText}
     >
       <StyledCheckbox
+        {...otherProps}
         label={label}
         name={field.name}
         value={String(field.state.value)}

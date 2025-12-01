@@ -1,3 +1,4 @@
+import type { InputGroupProps } from '@blueprintjs/core';
 import { InputGroup } from '@blueprintjs/core';
 import type { ChangeEvent } from 'react';
 
@@ -5,7 +6,7 @@ import { useFieldContext } from '../../context/use_ts_form.js';
 import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
-interface InputProps extends FormGroupInputProps {
+interface InputProps extends FormGroupInputProps, InputGroupProps {
   type?: string;
 }
 
@@ -14,10 +15,10 @@ export function Input(props: InputProps) {
     label,
     required,
     placeholder,
-    type = 'text',
     helpText,
     layout,
     fullWidth,
+    ...otherProps
   } = props;
 
   const field = useFieldContext<string>();
@@ -42,15 +43,14 @@ export function Input(props: InputProps) {
       fullWidth={fullWidth}
     >
       <InputGroup
+        {...otherProps}
         id={field.name}
         name={field.name}
-        required={required}
-        type={type}
         onChange={onChange}
         onBlur={field.handleBlur}
         intent={error ? 'danger' : 'none'}
         value={field.state.value}
-        placeholder={placeholder}
+        required={required}
       />
     </FormGroup>
   );
