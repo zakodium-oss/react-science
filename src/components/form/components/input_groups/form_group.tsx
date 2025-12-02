@@ -1,5 +1,5 @@
 import type { Intent } from '@blueprintjs/core';
-import { Classes } from '@blueprintjs/core';
+import { Classes, Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
@@ -63,7 +63,7 @@ const InfoText = styled.span`
 
 // Enforce that the help text will be only gray
 const HelpText = styled(InfoText)`
-  color: #5f6b7c !important;
+  color: ${Colors.GRAY1} !important;
 `;
 
 export interface FormGroupInputProps {

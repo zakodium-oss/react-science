@@ -11,15 +11,7 @@ interface InputProps extends FormGroupInputProps, InputGroupProps {
 }
 
 export function Input(props: InputProps) {
-  const {
-    label,
-    required,
-    placeholder,
-    helpText,
-    layout,
-    fullWidth,
-    ...otherProps
-  } = props;
+  const { label, required, helpText, layout, fullWidth, ...otherProps } = props;
 
   const field = useFieldContext<string>();
   const error = field

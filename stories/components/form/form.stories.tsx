@@ -1,7 +1,7 @@
-import { Dialog, DialogBody } from '@blueprintjs/core';
+import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { z } from 'zod';
 
 import { Button, useForm } from '../../../src/components/index.js';
@@ -46,7 +46,7 @@ export function BlurValidation() {
   );
 }
 
-export function OnDialog() {
+export function InDialog() {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm({
@@ -73,8 +73,8 @@ export function OnDialog() {
     <div>
       <Button onClick={openDialog}>Open dialog</Button>
       <Dialog isOpen={isOpen}>
-        <DialogBody>
-          <form noValidate onSubmit={handleSubmit}>
+        <form noValidate onSubmit={handleSubmit}>
+          <DialogBody>
             <form.AppField name="name">
               {(field) => (
                 <field.Input
@@ -86,12 +86,13 @@ export function OnDialog() {
                 />
               )}
             </form.AppField>
-
+          </DialogBody>
+          <DialogFooter>
             <form.AppForm>
               <form.SubmitButton>Submit</form.SubmitButton>
             </form.AppForm>
-          </form>
-        </DialogBody>
+          </DialogFooter>
+        </form>
       </Dialog>
     </div>
   );
