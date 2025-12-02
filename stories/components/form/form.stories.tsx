@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { z } from 'zod';
 
 import { Button, useForm } from '../../../src/components/index.js';
