@@ -1,5 +1,13 @@
 # Changelog
 
+## [19.4.0](https://github.com/zakodium-oss/react-science/compare/v19.3.1...v19.4.0) (2025-12-03)
+
+
+### Features
+
+* allow input to be auto-focused & fix help text color ([#957](https://github.com/zakodium-oss/react-science/issues/957)) ([14b7e6f](https://github.com/zakodium-oss/react-science/commit/14b7e6fd23169cf97c678072d85dd9209001e9f5))
+* **Form:** add ColorPicker component ([#953](https://github.com/zakodium-oss/react-science/issues/953)) ([6409ea7](https://github.com/zakodium-oss/react-science/commit/6409ea715a5a6fc4465ff0d282c7f5317af2856f))
+
 ## [19.3.1](https://github.com/zakodium-oss/react-science/compare/v19.3.0...v19.3.1) (2025-10-13)
 
 
