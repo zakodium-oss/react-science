@@ -1,8 +1,10 @@
+import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
 import { z } from 'zod';
 
-import { useForm } from '../../../src/components/index.js';
+import { Button, useForm } from '../../../src/components/index.js';
 
 export default {
   title: 'Forms / Form',
@@ -41,5 +43,57 @@ export function BlurValidation() {
         <form.SubmitButton>Submit</form.SubmitButton>
       </form.AppForm>
     </form>
+  );
+}
+
+export function InDialog() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const form = useForm({
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'blur' }),
+    validators: { onDynamic: blurSchema },
+    defaultValues: {
+      name: '',
+    },
+    onSubmit: ({ value }) => {
+      return blurSchema.parse(value);
+    },
+  });
+
+  function openDialog() {
+    return setIsOpen(true);
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <div>
+      <Button onClick={openDialog}>Open dialog</Button>
+      <Dialog isOpen={isOpen}>
+        <form noValidate onSubmit={handleSubmit}>
+          <DialogBody>
+            <form.AppField name="name">
+              {(field) => (
+                <field.Input
+                  label="Name"
+                  required
+                  placeholder="min 5 length"
+                  layout="inline"
+                  autoFocus
+                />
+              )}
+            </form.AppField>
+          </DialogBody>
+          <DialogFooter>
+            <form.AppForm>
+              <form.SubmitButton>Submit</form.SubmitButton>
+            </form.AppForm>
+          </DialogFooter>
+        </form>
+      </Dialog>
+    </div>
   );
 }
