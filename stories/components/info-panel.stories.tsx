@@ -1,5 +1,5 @@
 import type { InfoPanelData } from '../../src/components/index.js';
-import { InfoPanel } from '../../src/components/index.js';
+import { InfoPanel, Toolbar } from '../../src/components/index.js';
 
 export default {
   title: 'Components / InfoPanel',
@@ -45,6 +45,26 @@ export function Small() {
   return (
     <div style={{ width: 250, height: '100%' }}>
       <InfoPanel data={data} />
+    </div>
+  );
+}
+export function SmallWithLeftAndRightElements() {
+  return (
+    <div style={{ width: 500, height: '100%' }}>
+      <InfoPanel
+        leftElement={
+          <Toolbar>
+            <Toolbar.Item icon="add-child" />
+            <Toolbar.Item icon="cube-edit" />
+          </Toolbar>
+        }
+        rightElement={
+          <Toolbar>
+            <Toolbar.Item icon="cog" />
+          </Toolbar>
+        }
+        data={data}
+      />
     </div>
   );
 }
