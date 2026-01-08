@@ -1,6 +1,6 @@
 import { Classes, Collapse, InputGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { P, match } from 'ts-pattern';
 
@@ -21,6 +21,8 @@ interface InfoPanelProps {
   data?: InfoPanelData[];
   titleStyle?: CSSProperties;
   inputStyle?: CSSProperties;
+  leftElement?: ReactNode;
+  rightElement?: ReactNode;
 }
 
 const AccordionButton = styled(Button, {
@@ -100,6 +102,8 @@ export function InfoPanel(props: InfoPanelProps) {
     data = emptyData,
     titleStyle,
     inputStyle,
+    leftElement,
+    rightElement,
   } = props;
 
   const [search, setSearch] = useState('');
@@ -163,6 +167,7 @@ export function InfoPanel(props: InfoPanelProps) {
         {title}
       </div>
       <InfoPanelGroup tabIndex={0}>
+        {leftElement}
         <InfoPanelInputGroup
           placeholder="Search for a parameter"
           value={search}
@@ -174,9 +179,9 @@ export function InfoPanel(props: InfoPanelProps) {
           style={inputStyle}
           leftIcon="search"
           type="search"
-          fill
         />
         <SelectedTotal count={count} total={total} />
+        {rightElement}
       </InfoPanelGroup>
       <InfoPanelContent filteredData={filteredData} />
     </InfoPanelContainer>
