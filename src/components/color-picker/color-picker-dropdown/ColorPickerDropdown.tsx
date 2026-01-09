@@ -7,11 +7,10 @@ import type { ColorPickerProps } from '../react-color/ColorPicker.js';
 import { ColorPicker } from '../react-color/ColorPicker.js';
 import * as colorHelper from '../react-color/helpers/color.js';
 
-interface ColorPickerDropdownProps
-  extends Pick<
-    ColorPickerProps,
-    'color' | 'presetColors' | 'disableAlpha' | 'onChange' | 'onChangeComplete'
-  > {
+interface ColorPickerDropdownProps extends Pick<
+  ColorPickerProps,
+  'color' | 'presetColors' | 'disableAlpha' | 'onChange' | 'onChangeComplete'
+> {
   popoverProps?: Omit<PopoverProps, 'content'>;
 }
 

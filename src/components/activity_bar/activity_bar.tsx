@@ -11,8 +11,10 @@ export interface ActivityBarProps {
   children: ReactNode;
 }
 
-export interface ActivityBarItemProps
-  extends Pick<ButtonProps, 'id' | 'icon' | 'active' | 'tag' | 'tagProps'> {
+export interface ActivityBarItemProps extends Pick<
+  ButtonProps,
+  'id' | 'icon' | 'active' | 'tag' | 'tagProps'
+> {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
   onClick?: (event: MouseEvent) => void;

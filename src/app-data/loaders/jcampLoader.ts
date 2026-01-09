@@ -77,16 +77,17 @@ function normalizeSpectra(spectra: any) {
   for (const spectrum of spectra) {
     let variables = spectrum.variables;
     if (!variables) {
-      variables = {};
-      variables.x = {
-        label: spectrum.xUnits,
-        symbol: 'X',
-        data: spectrum.data.x || spectrum.data.X,
-      };
-      variables.y = {
-        label: spectrum.yUnits,
-        symbol: 'Y',
-        data: spectrum.data.y || spectrum.data.Y,
+      variables = {
+        x: {
+          label: spectrum.xUnits,
+          symbol: 'X',
+          data: spectrum.data.x || spectrum.data.X,
+        },
+        y: {
+          label: spectrum.yUnits,
+          symbol: 'Y',
+          data: spectrum.data.y || spectrum.data.Y,
+        },
       };
     } else {
       for (const key in variables) {

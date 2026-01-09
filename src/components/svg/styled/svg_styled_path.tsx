@@ -4,7 +4,8 @@ import type { SVGStyledLineUserConfig } from './svg_styled_types.js';
 import { computeStrokeDasharray } from './svg_styled_utils.js';
 
 export interface SVGStyledPathProps
-  extends Omit<SVGProps<SVGPathElement>, keyof SVGStyledLineUserConfig>,
+  extends
+    Omit<SVGProps<SVGPathElement>, keyof SVGStyledLineUserConfig>,
     SVGStyledLineUserConfig {}
 
 export function SVGStyledPath(props: SVGStyledPathProps) {

@@ -3,7 +3,8 @@ import type { SVGProps } from 'react';
 import type { SVGStyledTextUserConfig } from './svg_styled_types.js';
 
 export interface SVGStyledTextProps
-  extends Omit<SVGProps<SVGTextElement>, keyof SVGStyledTextUserConfig>,
+  extends
+    Omit<SVGProps<SVGTextElement>, keyof SVGStyledTextUserConfig>,
     SVGStyledTextUserConfig {}
 
 export function SVGStyledText(props: SVGStyledTextProps) {
