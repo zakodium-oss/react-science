@@ -187,8 +187,9 @@ interface TableBaseProps<TData extends RowData> {
   renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
 
-interface RegularTableProps<TData extends RowData>
-  extends TableBaseProps<TData> {
+interface RegularTableProps<
+  TData extends RowData,
+> extends TableBaseProps<TData> {
   virtualizeRows?: false | undefined;
   scrollToRowRef?: RefObject<Scroller | undefined>;
   /**
@@ -200,8 +201,9 @@ interface RegularTableProps<TData extends RowData>
   scrollableElementRef?: RefObject<Element>;
 }
 
-interface VirtualizedTableProps<TData extends RowData>
-  extends TableBaseProps<TData> {
+interface VirtualizedTableProps<
+  TData extends RowData,
+> extends TableBaseProps<TData> {
   virtualizeRows: true;
   scrollToRowRef?: RefObject<VirtualScroller | undefined>;
   /**

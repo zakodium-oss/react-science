@@ -5,7 +5,5 @@ interface BooleanProps extends ValueRenderersProps {
 }
 
 export function Boolean({ value, ...other }: BooleanProps) {
-  return (
-    <div {...other}>{value !== undefined ? (value ? '✔' : '✘') : ''}</div>
-  );
+  return <div {...other}>{value !== undefined ? (value ? '✔' : '✘') : ''}</div>;
 }

@@ -28,8 +28,7 @@ interface ToolbarBaseProps {
 }
 
 export interface ToolbarProps
-  extends ToolbarBaseProps,
-    Pick<ButtonGroupProps, 'children' | 'vertical'> {
+  extends ToolbarBaseProps, Pick<ButtonGroupProps, 'children' | 'vertical'> {
   /**
    * The type of interaction which triggers a popover to open.
    * This prop only affects children which are `Toolbar.PopoverItem`.
@@ -40,7 +39,8 @@ export interface ToolbarProps
 }
 
 export interface ToolbarItemProps
-  extends ToolbarBaseProps,
+  extends
+    ToolbarBaseProps,
     Pick<ButtonProps, 'id' | 'icon' | 'active' | 'tag' | 'tagProps'> {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
@@ -51,8 +51,10 @@ interface ToolbarItemInternalProps extends ToolbarItemProps {
   isPopover: boolean;
 }
 
-export interface ToolbarPopoverItemProps
-  extends Omit<PopoverProps, 'targetProps'> {
+export interface ToolbarPopoverItemProps extends Omit<
+  PopoverProps,
+  'targetProps'
+> {
   itemProps: ToolbarItemProps;
 }
 

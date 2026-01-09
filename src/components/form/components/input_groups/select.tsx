@@ -89,8 +89,10 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
  * @constructor
  */
 
-interface RealSelectProps<OptionType, ID extends SelectId>
-  extends Pick<BPSelectProps<OptionType>, 'filterable' | 'items'> {
+interface RealSelectProps<OptionType, ID extends SelectId> extends Pick<
+  BPSelectProps<OptionType>,
+  'filterable' | 'items'
+> {
   onBlur: () => void;
   renderButton?: (
     state: SelectPropsRenderButtonState<OptionType>,
