@@ -312,6 +312,7 @@ export function Vertical() {
             icon={item.icon}
           />
         ))}
+
         <Toolbar.Item tooltip="Inbox" icon="inbox" />
       </Toolbar>
       {selectedItem && (
@@ -348,6 +349,24 @@ export function VerticalMore() {
               setSelected(item.id);
             }}
             icon={item.icon}
+          />
+        ))}
+        {itemsPopover.map(({ content, ...itemProps }) => (
+          <Toolbar.PopoverItem
+            key={itemProps.id}
+            content={content}
+            itemProps={{
+              ...itemProps,
+              active: selected === itemProps.id,
+              onClick: () => {
+                setSelected(itemProps.id);
+              },
+              tag: itemProps.id.startsWith('credit-card')
+                ? 1
+                : itemProps.id.startsWith('clipboard')
+                  ? 15
+                  : undefined,
+            }}
           />
         ))}
         <Toolbar.Item tooltip="Inbox" icon="inbox" />
@@ -412,6 +431,24 @@ export function HorizontalMore() {
             icon={item.icon}
             intent={item.id === 'test5' ? 'danger' : undefined}
             disabled={item.disabled ?? undefined}
+          />
+        ))}
+        {itemsPopover.map(({ content, ...itemProps }) => (
+          <Toolbar.PopoverItem
+            key={itemProps.id}
+            content={content}
+            itemProps={{
+              ...itemProps,
+              active: selected === itemProps.id,
+              onClick: () => {
+                setSelected(itemProps.id);
+              },
+              tag: itemProps.id.startsWith('credit-card')
+                ? 1
+                : itemProps.id.startsWith('clipboard')
+                  ? 15
+                  : undefined,
+            }}
           />
         ))}
       </Toolbar>
