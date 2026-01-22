@@ -24,7 +24,10 @@ export function MoreButton(props: MoreButtonProps) {
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
       interactionKind="click"
-      hasBackdrop
+      hasBackdrop={false}
+      enforceFocus={false}
+      autoFocus={false}
+      usePortal={false}
       content={
         <Toolbar
           vertical={vertical}
