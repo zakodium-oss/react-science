@@ -13,8 +13,12 @@ import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
 import { normalizeIcon } from '../icon.js';
 
+import { MoreButton } from './MoreButton.tsx';
 import type { ToolbarContext } from './toolbarContext.js';
 import { toolbarContext, useToolbarContext } from './toolbarContext.js';
+import { useMoreItems } from './useMoreItems.tsx';
+
+export type Overflow = 'wrap' | 'collapse';
 
 export type PopoverInteractionType =
   | 'click'
@@ -36,6 +40,13 @@ export interface ToolbarProps
    * {@link https://blueprintjs.com/docs/#core/components/popover.interactions}
    */
   popoverInteractionKind?: PopoverInteractionType;
+  /**
+   * Define what happens when there is not enough rom in the container
+   * "wrap": Items wrap to the next line
+   * "collapse": Collapse items into drop down menu
+   * @default "wrap"
+   */
+  overflow?: Overflow;
 }
 
 export interface ToolbarItemProps
@@ -60,7 +71,7 @@ export interface ToolbarPopoverItemProps extends Omit<
 
 const border = '1px solid rgb(247, 247, 247)';
 
-const ToolbarButton = styled(Button)`
+export const ToolbarButton = styled(Button)`
   .${Classes.ICON} {
     /* Color of icon in button is lighter in Blueprintjs. We want a better contrast in the toolbars */
     color: ${Colors.DARK_GRAY3} !important;
@@ -78,8 +89,14 @@ const ToolbarButton = styled(Button)`
 `;
 
 export function Toolbar(props: ToolbarProps) {
-  const { children, disabled, intent, vertical, popoverInteractionKind } =
-    props;
+  const {
+    children,
+    disabled,
+    intent,
+    vertical = false,
+    popoverInteractionKind,
+    overflow = 'wrap',
+  } = props;
 
   const contextValue = useMemo(
     () => ({
@@ -91,13 +108,19 @@ export function Toolbar(props: ToolbarProps) {
     [intent, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
+  const { items, moreItems } = useMoreItems({
+    children,
+    containerRef: ref,
+    overflow,
+    vertical,
+  });
 
   // Work around wrong width on vertical flex when wrapping
   // In Chrome: recently fixed (https://bugs.chromium.org/p/chromium/issues/detail?id=507397)
   // In Firefox: work-around needed (https://bugzilla.mozilla.org/show_bug.cgi?id=995020)
   // In Safari: work-around needed
   useLayoutEffect(() => {
-    if (!vertical) {
+    if (!vertical || overflow !== 'wrap') {
       return;
     }
 
@@ -123,7 +146,7 @@ export function Toolbar(props: ToolbarProps) {
     const observer = new ResizeObserver(update);
     observer.observe(element);
     return () => observer.unobserve(element);
-  }, [vertical]);
+  }, [overflow, vertical]);
 
   return (
     <ToolbarProvider value={contextValue}>
@@ -135,11 +158,19 @@ export function Toolbar(props: ToolbarProps) {
         vertical={vertical}
         variant="minimal"
         style={{
-          flexWrap: 'wrap',
+          flexWrap: overflow === 'wrap' ? 'wrap' : 'nowrap',
           borderRight: vertical ? border : undefined,
         }}
       >
-        {children}
+        {items}
+        {moreItems.length > 0 && (
+          <MoreButton
+            items={moreItems}
+            vertical={vertical}
+            intent={intent}
+            disabled={disabled}
+          />
+        )}
       </ButtonGroup>
     </ToolbarProvider>
   );

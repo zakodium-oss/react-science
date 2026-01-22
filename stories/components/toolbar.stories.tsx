@@ -323,6 +323,44 @@ export function Vertical() {
     </div>
   );
 }
+export function VerticalMore() {
+  const [selected, setSelected] = useState(itemsBlueprintIcons[1].id);
+
+  const selectedItem = itemsBlueprintIcons.find((item) => item.id === selected);
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: 100,
+      }}
+    >
+      <div style={{ padding: 5 }}>
+        <p>Something on the left</p>
+      </div>
+      <Toolbar vertical overflow="collapse">
+        {itemsBlueprintIcons.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            tooltip={item.tooltip}
+            active={selected === item.id}
+            onClick={() => {
+              setSelected(item.id);
+            }}
+            icon={item.icon}
+          />
+        ))}
+        <Toolbar.Item tooltip="Inbox" icon="inbox" />
+      </Toolbar>
+      {selectedItem && (
+        <div style={{ padding: 5 }}>
+          <p>Hello, World!</p>
+          <p>Value selected: {selectedItem.tooltip}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Horizontal() {
   const [selected, setSelected] = useState(itemsBlueprintIcons[1].id);
@@ -331,6 +369,37 @@ export function Horizontal() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Toolbar intent="primary" disabled={false}>
+        {itemsBlueprintIcons.map((item) => (
+          <Toolbar.Item
+            key={item.id}
+            id={item.id}
+            tooltip={item.tooltip}
+            active={selected === item.id}
+            onClick={() => {
+              setSelected(item.id);
+            }}
+            icon={item.icon}
+            intent={item.id === 'test5' ? 'danger' : undefined}
+            disabled={item.disabled ?? undefined}
+          />
+        ))}
+      </Toolbar>
+      {selectedItem && (
+        <div style={{ padding: 5 }}>
+          <p>Hello, World!</p>
+          <p>Value selected: {selectedItem.tooltip}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+export function HorizontalMore() {
+  const [selected, setSelected] = useState(itemsBlueprintIcons[1].id);
+
+  const selectedItem = itemsBlueprintIcons.find((item) => item.id === selected);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 200 }}>
+      <Toolbar intent="primary" disabled={false} overflow="collapse">
         {itemsBlueprintIcons.map((item) => (
           <Toolbar.Item
             key={item.id}
