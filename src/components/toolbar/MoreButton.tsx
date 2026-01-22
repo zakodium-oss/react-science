@@ -1,23 +1,22 @@
 import type { TooltipProps } from '@blueprintjs/core';
 import { Popover } from '@blueprintjs/core';
+import type { ReactNode } from 'react';
+import { Children } from 'react';
 
 import type { ButtonProps } from '../button/Button.tsx';
 
-import type { ToolbarItemProps } from './Toolbar.tsx';
 import { Toolbar, ToolbarButton } from './Toolbar.tsx';
 
 export interface MoreButtonProps extends ButtonProps {
-  items: ToolbarItemProps[];
   vertical?: boolean;
   tooltip?: TooltipProps['content'];
+  children: ReactNode;
 }
 
 export function MoreButton(props: MoreButtonProps) {
-  const { items, vertical, intent, disabled, tooltip, ...otherProps } = props;
-
-  if (!items?.length) {
-    return null;
-  }
+  const { vertical, intent, disabled, tooltip, children, ...otherProps } =
+    props;
+  const childCount = Children.count(children);
 
   return (
     <Popover
@@ -33,9 +32,7 @@ export function MoreButton(props: MoreButtonProps) {
           disabled={disabled}
           overflow="wrap"
         >
-          {items?.map((item) => {
-            return <Toolbar.Item key={JSON.stringify(item)} {...item} />;
-          })}
+          {children}
         </Toolbar>
       }
     >
@@ -45,7 +42,7 @@ export function MoreButton(props: MoreButtonProps) {
         intent={intent}
         disabled={disabled}
         tooltipProps={{
-          content: tooltip ?? `More [+${items.length}]`,
+          content: tooltip ?? `More [+${childCount}]`,
           placement: vertical ? 'right' : 'bottom',
           compact: true,
         }}

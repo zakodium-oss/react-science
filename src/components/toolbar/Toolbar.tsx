@@ -164,12 +164,9 @@ export function Toolbar(props: ToolbarProps) {
       >
         {items}
         {moreItems.length > 0 && (
-          <MoreButton
-            items={moreItems}
-            vertical={vertical}
-            intent={intent}
-            disabled={disabled}
-          />
+          <MoreButton vertical={vertical} intent={intent} disabled={disabled}>
+            {moreItems}
+          </MoreButton>
         )}
       </ButtonGroup>
     </ToolbarProvider>

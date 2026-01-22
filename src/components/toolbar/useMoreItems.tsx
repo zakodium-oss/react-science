@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { Children, isValidElement, useLayoutEffect, useState } from 'react';
+import { Children, useLayoutEffect, useState } from 'react';
 
-import type { Overflow, ToolbarItemProps } from './Toolbar.tsx';
+import type { Overflow } from './Toolbar.tsx';
 
 interface UseMeasureItemSizeProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -38,18 +38,9 @@ export function useMoreItems(props: UseMoreItemsProps) {
     };
   }
 
-  const visibleItems = items.slice(0, maxVisibleItems);
-  const hiddenItems: ToolbarItemProps[] = items
-    .slice(maxVisibleItems)
-    .filter(isValidElement)
-    .map((child) => {
-      const props = child.props as ToolbarItemProps;
-      return props;
-    });
-
   return {
-    items: visibleItems,
-    moreItems: hiddenItems,
+    items: items.slice(0, maxVisibleItems),
+    moreItems: items.slice(maxVisibleItems),
   };
 }
 
