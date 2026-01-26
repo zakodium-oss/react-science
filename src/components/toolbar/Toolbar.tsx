@@ -13,10 +13,11 @@ import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
 import { normalizeIcon } from '../icon.js';
 
-import { MoreButton } from './MoreButton.tsx';
+import type { BaseOverButtonProps, Placement } from './OverflowButton.tsx';
+import { OverflowButton } from './OverflowButton.tsx';
 import type { ToolbarContext } from './toolbarContext.js';
 import { toolbarContext, useToolbarContext } from './toolbarContext.js';
-import { useMoreItems } from './useMoreItems.tsx';
+import { useCheckOverflow } from './useCheckOverflow.tsx';
 
 export type Overflow = 'wrap' | 'collapse';
 
@@ -47,6 +48,8 @@ export interface ToolbarProps
    * @default "wrap"
    */
   overflow?: Overflow;
+
+  overflowButtonProps?: BaseOverButtonProps;
 }
 
 export interface ToolbarItemProps
@@ -70,6 +73,22 @@ export interface ToolbarPopoverItemProps extends Omit<
 }
 
 const border = '1px solid rgb(247, 247, 247)';
+
+interface ContainerProps {
+  vertical: boolean;
+  placement: Placement;
+}
+
+const Container = styled.div<ContainerProps>`
+  display: flex;
+  flex-direction: ${({ vertical, placement }) => {
+    if (vertical) {
+      return placement === 'start' ? 'column-reverse' : 'column';
+    }
+    return placement === 'start' ? 'row-reverse' : 'row';
+  }};
+  overflow: hidden;
+`;
 
 export const ToolbarButton = styled(Button)`
   .${Classes.ICON} {
@@ -96,7 +115,10 @@ export function Toolbar(props: ToolbarProps) {
     vertical = false,
     popoverInteractionKind,
     overflow = 'wrap',
+    overflowButtonProps,
   } = props;
+
+  const { placement = 'end' } = overflowButtonProps || {};
 
   const contextValue = useMemo(
     () => ({
@@ -108,8 +130,7 @@ export function Toolbar(props: ToolbarProps) {
     [intent, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
-  const { items, moreItems } = useMoreItems({
-    children,
+  const isOverflowing = useCheckOverflow({
     containerRef: ref,
     overflow,
     vertical,
@@ -148,27 +169,56 @@ export function Toolbar(props: ToolbarProps) {
     return () => observer.unobserve(element);
   }, [overflow, vertical]);
 
+  if (overflow === 'wrap') {
+    return (
+      <ToolbarProvider value={contextValue}>
+        <ButtonGroup
+          ref={ref}
+          key={String(vertical)}
+          vertical={vertical}
+          variant="minimal"
+          style={{
+            flexWrap: 'wrap',
+            borderRight: vertical ? border : undefined,
+          }}
+        >
+          {children}
+        </ButtonGroup>
+      </ToolbarProvider>
+    );
+  }
+
   return (
     <ToolbarProvider value={contextValue}>
-      <ButtonGroup
-        ref={ref}
-        // Reset because of layout effect above
-        // TODO: remove once the workaround is no longer needed
-        key={String(vertical)}
-        vertical={vertical}
-        variant="minimal"
-        style={{
-          flexWrap: overflow === 'wrap' ? 'wrap' : 'nowrap',
-          borderRight: vertical ? border : undefined,
-        }}
-      >
-        {items}
-        {moreItems.length > 0 && (
-          <MoreButton vertical={vertical} intent={intent} disabled={disabled}>
-            {moreItems}
-          </MoreButton>
+      <Container vertical={vertical} placement={placement}>
+        <ButtonGroup
+          ref={ref}
+          // Reset because of layout effect above
+          // TODO: remove once the workaround is no longer needed
+          key={String(vertical)}
+          vertical={vertical}
+          variant="minimal"
+          style={{
+            flex: 1,
+            flexWrap: 'nowrap',
+            overflow: 'hidden',
+            borderRight: vertical ? border : undefined,
+          }}
+        >
+          {children}
+        </ButtonGroup>
+        {isOverflowing && (
+          <OverflowButton
+            placement={placement}
+            vertical={vertical}
+            intent={intent}
+            disabled={disabled}
+            {...overflowButtonProps}
+          >
+            {children}
+          </OverflowButton>
         )}
-      </ButtonGroup>
+      </Container>
     </ToolbarProvider>
   );
 }
