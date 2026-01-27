@@ -426,6 +426,14 @@ export function HorizontalMore() {
   const selectedItem = itemsBlueprintIcons.find((item) => item.id === selected);
   return (
     <SplitPane>
+      <div>
+        {selectedItem && (
+          <div style={{ padding: 5 }}>
+            <p>Hello, World!</p>
+            <p>Value selected: {selectedItem.tooltip}</p>
+          </div>
+        )}
+      </div>
       <div style={{ width: '100%' }}>
         <Toolbar intent="primary" disabled={false} overflow="collapse">
           {itemsBlueprintIcons.map((item) => (
@@ -461,14 +469,6 @@ export function HorizontalMore() {
             />
           ))}
         </Toolbar>
-      </div>
-      <div>
-        {selectedItem && (
-          <div style={{ padding: 5 }}>
-            <p>Hello, World!</p>
-            <p>Value selected: {selectedItem.tooltip}</p>
-          </div>
-        )}
       </div>
     </SplitPane>
   );
