@@ -18,6 +18,16 @@ export interface OverButtonProps extends BaseOverButtonProps {
   children: ReactNode;
 }
 
+function getPlacement(
+  placement: Placement,
+  vertical?: boolean,
+): PopoverProps['placement'] {
+  const isEndPlacement = placement === 'end';
+  return vertical
+    ? `${isEndPlacement ? 'top' : 'bottom'}-start`
+    : `${isEndPlacement ? 'left' : 'right'}-start`;
+}
+
 export function OverflowButton(props: OverButtonProps) {
   const {
     style,
@@ -34,11 +44,14 @@ export function OverflowButton(props: OverButtonProps) {
     <Popover
       minimal
       disabled={disabled}
-      placement={vertical ? 'right-start' : 'bottom-start'}
+      placement={getPlacement(placement, vertical)}
       interactionKind="hover"
       hasBackdrop={false}
       enforceFocus={false}
       autoFocus={false}
+      modifiers={{
+        flip: { enabled: false },
+      }}
       {...popoverProps}
       content={
         <Toolbar
