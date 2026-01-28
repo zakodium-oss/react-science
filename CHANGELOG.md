@@ -1,5 +1,13 @@
 # Changelog
 
+## [19.5.0](https://github.com/zakodium-oss/react-science/compare/v19.4.0...v19.5.0) (2026-01-28)
+
+
+### Features
+
+* support collapsing overflow items into dropdown menu ([#962](https://github.com/zakodium-oss/react-science/issues/962)) ([275f89c](https://github.com/zakodium-oss/react-science/commit/275f89c202fc65591b929c474ed00071d1856425))
+* support custom left and right elements in info panel header ([#959](https://github.com/zakodium-oss/react-science/issues/959)) ([60f1b47](https://github.com/zakodium-oss/react-science/commit/60f1b4714a8a2cea0635c8f0703a720e2bb0d9ce))
+
 ## [19.4.0](https://github.com/zakodium-oss/react-science/compare/v19.3.1...v19.4.0) (2025-12-03)
 
 
