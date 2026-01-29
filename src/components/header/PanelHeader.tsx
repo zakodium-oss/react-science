@@ -23,6 +23,7 @@ const HeaderLeftContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
+  min-width: 0;
 
   '& > button:' {
     padding: 0 5px;
