@@ -130,7 +130,7 @@
     "wdf-parser": "^0.3.0"
   },
   "volta": {
-    "node": "24.12.0"
+    "node": "24.13.0"
   },
   "overrides": {
     "storybook": "$storybook"
