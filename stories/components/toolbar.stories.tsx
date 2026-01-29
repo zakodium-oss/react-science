@@ -13,6 +13,7 @@ import type {
   TooltipItem,
 } from '../../src/components/index.js';
 import {
+  PanelHeader,
   SplitPane,
   Toolbar,
   TooltipHelpContent,
@@ -435,40 +436,42 @@ export function HorizontalMore() {
         )}
       </div>
       <div style={{ width: '100%' }}>
-        <Toolbar intent="primary" disabled={false} overflow="collapse">
-          {itemsBlueprintIcons.map((item) => (
-            <Toolbar.Item
-              key={item.id}
-              id={item.id}
-              tooltip={item.tooltip}
-              active={selected === item.id}
-              onClick={() => {
-                setSelected(item.id);
-              }}
-              icon={item.icon}
-              intent={item.id === 'test5' ? 'danger' : undefined}
-              disabled={item.disabled ?? undefined}
-            />
-          ))}
-          {itemsPopover.map(({ content, ...itemProps }) => (
-            <Toolbar.PopoverItem
-              key={itemProps.id}
-              content={content}
-              itemProps={{
-                ...itemProps,
-                active: selected === itemProps.id,
-                onClick: () => {
-                  setSelected(itemProps.id);
-                },
-                tag: itemProps.id.startsWith('credit-card')
-                  ? 1
-                  : itemProps.id.startsWith('clipboard')
-                    ? 15
-                    : undefined,
-              }}
-            />
-          ))}
-        </Toolbar>
+        <PanelHeader total={10}>
+          <Toolbar intent="primary" overflow="collapse">
+            {itemsBlueprintIcons.map((item) => (
+              <Toolbar.Item
+                key={item.id}
+                id={item.id}
+                tooltip={item.tooltip}
+                active={selected === item.id}
+                onClick={() => {
+                  setSelected(item.id);
+                }}
+                icon={item.icon}
+                intent={item.id === 'test5' ? 'danger' : undefined}
+                disabled={item.disabled ?? undefined}
+              />
+            ))}
+            {itemsPopover.map(({ content, ...itemProps }) => (
+              <Toolbar.PopoverItem
+                key={itemProps.id}
+                content={content}
+                itemProps={{
+                  ...itemProps,
+                  active: selected === itemProps.id,
+                  onClick: () => {
+                    setSelected(itemProps.id);
+                  },
+                  tag: itemProps.id.startsWith('credit-card')
+                    ? 1
+                    : itemProps.id.startsWith('clipboard')
+                      ? 15
+                      : undefined,
+                }}
+              />
+            ))}
+          </Toolbar>
+        </PanelHeader>
       </div>
     </SplitPane>
   );

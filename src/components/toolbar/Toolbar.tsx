@@ -88,6 +88,7 @@ const Container = styled.div<ContainerProps>`
     return placement === 'start' ? 'row-reverse' : 'row';
   }};
   overflow: hidden;
+  width: 100%;
 `;
 
 export const ToolbarButton = styled(Button)`
