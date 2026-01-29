@@ -329,7 +329,7 @@ export function GeneralSettings(props: GeneralSettingsProps) {
         <FieldGroupSVGTextStyleFields
           form={form}
           fields="peaksLabel.textStyle"
-          label="TEST"
+          label="Text style"
         />
       </form.Section>
 

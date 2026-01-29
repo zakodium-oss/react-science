@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
-import { z } from 'zod';
+import { memo } from 'react';
+import type { z } from 'zod';
 
+import type { ButtonProps } from '../../../button/index.js';
 import { Button } from '../../../button/index.js';
 import { SVGStyledText } from '../../../svg/index.js';
 import { withFieldGroup } from '../../context/use_ts_form.js';
-import { FormGroup } from '../input_groups/form_group.js';
+
+import { svgTextStyleFieldsSchema } from './svg_text_style_fields.schema.ts';
 
 const TextStyleSwitchContainer = styled.div`
   display: flex;
@@ -12,20 +15,13 @@ const TextStyleSwitchContainer = styled.div`
   gap: 0.5rem;
 `;
 
-export const svgTextStyleFieldsSchema = z.object({
-  fill: z.string(),
-  fontSize: z.coerce.number(),
-  fontStyle: z.enum(['normal', 'italic']),
-  fontWeight: z.enum(['normal', 'bold']),
-});
-
 type SvgTextStyleFields = z.input<typeof svgTextStyleFieldsSchema>;
 
 // https://tanstack.com/form/latest/docs/framework/react/guides/form-composition#reusing-groups-of-fields-in-multiple-forms
 // Default values are not used at runtime (same for props).
 const defaultValues: SvgTextStyleFields = {
-  fill: '',
-  fontSize: '',
+  fill: '#000000',
+  fontSize: '16',
   fontStyle: 'normal',
   fontWeight: 'normal',
 };
@@ -37,16 +33,10 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
   },
   render: function SVGTextStyleFields({ group, label }) {
     return (
-      <>
-        {/* TODO: refactor so name is not necessary (extract grid wrapper component) */}
-        {/* TODO: find out why `group.state.values` is not reactive */}
-        <FormGroup name="" label={label}>
-          <TextStyleFieldPreview values={group.state.values} />
-        </FormGroup>
+      <fieldset>
+        <legend>{label}</legend>
         <group.AppField name="fill">
-          {(field) => (
-            <field.Input label="Color (TODO: change to ColorPicker)" />
-          )}
+          {(field) => <field.ColorPicker label="Color" />}
         </group.AppField>
         <group.AppField name="fontSize">
           {(field) => <field.NumericInput label="Font size" />}
@@ -55,7 +45,8 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
           <group.Field name="fontWeight">
             {(field) => (
               <TextStyleSwitch
-                fieldName="fontWeight"
+                icon="bold"
+                tooltip="Bold"
                 active={field.state.value === 'bold'}
                 onToggle={() =>
                   field.setValue((currentValue) =>
@@ -68,7 +59,8 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
           <group.Field name="fontStyle">
             {(field) => (
               <TextStyleSwitch
-                fieldName="fontStyle"
+                icon="italic"
+                tooltip="Italic"
                 active={field.state.value === 'italic'}
                 onToggle={() =>
                   field.setValue((currentValue) =>
@@ -79,47 +71,55 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
             )}
           </group.Field>
         </TextStyleSwitchContainer>
-      </>
+
+        <group.Subscribe selector={(state) => state.values}>
+          {(values) => <TextStyleFieldPreview {...values} />}
+        </group.Subscribe>
+      </fieldset>
     );
   },
 });
 
-interface TextStyleSwitchProps<FieldName extends 'fontWeight' | 'fontStyle'> {
-  fieldName: FieldName;
+interface TextStyleSwitchProps {
+  icon: ButtonProps['icon'];
+  tooltip: Exclude<ButtonProps['tooltipProps'], undefined>['content'];
   active: boolean;
   onToggle: () => void;
 }
 
-function TextStyleSwitch<FieldName extends 'fontWeight' | 'fontStyle'>(
-  props: TextStyleSwitchProps<FieldName>,
-) {
-  const { fieldName, active, onToggle } = props;
+function TextStyleSwitch(props: TextStyleSwitchProps) {
+  const { icon, tooltip, active, onToggle } = props;
   return (
     <Button
-      icon={fieldName === 'fontWeight' ? 'bold' : 'italic'}
+      icon={icon}
       fill={false}
       active={active}
       onClick={onToggle}
       tooltipProps={{
-        content: fieldName === 'fontWeight' ? 'Bold' : 'Italic',
+        content: tooltip,
       }}
     />
   );
 }
 
-interface TextStyleFieldPreviewProps {
-  values: SvgTextStyleFields;
-}
+const TextStyleFieldPreviewContainer = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+`;
 
-function TextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
-  const { values } = props;
-  console.log(values);
-  const parsedValues = svgTextStyleFieldsSchema.parse(values);
+const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
+  props: SvgTextStyleFields,
+) {
+  const parsedValues = svgTextStyleFieldsSchema.parse(props);
+
   return (
-    <svg height={parsedValues.fontSize} width="auto">
-      <SVGStyledText dominantBaseline="hanging" {...parsedValues}>
-        Preview
-      </SVGStyledText>
-    </svg>
+    <TextStyleFieldPreviewContainer>
+      <svg height={parsedValues.fontSize} width="auto">
+        <SVGStyledText dominantBaseline="hanging" {...parsedValues}>
+          Preview
+        </SVGStyledText>
+      </svg>
+    </TextStyleFieldPreviewContainer>
   );
-}
+});
