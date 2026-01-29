@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.5.1](https://github.com/zakodium-oss/react-science/compare/v19.5.0...v19.5.1) (2026-01-29)
+
+
+### Bug Fixes
+
+* toolbar does not collapse when used inside flex containers ([#963](https://github.com/zakodium-oss/react-science/issues/963)) ([10ecce9](https://github.com/zakodium-oss/react-science/commit/10ecce932d5c4f422245c66cf5661d2f046aa3bc))
+
 ## [19.5.0](https://github.com/zakodium-oss/react-science/compare/v19.4.0...v19.5.0) (2026-01-28)
 
 
