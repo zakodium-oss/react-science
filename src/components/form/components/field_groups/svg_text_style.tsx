@@ -7,6 +7,7 @@ import { Button } from '../../../button/index.js';
 import { SVGStyledText } from '../../../svg/index.js';
 import { withFieldGroup } from '../../context/use_ts_form.js';
 
+import { Fieldset, Legend } from './fieldset.tsx';
 import { svgTextStyleFieldsSchema } from './svg_text_style_fields.schema.ts';
 
 const TextStyleSwitchContainer = styled.div`
@@ -33,8 +34,8 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
   },
   render: function SVGTextStyleFields({ group, label }) {
     return (
-      <fieldset>
-        <legend>{label}</legend>
+      <Fieldset>
+        <Legend>{label}</Legend>
         <group.AppField name="fill">
           {(field) => <field.ColorPicker label="Color" />}
         </group.AppField>
@@ -75,7 +76,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
         <group.Subscribe selector={(state) => state.values}>
           {(values) => <TextStyleFieldPreview {...values} />}
         </group.Subscribe>
-      </fieldset>
+      </Fieldset>
     );
   },
 });
@@ -112,11 +113,18 @@ const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
   props: SvgTextStyleFields,
 ) {
   const parsedValues = svgTextStyleFieldsSchema.parse(props);
+  const svgHeight = Math.round(parsedValues.fontSize * 1.5);
+  const textY = Math.round(svgHeight / 4);
 
   return (
     <TextStyleFieldPreviewContainer>
-      <svg height={parsedValues.fontSize} width="auto">
-        <SVGStyledText dominantBaseline="hanging" {...parsedValues}>
+      <svg height={svgHeight} width="auto">
+        <SVGStyledText
+          dominantBaseline="hanging"
+          x={0}
+          y={textY}
+          {...parsedValues}
+        >
           Preview
         </SVGStyledText>
       </svg>
