@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.6.0](https://github.com/zakodium-oss/react-science/compare/v19.5.1...v19.6.0) (2026-01-30)
+
+
+### Features
+
+* add `FieldGroupSVGLineStyleFields` ([#967](https://github.com/zakodium-oss/react-science/issues/967)) ([d7a2adb](https://github.com/zakodium-oss/react-science/commit/d7a2adb66ad37c437df5f285254163d2a7887a5e))
+
 ## [19.5.1](https://github.com/zakodium-oss/react-science/compare/v19.5.0...v19.5.1) (2026-01-29)
 
 
