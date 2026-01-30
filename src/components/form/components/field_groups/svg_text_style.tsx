@@ -30,7 +30,7 @@ const defaultValues: SvgTextStyleFields = {
 
 interface SVGTextStyleFieldsProps {
   label: string;
-  placeholder?: string;
+  textPreview?: string;
 }
 
 const inferSVGTextStyleFieldsProps: SVGTextStyleFieldsProps = {
@@ -43,7 +43,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
   render: function SVGTextStyleFields({
     group,
     label,
-    placeholder = 'Placeholder',
+    textPreview = 'Placeholder',
   }) {
     return (
       <Fieldset>
@@ -89,7 +89,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
           <group.Subscribe selector={(state) => state.values}>
             {(values) => (
               <TextStyleFieldPreview {...values}>
-                {placeholder}
+                {textPreview}
               </TextStyleFieldPreview>
             )}
           </group.Subscribe>
