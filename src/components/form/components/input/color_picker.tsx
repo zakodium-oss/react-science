@@ -6,7 +6,10 @@ import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
 type ColorPickerProps = Omit<FormGroupInputProps, 'placeholder'> &
-  Omit<ColorPickerDropdownProps, 'onChange' | 'color' | 'onChangeComplete'>;
+  Pick<
+    ColorPickerDropdownProps,
+    'presetColors' | 'disableAlpha' | 'popoverProps'
+  >;
 
 export function ColorPicker(props: ColorPickerProps) {
   const { label, helpText, layout, fullWidth, required } = props;
