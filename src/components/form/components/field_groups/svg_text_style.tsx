@@ -6,10 +6,10 @@ import type { z } from 'zod';
 
 import { SVGStyledText } from '../../../svg/index.js';
 import { withFieldGroup } from '../../context/use_ts_form.js';
-import { FormGroup } from '../input_groups/form_group.tsx';
+import { FormGroup } from '../input_groups/form_group.js';
 
-import { Fieldset, Legend } from './fieldset.tsx';
-import { svgTextStyleFieldsSchema } from './svg_text_style_fields.schema.ts';
+import { Fieldset, Legend } from './fieldset.js';
+import { svgTextStyleFieldsSchema } from './svg_text_style.schema.js';
 
 const TextStyleSwitchContainer = styled.div`
   display: flex;

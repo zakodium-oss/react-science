@@ -1,13 +1,20 @@
+import type { ColorPickerDropdownProps } from '../../../color-picker/index.js';
 import { ColorPickerDropdown } from '../../../color-picker/index.js';
 import type { ChangeCallbackProps as ChangeCallbackComponentProps } from '../../../color-picker/react-color/ColorPicker.js';
 import { useFieldContext } from '../../context/use_ts_form.js';
 import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
-type ColorPickerProps = Omit<FormGroupInputProps, 'placeholder'>;
+type ColorPickerProps = Omit<FormGroupInputProps, 'placeholder'> &
+  Pick<
+    ColorPickerDropdownProps,
+    'presetColors' | 'disableAlpha' | 'popoverProps'
+  >;
 
 export function ColorPicker(props: ColorPickerProps) {
   const { label, helpText, layout, fullWidth, required } = props;
+  const { presetColors, disableAlpha, popoverProps } = props;
+
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
@@ -32,6 +39,9 @@ export function ColorPicker(props: ColorPickerProps) {
       <ColorPickerDropdown
         color={{ hex: field.state.value }}
         onChange={onChange}
+        presetColors={presetColors}
+        disableAlpha={disableAlpha}
+        popoverProps={popoverProps}
       />
     </FormGroup>
   );
