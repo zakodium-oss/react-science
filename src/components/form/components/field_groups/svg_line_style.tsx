@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 import { memo } from 'react';
 import type { z } from 'zod';
 
-import type { SVGStyledLineStrokePattern } from '../../../svg/index.ts';
-import { SVGStyledLine } from '../../../svg/index.ts';
-import { withFieldGroup } from '../../context/use_ts_form.ts';
-import { FormGroup } from '../input_groups/form_group.tsx';
+import type { SVGStyledLineStrokePattern } from '../../../svg/index.js';
+import { SVGStyledLine } from '../../../svg/index.js';
+import { withFieldGroup } from '../../context/use_ts_form.js';
+import { FormGroup } from '../input_groups/form_group.js';
 
-import { Fieldset, Legend } from './fieldset.tsx';
-import { svgLineStyleFieldsSchema } from './svg_line_style.schema.ts';
+import { Fieldset, Legend } from './fieldset.js';
+import { svgLineStyleFieldsSchema } from './svg_line_style.schema.js';
 
 type SvgLineStyleFields = z.input<typeof svgLineStyleFieldsSchema>;
 

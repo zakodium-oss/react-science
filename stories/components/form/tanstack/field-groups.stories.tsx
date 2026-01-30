@@ -4,19 +4,19 @@ import type { ReactNode } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import type { FormProps } from '../../../../src/components/form/components/input_groups/form.tsx';
-import { Form } from '../../../../src/components/form/components/input_groups/form.tsx';
+import type { FormProps } from '../../../../src/components/form/components/input_groups/form.js';
+import { Form } from '../../../../src/components/form/components/input_groups/form.js';
 import type {
   SVGLineStyleFieldsProps,
   SVGTextStyleFieldsProps,
-} from '../../../../src/components/index.ts';
+} from '../../../../src/components/index.js';
 import {
   FieldGroupSVGLineStyleFields,
   FieldGroupSVGTextStyleFields,
   svgLineStyleFieldsSchema,
   svgTextStyleFieldsSchema,
   useForm,
-} from '../../../../src/components/index.ts';
+} from '../../../../src/components/index.js';
 
 const meta: Meta = {
   title: 'Forms / Form / Tanstack / FieldGroups',

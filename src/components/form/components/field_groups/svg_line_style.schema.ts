@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { SVGStyledLineStrokePattern } from '../../../svg/index.ts';
+import { SVGStyledLineStrokePattern } from '../../../svg/index.js';
 
 export const svgLineStyleFieldsSchema = z.object({
   stroke: z
