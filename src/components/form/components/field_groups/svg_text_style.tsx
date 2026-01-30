@@ -9,7 +9,7 @@ import { withFieldGroup } from '../../context/use_ts_form.js';
 import { FormGroup } from '../input_groups/form_group.tsx';
 
 import { Fieldset, Legend } from './fieldset.tsx';
-import { svgTextStyleFieldsSchema } from './svg_text_style_fields.schema.ts';
+import { svgTextStyleFieldsSchema } from './svg_text_style.schema.ts';
 
 const TextStyleSwitchContainer = styled.div`
   display: flex;
