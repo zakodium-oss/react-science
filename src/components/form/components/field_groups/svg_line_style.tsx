@@ -21,7 +21,7 @@ const defaultValues: SvgLineStyleFields = {
   strokeDasharray: 'solid',
 };
 
-export interface PatternsOptionType {
+interface PatternsOptionType {
   label: string;
   value: SVGStyledLineStrokePattern;
 }

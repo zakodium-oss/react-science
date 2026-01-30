@@ -4,14 +4,16 @@ import type { ReactNode } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { svgLineStyleFieldsSchema } from '../../../../src/components/form/components/field_groups/svg_line_style.schema.ts';
-import type { SVGLineStyleFieldsProps } from '../../../../src/components/form/components/field_groups/svg_line_style.tsx';
-import { FieldGroupSVGLineStyleFields } from '../../../../src/components/form/components/field_groups/svg_line_style.tsx';
 import type { FormProps } from '../../../../src/components/form/components/input_groups/form.tsx';
 import { Form } from '../../../../src/components/form/components/input_groups/form.tsx';
-import type { SVGTextStyleFieldsProps } from '../../../../src/components/index.ts';
+import type {
+  SVGLineStyleFieldsProps,
+  SVGTextStyleFieldsProps,
+} from '../../../../src/components/index.ts';
 import {
+  FieldGroupSVGLineStyleFields,
   FieldGroupSVGTextStyleFields,
+  svgLineStyleFieldsSchema,
   svgTextStyleFieldsSchema,
   useForm,
 } from '../../../../src/components/index.ts';
