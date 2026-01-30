@@ -28,7 +28,7 @@ const defaultValues: SvgTextStyleFields = {
   fontWeight: 'normal',
 };
 
-interface SVGTextStyleFieldsProps {
+export interface SVGTextStyleFieldsProps {
   label: string;
   textPreview?: string;
 }
