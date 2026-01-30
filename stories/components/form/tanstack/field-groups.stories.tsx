@@ -42,10 +42,10 @@ export const SVGTextStyle: StoryObj<
   args: {
     layout: 'inline',
     label: 'Text style',
-    textPreview: 'Hello World!',
+    previewText: 'Hello World!',
   },
   render: (props) => {
-    const { layout, label, textPreview } = props;
+    const { layout, label, previewText } = props;
 
     const form = useForm({
       defaultValues,
@@ -63,7 +63,7 @@ export const SVGTextStyle: StoryObj<
           form={form}
           fields="textStyle"
           label={label}
-          textPreview={textPreview}
+          previewText={previewText}
         />
       </Form>
     );
