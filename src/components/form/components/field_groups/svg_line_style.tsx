@@ -17,7 +17,6 @@ const defaultValues: SvgLineStyleFields = {
 
 export interface SVGLineStyleFieldsProps {
   label: string;
-  previewText?: string;
 }
 
 const inferSVGLineStyleFieldsProps: SVGLineStyleFieldsProps = {

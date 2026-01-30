@@ -4,6 +4,9 @@ import type { ReactNode } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
+import { svgLineStyleFieldsSchema } from '../../../../src/components/form/components/field_groups/svg_line_style.schema.ts';
+import type { SVGLineStyleFieldsProps } from '../../../../src/components/form/components/field_groups/svg_line_style.tsx';
+import { FieldGroupSVGLineStyleFields } from '../../../../src/components/form/components/field_groups/svg_line_style.tsx';
 import type { FormProps } from '../../../../src/components/form/components/input_groups/form.tsx';
 import { Form } from '../../../../src/components/form/components/input_groups/form.tsx';
 import type { SVGTextStyleFieldsProps } from '../../../../src/components/index.ts';
@@ -24,10 +27,10 @@ const meta: Meta = {
 };
 export default meta;
 
-const formSchema = z.object({
+const svgTextStyleFormSchema = z.object({
   textStyle: svgTextStyleFieldsSchema,
 });
-const defaultValues: z.input<typeof formSchema> = {
+const svgTextStyleDefaultValues: z.input<typeof svgTextStyleFormSchema> = {
   textStyle: {
     fill: '#000000',
     fontSize: '16',
@@ -48,11 +51,11 @@ export const SVGTextStyle: StoryObj<
     const { layout, label, previewText } = props;
 
     const form = useForm({
-      defaultValues,
-      validators: { onDynamic: formSchema },
+      defaultValues: svgTextStyleDefaultValues,
+      validators: { onDynamic: svgTextStyleFormSchema },
       validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
       onSubmit: ({ value }) => {
-        const parsedValue = formSchema.parse(value);
+        const parsedValue = svgTextStyleFormSchema.parse(value);
         action('onSubmit')(parsedValue);
       },
     });
@@ -64,6 +67,49 @@ export const SVGTextStyle: StoryObj<
           fields="textStyle"
           label={label}
           previewText={previewText}
+        />
+      </Form>
+    );
+  },
+};
+
+const svgLineStyleFormSchema = z.object({
+  lineStyle: svgLineStyleFieldsSchema,
+});
+const svgLineStyleDefaultValues: z.input<typeof svgLineStyleFormSchema> = {
+  lineStyle: {
+    color: '#000000FF',
+    style: '1',
+    width: '1',
+  },
+};
+
+export const SVGLineStyle: StoryObj<
+  (props: Pick<FormProps, 'layout'> & SVGLineStyleFieldsProps) => ReactNode
+> = {
+  args: {
+    layout: 'inline',
+    label: 'Text style',
+  },
+  render: (props) => {
+    const { layout, label } = props;
+
+    const form = useForm({
+      defaultValues: svgLineStyleDefaultValues,
+      validators: { onDynamic: svgLineStyleFormSchema },
+      validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+      onSubmit: ({ value }) => {
+        const parsedValue = svgTextStyleFormSchema.parse(value);
+        action('onSubmit')(parsedValue);
+      },
+    });
+
+    return (
+      <Form layout={layout} style={{ margin: '5px' }}>
+        <FieldGroupSVGLineStyleFields
+          form={form}
+          fields="lineStyle"
+          label={label}
         />
       </Form>
     );
