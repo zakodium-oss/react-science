@@ -54,7 +54,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
         <group.AppField name="fontSize">
           {(field) => <field.NumericInput label="Font size" />}
         </group.AppField>
-        <FormGroup name="" label="Font modifiers">
+        <FormGroup name="" label="Font style">
           <TextStyleSwitchContainer>
             <group.Field name="fontWeight">
               {(field) => (
