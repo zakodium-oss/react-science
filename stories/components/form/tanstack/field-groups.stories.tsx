@@ -78,9 +78,10 @@ const svgLineStyleFormSchema = z.object({
 });
 const svgLineStyleDefaultValues: z.input<typeof svgLineStyleFormSchema> = {
   lineStyle: {
-    color: '#000000FF',
-    style: '1',
-    width: '1',
+    stroke: '#000000',
+    strokeOpacity: '1',
+    strokeWidth: '1',
+    strokeDasharray: 'solid',
   },
 };
 
@@ -89,7 +90,7 @@ export const SVGLineStyle: StoryObj<
 > = {
   args: {
     layout: 'inline',
-    label: 'Text style',
+    label: 'Line style',
   },
   render: (props) => {
     const { layout, label } = props;

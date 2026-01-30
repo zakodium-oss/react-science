@@ -1,8 +1,12 @@
+export const SVGStyledLineStrokePattern = {
+  solid: 'solid',
+  dashed: 'dashed',
+  dotted: 'dotted',
+  'dashed-dot': 'dashed-dot',
+} as const;
+
 export type SVGStyledLineStrokePattern =
-  | 'solid'
-  | 'dashed'
-  | 'dotted'
-  | 'dashed-dot';
+  (typeof SVGStyledLineStrokePattern)[keyof typeof SVGStyledLineStrokePattern];
 
 /**
  * SVG line styles that can be controlled by the user.
