@@ -78,7 +78,7 @@ export interface FormGroupInputProps {
 interface FormGroupProps {
   label?: string;
   intent?: Intent;
-  name: string;
+  name?: string;
   required?: boolean;
   helpText?: string;
   children?: ReactNode;
