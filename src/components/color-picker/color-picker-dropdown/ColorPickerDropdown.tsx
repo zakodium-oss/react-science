@@ -12,6 +12,11 @@ export interface ColorPickerDropdownProps extends Pick<
   'color' | 'presetColors' | 'disableAlpha' | 'onChange' | 'onChangeComplete'
 > {
   popoverProps?: Omit<PopoverProps, 'content'>;
+
+  /**
+   * To link with label
+   */
+  id?: string;
 }
 
 const ColorPickerRoot = styled.button`
@@ -30,7 +35,7 @@ const ColorPickerPreview = styled.div`
 `;
 
 export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
-  const { color, popoverProps, ...otherProps } = props;
+  const { color, popoverProps, id, ...otherProps } = props;
 
   const { hex } = colorHelper.toState(color || 'white');
 
@@ -41,7 +46,7 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
       minimal
       {...popoverProps}
     >
-      <ColorPickerRoot type="button">
+      <ColorPickerRoot type="button" id={id}>
         <ColorPickerPreview>
           <FixedColorPreview color={hex} />
         </ColorPickerPreview>

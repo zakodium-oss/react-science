@@ -37,6 +37,7 @@ export function ColorPicker(props: ColorPickerProps) {
       intent={error ? 'danger' : 'none'}
     >
       <ColorPickerDropdown
+        id={field.name}
         color={{ hex: field.state.value }}
         onChange={onChange}
         presetColors={presetColors}
