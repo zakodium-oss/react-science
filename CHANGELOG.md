@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.7.0](https://github.com/zakodium-oss/react-science/compare/v19.6.0...v19.7.0) (2026-02-03)
+
+
+### Features
+
+* export tanstack forms ([#970](https://github.com/zakodium-oss/react-science/issues/970)) ([1f9788c](https://github.com/zakodium-oss/react-science/commit/1f9788c613425a5553d62510d61010048992413b))
+
 ## [19.6.0](https://github.com/zakodium-oss/react-science/compare/v19.5.1...v19.6.0) (2026-02-02)
 
 
