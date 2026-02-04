@@ -126,12 +126,7 @@ const defaultValues: z.input<typeof formSchema> = {
   peaksLabel: {
     marginTop: '0.5',
     fontSize: '14',
-    textStyle: {
-      fill: '#000000',
-      fontSize: '16',
-      fontStyle: 'normal',
-      fontWeight: 'normal',
-    },
+    textStyle: {},
   },
 };
 

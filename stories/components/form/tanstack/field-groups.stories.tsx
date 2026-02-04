@@ -33,12 +33,7 @@ const svgTextStyleFormSchema = z.object({
   textStyle: svgTextStyleFieldsSchema,
 });
 const svgTextStyleDefaultValues: z.input<typeof svgTextStyleFormSchema> = {
-  textStyle: {
-    fill: '#000000',
-    fontSize: '16',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-  },
+  textStyle: {},
 };
 
 export const SVGTextStyle: StoryObj<

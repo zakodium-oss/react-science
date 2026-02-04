@@ -21,12 +21,7 @@ type SvgTextStyleFields = z.input<typeof svgTextStyleFieldsSchema>;
 
 // https://tanstack.com/form/latest/docs/framework/react/guides/form-composition#reusing-groups-of-fields-in-multiple-forms
 // Default values are not used at runtime (same for props).
-const defaultValues: SvgTextStyleFields = {
-  fill: '#000000',
-  fontSize: '16',
-  fontStyle: 'normal',
-  fontWeight: 'normal',
-};
+const defaultValues: SvgTextStyleFields = {};
 
 export interface SVGTextStyleFieldsProps {
   label: string;
@@ -113,7 +108,8 @@ const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
   props: TextStyleFieldPreviewProps,
 ) {
   const parsedValues = svgTextStyleFieldsSchema.parse(props);
-  const svgHeight = Math.round(parsedValues.fontSize * 1.5);
+  const fontSize = parsedValues.fontSize ?? 16;
+  const svgHeight = Math.round(fontSize * 1.5);
   const textY = Math.round(svgHeight / 4);
 
   return (
