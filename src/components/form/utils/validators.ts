@@ -3,12 +3,12 @@ import { z } from 'zod';
 
 interface StringToNumberOptionalOptions<
   Str extends ZodString,
-  Nbr extends ZodNumber,
+  Num extends ZodNumber,
 > {
   /** @default z.string() */
   strSchema?: Str;
   /** @default z.number() */
-  nbrSchema?: Nbr;
+  numSchema?: Num;
   /** @default Number */
   parse?: (str: string) => number;
 }
@@ -19,19 +19,19 @@ interface StringToNumberOptionalOptions<
  */
 export function stringToNumberOptional<
   Str extends ZodString = ZodString,
-  Nbr extends ZodNumber = ZodNumber,
+  Num extends ZodNumber = ZodNumber,
 >(
-  options: StringToNumberOptionalOptions<Str, Nbr> = {},
-): ZodCodec<ZodOptional<Str>, ZodOptional<Nbr>> {
+  options: StringToNumberOptionalOptions<Str, Num> = {},
+): ZodCodec<ZodOptional<Str>, ZodOptional<Num>> {
   const strSchema = options?.strSchema ?? (z.string() as Str);
-  const nbrSchema = options?.nbrSchema ?? (z.number() as Nbr);
+  const numSchema = options?.numSchema ?? (z.number() as Num);
   const parse = options?.parse ?? Number;
 
-  return z.codec(strSchema.optional(), nbrSchema.optional(), {
-    encode: (nbr) => {
-      if (nbr === undefined) return undefined;
+  return z.codec(strSchema.optional(), numSchema.optional(), {
+    encode: (num) => {
+      if (num === undefined) return undefined;
 
-      return String(nbr) as z.output<ZodOptional<Str>>;
+      return String(num) as z.output<ZodOptional<Str>>;
     },
     decode: (str) => {
       if (!str) return undefined;
@@ -39,7 +39,7 @@ export function stringToNumberOptional<
       const value = parse(str);
       if (Number.isNaN(value)) return undefined;
 
-      return value as z.input<ZodOptional<Nbr>>;
+      return value as z.input<ZodOptional<Num>>;
     },
   });
 }

@@ -12,7 +12,7 @@ export const svgLineStyleFieldsSchema = z.object({
     })
     .optional(),
   strokeOpacity: stringToNumberOptional({
-    nbrSchema: z.number().min(0).max(1),
+    numSchema: z.number().min(0).max(1),
   }),
   strokeWidth: stringToNumberOptional(),
   strokeDasharray: z.enum(SVGStyledLineStrokePattern).optional(),
