@@ -1,5 +1,13 @@
 # Changelog
 
+## [19.7.1](https://github.com/zakodium-oss/react-science/compare/v19.7.0...v19.7.1) (2026-02-04)
+
+
+### Bug Fixes
+
+* `svgLineStyleFieldsSchema` output should equal `SVGStyledLineUserConfig` ([d1e2709](https://github.com/zakodium-oss/react-science/commit/d1e2709493c6a2439e9054f4579fed6017cc29e9))
+* `svgTextStyleFieldsSchema` output should equal `SVGStyledTextUserConfig` ([#972](https://github.com/zakodium-oss/react-science/issues/972)) ([d1e2709](https://github.com/zakodium-oss/react-science/commit/d1e2709493c6a2439e9054f4579fed6017cc29e9))
+
 ## [19.7.0](https://github.com/zakodium-oss/react-science/compare/v19.6.0...v19.7.0) (2026-02-03)
 
 
