@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.8.0](https://github.com/zakodium-oss/react-science/compare/v19.7.1...v19.8.0) (2026-02-05)
+
+
+### Features
+
+* **TanstackForm:** export multiple input type to be used in projects ([#974](https://github.com/zakodium-oss/react-science/issues/974)) ([56bbf46](https://github.com/zakodium-oss/react-science/commit/56bbf46acd19bd608314950a1ca02f0c349a88c6))
+
 ## [19.7.1](https://github.com/zakodium-oss/react-science/compare/v19.7.0...v19.7.1) (2026-02-04)
 
 
