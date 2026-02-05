@@ -14,12 +14,7 @@ type SvgLineStyleFields = z.input<typeof svgLineStyleFieldsSchema>;
 
 // https://tanstack.com/form/latest/docs/framework/react/guides/form-composition#reusing-groups-of-fields-in-multiple-forms
 // Default values are not used at runtime (same for props).
-const defaultValues: SvgLineStyleFields = {
-  stroke: '#000000',
-  strokeOpacity: '1',
-  strokeWidth: '1',
-  strokeDasharray: 'solid',
-};
+const defaultValues: SvgLineStyleFields = {};
 
 interface PatternsOptionType {
   label: string;

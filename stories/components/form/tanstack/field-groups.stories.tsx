@@ -33,12 +33,7 @@ const svgTextStyleFormSchema = z.object({
   textStyle: svgTextStyleFieldsSchema,
 });
 const svgTextStyleDefaultValues: z.input<typeof svgTextStyleFormSchema> = {
-  textStyle: {
-    fill: '#000000',
-    fontSize: '16',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-  },
+  textStyle: {},
 };
 
 export const SVGTextStyle: StoryObj<
@@ -63,14 +58,24 @@ export const SVGTextStyle: StoryObj<
     });
 
     return (
-      <Form layout={layout} style={{ margin: '5px' }}>
-        <FieldGroupSVGTextStyleFields
-          form={form}
-          fields="textStyle"
-          label={label}
-          previewText={previewText}
-        />
-      </Form>
+      <form.AppForm>
+        <Form
+          layout={layout}
+          style={{ margin: '5px' }}
+          onSubmit={(event) => {
+            event.preventDefault();
+            void form.handleSubmit(event);
+          }}
+        >
+          <FieldGroupSVGTextStyleFields
+            form={form}
+            fields="textStyle"
+            label={label}
+            previewText={previewText}
+          />
+          <form.SubmitButton>Save</form.SubmitButton>
+        </Form>
+      </form.AppForm>
     );
   },
 };
@@ -79,12 +84,7 @@ const svgLineStyleFormSchema = z.object({
   lineStyle: svgLineStyleFieldsSchema,
 });
 const svgLineStyleDefaultValues: z.input<typeof svgLineStyleFormSchema> = {
-  lineStyle: {
-    stroke: '#000000',
-    strokeOpacity: '1',
-    strokeWidth: '1',
-    strokeDasharray: 'solid',
-  },
+  lineStyle: {},
 };
 
 export const SVGLineStyle: StoryObj<
@@ -102,19 +102,29 @@ export const SVGLineStyle: StoryObj<
       validators: { onDynamic: svgLineStyleFormSchema },
       validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
       onSubmit: ({ value }) => {
-        const parsedValue = svgTextStyleFormSchema.parse(value);
+        const parsedValue = svgLineStyleFormSchema.parse(value);
         action('onSubmit')(parsedValue);
       },
     });
 
     return (
-      <Form layout={layout} style={{ margin: '5px' }}>
-        <FieldGroupSVGLineStyleFields
-          form={form}
-          fields="lineStyle"
-          label={label}
-        />
-      </Form>
+      <form.AppForm>
+        <Form
+          layout={layout}
+          style={{ margin: '5px' }}
+          onSubmit={(event) => {
+            event.preventDefault();
+            void form.handleSubmit(event);
+          }}
+        >
+          <FieldGroupSVGLineStyleFields
+            form={form}
+            fields="lineStyle"
+            label={label}
+          />
+          <form.SubmitButton>Save</form.SubmitButton>
+        </Form>
+      </form.AppForm>
     );
   },
 };

@@ -1,8 +1,13 @@
 import { z } from 'zod';
 
+import { stringToNumberOptional } from '../../utils/validators.ts';
+
 export const svgTextStyleFieldsSchema = z.object({
-  fill: z.string(),
-  fontSize: z.coerce.number<string>(),
-  fontStyle: z.enum(['normal', 'italic']),
-  fontWeight: z.enum(['normal', 'bold']),
+  fill: z.string().optional(),
+  fontSize: stringToNumberOptional({
+    numSchema: z.int().min(0),
+    parse: (str) => Number.parseInt(str, 10),
+  }),
+  fontStyle: z.enum(['normal', 'italic']).optional(),
+  fontWeight: z.enum(['normal', 'bold']).optional(),
 });
