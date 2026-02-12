@@ -1,5 +1,5 @@
+import type { OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
-import type { OptionProps } from '@blueprintjs/core/src/common/index.ts';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
