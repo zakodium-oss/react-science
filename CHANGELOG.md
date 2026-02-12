@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.9.0](https://github.com/zakodium-oss/react-science/compare/v19.8.0...v19.9.0) (2026-02-12)
+
+
+### Features
+
+* add RadioGroup integration with stories examples ([#976](https://github.com/zakodium-oss/react-science/issues/976)) ([9b58540](https://github.com/zakodium-oss/react-science/commit/9b5854047934e0ea9abfd1959f4a56aaceb66c76))
+
 ## [19.8.0](https://github.com/zakodium-oss/react-science/compare/v19.7.1...v19.8.0) (2026-02-05)
 
 
