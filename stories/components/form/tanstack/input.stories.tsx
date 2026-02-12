@@ -1,3 +1,5 @@
+import { Radio } from '@blueprintjs/core';
+import type { OptionProps } from '@blueprintjs/core/src/common/index.ts';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
@@ -275,6 +277,86 @@ export function ColorPicker(props: InputProps) {
             label="Choose a color that you want"
             helpText="This can be usefull to render your color"
           />
+        )}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
+
+const radioSchema = z.object({
+  radio: z.enum(['choice-1', 'choice-2', 'choice-3']),
+});
+type RadioSchema = z.input<typeof radioSchema>;
+const radioDefaultValues: RadioSchema = { radio: 'choice-1' };
+const radioOptions: OptionProps[] = [
+  { value: 'choice-1', label: 'Choice 1' },
+  { value: 'choice-2', label: 'Choice 2' },
+  { value: 'choice-3', label: 'Choice 3' },
+];
+
+export function RadioGroupOptions(props: InputProps) {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(radioSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+    validators: { onDynamic: radioSchema },
+    defaultValues: radioDefaultValues,
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="radio">
+        {(field) => (
+          <field.RadioGroup
+            layout={props.layout}
+            label="Choose the option you want"
+            helpText="Use options props"
+            options={radioOptions}
+          />
+        )}
+      </form.AppField>
+
+      <form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  );
+}
+
+export function RadioGroupRadio(props: InputProps) {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(radioSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+    validators: { onDynamic: radioSchema },
+    defaultValues: radioDefaultValues,
+  });
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void form.handleSubmit();
+  }
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <form.AppField name="radio">
+        {(field) => (
+          <field.RadioGroup
+            layout={props.layout}
+            label="Choose the option you want"
+            helpText="Use Radio children"
+          >
+            <Radio value="choice-1" label="Choice 1" />
+            <Radio value="choice-2" label="Choice 2" />
+            <Radio value="choice-3" label="Choice 3" />
+          </field.RadioGroup>
         )}
       </form.AppField>
 
