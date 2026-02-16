@@ -1,4 +1,5 @@
 import { Spinner } from '@blueprintjs/core';
+import type { FallbackProps } from 'react-error-boundary';
 import { ErrorBoundary } from 'react-error-boundary';
 import { FaBook, FaMeteor } from 'react-icons/fa';
 import { useKbsGlobal } from 'react-kbs';
@@ -29,17 +30,16 @@ import {
 
 import { loadFiles } from './helpers/loadFiles.js';
 
-function ErrorFallback({
-  error,
-  resetErrorBoundary,
-}: {
-  error: Error;
-  resetErrorBoundary: () => void;
-}) {
+function ErrorFallback(props: FallbackProps) {
+  const { error, resetErrorBoundary } = props;
+  const message =
+    error && typeof error === 'object' && 'message' in error
+      ? error.message
+      : null;
   return (
     <div role="alert">
       <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
+      <pre>{message as string}</pre>
       <button type="button" onClick={resetErrorBoundary}>
         Try again
       </button>
