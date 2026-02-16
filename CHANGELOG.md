@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.9.1](https://github.com/zakodium-oss/react-science/compare/v19.9.0...v19.9.1) (2026-02-16)
+
+
+### Bug Fixes
+
+* update dependencies ([#978](https://github.com/zakodium-oss/react-science/issues/978)) ([9d54ba1](https://github.com/zakodium-oss/react-science/commit/9d54ba119b45601ebb34e8d26f155214a5b5aec1))
+
 ## [19.9.0](https://github.com/zakodium-oss/react-science/compare/v19.8.0...v19.9.0) (2026-02-12)
 
 
