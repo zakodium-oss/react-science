@@ -65,3 +65,23 @@ export const columns = [
     },
   }),
 ];
+
+export const columnsNativeMeta = [
+  columnHelper.accessor('ocl.idCode', {
+    header: 'Molecule',
+    cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
+  }),
+  columnHelper.accessor('name', {
+    header: 'Name',
+    meta: {
+      thStyle: {
+        backgroundColor: 'black',
+        color: '#FFF903',
+      },
+      tdStyle: {
+        backgroundColor: '#DB261D',
+        color: '#FFF903',
+      },
+    },
+  }),
+];
