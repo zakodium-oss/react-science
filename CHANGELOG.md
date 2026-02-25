@@ -1,5 +1,13 @@
 # Changelog
 
+## [19.10.0](https://github.com/zakodium-oss/react-science/compare/v19.9.1...v19.10.0) (2026-02-25)
+
+
+### Features
+
+* add support for `emptyIcon` and `emptyContent` ([#981](https://github.com/zakodium-oss/react-science/issues/981)) ([74c318f](https://github.com/zakodium-oss/react-science/commit/74c318fda761de2edf1d48e9cd203e8e25854016))
+* add support for `tdStyle` in `meta` column definition ([#981](https://github.com/zakodium-oss/react-science/issues/981)) ([74c318f](https://github.com/zakodium-oss/react-science/commit/74c318fda761de2edf1d48e9cd203e8e25854016))
+
 ## [19.9.1](https://github.com/zakodium-oss/react-science/compare/v19.9.0...v19.9.1) (2026-02-16)
 
 
