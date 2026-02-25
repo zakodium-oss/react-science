@@ -12,7 +12,12 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type { CSSProperties, RefObject, TableHTMLAttributes } from 'react';
+import type {
+  CSSProperties,
+  ReactNode,
+  RefObject,
+  TableHTMLAttributes,
+} from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { match } from 'ts-pattern';
 
@@ -185,6 +190,18 @@ interface TableBaseProps<TData extends RowData> {
    * Ignored when using custom row rendering with `renderRowTr`.
    */
   renderRowPreview?: TableRowPreviewRenderer<TData>;
+
+  /**
+   * Icon to display when the table is empty.
+   * @default `<Icon icon="eye-off" />`
+   */
+  emptyIcon?: ReactNode;
+
+  /**
+   * Content to display when the table is empty.
+   * @default `'No data'`
+   */
+  emptyContent?: ReactNode;
 }
 
 interface RegularTableProps<
@@ -244,6 +261,9 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     renderRowPreview,
 
     scrollToRowRef,
+
+    emptyIcon,
+    emptyContent,
   } = props;
   const isReorderingEnabled = !!onRowOrderChanged;
   const virtualScrollElementRef = useRef<HTMLDivElement>(null);
@@ -294,13 +314,16 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     }),
     [className, getTdProps, renderRowTr, columns, compact],
   );
+
+  const rows = table.getRowModel().rows;
+
   return (
     <FlashedRowProvider>
       <PreviewTablePropsContextProvider
         value={tablePreviewProps as PreviewTablePropsContextValue<unknown>}
       >
         <ItemOrderProvider
-          items={table.getRowModel().rows}
+          items={rows}
           onOrderChanged={(items) => {
             onRowOrderChanged?.(items.map((item) => item.original));
           }}
@@ -341,7 +364,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
                 />
               )}
               <TableBody
-                rows={table.getRowModel().rows}
+                rows={rows}
                 renderRowTr={renderRowTr}
                 tdStyle={tdStyle}
                 getTdProps={getTdProps}
@@ -349,6 +372,9 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
                 virtualizeRows={virtualizeRows}
                 renderRowPreview={renderRowPreview}
                 isReorderingEnabled={isReorderingEnabled}
+                emptyIcon={emptyIcon}
+                emptyContent={emptyContent}
+                columns={table.getAllColumns().length}
               />
             </CustomHTMLTable>
           </ScrollContainer>

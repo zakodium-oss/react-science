@@ -1,3 +1,5 @@
+import { Icon } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import type { Row, RowData } from '@tanstack/react-table';
 import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import { notUndefined } from '@tanstack/react-virtual';
@@ -23,6 +25,14 @@ interface TableBodyProps<TData extends RowData> {
   virtualizer: Virtualizer<HTMLDivElement, Element>;
   isReorderingEnabled: boolean;
   renderRowPreview?: TableRowPreviewRenderer<TData>;
+
+  emptyContent: ReactNode;
+  emptyIcon: ReactNode;
+
+  /**
+   * Bound to `EmptyRow`, it is needed for td colSpan.
+   */
+  columns: number;
 }
 
 export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
@@ -36,6 +46,9 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
     ) as TableRowTrRenderer<TData>,
     virtualizer,
     virtualizeRows,
+    emptyContent,
+    emptyIcon,
+    columns,
   } = props;
 
   if (virtualizeRows) {
@@ -72,6 +85,13 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
             }}
           />
         ))}
+        {virtualItems.length === 0 && (
+          <EmptyRow
+            emptyContent={emptyContent}
+            emptyIcon={emptyIcon}
+            columns={columns}
+          />
+        )}
         {after > 0 && (
           <tr>
             <td style={{ height: after }} />
@@ -91,9 +111,49 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
           }
         />
       ))}
+      {rows.length === 0 && (
+        <EmptyRow
+          emptyContent={emptyContent}
+          emptyIcon={emptyIcon}
+          columns={columns}
+        />
+      )}
     </tbody>
   );
 }
+
+interface EmptyRowProps {
+  emptyContent: ReactNode;
+  emptyIcon: ReactNode;
+  columns: number;
+}
+
+function EmptyRow(props: EmptyRowProps) {
+  const {
+    emptyIcon = <Icon icon="eye-off" />,
+    emptyContent = 'No data',
+    columns,
+  } = props;
+
+  return (
+    <tr>
+      <td colSpan={columns}>
+        <EmptyState>
+          {emptyIcon}
+          {emptyContent}
+        </EmptyState>
+      </td>
+    </tr>
+  );
+}
+
+const EmptyState = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25em;
+  gap: 0.5em;
+`;
 
 type TableRowRenderer<TData extends RowData> = (row: Row<TData>) => ReactNode;
 

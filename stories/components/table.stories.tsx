@@ -6,7 +6,7 @@ import type { GetTdProps, TableProps } from '../../src/components/index.js';
 import { Table, TableRowTr } from '../../src/components/index.js';
 import { table } from '../data/data.js';
 
-import { columns } from './table_columns.js';
+import { columns, columnsNativeMeta } from './table_columns.js';
 
 type TableRecord = (typeof table)[number];
 
@@ -111,3 +111,18 @@ export const WithTdStyle = {
 export const Virtualized: Story = {
   args: { virtualizeRows: true, estimatedRowHeight: () => 172 },
 } satisfies Story;
+
+export const WithMetaThAndTdStyle: Story = {
+  args: {
+    data: table.slice(0, 1),
+    columns: columnsNativeMeta,
+  },
+};
+
+export const EmptyTable: Story = {
+  args: {
+    data: [],
+    emptyContent: 'No molecules',
+    emptyIcon: <span aria-hidden="true">🪹</span>,
+  },
+};

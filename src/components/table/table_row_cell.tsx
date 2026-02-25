@@ -15,8 +15,9 @@ export function TableRowCell<TData extends RowData>(
 ) {
   const { cell, tdStyle, getTdProps } = props;
 
+  const tdStyleMeta = cell.column.columnDef.meta?.tdStyle;
   const tdProps = getTdProps?.(cell);
-  const style = { ...tdStyle, ...tdProps?.style };
+  const style = { ...tdStyleMeta, ...tdStyle, ...tdProps?.style };
 
   return (
     <td {...tdProps} style={style}>
