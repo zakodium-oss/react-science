@@ -14,5 +14,10 @@ declare module '@tanstack/react-table' {
      * Merged into the `style` prop of the default-rendered `<th>` element.
      */
     thStyle?: CSSProperties;
+
+    /**
+     * Merged into the `style` prop of the default-rendered `<td>` element.
+     */
+    tdStyle?: CSSProperties;
   }
 }
