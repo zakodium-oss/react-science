@@ -26,12 +26,10 @@ const defaultValues: SvgTextStyleFields = {};
 export interface SVGTextStyleFieldsProps {
   label: string;
   previewText?: string;
-  safeParse?: boolean;
 }
 
 const inferSVGTextStyleFieldsProps: SVGTextStyleFieldsProps = {
   label: '',
-  safeParse: false,
 };
 
 export const FieldGroupSVGTextStyleFields = withFieldGroup({
@@ -41,7 +39,6 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
     group,
     label,
     previewText = 'Placeholder',
-    safeParse = false,
   }) {
     return (
       <Fieldset>
@@ -50,7 +47,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
           {(field) => <field.ColorPicker label="Color" />}
         </group.AppField>
         <group.AppField name="fontSize">
-          {(field) => <field.NumericInput label="Font size" min={0} />}
+          {(field) => <field.NumericInput label="Font size" min={1} />}
         </group.AppField>
         <FormGroup label="Font style">
           <TextStyleSwitchContainer>
@@ -86,7 +83,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
         <FormGroup label="Preview">
           <group.Subscribe selector={(state) => state.values}>
             {(values) => (
-              <TextStyleFieldPreview safeParse={safeParse} {...values}>
+              <TextStyleFieldPreview {...values}>
                 {previewText}
               </TextStyleFieldPreview>
             )}
@@ -158,34 +155,8 @@ interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
 }
 
 const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
-  props: TextStyleFieldPreviewProps & { safeParse?: boolean },
+  props: TextStyleFieldPreviewProps,
 ) {
-  if (props.safeParse) {
-    return (
-      <SafeParseTextStyleFieldPreview {...props}>
-        {props.children}
-      </SafeParseTextStyleFieldPreview>
-    );
-  }
-
-  return (
-    <ParseTextStyleFieldPreview {...props}>
-      {props.children}
-    </ParseTextStyleFieldPreview>
-  );
-});
-
-function ParseTextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
-  const parsedValues = svgTextStyleFieldsSchema.parse(props);
-
-  return (
-    <RenderTextStyleFieldPreview values={parsedValues}>
-      {props.children}
-    </RenderTextStyleFieldPreview>
-  );
-}
-
-function SafeParseTextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
   const safeResult = svgTextStyleFieldsSchema.safeParse(props);
 
   if (!safeResult.success) {
@@ -208,7 +179,7 @@ function SafeParseTextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
       {props.children}
     </RenderTextStyleFieldPreview>
   );
-}
+});
 
 const BoldLabel = styled.span`
   font-weight: bold;
