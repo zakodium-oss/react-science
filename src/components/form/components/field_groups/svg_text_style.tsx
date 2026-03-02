@@ -103,8 +103,8 @@ const TextStyleFieldPreviewContainer = styled.div`
 const TextStyleFieldPreviewErrorContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: oklch(98% 0.016 73.684);
-  color: oklch(55.3% 0.195 38.402);
+  background-color: oklch(98% 0.016 73.684deg);
+  color: oklch(55.3% 0.195 38.402deg);
   border-radius: 6px;
   padding: 10px;
 
@@ -115,7 +115,7 @@ const TextStyleFieldPreviewErrorContainer = styled.div`
 
   & > p {
     font-weight: 600;
-    color: oklch(47% 0.157 37.304);
+    color: oklch(47% 0.157 37.304deg);
   }
 `;
 
