@@ -72,6 +72,7 @@ export const SVGTextStyle: StoryObj<
             fields="textStyle"
             label={label}
             previewText={previewText}
+            safeParse
           />
           <form.SubmitButton>Save</form.SubmitButton>
         </Form>

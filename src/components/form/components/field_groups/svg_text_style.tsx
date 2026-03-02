@@ -26,10 +26,12 @@ const defaultValues: SvgTextStyleFields = {};
 export interface SVGTextStyleFieldsProps {
   label: string;
   previewText?: string;
+  safeParse?: boolean;
 }
 
 const inferSVGTextStyleFieldsProps: SVGTextStyleFieldsProps = {
   label: '',
+  safeParse: false,
 };
 
 export const FieldGroupSVGTextStyleFields = withFieldGroup({
@@ -39,6 +41,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
     group,
     label,
     previewText = 'Placeholder',
+    safeParse = false,
   }) {
     return (
       <Fieldset>
@@ -47,7 +50,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
           {(field) => <field.ColorPicker label="Color" />}
         </group.AppField>
         <group.AppField name="fontSize">
-          {(field) => <field.NumericInput label="Font size" />}
+          {(field) => <field.NumericInput label="Font size" min={0} />}
         </group.AppField>
         <FormGroup label="Font style">
           <TextStyleSwitchContainer>
@@ -83,7 +86,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
         <FormGroup label="Preview">
           <group.Subscribe selector={(state) => state.values}>
             {(values) => (
-              <TextStyleFieldPreview {...values}>
+              <TextStyleFieldPreview safeParse={safeParse} {...values}>
                 {previewText}
               </TextStyleFieldPreview>
             )}
@@ -100,15 +103,37 @@ const TextStyleFieldPreviewContainer = styled.div`
   min-height: 30px;
 `;
 
-interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
+const TextStyleFieldPreviewErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: oklch(98% 0.016 73.684);
+  color: oklch(55.3% 0.195 38.402);
+  border-radius: 6px;
+  padding: 10px;
+
+  & > ul > li {
+    margin-left: 30px;
+    list-style: disc;
+  }
+
+  & > p {
+    font-weight: 600;
+    color: oklch(47% 0.157 37.304);
+  }
+`;
+
+interface RenderTextStyleFieldPreviewProps {
   children?: ReactNode;
+  values: {
+    fill?: string | undefined;
+    fontSize?: number | undefined;
+    fontStyle?: 'normal' | 'italic' | undefined;
+    fontWeight?: 'bold' | 'normal' | undefined;
+  };
 }
 
-const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
-  props: TextStyleFieldPreviewProps,
-) {
-  const parsedValues = svgTextStyleFieldsSchema.parse(props);
-  const fontSize = parsedValues.fontSize ?? 16;
+function RenderTextStyleFieldPreview(props: RenderTextStyleFieldPreviewProps) {
+  const fontSize = props.values.fontSize ?? 16;
   const svgHeight = Math.round(fontSize * 1.5);
   const textY = Math.round(svgHeight / 4);
 
@@ -119,18 +144,76 @@ const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
           dominantBaseline="hanging"
           x={0}
           y={textY}
-          {...parsedValues}
+          {...props.values}
         >
           {props.children}
         </SVGStyledText>
       </svg>
     </TextStyleFieldPreviewContainer>
   );
+}
+
+interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
+  children?: ReactNode;
+}
+
+const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
+  props: TextStyleFieldPreviewProps & { safeParse?: boolean },
+) {
+  if (props.safeParse) {
+    return (
+      <SafeParseTextStyleFieldPreview {...props}>
+        {props.children}
+      </SafeParseTextStyleFieldPreview>
+    );
+  }
+
+  return (
+    <ParseTextStyleFieldPreview {...props}>
+      {props.children}
+    </ParseTextStyleFieldPreview>
+  );
 });
+
+function ParseTextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
+  const parsedValues = svgTextStyleFieldsSchema.parse(props);
+
+  return (
+    <RenderTextStyleFieldPreview values={parsedValues}>
+      {props.children}
+    </RenderTextStyleFieldPreview>
+  );
+}
+
+function SafeParseTextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
+  const safeResult = svgTextStyleFieldsSchema.safeParse(props);
+
+  if (!safeResult.success) {
+    return (
+      <TextStyleFieldPreviewErrorContainer>
+        <p>Cannot render preview with invalid values</p>
+        <ul>
+          {safeResult.error.issues.map((error) => (
+            <li key={`${error.path.join('.')}-${error.code}`}>
+              {error.path.join('.')}: ${error.message}
+            </li>
+          ))}
+        </ul>
+      </TextStyleFieldPreviewErrorContainer>
+    );
+  }
+
+  return (
+    <RenderTextStyleFieldPreview values={safeResult.data}>
+      {props.children}
+    </RenderTextStyleFieldPreview>
+  );
+}
 
 const BoldLabel = styled.span`
   font-weight: bold;
 `;
+
 const ItalicLabel = styled.span`
   font-style: italic;
 `;
