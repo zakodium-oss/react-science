@@ -1,5 +1,13 @@
 # Changelog
 
+## [19.10.1](https://github.com/zakodium-oss/react-science/compare/v19.10.0...v19.10.1) (2026-03-03)
+
+
+### Bug Fixes
+
+* add a column gap to tanstack inputs ([#985](https://github.com/zakodium-oss/react-science/issues/985)) ([1a84c0e](https://github.com/zakodium-oss/react-science/commit/1a84c0e137796e37b52f294e2dff566e4db1ffde))
+* preview with invalid values ([#984](https://github.com/zakodium-oss/react-science/issues/984)) ([5852a1e](https://github.com/zakodium-oss/react-science/commit/5852a1e42e5bac8bdfee881931369c82a536d711))
+
 ## [19.10.0](https://github.com/zakodium-oss/react-science/compare/v19.9.1...v19.10.0) (2026-02-25)
 
 
