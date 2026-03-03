@@ -26,7 +26,7 @@ export default {
 } as Meta;
 
 const StyledForm = styled(Form)`
-  max-width: 762px;
+  max-width: 605px;
   display: flex;
   flex-direction: column;
 `;
