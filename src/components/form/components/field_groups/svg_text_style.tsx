@@ -16,19 +16,6 @@ const TextStyleSwitchContainer = styled.div`
   gap: 1rem;
 `;
 
-const TextStyleFieldPreviewContainer = styled.div`
-  display: flex;
-  align-items: center;
-  min-height: 30px;
-`;
-
-const TextStyleFieldPreviewErrorContainer = styled.ul`
-  & > li {
-    margin-left: 15px;
-    list-style: disc;
-  }
-`;
-
 type SvgTextStyleFields = z.input<typeof svgTextStyleFieldsSchema>;
 
 // https://tanstack.com/form/latest/docs/framework/react/guides/form-composition#reusing-groups-of-fields-in-multiple-forms
@@ -105,6 +92,19 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
     );
   },
 });
+
+const TextStyleFieldPreviewErrorContainer = styled.ul`
+  & > li {
+    margin-left: 15px;
+    list-style: disc;
+  }
+`;
+
+const TextStyleFieldPreviewContainer = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+`;
 
 interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
   children?: ReactNode;
