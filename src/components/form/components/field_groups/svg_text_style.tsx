@@ -150,10 +150,6 @@ function TextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
   );
 }
 
-interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
-  children?: ReactNode;
-}
-
 const BoldLabel = styled.span`
   font-weight: bold;
 `;
