@@ -1,7 +1,6 @@
-import { Checkbox } from '@blueprintjs/core';
+import { Callout, Checkbox } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
-import { memo } from 'react';
 import type { z } from 'zod';
 
 import { SVGStyledText } from '../../../svg/index.js';
@@ -47,7 +46,7 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
           {(field) => <field.ColorPicker label="Color" />}
         </group.AppField>
         <group.AppField name="fontSize">
-          {(field) => <field.NumericInput label="Font size" />}
+          {(field) => <field.NumericInput label="Font size" min={1} />}
         </group.AppField>
         <FormGroup label="Font style">
           <TextStyleSwitchContainer>
@@ -94,6 +93,13 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
   },
 });
 
+const TextStyleFieldPreviewErrorContainer = styled.ul`
+  & > li {
+    margin-left: 15px;
+    list-style: disc;
+  }
+`;
+
 const TextStyleFieldPreviewContainer = styled.div`
   display: flex;
   align-items: center;
@@ -104,11 +110,27 @@ interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
   children?: ReactNode;
 }
 
-const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
-  props: TextStyleFieldPreviewProps,
-) {
-  const parsedValues = svgTextStyleFieldsSchema.parse(props);
-  const fontSize = parsedValues.fontSize ?? 16;
+function TextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
+  const safeResult = svgTextStyleFieldsSchema.safeParse(props);
+
+  if (!safeResult.success) {
+    return (
+      <Callout
+        title="Cannot render preview with invalid values"
+        intent="danger"
+      >
+        <TextStyleFieldPreviewErrorContainer>
+          {safeResult.error.issues.map((error) => (
+            <li key={`${error.path.join('.')}-${error.code}`}>
+              {error.path.join('.')}: ${error.message}
+            </li>
+          ))}
+        </TextStyleFieldPreviewErrorContainer>
+      </Callout>
+    );
+  }
+
+  const fontSize = safeResult.data.fontSize ?? 16;
   const svgHeight = Math.round(fontSize * 1.5);
   const textY = Math.round(svgHeight / 4);
 
@@ -119,18 +141,19 @@ const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
           dominantBaseline="hanging"
           x={0}
           y={textY}
-          {...parsedValues}
+          {...safeResult.data}
         >
           {props.children}
         </SVGStyledText>
       </svg>
     </TextStyleFieldPreviewContainer>
   );
-});
+}
 
 const BoldLabel = styled.span`
   font-weight: bold;
 `;
+
 const ItalicLabel = styled.span`
   font-style: italic;
 `;
