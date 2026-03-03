@@ -1,7 +1,6 @@
-import { Checkbox } from '@blueprintjs/core';
+import { Callout, Checkbox } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
-import { memo } from 'react';
 import type { z } from 'zod';
 
 import { SVGStyledText } from '../../../svg/index.js';
@@ -15,6 +14,19 @@ const TextStyleSwitchContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
+`;
+
+const TextStyleFieldPreviewContainer = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+`;
+
+const TextStyleFieldPreviewErrorContainer = styled.ul`
+  & > li {
+    margin-left: 15px;
+    list-style: disc;
+  }
 `;
 
 type SvgTextStyleFields = z.input<typeof svgTextStyleFieldsSchema>;
@@ -94,43 +106,31 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
   },
 });
 
-const TextStyleFieldPreviewContainer = styled.div`
-  display: flex;
-  align-items: center;
-  min-height: 30px;
-`;
-
-const TextStyleFieldPreviewErrorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: oklch(98% 0.016 73.684deg);
-  color: oklch(55.3% 0.195 38.402deg);
-  border-radius: 6px;
-  padding: 10px;
-
-  & > ul > li {
-    margin-left: 30px;
-    list-style: disc;
-  }
-
-  & > p {
-    font-weight: 600;
-    color: oklch(47% 0.157 37.304deg);
-  }
-`;
-
-interface RenderTextStyleFieldPreviewProps {
+interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
   children?: ReactNode;
-  values: {
-    fill?: string | undefined;
-    fontSize?: number | undefined;
-    fontStyle?: 'normal' | 'italic' | undefined;
-    fontWeight?: 'bold' | 'normal' | undefined;
-  };
 }
 
-function RenderTextStyleFieldPreview(props: RenderTextStyleFieldPreviewProps) {
-  const fontSize = props.values.fontSize ?? 16;
+function TextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
+  const safeResult = svgTextStyleFieldsSchema.safeParse(props);
+
+  if (!safeResult.success) {
+    return (
+      <Callout
+        title="Cannot render preview with invalid values"
+        intent="danger"
+      >
+        <TextStyleFieldPreviewErrorContainer>
+          {safeResult.error.issues.map((error) => (
+            <li key={`${error.path.join('.')}-${error.code}`}>
+              {error.path.join('.')}: ${error.message}
+            </li>
+          ))}
+        </TextStyleFieldPreviewErrorContainer>
+      </Callout>
+    );
+  }
+
+  const fontSize = safeResult.data.fontSize ?? 16;
   const svgHeight = Math.round(fontSize * 1.5);
   const textY = Math.round(svgHeight / 4);
 
@@ -141,7 +141,7 @@ function RenderTextStyleFieldPreview(props: RenderTextStyleFieldPreviewProps) {
           dominantBaseline="hanging"
           x={0}
           y={textY}
-          {...props.values}
+          {...safeResult.data}
         >
           {props.children}
         </SVGStyledText>
@@ -153,33 +153,6 @@ function RenderTextStyleFieldPreview(props: RenderTextStyleFieldPreviewProps) {
 interface TextStyleFieldPreviewProps extends SvgTextStyleFields {
   children?: ReactNode;
 }
-
-const TextStyleFieldPreview = memo(function TextStyleFieldPreview(
-  props: TextStyleFieldPreviewProps,
-) {
-  const safeResult = svgTextStyleFieldsSchema.safeParse(props);
-
-  if (!safeResult.success) {
-    return (
-      <TextStyleFieldPreviewErrorContainer>
-        <p>Cannot render preview with invalid values</p>
-        <ul>
-          {safeResult.error.issues.map((error) => (
-            <li key={`${error.path.join('.')}-${error.code}`}>
-              {error.path.join('.')}: ${error.message}
-            </li>
-          ))}
-        </ul>
-      </TextStyleFieldPreviewErrorContainer>
-    );
-  }
-
-  return (
-    <RenderTextStyleFieldPreview values={safeResult.data}>
-      {props.children}
-    </RenderTextStyleFieldPreview>
-  );
-});
 
 const BoldLabel = styled.span`
   font-weight: bold;
