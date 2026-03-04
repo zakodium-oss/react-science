@@ -1,4 +1,5 @@
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
@@ -95,5 +96,35 @@ export function InDialog() {
         </form>
       </Dialog>
     </div>
+  );
+}
+
+const Parent = styled.div`
+  display: grid;
+  grid-template-columns: [label] 30% [input] 70%;
+  column-gap: 20px;
+`;
+
+const Children = styled.div<{ color: string }>`
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+
+  background-color: ${({ color }) => color};
+`;
+
+export function FormTest() {
+  return (
+    <Parent>
+      <Children color="red">
+        <p>Label 1</p>
+        <p>Input 1</p>
+      </Children>
+
+      <Children color="green">
+        <p>Label 2</p>
+        <p>Input 2</p>
+      </Children>
+    </Parent>
   );
 }

@@ -15,12 +15,21 @@ const FormContainer = styled.div<{
   width: 100%;
   display: grid;
   margin: 0;
-  grid-template-columns: ${(props) =>
-    props.layout === 'inline' ? '[label] 30% [input] 70%' : '1fr'};
+
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+
   column-gap: 20px;
+`;
+
+/*
+
+grid-template-columns: ${(props) =>
+    props.layout === 'inline' ? '[label] 30% [input] 70%' : '1fr'};
   grid-template-rows: ${(props) =>
     props.layout === 'inline' ? 'auto auto' : 'auto'};
-`;
+
+ */
 
 const RequiredSpan = styled.span`
   color: red;

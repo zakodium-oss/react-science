@@ -28,8 +28,11 @@ const Container = styled.div`
 const ContainerContent = styled.div`
   outline: 1px solid rgb(17 24 39 / 5%);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  display: flex;
-  flex-direction: column;
+
+  display: grid;
+  grid-template-columns: [label] 30% [input] 70%;
+  column-gap: 20px;
+
   gap: 2px;
   border-radius: 0.75rem;
   padding: 7px 10px 10px;
