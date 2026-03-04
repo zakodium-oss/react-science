@@ -2,7 +2,7 @@ import type { OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
@@ -57,7 +57,7 @@ export function NumericInput(props: InputProps) {
     } as Partial<z.input<typeof numericInputSchema>>,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -97,7 +97,7 @@ export function Input(props: InputProps) {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -137,7 +137,7 @@ export function Select(props: InputProps) {
     } as Partial<z.input<typeof selectSchema>>,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -186,7 +186,7 @@ export function Checkbox() {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -227,7 +227,7 @@ export function Switch(props: InputProps) {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -263,7 +263,7 @@ export function ColorPicker(props: InputProps) {
     } as ColorPickerSchema,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -306,7 +306,7 @@ export function RadioGroupOptions(props: InputProps) {
     defaultValues: radioDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -339,7 +339,7 @@ export function RadioGroupRadio(props: InputProps) {
     defaultValues: radioDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }

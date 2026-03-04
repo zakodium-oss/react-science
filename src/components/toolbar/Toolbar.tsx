@@ -148,7 +148,7 @@ export function Toolbar(props: ToolbarProps) {
 
     function update() {
       const lastElement = ref.current?.lastElementChild;
-      if (!lastElement) {
+      if (!ref.current || !lastElement) {
         return;
       }
       ref.current.style.width = 'initial';
