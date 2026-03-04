@@ -28,7 +28,7 @@ interface ScrollContainerProps {
   /**
    * A ref to the effective scroll container.
    */
-  scrollRef: RefObject<Element>;
+  scrollRef: RefObject<Element | null>;
   /**
    * The user provided ref to attach the scroll callbacks to.
    * It is set by the ScrollContainer component if the table is virtualized.
@@ -74,7 +74,7 @@ export function ScrollContainer(props: ScrollContainerProps) {
 }
 
 interface ContainerWithReorderingProps {
-  scrollElementRef: RefObject<Element>;
+  scrollElementRef: RefObject<Element | null>;
   isReorderingEnabled: boolean;
   children: ReactNode;
 }
@@ -91,7 +91,7 @@ function ContainerVirtual(props: ContainerWithReorderingProps) {
 }
 
 interface NoContainerProps {
-  scrollElementRef: RefObject<Element>;
+  scrollElementRef: RefObject<Element | null>;
   enabled: boolean;
   children: ReactNode;
 }
