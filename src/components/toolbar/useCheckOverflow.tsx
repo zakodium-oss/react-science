@@ -1,9 +1,10 @@
+import type { RefObject } from 'react';
 import { useLayoutEffect, useState } from 'react';
 
 import type { Overflow } from './Toolbar.tsx';
 
 interface UseCheckOverflowOptions {
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: RefObject<HTMLDivElement | null>;
   vertical: boolean;
   overflow: Overflow;
 }

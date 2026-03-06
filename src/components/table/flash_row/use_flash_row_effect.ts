@@ -6,7 +6,7 @@ import { useFlashedRowContext } from './flashed_row_context.js';
 
 export function useFlashRowEffect(
   id: string,
-  tableRowRef: RefObject<HTMLTableRowElement>,
+  tableRowRef: RefObject<HTMLTableRowElement | null>,
 ) {
   const [flashedItemId, setFlashedItemId] = useFlashedRowContext();
   useEffect(() => {
