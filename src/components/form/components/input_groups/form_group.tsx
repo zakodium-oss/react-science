@@ -46,11 +46,12 @@ const ContainerElement = styled.div<{
 
 // Keep 26 px for inline layout to align with input height
 const Label = styled.label<{ layout: Layout }>`
+  display: flex;
   padding-top: calc(
     ${INPUT_HEIGHT}px - ${(props) => (props.layout === 'inline' ? 26 : 20)}px
   );
+
   grid-column: ${(props) => (props.layout === 'inline' ? 'label' : '1 / -1')};
-  height: 30px;
 `;
 
 const ErrorAndHelpText = styled.div`
