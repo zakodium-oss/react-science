@@ -46,7 +46,6 @@ const ContainerElement = styled.div<{
 
 // Keep 26 px for inline layout to align with input height
 const Label = styled.label<{ layout: Layout }>`
-  display: flex;
   padding-top: calc(
     ${INPUT_HEIGHT}px - ${(props) => (props.layout === 'inline' ? 26 : 20)}px
   );
