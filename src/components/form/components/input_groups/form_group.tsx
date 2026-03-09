@@ -18,6 +18,7 @@ const FormContainer = styled.div<{
   grid-template-columns: ${(props) =>
     props.layout === 'inline' ? '[label] 30% [input] 70%' : '1fr'};
   column-gap: 20px;
+  row-gap: 5px;
   grid-template-rows: ${(props) =>
     props.layout === 'inline' ? 'auto auto' : 'auto'};
 `;

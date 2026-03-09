@@ -14,6 +14,7 @@ const TextStyleSwitchContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  height: 30px;
 `;
 
 type SvgTextStyleFields = z.input<typeof svgTextStyleFieldsSchema>;
