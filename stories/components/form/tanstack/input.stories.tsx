@@ -84,6 +84,7 @@ export function NumericInput(props: InputProps) {
 }
 
 const inputSchema = z.object({
+  longLabel: z.string(),
   input: z.string().min(1, 'Value must be at least 1 character'),
 });
 
@@ -93,6 +94,7 @@ export function Input(props: InputProps) {
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: inputSchema },
     defaultValues: {
+      longLabel: '',
       input: '',
     },
   });
@@ -103,7 +105,18 @@ export function Input(props: InputProps) {
   }
 
   return (
-    <form noValidate onSubmit={handleSubmit}>
+    <form style={{ maxWidth: 360 }} noValidate onSubmit={handleSubmit}>
+      <form.AppField name="longLabel">
+        {(field) => (
+          <field.Input
+            layout={props.layout}
+            label="Input with a long label should not overlap with the next field"
+            required
+            placeholder="Hello, World!"
+            helpText="a string"
+          />
+        )}
+      </form.AppField>
       <form.AppField name="input">
         {(field) => (
           <field.Input
