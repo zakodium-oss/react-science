@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.10.3](https://github.com/zakodium-oss/react-science/compare/v19.10.2...v19.10.3) (2026-03-10)
+
+
+### Bug Fixes
+
+* tanstack fields integration ([#992](https://github.com/zakodium-oss/react-science/issues/992)) ([8efb03d](https://github.com/zakodium-oss/react-science/commit/8efb03d39326166ee7b82a95a47d9b34b6a0fdc6))
+
 ## [19.10.2](https://github.com/zakodium-oss/react-science/compare/v19.10.1...v19.10.2) (2026-03-09)
 
 
