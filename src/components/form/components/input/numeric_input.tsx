@@ -58,6 +58,7 @@ export function NumericInput(props: NumericInputProps) {
         max={max}
         value={field.state.value ?? ''}
         onValueChange={onChange}
+        onBlur={field.handleBlur}
         intent={intent}
         placeholder={placeholder}
         required={required}

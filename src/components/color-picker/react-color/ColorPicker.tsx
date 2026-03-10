@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, FocusEvent } from 'react';
 import { useCallback, useRef, useState } from 'react';
 
 import { debounce } from '../../utils/index.js';
@@ -51,6 +51,7 @@ export interface ColorPickerProps {
   disableAlpha?: boolean;
   onChange?: (props: ChangeCallbackProps, event?: Event) => void;
   onChangeComplete?: (props: ChangeCallbackProps, event?: Event) => void;
+  onBlur?: (event: FocusEvent<HTMLElement>) => void;
   onSwatchHover?: (props: ChangeCallbackProps, event?: Event) => void;
   style?: CSSProperties;
 }
@@ -149,6 +150,7 @@ export function ColorPicker(props: ColorPickerProps) {
     className = '',
     color = defaultColor,
     onChangeComplete,
+    onBlur,
     style = {},
   } = props;
 
@@ -200,12 +202,22 @@ export function ColorPicker(props: ColorPickerProps) {
   return (
     <div style={{ ...styles.picker(width), ...style }} className={className}>
       <div style={styles.saturationContainer}>
-        <Saturation hsl={hsl} hsv={hsv} onChange={handleChange} />
+        <Saturation
+          hsl={hsl}
+          hsv={hsv}
+          onChange={handleChange}
+          onBlur={onBlur}
+        />
       </div>
       <div style={styles.controls}>
         <div style={styles.sliders}>
           <div style={styles.hueContainer}>
-            <Hue style={styles.hueElement} hsl={hsl} onChange={handleChange} />
+            <Hue
+              style={styles.hueElement}
+              hsl={hsl}
+              onChange={handleChange}
+              onBlur={onBlur}
+            />
           </div>
           <div style={styles.alphaContainer(disableAlpha)}>
             <Alpha
@@ -213,6 +225,7 @@ export function ColorPicker(props: ColorPickerProps) {
               rgb={rgb}
               hsl={hsl}
               onChange={handleChange}
+              onBlur={onBlur}
             />
           </div>
         </div>
@@ -227,6 +240,7 @@ export function ColorPicker(props: ColorPickerProps) {
         hex={hex}
         rgb={rgb}
         onChange={handleChange}
+        onBlur={onBlur}
         disableAlpha={disableAlpha}
       />
       <SketchPresetColors

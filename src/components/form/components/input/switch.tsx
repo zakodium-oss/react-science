@@ -46,6 +46,7 @@ export function Switch(props: SwitchProps) {
       <StyledSwitch
         name={field.name}
         id={field.name}
+        value={String(field.state.value)}
         checked={field.state.value}
         onChange={onChange}
         onBlur={field.handleBlur}

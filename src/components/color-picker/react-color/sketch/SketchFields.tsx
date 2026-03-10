@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, FocusEvent } from 'react';
 import { useCallback } from 'react';
 
 import type { HSL, RGB } from '../ColorPicker.js';
@@ -10,6 +10,7 @@ interface SketchFieldsProps {
     data: (RGB | HSL | { hex: string }) & { source: string },
     e: Event,
   ) => void;
+  onBlur?: (event: FocusEvent<HTMLElement>) => void;
   hsl: HSL;
   hex: string;
   rgb: RGB;
@@ -57,6 +58,7 @@ const styles: Record<
 
 const SketchFields = ({
   onChange,
+  onBlur,
   rgb,
   hsl,
   hex,
@@ -116,6 +118,7 @@ const SketchFields = ({
           label="hex"
           value={hex.replace('#', '')}
           onChange={handleChange}
+          onBlur={onBlur}
         />
       </div>
       <div style={styles.single}>
@@ -124,6 +127,7 @@ const SketchFields = ({
           label="r"
           value={rgb.r}
           onChange={handleChange}
+          onBlur={onBlur}
           dragLabel="true"
           dragMax="255"
         />
@@ -134,6 +138,7 @@ const SketchFields = ({
           label="g"
           value={rgb.g}
           onChange={handleChange}
+          onBlur={onBlur}
           dragLabel="true"
           dragMax="255"
         />
@@ -144,6 +149,7 @@ const SketchFields = ({
           label="b"
           value={rgb.b}
           onChange={handleChange}
+          onBlur={onBlur}
           dragLabel="true"
           dragMax="255"
         />
@@ -154,6 +160,7 @@ const SketchFields = ({
           label="a"
           value={Math.round(rgb.a * 100)}
           onChange={handleChange}
+          onBlur={onBlur}
           dragLabel="true"
           dragMax="100"
         />

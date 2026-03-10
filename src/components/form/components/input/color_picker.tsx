@@ -22,7 +22,7 @@ export function ColorPicker(props: ColorPickerProps) {
     .at(0);
 
   function onChange(color: ChangeCallbackComponentProps) {
-    field.setValue(color.hex);
+    field.handleChange(color.hex);
   }
 
   return (
@@ -40,6 +40,7 @@ export function ColorPicker(props: ColorPickerProps) {
         id={field.name}
         color={{ hex: field.state.value }}
         onChange={onChange}
+        onBlur={field.handleBlur}
         presetColors={presetColors}
         disableAlpha={disableAlpha}
         popoverProps={popoverProps}
