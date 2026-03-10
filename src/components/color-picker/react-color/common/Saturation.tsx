@@ -53,7 +53,7 @@ const styles = {
 };
 
 const Saturation = (props) => {
-  const { onChange, hsl, hsv, pointer } = props;
+  const { hsl, hsv, pointer, onChange, onBlur } = props;
 
   const throttleRef = useRef(
     throttle((fn, data, e) => {
@@ -85,6 +85,7 @@ const Saturation = (props) => {
       onMouseDown={handleMouseDown}
       onTouchMove={handleChange}
       onTouchStart={handleChange}
+      onBlur={onBlur}
     >
       <div style={styles.white()}>
         <div style={styles.black()} />

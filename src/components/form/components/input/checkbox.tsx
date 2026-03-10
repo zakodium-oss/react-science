@@ -45,9 +45,9 @@ export function Checkbox(props: CheckboxProps) {
         label={label}
         name={field.name}
         value={String(field.state.value)}
+        checked={field.state.value}
         onChange={onChange}
         onBlur={field.handleBlur}
-        defaultChecked={field.state.value}
       />
     </FormGroup>
   );

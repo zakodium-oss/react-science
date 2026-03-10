@@ -89,6 +89,7 @@ const Hue = (props) => {
         onMouseDown={handleMouseDown}
         onTouchMove={handleChange}
         onTouchStart={handleChange}
+        onBlur={props.onBlur}
       >
         <div style={styles.pointer(direction, hsl)}>
           {pointer ? (

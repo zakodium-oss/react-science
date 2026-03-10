@@ -107,6 +107,7 @@ const Alpha = (props) => {
         onMouseDown={mouseDownHandler}
         onTouchMove={handleChange}
         onTouchStart={handleChange}
+        onBlur={props.onBlur}
       >
         <div style={styles.pointer(direction, rgb)}>
           {props.pointer ? (

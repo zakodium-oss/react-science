@@ -50,11 +50,16 @@ const EditableInput = (props) => {
     [props.label],
   );
 
-  const handleBlur = useCallback(() => {
-    if (state.blurValue) {
-      setState({ value: state.blurValue, blurValue: null });
-    }
-  }, [state.blurValue]);
+  const onBlur = props.onBlur;
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      if (state.blurValue) {
+        setState({ value: state.blurValue, blurValue: null });
+      }
+      onBlur?.(event);
+    },
+    [state.blurValue, onBlur],
+  );
 
   const setUpdatedValue = useCallback(
     (value, e) => {
