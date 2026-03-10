@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.10.2](https://github.com/zakodium-oss/react-science/compare/v19.10.1...v19.10.2) (2026-03-09)
+
+
+### Bug Fixes
+
+* input with long label ([#989](https://github.com/zakodium-oss/react-science/issues/989)) ([a5be381](https://github.com/zakodium-oss/react-science/commit/a5be38129cc94bb24f24b9a07d7f6e8b67dea8de))
+
 ## [19.10.1](https://github.com/zakodium-oss/react-science/compare/v19.10.0...v19.10.1) (2026-03-03)
 
 
