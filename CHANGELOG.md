@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.10.4](https://github.com/zakodium-oss/react-science/compare/v19.10.3...v19.10.4) (2026-03-20)
+
+
+### Bug Fixes
+
+* allow disabling submit button ([#995](https://github.com/zakodium-oss/react-science/issues/995)) ([57a36ae](https://github.com/zakodium-oss/react-science/commit/57a36ae425aa7749d071aa7471afce6f1dad94ea))
+
 ## [19.10.3](https://github.com/zakodium-oss/react-science/compare/v19.10.2...v19.10.3) (2026-03-10)
 
 
