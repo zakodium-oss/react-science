@@ -282,6 +282,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     count: data.length,
     getScrollElement: () => virtualScrollElementRef.current,
     estimateSize:
+      // eslint-disable-next-line unicorn/consistent-destructuring
       (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
   });
@@ -338,6 +339,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
                   virtualScrollElementRef
                 : // When not virtualized, ScrollContainer does not render a container, only its children,
                   // And the scrollable element is provided by the user or by default, the <table> element.
+                  // eslint-disable-next-line unicorn/consistent-destructuring
                   props.scrollableElementRef || tableRef
             }
             scrollToRowRef={scrollToRowRef}

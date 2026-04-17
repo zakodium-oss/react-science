@@ -99,7 +99,7 @@
     "cheminfo-types": "^1.15.0",
     "cross-env": "^10.1.0",
     "eslint": "^9.39.2",
-    "eslint-config-zakodium": "^19.1.0",
+    "eslint-config-zakodium": "^20.0.0",
     "eslint-plugin-storybook": "^10.3.5",
     "fifo-logger": "^2.0.1",
     "filelist-utils": "^1.11.3",
@@ -124,7 +124,7 @@
     "storybook": "^10.3.5",
     "stylelint": "^17.8.0",
     "stylelint-config-standard": "^40.0.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite": "^8.0.8",
     "vitest": "^4.1.4",
     "wdf-parser": "^1.0.0"

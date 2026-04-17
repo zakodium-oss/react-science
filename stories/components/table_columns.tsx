@@ -7,6 +7,7 @@ import {
 } from '../../src/components/index.js';
 import type { table } from '../data/data.js';
 
+// eslint-disable-next-line react-refresh/only-export-components
 const Truncate = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;

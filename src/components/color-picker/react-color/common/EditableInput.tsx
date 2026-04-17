@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 const DEFAULT_ARROW_OFFSET = 1;
 
@@ -10,8 +10,6 @@ const DOWN_KEY_CODE = 40;
 const VALID_KEY_CODES = new Set([UP_KEY_CODE, DOWN_KEY_CODE]);
 const isValidKeyCode = (keyCode) => VALID_KEY_CODES.has(keyCode);
 const getNumberValue = (value) => Number(String(value).replaceAll('%', ''));
-
-let idCounter = 1;
 
 const styles = {
   wrap: {
@@ -27,7 +25,7 @@ const EditableInput = (props) => {
   const inputRef = useRef();
   const valueRef = useRef<number>(props.value);
 
-  const inputId = useRef(`rc-editable-input-${idCounter++}`).current;
+  const inputId = `rc-editable-input-${useId()}`;
 
   useEffect(() => {
     valueRef.current = props.value;

@@ -40,9 +40,11 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
     rows,
     tdStyle,
     getTdProps,
+    isReorderingEnabled,
+    renderRowPreview,
     renderRowTr = getDefaultRenderRowTr(
-      props.isReorderingEnabled,
-      props.renderRowPreview as TableRowPreviewRenderer<unknown>,
+      isReorderingEnabled,
+      renderRowPreview as TableRowPreviewRenderer<unknown>,
     ) as TableRowTrRenderer<TData>,
     virtualizer,
     virtualizeRows,
