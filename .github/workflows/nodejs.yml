@@ -11,6 +11,7 @@ jobs:
     # Documentation: https://github.com/zakodium/workflows#nodejs-ci
     uses: zakodium/workflows/.github/workflows/nodejs.yml@nodejs-v1
     with:
+      npm-setup-command: npm ci --force
       lint-check-types: true
       upload-coverage: false
       node-version-matrix: '[24]'
@@ -22,6 +23,6 @@ jobs:
         with:
           node-version-file: 'package.json'
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --force
       - name: Run stylelint
         run: npm run stylelint
