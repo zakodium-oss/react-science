@@ -5,6 +5,7 @@ import type {
   TooltipProps,
 } from '@blueprintjs/core';
 import { ButtonGroup, Classes, Colors, Icon, Popover } from '@blueprintjs/core';
+import type { StyledComponent } from '@emotion/styled';
 import styled from '@emotion/styled';
 import type { MouseEvent, ReactNode } from 'react';
 import { useLayoutEffect, useMemo, useRef } from 'react';
@@ -91,7 +92,7 @@ const Container = styled.div<ContainerProps>`
   width: 100%;
 `;
 
-export const ToolbarButton = styled(Button)`
+export const ToolbarButton: StyledComponent<ButtonProps> = styled(Button)`
   .${Classes.ICON} {
     /* Color of icon in button is lighter in Blueprintjs. We want a better contrast in the toolbars */
     color: ${Colors.DARK_GRAY3} !important;
