@@ -4,11 +4,9 @@ import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
-const plugins = [react()];
-
 const pages = fs.readdirSync(new URL('pages', import.meta.url));
 
-const rollupInputOptions = {
+const rolldownInputOptions = {
   index: fileURLToPath(new URL('index.html', import.meta.url)),
   ...Object.fromEntries(
     pages.map((page) => [
@@ -21,30 +19,24 @@ const rollupInputOptions = {
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.VITE_BASE || '/',
-  esbuild: {
-    jsx: 'automatic',
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'esnext',
-    },
-  },
   build: {
     target: 'esnext',
-    rollupOptions: {
-      input: rollupInputOptions,
+    rolldownOptions: {
+      input: rolldownInputOptions,
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-          return undefined;
+        codeSplitting: {
+          groups: [
+            {
+              name: 'vendor',
+              test: 'node_modules/',
+            },
+          ],
         },
       },
     },
     minify: process.env.NO_MINIFY ? false : 'esbuild',
   },
-  plugins,
+  plugins: [react()],
   test: {
     include: ['./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     typecheck: {

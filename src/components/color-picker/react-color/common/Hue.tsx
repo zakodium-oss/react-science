@@ -59,27 +59,34 @@ const styles = {
 };
 
 const Hue = (props) => {
+  const {
+    direction = 'horizontal',
+    hsl,
+    style,
+    pointer,
+    onBlur,
+    onChange,
+  } = props;
+  const { borderRadius, boxShadow } = style;
+
   const containerRef = useRef();
 
   const handleChange = useCallback(
     (e) => {
       const change = hue.calculateChange(
         e,
-        props.direction,
-        props.hsl,
+        direction,
+        hsl,
         containerRef.current,
       );
-      if (change && typeof props.onChange === 'function') {
-        props.onChange(change, e);
+      if (change && typeof onChange === 'function') {
+        onChange(change, e);
       }
     },
-    [props],
+    [direction, hsl, onChange],
   );
 
   const handleMouseDown = useOnChange(handleChange);
-
-  const { direction = 'horizontal', hsl, style, pointer } = props;
-  const { borderRadius, boxShadow } = style;
 
   return (
     <div style={styles.hue(borderRadius, boxShadow)}>
@@ -89,7 +96,7 @@ const Hue = (props) => {
         onMouseDown={handleMouseDown}
         onTouchMove={handleChange}
         onTouchStart={handleChange}
-        onBlur={props.onBlur}
+        onBlur={onBlur}
       >
         <div style={styles.pointer(direction, hsl)}>
           {pointer ? (

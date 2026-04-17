@@ -33,7 +33,6 @@ export function useTableScroll<TData extends RowData>(options: {
   const { scrollToRowRef, virtualizeRows, scrollRef, table, virtualizer } =
     options;
 
-  // @ts-expect-error We cannot call the hook conditionally to satisfy the type checker
   useImperativeHandle(scrollToRowRef, () => {
     if (virtualizeRows) {
       return {

@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "rootDir": "src/components",
     "outDir": "lib/components"
   },
   "include": ["src/components"],
