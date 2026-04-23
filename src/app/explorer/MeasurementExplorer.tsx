@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { FaArrowsAltH, FaExchangeAlt } from 'react-icons/fa';
 
 import type { MeasurementPlotProps } from '../helpers/index.js';
@@ -41,6 +41,7 @@ const MeasurementExplorerAction = styled.div`
 
 export function MeasurementExplorer(props: MeasurementExplorerProps) {
   const { measurement, width = '100%', height = '100%' } = props;
+  const flipId = useId();
   const measurementsArray = useMemo(
     () => (Array.isArray(measurement) ? measurement : [measurement]),
     [measurement],
@@ -145,9 +146,9 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           </MeasurementExplorerSelect>
         </div>
         <div>
-          <FaExchangeAlt
-            style={{ marginTop: 2, cursor: 'pointer' }}
-            size="20"
+          <button
+            type="button"
+            aria-label="Swap x/y"
             onClick={() =>
               setInfo(({ xVariableName, yVariableName, ...info }) => ({
                 ...info,
@@ -155,7 +156,12 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
                 yVariableName: xVariableName,
               }))
             }
-          />
+          >
+            <FaExchangeAlt
+              style={{ marginTop: 2, cursor: 'pointer' }}
+              size="20"
+            />
+          </button>
         </div>
         <div>
           <label>yVariable :</label>
@@ -172,22 +178,27 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
           </MeasurementExplorerSelect>
         </div>
         <MeasurementExplorerAction>
-          Flip horizontal axis:
-          <FaArrowsAltH
-            style={{
-              cursor: 'pointer',
-              border: '1px solid black',
-              padding: 1,
-              marginLeft: 2,
-            }}
-            size="28"
+          <label id={flipId}>Flip horizontal axis:</label>
+          <button
+            type="button"
+            aria-labelledby={flipId}
             onClick={() =>
               setInfo(({ flipHorizontalAxis, ...other }) => ({
                 flipHorizontalAxis: !flipHorizontalAxis,
                 ...other,
               }))
             }
-          />
+          >
+            <FaArrowsAltH
+              style={{
+                cursor: 'pointer',
+                border: '1px solid black',
+                padding: 1,
+                marginLeft: 2,
+              }}
+              size="28"
+            />
+          </button>
         </MeasurementExplorerAction>
       </MeasurementExplorerContent>
       <MeasurementPlot {...props} {...info} />
