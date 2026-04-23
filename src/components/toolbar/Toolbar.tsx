@@ -33,7 +33,9 @@ interface ToolbarBaseProps {
 }
 
 export interface ToolbarProps
-  extends ToolbarBaseProps, Pick<ButtonGroupProps, 'children' | 'vertical'> {
+  extends
+    ToolbarBaseProps,
+    Pick<ButtonGroupProps, 'children' | 'vertical' | 'aria-label'> {
   /**
    * The type of interaction which triggers a popover to open.
    * This prop only affects children which are `Toolbar.PopoverItem`.
@@ -55,7 +57,10 @@ export interface ToolbarProps
 export interface ToolbarItemProps
   extends
     ToolbarBaseProps,
-    Pick<ButtonProps, 'id' | 'icon' | 'active' | 'tag' | 'tagProps'> {
+    Pick<
+      ButtonProps,
+      'id' | 'icon' | 'active' | 'tag' | 'tagProps' | 'aria-label'
+    > {
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
   onClick?: (event: MouseEvent) => void;
@@ -117,6 +122,7 @@ export function Toolbar(props: ToolbarProps) {
     popoverInteractionKind,
     overflow = 'wrap',
     overflowButtonProps,
+    'aria-label': ariaLabel,
   } = props;
 
   const { placement = 'end' } = overflowButtonProps || {};
@@ -174,6 +180,8 @@ export function Toolbar(props: ToolbarProps) {
     return (
       <ToolbarProvider value={contextValue}>
         <ButtonGroup
+          role="toolbar"
+          aria-label={ariaLabel}
           ref={ref}
           key={String(vertical)}
           vertical={vertical}
@@ -193,6 +201,8 @@ export function Toolbar(props: ToolbarProps) {
     <ToolbarProvider value={contextValue}>
       <Container vertical={vertical} placement={placement}>
         <ButtonGroup
+          role="toolbar"
+          aria-label={ariaLabel}
           ref={ref}
           // Reset because of layout effect above
           // TODO: remove once the workaround is no longer needed
