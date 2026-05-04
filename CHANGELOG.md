@@ -1,5 +1,13 @@
 # Changelog
 
+## [19.11.0](https://github.com/zakodium-oss/react-science/compare/v19.10.4...v19.11.0) (2026-05-04)
+
+
+### Features
+
+* add accessible props to Toolbar components ([7a2bb73](https://github.com/zakodium-oss/react-science/commit/7a2bb736233ae0e3724d4480ae9f0d57f76bcbb9))
+* add svg export utils ([#1001](https://github.com/zakodium-oss/react-science/issues/1001)) ([03f66c5](https://github.com/zakodium-oss/react-science/commit/03f66c551a4645d43cc9dbd475529576a36da3f9))
+
 ## [19.10.4](https://github.com/zakodium-oss/react-science/compare/v19.10.3...v19.10.4) (2026-03-20)
 
 
