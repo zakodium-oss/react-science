@@ -6,7 +6,7 @@ import type { AccordionItemProps } from '../../src/components/index.js';
 import { Accordion, assert } from '../../src/components/index.js';
 
 interface AccordionStoryState<T extends string> {
-  openItems: T[];
+  openItems: readonly T[];
 }
 
 type AccordionStoryAction<T extends string> =
@@ -31,15 +31,18 @@ function accordionStoryReducer<T extends string>(
     .exhaustive();
 }
 
-const accordionStoryContext = createContext<{
+interface AccordionStoryContextValue {
   state: AccordionStoryState<string>;
   dispatch: Dispatch<AccordionStoryAction<string>>;
-} | null>(null);
+}
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
-export function AccordionStoryProvider<T extends string>(props: {
+const accordionStoryContext = createContext<AccordionStoryContextValue | null>(
+  null,
+);
+
+export function AccordionStoryProvider(props: {
   children: ReactNode;
-  initialOpenItems: T[];
+  initialOpenItems: readonly string[];
 }) {
   const [state, dispatch] = useReducer(accordionStoryReducer, {
     openItems: props.initialOpenItems,

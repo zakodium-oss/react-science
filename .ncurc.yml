@@ -1,10 +1,5 @@
 dep: 'prod,dev'
 reject:
-  # We're not ready for React 19.
-  - react
-  - react-dom
-  - '@types/react'
-  - '@types/react-dom'
   # Blueprint is a peerDependency. Updating it is usually breaking change.
   - '@blueprintjs/core'
   - '@blueprintjs/icons'

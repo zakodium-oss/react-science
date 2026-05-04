@@ -5,7 +5,7 @@ import type { DraggableItemState } from './item_data.js';
 
 export interface DraggableRowContext {
   state: DraggableItemState;
-  dragHandleRef: RefObject<HTMLButtonElement>;
+  dragHandleRef: RefObject<HTMLButtonElement | null>;
 }
 
 export const draggableRowContext = createContext<DraggableRowContext | null>(

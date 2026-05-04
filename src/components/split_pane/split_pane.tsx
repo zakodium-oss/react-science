@@ -223,7 +223,7 @@ interface SplitterProps {
   direction: SplitPaneDirection;
   isOpen: boolean;
   isResizing: boolean;
-  splitterRef: RefObject<HTMLDivElement>;
+  splitterRef: RefObject<HTMLDivElement | null>;
 }
 
 function Splitter(props: SplitterProps) {
