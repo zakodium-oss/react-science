@@ -21,7 +21,7 @@ import { useItemOrder } from './item_order_context.js';
  * @param enabled Enable or disable the monitoring.
  */
 export function useDropMonitor(
-  scrollElementRef: RefObject<Element>,
+  scrollElementRef: RefObject<Element | null>,
   enabled: boolean,
 ) {
   const { reorderItem, items } = useItemOrder();
