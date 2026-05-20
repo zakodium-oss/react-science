@@ -48,9 +48,9 @@
   },
   "homepage": "https://github.com/zakodium-oss/react-science#readme",
   "peerDependencies": {
-    "@blueprintjs/core": "^6.12.0",
-    "@blueprintjs/icons": "^6.9.0",
-    "@blueprintjs/select": "^6.1.9",
+    "@blueprintjs/core": "^6.14.0",
+    "@blueprintjs/icons": "^6.10.0",
+    "@blueprintjs/select": "^6.2.0",
     "fifo-logger": "^1.0.0 || ^2.0.0",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
@@ -76,9 +76,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@blueprintjs/core": "6.12.0",
-    "@blueprintjs/icons": "6.9.0",
-    "@blueprintjs/select": "6.1.9",
+    "@blueprintjs/core": "6.14.0",
+    "@blueprintjs/icons": "6.10.0",
+    "@blueprintjs/select": "6.2.0",
     "@floating-ui/react": "^0.27.19",
     "@playwright/experimental-ct-react": "^1.59.1",
     "@playwright/test": "^1.59.1",
