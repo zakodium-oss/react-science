@@ -54,7 +54,7 @@ export function InDialog() {
             <ColorPickerDropdown
               popoverProps={{
                 positioningStrategy: 'fixed',
-                position: 'bottom-left',
+                placement: 'bottom-start',
               }}
               color={{ hex: color }}
               onChange={(element) => {

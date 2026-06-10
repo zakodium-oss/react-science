@@ -425,7 +425,7 @@ export function ControlledState() {
   type AccordionStoryItemId = 'first' | 'second' | 'third';
   const Item = AccordionStoryItem<AccordionStoryItemId>;
   return (
-    <AccordionStoryProvider<AccordionStoryItemId> initialOpenItems={['first']}>
+    <AccordionStoryProvider initialOpenItems={['first']}>
       <Accordion>
         <Item id="first" title="First">
           First content

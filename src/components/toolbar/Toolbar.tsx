@@ -1,10 +1,17 @@
 import type {
   ButtonGroupProps,
   Intent,
-  PopoverProps,
+  PopoverNextProps,
   TooltipProps,
 } from '@blueprintjs/core';
-import { ButtonGroup, Classes, Colors, Icon, Popover } from '@blueprintjs/core';
+import {
+  ButtonGroup,
+  Classes,
+  Colors,
+  Icon,
+  PopoverNext,
+} from '@blueprintjs/core';
+import type { StyledComponent } from '@emotion/styled';
 import styled from '@emotion/styled';
 import type { MouseEvent, ReactNode } from 'react';
 import { useLayoutEffect, useMemo, useRef } from 'react';
@@ -71,7 +78,7 @@ interface ToolbarItemInternalProps extends ToolbarItemProps {
 }
 
 export interface ToolbarPopoverItemProps extends Omit<
-  PopoverProps,
+  PopoverNextProps,
   'targetProps'
 > {
   itemProps: ToolbarItemProps;
@@ -96,7 +103,7 @@ const Container = styled.div<ContainerProps>`
   width: 100%;
 `;
 
-export const ToolbarButton = styled(Button)`
+export const ToolbarButton: StyledComponent<ButtonProps> = styled(Button)`
   .${Classes.ICON} {
     /* Color of icon in button is lighter in Blueprintjs. We want a better contrast in the toolbars */
     color: ${Colors.DARK_GRAY3} !important;
@@ -154,7 +161,7 @@ export function Toolbar(props: ToolbarProps) {
 
     function update() {
       const lastElement = ref.current?.lastElementChild;
-      if (!lastElement) {
+      if (!ref.current || !lastElement) {
         return;
       }
       ref.current.style.width = 'initial';
@@ -316,7 +323,7 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
 
 Toolbar.Item = ToolbarItem;
 
-const ToolbarPopover = styled(Popover)`
+const ToolbarPopover = styled(PopoverNext)`
   .${Classes.ICON} {
     color: ${Colors.DARK_GRAY3};
   }
@@ -330,7 +337,8 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
 
   return (
     <ToolbarPopover
-      minimal
+      animation="minimal"
+      arrow={false}
       disabled={disabled}
       placement={vertical ? 'right-start' : 'bottom-start'}
       interactionKind={popoverInteractionKind}

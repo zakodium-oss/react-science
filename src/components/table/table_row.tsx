@@ -4,12 +4,12 @@ import { useRef } from 'react';
 
 import { useFlashRowEffect } from './flash_row/use_flash_row_effect.js';
 
-export interface TableRowTrProps {
-  row: Row<unknown>;
+export interface TableRowTrProps<RowType> {
+  row: Row<RowType>;
   trProps: JSX.IntrinsicElements['tr'];
 }
 
-export function TableRowTr(props: TableRowTrProps) {
+export function TableRowTr<RowType>(props: TableRowTrProps<RowType>) {
   const { row, trProps } = props;
   const tableRowRef = useRef<HTMLTableRowElement>(null);
   useFlashRowEffect(row.id, tableRowRef);

@@ -43,14 +43,16 @@ export function ItemOrderProvider<T = unknown>(
     [items, onOrderChanged],
   );
 
-  const value = useMemo(
-    () => ({
+  const value = useMemo(() => {
+    // This assertion is necessary because the provider cannot contain the
+    // T type instantiated by this component.
+    const contextItems = items as Array<Row<unknown>>;
+    return {
       reorderItem,
-      items: items as Array<Row<unknown>>,
+      items: contextItems,
       instanceId,
-    }),
-    [reorderItem, items, instanceId],
-  );
+    };
+  }, [reorderItem, items, instanceId]);
 
   return (
     <itemOrderContext.Provider value={value}>

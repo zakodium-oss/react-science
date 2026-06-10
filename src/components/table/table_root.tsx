@@ -215,7 +215,7 @@ interface RegularTableProps<
    * By default, the table itself is used as the scrollable element, but
    * you must style it to make it scrollable.
    */
-  scrollableElementRef?: RefObject<Element>;
+  scrollableElementRef?: RefObject<Element | null>;
 }
 
 interface VirtualizedTableProps<

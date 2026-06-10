@@ -6,6 +6,7 @@ import { defaultColorPalette } from '../palette.js';
 
 import { Alpha, CheckBoard, Hue, Saturation } from './common/index.js';
 import * as colorHelper from './helpers/color.js';
+import type { SketchFieldsProps } from './sketch/SketchFields.js';
 import SketchFields from './sketch/SketchFields.js';
 import SketchPresetColors from './sketch/SketchPresetColors.js';
 
@@ -168,11 +169,14 @@ export function ColorPicker(props: ColorPickerProps) {
     setState(colorHelper.toState(color, 0));
   }
 
-  const handleChange = useCallback(
-    (data: any, event: any) => {
+  const handleChange = useCallback<SketchFieldsProps['onChange']>(
+    (data, event) => {
       const isValidColor = colorHelper.simpleCheckForValidColor(data);
       if (isValidColor) {
-        const colors = colorHelper.toState(data, data.h || state.oldHue);
+        const colors = colorHelper.toState(
+          data,
+          ('h' in data && data.h) || state.oldHue,
+        );
         setState(colors);
         if (onChangeComplete) {
           debounceRef.current(onChangeComplete, colors, event);
@@ -245,7 +249,7 @@ export function ColorPicker(props: ColorPickerProps) {
       />
       <SketchPresetColors
         colors={presetColors}
-        onClick={(data, e) => handleChange?.(data as ChangeCallbackProps, e)}
+        onClick={(data, e) => handleChange(data, e)}
         onSwatchHover={handleSwatchHover}
       />
     </div>
