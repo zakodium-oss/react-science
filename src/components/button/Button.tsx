@@ -91,18 +91,12 @@ export function Button(props: ButtonProps) {
              adds a sibling but should not affect the margin on its own.
             */
             tag ? (
-              <>
-                {children ? (
-                  <Icon icon={buttonProps.icon} />
-                ) : (
-                  <div style={{ display: 'contents' }}>
-                    <Icon icon={buttonProps.icon} />
-                  </div>
-                )}
+              <div style={{ display: 'contents' }}>
+                <Icon icon={buttonProps.icon} />
                 <ButtonTag round intent="success" {...tagProps}>
                   {tag}
                 </ButtonTag>
-              </>
+              </div>
             ) : (
               buttonProps.icon
             )

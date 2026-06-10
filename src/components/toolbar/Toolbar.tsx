@@ -280,28 +280,26 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
         width: 'fit-content',
       }}
       icon={
-        <>
-          {isPopover ? (
-            <>
-              {/*For the icon to be properly styled, it should not have any siblings*/}
-              <div style={{ display: 'contents' }}>{normalizedIcon}</div>
-              <Icon
-                icon="caret-right"
-                size={9}
-                style={{
-                  transform: 'rotate(45deg)',
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  width: 9,
-                  height: 9,
-                }}
-              />
-            </>
-          ) : (
-            normalizedIcon
-          )}
-        </>
+        isPopover ? (
+          <div style={{ display: 'contents' }}>
+            {/*For the icon to be properly styled, it should not have any siblings*/}
+            <div style={{ display: 'contents' }}>{normalizedIcon}</div>
+            <Icon
+              icon="caret-right"
+              size={9}
+              style={{
+                transform: 'rotate(45deg)',
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                width: 9,
+                height: 9,
+              }}
+            />
+          </div>
+        ) : (
+          normalizedIcon
+        )
       }
       onClick={onClick}
       tooltipProps={
