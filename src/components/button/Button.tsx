@@ -7,11 +7,9 @@ import type {
 import {
   AnchorButton,
   Button as BlueprintButton,
-  Icon,
   Tag,
   Tooltip,
 } from '@blueprintjs/core';
-import type { CSSObject } from '@emotion/styled';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
@@ -41,21 +39,32 @@ const ButtonTag = styled(Tag)`
   z-index: 20;
 `;
 
-// Setting the line-height makes sure regular sized buttons have a
-// height consistent with the input fields and across variants.
-// Using the same line height as in the blueprint docs.
-const buttonStyles: CSSObject = {
-  lineHeight: 1.15,
-  position: 'relative',
-};
+interface InnerButtonProps {
+  isIconButton: boolean;
+}
 
-const TooltipAnchorButton = styled(AnchorButton)<{
-  children: ReactNode;
-}>(buttonStyles);
+/*
+  Setting the line-height makes sure that when passing regular text in icons instead of an svg, they are vertically centered
+  max-width makes sure buttons with tag or hoverability indicator (both implying absolutely positioned elements) keep their intended width
+  When a button just has an icon, we override BP styles and remove the margin-right, because if it also has tag prop this is required to keep the layout correct.
+*/
+const buttonStyles = ({ isIconButton }: InnerButtonProps) => `
+  line-height: 1em;
+  position: relative;
+  max-width: ${isIconButton ? '30px' : 'none'};
 
-const TooltipButton = styled(BlueprintButton)<{ children: ReactNode }>(
-  buttonStyles,
-);
+  & .bp6-icon {
+    ${isIconButton ? 'margin-right: 0px;' : ''}
+  }
+`;
+
+const TooltipAnchorButton = styled(AnchorButton)<InnerButtonProps>`
+  ${(props) => buttonStyles(props)}
+`;
+
+const TooltipButton = styled(BlueprintButton)<InnerButtonProps>`
+  ${(props) => buttonStyles(props)}
+`;
 
 export function Button(props: ButtonProps) {
   const { tooltipProps = {}, children, tag, tagProps, ...buttonProps } = props;
@@ -80,28 +89,13 @@ export function Button(props: ButtonProps) {
         <InnerButton
           {...targetProps}
           {...buttonProps}
-          icon={
-            /*
-             icon and children will be children of the same node.
-             Blueprintjs' stylesheet treats the presence of multiple child elements
-             as there being icon and text, styling the icon with a right margin
-             so that the text is not right next to it.
-             In blueprint alone, this only happens when the button has children.
-             Here, we need to handle the case when the button has a tag, which
-             adds a sibling but should not affect the margin on its own.
-            */
-            tag ? (
-              <div style={{ display: 'contents' }}>
-                <Icon icon={buttonProps.icon} />
-                <ButtonTag round intent="success" {...tagProps}>
-                  {tag}
-                </ButtonTag>
-              </div>
-            ) : (
-              buttonProps.icon
-            )
-          }
+          isIconButton={!children && !buttonProps.text}
         >
+          {tag && (
+            <ButtonTag round intent="success" {...tagProps}>
+              {tag}
+            </ButtonTag>
+          )}
           {children}
         </InnerButton>
       )}
