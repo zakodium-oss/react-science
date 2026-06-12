@@ -7,6 +7,7 @@ import type {
 import {
   AnchorButton,
   Button as BlueprintButton,
+  Classes,
   Tag,
   Tooltip,
 } from '@blueprintjs/core';
@@ -53,16 +54,24 @@ const buttonStyles = ({ isIconButton }: InnerButtonProps) => `
   position: relative;
   max-width: ${isIconButton ? '30px' : 'none'};
 
-  & .bp6-icon {
+  & .${Classes.ICON} {
     ${isIconButton ? 'margin-right: 0px;' : ''}
   }
 `;
 
-const TooltipAnchorButton = styled(AnchorButton)<InnerButtonProps>`
+function shouldForwardButtonProp(propName: string) {
+  return propName !== 'isIconButton';
+}
+
+const TooltipAnchorButton = styled(AnchorButton, {
+  shouldForwardProp: shouldForwardButtonProp,
+})<InnerButtonProps>`
   ${(props) => buttonStyles(props)}
 `;
 
-const TooltipButton = styled(BlueprintButton)<InnerButtonProps>`
+const TooltipButton = styled(BlueprintButton, {
+  shouldForwardProp: shouldForwardButtonProp,
+})<InnerButtonProps>`
   ${(props) => buttonStyles(props)}
 `;
 

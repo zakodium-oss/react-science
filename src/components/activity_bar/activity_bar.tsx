@@ -43,8 +43,12 @@ export function ActivityBar(props: ActivityBarProps) {
 const ActivityButton = styled(Button)`
   font-size: 1.125em;
   width: fit-content;
+
+  /* Override the padding set by the large button group */
+  padding: var(--bp-surface-spacing) calc(var(--bp-surface-spacing) * 2) !important;
+
   .${Classes.ICON} {
-    color: ${Colors.DARK_GRAY3};
+    color: ${Colors.DARK_GRAY3} !important;
   }
 
   .${Classes.TAG} {
