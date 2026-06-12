@@ -1,4 +1,4 @@
-import type { MutableRefObject, ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import { useMemo } from 'react';
 import { useFullScreenHandle } from 'react-full-screen';
 
@@ -9,7 +9,7 @@ export interface FullscreenProviderProps {
    * Callback providing the ref which should be passed to the element that can be displayed fullscreen.
    * @param ref
    */
-  children: (ref: MutableRefObject<HTMLDivElement | null>) => ReactNode;
+  children: (ref: RefObject<HTMLDivElement | null>) => ReactNode;
   /**
    * Callback which will be called in case toggling results in an error.
    * @param error - The error that happened. Value is not necessarily an instance of `Error` and may even be `undefined`.

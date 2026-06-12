@@ -5,7 +5,7 @@ import type { HSL, RGB } from '../ColorPicker.js';
 import { EditableInput } from '../common/index.js';
 import * as color from '../helpers/color.js';
 
-interface SketchFieldsProps {
+export interface SketchFieldsProps {
   onChange: (
     data: (RGB | HSL | { hex: string }) & { source: string },
     e: Event,

@@ -277,19 +277,20 @@ function valueSearch(
   search: string,
   lowerCase = true,
 ): boolean {
+  let stringValue = match(value)
+    .with(P.boolean, String)
+    .with(P.number, String)
+    .with(P.string, (value) => {
+      return value === 'true' ? 'yes' : value === 'false' ? 'no' : value;
+    })
+    .with({}, (value) => JSON.stringify(value))
+    .otherwise(() => null);
+  if (stringValue === null) {
+    return true;
+  }
   if (lowerCase) {
-    value = String(value as unknown).toLowerCase();
+    stringValue = stringValue.toLowerCase();
     search = search.toLowerCase();
   }
-  return match(value)
-    .with(P.boolean, (value) => String(value).includes(search))
-    .with(P.number, (value) => String(value).includes(search))
-    .with(P.string, (value) => {
-      const newValue =
-        value === 'true' ? 'yes' : value === 'false' ? 'no' : value;
-
-      return newValue.includes(search);
-    })
-    .with({}, (value) => JSON.stringify(value).includes(search))
-    .otherwise(() => true);
+  return stringValue.includes(search);
 }

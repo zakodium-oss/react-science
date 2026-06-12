@@ -1,4 +1,4 @@
-import { Menu, MenuDivider, MenuItem, Popover } from '@blueprintjs/core';
+import { Menu, MenuDivider, MenuItem, PopoverNext } from '@blueprintjs/core';
 
 import { Button } from '../../src/components/index.js';
 
@@ -20,8 +20,8 @@ export function Dropdown() {
   );
 
   return (
-    <Popover content={content}>
+    <PopoverNext content={content}>
       <Button alignText="start" endIcon="caret-down" text="Default workspace" />
-    </Popover>
+    </PopoverNext>
   );
 }

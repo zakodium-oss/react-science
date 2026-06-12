@@ -73,7 +73,7 @@ export function TableDraggableRowTr<TData extends RowData>(
       );
     }
 
-    const data = getItemData(row as Row<unknown>, instanceId);
+    const data = getItemData(row, instanceId);
 
     return combine(
       draggable({

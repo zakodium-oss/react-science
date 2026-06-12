@@ -1,6 +1,6 @@
 import type { RadioGroupProps as BPRadioGroupProps } from '@blueprintjs/core';
 import { RadioGroup as BPRadioGroup } from '@blueprintjs/core';
-import type { FormEvent } from 'react';
+import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.ts';
 import { useFormContext } from '../input_groups/form_context.ts';
@@ -41,7 +41,7 @@ export function RadioGroup(props: RadioGroupProps) {
     .errors.map((e) => e.message)
     .at(0);
 
-  function onChange(event: FormEvent<HTMLInputElement>) {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
     return field.handleChange(event.currentTarget.value);
   }
 

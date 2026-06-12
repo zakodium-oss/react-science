@@ -19,7 +19,7 @@ export function useTableScroll<TData extends RowData>(options: {
   /**
    * A ref to the effective scroll container.
    */
-  scrollRef: RefObject<Element>;
+  scrollRef: RefObject<Element | null>;
   /*
   Tanstack table instance.
    */

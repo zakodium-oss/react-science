@@ -1,5 +1,5 @@
-import type { PopoverProps, TooltipProps } from '@blueprintjs/core';
-import { Popover } from '@blueprintjs/core';
+import type { PopoverNextProps, TooltipProps } from '@blueprintjs/core';
+import { PopoverNext } from '@blueprintjs/core';
 import type { ReactNode } from 'react';
 
 import type { ButtonProps } from '../button/Button.tsx';
@@ -10,7 +10,7 @@ export type Placement = 'start' | 'end';
 
 export interface BaseOverButtonProps extends ButtonProps {
   placement?: Placement;
-  popoverProps?: PopoverProps;
+  popoverProps?: PopoverNextProps;
 }
 export interface OverButtonProps extends BaseOverButtonProps {
   vertical?: boolean;
@@ -21,7 +21,7 @@ export interface OverButtonProps extends BaseOverButtonProps {
 function getPlacement(
   placement: Placement,
   vertical?: boolean,
-): PopoverProps['placement'] {
+): PopoverNextProps['placement'] {
   const isEndPlacement = placement === 'end';
   return vertical
     ? `${isEndPlacement ? 'top' : 'bottom'}-start`
@@ -41,17 +41,16 @@ export function OverflowButton(props: OverButtonProps) {
     ...otherProps
   } = props;
   return (
-    <Popover
-      minimal
+    <PopoverNext
+      shouldReturnFocusOnClose={false}
+      animation="minimal"
+      arrow={false}
       disabled={disabled}
       placement={getPlacement(placement, vertical)}
       interactionKind="hover"
       hasBackdrop={false}
       enforceFocus={false}
       autoFocus={false}
-      modifiers={{
-        flip: { enabled: false },
-      }}
       {...popoverProps}
       content={
         <Toolbar
@@ -75,7 +74,7 @@ export function OverflowButton(props: OverButtonProps) {
         }}
         {...otherProps}
       />
-    </Popover>
+    </PopoverNext>
   );
 }
 

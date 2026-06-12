@@ -2,7 +2,7 @@ import type { OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
@@ -46,18 +46,20 @@ const numericInputSchema = z.object({
     }),
 });
 
+const numericInputDefaultValues: Partial<z.input<typeof numericInputSchema>> = {
+  numeric: '18',
+};
+
 export function NumericInput(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) =>
       action('onSubmit')(numericInputSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: numericInputSchema },
-    defaultValues: {
-      numeric: '18',
-    } as Partial<z.input<typeof numericInputSchema>>,
+    defaultValues: numericInputDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -99,7 +101,7 @@ export function Input(props: InputProps) {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -139,18 +141,19 @@ export function Input(props: InputProps) {
 const selectSchema = z.object({
   select: z.string({ error: 'At least one element is required' }),
 });
+const selectDefaultValues: Partial<z.input<typeof selectSchema>> = {
+  select: undefined,
+};
 
 export function Select(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(selectSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: selectSchema },
-    defaultValues: {
-      select: undefined,
-    } as Partial<z.input<typeof selectSchema>>,
+    defaultValues: selectDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -199,7 +202,7 @@ export function Checkbox() {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -240,7 +243,7 @@ export function Switch(props: InputProps) {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -266,17 +269,19 @@ const colorPickerSchema = z.object({
 
 type ColorPickerSchema = z.input<typeof colorPickerSchema>;
 
+const colorPickerDefaultValues: ColorPickerSchema = {
+  color: undefined,
+};
+
 export function ColorPicker(props: InputProps) {
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(colorPickerSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
     validators: { onDynamic: colorPickerSchema },
-    defaultValues: {
-      color: undefined,
-    } as ColorPickerSchema,
+    defaultValues: colorPickerDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -319,7 +324,7 @@ export function RadioGroupOptions(props: InputProps) {
     defaultValues: radioDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -352,7 +357,7 @@ export function RadioGroupRadio(props: InputProps) {
     defaultValues: radioDefaultValues,
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }

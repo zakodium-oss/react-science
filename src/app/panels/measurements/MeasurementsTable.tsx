@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Popover } from '@blueprintjs/core';
+import { Menu, MenuItem, PopoverNext } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
@@ -315,7 +315,7 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
   return (
     <MeasurementsTableRowData>
       <MeasurementsIconsContainer>
-        <Popover content={content} position="bottom-left">
+        <PopoverNext content={content} placement="bottom-start">
           <Button
             variant="minimal"
             icon="more"
@@ -324,7 +324,7 @@ function MeasurementsTableRow(props: MeasurementsTableRowProps) {
             }}
             size="small"
           />
-        </Popover>
+        </PopoverNext>
         <MeasurementCheckbox
           checked={selectedMeasurements[kind]?.includes(item.id) || false}
           onSelectCheckbox={onSelectCheckbox}

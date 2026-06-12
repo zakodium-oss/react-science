@@ -1,6 +1,6 @@
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { revalidateLogic } from '@tanstack/react-form';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useState } from 'react';
 import { z } from 'zod';
 
@@ -26,7 +26,7 @@ export function BlurValidation() {
     },
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }
@@ -64,7 +64,7 @@ export function InDialog() {
     return setIsOpen(true);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void form.handleSubmit();
   }

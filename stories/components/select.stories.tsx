@@ -261,7 +261,7 @@ export function CategoriesNested() {
       <Select
         filterable={false}
         itemsEqual="label"
-        itemListRenderer={renderMenuNested(value as ItemsType, hoverState)}
+        itemListRenderer={renderMenuNested(value, hoverState)}
         items={[
           { label: 'Apple', group: 'Fruits' },
           { label: 'Banana', group: 'Fruits' },

@@ -11,7 +11,10 @@ export interface ItemData {
   [key: symbol]: unknown;
 }
 
-export function getItemData(row: Row<unknown>, instanceId: symbol): ItemData {
+export function getItemData<RowType>(
+  row: Row<RowType>,
+  instanceId: symbol,
+): ItemData {
   return {
     [itemKey]: true,
     id: row.id,

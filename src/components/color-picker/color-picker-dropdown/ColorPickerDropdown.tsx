@@ -1,5 +1,5 @@
-import type { PopoverProps } from '@blueprintjs/core';
-import { Popover } from '@blueprintjs/core';
+import type { PopoverNextProps } from '@blueprintjs/core';
+import { PopoverNext } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
 import FixedColorPreview from '../preview/FixedColorPreview.js';
@@ -16,7 +16,7 @@ export interface ColorPickerDropdownProps extends Pick<
   | 'onChangeComplete'
   | 'onBlur'
 > {
-  popoverProps?: Omit<PopoverProps, 'content'>;
+  popoverProps?: Omit<PopoverNextProps, 'content'>;
 
   /**
    * To link with label
@@ -45,10 +45,12 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
   const { hex } = colorHelper.toState(color || 'white');
 
   return (
-    <Popover
+    <PopoverNext
       targetProps={{ style: { width: '100%' } }}
       content={<ColorPicker color={color} {...otherProps} />}
-      minimal
+      shouldReturnFocusOnClose={false}
+      animation="minimal"
+      arrow={false}
       {...popoverProps}
     >
       <ColorPickerRoot type="button" id={id}>
@@ -56,6 +58,6 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
           <FixedColorPreview color={hex} />
         </ColorPickerPreview>
       </ColorPickerRoot>
-    </Popover>
+    </PopoverNext>
   );
 }

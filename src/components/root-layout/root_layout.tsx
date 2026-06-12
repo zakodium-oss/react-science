@@ -1,5 +1,5 @@
 import { BlueprintProvider, FocusStyleManager } from '@blueprintjs/core';
-import type { CSSProperties, MutableRefObject, ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { useCallback, useState } from 'react';
 
 import { AccordionProvider } from '../accordion/index.js';
@@ -43,9 +43,7 @@ export function RootLayout(props: RootLayoutProps) {
           id="root-layout"
           ref={(node) => {
             if (node) {
-              const mutableRef =
-                fullscreenRef as MutableRefObject<HTMLDivElement>;
-              mutableRef.current = node;
+              fullscreenRef.current = node;
               refCallback(node);
             }
           }}
