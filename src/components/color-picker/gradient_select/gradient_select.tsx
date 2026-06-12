@@ -26,7 +26,7 @@ const GradientSelectChevron = styled(FaChevronDown)`
   right: 0.5rem;
 `;
 
-const GradientSelectOption = styled.li`
+const GradientSelectOption = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 5px;
