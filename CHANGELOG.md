@@ -1,5 +1,17 @@
 # Changelog
 
+## [20.0.0](https://github.com/zakodium-oss/react-science/compare/v19.11.0...v20.0.0) (2026-06-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* `react-science` now requires React 19. All peer dependencies have been updated to the latest version. If you use `Popover` or `Overlay` from Blueprint, or `popoverProps` from our components that expose it, follow the Blueprint migration guide. React migration guide: https://react.dev/blog/2024/04/25/react-19-upgrade-guide Blueprint migration guide: https://github.com/palantir/blueprint/wiki/React-19-Support Popper migration guide: https://floating-ui.com/docs/migration
+
+### Features
+
+* update to React 19 ([517352d](https://github.com/zakodium-oss/react-science/commit/517352d54f308222098dcb61605fe5053bf43327))
+* update to React 19 ([#988](https://github.com/zakodium-oss/react-science/issues/988)) ([517352d](https://github.com/zakodium-oss/react-science/commit/517352d54f308222098dcb61605fe5053bf43327))
+
 ## [19.11.0](https://github.com/zakodium-oss/react-science/compare/v19.10.4...v19.11.0) (2026-05-04)
 
 
