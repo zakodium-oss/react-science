@@ -335,6 +335,7 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
 
   return (
     <ToolbarPopover
+      shouldReturnFocusOnClose={false}
       animation="minimal"
       arrow={false}
       disabled={disabled}

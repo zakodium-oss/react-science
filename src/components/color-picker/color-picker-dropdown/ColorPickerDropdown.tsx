@@ -48,6 +48,7 @@ export function ColorPickerDropdown(props: ColorPickerDropdownProps) {
     <PopoverNext
       targetProps={{ style: { width: '100%' } }}
       content={<ColorPicker color={color} {...otherProps} />}
+      shouldReturnFocusOnClose={false}
       animation="minimal"
       arrow={false}
       {...popoverProps}

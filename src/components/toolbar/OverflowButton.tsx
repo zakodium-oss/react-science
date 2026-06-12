@@ -42,6 +42,7 @@ export function OverflowButton(props: OverButtonProps) {
   } = props;
   return (
     <PopoverNext
+      shouldReturnFocusOnClose={false}
       animation="minimal"
       arrow={false}
       disabled={disabled}
