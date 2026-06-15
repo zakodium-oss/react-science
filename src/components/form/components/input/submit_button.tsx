@@ -1,4 +1,4 @@
-import { useStore } from '@tanstack/react-form';
+import { useSelector } from '@tanstack/react-store';
 
 import type { ButtonProps } from '../../../button/index.js';
 import { Button } from '../../../button/index.js';
@@ -10,7 +10,7 @@ export function SubmitButton(props: SubmitButtonProps) {
   const { intent, disabled, ...otherProps } = props;
 
   const form = useFormContext();
-  const isSubmitting = useStore(form.store, (state) => state.isSubmitting);
+  const isSubmitting = useSelector(form.store, (state) => state.isSubmitting);
 
   return (
     <Button
