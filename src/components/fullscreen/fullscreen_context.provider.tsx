@@ -1,8 +1,11 @@
-import type { ReactNode, RefObject } from 'react';
+import type { MutableRefObject, ReactNode } from 'react';
 import { useMemo } from 'react';
 import { useFullScreenHandle } from 'react-full-screen';
 
 import { fullscreenContext } from './fullscreen_context.js';
+
+// Remove for React 19.
+type RefObject<T> = MutableRefObject<T>;
 
 export interface FullscreenProviderProps {
   /**
