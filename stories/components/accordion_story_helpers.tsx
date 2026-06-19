@@ -16,7 +16,7 @@ type AccordionStoryAction<T extends string> =
 function accordionStoryReducer<T extends string>(
   state: AccordionStoryState<T>,
   action: AccordionStoryAction<T>,
-) {
+): AccordionStoryState<T> {
   return match(action)
     .with({ type: 'add' }, ({ id }) => {
       return {
