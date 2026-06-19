@@ -1,10 +1,13 @@
 import { Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import { revalidateLogic } from '@tanstack/react-form';
-import type { SubmitEvent } from 'react';
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { z } from 'zod';
 
 import { Button, useForm } from '../../../src/components/index.js';
+
+// Remove for React 19.
+type SubmitEvent<T> = FormEvent<T>;
 
 export default {
   title: 'Forms / Form',

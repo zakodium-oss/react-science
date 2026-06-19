@@ -7,3 +7,6 @@ reject:
   - 'fifo-logger'
   - 'react'
   - 'react-dom'
+  # https://github.com/zakodium-oss/react-science/issues/1008
+  - '@types/react'
+  - '@types/react-dom'
