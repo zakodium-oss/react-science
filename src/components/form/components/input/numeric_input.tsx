@@ -10,6 +10,8 @@ interface NumericInputProps extends FormGroupInputProps, BPNumericInputProps {
   step?: number;
   min?: number;
   max?: number;
+
+  autoFocus?: boolean;
 }
 
 export function NumericInput(props: NumericInputProps) {

@@ -73,6 +73,7 @@ export function NumericInput(props: InputProps) {
             label="Numeric"
             required
             placeholder="18"
+            autoFocus
             helpText="Value must be between 0 and 100"
           />
         )}
