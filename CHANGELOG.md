@@ -1,5 +1,18 @@
 # Changelog
 
+## [20.1.0](https://github.com/zakodium-oss/react-science/compare/v20.0.0...v20.1.0) (2026-06-19)
+
+
+### Features
+
+* add autoFocus on NumericInput ([#1006](https://github.com/zakodium-oss/react-science/issues/1006)) ([71a89c4](https://github.com/zakodium-oss/react-science/commit/71a89c458f1d7f69e542f1cb3b1094182f4766cb))
+
+
+### Bug Fixes
+
+* keep React 18 support ([7a5f166](https://github.com/zakodium-oss/react-science/commit/7a5f166860960945d6769c3d6c162eacc53b00ac))
+* use `useSelector` instead of deprecated one ([#1004](https://github.com/zakodium-oss/react-science/issues/1004)) ([0e60000](https://github.com/zakodium-oss/react-science/commit/0e6000034584546f633fba370ab9f1c0e9c45be3))
+
 ## [20.0.0](https://github.com/zakodium-oss/react-science/compare/v19.11.0...v20.0.0) (2026-06-12)
 
 
