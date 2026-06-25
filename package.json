@@ -56,16 +56,13 @@
     "react-dom": "^18.3.1 || ^19.2.7"
   },
   "dependencies": {
-    "@atlaskit/pragmatic-drag-and-drop": "^2.0.1",
-    "@atlaskit/pragmatic-drag-and-drop-auto-scroll": "^3.0.0",
-    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^2.0.0",
     "@emotion/styled": "^11.14.1",
     "@radix-ui/react-use-controllable-state": "^1.2.3",
     "@tanstack/react-form": "^1.33.0",
     "@tanstack/react-store": "^0.11.0",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.14.3",
-    "@zakodium/pdnd-esm": "^1.0.2",
+    "@zakodium/pdnd-esm": "^1.1.0",
     "d3-scale-chromatic": "^3.1.0",
     "react-d3-utils": "^3.1.2",
     "react-dropzone": "^15.0.0",
