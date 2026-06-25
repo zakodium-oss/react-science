@@ -47,18 +47,18 @@ export async function biologicLoader(
         // eslint-disable-next-line no-await-in-loop
         const { data, settings } = parseMPT(await file.arrayBuffer());
         if (data.variables) {
-          const metaData = settings?.variables;
+          const metadata = settings?.variables;
           const info = getMeasurementInfoFromFile(
             file,
-            metaData?.technique
-              ? `Experiment: ${metaData.technique}`
+            metadata?.technique
+              ? `Experiment: ${metadata.technique}`
               : file.name,
           );
           // puts the "useful" variables at x and y for default plot.
-          const variables = preferredXY(metaData?.technique, data.variables);
+          const variables = preferredXY(metadata?.technique, data.variables);
           const result: MeasurementBase = {
             ...info,
-            meta: metaData || {},
+            meta: metadata || {},
             data: [{ variables }],
           };
           entries.push(result);

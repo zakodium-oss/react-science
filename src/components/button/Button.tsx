@@ -81,7 +81,7 @@ export function Button(props: ButtonProps) {
     fill,
     content = '',
     disabled = !tooltipProps.content,
-    ...otherToolTipProps
+    ...otherTooltipProps
   } = tooltipProps;
 
   const InnerButton = buttonProps.disabled
@@ -93,7 +93,7 @@ export function Button(props: ButtonProps) {
       fill={fill || buttonProps.fill}
       disabled={disabled}
       content={content}
-      {...otherToolTipProps}
+      {...otherTooltipProps}
       renderTarget={({ isOpen, ...targetProps }) => (
         <InnerButton
           {...targetProps}

@@ -101,7 +101,7 @@ export function ActivityBarControl(
   );
 }
 
-const PlaceHolder = () => (
+const Placeholder = () => (
   <div
     style={{
       height: '100%',
@@ -138,7 +138,7 @@ export function ActivityToolbarLayout() {
       >
         {selected.length > 0 ? (
           <SplitPane defaultSize="30%" controlledSide="end">
-            <PlaceHolder />
+            <Placeholder />
             <ActivityPanel>
               {itemsBlueprintIcons
                 .filter(({ id }) => selected.includes(id))
@@ -158,7 +158,7 @@ export function ActivityToolbarLayout() {
             </ActivityPanel>
           </SplitPane>
         ) : (
-          <PlaceHolder />
+          <Placeholder />
         )}
       </div>
       <div
@@ -213,7 +213,7 @@ export function ActivityToolbarLayoutWithAccordions() {
       >
         {selected.length > 0 ? (
           <SplitPane defaultSize="30%" controlledSide="end">
-            <PlaceHolder />
+            <Placeholder />
             <AccordionStoryProvider
               initialOpenItems={itemsBlueprintIcons.map((item) => item.id)}
             >
@@ -246,7 +246,7 @@ export function ActivityToolbarLayoutWithAccordions() {
             </AccordionStoryProvider>
           </SplitPane>
         ) : (
-          <PlaceHolder />
+          <Placeholder />
         )}
       </div>
       <div
