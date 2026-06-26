@@ -4,9 +4,9 @@ import { revalidateLogic } from '@tanstack/react-form';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { Form } from '../../../../src/components/form/components/input_groups/form.js';
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import {
+  AppForm,
   FieldGroupSVGTextStyleFields,
   svgTextStyleFieldsSchema,
   useForm,
@@ -25,7 +25,7 @@ export default {
   },
 } as Meta;
 
-const StyledForm = styled(Form)`
+const StyledForm = styled(AppForm)`
   max-width: 605px;
   display: flex;
   flex-direction: column;
@@ -148,14 +148,7 @@ export function GeneralSettings(props: GeneralSettingsProps) {
   });
 
   return (
-    <StyledForm
-      noValidate
-      layout={layout}
-      onSubmit={(event) => {
-        event.preventDefault();
-        void form.handleSubmit();
-      }}
-    >
+    <StyledForm form={form} layout={layout}>
       <form.Section
         title="General"
         description="These settings affect the entire application."
@@ -328,9 +321,7 @@ export function GeneralSettings(props: GeneralSettingsProps) {
         />
       </form.Section>
 
-      <form.AppForm>
-        <form.SubmitButton>Apply</form.SubmitButton>
-      </form.AppForm>
+      <form.SubmitButton>Apply</form.SubmitButton>
     </StyledForm>
   );
 }

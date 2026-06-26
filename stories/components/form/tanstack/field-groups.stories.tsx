@@ -4,19 +4,19 @@ import type { ReactNode } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import type { FormProps } from '../../../../src/components/form/components/input_groups/form.js';
-import { Form } from '../../../../src/components/form/components/input_groups/form.js';
 import type {
   SVGLineStyleFieldsProps,
   SVGTextStyleFieldsProps,
 } from '../../../../src/components/index.js';
 import {
+  AppForm,
   FieldGroupSVGLineStyleFields,
   FieldGroupSVGTextStyleFields,
   svgLineStyleFieldsSchema,
   svgTextStyleFieldsSchema,
   useForm,
 } from '../../../../src/components/index.js';
+import type { FormProps } from '../../../../src/components/index.ts';
 
 const meta: Meta = {
   title: 'Forms / Form / Tanstack / FieldGroups',
@@ -58,24 +58,15 @@ export const SVGTextStyle: StoryObj<
     });
 
     return (
-      <form.AppForm>
-        <Form
-          layout={layout}
-          style={{ margin: '5px' }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            void form.handleSubmit(event);
-          }}
-        >
-          <FieldGroupSVGTextStyleFields
-            form={form}
-            fields="textStyle"
-            label={label}
-            previewText={previewText}
-          />
-          <form.SubmitButton>Save</form.SubmitButton>
-        </Form>
-      </form.AppForm>
+      <AppForm form={form} layout={layout} style={{ margin: '5px' }}>
+        <FieldGroupSVGTextStyleFields
+          form={form}
+          fields="textStyle"
+          label={label}
+          previewText={previewText}
+        />
+        <form.SubmitButton>Save</form.SubmitButton>
+      </AppForm>
     );
   },
 };
@@ -108,23 +99,14 @@ export const SVGLineStyle: StoryObj<
     });
 
     return (
-      <form.AppForm>
-        <Form
-          layout={layout}
-          style={{ margin: '5px' }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            void form.handleSubmit(event);
-          }}
-        >
-          <FieldGroupSVGLineStyleFields
-            form={form}
-            fields="lineStyle"
-            label={label}
-          />
-          <form.SubmitButton>Save</form.SubmitButton>
-        </Form>
-      </form.AppForm>
+      <AppForm form={form} layout={layout} style={{ margin: '5px' }}>
+        <FieldGroupSVGLineStyleFields
+          form={form}
+          fields="lineStyle"
+          label={label}
+        />
+        <form.SubmitButton>Save</form.SubmitButton>
+      </AppForm>
     );
   },
 };
