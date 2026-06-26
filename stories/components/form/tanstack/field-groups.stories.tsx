@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { ReactNode } from 'react';
@@ -29,6 +30,10 @@ const meta: Meta = {
 };
 export default meta;
 
+const AppFormStyled = styled(AppForm)`
+  margin: 5px;
+`;
+
 const svgTextStyleFormSchema = z.object({
   textStyle: svgTextStyleFieldsSchema,
 });
@@ -58,7 +63,7 @@ export const SVGTextStyle: StoryObj<
     });
 
     return (
-      <AppForm form={form} layout={layout} style={{ margin: '5px' }}>
+      <AppFormStyled form={form} layout={layout}>
         <FieldGroupSVGTextStyleFields
           form={form}
           fields="textStyle"
@@ -66,7 +71,7 @@ export const SVGTextStyle: StoryObj<
           previewText={previewText}
         />
         <form.SubmitButton>Save</form.SubmitButton>
-      </AppForm>
+      </AppFormStyled>
     );
   },
 };
@@ -99,14 +104,14 @@ export const SVGLineStyle: StoryObj<
     });
 
     return (
-      <AppForm form={form} layout={layout} style={{ margin: '5px' }}>
+      <AppFormStyled form={form} layout={layout}>
         <FieldGroupSVGLineStyleFields
           form={form}
           fields="lineStyle"
           label={label}
         />
         <form.SubmitButton>Save</form.SubmitButton>
-      </AppForm>
+      </AppFormStyled>
     );
   },
 };
