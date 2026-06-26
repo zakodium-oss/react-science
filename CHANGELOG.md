@@ -1,5 +1,12 @@
 # Changelog
 
+## [20.2.0](https://github.com/zakodium-oss/react-science/compare/v20.1.0...v20.2.0) (2026-06-26)
+
+
+### Features
+
+* update dependencies ([#1009](https://github.com/zakodium-oss/react-science/issues/1009)) ([789a4fc](https://github.com/zakodium-oss/react-science/commit/789a4fccc7319900ee1c5135a2700c51e9d1bbba))
+
 ## [20.1.0](https://github.com/zakodium-oss/react-science/compare/v20.0.0...v20.1.0) (2026-06-19)
 
 
