@@ -1,5 +1,12 @@
 # Changelog
 
+## [20.3.0](https://github.com/zakodium-oss/react-science/compare/v20.2.0...v20.3.0) (2026-06-26)
+
+
+### Features
+
+* provide `AppForm` component ([#1013](https://github.com/zakodium-oss/react-science/issues/1013)) ([674515b](https://github.com/zakodium-oss/react-science/commit/674515bf86ce5568a1a8ce9627027a0b01033fa6))
+
 ## [20.2.0](https://github.com/zakodium-oss/react-science/compare/v20.1.0...v20.2.0) (2026-06-26)
 
 
