@@ -9,6 +9,13 @@ export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   layout?: Layout;
 }
 
+/**
+ * @param props
+ * @deprecated Use `AppForm` instead.
+ * This component will be merged into `AppForm` and removed in a next major release.
+ * During migration, consider removing the `onSubmit` props.
+ * If you did not bound `noValidate` props, you will have to bound `domValidate` to `AppForm`.
+ */
 export function Form(props: FormProps) {
   const { children, layout = 'stacked', ...otherProps } = props;
 

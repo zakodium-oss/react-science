@@ -1,22 +1,23 @@
+import styled from '@emotion/styled';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { ReactNode } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import type { FormProps } from '../../../../src/components/form/components/input_groups/form.js';
-import { Form } from '../../../../src/components/form/components/input_groups/form.js';
 import type {
   SVGLineStyleFieldsProps,
   SVGTextStyleFieldsProps,
 } from '../../../../src/components/index.js';
 import {
+  AppForm,
   FieldGroupSVGLineStyleFields,
   FieldGroupSVGTextStyleFields,
   svgLineStyleFieldsSchema,
   svgTextStyleFieldsSchema,
   useForm,
 } from '../../../../src/components/index.js';
+import type { FormProps } from '../../../../src/components/index.ts';
 
 const meta: Meta = {
   title: 'Forms / Form / Tanstack / FieldGroups',
@@ -28,6 +29,10 @@ const meta: Meta = {
   },
 };
 export default meta;
+
+const AppFormStyled = styled(AppForm)`
+  margin: 5px;
+`;
 
 const svgTextStyleFormSchema = z.object({
   textStyle: svgTextStyleFieldsSchema,
@@ -58,24 +63,15 @@ export const SVGTextStyle: StoryObj<
     });
 
     return (
-      <form.AppForm>
-        <Form
-          layout={layout}
-          style={{ margin: '5px' }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            void form.handleSubmit(event);
-          }}
-        >
-          <FieldGroupSVGTextStyleFields
-            form={form}
-            fields="textStyle"
-            label={label}
-            previewText={previewText}
-          />
-          <form.SubmitButton>Save</form.SubmitButton>
-        </Form>
-      </form.AppForm>
+      <AppFormStyled form={form} layout={layout}>
+        <FieldGroupSVGTextStyleFields
+          form={form}
+          fields="textStyle"
+          label={label}
+          previewText={previewText}
+        />
+        <form.SubmitButton>Save</form.SubmitButton>
+      </AppFormStyled>
     );
   },
 };
@@ -108,23 +104,14 @@ export const SVGLineStyle: StoryObj<
     });
 
     return (
-      <form.AppForm>
-        <Form
-          layout={layout}
-          style={{ margin: '5px' }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            void form.handleSubmit(event);
-          }}
-        >
-          <FieldGroupSVGLineStyleFields
-            form={form}
-            fields="lineStyle"
-            label={label}
-          />
-          <form.SubmitButton>Save</form.SubmitButton>
-        </Form>
-      </form.AppForm>
+      <AppFormStyled form={form} layout={layout}>
+        <FieldGroupSVGLineStyleFields
+          form={form}
+          fields="lineStyle"
+          label={label}
+        />
+        <form.SubmitButton>Save</form.SubmitButton>
+      </AppFormStyled>
     );
   },
 };

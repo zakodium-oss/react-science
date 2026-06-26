@@ -11,6 +11,8 @@ export const AccordionDecorator: Decorator = (Story) => (
 
 const excludeDecorator = new Set([
   'forms-form-tanstack-generalsettings--general-settings',
+  'forms-form-tanstack-appform--simple-app-form',
+  'forms-form-tanstack-appform--meta-app-form',
 ]);
 
 export const RootLayoutDecorator: Decorator = (Story, ctx) => {
