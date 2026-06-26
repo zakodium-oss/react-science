@@ -63,7 +63,7 @@ export function useTableScroll<TData extends RowData>(options: {
           options?: TableVirtualScrollIntoViewOptions,
         ) {
           const element = scrollRef.current?.querySelector(
-            `tr[data-row-id="${id}"]`,
+            `tr[data-row-id="${CSS.escape(id)}"]`,
           );
           if (!element) {
             // eslint-disable-next-line no-console

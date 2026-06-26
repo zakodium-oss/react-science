@@ -19,10 +19,11 @@ const HeaderContainer = styled.div`
 `;
 
 export function Header(props: HeaderProps) {
+  const { children } = props;
   return (
     <HeaderContainer>
-      <div>{props.children[0]}</div>
-      <div>{props.children[1]}</div>
+      <div>{children[0]}</div>
+      <div>{children[1]}</div>
     </HeaderContainer>
   );
 }

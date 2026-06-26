@@ -2,6 +2,7 @@ import { expect, test } from 'vitest';
 
 import { normalizeDOI } from '../utils.js';
 
+/* eslint-disable unicorn/prefer-https */
 const dois = [
   '/10.3762/bjoc.20.4',
   '10.3762/bjoc.20.4',
@@ -12,6 +13,7 @@ const dois = [
   'http://doi.org//10.3762/bjoc.20.4',
   'https://doi.org//10.3762/bjoc.20.4',
 ];
+/* eslint-enable unicorn/prefer-https */
 
 test.each(dois)('normalize DOI %s', async (doi) => {
   expect(normalizeDOI(doi)).toBe('10.3762/bjoc.20.4');

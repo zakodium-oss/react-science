@@ -40,7 +40,7 @@ const ShortcutItem = styled.div`
   font-weight: bold;
 `;
 
-const SubTitleItem = styled.div`
+const SubtitleItem = styled.div`
   position: relative;
   padding-left: 15px;
   box-sizing: border-box;
@@ -158,12 +158,12 @@ function SubTitles({ items }: { items: TooltipItem[] }) {
       }}
     >
       {items.map(({ shortcuts = [], title }) => (
-        <SubTitleItem key={title}>
+        <SubtitleItem key={title}>
           <FlexContainer>
             <Title size="0.7rem">{title}</Title>
             <ShortCuts shortcuts={shortcuts} />
           </FlexContainer>
-        </SubTitleItem>
+        </SubtitleItem>
       ))}
     </ul>
   );

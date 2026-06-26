@@ -60,6 +60,8 @@ export function exportSVG(
 
   if (addBackground) {
     const background = document.createElementNS(
+      // XML namespaces are immutable. This false-positive is fixed in eslint-plugin-unicorn v66.
+      // eslint-disable-next-line unicorn/prefer-https
       'http://www.w3.org/2000/svg',
       'rect',
     );

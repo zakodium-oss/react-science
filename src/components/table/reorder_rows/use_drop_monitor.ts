@@ -1,4 +1,4 @@
-import type { ElementDragPayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import type { ElementDragPayload } from '@zakodium/pdnd-esm';
 import {
   autoScrollForElements,
   combine,

@@ -1,5 +1,5 @@
-import type { ElementDragPayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import type { Row, RowData } from '@tanstack/react-table';
+import type { ElementDragPayload } from '@zakodium/pdnd-esm';
 import {
   attachClosestEdge,
   combine,

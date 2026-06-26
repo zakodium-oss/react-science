@@ -1,5 +1,5 @@
-import type { Edge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/types';
 import type { Row } from '@tanstack/react-table';
+import type { Edge } from '@zakodium/pdnd-esm';
 import { createContext, useContext } from 'react';
 
 export type ReorderItemCallback = (args: {

@@ -7,7 +7,7 @@ interface MeasurementCheckboxProps {
   indeterminate?: boolean;
 }
 
-const InputMeasurementCheckBox = styled.input`
+const InputMeasurementCheckbox = styled.input`
   color: #6366f1;
   border-color: #d1d5db;
   border-radius: 0.25rem;
@@ -27,7 +27,7 @@ export function MeasurementCheckbox(props: MeasurementCheckboxProps) {
   }, [indeterminate]);
 
   return (
-    <InputMeasurementCheckBox
+    <InputMeasurementCheckbox
       type="checkbox"
       checked={checked}
       onChange={onSelectCheckbox}

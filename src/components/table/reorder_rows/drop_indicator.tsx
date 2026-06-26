@@ -1,6 +1,6 @@
-import type { Edge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/types';
 import { Colors } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Edge } from '@zakodium/pdnd-esm';
 
 export interface TableDropIndicatorProps {
   /**
