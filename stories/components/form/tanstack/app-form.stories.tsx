@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import type { Meta } from '@storybook/react-vite';
+import { revalidateLogic } from '@tanstack/react-form';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
@@ -26,17 +27,21 @@ const schema = z.object({
   // coerce number must be annotated, otherwise tanstack form inference will throw error
   // due to `age: unknown` in defaultValues
   age: z.coerce.number<string>().min(18),
+  // ensure no errors in types with `<AppForm form` when schema contains z.array type.
+  table: z.array(z.object({ id: z.string() })),
 });
 
 const defaultValues: z.input<typeof schema> = {
   name: '',
   age: '',
+  table: [],
 };
 
 export function SimpleAppForm(props: Pick<AppFormProps, 'layout'>) {
   const form = useForm({
     defaultValues,
     validators: { onDynamic: schema, onSubmit: schema },
+    validationLogic: revalidateLogic({ mode: 'change' }),
     onSubmit: ({ value }) => {
       const parsedValue = schema.parse(value);
       action('onSubmit')(parsedValue);
