@@ -1,4 +1,4 @@
-import type { SyntheticEvent } from 'react';
+import type { ReactNode, SyntheticEvent } from 'react';
 
 import { withForm } from '../../context/use_ts_form.js';
 import type { FormProps as DomFormProps } from '../input_groups/form.js';
@@ -27,34 +27,57 @@ const defaultValues: any = undefined;
  * Mount `form.AppForm` and `Form` with default onSubmit.
  * It reduces the boilerplate code.
  */
-export const AppForm = withForm({
-  defaultValues,
-  props,
-  render: function FormRender(props) {
-    const { form, children, domValidate, onSubmitMeta, ...domProps } = props;
-    const { AppForm } = form;
+export const AppForm = minimalForm(
+  withForm({
+    defaultValues,
+    props,
+    render: function FormRender(props) {
+      const { form, children, domValidate, onSubmitMeta, ...domProps } = props;
+      const { AppForm } = form;
 
-    return (
-      <AppForm>
-        {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
-        <DomForm
-          onSubmit={(event) => {
-            event.preventDefault();
+      return (
+        <AppForm>
+          {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
+          <DomForm
+            onSubmit={(event) => {
+              event.preventDefault();
 
-            const meta = onSubmitMeta?.(
-              // onSubmit event is not typed properly.
-              // It uses Event instead of SubmitEvent.
-              event as SyntheticEvent<HTMLFormElement, SubmitEvent>,
-            );
+              const meta = onSubmitMeta?.(
+                // onSubmit event is not typed properly.
+                // It uses Event instead of SubmitEvent.
+                event as SyntheticEvent<HTMLFormElement, SubmitEvent>,
+              );
 
-            void form.handleSubmit(meta);
-          }}
-          {...domProps}
-          noValidate={!domValidate}
-        >
-          {children}
-        </DomForm>
-      </AppForm>
-    );
-  },
-});
+              void form.handleSubmit(meta);
+            }}
+            {...domProps}
+            noValidate={!domValidate}
+          >
+            {children}
+          </DomForm>
+        </AppForm>
+      );
+    },
+  }),
+);
+
+type MinimalProps<Props extends { form: unknown }> = Omit<Props, 'form'> & {
+  /**
+   * Some properties of form are ignored because it is known to produce type errors on usage.
+   */
+  form: Omit<
+    Props['form'],
+    // field array API cause this kind of errors:
+    // Types of property 'pushFieldValue' are incompatible.
+    //  ...
+    //    Type 'any' is not assignable to type 'never'.
+    'pushFieldValue' | 'insertFieldValue' | 'replaceFieldValue'
+  >;
+};
+type MinimalFunctionComponent<Props> = (props: Props) => ReactNode;
+
+function minimalForm<Props extends { form: unknown }>(
+  component: MinimalFunctionComponent<Props>,
+): MinimalFunctionComponent<MinimalProps<Props>> {
+  return component as MinimalFunctionComponent<MinimalProps<Props>>;
+}
