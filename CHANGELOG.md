@@ -1,5 +1,12 @@
 # Changelog
 
+## [20.3.1](https://github.com/zakodium-oss/react-science/compare/v20.3.0...v20.3.1) (2026-06-29)
+
+
+### Bug Fixes
+
+* `<AppForm form>` prop binding ([#1016](https://github.com/zakodium-oss/react-science/issues/1016)) ([bee4c56](https://github.com/zakodium-oss/react-science/commit/bee4c56c80c02cfc84af5be81e7376cfeaa9c816))
+
 ## [20.3.0](https://github.com/zakodium-oss/react-science/compare/v20.2.0...v20.3.0) (2026-06-26)
 
 
