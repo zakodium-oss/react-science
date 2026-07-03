@@ -89,7 +89,7 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
  * @constructor
  */
 
-interface RealSelectProps<OptionType, ID extends SelectId> extends Pick<
+export interface RealSelectProps<OptionType, ID extends SelectId> extends Pick<
   BPSelectProps<OptionType>,
   'filterable' | 'items'
 > {
