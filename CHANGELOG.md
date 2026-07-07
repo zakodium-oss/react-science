@@ -1,5 +1,18 @@
 # Changelog
 
+## [20.4.0](https://github.com/zakodium-oss/react-science/compare/v20.3.1...v20.4.0) (2026-07-07)
+
+
+### Features
+
+* `Select` support number value ([#1020](https://github.com/zakodium-oss/react-science/issues/1020)) ([89ee218](https://github.com/zakodium-oss/react-science/commit/89ee2187e7a779fea2e5d356c4fbc46633e8e4c1))
+* add `selector` tagged template ([#1024](https://github.com/zakodium-oss/react-science/issues/1024)) ([2e04856](https://github.com/zakodium-oss/react-science/commit/2e04856b93084e9b64195a17e4ab847ef346bfd8))
+
+
+### Bug Fixes
+
+* **toolbar:** add hover delays to toolbar tooltips ([#1023](https://github.com/zakodium-oss/react-science/issues/1023)) ([756376d](https://github.com/zakodium-oss/react-science/commit/756376df969272a85d0d2ac6a8cd007c7ea72115))
+
 ## [20.3.1](https://github.com/zakodium-oss/react-science/compare/v20.3.0...v20.3.1) (2026-06-29)
 
 
