@@ -25,3 +25,4 @@ export * from './utils/index.js';
 export * from './selected-total/index.js';
 export * from './svg/index.js';
 export * as ValueRenderers from './value-renderers/index.js';
+export * from './utils/selector.js';
