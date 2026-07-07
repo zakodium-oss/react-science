@@ -310,6 +310,8 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
               placement: vertical ? 'right' : 'bottom',
               intent,
               compact: true,
+              hoverCloseDelay: 300,
+              hoverOpenDelay: 300,
               interactionKind: 'hover',
               ...tooltipProps,
             }
