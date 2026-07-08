@@ -37,7 +37,7 @@ const defaultValues: z.input<typeof schema> = {
   table: [],
 };
 
-export function SimpleAppForm(props: Pick<AppFormProps, 'layout'>) {
+export function SimpleAppForm(props: Props) {
   const form = useForm({
     defaultValues,
     validators: { onDynamic: schema, onSubmit: schema },
@@ -72,7 +72,7 @@ export function SimpleAppForm(props: Pick<AppFormProps, 'layout'>) {
 const onSubmitMetaSchema = z.enum(['apply', 'submit']);
 const onSubmitMeta: z.output<typeof onSubmitMetaSchema> = 'submit';
 
-export function MetaAppForm(props: Pick<AppFormProps, 'layout'>) {
+export function MetaAppForm(props: Props) {
   const form = useForm({
     defaultValues,
     validators: { onDynamic: schema, onSubmit: schema },
@@ -118,3 +118,48 @@ const Actions = styled.div`
   align-items: center;
   gap: 0.25em;
 `;
+
+export function FormOnSubmitStopPropagation(
+  props: Pick<AppFormProps, 'layout' | 'onSubmitStopPropagation'>,
+) {
+  const form = useForm({
+    defaultValues,
+    validators: { onDynamic: schema },
+    validationLogic: revalidateLogic(),
+    onSubmit({ value }) {
+      action('onSubmit')(value);
+    },
+  });
+
+  const { AppField, ResetButton, SubmitButton } = form;
+
+  return (
+    <div onSubmit={(event) => action('onSubmit parent')(event)}>
+      <AppForm
+        form={form}
+        layout={props.layout}
+        onSubmitStopPropagation={props.onSubmitStopPropagation}
+      >
+        <AppField name="name">
+          {({ Input }) => <Input label="Name" required />}
+        </AppField>
+        <AppField name="age">
+          {({ NumericInput }) => <NumericInput label="Age" required />}
+        </AppField>
+
+        <Actions>
+          <ResetButton>Reset</ResetButton>
+          <SubmitButton>Submit</SubmitButton>
+        </Actions>
+      </AppForm>
+    </div>
+  );
+}
+FormOnSubmitStopPropagation.argTypes = {
+  onSubmitStopPropagation: {
+    control: 'boolean',
+  },
+};
+FormOnSubmitStopPropagation.args = {
+  onSubmitStopPropagation: true,
+};

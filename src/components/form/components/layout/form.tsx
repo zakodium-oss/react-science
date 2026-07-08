@@ -8,10 +8,21 @@ export interface AppFormProps extends Omit<DomFormProps, 'noValidate'> {
   domValidate?: boolean;
   /**
    * should return meta to pass to `form.handleSubmit`
+   *
+   * @example
+   * ```tsx
+   * onSubmitMeta={(event) => event.nativeEvent.submitter?.dataset.action}
+   * ```
    */
   // Generic meta-result is not possible with higher order component pattern
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmitMeta?: (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => any;
+
+  /**
+   * onSubmit form will call `event.stopPropagation()`.
+   * It can be useful for nested form.
+   */
+  onSubmitStopPropagation?: boolean;
 }
 
 const props: AppFormProps = { children: null };
@@ -32,7 +43,14 @@ export const AppForm = minimalForm(
     defaultValues,
     props,
     render: function FormRender(props) {
-      const { form, children, domValidate, onSubmitMeta, ...domProps } = props;
+      const {
+        form,
+        children,
+        domValidate,
+        onSubmitMeta,
+        onSubmitStopPropagation,
+        ...domProps
+      } = props;
       const { AppForm } = form;
 
       return (
@@ -41,13 +59,13 @@ export const AppForm = minimalForm(
           <DomForm
             onSubmit={(event) => {
               event.preventDefault();
+              if (onSubmitStopPropagation) event.stopPropagation();
 
               const meta = onSubmitMeta?.(
                 // onSubmit event is not typed properly.
                 // It uses Event instead of SubmitEvent.
                 event as SyntheticEvent<HTMLFormElement, SubmitEvent>,
               );
-
               void form.handleSubmit(meta);
             }}
             {...domProps}
