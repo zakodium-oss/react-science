@@ -13,6 +13,7 @@ const excludeDecorator = new Set([
   'forms-form-tanstack-generalsettings--general-settings',
   'forms-form-tanstack-appform--simple-app-form',
   'forms-form-tanstack-appform--meta-app-form',
+  'forms-form-tanstack-appform--form-on-submit-stop-propagation',
 ]);
 
 export const RootLayoutDecorator: Decorator = (Story, ctx) => {
