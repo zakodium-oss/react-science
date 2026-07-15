@@ -10,8 +10,7 @@ interface AccordionStoryState<T extends string> {
 }
 
 type AccordionStoryAction<T extends string> =
-  | { type: 'add'; id: T }
-  | { type: 'remove'; id: T };
+  { type: 'add'; id: T } | { type: 'remove'; id: T };
 
 function accordionStoryReducer<T extends string>(
   state: AccordionStoryState<T>,

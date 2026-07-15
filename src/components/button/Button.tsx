@@ -15,9 +15,9 @@ import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 type BlueprintProps = {
-  [key in keyof BlueprintButtonProps &
-    keyof BlueprintAnchorButtonProps]?: BlueprintButtonProps[key] &
-    BlueprintAnchorButtonProps[key];
+  [
+    key in keyof BlueprintButtonProps & keyof BlueprintAnchorButtonProps
+  ]?: BlueprintButtonProps[key] & BlueprintAnchorButtonProps[key];
 };
 
 export type ButtonProps = BlueprintProps & {
