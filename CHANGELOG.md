@@ -1,5 +1,17 @@
 # Changelog
 
+## [20.5.0](https://github.com/zakodium-oss/react-science/compare/v20.4.0...v20.5.0) (2026-07-15)
+
+
+### Features
+
+* **AppForm:** add `onSubmitStopPropagation` flag ([#1022](https://github.com/zakodium-oss/react-science/issues/1022)) ([f80482a](https://github.com/zakodium-oss/react-science/commit/f80482a5bc38e8686ed91ef86ac4e4a8fe150ed7))
+
+
+### Bug Fixes
+
+* update react-dropzone ([#1026](https://github.com/zakodium-oss/react-science/issues/1026)) ([3ae3fd3](https://github.com/zakodium-oss/react-science/commit/3ae3fd36dbdfc2664e264430993dc6c849771498))
+
 ## [20.4.0](https://github.com/zakodium-oss/react-science/compare/v20.3.1...v20.4.0) (2026-07-07)
 
 
