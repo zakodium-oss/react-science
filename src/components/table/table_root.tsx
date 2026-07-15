@@ -232,8 +232,7 @@ interface VirtualizedTableProps<
 }
 
 export type TableProps<TData extends RowData> =
-  | RegularTableProps<TData>
-  | VirtualizedTableProps<TData>;
+  RegularTableProps<TData> | VirtualizedTableProps<TData>;
 
 export function Table<TData extends RowData>(props: TableProps<TData>) {
   const {

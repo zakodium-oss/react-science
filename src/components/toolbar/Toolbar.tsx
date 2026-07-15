@@ -29,10 +29,7 @@ import { useCheckOverflow } from './useCheckOverflow.tsx';
 export type Overflow = 'wrap' | 'collapse';
 
 export type PopoverInteractionType =
-  | 'click'
-  | 'hover'
-  | 'click-target'
-  | 'hover-target';
+  'click' | 'hover' | 'click-target' | 'hover-target';
 
 interface ToolbarBaseProps {
   intent?: Intent;

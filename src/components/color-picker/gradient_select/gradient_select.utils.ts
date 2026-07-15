@@ -1,11 +1,7 @@
 import * as scaleChromatic from 'd3-scale-chromatic';
 
 export type GradientScaleName =
-  | 'turbo'
-  | 'viridis'
-  | 'inferno'
-  | 'magma'
-  | 'plasma';
+  'turbo' | 'viridis' | 'inferno' | 'magma' | 'plasma';
 
 export const fixedGradientScales: Record<
   GradientScaleName,

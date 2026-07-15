@@ -24,8 +24,7 @@ interface UseSelectRenderOptions<T> extends UseSelectCommonOptions<T> {
 }
 
 export type UseSelectOptions<T> =
-  | UseSelectBaseOptions<T>
-  | UseSelectRenderOptions<T>;
+  UseSelectBaseOptions<T> | UseSelectRenderOptions<T>;
 
 function isAccessLabelByKey<T>(
   options: UseSelectOptions<T>,

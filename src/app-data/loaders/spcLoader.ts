@@ -1,5 +1,6 @@
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
+import type { ParseResult, UvProbeMeta } from 'spc-parser';
 import { guessSpectraType, parse } from 'spc-parser';
 
 import { assert } from '../../components/index.js';
@@ -10,6 +11,8 @@ import type {
 } from '../index.js';
 
 import { getMeasurementInfoFromFile } from './utility/index.js';
+
+type Header = Exclude<ParseResult['meta'], UvProbeMeta>;
 
 /**
  *
@@ -28,7 +31,9 @@ export async function spcLoader(
         // TODO: load in parallel
         // eslint-disable-next-line no-await-in-loop
         const parsed = parse(await file.arrayBuffer());
-        const spectraType: MeasurementKind = guessSpectraType(parsed.meta);
+        const spectraType: MeasurementKind = guessSpectraType(
+          parsed.meta as Header,
+        );
         if (!measurements[spectraType]) {
           measurements[spectraType] = { entries: [] };
         }
@@ -38,7 +43,7 @@ export async function spcLoader(
         );
         measurements[spectraType]?.entries.push({
           meta: parsed.meta,
-          ...getMeasurementInfoFromFile(file, parsed.meta.memo),
+          ...getMeasurementInfoFromFile(file, (parsed.meta as Header).memo),
           data: parsed.spectra as unknown as MeasurementBase['data'],
         });
       } catch (error) {
