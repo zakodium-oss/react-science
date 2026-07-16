@@ -3,12 +3,14 @@ import { Radio } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
+import { DraggableNumericInput } from '../../../../src/components/form/components/input/draggable_numeric_input.tsx';
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
-import { useForm } from '../../../../src/components/index.js';
+import { AppForm, useForm } from '../../../../src/components/index.js';
 
 // Remove for React 19.
 type SubmitEvent<T> = FormEvent<T>;
@@ -386,5 +388,37 @@ export function RadioGroupRadio(props: InputProps) {
         <form.SubmitButton>Submit</form.SubmitButton>
       </form.AppForm>
     </form>
+  );
+}
+
+const draggableSchema = z.object({
+  input: z.coerce.number<string>().min(0),
+});
+
+const draggableDefaultValues: z.input<typeof draggableSchema> = {
+  input: '0',
+};
+
+export function DraggableNumericInputStory() {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(draggableSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+    validators: { onDynamic: draggableSchema },
+    defaultValues: draggableDefaultValues,
+  });
+
+  return (
+    <AppForm form={form} layout="inline">
+      <form.AppField name="input">
+        {(field) => (
+          <field.DraggableNumericInput
+            label="Draggable"
+            draggableLabel="Drag me"
+          />
+        )}
+      </form.AppField>
+
+      <form.SubmitButton>Submit</form.SubmitButton>
+    </AppForm>
   );
 }

@@ -16,7 +16,7 @@ const FormContainer = styled.div<{
   display: grid;
   margin: 0;
   grid-template-columns: ${(props) =>
-    props.layout === 'inline' ? '[label] 30% [input] 70%' : '1fr'};
+    props.layout === 'inline' ? '[label] 3fr [input] 7fr' : '1fr'};
   gap: 5px 20px;
   grid-template-rows: ${(props) =>
     props.layout === 'inline' ? 'auto auto' : 'auto'};
@@ -29,6 +29,7 @@ const RequiredSpan = styled.span`
 const ContainerElement = styled.div<{
   height?: number | 'auto';
   fullWidth?: boolean;
+  contentFullWidth?: boolean;
   layout?: Layout;
 }>`
   display: inline-block;
@@ -40,7 +41,7 @@ const ContainerElement = styled.div<{
         : '1 / -1'};
   height: ${(props) =>
     props.height === 'auto' ? props.height : `${props.height}px`};
-  width: fit-content;
+  width: ${(props) => (props.contentFullWidth ? '100%' : 'fit-content')};
   min-width: 180px;
 `;
 
@@ -85,6 +86,7 @@ interface FormGroupProps {
   error?: string;
   layout?: Layout;
   fullWidth?: boolean;
+  contentFullWidth?: boolean;
 }
 
 export function FormGroup(props: FormGroupProps) {
@@ -98,6 +100,7 @@ export function FormGroup(props: FormGroupProps) {
     error,
     layout,
     fullWidth = false,
+    contentFullWidth = false,
   } = props;
 
   const { layout: formLayout } = useFormContext();
@@ -122,7 +125,11 @@ export function FormGroup(props: FormGroupProps) {
           )}
         </Label>
       )}
-      <ContainerElement fullWidth={fullWidth} layout={layout || formLayout}>
+      <ContainerElement
+        fullWidth={fullWidth}
+        layout={layout || formLayout}
+        contentFullWidth={contentFullWidth}
+      >
         {children}
 
         <ErrorAndHelpText>

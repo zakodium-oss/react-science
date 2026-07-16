@@ -2,6 +2,7 @@ import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 import { Checkbox } from '../components/input/checkbox.js';
 import { ColorPicker } from '../components/input/color_picker.tsx';
+import { DraggableNumericInput } from '../components/input/draggable_numeric_input.js';
 import { Input } from '../components/input/input.js';
 import { NumericInput } from '../components/input/numeric_input.js';
 import { RadioGroup } from '../components/input/radio_group.js';
@@ -37,6 +38,7 @@ const { useAppForm, withForm, withFieldGroup } = createFormHook({
     Switch,
     ColorPicker,
     RadioGroup,
+    DraggableNumericInput,
   },
 });
 

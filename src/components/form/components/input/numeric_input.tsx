@@ -6,7 +6,8 @@ import { getIntent } from '../../utils/use_intent.js';
 import type { FormGroupInputProps } from '../input_groups/form_group.js';
 import { FormGroup } from '../input_groups/form_group.js';
 
-interface NumericInputProps extends FormGroupInputProps, BPNumericInputProps {
+export interface NumericInputProps
+  extends FormGroupInputProps, BPNumericInputProps {
   step?: number;
   min?: number;
   max?: number;
