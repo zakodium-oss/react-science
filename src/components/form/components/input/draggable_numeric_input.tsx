@@ -1,4 +1,5 @@
-import { NumericInput as BPNumericInput } from '@blueprintjs/core';
+import type { Intent } from '@blueprintjs/core';
+import { Classes, NumericInput as BPNumericInput } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
@@ -11,6 +12,7 @@ import type { NumericInputProps } from './numeric_input.tsx';
 
 interface DraggableNumericInputProps extends NumericInputProps {
   draggableLabel: string;
+  draggableIntent?: Intent;
   hideInput?: boolean;
 }
 
@@ -26,6 +28,7 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
     layout,
     fullWidth,
     draggableLabel,
+    draggableIntent = 'success',
     hideInput = false,
     ...otherProps
   } = props;
@@ -66,7 +69,7 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
             value={field.state.value ?? ''}
             onValueChange={onChange}
             onBlur={field.handleBlur}
-            intent="success"
+            intent={intent}
             placeholder={placeholder}
             required={required}
           />
@@ -78,6 +81,9 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
             onBlur={field.handleBlur}
             onChange={onChange}
             step={step}
+            min={min}
+            max={max}
+            intent={draggableIntent}
           >
             {draggableLabel}
           </Range>
@@ -93,6 +99,9 @@ interface RangeProps {
   onChange: (_: number, value: string) => void;
   onBlur: () => void;
   step?: number;
+  min?: number;
+  max?: number;
+  intent: Intent;
 }
 
 const RangeContainer = styled.div`
@@ -100,15 +109,15 @@ const RangeContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #c7c7c7;
-  border-radius: 5px;
   user-select: none;
-  background-color: #18ce0f14;
-  font-size: 10px;
-  color: #00801d;
   cursor: ew-resize;
   height: 100%;
   min-height: 30px;
+
+  &.${Classes.TAG} {
+    padding: 0;
+    min-height: unset;
+  }
 `;
 
 const RangeLabel = styled.span`
@@ -121,7 +130,14 @@ const RangeLabel = styled.span`
 `;
 
 function Range(props: RangeProps) {
-  const { children, value, onChange, onBlur, step: stepSize = 1 } = props;
+  const {
+    children,
+    value,
+    onChange,
+    onBlur,
+    step: stepSize = 1,
+    intent,
+  } = props;
 
   const draggedValueRef = useRef(value);
   const onChangeRef = useRef(onChange);
@@ -167,7 +183,10 @@ function Range(props: RangeProps) {
   );
 
   return (
-    <RangeContainer onMouseDown={handleMouseDown}>
+    <RangeContainer
+      onMouseDown={handleMouseDown}
+      className={`${Classes.TAG} ${Classes.MINIMAL} ${Classes.intentClass(intent)}`}
+    >
       <RangeLabel>{children}</RangeLabel>
     </RangeContainer>
   );

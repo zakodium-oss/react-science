@@ -1,14 +1,11 @@
-import type { OptionProps } from '@blueprintjs/core';
+import type { Intent, OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react-vite';
-import { StoryObj } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
-import { useState } from 'react';
 import { action } from 'storybook/actions';
 import { z } from 'zod';
 
-import { DraggableNumericInput } from '../../../../src/components/form/components/input/draggable_numeric_input.tsx';
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
 import { AppForm, useForm } from '../../../../src/components/index.js';
@@ -29,6 +26,11 @@ export default {
     ),
   ],
   argTypes: {
+    draggableIntent: {
+      control: 'select',
+      options: ['danger', 'none', 'primary', 'success', 'warning'],
+      defaultValue: 'danger',
+    },
     hideInput: {
       control: 'boolean',
       defaultValue: false,
@@ -397,7 +399,7 @@ export function RadioGroupRadio(props: InputProps) {
 }
 
 const draggableSchema = z.object({
-  input: z.coerce.number<string>().min(0),
+  input: z.coerce.number<string>().min(0).max(100),
 });
 
 const draggableDefaultValues: z.input<typeof draggableSchema> = {
@@ -405,9 +407,9 @@ const draggableDefaultValues: z.input<typeof draggableSchema> = {
 };
 
 export function DraggableNumericInputStory(
-  props: InputProps & { hideInput: boolean },
+  props: InputProps & { hideInput: boolean; draggableIntent: Intent },
 ) {
-  const { layout, hideInput } = props;
+  const { layout, hideInput, draggableIntent } = props;
 
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(draggableSchema.parse(value)),
@@ -425,6 +427,9 @@ export function DraggableNumericInputStory(
             draggableLabel="Drag me"
             hideInput={hideInput}
             step={10}
+            min={0}
+            max={100}
+            draggableIntent={draggableIntent}
           />
         )}
       </form.AppField>
