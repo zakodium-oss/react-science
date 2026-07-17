@@ -11,6 +11,7 @@ import type { NumericInputProps } from './numeric_input.tsx';
 
 interface DraggableNumericInputProps extends NumericInputProps {
   draggableLabel: string;
+  hideInput?: boolean;
 }
 
 export function DraggableNumericInput(props: DraggableNumericInputProps) {
@@ -25,6 +26,7 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
     layout,
     fullWidth,
     draggableLabel,
+    hideInput = false,
     ...otherProps
   } = props;
 
@@ -53,26 +55,29 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
       contentFullWidth
     >
       <div style={{ display: 'flex', flexDirection: 'row', gap: 20 }}>
-        <BPNumericInput
-          {...otherProps}
-          id={field.name}
-          name={field.name}
-          stepSize={step}
-          min={min}
-          max={max}
-          value={field.state.value ?? ''}
-          onValueChange={onChange}
-          onBlur={field.handleBlur}
-          intent="success"
-          placeholder={placeholder}
-          required={required}
-        />
+        {!hideInput && (
+          <BPNumericInput
+            {...otherProps}
+            id={field.name}
+            name={field.name}
+            stepSize={step}
+            min={min}
+            max={max}
+            value={field.state.value ?? ''}
+            onValueChange={onChange}
+            onBlur={field.handleBlur}
+            intent="success"
+            placeholder={placeholder}
+            required={required}
+          />
+        )}
 
         <div style={{ flex: 1 }}>
           <Range
             value={Number(field.state.value)}
             onBlur={field.handleBlur}
             onChange={onChange}
+            step={step}
           >
             {draggableLabel}
           </Range>
@@ -87,6 +92,7 @@ interface RangeProps {
   value: number;
   onChange: (_: number, value: string) => void;
   onBlur: () => void;
+  step?: number;
 }
 
 const RangeContainer = styled.div`
@@ -102,6 +108,7 @@ const RangeContainer = styled.div`
   color: #00801d;
   cursor: ew-resize;
   height: 100%;
+  min-height: 30px;
 `;
 
 const RangeLabel = styled.span`
@@ -114,7 +121,7 @@ const RangeLabel = styled.span`
 `;
 
 function Range(props: RangeProps) {
-  const { children, value, onChange, onBlur } = props;
+  const { children, value, onChange, onBlur, step: stepSize = 1 } = props;
 
   const draggedValueRef = useRef(value);
   const onChangeRef = useRef(onChange);
@@ -129,8 +136,9 @@ function Range(props: RangeProps) {
       previousPositionRef.current = event.clientX;
 
       if (event.buttons === 1) {
-        const step = diff / (event.shiftKey ? 10 : 1);
-        draggedValueRef.current += step;
+        const step = event.shiftKey ? stepSize / 10 : stepSize;
+        draggedValueRef.current += diff * step;
+
         onChangeRef.current(0, String(draggedValueRef.current));
       }
     }
@@ -147,7 +155,7 @@ function Range(props: RangeProps) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [onBlur]);
+  }, [onBlur, stepSize]);
 
   const handleMouseDown = useCallback(
     (event: ReactMouseEvent) => {

@@ -1,6 +1,7 @@
 import type { OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react-vite';
+import { StoryObj } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
@@ -28,6 +29,10 @@ export default {
     ),
   ],
   argTypes: {
+    hideInput: {
+      control: 'boolean',
+      defaultValue: false,
+    },
     layout: {
       control: 'select',
       options: ['inline', 'stacked'],
@@ -399,7 +404,11 @@ const draggableDefaultValues: z.input<typeof draggableSchema> = {
   input: '0',
 };
 
-export function DraggableNumericInputStory() {
+export function DraggableNumericInputStory(
+  props: InputProps & { hideInput: boolean },
+) {
+  const { layout, hideInput } = props;
+
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(draggableSchema.parse(value)),
     validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
@@ -408,12 +417,14 @@ export function DraggableNumericInputStory() {
   });
 
   return (
-    <AppForm form={form} layout="inline">
+    <AppForm form={form} layout={layout}>
       <form.AppField name="input">
         {(field) => (
           <field.DraggableNumericInput
             label="Draggable"
             draggableLabel="Drag me"
+            hideInput={hideInput}
+            step={10}
           />
         )}
       </form.AppField>
