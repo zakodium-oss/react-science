@@ -113,11 +113,6 @@ const DraggableContainer = styled.div`
   cursor: ew-resize;
   height: 100%;
   min-height: 30px;
-
-  &.${Classes.TAG} {
-    padding: 0;
-    min-height: unset;
-  }
 `;
 
 const DraggableLabel = styled.span`
