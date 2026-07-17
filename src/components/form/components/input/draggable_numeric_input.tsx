@@ -76,7 +76,7 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
         )}
 
         <div style={{ flex: 1 }}>
-          <Range
+          <Draggable
             value={Number(field.state.value)}
             onBlur={field.handleBlur}
             onChange={onChange}
@@ -86,14 +86,14 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
             intent={draggableIntent}
           >
             {draggableLabel}
-          </Range>
+          </Draggable>
         </div>
       </div>
     </FormGroup>
   );
 }
 
-interface RangeProps {
+interface DraggableProps {
   children: ReactNode;
   value: number;
   onChange: (_: number, value: string) => void;
@@ -104,7 +104,7 @@ interface RangeProps {
   intent: Intent;
 }
 
-const RangeContainer = styled.div`
+const DraggableContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -120,7 +120,7 @@ const RangeContainer = styled.div`
   }
 `;
 
-const RangeLabel = styled.span`
+const DraggableLabel = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -129,7 +129,7 @@ const RangeLabel = styled.span`
   padding-right: 5px;
 `;
 
-function Range(props: RangeProps) {
+function Draggable(props: DraggableProps) {
   const {
     children,
     value,
@@ -186,12 +186,12 @@ function Range(props: RangeProps) {
   );
 
   return (
-    <RangeContainer
+    <DraggableContainer
       onMouseDown={handleMouseDown}
       className={`${Classes.TAG} ${Classes.MINIMAL} ${Classes.intentClass(intent)}`}
     >
-      <RangeLabel>{children}</RangeLabel>
-    </RangeContainer>
+      <DraggableLabel>{children}</DraggableLabel>
+    </DraggableContainer>
   );
 }
 
