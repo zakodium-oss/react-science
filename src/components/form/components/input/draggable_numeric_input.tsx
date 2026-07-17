@@ -136,6 +136,8 @@ function Range(props: RangeProps) {
     onChange,
     onBlur,
     step: stepSize = 1,
+    min,
+    max,
     intent,
   } = props;
 
@@ -153,8 +155,9 @@ function Range(props: RangeProps) {
 
       if (event.buttons === 1) {
         const step = event.shiftKey ? stepSize / 10 : stepSize;
-        draggedValueRef.current += diff * step;
+        const nextValue = draggedValueRef.current + diff * step;
 
+        draggedValueRef.current = clamp(nextValue, min, max);
         onChangeRef.current(0, String(draggedValueRef.current));
       }
     }
@@ -171,7 +174,7 @@ function Range(props: RangeProps) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [onBlur, stepSize]);
+  }, [max, min, onBlur, stepSize]);
 
   const handleMouseDown = useCallback(
     (event: ReactMouseEvent) => {
@@ -190,4 +193,8 @@ function Range(props: RangeProps) {
       <RangeLabel>{children}</RangeLabel>
     </RangeContainer>
   );
+}
+
+function clamp(value: number, min = -Infinity, max = Infinity): number {
+  return Math.min(Math.max(value, min), max);
 }
