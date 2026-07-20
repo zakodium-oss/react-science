@@ -1,12 +1,20 @@
 import type { GradientScaleName } from '../gradient_select/index.ts';
 
-export type ColorConfig =
-  | { kind: 'fixed'; color: string }
-  | { kind: 'fixedGradient'; gradient: GradientScaleName };
+interface ColorConfigFixed {
+  kind: 'fixed';
+  color: string;
+}
+
+interface ColorConfigGradient {
+  kind: 'fixedGradient';
+  gradient: GradientScaleName;
+}
+
+export type ColorConfig = ColorConfigFixed | ColorConfigGradient;
 
 export function assertColorFixed(
   color: ColorConfig,
-): asserts color is { kind: 'fixed'; color: string } {
+): asserts color is ColorConfigFixed {
   if (color.kind !== 'fixed') {
     throw new Error('Only fixed colors are supported');
   }
@@ -14,8 +22,8 @@ export function assertColorFixed(
 
 export function assertColorGradient(
   color: ColorConfig,
-): asserts color is { kind: 'fixedGradient'; gradient: GradientScaleName } {
-  if (color.kind !== 'fixed') {
+): asserts color is ColorConfigGradient {
+  if (color.kind !== 'fixedGradient') {
     throw new Error('Only fixed colors are supported');
   }
 }

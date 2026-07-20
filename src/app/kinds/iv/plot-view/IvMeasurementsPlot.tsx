@@ -47,9 +47,7 @@ export default function IvMeasurementsPlot() {
   });
   const { unselectedOpacity } = appState.settings.plot;
   const ivView = appState.view.plot.iv;
-  assert(ivView);
-  assert(ivView.xVariable);
-  assert(ivView.yVariable);
+  assert(ivView?.xVariable && ivView.yVariable);
 
   const { selectedEntries, unselectedEntries } = splitEntries(appState, 'iv');
 

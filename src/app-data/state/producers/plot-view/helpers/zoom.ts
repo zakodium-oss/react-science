@@ -45,8 +45,7 @@ export function updateZoom(
 
   const xVariable = plotView.xVariable;
   const yVariable = plotView.yVariable;
-  assert(xVariable);
-  assert(yVariable);
+  assert(xVariable && yVariable);
 
   const mXVariable = getVariableByLabel(measurement, xVariable);
   const mYVariable = getVariableByLabel(measurement, yVariable);
