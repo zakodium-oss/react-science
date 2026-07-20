@@ -73,13 +73,9 @@ export function Draggable(props: DraggableProps) {
           .with({ altKey: true }, () => minorStepSize ?? stepSize)
           .otherwise(() => stepSize);
 
-        const precision = Utils.countDecimalPlaces(
-          Math.max(
-            draggedValueRef.current,
-            minorStepSize ?? stepSize,
-            majorStepSize ?? stepSize,
-            stepSize,
-          ),
+        const precision = Math.max(
+          Utils.countDecimalPlaces(draggedValueRef.current),
+          Utils.countDecimalPlaces(minorStepSize ?? stepSize),
         );
 
         const nextValue = toMaxPrecision(
