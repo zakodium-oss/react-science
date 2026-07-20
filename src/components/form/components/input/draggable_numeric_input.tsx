@@ -1,9 +1,8 @@
 import type { Intent } from '@blueprintjs/core';
-import { Classes, NumericInput as BPNumericInput } from '@blueprintjs/core';
+import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import { useCallback, useEffect, useRef } from 'react';
 
+import { Draggable as InputDraggable } from '../../../draggable/Draggable.tsx';
 import { useFieldContext } from '../../context/use_ts_form.ts';
 import { getIntent } from '../../utils/use_intent.ts';
 import { FormGroup } from '../input_groups/index.ts';
@@ -15,6 +14,16 @@ interface DraggableNumericInputProps extends NumericInputProps {
   draggableIntent?: Intent;
   hideInput?: boolean;
 }
+
+const DraggableNumericInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+`;
+
+const Draggable = styled(InputDraggable)`
+  flex: 1;
+`;
 
 export function DraggableNumericInput(props: DraggableNumericInputProps) {
   const {
@@ -30,6 +39,8 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
     draggableLabel,
     draggableIntent = 'success',
     hideInput = false,
+    majorStepSize,
+    minorStepSize,
     ...otherProps
   } = props;
 
@@ -57,7 +68,7 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
       fullWidth={fullWidth}
       contentFullWidth
     >
-      <div style={{ display: 'flex', flexDirection: 'row', gap: 20 }}>
+      <DraggableNumericInputContainer>
         {!hideInput && (
           <BPNumericInput
             {...otherProps}
@@ -66,6 +77,8 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
             stepSize={step}
             min={min}
             max={max}
+            majorStepSize={majorStepSize}
+            minorStepSize={minorStepSize}
             value={field.state.value ?? ''}
             onValueChange={onChange}
             onBlur={field.handleBlur}
@@ -76,120 +89,21 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
         )}
 
         <div style={{ flex: 1 }}>
-          <Draggable
+          <InputDraggable
             value={Number(field.state.value)}
             onBlur={field.handleBlur}
             onChange={onChange}
             step={step}
             min={min}
             max={max}
+            majorStepSize={majorStepSize}
+            minorStepSize={minorStepSize}
             intent={draggableIntent}
           >
             {draggableLabel}
-          </Draggable>
+          </InputDraggable>
         </div>
-      </div>
+      </DraggableNumericInputContainer>
     </FormGroup>
   );
-}
-
-interface DraggableProps {
-  children: ReactNode;
-  value: number;
-  onChange: (_: number, value: string) => void;
-  onBlur: () => void;
-  step?: number;
-  min?: number;
-  max?: number;
-  intent: Intent;
-}
-
-const DraggableContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  cursor: ew-resize;
-  height: 100%;
-  min-height: 30px;
-`;
-
-const DraggableLabel = styled.span`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
-  padding-left: 5px;
-  padding-right: 5px;
-`;
-
-function Draggable(props: DraggableProps) {
-  const {
-    children,
-    value,
-    onChange,
-    onBlur,
-    step: stepSize = 1,
-    min,
-    max,
-    intent,
-  } = props;
-
-  const draggedValueRef = useRef(value);
-  const onChangeRef = useRef(onChange);
-  const previousPositionRef = useRef<number>(0);
-  const isDraggingRef = useRef<boolean>(false);
-
-  useEffect(() => {
-    function handleMouseMove(event: MouseEvent) {
-      if (!isDraggingRef.current) return;
-
-      const diff = event.clientX - previousPositionRef.current;
-      previousPositionRef.current = event.clientX;
-
-      if (event.buttons === 1) {
-        const step = event.shiftKey ? stepSize / 10 : stepSize;
-        const nextValue = draggedValueRef.current + diff * step;
-
-        draggedValueRef.current = clamp(nextValue, min, max);
-        onChangeRef.current(0, String(draggedValueRef.current));
-      }
-    }
-
-    function handleMouseUp() {
-      isDraggingRef.current = false;
-      onBlur();
-    }
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [max, min, onBlur, stepSize]);
-
-  const handleMouseDown = useCallback(
-    (event: ReactMouseEvent) => {
-      isDraggingRef.current = true;
-      previousPositionRef.current = event.clientX;
-      draggedValueRef.current = value;
-    },
-    [value],
-  );
-
-  return (
-    <DraggableContainer
-      onMouseDown={handleMouseDown}
-      className={`${Classes.TAG} ${Classes.MINIMAL} ${Classes.intentClass(intent)}`}
-    >
-      <DraggableLabel>{children}</DraggableLabel>
-    </DraggableContainer>
-  );
-}
-
-function clamp(value: number, min = -Infinity, max = Infinity): number {
-  return Math.min(Math.max(value, min), max);
 }

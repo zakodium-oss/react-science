@@ -17,6 +17,11 @@ export default {
   title: 'Forms / Form / Tanstack / Inputs',
   args: {
     layout: 'stacked',
+    minorStepSize: 0.1,
+    step: 1,
+    majorStepSize: 10,
+    draggableIntent: 'danger',
+    hideInput: false,
   },
   decorators: [
     (Story) => (
@@ -26,14 +31,21 @@ export default {
     ),
   ],
   argTypes: {
+    minorStepSize: {
+      control: 'number',
+    },
+    step: {
+      control: 'number',
+    },
+    majorStepSize: {
+      control: 'number',
+    },
     draggableIntent: {
       control: 'select',
       options: ['danger', 'none', 'primary', 'success', 'warning'],
-      defaultValue: 'danger',
     },
     hideInput: {
       control: 'boolean',
-      defaultValue: false,
     },
     layout: {
       control: 'select',
@@ -407,9 +419,22 @@ const draggableDefaultValues: z.input<typeof draggableSchema> = {
 };
 
 export function DraggableNumericInputStory(
-  props: InputProps & { hideInput: boolean; draggableIntent: Intent },
+  props: InputProps & {
+    hideInput: boolean;
+    draggableIntent: Intent;
+    minorStepSize: number;
+    majorStepSize: number;
+    step: number;
+  },
 ) {
-  const { layout, hideInput, draggableIntent } = props;
+  const {
+    layout,
+    hideInput,
+    draggableIntent,
+    minorStepSize,
+    majorStepSize,
+    step,
+  } = props;
 
   const form = useForm({
     onSubmit: ({ value }) => action('onSubmit')(draggableSchema.parse(value)),
@@ -426,9 +451,9 @@ export function DraggableNumericInputStory(
             label="Draggable"
             draggableLabel="Drag me"
             hideInput={hideInput}
-            step={10}
-            min={0}
-            max={100}
+            minorStepSize={minorStepSize}
+            majorStepSize={majorStepSize}
+            step={step}
             draggableIntent={draggableIntent}
           />
         )}
