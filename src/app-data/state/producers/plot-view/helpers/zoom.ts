@@ -1,4 +1,5 @@
-import { assert } from '../../../../../components/index.js';
+import { assert } from '@zakodium/utils';
+
 import {
   getPreferredVariable,
   getVariableByLabel,

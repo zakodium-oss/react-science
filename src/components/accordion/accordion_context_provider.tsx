@@ -1,7 +1,6 @@
+import { assert } from '@zakodium/utils';
 import type { ReactNode } from 'react';
 import { useMemo, useRef } from 'react';
-
-import { assert } from '../utils/index.js';
 
 import type { AccordionContextValue } from './accordion_context.js';
 import { accordionContext } from './accordion_context.js';

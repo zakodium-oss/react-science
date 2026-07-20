@@ -9,10 +9,10 @@ import {
   pointerOutsideOfPreview,
   setCustomNativeDragPreview,
 } from '@zakodium/pdnd-esm';
+import { assert } from '@zakodium/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { assert } from '../../utils/index.js';
 import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
 import { PreviewTable } from '../preview_table.js';
 import { useIsPreviewTable } from '../preview_table_context.js';

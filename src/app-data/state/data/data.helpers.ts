@@ -1,4 +1,5 @@
-import { assertNotNull } from '../../../components/index.js';
+import { assertNotNullish } from '@zakodium/utils';
+
 import type { AppState, AppView } from '../index.js';
 
 import type {
@@ -24,7 +25,7 @@ export function getMeasurementOrFail(
   selected: string,
 ) {
   const result = getMeasurement(measurements, kind, selected);
-  assertNotNull(result);
+  assertNotNullish(result);
   return result;
 }
 
@@ -42,7 +43,7 @@ export function getFirstMeasurementOrFail<Kind extends MeasurementKind>(
   kind: Kind,
 ) {
   const result = getFirstMeasurement(measurements, kind);
-  assertNotNull(result);
+  assertNotNullish(result);
   return result;
 }
 
@@ -84,7 +85,7 @@ export function getFirstSelectedMeasurementData(state: AppState) {
 
   const measurements = selectedMeasurements[selectedKind];
   if (!measurements?.length) return null;
-  assertNotNull(measurements);
+  assertNotNullish(measurements);
 
   const measurementId = measurements[0];
   const measurement = getMeasurement(
@@ -119,7 +120,7 @@ export function getSelectedMeasurement(
 
 export function getSelectedMeasurementOrFail(view: AppView) {
   const selected = getSelectedMeasurement(view);
-  assertNotNull(selected);
+  assertNotNullish(selected);
   return selected;
 }
 
