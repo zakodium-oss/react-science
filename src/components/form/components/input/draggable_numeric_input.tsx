@@ -2,7 +2,7 @@ import type { Intent } from '@blueprintjs/core';
 import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
-import { Draggable as InputDraggable } from '../../../draggable/Draggable.tsx';
+import { Draggable as InputDraggable } from '../../../draggable/draggable.tsx';
 import { useFieldContext } from '../../context/use_ts_form.ts';
 import { getIntent } from '../../utils/use_intent.ts';
 import { FormGroup } from '../input_groups/index.ts';
