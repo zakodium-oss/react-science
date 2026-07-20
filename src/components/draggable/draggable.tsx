@@ -1,5 +1,5 @@
 import type { Intent } from '@blueprintjs/core';
-import { Classes, NumericInput, Utils } from '@blueprintjs/core';
+import { Classes, Utils } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { clamp } from '@zakodium/utils';
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
