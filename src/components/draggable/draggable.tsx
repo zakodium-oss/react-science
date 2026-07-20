@@ -1,5 +1,5 @@
 import type { Intent } from '@blueprintjs/core';
-import { Classes } from '@blueprintjs/core';
+import { Classes, NumericInput, Utils } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { clamp } from '@zakodium/utils';
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
@@ -73,7 +73,11 @@ export function Draggable(props: DraggableProps) {
           .with({ altKey: true }, () => minorStepSize ?? stepSize)
           .otherwise(() => stepSize);
 
-        const nextValue = draggedValueRef.current + diff * step;
+        const precision = Utils.countDecimalPlaces(step);
+        const nextValue = toMaxPrecision(
+          draggedValueRef.current + diff * step,
+          precision,
+        );
 
         draggedValueRef.current = clamp(nextValue, min, max);
         onChangeRef.current(0, String(draggedValueRef.current));
@@ -111,4 +115,9 @@ export function Draggable(props: DraggableProps) {
       <DraggableLabel>{children}</DraggableLabel>
     </DraggableContainer>
   );
+}
+
+function toMaxPrecision(value: number, maxPrecision: number) {
+  const scaleFactor = 10 ** maxPrecision;
+  return Math.round(value * scaleFactor) / scaleFactor;
 }
