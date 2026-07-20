@@ -88,21 +88,19 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
           />
         )}
 
-        <div style={{ flex: 1 }}>
-          <InputDraggable
-            value={Number(field.state.value)}
-            onBlur={field.handleBlur}
-            onChange={onChange}
-            step={step}
-            min={min}
-            max={max}
-            majorStepSize={majorStepSize}
-            minorStepSize={minorStepSize}
-            intent={draggableIntent}
-          >
-            {draggableLabel}
-          </InputDraggable>
-        </div>
+        <Draggable
+          value={Number(field.state.value)}
+          onBlur={field.handleBlur}
+          onChange={onChange}
+          step={step}
+          min={min}
+          max={max}
+          majorStepSize={majorStepSize}
+          minorStepSize={minorStepSize}
+          intent={draggableIntent}
+        >
+          {draggableLabel}
+        </Draggable>
       </DraggableNumericInputContainer>
     </FormGroup>
   );
