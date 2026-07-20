@@ -1,3 +1,4 @@
+import { assert } from '@zakodium/utils';
 import type { ReactElement } from 'react';
 import { ResponsiveChart } from 'react-d3-utils';
 import {
@@ -11,7 +12,6 @@ import {
 } from 'react-plot';
 
 import { useAppDispatch, useAppState } from '../../../../app-data/index.js';
-import { assert } from '../../../../components/index.js';
 import { splitEntries } from '../../../helpers/index.js';
 
 import IvSeries from './IvSeries.js';
@@ -47,7 +47,8 @@ export default function IvMeasurementsPlot() {
   });
   const { unselectedOpacity } = appState.settings.plot;
   const ivView = appState.view.plot.iv;
-  assert(ivView && !!ivView.xVariable && !!ivView.yVariable);
+  assert(ivView?.xVariable && ivView.yVariable);
+
   const { selectedEntries, unselectedEntries } = splitEntries(appState, 'iv');
 
   const series: ReactElement[] = [];

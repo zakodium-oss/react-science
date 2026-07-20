@@ -1,9 +1,10 @@
+import { assert } from '@zakodium/utils';
 import type { Dispatch, ReactNode } from 'react';
 import { createContext, useContext, useMemo, useReducer } from 'react';
 import { match } from 'ts-pattern';
 
 import type { AccordionItemProps } from '../../src/components/index.js';
-import { Accordion, assert } from '../../src/components/index.js';
+import { Accordion } from '../../src/components/index.js';
 
 interface AccordionStoryState<T extends string> {
   openItems: readonly T[];

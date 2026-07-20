@@ -1,9 +1,9 @@
+import { assert } from '@zakodium/utils';
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import type { ParseResult, UvProbeMeta } from 'spc-parser';
 import { guessSpectraType, parse } from 'spc-parser';
 
-import { assert } from '../../components/index.js';
 import type {
   MeasurementBase,
   MeasurementKind,

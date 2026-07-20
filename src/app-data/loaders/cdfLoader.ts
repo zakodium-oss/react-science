@@ -1,8 +1,8 @@
+import { assert } from '@zakodium/utils';
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 import { NetCDFReader } from 'netcdfjs';
 
-import { assert } from '../../components/index.js';
 import type {
   MeasurementBase,
   MeasurementKind,

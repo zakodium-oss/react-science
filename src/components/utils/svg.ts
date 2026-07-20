@@ -1,4 +1,4 @@
-import { assert } from './assert.ts';
+import { assert } from '@zakodium/utils';
 
 export interface ExportSVGOptions {
   /**

@@ -20,7 +20,7 @@ import type { ColorConfig } from '../../../components/index.js';
 import {
   ColorPicker,
   ColorPreview,
-  assert,
+  assertColorFixed,
   useOnOff,
 } from '../../../components/index.js';
 
@@ -42,7 +42,7 @@ const ColorPreviewButton = styled.button`
 export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
   const { measurementId, kind, color } = props;
 
-  assert(color.kind === 'fixed', 'Only fixed colors are supported');
+  assertColorFixed(color);
 
   const dispatch = useAppDispatch();
   const [isOpened, , close, toggle] = useOnOff(false);

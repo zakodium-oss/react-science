@@ -1,7 +1,15 @@
+/**
+ * @param x
+ * @deprecated Use `assertUnreachable` from `@zakodium/utils`
+ */
 export function assertUnreachable(x: never): never {
   throw new Error(`unreachable: ${String(x)}`);
 }
 
+/**
+ * @param x
+ * @deprecated Use `assertNotNullish` from `@zakodium/utils`
+ */
 export function assertNotNull<T>(
   value: T | null | undefined,
 ): asserts value is Exclude<T, null | undefined> {
@@ -13,6 +21,11 @@ export function assertNotNull<T>(
   }
 }
 
+/**
+ * @param value
+ * @param message
+ * @deprecated Use `assert` from `@zakodium/utils`
+ */
 export function assert(value: unknown, message?: string): asserts value {
   if (!value) {
     throw new Error(`unreachable${message ? `: ${message}` : ''}`);

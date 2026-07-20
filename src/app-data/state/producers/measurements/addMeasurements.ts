@@ -1,4 +1,6 @@
-import { assert, defaultColorPalette } from '../../../../components/index.js';
+import { assert } from '@zakodium/utils';
+
+import { defaultColorPalette } from '../../../../components/index.js';
 import { getPreferredVariable, mergeMeasurements } from '../../../index.js';
 import type { MeasurementKind } from '../../index.js';
 import {
