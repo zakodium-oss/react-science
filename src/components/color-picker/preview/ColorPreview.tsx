@@ -1,12 +1,8 @@
-import { assertUnreachable } from '../../utils/assert.js';
-import type { GradientScaleName } from '../gradient_select/index.js';
+import { assertUnreachable } from '@zakodium/utils';
 
 import FixedColorPreview from './FixedColorPreview.js';
 import FixedGradientPreview from './FixedGradientPreview.js';
-
-export type ColorConfig =
-  | { kind: 'fixed'; color: string }
-  | { kind: 'fixedGradient'; gradient: GradientScaleName };
+import type { ColorConfig } from './color_config.ts';
 
 export interface ColorPreviewProps {
   color: ColorConfig;

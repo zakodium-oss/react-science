@@ -5,10 +5,10 @@ import {
   extractClosestEdge,
   monitorForElements,
 } from '@zakodium/pdnd-esm';
+import { assert } from '@zakodium/utils';
 import type { RefObject } from 'react';
 import { useEffect } from 'react';
 
-import { assert } from '../../utils/index.js';
 import { useFlashedRowContext } from '../flash_row/flashed_row_context.js';
 
 import { isItemData } from './item_data.js';

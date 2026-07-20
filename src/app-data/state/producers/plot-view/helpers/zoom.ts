@@ -1,4 +1,5 @@
-import { assert } from '../../../../../components/index.js';
+import { assert } from '@zakodium/utils';
+
 import {
   getPreferredVariable,
   getVariableByLabel,
@@ -44,7 +45,8 @@ export function updateZoom(
 
   const xVariable = plotView.xVariable;
   const yVariable = plotView.yVariable;
-  assert(xVariable && yVariable);
+  assert(xVariable);
+  assert(yVariable);
 
   const mXVariable = getVariableByLabel(measurement, xVariable);
   const mYVariable = getVariableByLabel(measurement, yVariable);

@@ -1,7 +1,7 @@
+import { assert } from '@zakodium/utils';
 import type { FifoLogger } from 'fifo-logger';
 import type { FileCollection } from 'filelist-utils';
 
-import { assert } from '../../../components/index.js';
 import type { MeasurementBase, Measurements } from '../../index.js';
 
 export type MeasurementsLoader = (

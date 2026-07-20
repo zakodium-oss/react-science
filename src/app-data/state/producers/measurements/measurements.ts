@@ -1,4 +1,5 @@
-import { assert, assertUnreachable } from '../../../../components/index.js';
+import { assert, assertUnreachable } from '@zakodium/utils';
+
 import { getMeasurementOrFail } from '../../../index.js';
 import { resetZoom } from '../plot-view/helpers/zoom.js';
 import type { AppStateProducer } from '../types.js';

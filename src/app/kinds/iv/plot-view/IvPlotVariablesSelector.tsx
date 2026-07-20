@@ -1,9 +1,10 @@
+import { assertNotNullish } from '@zakodium/utils';
+
 import {
   getAllVariableSymbols,
   useAppDispatch,
   useAppState,
 } from '../../../../app-data/index.js';
-import { assertNotNull } from '../../../../components/index.js';
 import { MeasurementVariableSelect } from '../../../helpers/index.js';
 
 export default function IvPlotVariablesSelector() {
@@ -16,7 +17,7 @@ export default function IvPlotVariablesSelector() {
     },
   } = useAppState();
   const dispatch = useAppDispatch();
-  assertNotNull(ivPlot);
+  assertNotNullish(ivPlot);
   const allOptions = new Set<string>();
   for (const measurement of ivMeasurements.entries) {
     const variables = getAllVariableSymbols(measurement);
