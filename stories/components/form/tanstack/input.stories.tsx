@@ -1,4 +1,4 @@
-import type { OptionProps } from '@blueprintjs/core';
+import type { Intent, OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
 import type { Meta } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
-import { useForm } from '../../../../src/components/index.js';
+import { AppForm, useForm } from '../../../../src/components/index.js';
 
 // Remove for React 19.
 type SubmitEvent<T> = FormEvent<T>;
@@ -17,6 +17,11 @@ export default {
   title: 'Forms / Form / Tanstack / Inputs',
   args: {
     layout: 'stacked',
+    minorStepSize: 0.1,
+    step: 1,
+    majorStepSize: 10,
+    draggableIntent: 'danger',
+    hideInput: false,
   },
   decorators: [
     (Story) => (
@@ -26,6 +31,22 @@ export default {
     ),
   ],
   argTypes: {
+    minorStepSize: {
+      control: 'number',
+    },
+    step: {
+      control: 'number',
+    },
+    majorStepSize: {
+      control: 'number',
+    },
+    draggableIntent: {
+      control: 'select',
+      options: ['danger', 'none', 'primary', 'success', 'warning'],
+    },
+    hideInput: {
+      control: 'boolean',
+    },
     layout: {
       control: 'select',
       options: ['inline', 'stacked'],
@@ -386,5 +407,59 @@ export function RadioGroupRadio(props: InputProps) {
         <form.SubmitButton>Submit</form.SubmitButton>
       </form.AppForm>
     </form>
+  );
+}
+
+const draggableSchema = z.object({
+  input: z.coerce.number<string>().min(0).max(100),
+});
+
+const draggableDefaultValues: z.input<typeof draggableSchema> = {
+  input: '0',
+};
+
+export function DraggableNumericInputStory(
+  props: InputProps & {
+    hideInput: boolean;
+    draggableIntent: Intent;
+    minorStepSize: number;
+    majorStepSize: number;
+    step: number;
+  },
+) {
+  const {
+    layout,
+    hideInput,
+    draggableIntent,
+    minorStepSize,
+    majorStepSize,
+    step,
+  } = props;
+
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(draggableSchema.parse(value)),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+    validators: { onDynamic: draggableSchema },
+    defaultValues: draggableDefaultValues,
+  });
+
+  return (
+    <AppForm form={form} layout={layout}>
+      <form.AppField name="input">
+        {(field) => (
+          <field.DraggableNumericInput
+            label="Draggable"
+            draggableLabel="Drag me"
+            hideInput={hideInput}
+            minorStepSize={minorStepSize}
+            majorStepSize={majorStepSize}
+            step={step}
+            draggableIntent={draggableIntent}
+          />
+        )}
+      </form.AppField>
+
+      <form.SubmitButton>Submit</form.SubmitButton>
+    </AppForm>
   );
 }
