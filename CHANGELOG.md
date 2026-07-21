@@ -1,5 +1,17 @@
 # Changelog
 
+## [20.6.0](https://github.com/zakodium-oss/react-science/compare/v20.5.0...v20.6.0) (2026-07-21)
+
+
+### Features
+
+* add draggable input to tanstack ([#1027](https://github.com/zakodium-oss/react-science/issues/1027)) ([98f6e79](https://github.com/zakodium-oss/react-science/commit/98f6e79677b443e8634ac80b1692adc4618522f1))
+
+
+### Bug Fixes
+
+* deprecate assert methods ([#1028](https://github.com/zakodium-oss/react-science/issues/1028)) ([50f5a00](https://github.com/zakodium-oss/react-science/commit/50f5a0024392bdd36988275c361621c08ed9c2e6))
+
 ## [20.5.0](https://github.com/zakodium-oss/react-science/compare/v20.4.0...v20.5.0) (2026-07-15)
 
 
