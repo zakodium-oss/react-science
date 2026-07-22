@@ -42,25 +42,27 @@ const ButtonTag = styled(Tag)`
 
 interface InnerButtonProps {
   isIconButton: boolean;
+  isTagButton: boolean;
 }
 
 /*
   Setting the line-height makes sure that when passing regular text in icons instead of an svg, they are vertically centered
   max-width makes sure buttons with tag or hoverability indicator (both implying absolutely positioned elements) keep their intended width
-  When a button just has an icon, we override BP styles and remove the margin-right, because if it also has tag prop this is required to keep the layout correct.
+  When a button just has an icon with a tag, we override BP styles and remove the margin-right to keep the layout correct.
 */
-const buttonStyles = ({ isIconButton }: InnerButtonProps) => `
+const buttonStyles = ({ isIconButton, isTagButton }: InnerButtonProps) => `
   line-height: 1em;
   position: relative;
   max-width: ${isIconButton ? '30px' : 'none'};
 
   & .${Classes.ICON} {
-    ${isIconButton ? 'margin-right: 0px;' : ''}
+    ${isIconButton && isTagButton ? 'margin-right: 0px;' : ''}
   }
 `;
 
+const propsToIgnore = new Set(['isIconButton', 'isTagButton']);
 function shouldForwardButtonProp(propName: string) {
-  return propName !== 'isIconButton';
+  return !propsToIgnore.has(propName);
 }
 
 const TooltipAnchorButton = styled(AnchorButton, {
@@ -99,6 +101,7 @@ export function Button(props: ButtonProps) {
           {...targetProps}
           {...buttonProps}
           isIconButton={!children && !buttonProps.text}
+          isTagButton={Boolean(tag)}
         >
           {tag && (
             <ButtonTag round intent="success" {...tagProps}>
