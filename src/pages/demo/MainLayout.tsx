@@ -1,7 +1,8 @@
 import { Spinner } from '@blueprintjs/core';
 import type { FallbackProps } from 'react-error-boundary';
 import { ErrorBoundary } from 'react-error-boundary';
-import { FaBook, FaMeteor } from 'react-icons/fa';
+import { FaBook, FaExpand, FaMeteor } from 'react-icons/fa';
+import { TbZoom } from 'react-icons/tb';
 import { useKbsGlobal } from 'react-kbs';
 
 import {
@@ -26,6 +27,7 @@ import {
   Header,
   SplitPane,
   Toolbar,
+  TooltipHelpContent,
 } from '../../components/index.js';
 
 import { loadFiles } from './helpers/loadFiles.js';
@@ -105,11 +107,44 @@ export default function MainLayout() {
           <FullscreenToolbarButton />
         </Toolbar>
       </Header>
-      <div
-        style={{
-          flex: 1,
-        }}
-      >
+      <div style={{ flex: 1, display: 'flex' }}>
+        <Toolbar vertical>
+          <Toolbar.Item
+            tooltip={
+              <TooltipHelpContent
+                title="Zoom in / out"
+                shortcuts={['Esc']}
+                subTitles={[
+                  { title: 'Vertical', shortcuts: ['Scroll wheel'] },
+                  { title: 'Horizontal', shortcuts: ['⇧', 'Scroll wheel'] },
+                  {
+                    title: 'Horizontal and Vertical',
+                    shortcuts: ['CTRL', 'drag'],
+                  },
+                  { title: 'Pan', shortcuts: ['Right button'] },
+                ]}
+                style={{ minWidth: '300px' }}
+              />
+            }
+            icon={<TbZoom strokeWidth={3} />}
+          />
+          <Toolbar.Item
+            tooltip={
+              <TooltipHelpContent
+                title="Zoom out"
+                subTitles={[
+                  { title: 'Horizontal', shortcuts: ['f'] },
+                  { title: 'Horizontal and Vertical', shortcuts: ['f', 'f'] },
+                ]}
+                description={`Zoom out by double-clicking the left mouse button, and fully zoom out horizontally by pressing the key "f". Alternatively, press the key "ff" to fit the spectra horizontally and vertically.`}
+                link="https://docs.nmrium.org/help/zoom-and-scale"
+              />
+            }
+            icon={<FaExpand />}
+          />
+          <Toolbar.Item tooltip="Test tag" icon="align-center" tag="1" />
+        </Toolbar>
+
         <SplitPane
           defaultSize="400px"
           closeThreshold={500}
