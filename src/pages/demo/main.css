@@ -1,3 +1,10 @@
+@layer react-science, blueprint;
+
+@import url('../../../styles/preflight.css') layer(react-science);
+@import url('@blueprintjs/core') layer(blueprint);
+@import url('@blueprintjs/icons') layer(blueprint);
+@import url('@blueprintjs/select') layer(blueprint);
+
 html,
 body,
 #root {
