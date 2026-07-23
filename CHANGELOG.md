@@ -1,5 +1,12 @@
 # Changelog
 
+## [20.6.1](https://github.com/zakodium-oss/react-science/compare/v20.6.0...v20.6.1) (2026-07-23)
+
+
+### Bug Fixes
+
+* adjust icon margin when render aside a tag ([#1030](https://github.com/zakodium-oss/react-science/issues/1030)) ([eabd231](https://github.com/zakodium-oss/react-science/commit/eabd23104e5b8b33e49cc055f0d30ab00ab80355))
+
 ## [20.6.0](https://github.com/zakodium-oss/react-science/compare/v20.5.0...v20.6.0) (2026-07-21)
 
 
