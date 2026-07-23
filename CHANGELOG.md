@@ -1,5 +1,12 @@
 # Changelog
 
+## [20.6.2](https://github.com/zakodium-oss/react-science/compare/v20.6.1...v20.6.2) (2026-07-23)
+
+
+### Bug Fixes
+
+* change draggable label to be a ReactNode ([#1032](https://github.com/zakodium-oss/react-science/issues/1032)) ([9a6858d](https://github.com/zakodium-oss/react-science/commit/9a6858dd8db007b25fada17c38f862d7c2ae322e))
+
 ## [20.6.1](https://github.com/zakodium-oss/react-science/compare/v20.6.0...v20.6.1) (2026-07-23)
 
 
