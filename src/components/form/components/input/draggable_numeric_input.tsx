@@ -1,6 +1,7 @@
 import type { Intent } from '@blueprintjs/core';
 import { NumericInput as BPNumericInput } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { ReactNode } from 'react';
 
 import { Draggable as InputDraggable } from '../../../draggable/draggable.tsx';
 import { useFieldContext } from '../../context/use_ts_form.ts';
@@ -10,7 +11,7 @@ import { FormGroup } from '../input_groups/index.ts';
 import type { NumericInputProps } from './numeric_input.tsx';
 
 interface DraggableNumericInputProps extends NumericInputProps {
-  draggableLabel: string;
+  draggableLabel: ReactNode;
   draggableIntent?: Intent;
   hideInput?: boolean;
 }
