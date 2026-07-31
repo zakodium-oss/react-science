@@ -19,7 +19,7 @@ export interface SelectProps
     Omit<FormGroupInputProps, 'placeholder'>,
     Pick<
       RealSelectProps<SelectOptionType, SelectId>,
-      'disabled' | 'filterable' | 'renderButton'
+      'disabled' | 'filterable' | 'renderButton' | 'itemDisabled'
     > {
   items: SelectOptionType[];
 }
@@ -28,6 +28,7 @@ export function Select(props: SelectProps) {
   const {
     label,
     items,
+    itemDisabled,
     required,
     helpText,
     layout,
@@ -63,6 +64,7 @@ export function Select(props: SelectProps) {
       <SelectInput
         onBlur={field.handleBlur}
         items={items}
+        itemDisabled={itemDisabled}
         selected={field.state.value}
         onChange={onItemSelect}
         intent={intent}

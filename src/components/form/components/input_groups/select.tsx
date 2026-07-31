@@ -91,7 +91,7 @@ export type SelectProps<OptionType, ID extends SelectId> = FieldGroupProps &
 
 export interface RealSelectProps<OptionType, ID extends SelectId> extends Pick<
   BPSelectProps<OptionType>,
-  'filterable' | 'items'
+  'filterable' | 'items' | 'itemDisabled'
 > {
   onBlur: () => void;
   renderButton?: (
@@ -121,6 +121,7 @@ export function Select<
     // Weirdly, setting the filterable prop on BP's Select component activates the filter input
     filterable = false,
     items,
+    itemDisabled,
     onChange,
     onBlur,
     name = null,
@@ -154,6 +155,7 @@ export function Select<
     <BPSelect<OptionType>
       filterable={filterable}
       items={items}
+      itemDisabled={itemDisabled}
       onItemSelect={onItemSelect}
       itemRenderer={itemRenderer}
       disabled={disabled}
