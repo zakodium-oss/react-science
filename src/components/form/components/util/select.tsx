@@ -29,6 +29,7 @@ export function getItemRenderer<OptionType, ID extends SelectId>(
     const label = getLabel(item);
     const { active, disabled, matchesPredicate } = modifiers;
     if (!matchesPredicate) return null;
+
     return (
       <MenuItem
         active={active}

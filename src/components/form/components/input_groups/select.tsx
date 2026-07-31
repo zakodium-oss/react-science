@@ -2,7 +2,7 @@ import type { FormGroup, FormGroupProps } from '@blueprintjs/core';
 import type { SelectProps as BPSelectProps } from '@blueprintjs/select';
 import { Select as BPSelect } from '@blueprintjs/select';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Button } from '../../../button/index.js';
 import type {
@@ -134,6 +134,10 @@ export function Select<
     [getValue, items, selected],
   );
 
+  const [activeItem, setActiveItem] = useState<OptionType | null>(
+    selectedOption || null,
+  );
+
   const itemRenderer = useMemo(() => {
     return getItemRenderer<OptionType, ID>({
       selected,
@@ -157,6 +161,13 @@ export function Select<
       onItemSelect={onItemSelect}
       itemRenderer={itemRenderer}
       disabled={disabled}
+      activeItem={activeItem}
+      onActiveItemChange={setActiveItem}
+      popoverProps={{
+        onOpening: () => {
+          setActiveItem(selectedOption || null);
+        },
+      }}
     >
       {renderButton ? (
         renderButton({ selectedOption, error: undefined }, onBlur)
