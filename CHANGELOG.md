@@ -1,5 +1,17 @@
 # Changelog
 
+## [20.7.0](https://github.com/zakodium-oss/react-science/compare/v20.6.2...v20.7.0) (2026-07-31)
+
+
+### Features
+
+* **Select:** forward `itemDisabled` props to blueprint `Select` ([#1036](https://github.com/zakodium-oss/react-science/issues/1036)) ([e81cf2f](https://github.com/zakodium-oss/react-science/commit/e81cf2f563b0d6236568677139d40bd1e180e83e))
+
+
+### Bug Fixes
+
+* default active item on Select ([#1035](https://github.com/zakodium-oss/react-science/issues/1035)) ([59bdedf](https://github.com/zakodium-oss/react-science/commit/59bdedfdc9d4c9e81d9f7c3cd0393a9bb84fbe2a))
+
 ## [20.6.2](https://github.com/zakodium-oss/react-science/compare/v20.6.1...v20.6.2) (2026-07-23)
 
 
