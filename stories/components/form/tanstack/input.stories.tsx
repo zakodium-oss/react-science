@@ -166,8 +166,9 @@ export function Input(props: InputProps) {
 const selectSchema = z.object({
   select: z.string({ error: 'At least one element is required' }),
 });
+
 const selectDefaultValues: Partial<z.input<typeof selectSchema>> = {
-  select: undefined,
+  select: 'orange',
 };
 
 export function Select(props: InputProps) {
