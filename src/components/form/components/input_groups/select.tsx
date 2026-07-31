@@ -135,7 +135,7 @@ export function Select<
   );
 
   const [activeItem, setActiveItem] = useState<OptionType | null>(
-    selectedOption || null,
+    selectedOption ?? null,
   );
 
   const itemRenderer = useMemo(() => {
@@ -165,7 +165,7 @@ export function Select<
       onActiveItemChange={setActiveItem}
       popoverProps={{
         onOpening: () => {
-          setActiveItem(selectedOption || null);
+          setActiveItem(selectedOption ?? null);
         },
       }}
     >
