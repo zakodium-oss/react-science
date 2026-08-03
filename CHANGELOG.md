@@ -1,5 +1,22 @@
 # Changelog
 
+## [21.0.0](https://github.com/zakodium-oss/react-science/compare/v20.7.0...v21.0.0) (2026-08-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Removed deprecated assertion helpers. Use `@zakodium/utils` instead.
+* `react-dropzone` was updated from version 17 to 20. Look at their release notes for details about the breaking changes: https://github.com/react-dropzone/react-dropzone/releases
+
+### Features
+
+* update react-dropzone ([#1038](https://github.com/zakodium-oss/react-science/issues/1038)) ([fe3404d](https://github.com/zakodium-oss/react-science/commit/fe3404d4b4dfc03eab86c35c03af8e49457e1eca))
+
+
+### Code Refactoring
+
+* remove deprecated assertion helpers ([def1ac5](https://github.com/zakodium-oss/react-science/commit/def1ac596c7afadfcd023a5ea7ecf0d0e0f5aac6))
+
 ## [20.7.0](https://github.com/zakodium-oss/react-science/compare/v20.6.2...v20.7.0) (2026-07-31)
 
 
