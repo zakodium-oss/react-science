@@ -1,6 +1,5 @@
 import type { IconName } from '@blueprintjs/icons';
 import { useState } from 'react';
-import type { FileWithPath } from 'react-dropzone';
 
 import {
   DropZone,
@@ -31,10 +30,10 @@ function fileValidator(file: File) {
   return null;
 }
 
-const columnHelper = createTableColumnHelper<FileWithPath>();
+const columnHelper = createTableColumnHelper<File>();
 const columns = [
-  columnHelper.accessor('path', { header: 'Path' }),
   columnHelper.accessor('name', { header: 'Name' }),
+  columnHelper.accessor('size', { header: 'Size' }),
 ];
 
 export function Control({
@@ -44,7 +43,7 @@ export function Control({
   emptyButtonText,
   emptyButtonIcon,
 }: DropZoneStoryProps) {
-  const [files, setFiles] = useState<FileWithPath[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   return (
     <div
       style={{
@@ -60,7 +59,7 @@ export function Control({
       >
         <DropZone
           validator={fileValidator}
-          onDrop={(files: FileWithPath[]) => {
+          onDrop={(files) => {
             setFiles(files);
           }}
           emptyIcon={emptyIcon}
@@ -84,12 +83,12 @@ Control.args = {
 };
 
 export function DropZoneContainerControl() {
-  const [files, setFiles] = useState<FileWithPath[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   return (
     <div style={{ height: 500 }}>
       <DropZoneContainer
         validator={fileValidator}
-        onDrop={(files: FileWithPath[]) => {
+        onDrop={(files: File[]) => {
           setFiles(files);
         }}
       >

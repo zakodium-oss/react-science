@@ -47,7 +47,12 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
   const dispatch = useAppDispatch();
   const [isOpened, , close, toggle] = useOnOff(false);
 
-  const { context, refs, floatingStyles } = useFloating({
+  const {
+    context,
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    refs: { setFloating, setReference },
+    floatingStyles,
+  } = useFloating({
     strategy: 'fixed',
     placement: 'bottom-start',
     open: isOpened,
@@ -74,7 +79,7 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
     <>
       <ColorPreviewButton
         type="button"
-        ref={refs.setReference}
+        ref={setReference}
         onClick={toggle}
         {...getReferenceProps()}
       >
@@ -86,9 +91,7 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
             <FloatingFocusManager context={context}>
               <div
                 style={floatingStyles}
-                // We are not accessing the ref's value here.
-                // eslint-disable-next-line react-hooks/refs
-                ref={refs.setFloating}
+                ref={setFloating}
                 {...getFloatingProps()}
               >
                 <FixedColorPicker
