@@ -7,6 +7,7 @@ import type { CSSProperties, ReactNode } from 'react';
 import { Fragment } from 'react';
 
 import { TableDraggableRowTr } from './reorder_rows/index.js';
+import type { ReactScienceTableFeatures } from './table_features.js';
 import { TableRowTr } from './table_row.js';
 import { TableRowCell } from './table_row_cell.js';
 import type {
@@ -17,7 +18,7 @@ import type {
 } from './table_utils.js';
 
 interface TableBodyProps<TData extends RowData> {
-  rows: Array<Row<TData>>;
+  rows: Array<Row<ReactScienceTableFeatures, TData>>;
   tdStyle?: CSSProperties;
   getTdProps?: GetTdProps<TData>;
   renderRowTr: TableRowTrRenderer<TData> | undefined;
@@ -42,10 +43,7 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
     getTdProps,
     isReorderingEnabled,
     renderRowPreview,
-    renderRowTr = getDefaultRenderRowTr(
-      isReorderingEnabled,
-      renderRowPreview as TableRowPreviewRenderer<unknown>,
-    ) as TableRowTrRenderer<TData>,
+    renderRowTr = getDefaultRenderRowTr(isReorderingEnabled, renderRowPreview),
     virtualizer,
     virtualizeRows,
     emptyContent,
@@ -157,13 +155,15 @@ const EmptyState = styled.div`
   gap: 0.5em;
 `;
 
-type TableRowRenderer<TData extends RowData> = (row: Row<TData>) => ReactNode;
+type TableRowRenderer<TData extends RowData> = (
+  row: Row<ReactScienceTableFeatures, TData>,
+) => ReactNode;
 
-function TableRow<TData>({
+function TableRow<TData extends RowData>({
   row,
   renderRowTr,
 }: {
-  row: Row<TData>;
+  row: Row<ReactScienceTableFeatures, TData>;
   renderRowTr: TableRowRenderer<TData>;
 }) {
   return <Fragment>{renderRowTr(row)}</Fragment>;
@@ -177,7 +177,7 @@ type RenderRowVirtualItem = VirtualItem & {
 };
 
 function getTrRenderProps<TData extends RowData>(
-  row: Row<TData>,
+  row: Row<ReactScienceTableFeatures, TData>,
   tdStyle: CSSProperties | undefined,
   getTdProps: GetTdProps<TData> | undefined,
   virtualItem?: RenderRowVirtualItem,
@@ -202,24 +202,20 @@ function getTrRenderProps<TData extends RowData>(
   };
 }
 
-function getDefaultRenderRowTr(
+function getDefaultRenderRowTr<TData extends RowData>(
   isReorderingEnabled: boolean,
-  renderRowPreview: TableRowPreviewRenderer<unknown> | undefined,
-): TableRowTrRenderer<unknown> {
+  renderRowPreview: TableRowPreviewRenderer<TData> | undefined,
+): TableRowTrRenderer<TData> {
   if (isReorderingEnabled) {
     return getDefaultRenderDraggableRowTr(renderRowPreview);
   } else {
-    return defaultRenderRowTr;
+    return (trProps, row) => <TableRowTr trProps={{ ...trProps }} row={row} />;
   }
 }
 
-const defaultRenderRowTr: TableRowTrRenderer<unknown> = (trProps, row) => (
-  <TableRowTr trProps={{ ...trProps }} row={row} />
-);
-
-function getDefaultRenderDraggableRowTr(
-  renderRowPreview: TableRowPreviewRenderer<unknown> | undefined,
-): TableRowTrRenderer<unknown> {
+function getDefaultRenderDraggableRowTr<TData extends RowData>(
+  renderRowPreview: TableRowPreviewRenderer<TData> | undefined,
+): TableRowTrRenderer<TData> {
   return (trProps, row) => (
     <TableDraggableRowTr
       trProps={trProps}

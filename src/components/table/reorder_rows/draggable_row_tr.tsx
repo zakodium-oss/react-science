@@ -16,6 +16,7 @@ import { createPortal } from 'react-dom';
 import { useFlashRowEffect } from '../flash_row/use_flash_row_effect.js';
 import { PreviewTable } from '../preview_table.js';
 import { useIsPreviewTable } from '../preview_table_context.js';
+import type { ReactScienceTableFeatures } from '../table_features.js';
 import type {
   TableRowPreviewRenderer,
   TableRowTrRenderProps,
@@ -35,7 +36,7 @@ export interface TableDraggableRowTrProps<TData extends RowData> {
   /**
    * Row data.
    */
-  row: Row<TData>;
+  row: Row<ReactScienceTableFeatures, TData>;
   /**
    * Preview of the row being dragged.
    */

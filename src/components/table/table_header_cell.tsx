@@ -1,9 +1,11 @@
 import { Icon } from '@blueprintjs/core';
 import type { IconName } from '@blueprintjs/icons';
-import type { Header, RowData, SortingFnOption } from '@tanstack/react-table';
+import type { Header, RowData, SortFnOption } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { match } from 'ts-pattern';
+
+import type { ReactScienceTableFeatures } from './table_features.js';
 
 type ThProps = Pick<
   HTMLAttributes<HTMLTableCellElement>,
@@ -12,11 +14,11 @@ type ThProps = Pick<
 
 export type HeaderCellRenderer<TData extends RowData> = (
   thProps: ThProps,
-  header: Header<TData, unknown>,
+  header: Header<ReactScienceTableFeatures, TData, unknown>,
 ) => ReactNode;
 
 interface TableHeaderCellProps<TData extends RowData> {
-  header: Header<TData, unknown>;
+  header: Header<ReactScienceTableFeatures, TData, unknown>;
   renderHeaderCell?: HeaderCellRenderer<TData>;
 }
 
@@ -33,15 +35,13 @@ export function TableHeaderCell<TData extends RowData>(
 }
 
 function getThProps<TData extends RowData>(
-  header: Header<TData, unknown>,
+  header: Header<ReactScienceTableFeatures, TData, unknown>,
 ): ThProps {
   const { column } = header;
 
   const sorted = column.getIsSorted();
   const canSort = column.getCanSort();
-  const sortingIcon = getSortingIcon(column.columnDef.sortingFn)[
-    sorted || 'asc'
-  ];
+  const sortingIcon = getSortingIcon(column.columnDef.sortFn)[sorted || 'asc'];
 
   return {
     onClick: canSort ? column.getToggleSortingHandler() : undefined,
@@ -60,10 +60,10 @@ function getThProps<TData extends RowData>(
 }
 
 function getSortingIcon<TData extends RowData>(
-  type: SortingFnOption<TData> | undefined,
+  type: SortFnOption<ReactScienceTableFeatures, TData> | undefined,
 ): { asc: IconName; desc: IconName } {
   return match<
-    SortingFnOption<TData> | undefined,
+    SortFnOption<ReactScienceTableFeatures, TData> | undefined,
     { asc: IconName; desc: IconName }
   >(type)
     .with(

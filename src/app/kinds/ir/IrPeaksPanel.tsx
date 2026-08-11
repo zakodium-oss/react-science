@@ -1,7 +1,8 @@
-import type { ColumnDef, SortingState } from '@tanstack/react-table';
+import type { SortingState } from '@tanstack/react-table';
 import { useState } from 'react';
 
 import type { IrPeak } from '../../../app-data/index.js';
+import type { TableColumnDef } from '../../../components/index.js';
 import { Table } from '../../../components/index.js';
 
 export interface IrColumnPreferences<T extends keyof IrPeak = keyof IrPeak> {
@@ -30,7 +31,7 @@ export function IrPeaksPanel(props: IrPeaksPanelProps) {
   const { peaks, preferences = {} } = props;
   const { columns = [] } = preferences;
 
-  const defaultColumns: Array<ColumnDef<IrPeak, number>> = columns.map(
+  const defaultColumns: Array<TableColumnDef<IrPeak, number>> = columns.map(
     ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
       header: label,
       accessorKey,

@@ -1,16 +1,7 @@
 import { HTMLTable } from '@blueprintjs/core';
 import styled from '@emotion/styled';
-import type {
-  Header,
-  RowData,
-  Table as TanstackTable,
-  TableOptions,
-} from '@tanstack/react-table';
-import {
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+import type { Header, RowData, TableOptions } from '@tanstack/react-table';
+import { useTable } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type {
   CSSProperties,
@@ -28,6 +19,8 @@ import type { PreviewTablePropsContextValue } from './preview_table_context.js';
 import { PreviewTablePropsContextProvider } from './preview_table_context.js';
 import { ItemOrderProvider } from './reorder_rows/item_order_provider.js';
 import { TableBody } from './table_body.js';
+import type { ReactScienceTableFeatures } from './table_features.js';
+import { reactScienceTableFeatures } from './table_features.js';
 import { TableHeader } from './table_header.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
 import { ScrollContainer } from './table_scroll_container.js';
@@ -124,8 +117,8 @@ interface TableBaseProps<TData extends RowData> {
   virtualizeRows?: boolean;
 
   reactTable?: Omit<
-    TableOptions<TData>,
-    'data' | 'columns' | 'getCoreRowModel' | 'getSortedRowModel'
+    TableOptions<ReactScienceTableFeatures, TData>,
+    'features' | 'data' | 'columns'
   >;
   /**
    * Props which are forwarded to the underlying HTML table element.
@@ -170,7 +163,7 @@ interface TableBaseProps<TData extends RowData> {
   /**
    * An accessor which should return a unique identifier for the row.
    */
-  getRowId?: TableOptions<TData>['getRowId'];
+  getRowId?: TableOptions<ReactScienceTableFeatures, TData>['getRowId'];
 
   /**
    * Called when the user changed the order of the rows.
@@ -267,12 +260,11 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   const isReorderingEnabled = !!onRowOrderChanged;
   const virtualScrollElementRef = useRef<HTMLDivElement>(null);
   const columnDefs = useTableColumns(columns);
-  const table = useReactTable<TData>({
+  const table = useTable({
     ...reactTable,
+    features: reactScienceTableFeatures,
     data,
     columns: columnDefs,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getRowId,
   });
 
@@ -299,10 +291,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   }
 
   const tableHeaders = table.getFlatHeaders();
-  useCheckProps(
-    props as TableProps<unknown>,
-    tableHeaders as Array<Header<unknown, unknown>>,
-  );
+  useCheckProps(props, tableHeaders);
 
   const tablePreviewProps = useMemo<PreviewTablePropsContextValue<TData>>(
     () => ({
@@ -320,7 +309,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   return (
     <FlashedRowProvider>
       <PreviewTablePropsContextProvider
-        value={tablePreviewProps as PreviewTablePropsContextValue<unknown>}
+        value={tablePreviewProps as PreviewTablePropsContextValue<RowData>}
       >
         <ItemOrderProvider
           items={rows}
@@ -331,7 +320,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
           <ScrollContainer
             virtualizeRows={virtualizeRows}
             virtualizer={tanstackVirtualizer}
-            table={table as TanstackTable<unknown>}
+            table={table}
             scrollRef={
               virtualizeRows
                 ? // When virtualized, ScrollContainer will render a scrollable element associated to this ref.
@@ -385,9 +374,9 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
   );
 }
 
-function useCheckProps(
-  props: TableProps<unknown>,
-  headers: Array<Header<unknown, unknown>>,
+function useCheckProps<TData extends RowData>(
+  props: TableProps<TData>,
+  headers: Array<Header<ReactScienceTableFeatures, TData, unknown>>,
 ) {
   const { onRowOrderChanged, getRowId } = props;
   useEffect(() => {

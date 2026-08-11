@@ -6,6 +6,7 @@ import { useImperativeHandle } from 'react';
 import { selector } from '../utils/selector.ts';
 
 import { useFlashedRowContext } from './flash_row/flashed_row_context.js';
+import type { ReactScienceTableFeatures } from './table_features.js';
 import type { TableProps } from './table_root.js';
 import type { TableVirtualScrollIntoViewOptions } from './table_utils.js';
 
@@ -25,7 +26,7 @@ export function useTableScroll<TData extends RowData>(options: {
   /*
   Tanstack table instance.
    */
-  table: Table<TData>;
+  table: Table<ReactScienceTableFeatures, TData>;
   /**
    * Tanstack virtualizer instance.
    */

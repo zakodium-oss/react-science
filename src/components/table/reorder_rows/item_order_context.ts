@@ -1,4 +1,3 @@
-import type { Row } from '@tanstack/react-table';
 import type { Edge } from '@zakodium/pdnd-esm';
 import { createContext, useContext } from 'react';
 
@@ -8,8 +7,8 @@ export type ReorderItemCallback = (args: {
   closestEdgeOfTarget: Edge | null;
 }) => void;
 
-export interface ItemOrderContextValue<T = unknown> {
-  items: Array<Row<T>>;
+export interface ItemOrderContextValue {
+  items: Array<{ id: string }>;
   reorderItem: ReorderItemCallback;
   instanceId: symbol;
 }

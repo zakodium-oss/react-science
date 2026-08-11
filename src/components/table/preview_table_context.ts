@@ -11,7 +11,7 @@ export type PreviewTablePropsContextValue<TData extends RowData> = Pick<
 >;
 
 export const previewTablePropsContext =
-  createContext<PreviewTablePropsContextValue<unknown> | null>(null);
+  createContext<PreviewTablePropsContextValue<RowData> | null>(null);
 
 export function usePreviewTableProps<TData extends RowData>() {
   const value = useContext(previewTablePropsContext);

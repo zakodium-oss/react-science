@@ -1,5 +1,7 @@
-import type { Row } from '@tanstack/react-table';
+import type { Row, RowData } from '@tanstack/react-table';
 import type { Edge } from '@zakodium/pdnd-esm';
+
+import type { ReactScienceTableFeatures } from '../table_features.js';
 
 const itemKey = Symbol('table-item-data');
 export interface ItemData {
@@ -11,8 +13,8 @@ export interface ItemData {
   [key: symbol]: unknown;
 }
 
-export function getItemData<RowType>(
-  row: Row<RowType>,
+export function getItemData<RowType extends RowData>(
+  row: Row<ReactScienceTableFeatures, RowType>,
   instanceId: symbol,
 ): ItemData {
   return {

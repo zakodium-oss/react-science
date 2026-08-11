@@ -20,7 +20,7 @@ interface TableData {
   visible: boolean;
 }
 
-const helper = createTableColumnHelper<TableData>();
+const columnHelper = createTableColumnHelper<TableData>();
 
 const data: TableData[] = [
   { label: 'Name', field: 'info.name', format: '', visible: true },
@@ -73,9 +73,9 @@ export function InsideTable() {
   );
 
   const columns = useMemo(() => {
-    return [
-      helper.accessor('id', { header: '#' }),
-      helper.accessor('label', {
+    return columnHelper.columns([
+      columnHelper.accessor('id', { header: '#' }),
+      columnHelper.accessor('label', {
         header: 'Label',
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableComponent
@@ -95,7 +95,7 @@ export function InsideTable() {
           </InlineEditableComponent>
         ),
       }),
-      helper.accessor('field', {
+      columnHelper.accessor('field', {
         header: 'Field',
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableComponent
@@ -115,7 +115,7 @@ export function InsideTable() {
           </InlineEditableComponent>
         ),
       }),
-      helper.accessor('format', {
+      columnHelper.accessor('format', {
         header: 'Format',
         cell: ({ getValue, row: { index } }) => (
           <InlineEditableComponent
@@ -135,8 +135,8 @@ export function InsideTable() {
           </InlineEditableComponent>
         ),
       }),
-      helper.accessor('visible', { header: 'Visible' }),
-      helper.display({
+      columnHelper.accessor('visible', { header: 'Visible' }),
+      columnHelper.display({
         header: ' ',
         cell: ({ row: { index } }) => {
           return (
@@ -149,7 +149,7 @@ export function InsideTable() {
           );
         },
       }),
-    ];
+    ]);
   }, [changeValue, deleteIndex]);
 
   return (

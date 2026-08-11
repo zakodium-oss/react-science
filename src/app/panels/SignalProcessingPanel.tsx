@@ -45,7 +45,7 @@ const columnHelper = createTableColumnHelper<Filter>();
 export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
   const { filters, onChange } = props;
 
-  const columns = [
+  const columns = columnHelper.columns([
     columnHelper.display({
       header: ' ',
       cell: ({ row }) => {
@@ -134,7 +134,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
         );
       },
     }),
-  ];
+  ]);
 
   return (
     <div>

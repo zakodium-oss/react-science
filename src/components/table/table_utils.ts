@@ -3,7 +3,10 @@ import { createColumnHelper } from '@tanstack/react-table';
 import type { ScrollToOptions } from '@tanstack/react-virtual';
 import type { CSSProperties, ReactNode, TdHTMLAttributes } from 'react';
 
+import type { ReactScienceTableFeatures } from './table_features.js';
+
 export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<
+  ReactScienceTableFeatures,
   TData,
   TValue
 >;
@@ -11,11 +14,11 @@ export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<
 type TableTdProps = TdHTMLAttributes<HTMLTableCellElement>;
 
 export type GetTdProps<TData extends RowData> = (
-  cell: Cell<TData, unknown>,
+  cell: Cell<ReactScienceTableFeatures, TData, unknown>,
 ) => TableTdProps;
 
 export function createTableColumnHelper<TData extends RowData>() {
-  return createColumnHelper<TData>();
+  return createColumnHelper<ReactScienceTableFeatures, TData>();
 }
 
 export interface TableRowTrRenderProps {
@@ -28,14 +31,14 @@ export interface TableRowTrRenderProps {
 
 export type TableRowTrRenderer<TData extends RowData> = (
   trProps: TableRowTrRenderProps,
-  row: Row<TData>,
+  row: Row<ReactScienceTableFeatures, TData>,
 ) => ReactNode;
 
 export type TableRowPreviewRenderer<TData extends RowData> = (
   /**
    * The row being dragged, for which to render a preview.
    */
-  row: Row<TData>,
+  row: Row<ReactScienceTableFeatures, TData>,
 ) => ReactNode;
 
 interface FlashRowOptions {

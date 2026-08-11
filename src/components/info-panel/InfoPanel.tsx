@@ -84,7 +84,7 @@ interface InfoPanelDatum {
 }
 
 const columnHelper = createTableColumnHelper<InfoPanelDatum>();
-const columns = [
+const columns = columnHelper.columns([
   columnHelper.accessor('parameter', {
     header: 'Parameter',
   }),
@@ -92,7 +92,7 @@ const columns = [
     header: 'Value',
     cell: ({ getValue }) => valueCell(getValue()),
   }),
-];
+]);
 
 const emptyData: InfoPanelData[] = [];
 

@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
+import type { RowData, Table as TanstackTable } from '@tanstack/react-table';
 import type { Virtualizer } from '@tanstack/react-virtual';
-import type { Table as TanstackTable } from '@tanstack/table-core';
 import type { ReactNode, RefObject } from 'react';
 
 import { useDropMonitor } from './reorder_rows/use_drop_monitor.js';
+import type { ReactScienceTableFeatures } from './table_features.js';
 import type { TableProps } from './table_root.js';
 import { useTableScroll } from './use_table_scroll.js';
 
@@ -12,7 +13,7 @@ const ScrollRefDiv = styled.div`
   overflow: auto;
 `;
 
-interface ScrollContainerProps {
+interface ScrollContainerProps<TData extends RowData> {
   /**
    * Whether the table rows are virtualized.
    */
@@ -24,7 +25,7 @@ interface ScrollContainerProps {
   /**
    * The tanstack table.
    */
-  table: TanstackTable<unknown>;
+  table: TanstackTable<ReactScienceTableFeatures, TData>;
   /**
    * A ref to the effective scroll container.
    */
@@ -34,12 +35,14 @@ interface ScrollContainerProps {
    * It is set by the ScrollContainer component if the table is virtualized.
    * It is an external ref when the table is not virtualized.
    */
-  scrollToRowRef?: TableProps<unknown>['scrollToRowRef'];
+  scrollToRowRef?: TableProps<TData>['scrollToRowRef'];
   isReorderingEnabled: boolean;
   children: ReactNode;
 }
 
-export function ScrollContainer(props: ScrollContainerProps) {
+export function ScrollContainer<TData extends RowData>(
+  props: ScrollContainerProps<TData>,
+) {
   const {
     virtualizeRows,
     table,

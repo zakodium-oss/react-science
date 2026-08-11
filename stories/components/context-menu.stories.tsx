@@ -58,7 +58,7 @@ const content = (
 );
 
 const columnHelper = createTableColumnHelper<(typeof table)[number]>();
-const columns = [
+const columns = columnHelper.columns([
   columnHelper.accessor('id', {
     header: () => <ColumnWithDropdownMenu value="id" content={content} />,
   }),
@@ -91,7 +91,7 @@ const columns = [
     header: () => <ColumnWithDropdownMenu value="color" content={content} />,
     cell: ({ getValue }) => <ValueRenderers.Color value={getValue()} />,
   }),
-];
+]);
 
 export function TableWithHeaderDropDownMenu() {
   return <Table data={table.slice(0, 10)} columns={columns} />;
