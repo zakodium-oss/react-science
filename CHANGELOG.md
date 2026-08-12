@@ -1,5 +1,16 @@
 # Changelog
 
+## [22.0.0](https://github.com/zakodium-oss/react-science/compare/v21.1.0...v22.0.0) (2026-08-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* The Table component now uses `@tanstack/react-table` v9. The API has been adapted to it. See https://tanstack.com/table/latest/docs/framework/react/guide/migrating for migration information.
+
+### Features
+
+* update react-table to v9 ([#1041](https://github.com/zakodium-oss/react-science/issues/1041)) ([b440ff8](https://github.com/zakodium-oss/react-science/commit/b440ff8ea904441f423bfa97c028046e5c4e97c3))
+
 ## [21.1.0](https://github.com/zakodium-oss/react-science/compare/v21.0.0...v21.1.0) (2026-08-12)
 
 
