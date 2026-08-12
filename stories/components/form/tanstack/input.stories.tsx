@@ -11,8 +11,8 @@ import { z } from 'zod';
 
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
-import { coerce_number_input } from '../../../../src/components/form/utils/validation/coerce_number_input.ts';
 import { AppForm, useForm } from '../../../../src/components/index.js';
+import { coerceNumberInput } from '../../../../src/components/index.ts';
 
 // Remove for React 19.
 type SubmitEvent<T> = FormEvent<T>;
@@ -470,7 +470,7 @@ export function DraggableNumericInputStory(
 }
 
 const crashZodValidation = z.object({
-  width: coerce_number_input,
+  width: coerceNumberInput,
 });
 
 // This is to test user input when the user's trying to write `-1`.
