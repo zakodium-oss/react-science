@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { IdcodeSvgRenderer } from 'react-ocl';
 
-import type { TableColumnDef } from '../../src/components/index.js';
 import {
   ValueRenderers,
   createTableColumnHelper,
