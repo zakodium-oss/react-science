@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.1.0](https://github.com/zakodium-oss/react-science/compare/v21.0.0...v21.1.0) (2026-08-12)
+
+
+### Features
+
+* **validation:** add `coerceNumberInput` on validation utils ([#1042](https://github.com/zakodium-oss/react-science/issues/1042)) ([bf3de2e](https://github.com/zakodium-oss/react-science/commit/bf3de2eb097f72699bc6dcd5c993286d074c1c6e))
+
 ## [21.0.0](https://github.com/zakodium-oss/react-science/compare/v20.7.0...v21.0.0) (2026-08-03)
 
 
