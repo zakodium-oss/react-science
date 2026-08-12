@@ -7,6 +7,8 @@ import {
 } from '../../src/components/index.js';
 import type { table } from '../data/data.js';
 
+type TableRecord = (typeof table)[number];
+
 // eslint-disable-next-line react-refresh/only-export-components
 const Truncate = styled.div`
   overflow: hidden;
@@ -14,9 +16,9 @@ const Truncate = styled.div`
   white-space: nowrap;
 `;
 
-const columnHelper = createTableColumnHelper<(typeof table)[number]>();
+const columnHelper = createTableColumnHelper<TableRecord>();
 
-export const columns = [
+export const columns = columnHelper.columns([
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
     cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
@@ -25,7 +27,7 @@ export const columns = [
   columnHelper.accessor('name', {
     header: 'Name',
     enableSorting: true,
-    sortingFn: 'textCaseSensitive',
+    sortFn: 'textCaseSensitive',
     cell: ({ getValue }) => <Truncate>{getValue()}</Truncate>,
     meta: {
       color: 'lightblue',
@@ -41,7 +43,7 @@ export const columns = [
   }),
   columnHelper.accessor('em', {
     header: 'EM',
-    sortingFn: 'basic',
+    sortFn: 'basic',
     enableSorting: true,
     cell: ({ getValue }) => (
       <ValueRenderers.Number value={getValue()} fixed={4} />
@@ -49,8 +51,10 @@ export const columns = [
   }),
   columnHelper.accessor('isExpensive', {
     header: 'Is expensive',
-    sortingFn: (row) => {
-      return row.original.isExpensive ? 1 : -1;
+    sortFn: (rowA, rowB) => {
+      return (
+        Number(rowA.original.isExpensive) - Number(rowB.original.isExpensive)
+      );
     },
     enableSorting: true,
   }),
@@ -65,9 +69,9 @@ export const columns = [
       },
     },
   }),
-];
+]);
 
-export const columnsNativeMeta = [
+export const columnsNativeMeta = columnHelper.columns([
   columnHelper.accessor('ocl.idCode', {
     header: 'Molecule',
     cell: ({ getValue }) => <IdcodeSvgRenderer idcode={getValue()} />,
@@ -85,4 +89,4 @@ export const columnsNativeMeta = [
       },
     },
   }),
-];
+]);

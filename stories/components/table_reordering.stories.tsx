@@ -49,7 +49,7 @@ export default {
 
 const columnHelper = createTableColumnHelper<(typeof table)[number]>();
 
-const columns = [
+const columns = columnHelper.columns([
   columnHelper.display({
     header: 'Drag',
     cell: () => <TableDragRowHandler size="large" />,
@@ -63,7 +63,7 @@ const columns = [
     header: 'Name',
     cell: ({ getValue }) => getValue(),
   }),
-];
+]);
 
 export function ReordableRows(props: ControlProps) {
   const [data, setData] = useState(table);

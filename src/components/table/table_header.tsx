@@ -1,6 +1,7 @@
 import type { Header, RowData } from '@tanstack/react-table';
 import type { CSSProperties } from 'react';
 
+import type { ReactScienceTableFeatures } from './table_features.js';
 import type { HeaderCellRenderer } from './table_header_cell.js';
 import { TableHeaderCell } from './table_header_cell.js';
 
@@ -12,7 +13,7 @@ const headerStyle: CSSProperties = {
 };
 
 interface TableHeaderProps<TData extends RowData> {
-  headers: Array<Header<TData, unknown>>;
+  headers: Array<Header<ReactScienceTableFeatures, TData, unknown>>;
   sticky: boolean;
   renderHeaderCell?: HeaderCellRenderer<TData>;
 }

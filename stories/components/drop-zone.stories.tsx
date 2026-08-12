@@ -31,10 +31,10 @@ function fileValidator(file: File) {
 }
 
 const columnHelper = createTableColumnHelper<File>();
-const columns = [
+const columns = columnHelper.columns([
   columnHelper.accessor('name', { header: 'Name' }),
   columnHelper.accessor('size', { header: 'Size' }),
-];
+]);
 
 export function Control({
   emptyIcon,

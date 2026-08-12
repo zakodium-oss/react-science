@@ -2,10 +2,11 @@ import type { Cell, RowData } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
 import type { CSSProperties } from 'react';
 
+import type { ReactScienceTableFeatures } from './table_features.js';
 import type { GetTdProps } from './table_utils.js';
 
 interface TableRowCellProps<TData extends RowData> {
-  cell: Cell<TData, unknown>;
+  cell: Cell<ReactScienceTableFeatures, TData, unknown>;
   tdStyle: CSSProperties | undefined;
   getTdProps: GetTdProps<TData> | undefined;
 }

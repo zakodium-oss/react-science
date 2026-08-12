@@ -1,18 +1,23 @@
-import type { Row } from '@tanstack/react-table';
+import type { Row, RowData } from '@tanstack/react-table';
 import { getReorderDestinationIndex, reorder } from '@zakodium/pdnd-esm';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
-import type { ReorderItemCallback } from './item_order_context.js';
+import type { ReactScienceTableFeatures } from '../table_features.js';
+
+import type {
+  ItemOrderContextValue,
+  ReorderItemCallback,
+} from './item_order_context.js';
 import { itemOrderContext } from './item_order_context.js';
 
-interface ItemOrderProviderProps<T> {
-  items: Array<Row<T>>;
-  onOrderChanged: (items: Array<Row<T>>) => void;
+interface ItemOrderProviderProps<T extends RowData> {
+  items: Array<Row<ReactScienceTableFeatures, T>>;
+  onOrderChanged: (items: Array<Row<ReactScienceTableFeatures, T>>) => void;
   children: ReactNode;
 }
 
-export function ItemOrderProvider<T = unknown>(
+export function ItemOrderProvider<T extends RowData = RowData>(
   props: ItemOrderProviderProps<T>,
 ) {
   // Isolated instances of this component from one another
@@ -43,13 +48,10 @@ export function ItemOrderProvider<T = unknown>(
     [items, onOrderChanged],
   );
 
-  const value = useMemo(() => {
-    // This assertion is necessary because the provider cannot contain the
-    // T type instantiated by this component.
-    const contextItems = items as Array<Row<unknown>>;
+  const value = useMemo<ItemOrderContextValue>(() => {
     return {
       reorderItem,
-      items: contextItems,
+      items,
       instanceId,
     };
   }, [reorderItem, items, instanceId]);

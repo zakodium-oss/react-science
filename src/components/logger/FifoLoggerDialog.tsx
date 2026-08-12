@@ -41,34 +41,35 @@ export interface FifoLoggerDialogProps {
 const columnHelper = createTableColumnHelper<LogEntry>();
 function useColumns(unseen: number) {
   return useMemo(
-    () => [
-      columnHelper.display({
-        header: '#',
-        cell: ({ row }) => {
-          return (
-            <RowIndexCell
-              pillColor={
-                row.index >= unseen
-                  ? 'transparent'
-                  : rowBackgroundColor[row.original.levelLabel]
-              }
-            >
-              {String(row.index + 1)}
-            </RowIndexCell>
-          );
-        },
-      }),
-      columnHelper.accessor('time', {
-        header: 'Time',
-        cell: ({ getValue }) => new Date(getValue()).toLocaleTimeString(),
-      }),
-      columnHelper.accessor('levelLabel', {
-        header: 'Level',
-      }),
-      columnHelper.accessor('message', {
-        header: 'Message',
-      }),
-    ],
+    () =>
+      columnHelper.columns([
+        columnHelper.display({
+          header: '#',
+          cell: ({ row }) => {
+            return (
+              <RowIndexCell
+                pillColor={
+                  row.index >= unseen
+                    ? 'transparent'
+                    : rowBackgroundColor[row.original.levelLabel]
+                }
+              >
+                {String(row.index + 1)}
+              </RowIndexCell>
+            );
+          },
+        }),
+        columnHelper.accessor('time', {
+          header: 'Time',
+          cell: ({ getValue }) => new Date(getValue()).toLocaleTimeString(),
+        }),
+        columnHelper.accessor('levelLabel', {
+          header: 'Level',
+        }),
+        columnHelper.accessor('message', {
+          header: 'Message',
+        }),
+      ]),
     [unseen],
   );
 }
