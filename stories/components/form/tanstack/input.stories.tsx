@@ -1,14 +1,18 @@
 import type { Intent, OptionProps } from '@blueprintjs/core';
 import { Radio } from '@blueprintjs/core';
-import type { Meta } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
+import { useSelector } from '@tanstack/react-store';
 import type { FormEvent } from 'react';
+import { useMemo } from 'react';
 import { action } from 'storybook/actions';
+import { expect, userEvent, within } from 'storybook/test';
 import { z } from 'zod';
 
 import type { Layout } from '../../../../src/components/form/components/input_groups/form_context.js';
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
 import { AppForm, useForm } from '../../../../src/components/index.js';
+import { coerceNumberInput } from '../../../../src/components/index.ts';
 
 // Remove for React 19.
 type SubmitEvent<T> = FormEvent<T>;
@@ -464,3 +468,51 @@ export function DraggableNumericInputStory(
     </AppForm>
   );
 }
+
+const crashZodValidation = z.object({
+  width: coerceNumberInput,
+});
+
+// This is to test user input when the user's trying to write `-1`.
+// Before, the application crashed. now it should be fixed
+// https://github.com/cheminfo/nmrium/issues/4308
+export const PreventCrashOnUserInput = {
+  render: () => {
+    const form = useForm({
+      onSubmit: ({ value }) =>
+        action('onSubmit')(crashZodValidation.parse(value)),
+      validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+      validators: { onDynamic: crashZodValidation },
+      defaultValues: {
+        width: '5',
+      },
+    });
+
+    const inputValues = useSelector(form.store, (store) => store.values);
+
+    const outputValues = useMemo(() => {
+      return crashZodValidation.decode(inputValues);
+    }, [inputValues]);
+
+    return (
+      <AppForm form={form}>
+        <form.AppField name="width">
+          {(field) => <field.NumericInput />}
+        </form.AppField>
+
+        <span data-testid="output-result">{JSON.stringify(outputValues)}</span>
+      </AppForm>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const input = canvas.getByRole('spinbutton');
+
+    await userEvent.clear(input);
+    await userEvent.type(input, '-');
+
+    const output = canvas.getByTestId('output-result');
+    await expect(output.textContent).toBe(JSON.stringify({ width: 0 }));
+  },
+} as StoryObj;

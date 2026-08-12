@@ -5,5 +5,5 @@
     "outDir": "lib/components"
   },
   "include": ["src/components"],
-  "exclude": ["**/__tests__", "**/*.stories.*"]
+  "exclude": ["**/__tests__", "**/*.stories.*", "**/*.test.*"]
 }
