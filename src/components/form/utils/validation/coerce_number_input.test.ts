@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { coerceNumberInput } from './coerceNumberInput.ts';
+import { coerceNumberInput } from './coerce_number_input.ts';
 
 describe('coerceNumberInput', () => {
   it('is defined', () => {

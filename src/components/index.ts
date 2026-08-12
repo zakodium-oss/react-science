@@ -19,6 +19,7 @@ export * from './form/components/input_groups/index.js';
 export * from './form/components/input/index.js';
 export * from './form/components/layout/index.js';
 export * from './form/context/use_ts_form.js';
+export * from './form/utils/validation/coerce_number_input.ts';
 export * from './activity_bar/index.js';
 export * from './activity_panel/index.js';
 export * from './utils/index.js';

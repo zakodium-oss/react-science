@@ -10,8 +10,7 @@
   "files": [
     "lib",
     "src/components",
-    "styles/preflight.css",
-    "!src/components/**/*.test.*"
+    "styles/preflight.css"
   ],
   "scripts": {
     "build": "npm run clean && npm run build-ts",
