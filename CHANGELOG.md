@@ -1,5 +1,17 @@
 # Changelog
 
+## [23.0.0](https://github.com/zakodium-oss/react-science/compare/v22.0.0...v23.0.0) (2026-08-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* `coerceNumberInput` is now a function instead of a const
+
+### Features
+
+* add schema on `coerceNumberInput` ([#1047](https://github.com/zakodium-oss/react-science/issues/1047)) ([f4f6dfd](https://github.com/zakodium-oss/react-science/commit/f4f6dfd33967195039cedf8f23370ab9cd872084))
+* export data types from react-table ([#1045](https://github.com/zakodium-oss/react-science/issues/1045)) ([8a27b74](https://github.com/zakodium-oss/react-science/commit/8a27b74307bb630cd1bdbc38462b7c04057da2b1))
+
 ## [22.0.0](https://github.com/zakodium-oss/react-science/compare/v21.1.0...v22.0.0) (2026-08-12)
 
 
