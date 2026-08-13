@@ -30,3 +30,8 @@ declare module '@tanstack/react-table' {
   }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 }
+
+export type {
+  CellData as TableCellData,
+  RowData as TableRowData,
+} from '@tanstack/react-table';
