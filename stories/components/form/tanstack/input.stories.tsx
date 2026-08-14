@@ -470,7 +470,7 @@ export function DraggableNumericInputStory(
 }
 
 const crashZodValidation = z.object({
-  width: coerceNumberInput,
+  width: coerceNumberInput(z.number().min(0)),
 });
 
 // This is to test user input when the user's trying to write `-1`.
