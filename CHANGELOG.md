@@ -1,5 +1,12 @@
 # Changelog
 
+## [23.0.1](https://github.com/zakodium-oss/react-science/compare/v23.0.0...v23.0.1) (2026-08-17)
+
+
+### Bug Fixes
+
+* change transform to codec in coerceNumberInput ([#1048](https://github.com/zakodium-oss/react-science/issues/1048)) ([1c975f5](https://github.com/zakodium-oss/react-science/commit/1c975f5d8ce13eb32972293e085c5583f5a30d6f))
+
 ## [23.0.0](https://github.com/zakodium-oss/react-science/compare/v22.0.0...v23.0.0) (2026-08-13)
 
 
