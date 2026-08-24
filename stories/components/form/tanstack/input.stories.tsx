@@ -516,3 +516,28 @@ export const PreventCrashOnUserInput = {
     await expect(output.textContent).toBe(JSON.stringify({ width: 0 }));
   },
 } as StoryObj;
+
+export function TextArea() {
+  const form = useForm({
+    onSubmit: ({ value }) => action('onSubmit')(value),
+    validationLogic: revalidateLogic({ modeAfterSubmission: 'change' }),
+    validators: {
+      onDynamic: z.object({
+        text: z.string(),
+      }),
+    },
+    defaultValues: {
+      text: '',
+    },
+  });
+
+  return (
+    <AppForm form={form} layout="inline">
+      <form.AppField name="text">
+        {(field) => <field.TextArea label="Text area" />}
+      </form.AppField>
+
+      <form.SubmitButton>Submit</form.SubmitButton>
+    </AppForm>
+  );
+}

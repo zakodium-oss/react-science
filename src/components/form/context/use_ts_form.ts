@@ -10,6 +10,7 @@ import { ResetButton } from '../components/input/reset_button.js';
 import { Select } from '../components/input/select.js';
 import { SubmitButton } from '../components/input/submit_button.js';
 import { Switch } from '../components/input/switch.js';
+import { TextArea } from '../components/input/textarea.tsx';
 import { Section } from '../components/layout/Section.js';
 
 const { useFormContext, useFieldContext, formContext, fieldContext } =
@@ -39,6 +40,7 @@ const { useAppForm, withForm, withFieldGroup } = createFormHook({
     ColorPicker,
     RadioGroup,
     DraggableNumericInput,
+    TextArea,
   },
 });
 
