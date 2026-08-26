@@ -12,3 +12,4 @@ export type {
 export type { SubmitButton as _SubmitButton } from './submit_button.js';
 export type { Switch as _Switch } from './switch.js';
 export type { DraggableNumericInput as _DraggableNumericInput } from './draggable_numeric_input.js';
+export type { TextArea as _TextArea } from './textarea.tsx';
