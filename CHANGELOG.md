@@ -1,5 +1,12 @@
 # Changelog
 
+## [23.1.1](https://github.com/zakodium-oss/react-science/compare/v23.1.0...v23.1.1) (2026-08-26)
+
+
+### Bug Fixes
+
+* export type name for TextArea ([#1055](https://github.com/zakodium-oss/react-science/issues/1055)) ([cbbe123](https://github.com/zakodium-oss/react-science/commit/cbbe123b000580519277017ee5fc6fc9d690c646))
+
 ## [23.1.0](https://github.com/zakodium-oss/react-science/compare/v23.0.1...v23.1.0) (2026-08-26)
 
 
