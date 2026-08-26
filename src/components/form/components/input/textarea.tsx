@@ -1,5 +1,6 @@
 import type { TextAreaProps as BPTextAreaProps } from '@blueprintjs/core';
 import { TextArea as BPTextArea } from '@blueprintjs/core';
+import styled from '@emotion/styled';
 import type { ChangeEvent } from 'react';
 
 import { useFieldContext } from '../../context/use_ts_form.ts';
@@ -7,6 +8,11 @@ import type { FormGroupInputProps } from '../input_groups/index.ts';
 import { FormGroup } from '../input_groups/index.ts';
 
 interface TextAreaProps extends FormGroupInputProps, BPTextAreaProps {}
+
+const ResizeableTextArea = styled(BPTextArea)`
+  resize: both;
+  max-width: 100%;
+`;
 
 export function TextArea(props: TextAreaProps) {
   const { label, required, helpText, layout, fullWidth, ...otherProps } = props;
@@ -31,8 +37,9 @@ export function TextArea(props: TextAreaProps) {
       helpText={helpText}
       layout={layout}
       fullWidth={fullWidth}
+      contentFullWidth
     >
-      <BPTextArea
+      <ResizeableTextArea
         {...otherProps}
         id={field.name}
         name={field.name}
