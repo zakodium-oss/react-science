@@ -1,5 +1,13 @@
 # Changelog
 
+## [23.1.0](https://github.com/zakodium-oss/react-science/compare/v23.0.1...v23.1.0) (2026-08-26)
+
+
+### Features
+
+* add `SVGPathBuilder` ([#1053](https://github.com/zakodium-oss/react-science/issues/1053)) ([fed7c11](https://github.com/zakodium-oss/react-science/commit/fed7c11ea3ca7174e8f8c988dd4e40bb80b594ec))
+* add `TextArea` to useForm ([#1052](https://github.com/zakodium-oss/react-science/issues/1052)) ([1829cfe](https://github.com/zakodium-oss/react-science/commit/1829cfe95e4f90e518457f7e30265ab0ca91145d))
+
 ## [23.0.1](https://github.com/zakodium-oss/react-science/compare/v23.0.0...v23.0.1) (2026-08-17)
 
 
