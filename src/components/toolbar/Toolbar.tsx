@@ -101,6 +101,10 @@ const Container = styled.div<ContainerProps>`
 `;
 
 export const ToolbarButton: StyledComponent<ButtonProps> = styled(Button)`
+  && {
+    border-radius: 0;
+  }
+
   .${Classes.ICON} {
     /* Color of icon in button is lighter in Blueprintjs. We want a better contrast in the toolbars */
     color: ${Colors.DARK_GRAY3} !important;
