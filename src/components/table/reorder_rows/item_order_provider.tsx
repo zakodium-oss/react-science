@@ -9,7 +9,7 @@ import type {
   ItemOrderContextValue,
   ReorderItemCallback,
 } from './item_order_context.js';
-import { itemOrderContext } from './item_order_context.js';
+import { ItemOrderContext } from './item_order_context.js';
 
 interface ItemOrderProviderProps<T extends RowData> {
   items: Array<Row<ReactScienceTableFeatures, T>>;
@@ -56,9 +56,5 @@ export function ItemOrderProvider<T extends RowData = RowData>(
     };
   }, [reorderItem, items, instanceId]);
 
-  return (
-    <itemOrderContext.Provider value={value}>
-      {children}
-    </itemOrderContext.Provider>
-  );
+  return <ItemOrderContext value={value}>{children}</ItemOrderContext>;
 }

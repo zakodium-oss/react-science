@@ -22,13 +22,15 @@ export default {
   },
 } as Meta<Props>;
 
+const tableSchema = z.array(z.object({ id: z.string() }));
+
 const schema = z.object({
   name: z.string().min(1),
   // coerce number must be annotated, otherwise tanstack form inference will throw error
   // due to `age: unknown` in defaultValues
   age: z.coerce.number<string>().min(18),
   // ensure no errors in types with `<AppForm form` when schema contains z.array type.
-  table: z.array(z.object({ id: z.string() })),
+  table: tableSchema,
 });
 
 const defaultValues: z.input<typeof schema> = {
@@ -50,20 +52,19 @@ export function SimpleAppForm(props: Props) {
       action('onSubmitInvalid')(value);
     },
   });
-  const { AppField, SubmitButton, ResetButton } = form;
 
   return (
     <AppForm form={form} layout={props.layout}>
-      <AppField name="name">
+      <form.AppField name="name">
         {({ Input }) => <Input label="Name" required />}
-      </AppField>
-      <AppField name="age">
+      </form.AppField>
+      <form.AppField name="age">
         {({ NumericInput }) => <NumericInput label="Age" required />}
-      </AppField>
+      </form.AppField>
 
       <Actions>
-        <ResetButton>Reset</ResetButton>
-        <SubmitButton>Submit</SubmitButton>
+        <form.ResetButton>Reset</form.ResetButton>
+        <form.SubmitButton>Submit</form.SubmitButton>
       </Actions>
     </AppForm>
   );
@@ -85,7 +86,6 @@ export function MetaAppForm(props: Props) {
       action('onSubmitInvalid')({ value, meta });
     },
   });
-  const { AppField, SubmitButton, ResetButton } = form;
 
   return (
     <AppForm
@@ -97,17 +97,17 @@ export function MetaAppForm(props: Props) {
         return parsed.success ? parsed.data : 'submit';
       }}
     >
-      <AppField name="name">
+      <form.AppField name="name">
         {({ Input }) => <Input label="Name" required />}
-      </AppField>
-      <AppField name="age">
+      </form.AppField>
+      <form.AppField name="age">
         {({ NumericInput }) => <NumericInput label="Age" required />}
-      </AppField>
+      </form.AppField>
 
       <Actions>
-        <ResetButton>Reset</ResetButton>
-        <SubmitButton data-meta="apply">Apply</SubmitButton>
-        <SubmitButton data-meta="submit">Submit</SubmitButton>
+        <form.ResetButton>Reset</form.ResetButton>
+        <form.SubmitButton data-meta="apply">Apply</form.SubmitButton>
+        <form.SubmitButton data-meta="submit">Submit</form.SubmitButton>
       </Actions>
     </AppForm>
   );
@@ -131,8 +131,6 @@ export function FormOnSubmitStopPropagation(
     },
   });
 
-  const { AppField, ResetButton, SubmitButton } = form;
-
   return (
     <div onSubmit={(event) => action('onSubmit parent')(event)}>
       <AppForm
@@ -140,16 +138,16 @@ export function FormOnSubmitStopPropagation(
         layout={props.layout}
         onSubmitStopPropagation={props.onSubmitStopPropagation}
       >
-        <AppField name="name">
+        <form.AppField name="name">
           {({ Input }) => <Input label="Name" required />}
-        </AppField>
-        <AppField name="age">
+        </form.AppField>
+        <form.AppField name="age">
           {({ NumericInput }) => <NumericInput label="Age" required />}
-        </AppField>
+        </form.AppField>
 
         <Actions>
-          <ResetButton>Reset</ResetButton>
-          <SubmitButton>Submit</SubmitButton>
+          <form.ResetButton>Reset</form.ResetButton>
+          <form.SubmitButton>Submit</form.SubmitButton>
         </Actions>
       </AppForm>
     </div>

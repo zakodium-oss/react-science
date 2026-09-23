@@ -8,11 +8,11 @@ export const selectOrUnselectAllMeasurements: AppStateProducer<
   'SELECT_ALL_MEASUREMENTS'
 > = (draft, action) => {
   const {
-    payload: { kind, select },
+    payload: { kind, isSelected },
   } = action;
 
   draft.view.selectedKind = kind;
-  draft.view.selectedMeasurements[kind] = select
+  draft.view.selectedMeasurements[kind] = isSelected
     ? draft.data.measurements[kind].entries.map((element) => element.id)
     : [];
 };
@@ -75,7 +75,9 @@ export const setMeasurementVisibility: AppStateProducer<
 export const setSelectedMeasurementVisibility: AppStateProducer<
   'SET_SELECTED_MEASUREMENTS_VISIBILITY'
 > = (draft, action) => {
-  for (const id of draft.view.selectedMeasurements[action.payload.kind] || []) {
+  const selectedMeasurementsIds =
+    draft.view.selectedMeasurements[action.payload.kind] || [];
+  for (const id of selectedMeasurementsIds) {
     const measurementView = draft.view.measurements[id];
     measurementView.visible = action.payload.isVisible;
   }
@@ -101,8 +103,9 @@ export const changeMeasurementsDisplay: AppStateProducer<
 > = (draft, action) => {
   assert(draft.view.selectedKind);
 
-  for (const id of draft.view.selectedMeasurements[draft.view.selectedKind] ||
-    []) {
+  const selectedMeasurementsIds =
+    draft.view.selectedMeasurements[draft.view.selectedKind] || [];
+  for (const id of selectedMeasurementsIds) {
     draft.view.measurements[id] = {
       ...draft.view.measurements[id],
       ...action.payload.display,

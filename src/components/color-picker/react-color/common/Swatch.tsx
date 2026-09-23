@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+import type { CSSProperties } from 'react';
 import { useCallback } from 'react';
 
 import CheckBoard from './CheckBoard.js';
@@ -24,6 +25,8 @@ const styles = {
   outline: 'none',
 };
 
+const defaultFocusStyle: CSSProperties = {};
+
 const SwatchWithFocus = handleFocus(function Swatch({
   color,
   style,
@@ -32,20 +35,26 @@ const SwatchWithFocus = handleFocus(function Swatch({
   title = color,
   children,
   focus,
-  focusStyle = {},
+  focusStyle = defaultFocusStyle,
 }) {
-  const transparent = color === 'transparent';
+  const isTransparent = color === 'transparent';
 
-  const handleClick = useCallback((e) => onClick?.(color, e), [color, onClick]);
+  const handleClick = useCallback(
+    (event) => onClick?.(color, event),
+    [color, onClick],
+  );
   const handleKeyDown = useCallback(
-    (e) => {
-      if (e.key.toLowerCase() === 'enter') {
-        onClick?.(color, e);
+    (event) => {
+      if (event.key.toLowerCase() === 'enter') {
+        onClick?.(color, event);
       }
     },
     [color, onClick],
   );
-  const handleHover = useCallback((e) => onHover?.(color, e), [color, onHover]);
+  const handleHover = useCallback(
+    (event) => onHover?.(color, event),
+    [color, onHover],
+  );
 
   const optionalEvents = {};
   if (onHover) {
@@ -58,7 +67,7 @@ const SwatchWithFocus = handleFocus(function Swatch({
         ...styles,
         background: color,
         ...style,
-        ...(focus ? focusStyle : {}),
+        ...(focus && focusStyle),
       }}
       onClick={handleClick}
       title={title}
@@ -67,7 +76,7 @@ const SwatchWithFocus = handleFocus(function Swatch({
       {...optionalEvents}
     >
       {children}
-      {transparent && (
+      {isTransparent && (
         <CheckBoard
           borderRadius={style.borderRadius}
           boxShadow="inset 0 0 0 1px rgba(0,0,0,0.1)"

@@ -37,11 +37,11 @@ export function ControlledAndIndeterminate() {
     return undefined;
   }, [apple, banana, orange]);
 
-  const setAllChecked = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
-    setOrange(checked);
-    setApple(checked);
-    setBanana(checked);
+  const setAllChecked = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setOrange(isChecked);
+    setApple(isChecked);
+    setBanana(isChecked);
   }, []);
 
   return (
@@ -63,17 +63,17 @@ export function ControlledAndIndeterminate() {
       <div style={{ display: 'flex', gap: 10 }}>
         <Checkbox
           checked={orange}
-          onChange={(e) => setOrange(e.target.checked)}
+          onChange={(event) => setOrange(event.target.checked)}
           label="Orange"
         />
         <Checkbox
           checked={apple}
-          onChange={(e) => setApple(e.target.checked)}
+          onChange={(event) => setApple(event.target.checked)}
           label="Apple"
         />
         <Checkbox
           checked={banana}
-          onChange={(e) => setBanana(e.target.checked)}
+          onChange={(event) => setBanana(event.target.checked)}
           label="Banana"
         />
       </div>
@@ -92,11 +92,11 @@ export function ControlledIndeterminateAndDisabled() {
     return undefined;
   }, [apple, banana, orange]);
 
-  const setAllChecked = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
-    setOrange(checked);
-    setApple(checked);
-    setBanana(checked);
+  const setAllChecked = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setOrange(isChecked);
+    setApple(isChecked);
+    setBanana(isChecked);
   }, []);
 
   return (
@@ -119,17 +119,17 @@ export function ControlledIndeterminateAndDisabled() {
         <Checkbox
           disabled
           checked={orange}
-          onChange={(e) => setOrange(e.target.checked)}
+          onChange={(event) => setOrange(event.target.checked)}
           label="Orange"
         />
         <Checkbox
           checked={apple}
-          onChange={(e) => setApple(e.target.checked)}
+          onChange={(event) => setApple(event.target.checked)}
           label="Apple"
         />
         <Checkbox
           checked={banana}
-          onChange={(e) => setBanana(e.target.checked)}
+          onChange={(event) => setBanana(event.target.checked)}
           label="Banana"
         />
       </div>
@@ -143,7 +143,7 @@ export function SimpleWithInput() {
     <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
       <Checkbox
         checked={checked}
-        onChange={(e) => setChecked(e.target.checked)}
+        onChange={(event) => setChecked(event.target.checked)}
         label="Hello, world!"
       />
       <InputGroup />

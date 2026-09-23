@@ -9,6 +9,7 @@ import {
   pointerOutsideOfPreview,
   setCustomNativeDragPreview,
 } from '@zakodium/pdnd-esm';
+import type { Mandatory } from '@zakodium/utils';
 import { assert } from '@zakodium/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -22,8 +23,8 @@ import type {
   TableRowTrRenderProps,
 } from '../table_utils.js';
 
-import type { DraggableRowContext } from './draggable_row_context.js';
-import { draggableRowContext } from './draggable_row_context.js';
+import type { DraggableRowContextValue } from './draggable_row_context.js';
+import { DraggableRowContext } from './draggable_row_context.js';
 import type { DraggableItemState } from './item_data.js';
 import { getItemData, isItemData } from './item_data.js';
 import { useItemOrder } from './item_order_context.js';
@@ -43,13 +44,17 @@ export interface TableDraggableRowTrProps<TData extends RowData> {
   renderRowPreview?: TableRowPreviewRenderer<TData>;
 }
 
+const defaultRenderRowPreview: Mandatory<
+  TableDraggableRowTrProps<RowData>['renderRowPreview']
+> = (row) => <PreviewTable row={row} />;
+
 export function TableDraggableRowTr<TData extends RowData>(
   props: TableDraggableRowTrProps<TData>,
 ) {
   const {
     trProps,
     row,
-    renderRowPreview = (row) => <PreviewTable row={row} />,
+    renderRowPreview = defaultRenderRowPreview as TableRowPreviewRenderer<TData>,
   } = props;
   const { instanceId } = useItemOrder();
   const isPreview = useIsPreviewTable();
@@ -137,7 +142,7 @@ export function TableDraggableRowTr<TData extends RowData>(
 
   useFlashRowEffect(row.id, tableRowRef);
 
-  const value = useMemo<DraggableRowContext>(() => {
+  const value = useMemo<DraggableRowContextValue>(() => {
     return {
       dragHandleRef,
       state,
@@ -146,9 +151,9 @@ export function TableDraggableRowTr<TData extends RowData>(
 
   return (
     <>
-      <draggableRowContext.Provider value={value}>
+      <DraggableRowContext value={value}>
         <tr {...trProps} ref={tableRowRef} />
-      </draggableRowContext.Provider>
+      </DraggableRowContext>
       {state.type === 'preview' &&
         createPortal(renderRowPreview(row), state.container)}
     </>

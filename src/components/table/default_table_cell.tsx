@@ -11,12 +11,12 @@ export function defaultTableCell<TData extends RowData, TValue = unknown>(
   const value = context.getValue();
   if (typeof value === 'string') {
     return <ValueRenderers.Text value={value} />;
-  } else if (typeof value === 'number') {
-    return <ValueRenderers.Number value={value} />;
-  } else if (typeof value === 'boolean') {
-    return <ValueRenderers.Boolean value={value} />;
-  } else {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return <ValueRenderers.Text value={`${value}`} />;
   }
+  if (typeof value === 'number') {
+    return <ValueRenderers.Number value={value} />;
+  }
+  if (typeof value === 'boolean') {
+    return <ValueRenderers.Boolean value={value} />;
+  }
+  return <ValueRenderers.Text value={String(value)} />;
 }

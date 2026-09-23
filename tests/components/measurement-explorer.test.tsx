@@ -31,7 +31,7 @@ test('select variables', async ({ mount }) => {
 test('reverse btn', async ({ mount }) => {
   const component = await mount(<IrMeasurementExplorer />);
 
-  const reverseBtn = component.getByRole('button', { name: 'Swap x/y' });
+  const reverseButton = component.getByRole('button', { name: 'Swap x/y' });
   const xVariableName = component.locator('select >> nth=1');
   const yVariableName = component.locator('select >> nth=2');
 
@@ -39,7 +39,7 @@ test('reverse btn', async ({ mount }) => {
   await expect(xVariableName).toHaveValue('x');
   await expect(yVariableName).toHaveValue('y');
 
-  await reverseBtn.click();
+  await reverseButton.click();
 
   // test selected variables after reverse
   await expect(xVariableName).toHaveValue('y');

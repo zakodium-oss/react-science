@@ -1,7 +1,7 @@
 import type { Edge } from '@zakodium/pdnd-esm';
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
-export type ReorderItemCallback = (args: {
+export type ReorderItemCallback = (options: {
   startIndex: number;
   indexOfTarget: number;
   closestEdgeOfTarget: Edge | null;
@@ -13,12 +13,12 @@ export interface ItemOrderContextValue {
   instanceId: symbol;
 }
 
-export const itemOrderContext = createContext<ItemOrderContextValue | null>(
+export const ItemOrderContext = createContext<ItemOrderContextValue | null>(
   null,
 );
 
 export function useItemOrder() {
-  const context = useContext(itemOrderContext);
+  const context = use(ItemOrderContext);
   if (!context) {
     throw new Error('useItemOrder must be used within a ListContextProvider');
   }

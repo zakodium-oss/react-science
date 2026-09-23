@@ -34,7 +34,7 @@ const styles = {
   },
 };
 
-const CheckBoard = (props) => {
+export default function CheckBoard(props) {
   const { children } = props;
 
   if (!isValidElement(children)) {
@@ -45,6 +45,4 @@ const CheckBoard = (props) => {
     ...children.props,
     style: { ...children.props.style, ...styles.grid(props) },
   });
-};
-
-export default CheckBoard;
+}

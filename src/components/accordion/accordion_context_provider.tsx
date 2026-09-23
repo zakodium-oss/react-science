@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { useMemo, useRef } from 'react';
 
 import type { AccordionContextValue } from './accordion_context.js';
-import { accordionContext } from './accordion_context.js';
+import { AccordionContext } from './accordion_context.js';
 import type { AccordionItemSetIsOpen } from './accordion_context_utils.js';
 import { getAccordionRegister } from './accordion_context_utils.js';
 
@@ -27,7 +27,7 @@ export function AccordionProvider(props: AccordionProviderProps) {
       },
       closeAllExcept: (id: string) => {
         assert(registerRef.current);
-        for (const [key, item] of registerRef.current.entries()) {
+        for (const [key, item] of registerRef.current) {
           if (key === id) {
             item.setIsOpen(true);
           } else {
@@ -70,9 +70,5 @@ export function AccordionProvider(props: AccordionProviderProps) {
     ];
   }, [unmountChildren, utils]);
 
-  return (
-    <accordionContext.Provider value={contextValue}>
-      {children}
-    </accordionContext.Provider>
-  );
+  return <AccordionContext value={contextValue}>{children}</AccordionContext>;
 }

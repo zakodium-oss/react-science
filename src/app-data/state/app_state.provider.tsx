@@ -2,9 +2,9 @@ import type { ReactNode } from 'react';
 import { useReducer } from 'react';
 
 import {
-  appDispatchContext,
+  AppDispatchContext,
+  AppStateContext,
   appReducer,
-  appStateContext,
   getEmptyAppState,
 } from './app_state.js';
 
@@ -15,10 +15,8 @@ export function AppStateProvider(props: { children: ReactNode }) {
     getEmptyAppState,
   );
   return (
-    <appDispatchContext.Provider value={appDispatch}>
-      <appStateContext.Provider value={appState}>
-        {props.children}
-      </appStateContext.Provider>
-    </appDispatchContext.Provider>
+    <AppDispatchContext value={appDispatch}>
+      <AppStateContext value={appState}>{props.children}</AppStateContext>
+    </AppDispatchContext>
   );
 }

@@ -9,6 +9,7 @@ import { FullScreenProvider } from '../fullscreen/index.js';
 import { CustomDivPreflight } from './css-reset/customPreflight.js';
 import { RootLayoutProvider } from './root_layout_context.provider.js';
 
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 FocusStyleManager.onlyShowFocusOnTabs();
 
 interface RootLayoutProps {
@@ -42,10 +43,12 @@ export function RootLayout(props: RootLayoutProps) {
         <CustomDivPreflight
           id="root-layout"
           ref={(node) => {
-            if (node) {
-              fullscreenRef.current = node;
-              refCallback(node);
+            if (!node) {
+              return;
             }
+
+            fullscreenRef.current = node;
+            refCallback(node);
           }}
           style={{
             ...style,

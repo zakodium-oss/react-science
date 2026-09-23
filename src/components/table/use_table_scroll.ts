@@ -59,27 +59,24 @@ export function useTableScroll<TData extends RowData>(options: {
           }
         },
       };
-    } else {
-      return {
-        scrollIntoView(
-          id: string,
-          options?: TableVirtualScrollIntoViewOptions,
-        ) {
-          const element = scrollRef.current?.querySelector(
-            selector`tr[data-row-id="${id}"]`,
-          );
-          if (!element) {
-            // eslint-disable-next-line no-console
-            console.warn(
-              `Could not scroll to row with ID ${id}, the row does not exist`,
-            );
-          }
-          element?.scrollIntoView(options);
-          if (options?.flashRow && options.behavior !== 'smooth') {
-            setFlashedRow(id);
-          }
-        },
-      };
     }
+
+    return {
+      scrollIntoView(id: string, options?: TableVirtualScrollIntoViewOptions) {
+        const element = scrollRef.current?.querySelector(
+          selector`tr[data-row-id="${id}"]`,
+        );
+        if (!element) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `Could not scroll to row with ID ${id}, the row does not exist`,
+          );
+        }
+        element?.scrollIntoView(options);
+        if (options?.flashRow && options.behavior !== 'smooth') {
+          setFlashedRow(id);
+        }
+      },
+    };
   }, [virtualizeRows, scrollRef, table, virtualizer, setFlashedRow]);
 }

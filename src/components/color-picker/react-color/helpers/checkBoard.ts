@@ -28,7 +28,7 @@ export function render(c1, c2, size, ServerCanvas) {
 export function get(c1, c2, size, ServerCanvas) {
   const key = `${c1}-${c2}-${size}${ServerCanvas ? '-server' : ''}`;
 
-  if (checkBoardCache[key]) {
+  if (Object.hasOwn(checkBoardCache, key)) {
     return checkBoardCache[key];
   }
 

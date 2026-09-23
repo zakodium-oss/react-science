@@ -61,11 +61,7 @@ export const AppForm = minimalForm(
               event.preventDefault();
               if (onSubmitStopPropagation) event.stopPropagation();
 
-              const meta = onSubmitMeta?.(
-                // onSubmit event is not typed properly.
-                // It uses Event instead of SubmitEvent.
-                event as SyntheticEvent<HTMLFormElement, SubmitEvent>,
-              );
+              const meta = onSubmitMeta?.(event);
               void form.handleSubmit(meta);
             }}
             {...domProps}
@@ -92,7 +88,9 @@ type MinimalProps<Props extends { form: unknown }> = Omit<Props, 'form'> & {
     'pushFieldValue' | 'insertFieldValue' | 'replaceFieldValue'
   >;
 };
-type MinimalFunctionComponent<Props> = (props: Props) => ReactNode;
+type MinimalFunctionComponent<Props> = (
+  props: Props,
+) => ReactNode | Promise<ReactNode>;
 
 function minimalForm<Props extends { form: unknown }>(
   component: MinimalFunctionComponent<Props>,

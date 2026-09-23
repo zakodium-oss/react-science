@@ -20,10 +20,10 @@ export interface OverButtonProps extends BaseOverButtonProps {
 
 function getPlacement(
   placement: Placement,
-  vertical?: boolean,
+  isVertical?: boolean,
 ): PopoverNextProps['placement'] {
   const isEndPlacement = placement === 'end';
-  return vertical
+  return isVertical
     ? `${isEndPlacement ? 'top' : 'bottom'}-start`
     : `${isEndPlacement ? 'left' : 'right'}-start`;
 }
@@ -78,7 +78,7 @@ export function OverflowButton(props: OverButtonProps) {
   );
 }
 
-function getOverflowShadow(placement: Placement, vertical?: boolean) {
+function getOverflowShadow(placement: Placement, isVertical?: boolean) {
   const color = 'rgba(0, 0, 0, 0.15)';
   const offset = 8;
   const blur = 8;
@@ -86,8 +86,8 @@ function getOverflowShadow(placement: Placement, vertical?: boolean) {
 
   const sign = placement === 'start' ? 1 : -1;
 
-  const x = vertical ? 0 : offset * sign;
-  const y = vertical ? offset * sign : 0;
+  const x = isVertical ? 0 : offset * sign;
+  const y = isVertical ? offset * sign : 0;
 
   return `${x}px ${y}px ${blur}px -${spread}px ${color}`;
 }

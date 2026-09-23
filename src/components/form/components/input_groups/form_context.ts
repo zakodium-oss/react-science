@@ -1,11 +1,11 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 export type Layout = 'inline' | 'stacked';
 
-export const formContext = createContext<{ layout: Layout }>({
+export const FormContext = createContext<{ layout: Layout }>({
   layout: 'stacked',
 });
 
 export function useFormContext() {
-  return useContext(formContext);
+  return use(FormContext);
 }

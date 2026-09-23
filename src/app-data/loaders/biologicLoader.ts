@@ -150,7 +150,7 @@ function setDefault(
       varum !== storeAt
     ) {
       // populate key, if there is no data there.
-      if (!variables[storeAt]) {
+      if (!Object.hasOwn(variables, storeAt)) {
         variables[storeAt] = variables[varum];
         delete variables[varum];
       } else {

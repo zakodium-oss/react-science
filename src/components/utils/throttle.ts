@@ -1,18 +1,20 @@
-export function throttle<T extends (...args: any[]) => void>(
-  func: T,
+export function throttle<T extends (...arguments_: any[]) => void>(
+  function_: T,
   limit: number,
 ): T {
-  let inThrottle: boolean;
+  let isInThrottle: boolean;
 
-  const fun = (...args: any[]) => {
-    if (!inThrottle) {
-      func.apply({}, args);
-      inThrottle = true;
-
-      setTimeout(() => {
-        inThrottle = false;
-      }, limit);
+  const fun = (...arguments_: any[]) => {
+    if (isInThrottle) {
+      return;
     }
+
+    function_.apply({}, arguments_);
+    isInThrottle = true;
+
+    setTimeout(() => {
+      isInThrottle = false;
+    }, limit);
   };
 
   return fun as T;

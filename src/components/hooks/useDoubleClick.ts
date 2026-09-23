@@ -11,27 +11,27 @@ export function useDoubleClick<EventData>({
   onDoubleClick,
   delay = 250,
 }: UseDoubleClickOptions<EventData>) {
-  const timeout = useRef<number | null>(null);
+  const timeoutRef = useRef<number | null>(null);
   useEffect(() => {
     return () => {
       // Cleanup timeout when the component is unmounted.
-      if (timeout.current) {
-        window.clearTimeout(timeout.current);
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
       }
     };
   }, []);
   const handleClick = useCallback(
     (data: EventData) => {
-      if (timeout.current === null) {
+      if (timeoutRef.current === null) {
         // No recent click. Start timer to wait for possible double click.
-        timeout.current = window.setTimeout(() => {
-          timeout.current = null;
+        timeoutRef.current = window.setTimeout(() => {
+          timeoutRef.current = null;
           onClick?.(data);
         }, delay);
       } else {
         // A click occured recently. Trigger double click event and stop timer.
-        window.clearTimeout(timeout.current);
-        timeout.current = null;
+        window.clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
         onDoubleClick?.(data);
       }
     },

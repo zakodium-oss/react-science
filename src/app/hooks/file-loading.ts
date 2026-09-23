@@ -9,14 +9,14 @@ import type { AppDispatch } from '../../app-data/index.js';
 import { useAppDispatch } from '../../app-data/index.js';
 import { useFifoLogger, useHashSearchParams } from '../../components/index.js';
 
-type LoadFn = (
+type LoadFunction = (
   files: File[] | FileCollection,
   logger: FifoLogger,
   dispatch: AppDispatch,
 ) => Promise<void>;
 
 export function useLoadFileCollectionFromHash(
-  onLoad: LoadFn,
+  onLoad: LoadFunction,
 ): UseQueryResult<true | null> {
   const logger = useFifoLogger();
   const appDispatch = useAppDispatch();
@@ -41,7 +41,7 @@ export function useLoadFileCollectionFromHash(
   });
 }
 
-export function useDropFiles(onLoad: LoadFn) {
+export function useDropFiles(onLoad: LoadFunction) {
   const dispatch = useAppDispatch();
   const logger = useFifoLogger();
   return useCallback(

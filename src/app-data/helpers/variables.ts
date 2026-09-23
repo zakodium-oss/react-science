@@ -12,9 +12,8 @@ export function getPreferredVariable(
 ): MeasurementVariable {
   if (axis === 'x') {
     return measurement.data[0].variables.x || measurement.data[0].variables.a;
-  } else {
-    return measurement.data[0].variables.y || measurement.data[0].variables.b;
   }
+  return measurement.data[0].variables.y || measurement.data[0].variables.b;
 }
 
 export function getVariableByLabel(

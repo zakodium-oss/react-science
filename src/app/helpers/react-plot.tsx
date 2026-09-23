@@ -53,7 +53,8 @@ export function BasicComponent(props: BasicComponentProps) {
 
   const { x, y } = useMemo(() => {
     const { variables } = data[dataIndex];
-    const { [xVariableName]: x, [yVariableName]: y } = variables;
+    const x = variables[xVariableName];
+    const y = variables[yVariableName];
     if (x === undefined || y === undefined) {
       throw new Error(
         `Variable "${

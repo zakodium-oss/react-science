@@ -23,7 +23,7 @@ export type AppStateAction =
     >
   | ActionType<
       'SELECT_ALL_MEASUREMENTS',
-      { select: boolean; kind: MeasurementKind }
+      { isSelected: boolean; kind: MeasurementKind }
     >
   | ActionType<'SELECT_MEASUREMENT_KIND', MeasurementKind>
   | ActionType<'SET_MEASUREMENT_VISIBILITY', { id: string; isVisible: boolean }>

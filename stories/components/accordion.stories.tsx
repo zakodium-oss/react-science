@@ -191,7 +191,7 @@ export function WithDynamicItems() {
     setState([
       ...state,
       {
-        title: `${state.length + 1}`,
+        title: String(state.length + 1),
         content: 'Element added',
         defaultOpen: false,
       },
@@ -368,22 +368,23 @@ export function UnmountSomeChildren() {
   );
 }
 
+function renderToolbarToggle({
+  isOpen,
+  controls,
+}: AccordionRenderToolbarProps) {
+  return (
+    <Button
+      icon={isOpen ? 'minus' : 'plus'}
+      variant="minimal"
+      onClick={() => {
+        controls.toggle();
+      }}
+    />
+  );
+}
+
 export function WithToolbar() {
   const [bellCount, setBellCount] = useState(0);
-  function renderToolbarToggle({
-    isOpen,
-    controls,
-  }: AccordionRenderToolbarProps) {
-    return (
-      <Button
-        icon={isOpen ? 'minus' : 'plus'}
-        variant="minimal"
-        onClick={() => {
-          controls.toggle();
-        }}
-      />
-    );
-  }
   return (
     <Accordion>
       <Accordion.Item

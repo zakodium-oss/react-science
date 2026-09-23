@@ -10,12 +10,12 @@ export function irMeasurementEnhancer(measurement: MeasurementBase) {
   for (const datum of measurement.data) {
     const variables = datum.variables;
     const yVariable = variables.y;
-    let absorbance = true;
+    let isAbsorbance = true;
     if (yVariable.label.toLowerCase().includes('trans')) {
-      absorbance = false;
+      isAbsorbance = false;
     }
 
-    if (absorbance) {
+    if (isAbsorbance) {
       variables.a = { ...yVariable };
       variables.a.data = variables.a.data.slice();
       variables.t = {

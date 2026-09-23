@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 export function calculateChange(
-  e,
+  event,
   hsl,
   direction,
   initialA,
@@ -10,14 +10,16 @@ export function calculateChange(
 ) {
   const containerWidth = container.clientWidth;
   const containerHeight = container.clientHeight;
-  const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX;
-  const y = typeof e.pageY === 'number' ? e.pageY : e.touches[0].pageY;
+  const x =
+    typeof event.pageX === 'number' ? event.pageX : event.touches[0].pageX;
+  const y =
+    typeof event.pageY === 'number' ? event.pageY : event.touches[0].pageY;
   const left =
     x - (container.getBoundingClientRect().left + window.pageXOffset);
   const top = y - (container.getBoundingClientRect().top + window.pageYOffset);
 
+  let a;
   if (direction === 'vertical') {
-    let a;
     if (top < 0) {
       a = 0;
     } else if (top > containerHeight) {
@@ -36,7 +38,6 @@ export function calculateChange(
       };
     }
   } else {
-    let a;
     if (left < 0) {
       a = 0;
     } else if (left > containerWidth) {

@@ -24,9 +24,8 @@ interface FilterOptionsInfo {
 // get filters information & default options values
 const defaultFilters = filterXY.anyOf.map(({ properties }) => {
   const options: Record<string, FilterOptionsInfo> = {};
-  for (const [key, value] of Object.entries(
-    properties?.options?.properties || {},
-  )) {
+  const optionProperties = properties?.options?.properties || {};
+  for (const [key, value] of Object.entries<any>(optionProperties)) {
     options[key] = {
       defaultValue: value.default,
       choices: value.enum,
@@ -87,11 +86,12 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
             onChange={({ target }) => {
               const value = Number(target.value);
               if (!Number.isNaN(value)) {
-                const filter = getDefaultFilter(defaultFilters[value]);
-                const newFilters = [...filters];
-                newFilters[row.index] = filter;
-                onChange?.(newFilters);
+                return;
               }
+              const filter = getDefaultFilter(defaultFilters[value]);
+              const newFilters = [...filters];
+              newFilters[row.index] = filter;
+              onChange?.(newFilters);
             }}
             style={{ border: '1px solid black' }}
             value={defaultFilters.findIndex((f) => f.name === getValue())}
@@ -167,8 +167,8 @@ function getDefaultFilter({ options, name }: Filter<FilterOptionsInfo>) {
   return { name };
 }
 
-function normalCase(str: string) {
-  const result = str.replaceAll(/(?<upper>[A-Z])/g, ' $<upper>').trim();
+function normalCase(value: string) {
+  const result = value.replaceAll(/(?<upper>[A-Z])/g, ' $<upper>').trim();
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
 

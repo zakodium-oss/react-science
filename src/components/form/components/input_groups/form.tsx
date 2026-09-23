@@ -2,7 +2,7 @@ import type { FormHTMLAttributes, ReactNode } from 'react';
 import { useMemo } from 'react';
 
 import type { Layout } from './form_context.js';
-import { formContext } from './form_context.js';
+import { FormContext } from './form_context.js';
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
@@ -24,8 +24,8 @@ export function Form(props: FormProps) {
   }, [layout]);
 
   return (
-    <formContext.Provider value={contextValue}>
+    <FormContext value={contextValue}>
       <form {...otherProps}>{children}</form>
-    </formContext.Provider>
+    </FormContext>
   );
 }

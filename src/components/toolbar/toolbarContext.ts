@@ -1,23 +1,21 @@
 import type { Intent } from '@blueprintjs/core';
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 import type { PopoverInteractionType } from './Toolbar.js';
 
-export interface ToolbarContext {
+export interface ToolbarContextValue {
   intent?: Intent;
   vertical?: boolean;
   disabled?: boolean;
   popoverInteractionKind?: PopoverInteractionType;
 }
 
-export const toolbarContext = createContext<ToolbarContext | null>(null);
+export const ToolbarContext = createContext<ToolbarContextValue | null>(null);
 
 export function useToolbarContext() {
-  const ctx = useContext(toolbarContext);
+  const ctx = use(ToolbarContext);
   if (!ctx) {
-    throw new Error(
-      'useToolbarContext must be used within a ToolbarContextProvider',
-    );
+    throw new Error('useToolbarContext must be used within a ToolbarContext');
   }
   return ctx;
 }

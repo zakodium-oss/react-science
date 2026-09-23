@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 
 export function useOnOff(
-  initialValue = false,
+  isInitialOn = false,
 ): [isOn: boolean, setOn: () => void, setOff: () => void, toggle: () => void] {
-  const [isOn, setOnOff] = useState(initialValue);
-  const setOn = useCallback(() => setOnOff(true), []);
-  const setOff = useCallback(() => setOnOff(false), []);
-  const toggle = useCallback(() => setOnOff((isOn) => !isOn), []);
+  const [isOn, setIsOn] = useState(isInitialOn);
+  const setOn = useCallback(() => setIsOn(true), []);
+  const setOff = useCallback(() => setIsOn(false), []);
+  const toggle = useCallback(() => setIsOn((isOn) => !isOn), []);
   return [isOn, setOn, setOff, toggle];
 }

@@ -48,7 +48,7 @@ export function DraggableNumericInput(props: DraggableNumericInputProps) {
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
-    .errors.map((e) => e.message)
+    .errors.map((error) => error.message)
     .at(0);
 
   const intent = getIntent(error);

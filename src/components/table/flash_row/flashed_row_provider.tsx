@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { flashedRowContext } from './flashed_row_context.js';
+import { FlashedRowContext } from './flashed_row_context.js';
 
 export function FlashedRowProvider(props: { children: ReactNode }) {
-  const value = useState<string>();
+  const [value, setValue] = useState<string>();
+  const contextValue: ReturnType<typeof useState<string>> = useMemo(
+    () => [value, setValue],
+    [value],
+  );
   return (
-    <flashedRowContext.Provider value={value}>
-      {props.children}
-    </flashedRowContext.Provider>
+    <FlashedRowContext value={contextValue}>{props.children}</FlashedRowContext>
   );
 }

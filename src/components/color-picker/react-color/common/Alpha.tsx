@@ -75,19 +75,19 @@ const styles = {
   },
 };
 
-const Alpha = (props) => {
+export default function Alpha(props) {
   const containerRef = useRef();
   const handleChange = useCallback(
-    (e) => {
+    (event) => {
       const change = alpha.calculateChange(
-        e,
+        event,
         props.hsl,
         props.direction,
         props.a,
         containerRef.current,
       );
       if (change && typeof props.onChange === 'function') {
-        props.onChange(change, e);
+        props.onChange(change, event);
       }
     },
     [props],
@@ -119,6 +119,4 @@ const Alpha = (props) => {
       </div>
     </div>
   );
-};
-
-export default Alpha;
+}

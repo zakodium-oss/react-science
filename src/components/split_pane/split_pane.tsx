@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type {
   CSSProperties,
-  MutableRefObject,
   PointerEvent as ReactPointerEvent,
   ReactNode,
+  RefObject,
 } from 'react';
 import { useEffect, useReducer, useRef } from 'react';
 import { useResizeObserver } from 'react-d3-utils';
@@ -14,9 +14,6 @@ import { match } from 'ts-pattern';
 import type { SplitPaneSize, SplitPaneType } from './split_pane_helpers.js';
 import { parseSize, serializeSize } from './split_pane_helpers.js';
 import { useSplitPaneSize } from './use_split_pane_size.js';
-
-// Remove for React 19.
-type RefObject<T> = MutableRefObject<T>;
 
 export type SplitPaneDirection = 'vertical' | 'horizontal';
 export type SplitPaneSide = 'start' | 'end';
@@ -279,11 +276,11 @@ function isSideVisible(
 ) {
   if (!isOpen) {
     return !isControlledSide;
-  } else if (type === '%') {
-    return isControlledSide ? size !== 0 : size !== 100;
-  } else {
-    return isControlledSide ? size !== 0 : size !== parentSize;
   }
+  if (type === '%') {
+    return size !== (isControlledSide ? 0 : 100);
+  }
+  return size !== (isControlledSide ? 0 : parentSize);
 }
 
 function getItemStyle(
@@ -297,7 +294,8 @@ function getItemStyle(
   const base: CSSProperties = { display: 'flex', overflow: 'hidden' };
   if (!isOpen) {
     return isControlledSide ? { display: 'none' } : { flex: '1 1 0%', ...base };
-  } else if (type === '%' && size !== 0) {
+  }
+  if (type === '%' && size !== 0) {
     return isControlledSide
       ? {
           ...base,
@@ -308,18 +306,17 @@ function getItemStyle(
           flex: `${percentToFlex(size)} 0 0%`,
           [isHorizontal ? 'minWidth' : 'minHeight']: 0,
         };
-  } else {
-    return isControlledSide
-      ? {
-          ...base,
-          [isHorizontal ? 'width' : 'height']: size,
-        }
-      : {
-          ...base,
-          flex: '1 1 0%',
-          [isHorizontal ? 'minWidth' : 'minHeight']: 0,
-        };
   }
+  return isControlledSide
+    ? {
+        ...base,
+        [isHorizontal ? 'width' : 'height']: size,
+      }
+    : {
+        ...base,
+        flex: '1 1 0%',
+        [isHorizontal ? 'minWidth' : 'minHeight']: 0,
+      };
 }
 
 const Split = styled.div<{

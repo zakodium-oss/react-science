@@ -1,6 +1,6 @@
-import { useContext, useMemo } from 'react';
+import { use, useMemo } from 'react';
 
-import { accordionContext } from './accordion_context.js';
+import { AccordionContext } from './accordion_context.js';
 
 export interface AccordionControls<T extends string = string> {
   open: (id: T) => void;
@@ -12,7 +12,7 @@ export interface AccordionControls<T extends string = string> {
 export function useAccordionControls<
   T extends string = string,
 >(): AccordionControls<T> {
-  const context = useContext(accordionContext);
+  const context = use(AccordionContext);
 
   if (!context) {
     throw new Error('AccordionContext was not found');

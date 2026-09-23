@@ -43,12 +43,12 @@ export interface ColorPickerProps {
   className?: string;
   presetColors?: string[];
   color?:
-    | {
-        hex: string;
-      }
     | RGB
     | HSL
-    | HSV;
+    | HSV
+    | {
+        hex: string;
+      };
   disableAlpha?: boolean;
   onChange?: (props: ChangeCallbackProps, event?: Event) => void;
   onChangeComplete?: (props: ChangeCallbackProps, event?: Event) => void;
@@ -76,7 +76,7 @@ const styles: Record<
   Record<
     'picker' | 'color' | 'activeColor' | 'alphaContainer',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (...args: any) => CSSProperties
+    (...arguments_: any) => CSSProperties
   > = {
   picker: (width: number | string) => ({
     width: typeof width === 'string' ? width : `${width}px`,
@@ -93,9 +93,9 @@ const styles: Record<
     padding: '4px 0',
     flex: '1',
   },
-  color: (disableAlpha: boolean) => ({
+  color: (isAlphaDisabled: boolean) => ({
     width: '24px',
-    height: disableAlpha ? '10px' : '24px',
+    height: isAlphaDisabled ? '10px' : '24px',
     position: 'relative',
     marginTop: '4px',
     marginLeft: '4px',
@@ -128,18 +128,20 @@ const styles: Record<
     borderRadius: '2px',
     boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
   },
-  alphaContainer: (disableAlpha: boolean) => ({
+  alphaContainer: (isAlphaDisabled: boolean) => ({
     position: 'relative',
     height: '10px',
     marginTop: '4px',
     overflow: 'hidden',
-    ...(disableAlpha && { display: 'none' }),
+    ...(isAlphaDisabled && { display: 'none' }),
   }),
   alphaElement: {
     borderRadius: '2px',
     boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)',
   },
 };
+
+const defaultStyle: CSSProperties = {};
 
 export function ColorPicker(props: ColorPickerProps) {
   const {
@@ -152,12 +154,12 @@ export function ColorPicker(props: ColorPickerProps) {
     color = defaultColor,
     onChangeComplete,
     onBlur,
-    style = {},
+    style = defaultStyle,
   } = props;
 
   const debounceRef = useRef(
-    debounce((fn: any, data: ChangeCallbackProps, event: Event) => {
-      fn(data, event);
+    debounce((function_: any, data: ChangeCallbackProps, event: Event) => {
+      function_(data, event);
     }, 100),
   );
 
@@ -172,18 +174,20 @@ export function ColorPicker(props: ColorPickerProps) {
   const handleChange = useCallback<SketchFieldsProps['onChange']>(
     (data, event) => {
       const isValidColor = colorHelper.simpleCheckForValidColor(data);
-      if (isValidColor) {
-        const colors = colorHelper.toState(
-          data,
-          ('h' in data && data.h) || state.oldHue,
-        );
-        setState(colors);
-        if (onChangeComplete) {
-          debounceRef.current(onChangeComplete, colors, event);
-        }
-        if (onChange) {
-          onChange(colors, event);
-        }
+      if (!isValidColor) {
+        return;
+      }
+
+      const colors = colorHelper.toState(
+        data,
+        ('h' in data && data.h) || state.oldHue,
+      );
+      setState(colors);
+      if (onChangeComplete) {
+        debounceRef.current(onChangeComplete, colors, event);
+      }
+      if (onChange) {
+        onChange(colors, event);
       }
     },
     [debounceRef, onChange, onChangeComplete, state.oldHue],
@@ -192,11 +196,13 @@ export function ColorPicker(props: ColorPickerProps) {
   const handleSwatchHover = useCallback(
     (data: any, event: any) => {
       const isValidColor = colorHelper.simpleCheckForValidColor(data);
-      if (isValidColor) {
-        const colors = colorHelper.toState(data, data.h || state.oldHue);
-        if (onSwatchHover) {
-          onSwatchHover(colors, event);
-        }
+      if (!isValidColor) {
+        return;
+      }
+
+      const colors = colorHelper.toState(data, data.h || state.oldHue);
+      if (onSwatchHover) {
+        onSwatchHover(colors, event);
       }
     },
     [onSwatchHover, state.oldHue],
@@ -249,7 +255,7 @@ export function ColorPicker(props: ColorPickerProps) {
       />
       <SketchPresetColors
         colors={presetColors}
-        onClick={(data, e) => handleChange(data, e)}
+        onClick={(data, event) => handleChange(data, event)}
         onSwatchHover={handleSwatchHover}
       />
     </div>

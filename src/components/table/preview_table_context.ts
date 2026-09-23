@@ -1,5 +1,5 @@
 import type { RowData } from '@tanstack/react-table';
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 import type { TableProps } from './table_root.js';
 
@@ -10,11 +10,11 @@ export type PreviewTablePropsContextValue<TData extends RowData> = Pick<
   'getTdProps' | 'columns' | 'className' | 'renderRowTr' | 'compact'
 >;
 
-export const previewTablePropsContext =
+export const PreviewTablePropsContext =
   createContext<PreviewTablePropsContextValue<RowData> | null>(null);
 
 export function usePreviewTableProps<TData extends RowData>() {
-  const value = useContext(previewTablePropsContext);
+  const value = use(PreviewTablePropsContext);
   if (value === null) {
     throw new Error(
       'useTablePreviewProps must be used within a TablePreviewContextProvider',
@@ -24,10 +24,10 @@ export function usePreviewTableProps<TData extends RowData>() {
 }
 
 export const PreviewTablePropsContextProvider =
-  previewTablePropsContext.Provider;
+  PreviewTablePropsContext.Provider;
 
-export const isPreviewTableContext = createContext(false);
+export const IsPreviewTableContext = createContext(false);
 
 export function useIsPreviewTable() {
-  return useContext(isPreviewTableContext);
+  return use(IsPreviewTableContext);
 }

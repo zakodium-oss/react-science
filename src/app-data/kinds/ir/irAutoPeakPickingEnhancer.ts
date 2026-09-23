@@ -7,16 +7,26 @@ import type { IrMeasurement } from './IrMeasurement.js';
 import type { IrPeak, IrPeakKind } from './IrPeak.js';
 
 export interface AutoPeakPickingOptions extends GSDOptions {
-  /** x variable label, by default 'x' */
+  /**
+   * x variable label, by default 'x'
+   */
   xVariable?: string;
-  /** y variable label, by default 'y' */
+  /**
+   * y variable label, by default 'y'
+   */
   yVariable?: string;
   shape?: Shape1D;
-  /** First X value for the peak picking (default: first X value */
+  /**
+   * First X value for the peak picking (default: first X value
+   */
   from?: number;
-  /** Last X value for the peak picking (default: last X value */
+  /**
+   * Last X value for the peak picking (default: last X value
+   */
   to?: number;
-  /** Minimal peak width */
+  /**
+   * Minimal peak width
+   */
   minPeakWidth?: number;
 }
 
@@ -90,7 +100,8 @@ function getPeakKind(
     (maxTransmittance - transmittance) / (maxTransmittance - minTransmittance);
   if (position < 0.33) {
     return 'w';
-  } else if (position < 0.66) {
+  }
+  if (position < 0.66) {
     return 'm';
   }
   return 'S';

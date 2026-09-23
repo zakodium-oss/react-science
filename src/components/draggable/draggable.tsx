@@ -67,25 +67,27 @@ export function Draggable(props: DraggableProps) {
       const diff = event.clientX - previousPositionRef.current;
       previousPositionRef.current = event.clientX;
 
-      if (event.buttons === 1) {
-        const step = match(event)
-          .with({ shiftKey: true }, () => majorStepSize ?? stepSize)
-          .with({ altKey: true }, () => minorStepSize ?? stepSize)
-          .otherwise(() => stepSize);
-
-        const precision = Math.max(
-          Utils.countDecimalPlaces(draggedValueRef.current),
-          Utils.countDecimalPlaces(minorStepSize ?? stepSize),
-        );
-
-        const nextValue = toMaxPrecision(
-          draggedValueRef.current + diff * step,
-          precision,
-        );
-
-        draggedValueRef.current = clamp(nextValue, min, max);
-        onChangeRef.current(0, String(draggedValueRef.current));
+      if (event.buttons !== 1) {
+        return;
       }
+
+      const step = match(event)
+        .with({ shiftKey: true }, () => majorStepSize ?? stepSize)
+        .with({ altKey: true }, () => minorStepSize ?? stepSize)
+        .otherwise(() => stepSize);
+
+      const precision = Math.max(
+        Utils.countDecimalPlaces(draggedValueRef.current),
+        Utils.countDecimalPlaces(minorStepSize ?? stepSize),
+      );
+
+      const nextValue = toMaxPrecision(
+        draggedValueRef.current + diff * step,
+        precision,
+      );
+
+      draggedValueRef.current = clamp(nextValue, min, max);
+      onChangeRef.current(0, String(draggedValueRef.current));
     }
 
     function handleMouseUp() {

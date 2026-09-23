@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 import type { Dispatch } from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 import type { AppStateAction } from './app_state.actions.js';
 import type { AppData } from './data/index.js';
@@ -33,10 +33,10 @@ export function getEmptyAppState(): AppState {
   };
 }
 
-export const appStateContext = createContext<AppState | null>(null);
+export const AppStateContext = createContext<AppState | null>(null);
 
 export function useAppState(): AppState {
-  const appState = useContext(appStateContext);
+  const appState = use(AppStateContext);
   if (!appState) {
     throw new Error('useAppState must be used within an AppStateProvider');
   }
@@ -45,10 +45,10 @@ export function useAppState(): AppState {
 
 export type AppDispatch = Dispatch<AppStateAction>;
 
-export const appDispatchContext = createContext<AppDispatch | null>(null);
+export const AppDispatchContext = createContext<AppDispatch | null>(null);
 
 export function useAppDispatch(): AppDispatch {
-  const appDispatch = useContext(appDispatchContext);
+  const appDispatch = use(AppDispatchContext);
   if (!appDispatch) {
     throw new Error('useAppDispatch must be used within an AppStateProvider');
   }

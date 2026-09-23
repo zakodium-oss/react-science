@@ -108,13 +108,13 @@ export function WithMinimalSizeAndEvilChild() {
     [],
   );
 
-  const [opened, setOpen] = useState<string | number>();
+  const [opened, setOpened] = useState<string | number>();
 
   return (
     <div style={{ height: '100%' }}>
       <SplitPane direction="horizontal" defaultSize="20%" controlledSide="end">
         <div style={{ width: '100%', minWidth: 0 }}>
-          <StyledTabs selectedTabId={opened} onChange={setOpen}>
+          <StyledTabs selectedTabId={opened} onChange={setOpened}>
             {tabItems.map((item) => (
               <Tab
                 id={item.id}
@@ -140,8 +140,8 @@ export function WithMinimalSizeAndEvilChild() {
 }
 
 export function WithConditionalChild() {
-  const [hasChild1, sethasChild1] = useState(true);
-  const [hasChild2, sethasChild2] = useState(true);
+  const [hasChild1, setHasChild1] = useState(true);
+  const [hasChild2, setHasChild2] = useState(true);
   return (
     <div
       style={{
@@ -151,12 +151,12 @@ export function WithConditionalChild() {
         gap: 4,
       }}
     >
-      <Button onClick={() => sethasChild1((val) => !val)}>
+      <Button onClick={() => setHasChild1((value) => !value)}>
         {hasChild1
           ? 'Set first child to be null'
           : 'Set first child to be contentful'}
       </Button>
-      <Button onClick={() => sethasChild2((val) => !val)}>
+      <Button onClick={() => setHasChild2((value) => !value)}>
         {hasChild2
           ? 'Set second child to be null'
           : 'Set second child to be contentful'}

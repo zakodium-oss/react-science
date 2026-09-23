@@ -13,7 +13,7 @@ import {
 } from '@blueprintjs/core';
 import type { StyledComponent } from '@emotion/styled';
 import styled from '@emotion/styled';
-import type { MouseEvent, ReactNode } from 'react';
+import type { MouseEvent } from 'react';
 import { useLayoutEffect, useMemo, useRef } from 'react';
 
 import type { ButtonProps } from '../button/index.js';
@@ -22,8 +22,7 @@ import { normalizeIcon } from '../icon.js';
 
 import type { BaseOverButtonProps, Placement } from './OverflowButton.tsx';
 import { OverflowButton } from './OverflowButton.tsx';
-import type { ToolbarContext } from './toolbarContext.js';
-import { toolbarContext, useToolbarContext } from './toolbarContext.js';
+import { ToolbarContext, useToolbarContext } from './toolbarContext.js';
 import { useCheckOverflow } from './useCheckOverflow.tsx';
 
 export type Overflow = 'wrap' | 'collapse';
@@ -163,8 +162,8 @@ export function Toolbar(props: ToolbarProps) {
       }
       ref.current.style.width = 'initial';
       const divRect = ref.current.getBoundingClientRect();
-      const lastElemRect = lastElement.getBoundingClientRect();
-      const width = `${lastElemRect.right - divRect.left}px`;
+      const lastElementRect = lastElement.getBoundingClientRect();
+      const width = `${lastElementRect.right - divRect.left}px`;
       if (ref.current.style.width !== width) {
         ref.current.style.width = width;
       }
@@ -182,7 +181,7 @@ export function Toolbar(props: ToolbarProps) {
 
   if (overflow === 'wrap') {
     return (
-      <ToolbarProvider value={contextValue}>
+      <ToolbarContext value={contextValue}>
         <ButtonGroup
           role="toolbar"
           aria-label={ariaLabel}
@@ -197,12 +196,12 @@ export function Toolbar(props: ToolbarProps) {
         >
           {children}
         </ButtonGroup>
-      </ToolbarProvider>
+      </ToolbarContext>
     );
   }
 
   return (
-    <ToolbarProvider value={contextValue}>
+    <ToolbarContext value={contextValue}>
       <Container vertical={vertical} placement={placement}>
         <ButtonGroup
           role="toolbar"
@@ -234,7 +233,7 @@ export function Toolbar(props: ToolbarProps) {
           </OverflowButton>
         )}
       </Container>
-    </ToolbarProvider>
+    </ToolbarContext>
   );
 }
 
@@ -351,14 +350,3 @@ Toolbar.PopoverItem = function ToolbarPopoverItem(
     />
   );
 };
-
-function ToolbarProvider(props: {
-  value: ToolbarContext;
-  children: ReactNode;
-}) {
-  return (
-    <toolbarContext.Provider value={props.value}>
-      {props.children}
-    </toolbarContext.Provider>
-  );
-}

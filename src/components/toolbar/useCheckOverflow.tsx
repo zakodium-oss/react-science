@@ -26,6 +26,7 @@ export function useCheckOverflow(options: UseCheckOverflowOptions) {
       } else {
         isOverflow = container.scrollWidth > container.clientWidth;
       }
+      // eslint-disable-next-line @eslint-react/set-state-in-effect
       setIsOverflow(isOverflow);
     };
 

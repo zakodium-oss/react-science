@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 
-import { shouldForwardPropExcept } from '../../../src/components/utils/shouldForwardPropExcept.js';
+import { forwardAllPropsExcept } from '../../../src/components/utils/forward_all_props_except.ts';
 
 export default {
   title: 'Components / Utils / ShouldForwardProps',
 };
 
 const Container = styled('div', {
-  shouldForwardProp: shouldForwardPropExcept(['color']),
+  shouldForwardProp: forwardAllPropsExcept(['color']),
 })<{ color: string }>`
   background-color: ${(props) => props.color};
 `;

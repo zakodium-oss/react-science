@@ -66,7 +66,7 @@ describe('coerceNumberInput basic behavior', () => {
   });
 
   it('handle NaN as data', () => {
-    const parsed = coerceNumberInput().parse(Number.NaN.toString());
+    const parsed = coerceNumberInput().parse(NaN.toString());
     expect(parsed).toBe(0);
   });
 

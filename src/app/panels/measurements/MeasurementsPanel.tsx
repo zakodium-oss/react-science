@@ -25,18 +25,18 @@ const MeasurementsTabs = styled(Tabs)`
   }
 `;
 
+const kindItem = (kind: MeasurementKind) => ({
+  id: kind,
+  title: kindLabels[kind],
+  content: <MeasurementsTable kind={kind} />,
+});
+
 // eslint-disable-next-line @typescript-eslint/unbound-method
 export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
   const appState = useAppState();
   const { data, view } = appState;
 
   const dispatch = useAppDispatch();
-
-  const kindItem = (kind: MeasurementKind) => ({
-    id: kind,
-    title: kindLabels[kind],
-    content: <MeasurementsTable kind={kind} />,
-  });
 
   const availableKinds = measurementKinds.filter(
     (label) => data.measurements[label].entries.length > 0,

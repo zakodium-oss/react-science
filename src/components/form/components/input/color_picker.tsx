@@ -18,7 +18,7 @@ export function ColorPicker(props: ColorPickerProps) {
   const field = useFieldContext<string>();
   const error = field
     .getMeta()
-    .errors.map((e) => e.message)
+    .errors.map((error) => error.message)
     .at(0);
 
   function onChange(color: ChangeCallbackComponentProps) {

@@ -2,15 +2,21 @@ import type { ZodCodec, ZodNumber, ZodOptional, ZodString } from 'zod';
 import { z } from 'zod';
 
 interface StringToNumberOptionalOptions<
-  Str extends ZodString,
-  Num extends ZodNumber,
+  StringSchema extends ZodString,
+  NumberSchema extends ZodNumber,
 > {
-  /** @default z.string() */
-  strSchema?: Str;
-  /** @default z.number() */
-  numSchema?: Num;
-  /** @default Number */
-  parse?: (str: string) => number;
+  /**
+   * @default z.string()
+   */
+  strSchema?: StringSchema;
+  /**
+   * @default z.number()
+   */
+  numSchema?: NumberSchema;
+  /**
+   * @default Number
+   */
+  parse?: (value: string) => number;
 }
 
 /**
@@ -18,28 +24,28 @@ interface StringToNumberOptionalOptions<
  * @param options
  */
 export function stringToNumberOptional<
-  Str extends ZodString = ZodString,
-  Num extends ZodNumber = ZodNumber,
+  StringSchema extends ZodString = ZodString,
+  NumberSchema extends ZodNumber = ZodNumber,
 >(
-  options: StringToNumberOptionalOptions<Str, Num> = {},
-): ZodCodec<ZodOptional<Str>, ZodOptional<Num>> {
-  const strSchema = options?.strSchema ?? (z.string() as Str);
-  const numSchema = options?.numSchema ?? (z.number() as Num);
+  options: StringToNumberOptionalOptions<StringSchema, NumberSchema> = {},
+): ZodCodec<ZodOptional<StringSchema>, ZodOptional<NumberSchema>> {
+  const stringSchema = options?.strSchema ?? (z.string() as StringSchema);
+  const numberSchema = options?.numSchema ?? (z.number() as NumberSchema);
   const parse = options?.parse ?? Number;
 
-  return z.codec(strSchema.optional(), numSchema.optional(), {
-    encode: (num) => {
-      if (num === undefined) return undefined;
+  return z.codec(stringSchema.optional(), numberSchema.optional(), {
+    encode: (value) => {
+      if (value === undefined) return undefined;
 
-      return String(num) as z.output<ZodOptional<Str>>;
+      return String(value) as z.output<ZodOptional<StringSchema>>;
     },
-    decode: (str) => {
-      if (!str) return undefined;
+    decode: (value) => {
+      if (!value) return undefined;
 
-      const value = parse(str);
-      if (Number.isNaN(value)) return undefined;
+      const parsed = parse(value);
+      if (Number.isNaN(parsed)) return undefined;
 
-      return value as z.input<ZodOptional<Num>>;
+      return parsed as z.input<ZodOptional<NumberSchema>>;
     },
   });
 }

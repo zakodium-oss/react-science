@@ -1,6 +1,7 @@
 import type { RadioGroupProps, RadioProps } from '@blueprintjs/core';
 import { RadioGroup } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Mandatory } from '@zakodium/utils';
 import type { ReactElement } from 'react';
 import { Children, cloneElement } from 'react';
 
@@ -29,10 +30,12 @@ const RadioButtonContainer = styled.div<{ size?: RadioProps['size'] }>`
   }
 `;
 
+const defaultOptions: Mandatory<RadioButtonGroupProps['options']> = [];
+
 export function RadioButtonGroup(props: RadioButtonGroupProps) {
   const {
     disabled: groupDisabled = false,
-    options = [],
+    options = defaultOptions,
     name,
     size,
     selectedValue,
@@ -52,7 +55,7 @@ export function RadioButtonGroup(props: RadioButtonGroupProps) {
         {options?.map(({ value, label, disabled }, index) => {
           return (
             <RadioButton
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line @eslint-react/no-array-index-key
               key={index}
               value={value}
               label={label}

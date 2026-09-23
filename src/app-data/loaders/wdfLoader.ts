@@ -95,14 +95,14 @@ function getYVariables(blocks: Wdf['blocks']) {
     throw new Error('no spectrum found in data block of wdf file');
   }
 
-  const yVariables: MeasurementVariable[] = [];
-  for (const spectrum of dataBlock.spectra) {
-    yVariables.push({
+  const yVariables: MeasurementVariable[] = Array.from(
+    dataBlock.spectra,
+    (spectrum) => ({
       data: Array.from(spectrum),
       units: '',
       label: 'Arbitrary Intensity',
-    });
-  }
+    }),
+  );
 
   return yVariables;
 }

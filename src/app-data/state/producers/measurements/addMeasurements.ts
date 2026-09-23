@@ -30,22 +30,23 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
 
   // Automatically select the first measurement of each kind.
   // Automatically select the kind of measurement that was added first.
-  for (const kind of Object.keys(kindLabels).filter(
-    (k) => k in newMeasurements,
-  ) as MeasurementKind[]) {
+  for (const kind of Object.keys(kindLabels) as MeasurementKind[]) {
     if (
-      !draft.view.selectedMeasurements[kind] &&
-      draft.data.measurements[kind].entries.length > 0
+      !Object.hasOwn(newMeasurements, kind) ||
+      !Object.hasOwn(draft.view.selectedMeasurements, kind) ||
+      draft.data.measurements[kind].entries.length === 0
     ) {
-      const { measurement } = getFirstMeasurementOrFail(
-        draft.data.measurements,
-        kind,
-      );
-      const id = measurement.id;
-      draft.view.selectedMeasurements[kind] = [id];
-      if (draft.view.selectedKind === undefined) {
-        draft.view.selectedKind = kind;
-      }
+      continue;
+    }
+
+    const { measurement } = getFirstMeasurementOrFail(
+      draft.data.measurements,
+      kind,
+    );
+    const id = measurement.id;
+    draft.view.selectedMeasurements[kind] = [id];
+    if (draft.view.selectedKind === undefined) {
+      draft.view.selectedKind = kind;
     }
   }
 
@@ -66,20 +67,22 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
     updateZoom(draft, kind, measurement);
   }
 
-  // Automatically select the IV variables for the first measurement.
-  if (!initialCounts.iv && counts.iv) {
-    const firstIvMeasurement = getFirstMeasurementOrFail(
-      draft.data.measurements,
-      'iv',
-    );
-    const ivPlotView = draft.view.plot.iv;
-    assert(ivPlotView);
-    const xVariable = getPreferredVariable(firstIvMeasurement.measurement, 'x');
-    const yVariable = getPreferredVariable(firstIvMeasurement.measurement, 'y');
-    if (xVariable && yVariable) {
-      ivPlotView.xVariable = xVariable.label;
-      ivPlotView.yVariable = yVariable.label;
-    }
-    resetZoom(draft, 'iv');
+  if (initialCounts.iv || !counts.iv) {
+    return;
   }
+
+  // Automatically select the IV variables for the first measurement.
+  const firstIvMeasurement = getFirstMeasurementOrFail(
+    draft.data.measurements,
+    'iv',
+  );
+  const ivPlotView = draft.view.plot.iv;
+  assert(ivPlotView);
+  const xVariable = getPreferredVariable(firstIvMeasurement.measurement, 'x');
+  const yVariable = getPreferredVariable(firstIvMeasurement.measurement, 'y');
+  if (xVariable && yVariable) {
+    ivPlotView.xVariable = xVariable.label;
+    ivPlotView.yVariable = yVariable.label;
+  }
+  resetZoom(draft, 'iv');
 };

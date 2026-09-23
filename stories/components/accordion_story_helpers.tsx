@@ -1,6 +1,6 @@
 import { assert } from '@zakodium/utils';
 import type { Dispatch, ReactNode } from 'react';
-import { createContext, useContext, useMemo, useReducer } from 'react';
+import { createContext, use, useMemo, useReducer } from 'react';
 import { match } from 'ts-pattern';
 
 import type { AccordionItemProps } from '../../src/components/index.js';
@@ -36,7 +36,7 @@ interface AccordionStoryContextValue {
   dispatch: Dispatch<AccordionStoryAction<string>>;
 }
 
-const accordionStoryContext = createContext<AccordionStoryContextValue | null>(
+const AccordionStoryContext = createContext<AccordionStoryContextValue | null>(
   null,
 );
 
@@ -49,9 +49,9 @@ export function AccordionStoryProvider(props: {
   });
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (
-    <accordionStoryContext.Provider value={value}>
+    <AccordionStoryContext value={value}>
       {props.children}
-    </accordionStoryContext.Provider>
+    </AccordionStoryContext>
   );
 }
 
@@ -66,7 +66,7 @@ export function AccordionStoryItem<T extends string = string>(
   props: AccordionStoryItemProps<T>,
 ) {
   const { id, ...otherProps } = props;
-  const contextValue = useContext(accordionStoryContext);
+  const contextValue = use(AccordionStoryContext);
   assert(contextValue, 'AccordionStoryItem must be used within AccordionStory');
   const { state, dispatch } = contextValue;
   if (!state) {
@@ -78,9 +78,7 @@ export function AccordionStoryItem<T extends string = string>(
       id={id}
       open={state.openItems.includes(id)}
       onOpenChange={(isOpen) =>
-        isOpen
-          ? dispatch({ type: 'add', id })
-          : dispatch({ type: 'remove', id })
+        dispatch({ type: isOpen ? 'add' : 'remove', id })
       }
       {...otherProps}
     />

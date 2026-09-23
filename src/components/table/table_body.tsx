@@ -4,7 +4,7 @@ import type { Row, RowData } from '@tanstack/react-table';
 import type { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import { notUndefined } from '@tanstack/react-virtual';
 import type { CSSProperties, ReactNode } from 'react';
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 
 import { TableDraggableRowTr } from './reorder_rows/index.js';
 import type { ReactScienceTableFeatures } from './table_features.js';
@@ -43,13 +43,19 @@ export function TableBody<TData extends RowData>(props: TableBodyProps<TData>) {
     getTdProps,
     isReorderingEnabled,
     renderRowPreview,
-    renderRowTr = getDefaultRenderRowTr(isReorderingEnabled, renderRowPreview),
     virtualizer,
     virtualizeRows,
     emptyContent,
     emptyIcon,
     columns,
   } = props;
+
+  const renderRowTr = useMemo(
+    () =>
+      props.renderRowTr ??
+      getDefaultRenderRowTr(isReorderingEnabled, renderRowPreview),
+    [props.renderRowTr, isReorderingEnabled, renderRowPreview],
+  );
 
   if (virtualizeRows) {
     const virtualItems = virtualizer.getVirtualItems();
@@ -128,9 +134,11 @@ interface EmptyRowProps {
   columns: number;
 }
 
+const defaultEmptyIcon = <Icon icon="eye-off" />;
+
 function EmptyRow(props: EmptyRowProps) {
   const {
-    emptyIcon = <Icon icon="eye-off" />,
+    emptyIcon = defaultEmptyIcon,
     emptyContent = 'No data',
     columns,
   } = props;
@@ -208,9 +216,15 @@ function getDefaultRenderRowTr<TData extends RowData>(
 ): TableRowTrRenderer<TData> {
   if (isReorderingEnabled) {
     return getDefaultRenderDraggableRowTr(renderRowPreview);
-  } else {
-    return (trProps, row) => <TableRowTr trProps={{ ...trProps }} row={row} />;
   }
+  return defaultRenderRowTr;
+}
+
+function defaultRenderRowTr<TData extends RowData>(
+  trProps: TableRowTrRenderProps,
+  row: Row<ReactScienceTableFeatures, TData>,
+) {
+  return <TableRowTr trProps={trProps} row={row} />;
 }
 
 function getDefaultRenderDraggableRowTr<TData extends RowData>(

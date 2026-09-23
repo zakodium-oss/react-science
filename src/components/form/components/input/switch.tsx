@@ -26,7 +26,7 @@ export function Switch(props: SwitchProps) {
   const field = useFieldContext<boolean>();
   const error = field
     .getMeta()
-    .errors.map((e) => e.message)
+    .errors.map((error) => error.message)
     .at(0);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
