@@ -33,7 +33,7 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   for (const kind of Object.keys(kindLabels) as MeasurementKind[]) {
     if (
       !newMeasurements[kind] ||
-      !draft.view.selectedMeasurements[kind] ||
+      draft.view.selectedMeasurements[kind] ||
       draft.data.measurements[kind].entries.length === 0
     ) {
       continue;

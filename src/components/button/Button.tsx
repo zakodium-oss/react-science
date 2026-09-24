@@ -112,11 +112,11 @@ export function Button(props: ButtonProps) {
           isIconButton={!children && !buttonProps.text}
           isTagButton={Boolean(tag)}
         >
-          {tag ? (
+          {Boolean(tag) && (
             <ButtonTag round intent="success" {...tagProps}>
               {tag}
             </ButtonTag>
-          ) : null}
+          )}
           {children}
         </InnerButton>
       )}

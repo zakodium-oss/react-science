@@ -10,15 +10,15 @@ interface SketchPresetColorsProps {
 }
 
 const styles: Record<'swatchWrap' | 'swatch', CSSProperties> &
-  Record<'colors', (isFlag: boolean) => CSSProperties> = {
-  colors: (isFlag: boolean) => ({
+  Record<'colors', (isHidden: boolean) => CSSProperties> = {
+  colors: (isHidden: boolean) => ({
     margin: '0 -10px',
     padding: '10px 0 0 10px',
     borderTop: '1px solid #eee',
     display: 'flex',
     flexWrap: 'wrap',
     position: 'relative',
-    ...(isFlag && { display: 'none' }),
+    ...(isHidden && { display: 'none' }),
   }),
   swatchWrap: {
     width: '16px',

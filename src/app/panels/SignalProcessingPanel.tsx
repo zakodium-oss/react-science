@@ -85,7 +85,7 @@ export function SignalProcessingPanel(props: SignalProcessingPanelProps) {
           <select
             onChange={({ target }) => {
               const value = Number(target.value);
-              if (!Number.isNaN(value)) {
+              if (Number.isNaN(value)) {
                 return;
               }
               const filter = getDefaultFilter(defaultFilters[value]);

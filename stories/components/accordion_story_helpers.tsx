@@ -77,9 +77,13 @@ export function AccordionStoryItem<T extends string = string>(
     <Accordion.Item<T>
       id={id}
       open={state.openItems.includes(id)}
-      onOpenChange={(isOpen) =>
-        dispatch({ type: isOpen ? 'add' : 'remove', id })
-      }
+      onOpenChange={(isOpen) => {
+        if (isOpen) {
+          dispatch({ type: 'add', id });
+        } else {
+          dispatch({ type: 'remove', id });
+        }
+      }}
       {...otherProps}
     />
   );

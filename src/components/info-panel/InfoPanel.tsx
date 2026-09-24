@@ -197,7 +197,7 @@ interface InfoPanelContentProps {
 
 const InfoPanelContent = memo((props: InfoPanelContentProps) => {
   const { filteredData } = props;
-  const [openDescriptions, setOpenDescriptions] = useState<string[]>(
+  const [openDescriptions, setOpenDescriptions] = useState<string[]>(() =>
     filteredData.map(({ description }) => description),
   );
   return (

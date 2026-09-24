@@ -30,8 +30,7 @@ export function FullScreenProvider(props: FullscreenProviderProps) {
         onToggleError?.(error, handle.active ? 'exit' : 'enter');
       }
       try {
-        // eslint-disable-next-line unicorn/prefer-await
-        handleToggle().catch(handleError);
+        void handleToggle().catch(handleError);
       } catch (error) {
         handleError(error);
       }
