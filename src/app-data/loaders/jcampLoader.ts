@@ -43,7 +43,7 @@ export async function jcampLoader(
             continue;
           }
 
-          if (!Object.hasOwn(newMeasurements, kind)) {
+          if (!newMeasurements[kind]) {
             newMeasurements[kind] = { entries: [] };
           }
           assert(

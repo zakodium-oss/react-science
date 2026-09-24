@@ -32,8 +32,8 @@ export const addMeasurements: AppStateProducer<'ADD_MEASUREMENTS'> = (
   // Automatically select the kind of measurement that was added first.
   for (const kind of Object.keys(kindLabels) as MeasurementKind[]) {
     if (
-      !Object.hasOwn(newMeasurements, kind) ||
-      !Object.hasOwn(draft.view.selectedMeasurements, kind) ||
+      !newMeasurements[kind] ||
+      !draft.view.selectedMeasurements[kind] ||
       draft.data.measurements[kind].entries.length === 0
     ) {
       continue;

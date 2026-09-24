@@ -16,7 +16,7 @@ export function mergeMeasurements(
   //fixes for putting type "string" to key
   let kind: keyof typeof newMeasurements;
   for (kind in newMeasurements) {
-    if (!Object.hasOwn(measurements, kind)) {
+    if (!measurements[kind]) {
       measurements[kind] = { entries: [] };
     }
     assert(measurements[kind], 'Error while loading, kind is not defined');

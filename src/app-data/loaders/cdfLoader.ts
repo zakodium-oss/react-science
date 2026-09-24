@@ -42,7 +42,7 @@ export async function cdfLoader(
         }
 
         addMeta(reader, reader.globalAttributes);
-        if (!Object.hasOwn(newMeasurements, kind)) {
+        if (!newMeasurements[kind]) {
           newMeasurements[kind] = { entries: [] };
         }
         assert(

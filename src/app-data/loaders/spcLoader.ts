@@ -34,7 +34,7 @@ export async function spcLoader(
         const spectraType: MeasurementKind = guessSpectraType(
           parsed.meta as Header,
         );
-        if (!Object.hasOwn(measurements, spectraType)) {
+        if (!measurements[spectraType]) {
           measurements[spectraType] = { entries: [] };
         }
         assert(

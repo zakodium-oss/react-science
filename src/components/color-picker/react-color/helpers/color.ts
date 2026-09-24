@@ -9,7 +9,7 @@ function simpleCheckForValidColor(data) {
   let passed = 0;
 
   for (const letter of keysToCheck) {
-    if (!Object.hasOwn(data, letter)) {
+    if (!data[letter]) {
       continue;
     }
 
