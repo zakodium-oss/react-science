@@ -58,7 +58,7 @@ const styles = {
   },
 };
 
-const Hue = (props) => {
+export default function Hue(props) {
   const {
     direction = 'horizontal',
     hsl,
@@ -72,15 +72,15 @@ const Hue = (props) => {
   const containerRef = useRef();
 
   const handleChange = useCallback(
-    (e) => {
+    (event) => {
       const change = hue.calculateChange(
-        e,
+        event,
         direction,
         hsl,
         containerRef.current,
       );
       if (change && typeof onChange === 'function') {
-        onChange(change, e);
+        onChange(change, event);
       }
     },
     [direction, hsl, onChange],
@@ -108,6 +108,4 @@ const Hue = (props) => {
       </div>
     </div>
   );
-};
-
-export default Hue;
+}

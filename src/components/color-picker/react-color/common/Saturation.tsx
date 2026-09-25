@@ -52,24 +52,24 @@ const styles = {
   },
 };
 
-const Saturation = (props) => {
+export default function Saturation(props) {
   const { hsl, hsv, pointer, onChange, onBlur } = props;
 
   const throttleRef = useRef(
-    throttle((fn, data, e) => {
-      fn(data, e);
+    throttle((function_, data, event) => {
+      function_(data, event);
     }, 50),
   );
 
   const containerRef = useRef();
 
   const handleChange = useCallback(
-    (e) => {
+    (event) => {
       if (onChange && typeof onChange === 'function') {
         throttleRef.current(
           onChange,
-          saturation.calculateChange(e, hsl, containerRef.current),
-          e,
+          saturation.calculateChange(event, hsl, containerRef.current),
+          event,
         );
       }
     },
@@ -99,6 +99,4 @@ const Saturation = (props) => {
       </div>
     </div>
   );
-};
-
-export default Saturation;
+}

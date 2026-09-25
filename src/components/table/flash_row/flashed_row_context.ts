@@ -1,17 +1,17 @@
 import type { useState } from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 /**
  * An editable state containing the ID of the next item to flash.
  */
 type FlashedRowContextValue = ReturnType<typeof useState<string>>;
 
-export const flashedRowContext = createContext<FlashedRowContextValue | null>(
+export const FlashedRowContext = createContext<FlashedRowContextValue | null>(
   null,
 );
 
 export function useFlashedRowContext() {
-  const context = useContext(flashedRowContext);
+  const context = use(FlashedRowContext);
 
   if (!context) {
     throw new Error(

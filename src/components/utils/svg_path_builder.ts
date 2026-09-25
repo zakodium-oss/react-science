@@ -1,4 +1,6 @@
-/** Better dom readability */
+/**
+ * Better dom readability.
+ */
 const DEFAULT_SEPARATOR = '\n  ';
 const DEFAULT_CLAMP_VALUE = 1e5;
 
@@ -17,7 +19,23 @@ const DEFAULT_CLAMP_VALUE = 1e5;
  * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d
  */
 export class SVGPathBuilder {
+  /**
+   * Merge many path builders into a new single one.
+   *
+   * @param builders
+   */
+  static concat(...builders: SVGPathBuilder[]): SVGPathBuilder {
+    const builder = new SVGPathBuilder();
+
+    builder.#buffer = builder.#buffer.concat(
+      builders.flatMap((path) => path.getBufferSlice()),
+    );
+
+    return builder;
+  }
+
   #buffer: string[] = [];
+
   clampValue: number | null;
 
   /**
@@ -51,10 +69,10 @@ export class SVGPathBuilder {
   /**
    * Get a shallow copy of internal the buffer.
    *
-   * @param sliceArgs
+   * @param sliceArguments
    */
-  getBufferSlice(...sliceArgs: [start?: number, end?: number]) {
-    return this.#buffer.slice(...sliceArgs);
+  getBufferSlice(...sliceArguments: [start?: number, end?: number]) {
+    return this.#buffer.slice(...sliceArguments);
   }
 
   /**
@@ -106,20 +124,5 @@ export class SVGPathBuilder {
    */
   toString(separator = DEFAULT_SEPARATOR): string {
     return this.#buffer.join(separator);
-  }
-
-  /**
-   * Merge many path builders into a new single one.
-   *
-   * @param builders
-   */
-  static concat(...builders: SVGPathBuilder[]): SVGPathBuilder {
-    const builder = new SVGPathBuilder();
-
-    builder.#buffer = builder.#buffer.concat(
-      builders.flatMap((path) => path.getBufferSlice()),
-    );
-
-    return builder;
   }
 }

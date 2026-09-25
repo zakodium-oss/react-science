@@ -2,7 +2,7 @@ import { Tab, Tabs } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
-import { shouldForwardPropExcept } from '../../src/components/utils/shouldForwardPropExcept.js';
+import { forwardAllPropsExcept } from '../../src/components/utils/forward_all_props_except.ts';
 
 export default {
   title: 'Components / Tabs',
@@ -86,7 +86,7 @@ export function AllowHorizontalChildToTakeFullHeight() {
 }
 
 const ManyTabsStyled = styled(Tabs, {
-  shouldForwardProp: shouldForwardPropExcept(['orientation']),
+  shouldForwardProp: forwardAllPropsExcept(['orientation']),
 })<{ orientation: string }>`
   height: 100%;
 

@@ -2,12 +2,12 @@ import {
   columnVisibilityFeature,
   createSortedRowModel,
   rowSortingFeature,
-  sortFn_alphanumeric as sortFnAlphanumeric,
-  sortFn_alphanumericCaseSensitive as sortFnAlphanumericCaseSensitive,
-  sortFn_basic as sortFnBasic,
-  sortFn_datetime as sortFnDatetime,
-  sortFn_text as sortFnText,
-  sortFn_textCaseSensitive as sortFnTextCaseSensitive,
+  sortFn_alphanumeric as sortFunctionAlphanumeric,
+  sortFn_alphanumericCaseSensitive as sortFunctionAlphanumericCaseSensitive,
+  sortFn_basic as sortFunctionBasic,
+  sortFn_datetime as sortFunctionDatetime,
+  sortFn_text as sortFunctionText,
+  sortFn_textCaseSensitive as sortFunctionTextCaseSensitive,
   tableFeatures,
 } from '@tanstack/react-table';
 
@@ -16,12 +16,12 @@ export const reactScienceTableFeatures = tableFeatures({
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
   sortFns: {
-    alphanumeric: sortFnAlphanumeric,
-    alphanumericCaseSensitive: sortFnAlphanumericCaseSensitive,
-    basic: sortFnBasic,
-    datetime: sortFnDatetime,
-    text: sortFnText,
-    textCaseSensitive: sortFnTextCaseSensitive,
+    alphanumeric: sortFunctionAlphanumeric,
+    alphanumericCaseSensitive: sortFunctionAlphanumericCaseSensitive,
+    basic: sortFunctionBasic,
+    datetime: sortFunctionDatetime,
+    text: sortFunctionText,
+    textCaseSensitive: sortFunctionTextCaseSensitive,
   },
 });
 

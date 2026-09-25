@@ -16,7 +16,7 @@ const columns: IrColumnPreferences[] = [
     accessorKey: 'transmittance',
     visible: true,
     label: 'Transmittance',
-    format: (val) => `${(100 * Number(val)).toFixed(2)}%`,
+    format: (value) => `${(100 * Number(value)).toFixed(2)}%`,
   },
   {
     accessorKey: 'absorbance',

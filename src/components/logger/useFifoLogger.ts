@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 
-import { fifoLoggerContext } from './loggerContext.js';
+import { FifoLoggerContext } from './loggerContext.js';
 
 export function useFifoLogger() {
-  const fifoLogger = useContext(fifoLoggerContext);
+  const fifoLogger = use(FifoLoggerContext);
   if (!fifoLogger) {
     throw new Error('useFifoLogger must be used within a FifoLoggerProvider');
   }
@@ -14,9 +14,11 @@ export function useFifoLogs() {
   const logger = useFifoLogger();
   const [logs, setLogs] = useState(logger.getLogs());
   useEffect(() => {
-    logger.addEventListener('change', () => {
+    function onChange() {
       setLogs(logger.getLogs());
-    });
+    }
+    logger.addEventListener('change', onChange);
+    return () => logger.removeEventListener('change', onChange);
   }, [logger]);
   return logs;
 }

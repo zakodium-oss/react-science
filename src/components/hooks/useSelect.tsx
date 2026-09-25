@@ -55,10 +55,12 @@ export function useSelect<T>(options: UseSelectOptions<T>) {
   const popoverProps = {
     onOpened: (node: HTMLElement) => {
       const firstUl = node.querySelector('ul');
-      if (firstUl) {
-        firstUl.tabIndex = 0;
-        firstUl.focus();
+      if (!firstUl) {
+        return;
       }
+
+      firstUl.tabIndex = 0;
+      firstUl.focus();
     },
   };
   const popoverTargetProps = {

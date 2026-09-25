@@ -9,25 +9,28 @@ function simpleCheckForValidColor(data) {
   let passed = 0;
 
   for (const letter of keysToCheck) {
-    if (data[letter]) {
-      checked += 1;
-      if (!Number.isNaN(Number(data[letter]))) {
-        passed += 1;
-      }
-      if (letter === 's' || letter === 'l') {
-        const percentPatt = /^\d+%$/;
-        if (percentPatt.test(data[letter])) {
-          passed += 1;
-        }
-      }
+    if (!data[letter]) {
+      continue;
+    }
+
+    checked += 1;
+    if (!Number.isNaN(Number(data[letter]))) {
+      passed += 1;
+    }
+    if (letter !== 's' && letter !== 'l') {
+      continue;
+    }
+    const percentPattern = /^\d+%$/;
+    if (percentPattern.test(data[letter])) {
+      passed += 1;
     }
   }
 
-  return checked === passed ? data : false;
+  return checked === passed && data;
 }
 
 function toState(data, oldHue?: number) {
-  const color = data.hex ? tinycolor(data.hex) : tinycolor(data);
+  const color = tinycolor(data.hex || data);
   const hsl = color.toHsl();
   const hsv = color.toHsv();
   const rgb = color.toRgb();

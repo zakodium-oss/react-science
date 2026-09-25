@@ -543,7 +543,7 @@ export function MixedItems(
   const [active, setActive] = useState<string | null>(null);
 
   const set = new Set<number>([0, 1, 4, 6, 7]);
-  const showPopover = (value: number) => popoverFirst === set.has(value);
+  const shouldShowPopover = (value: number) => popoverFirst === set.has(value);
 
   return (
     <div>
@@ -552,7 +552,7 @@ export function MixedItems(
         {...toolbarProps}
       >
         {itemsPopover.map(({ content, ...itemProps }, index) =>
-          showPopover(index) ? (
+          shouldShowPopover(index) ? (
             <Toolbar.PopoverItem
               key={itemProps.id}
               content={content}

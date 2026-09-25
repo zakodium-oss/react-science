@@ -60,12 +60,12 @@ const EditableInput = (props) => {
   );
 
   const setUpdatedValue = useCallback(
-    (value, e) => {
+    (value, event) => {
       const onChangeValue = props.label
         ? getValueObjectWithLabel(value)
         : value;
       if (props.onChange) {
-        props.onChange(onChangeValue, e);
+        props.onChange(onChangeValue, event);
       }
 
       setState({ value });
@@ -73,58 +73,64 @@ const EditableInput = (props) => {
     [getValueObjectWithLabel, props],
   );
   const handleChange = useCallback(
-    (e) => {
-      setUpdatedValue(e.target.value, e);
+    (event) => {
+      setUpdatedValue(event.target.value, event);
     },
     [setUpdatedValue],
   );
 
   const handleKeyDown = useCallback(
-    (e) => {
-      // In case `e.target.value` is a percentage remove the `%` character
+    (event) => {
+      // In case `event.target.value` is a percentage remove the `%` character
       // and update accordingly with a percentage
       // https://github.com/casesandberg/react-color/issues/383
-      const value = getNumberValue(e.target.value);
-      const offset: number = props.arrowOffset || DEFAULT_ARROW_OFFSET;
-      if (!Number.isNaN(value) && isValidKeyCode(e.keyCode)) {
-        const updatedValue =
-          e.keyCode === UP_KEY_CODE ? value + offset : value - offset;
-
-        setUpdatedValue(updatedValue, e);
+      const value = getNumberValue(event.target.value);
+      if (Number.isNaN(value) || !isValidKeyCode(event.keyCode)) {
+        return;
       }
+      const offset: number = props.arrowOffset || DEFAULT_ARROW_OFFSET;
+      const updatedValue =
+        event.keyCode === UP_KEY_CODE ? value + offset : value - offset;
+      setUpdatedValue(updatedValue, event);
     },
     [props.arrowOffset, setUpdatedValue],
   );
 
   const handleDrag = useCallback(
-    (e: MouseEvent) => {
-      if (props.dragLabel) {
-        const newValue = Math.round(valueRef.current + e.movementX);
-        if (newValue >= 0 && newValue <= props.dragMax) {
-          valueRef.current = newValue;
+    (event: MouseEvent) => {
+      if (!props.dragLabel) {
+        return;
+      }
 
-          if (props.onChange) {
-            props.onChange(getValueObjectWithLabel(newValue), e);
-          }
-        }
+      const newValue = Math.round(valueRef.current + event.movementX);
+      if (newValue < 0 || newValue > props.dragMax) {
+        return;
+      }
+
+      valueRef.current = newValue;
+
+      if (props.onChange) {
+        props.onChange(getValueObjectWithLabel(newValue), event);
       }
     },
     [props, getValueObjectWithLabel],
   );
 
   const handleMouseDown = useCallback(
-    (e) => {
+    (event) => {
       function mouseUp() {
         window.removeEventListener('mousemove', handleDrag);
         window.removeEventListener('mouseup', mouseUp);
       }
 
-      if (props.dragLabel) {
-        e.preventDefault();
-        handleDrag(e);
-        window.addEventListener('mousemove', handleDrag);
-        window.addEventListener('mouseup', mouseUp);
+      if (!props.dragLabel) {
+        return;
       }
+
+      event.preventDefault();
+      handleDrag(event);
+      window.addEventListener('mousemove', handleDrag);
+      window.addEventListener('mouseup', mouseUp);
     },
     [handleDrag, props.dragLabel],
   );

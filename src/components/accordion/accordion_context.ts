@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo } from 'react';
+import { createContext, use, useEffect, useMemo } from 'react';
 
 import type {
   AccordionItemContextValue,
@@ -17,7 +17,7 @@ export type AccordionContextValue = [
     change: (id: string, isOpen: boolean) => void;
   },
 ];
-export const accordionContext = createContext<AccordionContextValue | null>(
+export const AccordionContext = createContext<AccordionContextValue | null>(
   null,
 );
 
@@ -25,7 +25,7 @@ export function useAccordionItemContext(
   id: string,
   setIsOpen: AccordionItemSetIsOpen,
 ): AccordionItemContextValue {
-  const context = useContext(accordionContext);
+  const context = use(AccordionContext);
 
   if (!context) {
     throw new Error('AccordionContext was not found');

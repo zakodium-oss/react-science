@@ -18,16 +18,16 @@ import { useItemOrder } from './item_order_context.js';
  * Monitor drop events.
  * Check if they can be acted on to reorder items.
  * @param scrollElementRef The element to auto-scroll when dragging elements.
- * @param enabled Enable or disable the monitoring.
+ * @param isEnabled Enable or disable the monitoring.
  */
 export function useDropMonitor(
   scrollElementRef: RefObject<Element | null>,
-  enabled: boolean,
+  isEnabled: boolean,
 ) {
   const { reorderItem, items } = useItemOrder();
   const [, setFlashedRow] = useFlashedRowContext();
   useEffect(() => {
-    if (!enabled) {
+    if (!isEnabled) {
       return;
     }
 
@@ -75,5 +75,5 @@ export function useDropMonitor(
         element: scrollContainer,
       }),
     );
-  }, [items, reorderItem, scrollElementRef, setFlashedRow, enabled]);
+  }, [items, reorderItem, scrollElementRef, setFlashedRow, isEnabled]);
 }

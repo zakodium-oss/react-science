@@ -46,60 +46,60 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
     () => (Array.isArray(measurement) ? measurement : [measurement]),
     [measurement],
   );
-  const varNames = useMemo(() => {
-    const varNames: string[][] = [];
+  const variableNames = useMemo(() => {
+    const variableNames: string[][] = [];
     for (const [i, { data }] of measurementsArray.entries()) {
       for (const { variables } of data) {
         const names: string[] = [];
-        for (const varName in variables) {
+        for (const variableName in variables) {
           if (i === 0) {
-            names.push(varName);
-          } else if (!varNames.flat().includes(varName)) {
+            names.push(variableName);
+          } else if (!variableNames.flat().includes(variableName)) {
             throw new Error(
               `Measurements selected does not have the same variables `,
             );
           }
         }
-        varNames.push(names);
+        variableNames.push(names);
       }
     }
-    return varNames;
+    return variableNames;
   }, [measurementsArray]);
 
   function defaultInfo(dataIndex: number) {
     return {
       dataIndex,
-      xVariableName: varNames[dataIndex].includes('x')
+      xVariableName: variableNames[dataIndex].includes('x')
         ? 'x'
-        : varNames[dataIndex][0],
-      yVariableName: varNames[dataIndex].includes('y')
+        : variableNames[dataIndex][0],
+      yVariableName: variableNames[dataIndex].includes('y')
         ? 'y'
-        : varNames[dataIndex][1],
+        : variableNames[dataIndex][1],
     };
   }
 
-  const [info, setInfo] = useState<ExplorerInfo>({
+  const [info, setInfo] = useState<ExplorerInfo>(() => ({
     flipHorizontalAxis: false,
     ...defaultInfo(0),
-  });
+  }));
 
   /* variables for this measurement are mapped into `id - label (units)`
     `id` necessary bc files may have repeated labels
   */
   function dropdownVariables(axis: 'x' | 'y') {
-    function formatVar(varKey: string) {
-      const { label, units } = variables[varKey];
+    function formatVariable(variableKey: string) {
+      const { label, units } = variables[variableKey];
       const formatUnit = units ? ` (${units})` : '';
-      const formatVarKey = `${varKey} - `;
-      return formatVarKey + label + formatUnit;
+      const formatVariableKey = `${variableKey} - `;
+      return formatVariableKey + label + formatUnit;
     }
     const { variables } = measurementsArray[0].data[info.dataIndex];
     const oppositeAxis = axis === 'x' ? 'yVariableName' : 'xVariableName';
-    return varNames[info.dataIndex].map((d) => {
+    return variableNames[info.dataIndex].map((d) => {
       if (d !== info[oppositeAxis]) {
         return (
           <option key={d} value={d}>
-            {formatVar(d)}
+            {formatVariable(d)}
           </option>
         );
       }
@@ -124,7 +124,7 @@ export function MeasurementExplorer(props: MeasurementExplorerProps) {
             }}
           >
             {measurementsArray[0].data.map((d, i) => (
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line @eslint-react/no-array-index-key
               <option key={i} value={i}>
                 {i}
               </option>

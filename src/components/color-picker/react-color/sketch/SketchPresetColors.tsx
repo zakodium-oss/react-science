@@ -10,15 +10,15 @@ interface SketchPresetColorsProps {
 }
 
 const styles: Record<'swatchWrap' | 'swatch', CSSProperties> &
-  Record<'colors', (flag: boolean) => CSSProperties> = {
-  colors: (flag: boolean) => ({
+  Record<'colors', (isHidden: boolean) => CSSProperties> = {
+  colors: (isHidden: boolean) => ({
     margin: '0 -10px',
     padding: '10px 0 0 10px',
     borderTop: '1px solid #eee',
     display: 'flex',
     flexWrap: 'wrap',
     position: 'relative',
-    ...(flag && { display: 'none' }),
+    ...(isHidden && { display: 'none' }),
   }),
   swatchWrap: {
     width: '16px',
@@ -35,13 +35,13 @@ const SketchPresetColors = (props: SketchPresetColorsProps) => {
   const { colors, onClick, onSwatchHover } = props;
 
   const handleClick = useCallback(
-    (hex: any, e: MouseEvent) => {
+    (hex: any, event: MouseEvent) => {
       onClick?.(
         {
           hex,
           source: 'hex',
         },
-        e,
+        event,
       );
     },
     [onClick],
@@ -49,11 +49,11 @@ const SketchPresetColors = (props: SketchPresetColorsProps) => {
 
   return (
     <div style={styles.colors(!colors || colors.length === 0)}>
-      {colors.map((colorObjOrString) => {
+      {colors.map((colorObjectOrString) => {
         const c =
-          typeof colorObjOrString === 'string'
-            ? { color: colorObjOrString }
-            : colorObjOrString;
+          typeof colorObjectOrString === 'string'
+            ? { color: colorObjectOrString }
+            : colorObjectOrString;
         const key = `${c.color}${'title' in c ? c?.title : ''}`;
         return (
           <div key={key} style={styles.swatchWrap}>

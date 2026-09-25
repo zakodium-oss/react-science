@@ -119,6 +119,7 @@ export function FifoLoggerDialog(props: FifoLoggerDialogProps) {
               intent="danger"
               icon="trash"
               text="Clear logs"
+              // eslint-disable-next-line @eslint-react/immutability
               onClick={() => logger.clear()}
             />
             <Button

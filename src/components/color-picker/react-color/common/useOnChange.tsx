@@ -4,8 +4,8 @@ export function useOnChange(
   onChange: (event: Event) => void,
 ): (event: Event) => void {
   return useCallback(
-    (e) => {
-      onChange(e);
+    (event) => {
+      onChange(event);
 
       function handleMouseUp() {
         window.removeEventListener('mousemove', onChange);

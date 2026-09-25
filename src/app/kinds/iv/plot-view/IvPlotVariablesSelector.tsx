@@ -9,17 +9,13 @@ import { MeasurementVariableSelect } from '../../../helpers/index.js';
 
 export default function IvPlotVariablesSelector() {
   const {
-    data: {
-      measurements: { iv: ivMeasurements },
-    },
-    view: {
-      plot: { iv: ivPlot },
-    },
+    data: { measurements },
+    view: { plot },
   } = useAppState();
   const dispatch = useAppDispatch();
-  assertNotNullish(ivPlot);
+  assertNotNullish(plot.iv);
   const allOptions = new Set<string>();
-  for (const measurement of ivMeasurements.entries) {
+  for (const measurement of measurements.iv.entries) {
     const variables = getAllVariableSymbols(measurement);
     for (const variable of variables) {
       allOptions.add(variable);
@@ -39,7 +35,7 @@ export default function IvPlotVariablesSelector() {
     >
       <MeasurementVariableSelect
         label="Y variable"
-        value={ivPlot.yVariable || ''}
+        value={plot.iv.yVariable || ''}
         options={options}
         onSelect={(variable) =>
           dispatch({
@@ -50,7 +46,7 @@ export default function IvPlotVariablesSelector() {
       />
       <MeasurementVariableSelect
         label="X variable"
-        value={ivPlot.xVariable || ''}
+        value={plot.iv.xVariable || ''}
         options={options}
         onSelect={(variable) =>
           dispatch({

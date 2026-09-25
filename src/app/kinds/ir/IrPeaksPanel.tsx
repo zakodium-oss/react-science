@@ -2,12 +2,12 @@ import type { SortingState } from '@tanstack/react-table';
 import { useState } from 'react';
 
 import type { IrPeak } from '../../../app-data/index.js';
-import type { TableColumnDef } from '../../../components/index.js';
+import type { TableColumnDefinition } from '../../../components/index.js';
 import { Table } from '../../../components/index.js';
 
 export interface IrColumnPreferences<T extends keyof IrPeak = keyof IrPeak> {
   visible?: boolean;
-  format?: (val: IrPeak[T]) => string | number;
+  format?: (value: IrPeak[T]) => string | number;
   accessorKey: T;
   label?: string;
 }
@@ -27,17 +27,20 @@ export interface IrPeaksPanelProps {
   preferences?: IrPeakPanelPreferences;
 }
 
+const defaultPreferences: IrPeakPanelPreferences = {};
+
 export function IrPeaksPanel(props: IrPeaksPanelProps) {
-  const { peaks, preferences = {} } = props;
+  const { peaks, preferences = defaultPreferences } = props;
   const { columns = [] } = preferences;
 
-  const defaultColumns: Array<TableColumnDef<IrPeak, number>> = columns.map(
-    ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
-      header: label,
-      accessorKey,
-      cell: ({ getValue }) => format(getValue()),
-    }),
-  );
+  const defaultColumns: Array<TableColumnDefinition<IrPeak, number>> =
+    columns.map(
+      ({ accessorKey, label = accessorKey, format = (x: number) => x }) => ({
+        header: label,
+        accessorKey,
+        cell: ({ getValue }) => format(getValue()),
+      }),
+    );
 
   function getColumnVisibility() {
     const columnVisibility: Record<string, boolean> = {};

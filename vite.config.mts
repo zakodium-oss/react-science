@@ -34,7 +34,7 @@ export default defineConfig({
         },
       },
     },
-    minify: process.env.NO_MINIFY ? false : 'esbuild',
+    minify: !process.env.NO_MINIFY && 'esbuild',
   },
   plugins: [react()],
   test: {

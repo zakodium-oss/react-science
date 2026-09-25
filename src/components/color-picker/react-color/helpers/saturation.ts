@@ -1,11 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-export function calculateChange(e, hsl, container: Element) {
+export function calculateChange(event, hsl, container: Element) {
   const { width: containerWidth, height: containerHeight } =
     container.getBoundingClientRect();
-  const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX;
-  const y = typeof e.pageY === 'number' ? e.pageY : e.touches[0].pageY;
+  const x =
+    typeof event.pageX === 'number' ? event.pageX : event.touches[0].pageX;
+  const y =
+    typeof event.pageY === 'number' ? event.pageY : event.touches[0].pageY;
   let left = x - (container.getBoundingClientRect().left + window.pageXOffset);
   let top = y - (container.getBoundingClientRect().top + window.pageYOffset);
 

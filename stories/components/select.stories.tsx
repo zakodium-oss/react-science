@@ -17,8 +17,8 @@ export default {
   title: 'Forms / Select',
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (storyFn: any) => (
-      <div style={{ width: '100%', padding: '10px' }}>{storyFn()}</div>
+    (storyFunction: any) => (
+      <div style={{ width: '100%', padding: '10px' }}>{storyFunction()}</div>
     ),
   ],
 };
@@ -69,10 +69,8 @@ const renderMenu: ItemListRenderer<ItemsType> = ({
 };
 function renderMenuNested(
   value: ItemsType | null,
-  [hoveredGroup, setHoveredGroup]: [
-    string | undefined,
-    Dispatch<SetStateAction<string | undefined>>,
-  ],
+  hoveredGroup: string | undefined,
+  setHoveredGroup: Dispatch<SetStateAction<string | undefined>>,
 ) {
   const render: ItemListRenderer<ItemsType> = ({
     filteredItems,
@@ -255,13 +253,19 @@ export function CategoriesNested() {
   const { value, ...defaultProps } = useSelect<ItemsType>({
     itemTextKey: 'label',
   });
-  const hoverState = useState<string | undefined>(undefined);
+  const [hoveredGroup, setHoveredGroup] = useState<string | undefined>(
+    undefined,
+  );
   return (
     <>
       <Select
         filterable={false}
         itemsEqual="label"
-        itemListRenderer={renderMenuNested(value, hoverState)}
+        itemListRenderer={renderMenuNested(
+          value,
+          hoveredGroup,
+          setHoveredGroup,
+        )}
         items={[
           { label: 'Apple', group: 'Fruits' },
           { label: 'Banana', group: 'Fruits' },

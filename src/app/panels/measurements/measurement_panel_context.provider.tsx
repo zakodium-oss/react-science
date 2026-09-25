@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { MeasurementState } from './measurement_panel_context.js';
-import { measurementPanelContext } from './measurement_panel_context.js';
+import { MeasurementPanelContext } from './measurement_panel_context.js';
 
 export function MeasurementPanelProvider({
   children,
@@ -11,8 +11,6 @@ export function MeasurementPanelProvider({
   value: MeasurementState;
 }) {
   return (
-    <measurementPanelContext.Provider value={value}>
-      {children}
-    </measurementPanelContext.Provider>
+    <MeasurementPanelContext value={value}>{children}</MeasurementPanelContext>
   );
 }

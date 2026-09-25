@@ -1,11 +1,8 @@
-import type { MutableRefObject, ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import { useMemo } from 'react';
 import { useFullScreenHandle } from 'react-full-screen';
 
-import { fullscreenContext } from './fullscreen_context.js';
-
-// Remove for React 19.
-type RefObject<T> = MutableRefObject<T>;
+import { FullscreenContext } from './fullscreen_context.js';
 
 export interface FullscreenProviderProps {
   /**
@@ -33,7 +30,7 @@ export function FullScreenProvider(props: FullscreenProviderProps) {
         onToggleError?.(error, handle.active ? 'exit' : 'enter');
       }
       try {
-        handleToggle().catch(handleError);
+        void handleToggle().catch(handleError);
       } catch (error) {
         handleError(error);
       }
@@ -45,8 +42,6 @@ export function FullScreenProvider(props: FullscreenProviderProps) {
   }, [handle, onToggleError]);
 
   return (
-    <fullscreenContext.Provider value={value}>
-      {children(handle.node)}
-    </fullscreenContext.Provider>
+    <FullscreenContext value={value}>{children(handle.node)}</FullscreenContext>
   );
 }

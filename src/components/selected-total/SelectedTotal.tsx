@@ -18,7 +18,7 @@ export function SelectedTotal(props: SelectedTotalProps) {
 }
 
 function formatCounterLabel(count?: number, total?: number) {
-  const thinSpace = '\u2009';
+  const thinSpace = '\u{2009}';
   if (count !== undefined && total !== undefined) {
     return `[${thinSpace}${count}${thinSpace}/${thinSpace}${total}${thinSpace}]`;
   }

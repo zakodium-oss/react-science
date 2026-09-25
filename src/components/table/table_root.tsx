@@ -12,7 +12,7 @@ import type {
 import { useEffect, useMemo, useRef } from 'react';
 import { match } from 'ts-pattern';
 
-import { shouldForwardPropExcept } from '../utils/shouldForwardPropExcept.js';
+import { forwardAllPropsExcept } from '../utils/forward_all_props_except.ts';
 
 import { FlashedRowProvider } from './flash_row/flashed_row_provider.js';
 import type { PreviewTablePropsContextValue } from './preview_table_context.js';
@@ -27,7 +27,7 @@ import { ScrollContainer } from './table_scroll_container.js';
 import type {
   GetTdProps,
   Scroller,
-  TableColumnDef,
+  TableColumnDefinition,
   TableRowPreviewRenderer,
   TableRowTrRenderer,
   VirtualScroller,
@@ -35,7 +35,7 @@ import type {
 import { useTableColumns } from './use_table_columns.js';
 
 const CustomHTMLTable = styled(HTMLTable, {
-  shouldForwardProp: shouldForwardPropExcept([
+  shouldForwardProp: forwardAllPropsExcept([
     'striped',
     'stickyHeader',
     'noHeader',
@@ -83,7 +83,7 @@ interface TableBaseProps<TData extends RowData> {
    * Tanstack table definition of columns in the table.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: Array<TableColumnDef<TData, any>>;
+  columns: Array<TableColumnDefinition<TData, any>>;
   /**
    * Show borders between each cell and row of the table.
    */
@@ -327,7 +327,7 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
                   virtualScrollElementRef
                 : // When not virtualized, ScrollContainer does not render a container, only its children,
                   // And the scrollable element is provided by the user or by default, the <table> element.
-                  // eslint-disable-next-line unicorn/consistent-destructuring
+
                   props.scrollableElementRef || tableRef
             }
             scrollToRowRef={scrollToRowRef}
@@ -380,19 +380,21 @@ function useCheckProps<TData extends RowData>(
 ) {
   const { onRowOrderChanged, getRowId } = props;
   useEffect(() => {
-    if (onRowOrderChanged) {
-      if (!getRowId) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          'When reordering rows is enabled via the `onRowOrderChanged` prop, the `getRowId` prop must be provided to identify each row unambiguously.',
-        );
-      }
-      if (headers.some((header) => header.column.getCanSort())) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          'When reordering rows is enabled via the `onRowOrderChanged` prop, none of the columns should be sortable as data order will be overriden by internal sorting.',
-        );
-      }
+    if (!onRowOrderChanged) {
+      return;
+    }
+
+    if (!getRowId) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'When reordering rows is enabled via the `onRowOrderChanged` prop, the `getRowId` prop must be provided to identify each row unambiguously.',
+      );
+    }
+    if (headers.some((header) => header.column.getCanSort())) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'When reordering rows is enabled via the `onRowOrderChanged` prop, none of the columns should be sortable as data order will be overriden by internal sorting.',
+      );
     }
   }, [onRowOrderChanged, getRowId, headers]);
 }

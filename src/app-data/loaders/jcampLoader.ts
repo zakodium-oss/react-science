@@ -38,23 +38,26 @@ export async function jcampLoader(
           } else if (measurement?.dataType?.match(/nmr/i)) {
             kind = 'nmr';
           }
-          if (kind) {
-            if (!newMeasurements[kind]) {
-              newMeasurements[kind] = { entries: [] };
-            }
-            assert(
-              newMeasurements[kind],
-              'Error while loading, kind is not defined',
-            );
-            const newMeasurement = {
-              ...getMeasurementInfoFromFile(file, measurement.title || ''),
-              meta: measurement.meta,
-              data: normalizeSpectra(measurement.spectra),
-            };
-            count++;
-            Object.assign(newMeasurement.info, measurement.info);
-            newMeasurements[kind]?.entries.push(newMeasurement);
+
+          if (!kind) {
+            continue;
           }
+
+          if (!newMeasurements[kind]) {
+            newMeasurements[kind] = { entries: [] };
+          }
+          assert(
+            newMeasurements[kind],
+            'Error while loading, kind is not defined',
+          );
+          const newMeasurement = {
+            ...getMeasurementInfoFromFile(file, measurement.title || ''),
+            meta: measurement.meta,
+            data: normalizeSpectra(measurement.spectra),
+          };
+          count++;
+          Object.assign(newMeasurement.info, measurement.info);
+          newMeasurements[kind]?.entries.push(newMeasurement);
         }
       } catch (error) {
         if (error instanceof Error) {

@@ -1,19 +1,18 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { Component } from 'react';
+import { useCallback, useState } from 'react';
 
-export const handleFocus = (WrappedComponent: any, Span = 'span'): any =>
-  class Focus extends Component {
-    state = { focus: false };
-    handleFocus = () => this.setState({ focus: true });
-    handleBlur = () => this.setState({ focus: false });
+export function handleFocus(WrappedComponent: any, Span = 'span'): any {
+  return function Focus(props: any) {
+    const [focus, setFocus] = useState(false);
+    const handleFocus = useCallback(() => setFocus(true), []);
+    const handleBlur = useCallback(() => setFocus(false), []);
 
-    render() {
-      return (
-        <Span onFocus={this.handleFocus} onBlur={this.handleBlur}>
-          <WrappedComponent {...this.props} {...this.state} />
-        </Span>
-      );
-    }
+    return (
+      <Span onFocus={handleFocus} onBlur={handleBlur}>
+        <WrappedComponent {...props} focus={focus} />
+      </Span>
+    );
   };
+}

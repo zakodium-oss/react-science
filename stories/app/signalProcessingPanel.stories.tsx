@@ -22,9 +22,9 @@ export function Control({ onChange }: SignalProcessingPanelProps) {
   return (
     <SignalProcessingPanel
       filters={filters}
-      onChange={(val) => {
-        onChange(val);
-        setFilters(val);
+      onChange={(value) => {
+        onChange(value);
+        setFilters(value);
       }}
     />
   );
@@ -39,9 +39,9 @@ export function LoadFilters({
   return (
     <SignalProcessingPanel
       filters={filters}
-      onChange={(val) => {
-        onChange(val);
-        setFilters(val);
+      onChange={(value) => {
+        onChange(value);
+        setFilters(value);
       }}
     />
   );

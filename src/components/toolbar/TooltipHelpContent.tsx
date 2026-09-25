@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import type { Mandatory } from '@zakodium/utils';
 import type { CSSProperties } from 'react';
 
 const shortcutBoxSize = 1.5;
@@ -81,14 +82,18 @@ export interface TooltipItem {
   style?: CSSProperties;
 }
 
+const defaultShortCuts: Mandatory<TooltipItem['shortcuts']> = [];
+const defaultSubTitles: Mandatory<TooltipItem['subTitles']> = [];
+const defaultStyle: Mandatory<TooltipItem['style']> = {};
+
 export function TooltipHelpContent(props: TooltipItem) {
   const {
     title,
-    shortcuts = [],
-    subTitles = [],
+    shortcuts = defaultShortCuts,
+    subTitles = defaultSubTitles,
     description = '',
     link,
-    style = {},
+    style = defaultStyle,
   } = props;
 
   return (
@@ -135,8 +140,8 @@ function ShortCuts({ shortcuts }: { shortcuts: string[] }) {
     >
       {shortcuts.map((shortcut, index) => {
         return (
-          // eslint-disable-next-line react/no-array-index-key
-          <ShortcutItem key={`${index}`}>
+          // eslint-disable-next-line @eslint-react/no-array-index-key
+          <ShortcutItem key={index}>
             <span>{shortcut}</span>
           </ShortcutItem>
         );

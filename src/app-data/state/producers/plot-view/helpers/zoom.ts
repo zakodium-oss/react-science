@@ -14,8 +14,8 @@ import { iterateKindMeasurementsAndView } from '../../../index.js';
 
 export function getInitialZoom(): Plot2DZoom {
   return {
-    x: { min: Number.POSITIVE_INFINITY, max: Number.NEGATIVE_INFINITY },
-    y: { min: Number.POSITIVE_INFINITY, max: Number.NEGATIVE_INFINITY },
+    x: { min: Infinity, max: -Infinity },
+    y: { min: Infinity, max: -Infinity },
   };
 }
 
@@ -51,14 +51,16 @@ export function updateZoom(
   const mYVariable = getVariableByLabel(measurement, yVariable);
 
   if (
-    typeof mXVariable?.min === 'number' &&
-    typeof mXVariable?.max === 'number' &&
-    typeof mYVariable?.min === 'number' &&
-    typeof mYVariable?.max === 'number'
+    typeof mXVariable?.min !== 'number' ||
+    typeof mXVariable?.max !== 'number' ||
+    typeof mYVariable?.min !== 'number' ||
+    typeof mYVariable?.max !== 'number'
   ) {
-    plotView.zoom.x.min = Math.min(plotView.zoom.x.min, mXVariable.min);
-    plotView.zoom.x.max = Math.max(plotView.zoom.x.max, mXVariable.max);
-    plotView.zoom.y.min = Math.min(plotView.zoom.y.min, mYVariable.min);
-    plotView.zoom.y.max = Math.max(plotView.zoom.y.max, mYVariable.max);
+    return;
   }
+
+  plotView.zoom.x.min = Math.min(plotView.zoom.x.min, mXVariable.min);
+  plotView.zoom.x.max = Math.max(plotView.zoom.x.max, mXVariable.max);
+  plotView.zoom.y.min = Math.min(plotView.zoom.y.min, mYVariable.min);
+  plotView.zoom.y.max = Math.max(plotView.zoom.y.max, mYVariable.max);
 }

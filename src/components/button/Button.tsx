@@ -12,6 +12,7 @@ import {
   Tooltip,
 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Mandatory } from '@zakodium/utils';
 import type { ReactNode } from 'react';
 
 type BlueprintProps = {
@@ -77,8 +78,16 @@ const TooltipButton = styled(BlueprintButton, {
   ${(props) => buttonStyles(props)}
 `;
 
+const defaultTooltipProps: Mandatory<ButtonProps['tooltipProps']> = {};
+
 export function Button(props: ButtonProps) {
-  const { tooltipProps = {}, children, tag, tagProps, ...buttonProps } = props;
+  const {
+    tooltipProps = defaultTooltipProps,
+    children,
+    tag,
+    tagProps,
+    ...buttonProps
+  } = props;
   const {
     fill,
     content = '',
@@ -103,7 +112,7 @@ export function Button(props: ButtonProps) {
           isIconButton={!children && !buttonProps.text}
           isTagButton={Boolean(tag)}
         >
-          {tag && (
+          {Boolean(tag) && (
             <ButtonTag round intent="success" {...tagProps}>
               {tag}
             </ButtonTag>

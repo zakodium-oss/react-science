@@ -10,6 +10,8 @@ export function useOnClickOutside<T extends Node = Node>(
   const shadowElement = useRootLayoutContext();
 
   useEffect(() => {
+    if (shadowElement === null) return;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
       // Do nothing if clicking ref's element or descendent elements
@@ -19,8 +21,6 @@ export function useOnClickOutside<T extends Node = Node>(
 
       handler(event);
     };
-
-    if (shadowElement === null) return;
 
     shadowElement.addEventListener('mousedown', listener);
     shadowElement.addEventListener('touchstart', listener);

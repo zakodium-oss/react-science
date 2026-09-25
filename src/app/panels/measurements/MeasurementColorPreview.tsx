@@ -57,8 +57,8 @@ export function MeasurementColorPreview(props: MeasurementColorPreviewProps) {
     placement: 'bottom-start',
     open: isOpened,
     whileElementsMounted: autoUpdate,
-    onOpenChange: (open: boolean, event?: Event) => {
-      if (!open && event) {
+    onOpenChange: (isOpen: boolean, event?: Event) => {
+      if (!isOpen && event) {
         return close();
       }
     },

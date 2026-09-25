@@ -22,14 +22,14 @@ export function Checkbox(props: CheckboxProps) {
   const field = useFieldContext<boolean>();
   const error = field
     .getMeta()
-    .errors.map((e) => e.message)
+    .errors.map((error) => error.message)
     .at(0);
 
   const intent = getIntent(error);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    const checked = event.target.checked;
-    return field.handleChange(checked);
+    const isChecked = event.target.checked;
+    return field.handleChange(isChecked);
   }
 
   return (

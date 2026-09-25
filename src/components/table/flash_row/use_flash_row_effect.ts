@@ -10,12 +10,14 @@ export function useFlashRowEffect(
 ) {
   const [flashedItemId, setFlashedItemId] = useFlashedRowContext();
   useEffect(() => {
-    if (flashedItemId === id && tableRowRef.current) {
-      triggerPostFlash(tableRowRef.current);
-      // In a virtualized table, prevent the flash from happening again
-      // when the component remounts
-      setFlashedItemId(undefined);
+    if (flashedItemId !== id || !tableRowRef.current) {
+      return;
     }
+
+    triggerPostFlash(tableRowRef.current);
+    // In a virtualized table, prevent the flash from happening again
+    // when the component remounts
+    setFlashedItemId(undefined);
   }, [flashedItemId, id, setFlashedItemId, tableRowRef]);
 }
 

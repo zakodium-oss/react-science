@@ -61,10 +61,11 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
           ? clientX - bounds.left
           : clientY - bounds.top;
 
-      const centralizingValue =
+      const centralizingClientValue =
         direction === 'horizontal'
-          ? splitterRef.current.clientWidth / 2
-          : splitterRef.current.clientHeight / 2;
+          ? splitterRef.current.clientWidth
+          : splitterRef.current.clientHeight;
+      const centralizingValue = centralizingClientValue / 2;
 
       const value =
         controlledSide === 'start' ? client : parentDimension - client;

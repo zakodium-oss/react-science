@@ -5,11 +5,10 @@ import type { CSSProperties, ReactNode, TdHTMLAttributes } from 'react';
 
 import type { ReactScienceTableFeatures } from './table_features.js';
 
-export type TableColumnDef<TData extends RowData, TValue = unknown> = ColumnDef<
-  ReactScienceTableFeatures,
-  TData,
-  TValue
->;
+export type TableColumnDefinition<
+  TData extends RowData,
+  TValue = unknown,
+> = ColumnDef<ReactScienceTableFeatures, TData, TValue>;
 
 type TableTdProps = TdHTMLAttributes<HTMLTableCellElement>;
 

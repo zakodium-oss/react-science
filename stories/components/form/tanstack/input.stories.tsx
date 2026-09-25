@@ -3,7 +3,7 @@ import { Radio } from '@blueprintjs/core';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { revalidateLogic } from '@tanstack/react-form';
 import { useSelector } from '@tanstack/react-store';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useMemo } from 'react';
 import { action } from 'storybook/actions';
 import { expect, userEvent, within } from 'storybook/test';
@@ -13,9 +13,6 @@ import type { Layout } from '../../../../src/components/form/components/input_gr
 import { Section } from '../../../../src/components/form/components/layout/Section.js';
 import { AppForm, useForm } from '../../../../src/components/index.js';
 import { coerceNumberInput } from '../../../../src/components/index.ts';
-
-// Remove for React 19.
-type SubmitEvent<T> = FormEvent<T>;
 
 export default {
   title: 'Forms / Form / Tanstack / Inputs',

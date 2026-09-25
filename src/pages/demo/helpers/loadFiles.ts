@@ -77,7 +77,9 @@ export async function loadFiles(
   }
 }
 
-/** function executed for a single file */
+/**
+ * Function executed for a single file.
+ */
 async function loadFullState(
   file: FileCollectionItem | File,
   dispatch: AppDispatch,

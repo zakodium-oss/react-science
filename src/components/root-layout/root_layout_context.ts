@@ -1,12 +1,12 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 const defaultPortalContext =
   typeof document === 'undefined' ? null : document.body;
 
-export const rootLayoutContext = createContext<HTMLElement | null>(
+export const RootLayoutContext = createContext<HTMLElement | null>(
   defaultPortalContext,
 );
 
 export function useRootLayoutContext() {
-  return useContext(rootLayoutContext);
+  return use(RootLayoutContext);
 }

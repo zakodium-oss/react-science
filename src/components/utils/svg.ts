@@ -42,7 +42,9 @@ export function exportSVG(
   options: ExportSVGOptions = {},
 ): string {
   const {
+    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     removeFromSelector,
+    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     addBackground = false,
     backgroundColor = 'white',
     customMutations,
@@ -60,8 +62,6 @@ export function exportSVG(
 
   if (addBackground) {
     const background = document.createElementNS(
-      // XML namespaces are immutable. This false-positive is fixed in eslint-plugin-unicorn v66.
-      // eslint-disable-next-line unicorn/prefer-https
       'http://www.w3.org/2000/svg',
       'rect',
     );
@@ -89,7 +89,9 @@ export async function exportSVGAsPNG(
   options: ExportSVGOptions = {},
 ): Promise<Blob> {
   const {
+    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     removeFromSelector,
+    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     addBackground = false,
     backgroundColor = 'white',
     customMutations,
@@ -104,6 +106,7 @@ export async function exportSVGAsPNG(
 
   const img = new Image();
   img.src = URL.createObjectURL(svgBlob);
+  // eslint-disable-next-line unicorn/prefer-await
   await img.decode().finally(() => URL.revokeObjectURL(img.src));
 
   const canvas = new OffscreenCanvas(img.naturalWidth, img.naturalHeight);

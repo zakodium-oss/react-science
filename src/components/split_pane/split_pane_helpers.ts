@@ -7,7 +7,7 @@ export interface ParsedSplitPaneSize {
 }
 
 export function parseSize(size: string): ParsedSplitPaneSize {
-  const value = Number.parseFloat(size);
+  const value = Number(size);
   // remove numbers and dots from the string
   const type = size.replaceAll(/[\d .]/g, '') as SplitPaneType;
 

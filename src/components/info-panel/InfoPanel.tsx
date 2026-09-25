@@ -7,7 +7,7 @@ import { P, match } from 'ts-pattern';
 import { Button } from '../button/Button.js';
 import { SelectedTotal } from '../selected-total/index.js';
 import { Table, createTableColumnHelper } from '../table/index.js';
-import { shouldForwardPropExcept } from '../utils/shouldForwardPropExcept.js';
+import { forwardAllPropsExcept } from '../utils/forward_all_props_except.ts';
 import * as ValueRenderers from '../value-renderers/index.js';
 
 export interface InfoPanelData {
@@ -26,7 +26,7 @@ interface InfoPanelProps {
 }
 
 const AccordionButton = styled(Button, {
-  shouldForwardProp: shouldForwardPropExcept(['open']),
+  shouldForwardProp: forwardAllPropsExcept(['open']),
 })<{ open?: boolean }>`
   z-index: 1;
   position: sticky;
@@ -132,9 +132,8 @@ export function InfoPanel(props: InfoPanelProps) {
           includes.push({ parameter, value });
           continue;
         }
-        if (valueSearch(value, search)) {
+        if (isValueMatch(value, search)) {
           valueContains.push({ parameter, value });
-          continue;
         }
       }
       return [...exactMatch, ...startsWith, ...includes, ...valueContains];
@@ -198,7 +197,7 @@ interface InfoPanelContentProps {
 
 const InfoPanelContent = memo((props: InfoPanelContentProps) => {
   const { filteredData } = props;
-  const [isOpen, setIsOpen] = useState<string[]>(
+  const [openDescriptions, setOpenDescriptions] = useState<string[]>(() =>
     filteredData.map(({ description }) => description),
   );
   return (
@@ -213,15 +212,15 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
       }}
     >
       {filteredData.map(({ description, data }) => {
-        const open = isOpen.includes(description);
+        const isOpen = openDescriptions.includes(description);
         return (
           <div key={description}>
             <AccordionButton
-              open={open}
+              open={isOpen}
               variant="minimal"
               onClick={() =>
-                setIsOpen((pred) =>
-                  open
+                setOpenDescriptions((pred) =>
+                  isOpen
                     ? pred.filter((o) => o !== description)
                     : [...pred, description],
                 )
@@ -231,7 +230,7 @@ const InfoPanelContent = memo((props: InfoPanelContentProps) => {
             >
               {description}
             </AccordionButton>
-            <InfoPanelCollapse isOpen={open}>
+            <InfoPanelCollapse isOpen={isOpen}>
               <Table
                 data={data}
                 columns={columns}
@@ -272,10 +271,9 @@ function valueCell(value: number | string | object | boolean) {
  * @param search - Value to search for.
  * @returns - If search exist in value
  */
-function valueSearch(
+function isValueMatch(
   value: number | string | object | boolean,
   search: string,
-  lowerCase = true,
 ): boolean {
   let stringValue = match(value)
     .with(P.boolean, String)
@@ -288,9 +286,7 @@ function valueSearch(
   if (stringValue === null) {
     return true;
   }
-  if (lowerCase) {
-    stringValue = stringValue.toLowerCase();
-    search = search.toLowerCase();
-  }
+  stringValue = stringValue.toLowerCase();
+  search = search.toLowerCase();
   return stringValue.includes(search);
 }

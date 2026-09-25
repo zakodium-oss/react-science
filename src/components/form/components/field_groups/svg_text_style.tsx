@@ -56,9 +56,11 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
                 <Checkbox
                   labelElement={<BoldLabel>Bold</BoldLabel>}
                   name={field.name}
-                  checked={fontWeightToBoolean(field.state.value)}
-                  onChange={(e) =>
-                    field.handleChange(booleanToFontWeight(e.target.checked))
+                  checked={isBoldFontWeight(field.state.value)}
+                  onChange={(event) =>
+                    field.handleChange(
+                      booleanToFontWeight(event.target.checked),
+                    )
                   }
                   onBlur={field.handleBlur}
                 />
@@ -69,9 +71,9 @@ export const FieldGroupSVGTextStyleFields = withFieldGroup({
                 <Checkbox
                   labelElement={<ItalicLabel>Italic</ItalicLabel>}
                   name={field.name}
-                  checked={fontStyleToBoolean(field.state.value)}
-                  onChange={(e) =>
-                    field.handleChange(booleanToFontStyle(e.target.checked))
+                  checked={isItalicFontStyle(field.state.value)}
+                  onChange={(event) =>
+                    field.handleChange(booleanToFontStyle(event.target.checked))
                   }
                   onBlur={field.handleBlur}
                 />
@@ -123,7 +125,7 @@ function TextStyleFieldPreview(props: TextStyleFieldPreviewProps) {
         <TextStyleFieldPreviewErrorContainer>
           {safeResult.error.issues.map((error) => (
             <li key={`${error.path.join('.')}-${error.code}`}>
-              {error.path.join('.')}: ${error.message}
+              {error.path.join('.')}: {error.message}
             </li>
           ))}
         </TextStyleFieldPreviewErrorContainer>
@@ -159,22 +161,22 @@ const ItalicLabel = styled.span`
   font-style: italic;
 `;
 
-function fontWeightToBoolean(
-  weight: SvgTextStyleFields['fontWeight'],
-): boolean {
+function isBoldFontWeight(weight: SvgTextStyleFields['fontWeight']): boolean {
   return weight === 'bold';
 }
 
 function booleanToFontWeight(
-  weight: boolean,
+  isBold: boolean,
 ): SvgTextStyleFields['fontWeight'] {
-  return weight ? 'bold' : 'normal';
+  return isBold ? 'bold' : 'normal';
 }
 
-function fontStyleToBoolean(weight: SvgTextStyleFields['fontStyle']): boolean {
+function isItalicFontStyle(weight: SvgTextStyleFields['fontStyle']): boolean {
   return weight === 'italic';
 }
 
-function booleanToFontStyle(weight: boolean): SvgTextStyleFields['fontStyle'] {
-  return weight ? 'italic' : 'normal';
+function booleanToFontStyle(
+  isItalic: boolean,
+): SvgTextStyleFields['fontStyle'] {
+  return isItalic ? 'italic' : 'normal';
 }

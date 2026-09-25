@@ -6,7 +6,7 @@ export const svgTextStyleFieldsSchema = z.object({
   fill: z.string().optional(),
   fontSize: stringToNumberOptional({
     numSchema: z.int().min(1),
-    parse: (str) => Number.parseInt(str, 10),
+    parse: (string_) => Math.trunc(Number(string_)),
   }),
   fontStyle: z.enum(['normal', 'italic']).optional(),
   fontWeight: z.enum(['normal', 'bold']).optional(),

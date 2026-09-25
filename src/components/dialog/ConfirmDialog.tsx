@@ -3,7 +3,7 @@ import { Classes, Dialog, DialogBody, DialogFooter } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 
 import { Button } from '../button/index.js';
-import { shouldForwardPropExcept } from '../utils/shouldForwardPropExcept.js';
+import { forwardAllPropsExcept } from '../utils/forward_all_props_except.ts';
 
 interface ConfirmDialogProps extends Omit<DialogProps, 'isCloseButtonShown'> {
   onConfirm: () => void;
@@ -14,7 +14,7 @@ interface ConfirmDialogProps extends Omit<DialogProps, 'isCloseButtonShown'> {
 }
 
 const DialogWithHeaderColor = styled(Dialog, {
-  shouldForwardProp: shouldForwardPropExcept(['headerColor']),
+  shouldForwardProp: forwardAllPropsExcept(['headerColor']),
 })<{ headerColor: string }>`
   .${Classes.DIALOG_HEADER} {
     background-color: ${(props) => props.headerColor};

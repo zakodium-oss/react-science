@@ -180,22 +180,22 @@ function MeasurementsTableHeader({
     view: { selectedMeasurements, measurements },
   } = useAppState();
   const dispatch = useAppDispatch();
-  function onSelectLink(select: boolean) {
+  function onSelectLink(isSelected: boolean) {
     dispatch({
       type: 'SELECT_ALL_MEASUREMENTS',
       payload: {
         kind,
-        select,
+        isSelected,
       },
     });
   }
-  const allSelected = useMemo(
+  const isAllSelected = useMemo(
     () =>
       selectedMeasurements[kind]?.length ===
       measurementsData[kind]?.entries.length,
     [kind, measurementsData, selectedMeasurements],
   );
-  const selectedVisible = useMemo(() => {
+  const isSelectedVisible = useMemo(() => {
     const ids = selectedMeasurements[kind];
     if (ids) {
       return ids.every((id) => measurements[id]?.visible);
@@ -211,14 +211,14 @@ function MeasurementsTableHeader({
           }}
         >
           <MeasurementCheckbox
-            checked={allSelected}
+            checked={isAllSelected}
             onSelectCheckbox={() => {
-              onSelectLink(!allSelected);
+              onSelectLink(!isAllSelected);
             }}
           />
           <MeasurementSelectedVisibilityChange
             kind={kind}
-            isVisible={selectedVisible}
+            isVisible={isSelectedVisible}
           />
         </MeasurementsIconsContainer>
         <TableHeaderFilename>Filename</TableHeaderFilename>

@@ -8,7 +8,7 @@ import * as color from '../helpers/color.js';
 export interface SketchFieldsProps {
   onChange: (
     data: (RGB | HSL | { hex: string }) & { source: string },
-    e: Event,
+    event: Event,
   ) => void;
   onBlur?: (event: FocusEvent<HTMLElement>) => void;
   hsl: HSL;
@@ -21,7 +21,7 @@ const styles: Record<
   'fields' | 'single' | 'double' | 'input' | 'label',
   CSSProperties
 > &
-  Record<'alpha', (disableAlpha: boolean) => CSSProperties> = {
+  Record<'alpha', (isAlphaDisabled: boolean) => CSSProperties> = {
   fields: {
     display: 'flex',
     paddingTop: '4px',
@@ -30,10 +30,10 @@ const styles: Record<
     flex: '1',
     paddingLeft: '6px',
   },
-  alpha: (disableAlpha: boolean) => ({
+  alpha: (isAlphaDisabled: boolean) => ({
     flex: '1',
     paddingLeft: '6px',
-    ...(disableAlpha && { display: 'none' }),
+    ...(isAlphaDisabled && { display: 'none' }),
   }),
   double: {
     flex: '2',
@@ -65,7 +65,7 @@ const SketchFields = ({
   disableAlpha,
 }: SketchFieldsProps) => {
   const handleChange = useCallback(
-    (data: any, e: any) => {
+    (data: any, event: any) => {
       if (data.hex) {
         if (color.isValidHex(data.hex)) {
           onChange(
@@ -73,7 +73,7 @@ const SketchFields = ({
               hex: data.hex,
               source: 'hex',
             },
-            e,
+            event,
           );
         }
       } else if (data.r || data.g || data.b) {
@@ -85,7 +85,7 @@ const SketchFields = ({
             a: rgb.a,
             source: 'rgb',
           },
-          e,
+          event,
         );
       } else if (data.a) {
         if (data.a < 0) {
@@ -103,7 +103,7 @@ const SketchFields = ({
             a: data.a,
             source: 'rgb',
           },
-          e,
+          event,
         );
       }
     },
