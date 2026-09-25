@@ -1,5 +1,16 @@
 # Changelog
 
+## [24.0.0](https://github.com/zakodium-oss/react-science/compare/v23.1.1...v24.0.0) (2026-09-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* Peer dependencies have been updated and only React 19 is supported. The `TableColumnDef` type was renamed to `TableColumnDefinition`.
+
+### Features
+
+* update peer dependencies and require React 19 ([#1060](https://github.com/zakodium-oss/react-science/issues/1060)) ([9df6bc7](https://github.com/zakodium-oss/react-science/commit/9df6bc7126b50757eec613e1e953347350669396))
+
 ## [23.1.1](https://github.com/zakodium-oss/react-science/compare/v23.1.0...v23.1.1) (2026-08-26)
 
 
