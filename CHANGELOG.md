@@ -1,5 +1,12 @@
 # Changelog
 
+## [24.0.1](https://github.com/zakodium-oss/react-science/compare/v24.0.0...v24.0.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* split pane size parsing ([#1062](https://github.com/zakodium-oss/react-science/issues/1062)) ([3654b54](https://github.com/zakodium-oss/react-science/commit/3654b54f148a8504c8b1c14259ef5ab69c1de608))
+
 ## [24.0.0](https://github.com/zakodium-oss/react-science/compare/v23.1.1...v24.0.0) (2026-09-25)
 
 
