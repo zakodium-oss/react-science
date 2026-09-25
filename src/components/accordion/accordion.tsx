@@ -1,4 +1,4 @@
-import { Colors } from '@blueprintjs/core';
+import { Colors, Icon } from '@blueprintjs/core';
 import styled from '@emotion/styled';
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type {
@@ -7,6 +7,12 @@ import type {
   ReactNode,
 } from 'react';
 import { useCallback, useRef } from 'react';
+
+import {
+  PanelItemHeader,
+  PanelItemTitle,
+  PanelItemTitleLabel,
+} from '../utils/panel_item_header.js';
 
 import { useAccordionItemContext } from './accordion_context.js';
 import type { AccordionItemControls } from './accordion_context_utils.js';
@@ -64,29 +70,20 @@ export interface AccordionItemProps<T extends string = string> {
   renderToolbar?: (renderProps: AccordionRenderToolbarProps<T>) => ReactNode;
 }
 
-const AccordionItemHeader = styled.div`
+const AccordionItemHeader = styled(PanelItemHeader)`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-color: #d5d5d5 currentcolor currentcolor;
-  border-style: solid none none;
-  color: #2d2d2d;
-  font-weight: bold;
-  text-decoration: none;
-  text-shadow: white 0 1px 0;
-  background: white
-    linear-gradient(${Colors.LIGHT_GRAY5} 5%, ${Colors.LIGHT_GRAY3} 100%) repeat
-    scroll 0 0;
-  width: 100%;
-  user-select: none;
-  justify-content: space-between;
-  padding-left: 12px;
 
   :hover {
-    background: white
-      linear-gradient(${Colors.LIGHT_GRAY4} 5%, ${Colors.LIGHT_GRAY2} 100%)
-      repeat scroll 0 0;
+    background-color: ${Colors.LIGHT_GRAY3};
   }
+`;
+
+const Chevron = styled(Icon, {
+  shouldForwardProp: (propName) => propName !== 'isOpen',
+})<{ isOpen: boolean }>`
+  color: ${Colors.GRAY2};
+  transition: transform 100ms ease;
+  transform: rotate(${({ isOpen }) => (isOpen ? '0deg' : '-90deg')});
 `;
 
 const AccordionContainer = styled.div`
@@ -144,21 +141,20 @@ Accordion.Item = function AccordionItem<T extends string = string>(
         flex: isOpen ? '1 1 1px' : 'none',
         display: 'flex',
         flexDirection: 'column',
+        minWidth: 0,
         isolation: 'isolate',
       }}
     >
       <AccordionItemHeader
         onClick={onClickHandle}
         role="button"
+        aria-expanded={isOpen ?? false}
         ref={headerRef}
       >
-        <div
-          style={{
-            padding: '5px 0px',
-          }}
-        >
-          {title}
-        </div>
+        <PanelItemTitle>
+          <Chevron icon="chevron-down" size={12} isOpen={isOpen ?? false} />
+          <PanelItemTitleLabel>{title}</PanelItemTitleLabel>
+        </PanelItemTitle>
         <ToolbarContainer onClick={(event) => event.stopPropagation()}>
           {renderToolbar?.({ id, isOpen: isOpen ?? false, controls })}
         </ToolbarContainer>
