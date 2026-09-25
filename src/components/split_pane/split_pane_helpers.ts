@@ -7,9 +7,14 @@ export interface ParsedSplitPaneSize {
 }
 
 export function parseSize(size: string): ParsedSplitPaneSize {
-  const value = Number(size);
-  // remove numbers and dots from the string
-  const type = size.replaceAll(/[\d .]/g, '') as SplitPaneType;
+  // eslint-disable-next-line unicorn/prefer-number-coercion
+  const value = Number.parseFloat(size);
+  // Remove numbers and dots from the string.
+  const type = size.replaceAll(/[\d .]/g, '');
+
+  if (Number.isNaN(value) || (type !== '%' && type !== 'px')) {
+    throw new Error('SplitPane size must be a number with "%" or "px" unit.');
+  }
 
   return { value, type };
 }
