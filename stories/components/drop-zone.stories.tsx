@@ -18,6 +18,7 @@ interface DropZoneStoryProps {
   emptyDescription?: string;
   emptyButtonText?: string;
   emptyButtonIcon?: IconName;
+  folderMode?: boolean;
 }
 
 function fileValidator(file: File) {
@@ -33,6 +34,7 @@ function fileValidator(file: File) {
 const columnHelper = createTableColumnHelper<File>();
 const columns = columnHelper.columns([
   columnHelper.accessor('name', { header: 'Name' }),
+  columnHelper.accessor('webkitRelativePath', { header: 'Relative path' }),
   columnHelper.accessor('size', { header: 'Size' }),
 ]);
 
@@ -42,6 +44,7 @@ export function Control({
   emptyDescription,
   emptyButtonText,
   emptyButtonIcon,
+  folderMode,
 }: DropZoneStoryProps) {
   const [files, setFiles] = useState<File[]>([]);
   return (
@@ -67,6 +70,7 @@ export function Control({
           emptyDescription={emptyDescription}
           emptyButtonText={emptyButtonText}
           emptyButtonIcon={emptyButtonIcon}
+          folderMode={folderMode}
         />
       </div>
       {files.length > 0 && <Table data={files} columns={columns} />}
@@ -80,6 +84,7 @@ Control.args = {
   emptyDescription: 'You can load data by drag-and-dropping files here',
   emptyButtonText: 'Select files',
   emptyButtonIcon: 'plus',
+  folderMode: false,
 };
 
 export function DropZoneContainerControl() {
