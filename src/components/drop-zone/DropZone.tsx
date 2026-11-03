@@ -2,8 +2,12 @@ import { Button, Colors, NonIdealState } from '@blueprintjs/core';
 import type { IconName } from '@blueprintjs/icons';
 import styled from '@emotion/styled';
 import type { CSSProperties, MouseEventHandler, ReactElement } from 'react';
+import type { DropzoneInputProps } from 'react-dropzone';
 import * as dropzone from 'react-dropzone';
 import tinycolor from 'tinycolor2';
+
+// https://react-dropzone.js.org/examples/directory
+type InputProps = DropzoneInputProps & { webkitdirectory?: 'true' };
 
 export interface DropZoneProps extends dropzone.DropzoneOptions {
   borderColor?: string;
@@ -12,6 +16,14 @@ export interface DropZoneProps extends dropzone.DropzoneOptions {
   emptyDescription?: string;
   emptyButtonText?: string;
   emptyButtonIcon?: IconName;
+  /**
+   * Note this mode is not standard but widely supported.
+   * Also note, if you enable this mode, you must not use `useFsAccessApi` flag.
+   *
+   * @see https://react-dropzone.js.org/examples/directory
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file#webkitdirectory
+   */
+  folderMode?: boolean;
 }
 
 const DropzoneRoot = styled.div`
@@ -66,11 +78,6 @@ function DropZoneContent(
   props: DropZoneProps & {
     children?: ReactElement | null;
     onClick?: MouseEventHandler<HTMLDivElement>;
-    emptyIcon?: IconName;
-    emptyTitle?: string;
-    emptyDescription?: string;
-    emptyButtonText?: string;
-    emptyButtonIcon?: IconName;
   },
 ) {
   const {
@@ -83,6 +90,7 @@ function DropZoneContent(
     emptyButtonText = 'Select files',
     emptyButtonIcon = 'plus',
     noClick,
+    folderMode = false,
     ...otherProps
   } = props;
 
@@ -92,6 +100,10 @@ function DropZoneContent(
     noClick: noClick ?? hasChildren,
     ...otherProps,
   });
+
+  const extraInputProps: InputProps = folderMode
+    ? { webkitdirectory: 'true' }
+    : {};
 
   return (
     <DropzoneRoot {...getRootProps({ onClick })}>
@@ -118,7 +130,7 @@ function DropZoneContent(
           />
         </DropzoneEmpty>
       ) : null}
-      <input {...getInputProps()} />
+      <input {...getInputProps(extraInputProps)} />
     </DropzoneRoot>
   );
 }
