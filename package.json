@@ -12,6 +12,10 @@
     "src/components",
     "styles/preflight.css"
   ],
+  "sideEffects": [
+    "./lib/components/root-layout/root_layout.js",
+    "./styles/*.css"
+  ],
   "scripts": {
     "build": "npm run clean && npm run build-ts",
     "build-all": "npm run build-app && npm run build-storybook && mv storybook-static dist/stories",
