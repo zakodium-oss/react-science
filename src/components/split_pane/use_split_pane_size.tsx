@@ -1,4 +1,4 @@
-import type { RefObject } from 'react';
+import type { PointerEvent as ReactPointerEvent, RefObject } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { SplitPaneDirection, SplitPaneSide } from './split_pane.js';
@@ -29,7 +29,10 @@ export function useSplitPaneSize(options: UseSplitPaneSizeOptions) {
   } = options;
 
   const [isResizing, setIsResizing] = useState(false);
-  const onPointerDown = useCallback(() => {
+  const onPointerDown = useCallback((event: ReactPointerEvent) => {
+    // Without capture, a pointer that enters an iframe sends its moves and its
+    // release to the iframe's document, and the drag is left stuck.
+    event.currentTarget.setPointerCapture(event.pointerId);
     setIsResizing(true);
   }, []);
 
