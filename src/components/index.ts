@@ -1,5 +1,6 @@
 export * from './accordion/index.js';
 export * from './button/index.js';
+export * from './capsule_group/index.js';
 export * from './color-picker/index.js';
 export * from './dialog/index.js';
 export * from './doi/index.js';
