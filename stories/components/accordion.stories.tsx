@@ -250,9 +250,9 @@ export function WithDynamicItems() {
   );
 }
 
-type WithToggleTitle = 'spectra' | 'integral';
-
 export function WithToggle() {
+  type WithToggleTitle = 'spectra' | 'integral';
+
   const controls = useAccordionControls<WithToggleTitle>();
   const TypedAccordionItem = Accordion.Item<WithToggleTitle>;
   return (

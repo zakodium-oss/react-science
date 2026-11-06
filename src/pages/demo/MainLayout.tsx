@@ -58,7 +58,9 @@ export default function MainLayout() {
   useLoadFileCollectionFromHash(loadFiles);
   const onDrop = useDropFiles(loadFiles);
 
-  function saveHandler(filename = 'file', spaceIndent = 0) {
+  function saveHandler() {
+    const filename = 'file';
+    const spaceIndent = 0;
     const data = JSON.stringify(
       { data: appState.data, view: appState.view },
       (_key, value) =>

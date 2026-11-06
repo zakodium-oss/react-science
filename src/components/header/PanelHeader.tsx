@@ -24,11 +24,6 @@ const HeaderLeftContainer = styled.div`
   flex-direction: row;
   flex: 1;
   min-width: 0;
-
-  '& > button:' {
-    padding: 0 5px;
-    min-width: auto;
-  }
 `;
 
 export function PanelHeader(props: PanelHeaderProps) {

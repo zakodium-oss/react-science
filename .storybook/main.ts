@@ -11,7 +11,16 @@ const config: StorybookConfig = {
       strictMode: false,
     },
   },
-  addons: ['@storybook/addon-docs'],
+  addons: [
+    {
+      name: 'addon-storybook-sync',
+      options: {
+        port:
+          Number(process.env.WEBSTORM_ADDON_STORYBOOK_SYNC_PORT) || undefined,
+      },
+    },
+    '@storybook/addon-docs',
+  ],
 };
 
 export default config;

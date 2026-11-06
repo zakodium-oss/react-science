@@ -7,6 +7,7 @@ import * as dropzone from 'react-dropzone';
 import tinycolor from 'tinycolor2';
 
 // https://react-dropzone.js.org/examples/directory
+// eslint-disable-next-line unicorn/prefer-smaller-scope
 type InputProps = DropzoneInputProps & { webkitdirectory?: 'true' };
 
 export interface DropZoneProps extends dropzone.DropzoneOptions {

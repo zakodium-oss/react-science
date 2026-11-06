@@ -23,7 +23,7 @@ import { normalizeIcon } from '../icon.js';
 import type { BaseOverButtonProps, Placement } from './OverflowButton.tsx';
 import { OverflowButton } from './OverflowButton.tsx';
 import { ToolbarContext, useToolbarContext } from './toolbarContext.js';
-import { useCheckOverflow } from './useCheckOverflow.tsx';
+import { useIsOverflow } from './use_is_overflow.tsx';
 
 export type Overflow = 'wrap' | 'collapse';
 
@@ -140,7 +140,7 @@ export function Toolbar(props: ToolbarProps) {
     [intent, vertical, disabled, popoverInteractionKind],
   );
   const ref = useRef<HTMLDivElement>(null);
-  const isOverflowing = useCheckOverflow({
+  const isOverflowing = useIsOverflow({
     containerRef: ref,
     overflow,
     vertical,

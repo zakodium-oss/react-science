@@ -9,7 +9,6 @@ import { FullScreenProvider } from '../fullscreen/index.js';
 import { CustomDivPreflight } from './css-reset/customPreflight.js';
 import { RootLayoutProvider } from './root_layout_context.provider.js';
 
-// eslint-disable-next-line unicorn/no-top-level-side-effects
 FocusStyleManager.onlyShowFocusOnTabs();
 
 interface RootLayoutProps {

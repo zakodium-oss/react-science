@@ -12,8 +12,6 @@ import type {
 
 import { getMeasurementInfoFromFile } from './utility/index.js';
 
-type Header = Exclude<ParseResult['meta'], UvProbeMeta>;
-
 /**
  *
  * @param fileCollection - the dragged file/files
@@ -28,6 +26,8 @@ export async function spcLoader(
   for (const file of fileCollection) {
     if (/\.spc$/i.test(file.name)) {
       try {
+        type Header = Exclude<ParseResult['meta'], UvProbeMeta>;
+
         // TODO: load in parallel
         // eslint-disable-next-line no-await-in-loop
         const parsed = parse(await file.arrayBuffer());

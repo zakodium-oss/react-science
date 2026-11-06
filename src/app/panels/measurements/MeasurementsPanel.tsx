@@ -33,8 +33,7 @@ const kindItem = (kind: MeasurementKind) => ({
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 export function MeasurementsPanel({ openPanel }: PanelProps<object>) {
-  const appState = useAppState();
-  const { data, view } = appState;
+  const { data, view } = useAppState();
 
   const dispatch = useAppDispatch();
 
