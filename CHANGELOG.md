@@ -1,5 +1,13 @@
 # Changelog
 
+## [24.1.1](https://github.com/zakodium-oss/react-science/compare/v24.1.0...v24.1.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* keep the SplitPane drag when the pointer crosses an iframe ([#1066](https://github.com/zakodium-oss/react-science/issues/1066)) ([77f6cd6](https://github.com/zakodium-oss/react-science/commit/77f6cd6a5ea9bc0a8aa36212db1175d57e9df7e7))
+* update dependencies ([#1068](https://github.com/zakodium-oss/react-science/issues/1068)) ([42f097a](https://github.com/zakodium-oss/react-science/commit/42f097ad702e6004064220f7b9e17cfcf455a354))
+
 ## [24.1.0](https://github.com/zakodium-oss/react-science/compare/v24.0.1...v24.1.0) (2026-11-03)
 
 
