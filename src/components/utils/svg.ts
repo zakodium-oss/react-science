@@ -42,9 +42,7 @@ export function exportSVG(
   options: ExportSVGOptions = {},
 ): string {
   const {
-    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     removeFromSelector,
-    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     addBackground = false,
     backgroundColor = 'white',
     customMutations,
@@ -89,9 +87,7 @@ export async function exportSVGAsPNG(
   options: ExportSVGOptions = {},
 ): Promise<Blob> {
   const {
-    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     removeFromSelector,
-    // eslint-disable-next-line unicorn/no-non-function-verb-prefix
     addBackground = false,
     backgroundColor = 'white',
     customMutations,

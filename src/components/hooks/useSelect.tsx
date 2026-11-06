@@ -66,6 +66,8 @@ export function useSelect<T>(options: UseSelectOptions<T>) {
   const popoverTargetProps = {
     style: { display: 'inline-block' },
   };
+  // Name is from the Blueprint component.
+  // eslint-disable-next-line unicorn/consistent-boolean-name
   const itemPredicate = (query: string, item: T) => {
     const label = getLabel(item, options);
     if (!label) return false;

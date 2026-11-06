@@ -7,7 +7,7 @@ import { useFormContext } from '../../context/use_ts_form.js';
 type SubmitButtonProps = ButtonProps;
 
 export function SubmitButton(props: SubmitButtonProps) {
-  const { intent, disabled, ...otherProps } = props;
+  const { intent = 'primary', disabled, ...otherProps } = props;
 
   const form = useFormContext();
   const isSubmitting = useSelector(form.store, (state) => state.isSubmitting);
@@ -15,7 +15,7 @@ export function SubmitButton(props: SubmitButtonProps) {
   return (
     <Button
       {...otherProps}
-      intent={intent ?? 'primary'}
+      intent={intent}
       type="submit"
       disabled={disabled || isSubmitting}
     />

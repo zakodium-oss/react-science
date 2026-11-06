@@ -273,7 +273,6 @@ export function Table<TData extends RowData>(props: TableProps<TData>) {
     count: data.length,
     getScrollElement: () => virtualScrollElementRef.current,
     estimateSize:
-      // eslint-disable-next-line unicorn/consistent-destructuring
       (props.virtualizeRows && props.estimatedRowHeight) || (() => 0),
     overscan: 5,
   });

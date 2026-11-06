@@ -3,13 +3,13 @@ import { useLayoutEffect, useState } from 'react';
 
 import type { Overflow } from './Toolbar.tsx';
 
-interface UseCheckOverflowOptions {
+interface UseIsOverflowOptions {
   containerRef: RefObject<HTMLDivElement | null>;
   vertical: boolean;
   overflow: Overflow;
 }
 
-export function useCheckOverflow(options: UseCheckOverflowOptions) {
+export function useIsOverflow(options: UseIsOverflowOptions) {
   const { containerRef, overflow, vertical } = options;
   const [isOverflow, setIsOverflow] = useState(false);
   useLayoutEffect(() => {
@@ -26,7 +26,6 @@ export function useCheckOverflow(options: UseCheckOverflowOptions) {
       } else {
         isOverflow = container.scrollWidth > container.clientWidth;
       }
-      // eslint-disable-next-line @eslint-react/set-state-in-effect
       setIsOverflow(isOverflow);
     };
 
