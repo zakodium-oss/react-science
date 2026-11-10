@@ -78,7 +78,7 @@ export interface TooltipItem {
   shortcuts?: string[];
   subTitles?: Array<Pick<TooltipItem, 'title' | 'shortcuts'>>;
   description?: string;
-  link?: string;
+  helpUrl?: string;
   style?: CSSProperties;
 }
 
@@ -92,7 +92,7 @@ export function TooltipHelpContent(props: TooltipItem) {
     shortcuts = defaultShortCuts,
     subTitles = defaultSubTitles,
     description = '',
-    link,
+    helpUrl,
     style = defaultStyle,
   } = props;
 
@@ -111,14 +111,14 @@ export function TooltipHelpContent(props: TooltipItem) {
       </FlexContainer>
       <SubTitles items={subTitles} />
 
-      {(description || link) && (
+      {(description || helpUrl) && (
         <Description>
           {description}
-          {link && (
+          {helpUrl && (
             <a
               style={description ? { paddingLeft: '5px' } : {}}
               target="_blank"
-              href={link}
+              href={helpUrl}
               rel="noreferrer"
             >
               Learn more

@@ -139,7 +139,7 @@ export default function MainLayout() {
                   { title: 'Horizontal and Vertical', shortcuts: ['f', 'f'] },
                 ]}
                 description={`Zoom out by double-clicking the left mouse button, and fully zoom out horizontally by pressing the key "f". Alternatively, press the key "ff" to fit the spectra horizontally and vertically.`}
-                link="https://docs.nmrium.org/help/zoom-and-scale"
+                helpUrl="https://docs.nmrium.org/help/zoom-and-scale"
               />
             }
             icon={<FaExpand />}
