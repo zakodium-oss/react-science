@@ -3,9 +3,11 @@ import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
 import { Button } from '../button/index.js';
-
-const PADDING_LG = 8;
-const PADDING_SM = 4;
+import {
+  PanelItemHeader,
+  PanelItemTitle,
+  PanelItemTitleLabel,
+} from '../utils/panel_item_header.js';
 
 export interface ActivityPanelProps {
   children: ReactNode;
@@ -21,6 +23,7 @@ const PanelContainer = styled.div`
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  min-width: 0;
   background-color: ${Colors.LIGHT_GRAY5};
   gap: 1px;
   border-left: 1px solid ${Colors.LIGHT_GRAY4};
@@ -29,26 +32,14 @@ const PanelContainer = styled.div`
 const PanelItemContainer = styled.div`
   flex-grow: 1;
   display: flex;
+  min-width: 0;
   background-color: ${Colors.WHITE};
   flex-direction: column;
 `;
 
-const PanelItemHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: ${PADDING_SM}px ${PADDING_LG}px ${PADDING_SM}px ${PADDING_LG}px;
-  background-color: ${Colors.LIGHT_GRAY4};
-`;
-
 const PanelItemContent = styled.div`
   flex-grow: 1;
-  padding: ${PADDING_LG}px;
-`;
-
-const PanelItemTitle = styled.div`
-  color: ${Colors.DARK_GRAY5};
-  font-weight: bold;
+  padding: 8px;
 `;
 
 export function ActivityPanel(props: ActivityPanelProps) {
@@ -63,7 +54,9 @@ export function ActivityPanelItem(props: ActivityPanelItemProps) {
   return (
     <PanelItemContainer>
       <PanelItemHeader>
-        <PanelItemTitle>{title}</PanelItemTitle>
+        <PanelItemTitle>
+          <PanelItemTitleLabel>{title}</PanelItemTitleLabel>
+        </PanelItemTitle>
         <Button variant="minimal" icon="cross" onClick={onClose} />
       </PanelItemHeader>
 
