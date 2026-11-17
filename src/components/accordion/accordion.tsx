@@ -6,7 +6,7 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react';
-import { useCallback, useRef } from 'react';
+import { useCallback, useId } from 'react';
 
 import { useAccordionItemContext } from './accordion_context.js';
 import type { AccordionItemControls } from './accordion_context_utils.js';
@@ -80,13 +80,19 @@ const AccordionItemHeader = styled.div`
   width: 100%;
   user-select: none;
   justify-content: space-between;
-  padding-left: 12px;
 
   :hover {
     background: white
       linear-gradient(${Colors.LIGHT_GRAY4} 5%, ${Colors.LIGHT_GRAY2} 100%)
       repeat scroll 0 0;
   }
+`;
+
+const AccordionItemButton = styled.button`
+  flex: 1;
+  min-width: 0;
+  padding: 5px 0 5px 12px;
+  text-align: left;
 `;
 
 const AccordionContainer = styled.div`
@@ -120,15 +126,18 @@ Accordion.Item = function AccordionItem<T extends string = string>(
   });
   const { controls, unmountChildren } = useAccordionItemContext(id, setIsOpen);
 
-  const headerRef = useRef<HTMLDivElement>(null);
+  const buttonId = useId();
+  const panelId = useId();
 
   const shouldUnmountChildren =
     props.unmountChildren === undefined
       ? unmountChildren
       : props.unmountChildren;
 
+  const isPanelRendered = isOpen || !shouldUnmountChildren;
+
   const onClickHandle = useCallback(
-    (event: ReactMouseEvent<HTMLDivElement>) => {
+    (event: ReactMouseEvent<HTMLButtonElement>) => {
       if (event.shiftKey) {
         controls.closeOthers();
       } else {
@@ -147,24 +156,25 @@ Accordion.Item = function AccordionItem<T extends string = string>(
         isolation: 'isolate',
       }}
     >
-      <AccordionItemHeader
-        onClick={onClickHandle}
-        role="button"
-        ref={headerRef}
-      >
-        <div
-          style={{
-            padding: '5px 0px',
-          }}
+      <AccordionItemHeader>
+        <AccordionItemButton
+          type="button"
+          id={buttonId}
+          aria-expanded={isOpen}
+          aria-controls={isPanelRendered ? panelId : undefined}
+          onClick={onClickHandle}
         >
           {title}
-        </div>
+        </AccordionItemButton>
         <ToolbarContainer onClick={(event) => event.stopPropagation()}>
           {renderToolbar?.({ id, isOpen: isOpen ?? false, controls })}
         </ToolbarContainer>
       </AccordionItemHeader>
-      {!isOpen && shouldUnmountChildren ? null : (
+      {isPanelRendered && (
         <div
+          role="region"
+          id={panelId}
+          aria-labelledby={buttonId}
           style={{
             display: isOpen ? 'flex' : 'none',
             flex: isOpen ? '1 1 1px' : 'none',
