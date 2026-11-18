@@ -34,6 +34,12 @@ export function ColorPickerStory() {
 
 ColorPickerStory.storyName = 'Color Picker';
 
+export function ColorPickerHex() {
+  return <ColorPicker color={{ hex: '0099ff' }} />;
+}
+
+ColorPickerHex.storyName = 'Color Picker (hex)';
+
 export function GradientSelectStory() {
   const [scale, setScale] = useState<GradientScaleName>('inferno');
   return (

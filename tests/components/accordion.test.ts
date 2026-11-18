@@ -1,9 +1,7 @@
-import { expect, test } from '@playwright/experimental-ct-react';
-
-import { AccordionWithItems } from './accordion.components.js';
+import { expect, test } from '@playwright/test';
 
 test('targets an item header by its button role', async ({ mount }) => {
-  const component = await mount(<AccordionWithItems />);
+  const component = await mount('components/accordion/MixedItems');
   const first = component.getByRole('button', { name: 'First' });
   const second = component.getByRole('button', { name: 'Second' });
 
@@ -15,7 +13,7 @@ test('targets an item header by its button role', async ({ mount }) => {
 });
 
 test('targets an item content by its region role', async ({ mount }) => {
-  const component = await mount(<AccordionWithItems />);
+  const component = await mount('components/accordion/MixedItems');
 
   await expect(component.getByRole('region', { name: 'First' })).toHaveText(
     'First content',
@@ -32,7 +30,7 @@ test('targets an item content by its region role', async ({ mount }) => {
 test('unmounts the content of a closed item with unmountChildren', async ({
   mount,
 }) => {
-  const component = await mount(<AccordionWithItems />);
+  const component = await mount('components/accordion/MixedItems');
   const button = component.getByRole('button', { name: 'Third' });
   const region = component.getByRole('region', {
     name: 'Third',
