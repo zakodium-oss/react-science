@@ -1,10 +1,12 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
+export default defineConfig({
+  testDir: './tests',
   forbidOnly: !!process.env.CI,
   retries: 1,
+  reporter: process.env.CI ? [['github'], ['html']] : [['list'], ['html']],
   use: {
+    baseURL: 'http://localhost:5173/playwright/gallery/index.html',
     trace: 'on-first-retry',
     headless: true,
     ignoreHTTPSErrors: true,
@@ -15,6 +17,11 @@ const config: PlaywrightTestConfig = {
     contextOptions: {
       strictSelectors: true,
     },
+  },
+  webServer: {
+    command: 'npx vite --port 5173 --strictPort',
+    port: 5173,
+    reuseExistingServer: !process.env.CI,
   },
   projects: [
     {
@@ -36,6 +43,4 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-};
-
-export default config;
+});

@@ -350,6 +350,22 @@ export const UnmountChildren = {
   },
 } satisfies Meta;
 
+export function MixedItems() {
+  return (
+    <Accordion>
+      <Accordion.Item id="first" title="First" defaultOpen>
+        First content
+      </Accordion.Item>
+      <Accordion.Item id="second" title="Second">
+        Second content
+      </Accordion.Item>
+      <Accordion.Item id="third" title="Third" unmountChildren>
+        Third content
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+
 export function UnmountSomeChildren() {
   return (
     <Accordion>

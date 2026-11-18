@@ -1,13 +1,11 @@
-import { expect, test } from '@playwright/experimental-ct-react';
 import type { Locator } from '@playwright/test';
-
-import { SplitPaneWithFrame } from './split-pane.components.js';
+import { expect, test } from '@playwright/test';
 
 test('keeps the drag while the pointer crosses an iframe', async ({
   mount,
   page,
 }) => {
-  const component = await mount(<SplitPaneWithFrame />);
+  const component = await mount('components/split_pane/WithIframe');
   const splitter = component.getByText('⋮');
   const start = await centreOf(splitter);
 

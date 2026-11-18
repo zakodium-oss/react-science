@@ -1,9 +1,9 @@
-import { expect, test } from '@playwright/experimental-ct-react';
-
-import { IrMeasurementExplorer } from './measurement-explorer.components.js';
+import { expect, test } from '@playwright/test';
 
 test('initial variables', async ({ mount }) => {
-  const component = await mount(<IrMeasurementExplorer />);
+  const component = await mount(
+    'app/measurements/measurement-explorer/Control',
+  );
   const dataIndex = component.locator('select >> nth=0');
   const xVariableName = component.locator('select >> nth=1');
   const yVariableName = component.locator('select >> nth=2');
@@ -14,7 +14,9 @@ test('initial variables', async ({ mount }) => {
 });
 
 test('select variables', async ({ mount }) => {
-  const component = await mount(<IrMeasurementExplorer />);
+  const component = await mount(
+    'app/measurements/measurement-explorer/Control',
+  );
   const dataIndex = component.locator('select >> nth=0');
   const xVariableName = component.locator('select >> nth=1');
   const yVariableName = component.locator('select >> nth=2');
@@ -29,7 +31,9 @@ test('select variables', async ({ mount }) => {
 });
 
 test('reverse btn', async ({ mount }) => {
-  const component = await mount(<IrMeasurementExplorer />);
+  const component = await mount(
+    'app/measurements/measurement-explorer/Control',
+  );
 
   const reverseButton = component.getByRole('button', { name: 'Swap x/y' });
   const xVariableName = component.locator('select >> nth=1');

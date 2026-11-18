@@ -37,6 +37,16 @@ export default defineConfig({
     minify: !process.env.NO_MINIFY && 'esbuild',
   },
   plugins: [react()],
+  optimizeDeps: {
+    entries: [
+      'index.html',
+      'pages/*.html',
+      'playwright/gallery/index.html',
+      // Pre-bundle the dependencies of the stories rendered by the Playwright
+      // gallery, so that Vite doesn't reload the page while a test is running.
+      'stories/**/*.stories.tsx',
+    ],
+  },
   test: {
     include: ['./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     typecheck: {

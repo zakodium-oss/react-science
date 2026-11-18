@@ -13,7 +13,6 @@ export default defineConfig(
     'lib',
     'node_modules',
     'storybook-static',
-    'playwright/.cache',
     'playwright-report*',
   ]),
   ts,

@@ -7,7 +7,7 @@ import { SplitPanelChildContent } from './split_pane.utils.js';
 
 export default {
   title: 'Components / SplitPane',
-  tags: ['auotodocs'],
+  tags: ['autodocs'],
   component: SplitPane,
   argTypes: {
     size: {
@@ -130,3 +130,19 @@ ControlledProps.args = {
   open: true,
   size: '50%',
 };
+
+export function WithIframe() {
+  return (
+    <div style={{ height: 400, width: 600 }}>
+      <SplitPane>
+        <div>Start</div>
+        <iframe
+          title="Frame"
+          srcDoc="<p>Frame</p>"
+          sandbox=""
+          style={{ flex: 1, border: 0 }}
+        />
+      </SplitPane>
+    </div>
+  );
+}
