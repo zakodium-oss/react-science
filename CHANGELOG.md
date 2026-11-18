@@ -1,5 +1,12 @@
 # Changelog
 
+## [24.1.2](https://github.com/zakodium-oss/react-science/compare/v24.1.1...v24.1.2) (2026-11-17)
+
+
+### Bug Fixes
+
+* **accordion:** make component more accessible ([#1071](https://github.com/zakodium-oss/react-science/issues/1071)) ([0fed3c3](https://github.com/zakodium-oss/react-science/commit/0fed3c3072fc67f54dd01493ce40861cb3df8267))
+
 ## [24.1.1](https://github.com/zakodium-oss/react-science/compare/v24.1.0...v24.1.1) (2026-11-06)
 
 
