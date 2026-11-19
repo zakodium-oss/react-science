@@ -64,6 +64,10 @@ export interface ToolbarItemProps
       ButtonProps,
       'id' | 'icon' | 'active' | 'tag' | 'tagProps' | 'aria-label'
     > {
+  /**
+   * Tooltip shown on hover.
+   * If the tooltip is a string, it will be used as a fallback for the aria-label.
+   */
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
   onClick?: (event: MouseEvent) => void;
@@ -251,6 +255,7 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
     intent: itemIntent,
     disabled: itemDisabled,
     isPopover,
+    'aria-label': ariaLabel,
     ...other
   } = props;
 
@@ -263,6 +268,8 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
   const disabled = itemDisabled ?? toolbarDisabled;
 
   const normalizedIcon = normalizeIcon(icon, 16);
+  const finalLabel =
+    ariaLabel ?? (typeof tooltip === 'string' ? tooltip : undefined);
 
   return (
     <ToolbarButton
@@ -270,6 +277,8 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
       intent={intent}
       type="button"
       active={active}
+      onClick={onClick}
+      aria-label={finalLabel}
       style={{
         position: 'relative',
         fontSize: '1.125em',
@@ -297,7 +306,6 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
           normalizedIcon
         )
       }
-      onClick={onClick}
       tooltipProps={
         !tooltip
           ? undefined

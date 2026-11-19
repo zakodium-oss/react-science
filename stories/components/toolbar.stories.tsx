@@ -658,6 +658,50 @@ export function CustomTooltipContent({ intent }: ToolbarProps) {
   );
 }
 
+const accessibleItems: ToolbarItemProps[] = [
+  {
+    id: 'copy',
+    icon: 'phone',
+    tooltip: 'string tooltip only',
+  },
+  {
+    id: 'paste',
+    icon: 'add-column-left',
+    'aria-label': 'aria-label only',
+  },
+  {
+    id: 'undo',
+    icon: 'add-column-right',
+    'aria-label': 'aria-label and tooltip',
+    tooltip: 'string tooltip and aria-label',
+  },
+  {
+    id: 'redo',
+    icon: 'redo',
+    tooltip: <div>JSX tooltip</div>,
+  },
+];
+
+export function Accessible({ intent }: ToolbarProps) {
+  return (
+    <div
+      style={{
+        padding: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10,
+      }}
+    >
+      <div>aria-label or string tooltip is used to label the items.</div>
+      <Toolbar intent={intent}>
+        {accessibleItems.map((item) => (
+          <Toolbar.Item key={item.id} {...item} />
+        ))}
+      </Toolbar>
+    </div>
+  );
+}
+
 export function TooltipHelpContentStory({ intent }: ToolbarProps) {
   return (
     <div>
