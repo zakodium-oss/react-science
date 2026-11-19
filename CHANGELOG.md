@@ -1,5 +1,12 @@
 # Changelog
 
+## [24.1.4](https://github.com/zakodium-oss/react-science/compare/v24.1.3...v24.1.4) (2026-11-19)
+
+
+### Bug Fixes
+
+* **activity_bar:** make component more accessible ([#1076](https://github.com/zakodium-oss/react-science/issues/1076)) ([a47e15c](https://github.com/zakodium-oss/react-science/commit/a47e15ca89d9c7496a5d99ba46f9c2847aef01e4))
+
 ## [24.1.3](https://github.com/zakodium-oss/react-science/compare/v24.1.2...v24.1.3) (2026-11-19)
 
 
