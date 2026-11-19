@@ -1,5 +1,12 @@
 # Changelog
 
+## [24.1.3](https://github.com/zakodium-oss/react-science/compare/v24.1.2...v24.1.3) (2026-11-19)
+
+
+### Bug Fixes
+
+* **toolbar:** use tooltip as fallback for aria-label if possible ([#1074](https://github.com/zakodium-oss/react-science/issues/1074)) ([05a296d](https://github.com/zakodium-oss/react-science/commit/05a296d342397b74b7e2f48a17893b8675810964))
+
 ## [24.1.2](https://github.com/zakodium-oss/react-science/compare/v24.1.1...v24.1.2) (2026-11-17)
 
 
