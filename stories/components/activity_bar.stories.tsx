@@ -33,7 +33,7 @@ export default {
 
 type ActivityBarStoryItem = Pick<
   ActivityBarItemProps,
-  'tooltip' | 'icon' | 'disabled'
+  'tooltip' | 'icon' | 'disabled' | 'aria-label'
 > & {
   id: string;
   content?: ReactElement;
@@ -276,6 +276,46 @@ export function ActivityToolbarLayoutWithAccordions() {
           ))}
         </ActivityBar>
       </div>
+    </div>
+  );
+}
+
+const accessibleItems: ActivityBarStoryItem[] = [
+  { id: 'phone', icon: 'phone', tooltip: 'string tooltip only' },
+  { id: 'add-left', icon: 'add-column-left', 'aria-label': 'aria-label only' },
+  {
+    id: 'add-right',
+    icon: 'add-column-right',
+    'aria-label': 'aria-label and tooltip',
+    tooltip: 'string tooltip and aria-label',
+  },
+  { id: 'redo', icon: 'redo', tooltip: <div>JSX tooltip</div> },
+  { id: 'lab-test', icon: 'lab-test', tooltip: 'disabled', disabled: true },
+];
+
+export function Accessible() {
+  const [active, setActive] = useState<string | null>(null);
+
+  return (
+    <div
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'row-reverse',
+      }}
+    >
+      <ActivityBar aria-label="Activities">
+        {accessibleItems.map((item) => (
+          <ActivityBarItem
+            key={item.id}
+            {...item}
+            active={item.id === active}
+            onClick={() =>
+              setActive((prev) => (prev === item.id ? null : item.id))
+            }
+          />
+        ))}
+      </ActivityBar>
     </div>
   );
 }
