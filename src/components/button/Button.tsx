@@ -80,6 +80,13 @@ const TooltipButton = styled(BlueprintButton, {
 
 const defaultTooltipProps: Mandatory<ButtonProps['tooltipProps']> = {};
 
+/**
+ * Button with tooltip wrapper.
+ * About accessibility: if the tooltip content is a string, and no aria-label is provided. aria-label will be the tooltip content.
+ * If your usage is an icon button, please use a tooltipProps.content string.
+ * If you need a stylized presentation for the button tooltip content, also use aria-label.
+ * @param props
+ */
 export function Button(props: ButtonProps) {
   const {
     tooltipProps = defaultTooltipProps,
@@ -109,6 +116,10 @@ export function Button(props: ButtonProps) {
         <InnerButton
           {...targetProps}
           {...buttonProps}
+          aria-label={
+            buttonProps['aria-label'] ??
+            (typeof content === 'string' ? content : undefined)
+          }
           isIconButton={!children && !buttonProps.text}
           isTagButton={Boolean(tag)}
         >
