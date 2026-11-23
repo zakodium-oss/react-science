@@ -6,6 +6,8 @@ import {
   PanelStack,
 } from '@blueprintjs/core';
 import styled from '@emotion/styled';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { noop } from '@zakodium/utils';
 
 import {
   Accordion,
@@ -20,6 +22,8 @@ export default {
   title: 'Components / PanelHeader',
   component: PanelHeader,
 };
+
+type Story = StoryObj<Meta<typeof PanelHeader>>;
 
 export function Basic() {
   return (
@@ -221,3 +225,38 @@ export function WithAccordionPanelToolbarStackedPanel() {
     </div>
   );
 }
+
+export const PanelHeaderAccessibilityDefault: Story = {
+  args: {
+    onClickSettings: noop,
+  },
+};
+
+export const PanelHeaderAccessibilityCustomTooltip: Story = {
+  args: {
+    onClickSettings: noop,
+    tooltipPropsSettings: { content: 'Settings' },
+  },
+};
+
+export const PanelHeaderAccessibilityCustomAriaLabel: Story = {
+  args: {
+    onClickSettings: noop,
+    ariaLabelSettingsButton: 'Rich Text settings',
+    tooltipPropsSettings: {
+      content: (
+        <div
+          style={{
+            padding: '0.5rem',
+            borderRadius: '5px',
+            background: 'white',
+            color: 'black',
+            fontWeight: 'bold',
+          }}
+        >
+          Rich Text settings
+        </div>
+      ),
+    },
+  },
+};

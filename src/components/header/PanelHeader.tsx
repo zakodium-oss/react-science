@@ -1,13 +1,19 @@
 import styled from '@emotion/styled';
-import type { ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
+import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
 import { SelectedTotal } from '../selected-total/index.js';
 
-interface PanelHeaderProps {
+interface PanelHeaderProps extends Pick<
+  ComponentProps<typeof HeaderContainer>,
+  'aria-label'
+> {
   total?: number;
   current?: number;
   onClickSettings?: () => void;
+  tooltipPropsSettings?: ButtonProps['tooltipProps'];
+  ariaLabelSettingsButton?: string;
   children?: ReactNode;
 }
 
@@ -26,11 +32,26 @@ const HeaderLeftContainer = styled.div`
   min-width: 0;
 `;
 
+/**
+ * PanelHeader onClickSettings mount a button.
+ * By default, tooltipProps content is bound to 'Panel settings'.
+ * If you have to use tooltip content JSX instead string, take a look to Button documentation for the accessibility.
+ * @param props
+ * @see Button
+ */
 export function PanelHeader(props: PanelHeaderProps) {
-  const { total, current, children, onClickSettings } = props;
+  const {
+    total,
+    current,
+    children,
+    'aria-label': ariaLabel = 'Panel header',
+    onClickSettings,
+    tooltipPropsSettings,
+    ariaLabelSettingsButton,
+  } = props;
 
   return (
-    <HeaderContainer>
+    <HeaderContainer aria-label={ariaLabel}>
       <HeaderLeftContainer>{children}</HeaderLeftContainer>
       <SelectedTotal count={current} total={total} />
       {onClickSettings && (
@@ -39,6 +60,8 @@ export function PanelHeader(props: PanelHeaderProps) {
           variant="minimal"
           onClick={onClickSettings}
           icon="cog"
+          aria-label={ariaLabelSettingsButton}
+          tooltipProps={{ content: 'Panel settings', ...tooltipPropsSettings }}
         />
       )}
     </HeaderContainer>
