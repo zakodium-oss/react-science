@@ -1,6 +1,6 @@
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollectionItem } from 'filelist-utils';
-import { FileCollection, fileCollectionFromFiles } from 'filelist-utils';
+import type { FileItem } from 'file-collection';
+import { FileCollection } from 'file-collection';
 
 import type { AppDispatch, AppState } from '../../../app-data/index.js';
 import {
@@ -60,7 +60,8 @@ export async function loadFiles(
       await loadFullState(files[0], dispatch);
     } else {
       //multiple items in File[]
-      const fileCollection = await fileCollectionFromFiles(files);
+      const fileCollection = new FileCollection();
+      await fileCollection.appendFileList(files);
       const { measurements, logs } = await loadMeasurements(fileCollection, {
         ...baseOptions,
         logger,
@@ -80,10 +81,7 @@ export async function loadFiles(
 /**
  * Function executed for a single file.
  */
-async function loadFullState(
-  file: FileCollectionItem | File,
-  dispatch: AppDispatch,
-) {
+async function loadFullState(file: FileItem | File, dispatch: AppDispatch) {
   //single file
   const data = await file.text();
   const appState: AppState = JSON.parse(data);

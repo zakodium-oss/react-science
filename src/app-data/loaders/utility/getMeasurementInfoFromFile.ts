@@ -1,4 +1,4 @@
-import type { FileCollectionItem } from 'filelist-utils';
+import type { FileItem } from 'file-collection';
 
 /**
  * creates a template for the MeasurementBase (part)
@@ -7,7 +7,7 @@ import type { FileCollectionItem } from 'filelist-utils';
  * @param title
  */
 export function getMeasurementInfoFromFile(
-  { name, relativePath, lastModified, size }: FileCollectionItem,
+  { name, relativePath, lastModified, size }: FileItem,
   title: string,
 ) {
   return {

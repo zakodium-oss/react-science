@@ -3,7 +3,7 @@
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { fileCollectionFromPath } from 'filelist-utils';
+import { FileCollection } from 'file-collection';
 import { produce } from 'immer';
 
 import { getEmptyAppData } from '../lib/data/AppData.js';
@@ -14,7 +14,7 @@ import { jcampLoader } from '../lib/data/loaders/jcampLoader.js';
 import { wdfLoader } from '../lib/data/loaders/wdfLoader.js';
 
 const appData = getEmptyAppData();
-const fileCollection = await fileCollectionFromPath(
+const fileCollection = await FileCollection.fromPath(
   fileURLToPath(new URL('../test-data', import.meta.url)),
 );
 

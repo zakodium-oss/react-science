@@ -1,6 +1,6 @@
 import { assert } from '@zakodium/utils';
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollection } from 'filelist-utils';
+import type { FileCollection } from 'file-collection';
 import { convert } from 'jcampconverter';
 
 import type { MeasurementKind, Measurements } from '../index.js';

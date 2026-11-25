@@ -1,5 +1,5 @@
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollection } from 'filelist-utils';
+import type { FileCollection } from 'file-collection';
 import { xMinMaxValues } from 'ml-spectra-processing';
 
 import type { Enhancers, MeasurementBase, Measurements } from '../index.js';

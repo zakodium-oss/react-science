@@ -1,7 +1,7 @@
 import { parseMPR, parseMPT } from 'biologic-converter';
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollection } from 'filelist-utils';
+import type { FileCollection } from 'file-collection';
 
 import type { MeasurementBase, Measurements } from '../index.js';
 
@@ -13,7 +13,7 @@ type MeasurementDataVariable = Record<string, MeasurementVariable>;
 /**
  *
  * @param fileCollection - the dragged file/files
- * @param logs - pass to append errors to the logs, it mutates the external array.
+ * @param logger - pass to append errors to the logs, it mutates the external array.
  * @returns - new measurements object to be merged
  */
 export async function biologicLoader(
