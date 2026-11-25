@@ -1,6 +1,6 @@
 import type { MeasurementVariable } from 'cheminfo-types';
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollection } from 'filelist-utils';
+import type { FileCollection } from 'file-collection';
 import type { Wdf } from 'wdf-parser';
 import { parse } from 'wdf-parser';
 

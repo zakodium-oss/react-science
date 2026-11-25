@@ -1,4 +1,4 @@
-import type { FileCollectionItem } from 'filelist-utils';
+import type { FileItem } from 'file-collection';
 import { expect, test } from 'vitest';
 
 import { getTestFileCollection } from '../../../../test-utils.js';
@@ -6,7 +6,7 @@ import { getMeasurementInfoFromFile } from '../getMeasurementInfoFromFile.js';
 
 test('getMeasurementInfoFromFile', async () => {
   const { files } = await getTestFileCollection('jdx');
-  const jdx = files.find((f) => f.name === '1h.jdx') as FileCollectionItem;
+  const jdx = files.find((f) => f.name === '1h.jdx') as FileItem;
   expect(getMeasurementInfoFromFile(jdx, 'jdx title')).toMatchObject({
     info: {
       title: 'jdx title',

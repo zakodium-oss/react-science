@@ -99,7 +99,7 @@
     "eslint-config-zakodium": "^21.0.0",
     "eslint-plugin-storybook": "^10.6.7",
     "fifo-logger": "2.0.1",
-    "filelist-utils": "^1.11.3",
+    "file-collection": "^6.7.1",
     "immer": "^11.2.10",
     "jcampconverter": "^12.5.12",
     "ml-gsd": "^14.3.0",

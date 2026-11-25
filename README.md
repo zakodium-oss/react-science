@@ -56,9 +56,9 @@ The application has a state containing 3 properties:
 
 ### Loading new data in the application
 
-New data can be added by drag/drop or by adding in the URL a link to a webservice that returns a list of files. This later will use [FileCollectionFromWebservice](https://cheminfo.github.io/filelist-utils/modules.html#fileCollectionFromWebservice). You can find an example of the webservice [here](https://zakodium-oss.github.io/analysis-dataset/jdx.json)
+New data can be added by drag/drop or by adding in the URL a link to a webservice that returns a list of files. This later will use `FileCollection.fromSource` from [file-collection](https://github.com/cheminfo/file-collection). You can find an example of the webservice [here](https://zakodium-oss.github.io/analysis-dataset/jdx.json)
 
-Both approach will generate internally a `FileCollection` (see https://cheminfo.github.io/filelist-utils/classes/FileCollection.html and https://github.com/cheminfo/filelist-utils).
+Both approach will generate internally a `FileCollection` (see https://github.com/cheminfo/file-collection).
 
 To convert the various proprietary formats and add the parsed result to the application `data state` we will use `loaders`. A loader will receive a `FileCollection` and will try to parse what it can, often based on the file extension. An example of the `JCAMP-DX` loader can be found [here](https://github.com/zakodium-oss/react-science/blob/6f36ab05af11f848d4ed98eb10c99184a713ae97/src/app/data/loaders/jcampLoader.ts)
 

@@ -1,8 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollection } from 'filelist-utils';
-import { fileCollectionFromWebSource } from 'filelist-utils';
+import { FileCollection } from 'file-collection';
 import { useCallback } from 'react';
 
 import type { AppDispatch } from '../../app-data/index.js';
@@ -31,7 +30,7 @@ export function useLoadFileCollectionFromHash(
       const request = await fetch(filelistUrl);
       const data = await request.json();
       const baseURL = filelistUrl.replace(/\/[^/]*$/, '/');
-      const fileCollection = await fileCollectionFromWebSource({
+      const fileCollection = await FileCollection.fromSource({
         entries: data,
         baseURL,
       });

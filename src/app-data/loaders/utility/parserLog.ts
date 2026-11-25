@@ -10,7 +10,7 @@ export interface ParserLog {
    */
   branch?: string;
   /*
-   * From FileCollectionItem or other.
+   * From FileItem or other.
    */
   relativePath?: string;
   error?: Error;

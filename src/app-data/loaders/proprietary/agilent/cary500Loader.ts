@@ -1,5 +1,5 @@
 import type { FifoLogger } from 'fifo-logger';
-import type { FileCollection, FileCollectionItem } from 'filelist-utils';
+import type { FileCollection, FileItem } from 'file-collection';
 
 import type { MeasurementBase, Measurements } from '../../../index.js';
 import { getMeasurementInfoFromFile } from '../../../index.js';
@@ -36,7 +36,7 @@ export async function cary500Loader(
   return newMeasurements;
 }
 
-async function convert(file: FileCollectionItem): Promise<MeasurementBase[]> {
+async function convert(file: FileItem): Promise<MeasurementBase[]> {
   const text = await file.text();
   // this format allows many experiments in one file
   const lines = text.split(/\r?\n/).map((line) => line.trim());
