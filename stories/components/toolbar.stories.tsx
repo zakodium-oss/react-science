@@ -10,7 +10,7 @@ import type {
   PopoverInteractionType,
   ToolbarItemProps,
   ToolbarProps,
-  TooltipItem,
+  TooltipHelpContentProps,
 } from '../../src/components/index.js';
 import {
   Accordion,
@@ -595,7 +595,7 @@ MixedItems.argTypes = {
 };
 
 const itemsShortcuts: Array<
-  TooltipItem & { id: string; icon: ToolbarItemProps['icon'] }
+  TooltipHelpContentProps & { id: string; icon: ToolbarItemProps['icon'] }
 > = [
   {
     id: 'copy',
@@ -680,9 +680,21 @@ const accessibleItems: ToolbarItemProps[] = [
     icon: 'redo',
     tooltip: <div>JSX tooltip</div>,
   },
+  {
+    id: 'help',
+    icon: 'help',
+    tooltip: (
+      <TooltipHelpContent
+        title="TooltipHelpContent title"
+        shortcuts={['h']}
+        description="The title is used as the label."
+      />
+    ),
+  },
 ];
 
 export function Accessible({ intent }: ToolbarProps) {
+  const [toggleActive, setToggleActive] = useState(false);
   return (
     <div
       style={{
@@ -692,11 +704,29 @@ export function Accessible({ intent }: ToolbarProps) {
         gap: 10,
       }}
     >
-      <div>aria-label or string tooltip is used to label the items.</div>
-      <Toolbar intent={intent}>
+      <div>
+        aria-label, string tooltip or TooltipHelpContent title is used to label
+        the items. Items with an explicit `active` prop are exposed as toggle
+        buttons.
+      </div>
+      <Toolbar intent={intent} aria-label="Accessible toolbar">
         {accessibleItems.map((item) => (
           <Toolbar.Item key={item.id} {...item} />
         ))}
+        <Toolbar.Item
+          icon="eye-open"
+          tooltip="toggle"
+          active={toggleActive}
+          onClick={() => setToggleActive((value) => !value)}
+        />
+        <Toolbar.PopoverItem
+          content={
+            <Menu>
+              <MenuItem text="Item" />
+            </Menu>
+          }
+          itemProps={{ icon: 'more', tooltip: 'popover item' }}
+        />
       </Toolbar>
     </div>
   );

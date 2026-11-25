@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 import type { ButtonProps } from '../button/Button.tsx';
 
-import { Toolbar, ToolbarButton } from './Toolbar.tsx';
+import { Toolbar, ToolbarButton } from './toolbar.tsx';
 
 export type Placement = 'start' | 'end';
 

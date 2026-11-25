@@ -20,9 +20,10 @@ import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
 import { normalizeIcon } from '../icon.js';
 
-import type { BaseOverButtonProps, Placement } from './OverflowButton.tsx';
-import { OverflowButton } from './OverflowButton.tsx';
-import { ToolbarContext, useToolbarContext } from './toolbarContext.js';
+import type { BaseOverButtonProps, Placement } from './overflow_button.tsx';
+import { OverflowButton } from './overflow_button.tsx';
+import { ToolbarContext, useToolbarContext } from './toolbar_context.ts';
+import { getTooltipLabel } from './tooltip_label.js';
 import { useIsOverflow } from './use_is_overflow.tsx';
 
 export type Overflow = 'wrap' | 'collapse';
@@ -66,7 +67,8 @@ export interface ToolbarItemProps
     > {
   /**
    * Tooltip shown on hover.
-   * If the tooltip is a string, it will be used as a fallback for the aria-label.
+   * If the tooltip is a string, or a `<TooltipHelpContent />` element, its
+   * text (or title) will be used as a fallback for the aria-label.
    */
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
@@ -247,7 +249,7 @@ function ToolbarItem(props: ToolbarItemProps) {
 
 function ToolbarItemInternal(props: ToolbarItemInternalProps) {
   const {
-    active = false,
+    active,
     icon,
     onClick,
     tooltip,
@@ -268,17 +270,17 @@ function ToolbarItemInternal(props: ToolbarItemInternalProps) {
   const disabled = itemDisabled ?? toolbarDisabled;
 
   const normalizedIcon = normalizeIcon(icon, 16);
-  const finalLabel =
-    ariaLabel ?? (typeof tooltip === 'string' ? tooltip : undefined);
 
   return (
     <ToolbarButton
       disabled={disabled}
       intent={intent}
       type="button"
-      active={active}
+      active={active ?? false}
+      // Do not set a pressed state when active is undefined.
+      aria-pressed={active}
       onClick={onClick}
-      aria-label={finalLabel}
+      aria-label={ariaLabel ?? getTooltipLabel(tooltip)}
       style={{
         position: 'relative',
         fontSize: '1.125em',
