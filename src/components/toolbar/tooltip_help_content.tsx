@@ -73,24 +73,34 @@ const SubtitleItem = styled.div`
   }
 `;
 
-export interface TooltipItem {
+export type TooltipHelpContentSubtitle = Pick<
+  TooltipHelpContentProps,
+  'title' | 'shortcuts'
+>;
+
+export interface TooltipHelpContentProps {
   title: string;
   shortcuts?: string[];
-  subTitles?: Array<Pick<TooltipItem, 'title' | 'shortcuts'>>;
+  subTitles?: TooltipHelpContentSubtitle[];
   description?: string;
   link?: string;
   style?: CSSProperties;
 }
 
-const defaultShortCuts: Mandatory<TooltipItem['shortcuts']> = [];
-const defaultSubTitles: Mandatory<TooltipItem['subTitles']> = [];
-const defaultStyle: Mandatory<TooltipItem['style']> = {};
+/**
+ * @deprecated Use TooltipHelpContentProps instead.
+ */
+export type TooltipItem = TooltipHelpContentProps;
 
-export function TooltipHelpContent(props: TooltipItem) {
+const defaultShortcuts: Mandatory<TooltipHelpContentProps['shortcuts']> = [];
+const defaultSubtitles: Mandatory<TooltipHelpContentProps['subTitles']> = [];
+const defaultStyle: Mandatory<TooltipHelpContentProps['style']> = {};
+
+export function TooltipHelpContent(props: TooltipHelpContentProps) {
   const {
     title,
-    shortcuts = defaultShortCuts,
-    subTitles = defaultSubTitles,
+    shortcuts = defaultShortcuts,
+    subTitles = defaultSubtitles,
     description = '',
     link,
     style = defaultStyle,
@@ -107,9 +117,9 @@ export function TooltipHelpContent(props: TooltipItem) {
     >
       <FlexContainer>
         <Title size="0.9rem">{title}</Title>
-        <ShortCuts shortcuts={shortcuts} />
+        <Shortcuts shortcuts={shortcuts} />
       </FlexContainer>
-      <SubTitles items={subTitles} />
+      <Subtitles items={subTitles} />
 
       {(description || link) && (
         <Description>
@@ -130,7 +140,7 @@ export function TooltipHelpContent(props: TooltipItem) {
   );
 }
 
-function ShortCuts({ shortcuts }: { shortcuts: string[] }) {
+function Shortcuts({ shortcuts }: { shortcuts: string[] }) {
   return (
     <div
       style={{
@@ -150,7 +160,7 @@ function ShortCuts({ shortcuts }: { shortcuts: string[] }) {
   );
 }
 
-function SubTitles({ items }: { items: TooltipItem[] }) {
+function Subtitles({ items }: { items: TooltipHelpContentSubtitle[] }) {
   if (!items || items.length === 0) {
     return null;
   }
@@ -166,7 +176,7 @@ function SubTitles({ items }: { items: TooltipItem[] }) {
         <SubtitleItem key={title}>
           <FlexContainer>
             <Title size="0.7rem">{title}</Title>
-            <ShortCuts shortcuts={shortcuts} />
+            <Shortcuts shortcuts={shortcuts} />
           </FlexContainer>
         </SubtitleItem>
       ))}

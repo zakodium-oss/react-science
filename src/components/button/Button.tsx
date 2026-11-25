@@ -15,6 +15,8 @@ import styled from '@emotion/styled';
 import type { Mandatory } from '@zakodium/utils';
 import type { ReactNode } from 'react';
 
+import { getTooltipLabel } from '../toolbar/tooltip_label.js';
+
 type BlueprintProps = {
   [
     key in keyof BlueprintButtonProps & keyof BlueprintAnchorButtonProps
@@ -82,7 +84,8 @@ const defaultTooltipProps: Mandatory<ButtonProps['tooltipProps']> = {};
 
 /**
  * Button with tooltip wrapper.
- * About accessibility: if the tooltip content is a string, and no aria-label is provided. aria-label will be the tooltip content.
+ * About accessibility: if no aria-label is provided, it falls back to the tooltip content when it is a string,
+ * or to the `title` when it is a `<TooltipHelpContent />` element.
  * If your usage is an icon button, please use a tooltipProps.content string.
  * If you need a stylized presentation for the button tooltip content, also use aria-label.
  * @param props
@@ -116,10 +119,7 @@ export function Button(props: ButtonProps) {
         <InnerButton
           {...targetProps}
           {...buttonProps}
-          aria-label={
-            buttonProps['aria-label'] ??
-            (typeof content === 'string' ? content : undefined)
-          }
+          aria-label={buttonProps['aria-label'] ?? getTooltipLabel(content)}
           isIconButton={!children && !buttonProps.text}
           isTagButton={Boolean(tag)}
         >

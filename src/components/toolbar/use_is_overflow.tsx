@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { useLayoutEffect, useState } from 'react';
 
-import type { Overflow } from './Toolbar.tsx';
+import type { Overflow } from './toolbar.tsx';
 
 interface UseIsOverflowOptions {
   containerRef: RefObject<HTMLDivElement | null>;

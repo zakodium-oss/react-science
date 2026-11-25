@@ -6,6 +6,7 @@ import type { MouseEvent, ReactNode } from 'react';
 import type { ButtonProps } from '../button/index.js';
 import { Button } from '../button/index.js';
 import { normalizeIcon } from '../icon.js';
+import { getTooltipLabel } from '../toolbar/tooltip_label.js';
 
 export interface ActivityBarProps extends Pick<ButtonGroupProps, 'aria-label'> {
   children: ReactNode;
@@ -17,7 +18,8 @@ export interface ActivityBarItemProps extends Pick<
 > {
   /**
    * Tooltip shown on hover.
-   * If the tooltip is a string, it will be used as a fallback for the aria-label.
+   * If the tooltip is a string, or a `<TooltipHelpContent />` element, its
+   * text (or title) will be used as a fallback for the aria-label.
    */
   tooltip?: TooltipProps['content'];
   tooltipProps?: Omit<TooltipProps, 'content'>;
@@ -82,15 +84,13 @@ export function ActivityBarItem(props: ActivityBarItemProps) {
   } = props;
 
   const resizedIcon = normalizeIcon(icon, 20);
-  const finalLabel =
-    ariaLabel ?? (typeof tooltip === 'string' ? tooltip : undefined);
 
   return (
     <ActivityButton
       type="button"
       active={active}
       aria-pressed={active}
-      aria-label={finalLabel}
+      aria-label={ariaLabel ?? getTooltipLabel(tooltip)}
       onClick={onClick}
       tooltipProps={
         !tooltip
