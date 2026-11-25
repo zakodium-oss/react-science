@@ -1,5 +1,17 @@
 # Changelog
 
+## [24.2.0](https://github.com/zakodium-oss/react-science/compare/v24.1.4...v24.2.0) (2026-11-25)
+
+
+### Features
+
+* **Button:** improve accessibility ([#1079](https://github.com/zakodium-oss/react-science/issues/1079)) ([35ca24f](https://github.com/zakodium-oss/react-science/commit/35ca24f82c9d40f0bf8934ce0898ffc8d6ebb341))
+
+
+### Bug Fixes
+
+* **toolbar:** improve accessibility and tooltip handling of toolbar buttons ([#1082](https://github.com/zakodium-oss/react-science/issues/1082)) ([c3802b4](https://github.com/zakodium-oss/react-science/commit/c3802b44add8b4659fd30acd9169271e91ef342f))
+
 ## [24.1.4](https://github.com/zakodium-oss/react-science/compare/v24.1.3...v24.1.4) (2026-11-19)
 
 
